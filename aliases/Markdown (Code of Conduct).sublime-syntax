@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: Markdown (Code of conduct)
+scope: text.html.markdown.codeofconduct
+hidden: true
+file_extensions:
+  - CODE_OF_CONDUCT.md
+contexts:
+  main:
+    - include: scope:text.html.markdown
+      apply_prototype: true

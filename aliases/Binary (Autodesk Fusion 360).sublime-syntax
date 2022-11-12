@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Binary (Autodesk Fusion 360)
+scope: binary.f3d
+hidden: true
+file_extensions:
+  - f3d
+contexts:
+  main: []
