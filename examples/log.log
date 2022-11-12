@@ -1,0 +1,5 @@
+[2022-07-25T10:39:51Z TRACE mio::poll] registering event source with poller: token=Token(0), interests=READABLE | WRITABLE
+[2022-07-25T10:39:51Z INFO  lotto_web::site] Starting lotto-random web site.
+[2022-07-25T10:39:51Z DEBUG lotto_web::site] Ip address is "127.0.0.1" and port is "6284".
+[2022-07-25T10:39:51Z DEBUG lotto_web::site] Trying to bind server to address: 127.0.0.1:6284
+[2022-07-25T10:39:51Z TRACE mio::poll] registering event source with poller: token=Token(1), interests=READABLE | WRITABLE

@@ -1,0 +1,24 @@
+[package]
+name = "test"
+version = "0.1.0"
+authors = ["John Doe <johndoe@gmail.com>"]
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+config = "0.13.1"
+env_logger = "0.9.0"
+log = "0.4.17"
+rand = "0.8.5"
+randomorg = "1.0.3"
+serde = "1.0.137"
+serde_derive = "1.0.137"
+
+[dev-dependencies]
+criterion = "0.3.5"
+pprof = { version = "0.10", features = ["criterion", "flamegraph"] }
+
+[[bench]]
+name = "my_benchmark"
+harness = false
