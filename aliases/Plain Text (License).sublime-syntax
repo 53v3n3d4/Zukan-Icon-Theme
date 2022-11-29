@@ -6,6 +6,8 @@ hidden: true
 file_extensions:
   - copying
   - copyright
+  - COPYRIGHT
   - license
+  - LICENSE
 contexts:
   main: []

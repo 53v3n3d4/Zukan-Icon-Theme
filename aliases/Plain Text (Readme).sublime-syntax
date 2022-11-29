@@ -7,7 +7,6 @@ file_extensions:
   - AUTHORS
   - NOTICE
   - README
-  - README.md
   - RELEASE-NOTES
 contexts:
   main: []
