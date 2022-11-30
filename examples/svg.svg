@@ -1,0 +1,11 @@
+<svg width="220" height="220">
+  <marker id="m1" orient="auto" viewBox="0 0 20 6" markerWidth="10" markerHeight="3" refX="20" refY="3">
+    <rect x="0" y="0" width="20" height="6" fill="red" opacity="0.5" />
+  </marker>
+  <marker id="m2" orient="auto" viewBox="0 0 20 6" markerWidth="10" markerHeight="3" refX="0" refY="3">
+    <rect x="0" y="0" width="20" height="6" fill="red" opacity="0.5" />
+  </marker>
+
+  <line id="l2" x1="20" y1="20" x2="200" y2="80" marker-end="url(#m1)" marker-start="url(#m2)" stroke="black" stroke-width="2" />
+
+</svg>

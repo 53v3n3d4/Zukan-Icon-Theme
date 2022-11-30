@@ -13,7 +13,7 @@
 
 ## Activate the Theme
 
-**You can active this theme from:**
+*You can active this theme from:*
 
 1. Command Palette `Tools → Command Palette` or `CMD/CTRL` + `SHIFT` + `P`
 2. Typing `UI: Select Theme` next find for `GitHub Theme` and press `ENTER`
