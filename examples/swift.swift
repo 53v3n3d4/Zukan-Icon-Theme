@@ -1,4 +1,17 @@
-// example from https://www.programiz.com/swift-programming/hello-world
-// Swift "Hello, World!" Program
+//
+//  testApp.swift
+//  test
+//
+//  Created by xxx on 07/07/22.
+//
 
-print("Hello, World!") 
+import SwiftUI
+
+@main
+struct testApp: App {
+    var body: some Scene {
+        WindowGroup {
+            ContentView()
+        }
+    }
+}

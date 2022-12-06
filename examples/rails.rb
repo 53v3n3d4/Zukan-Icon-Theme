@@ -1,3 +1,4 @@
+# https://rubyonrails.org
 class ArticlesController < ApplicationController
   def index
     @articles = Article.recent
