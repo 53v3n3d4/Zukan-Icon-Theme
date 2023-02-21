@@ -4,6 +4,7 @@ name: Plain Text (Ruby)
 scope: text.plain.ruby
 hidden: true
 file_extensions:
+  - Gemfile.lock
   - .ruby-version
   - .ruby-gemset
   - .rspec
