@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: Plain Text (Ruby)
-scope: text.plain.ruby
+scope: source.ruby
 hidden: true
 file_extensions:
   - Gemfile.lock
@@ -9,4 +9,6 @@ file_extensions:
   - .ruby-gemset
   - .rspec
 contexts:
-  main: []
+  main:
+    - include: scope:source.ruby
+      apply_prototype: true

@@ -2,7 +2,7 @@
 <plist version="1.0">
 	<dict>
 		<key>scope</key>
-		<string>source.ruby, source.shell.ruby, text.plain.ruby</string>
+		<string>source.ruby, source.shell.ruby</string>
 		<key>settings</key>
 		<dict>
 			<key>icon</key>
