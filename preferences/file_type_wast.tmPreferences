@@ -2,11 +2,11 @@
 <plist version="1.0">
   <dict>
     <key>scope</key>
-    <string>binary.webassembly, text.webassembly</string>
+    <string>binary.webassembly, text.webassembly, source.wast</string>
     <key>settings</key>
     <dict>
       <key>icon</key>
-      <string>file_type_webassembly</string>
+      <string>file_type_wast</string>
     </dict>
   </dict>
 </plist>
