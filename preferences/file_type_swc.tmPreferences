@@ -2,7 +2,7 @@
 <plist version="1.0">
 	<dict>
 		<key>scope</key>
-		<string>source.json.swc, text.swc</string>
+		<string>source.json.swc, source.js.swc, text.swc</string>
 		<key>settings</key>
 		<dict>
 			<key>icon</key>

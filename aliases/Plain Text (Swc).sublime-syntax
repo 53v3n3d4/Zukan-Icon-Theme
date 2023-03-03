@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: Plain Text (Swc)
+name: Plain Text (SWC)
 scope: text.swc
 hidden: true
 file_extensions:

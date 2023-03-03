@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: JSON (Swc)
+name: JSON (SWC)
 scope: source.json.swc
 hidden: true
 file_extensions:
