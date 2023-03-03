@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Plain Text (Swc)
+scope: text.swc
+hidden: true
+file_extensions:
+  - .swcrc
+contexts:
+  main: []

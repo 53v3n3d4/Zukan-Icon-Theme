@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: JSON (Swc)
+scope: source.json.swc
+hidden: true
+file_extensions:
+  - .swcrc
+contexts:
+  main:
+    - include: scope:source.json
+      apply_prototype: true
