@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+name: Binary (Bun)
+scope: binary.bun
+hidden: true
+file_extensions:
+  - bun
+  - bun.lockb
+contexts:
+  main: []

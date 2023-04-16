@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Plain Text (Bun)
+scope: source.toml.bun
+hidden: true
+file_extensions:
+  - bunfig.toml
+contexts:
+  main: []
