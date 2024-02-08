@@ -1,7 +1,7 @@
 ## [0.1.1] - 2024
-- Add alias: go, turbo, typescript, rspack, swc
-- Add file type icons: afphoto, afpub, bun, makefile, turbo, rails, rspack, swc, webassembly -> wast
-- Add preferences: turbo, rails, rspack, swc
+- Add alias: go, pnpm, turbo, typescript, rspack, swc
+- Add file type icons: afphoto, afpub, bun, makefile, pnpm, turbo, rails, rspack, swc, webassembly -> wast
+- Add preferences: pnpm, turbo, rails, rspack, swc
 - Rename for compatibility webassemby to wast, A File Icon package 
 - Change alias: ruby
 - Change file type icon: settings, toml, afdesign, wast
