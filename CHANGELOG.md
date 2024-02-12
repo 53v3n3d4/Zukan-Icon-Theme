@@ -1,4 +1,4 @@
-## [0.1.1] - 2024
+## [0.1.1] - 2024-02-11
 - Add alias: go, pnpm, turbo, typescript, rspack, swc, yarn
 - Add file type icons: afphoto, afpub, bun, makefile, pnpm, turbo, rails, rspack, swc, webassembly -> wast
 - Add preferences: pnpm, turbo, rails, rspack, swc
