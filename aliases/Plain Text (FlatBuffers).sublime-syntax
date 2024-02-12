@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Plain Text (FlatBuffers)
+scope: source.fbs
+hidden: true
+file_extensions:
+  - fbs
+contexts:
+  main: []

@@ -1,0 +1,10 @@
+// flatbuffers
+.fbs
+namespace nodes;
+
+table Node {
+  name:string;
+  key:ulong;
+}
+
+root_type Node;
