@@ -1,7 +1,10 @@
+# Changelog
+
 ## [0.1.2] - 2024
-- Add alias: flatbuffers
-- Add file type icons: flatbuffers
-- Add preferences: flatbuffers
+- Add alias: flatbuffers, mdx, opengl, vite, rollup
+- Add file type icons: flatbuffers, mdx, opengl, vite
+- Add preferences: flatbuffers, mdx, opengl, vite
+- Change alias: rollup
 
 ## [0.1.1] - 2024-02-11
 - Add alias: go, pnpm, turbo, typescript, rspack, swc, yarn

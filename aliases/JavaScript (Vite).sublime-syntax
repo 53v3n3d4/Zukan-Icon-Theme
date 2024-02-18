@@ -1,12 +1,10 @@
 %YAML 1.2
 ---
-name: JavaScript (Rollup)
-scope: source.js.rollup
+name: JavaScript (Vite)
+scope: source.js.vite
 hidden: true
 file_extensions:
-  - rollup.config.js
-  - rollup.config.cjs
-  - rollup.config.mjs
+  - vite.config.js
 contexts:
   main:
     - include: scope:source.js

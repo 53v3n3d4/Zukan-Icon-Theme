@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: Markdown (mdx)
+scope: text.html.markdown.mdx
+hidden: true
+file_extensions:
+  - mdx
+contexts:
+  main:
+    - include: scope:text.html.markdown
+      apply_prototype: true
