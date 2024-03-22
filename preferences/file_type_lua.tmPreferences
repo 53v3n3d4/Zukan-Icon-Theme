@@ -2,11 +2,11 @@
 <plist version="1.0">
 	<dict>
 		<key>scope</key>
-		<string>text.html.markdown.citation, text.plain.citation, source.yaml.citation</string>
+		<string>source.lua, text.plain.lua</string>
 		<key>settings</key>
 		<dict>
 			<key>icon</key>
-			<string>file_type_citation</string>
+			<string>file_type_lua</string>
 		</dict>
 	</dict>
 </plist>

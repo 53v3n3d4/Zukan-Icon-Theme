@@ -4,7 +4,6 @@ name: Plain Text (Citation)
 scope: text.plain.citation
 hidden: true
 file_extensions:
-  - CITATION.cff
   - CITATION
   - CITATIONS
   - CITATION.bib
