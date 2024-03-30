@@ -5,7 +5,8 @@
 - Add file type icons: flatbuffers, lua, mdx, opengl, vite, storybook
 - Add preferences: flatbuffers, lua, mdx, opengl, vite, storybook
 - Change alias: citation, rollup, vite, rspack
-- Change preferences: citation, rspack
+- Change file type icons: test.tsx, tsx
+- Change preferences: citation, rspack, test.tsx, tsx
 
 ## [0.1.1] - 2024-02-11
 - Add alias: go, pnpm, turbo, typescript, rspack, swc, yarn

@@ -6,7 +6,7 @@
     <key>settings</key>
     <dict>
       <key>icon</key>
-      <string>file_type_test_typescript</string>
+      <string>file_type_test_tsx</string>
     </dict>
   </dict>
 </plist>
