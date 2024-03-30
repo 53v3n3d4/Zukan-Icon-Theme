@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: TSX (Storybook)
+scope: source.tsx.storybook
+hidden: true
+file_extensions:
+  - stories.tsx
+contexts:
+  main:
+    - include: scope:source.tsx
+      apply_prototype: true

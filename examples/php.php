@@ -1,3 +1,84 @@
+<p>This is going to be ignored by PHP and displayed by the browser.</p>
+<?php echo 'While this is going to be parsed.'; ?>
+<p>This will also be ignored by PHP and displayed by the browser.</p>
+
+<?php if ($expression == true): ?>
+This will show if the expression is true.
+<?php else: ?>
+Otherwise this will show.
+<?php endif; ?>
+
+<?php
+$var = NULL;       
+?>
+
+<?php
+$a = 1234; // decimal number
+$a = 0123; // octal number (equivalent to 83 decimal)
+$a = 0o123; // octal number (as of PHP 8.1.0)
+$a = 0x1A; // hexadecimal number (equivalent to 26 decimal)
+$a = 0b11111111; // binary number (equivalent to 255 decimal)
+$a = 1_234_567; // decimal number (as of PHP 7.4.0)
+?>
+
+<?php
+class foo
+{
+    function do_foo()
+    {
+        echo "Doing foo."; 
+    }
+}
+
+$bar = new foo;
+$bar->do_foo();
+?>
+
+<?php
+// Our closure
+$double = function($a) {
+    return $a * 2;
+};
+
+// This is our range of numbers
+$numbers = range(1, 5);
+
+// Use the closure as a callback here to
+// double the size of each element in our
+// range
+$new_numbers = array_map($double, $numbers);
+
+print implode(' ', $new_numbers);
+?>
+
+<?php
+
+// Valid constant names
+define("FOO",     "something");
+define("FOO2",    "something else");
+define("FOO_BAR", "something more");
+
+// Invalid constant names
+define("2FOO",    "something");
+
+// This is valid, but should be avoided:
+// PHP may one day provide a magical constant
+// that will break your script
+define("__FOO__", "something"); 
+
+?>
+
+<?php namespace fub;
+  include 'file1.php';
+  include 'file2.php';
+  include 'file3.php';
+  use foo as feline;
+  use bar as canine;
+  use animate;
+  echo \feline\Cat::says(), "<br />\n";
+  echo \canine\Dog::says(), "<br />\n";
+  echo \animate\Animal::breathes(), "<br />\n";  ?>
+
 <?php
 
 function theme_enqueue_styles(){

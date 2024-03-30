@@ -1,9 +1,16 @@
 {
-    "theme": "GitHub Theme",
-    "repository": "https://github.com/mauroreisvieira/github-sublime-theme",
-    "author": {
-        "name": "Mauro Reis Vieira",
-        "email": "mauroreisvieira@gmail.com",
-        "country": "Portugal"
-    }
+  "name": "sublime-builder",
+  "version": "0.2.1",
+  "description": "Sublime Text theme and color-scheme builder.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/53v3n3d4/sublime-builder.git"
+  },
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "jest-coverage": "jest --coverage",
+    "lint": "eslint '**/*.js'",
+    "test": "jest"
+  }
 }

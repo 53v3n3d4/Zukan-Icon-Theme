@@ -72,8 +72,103 @@ class Fractions:
 my_frac1 = Fractions(20, 30)
 my_frac2 = Fractions(5, 173)
 
-#my_frac1.destroy()
+my_frac1.destroy()
 
 print(my_frac1)
 print(my_frac1 == my_frac1.__copy__())
 print(my_frac1 / (my_frac1 - my_frac2))
+
+from functools import reduce
+from .models import Base, User, Org, Repo, Issue, OrgRole, RepoRole, role
+
+class Org(Base):
+    __tablename__ = "orgs"
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String, unique=True)
+    base_repo_role = Column(String)
+    billing_address = Column(String)
+
+    def repr(self):
+        return {
+            "id": self.id,
+            "name": self.name,
+            "billing_address": self.billing_address,
+            "base_repo_role": self.base_repo_role,
+        }
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True)
+    email = Column(String, unique=True)
+
+    def repr(self):
+        return {"id": self.id, "email": self.email}
+
+   @app.before_request
+    def set_current_user_and_session():
+        flask_session.permanent = True
+
+        g.session = Session()
+        # docs: begin-authn
+        if "current_user" not in g:
+            if "current_user_id" in flask_session:
+                user_id = flask_session.get("current_user_id")
+                user = g.session.query(User).filter_by(id=user_id).one_or_none()
+                if user is None:
+                    flask_session.pop("current_user_id")
+                g.current_user = user
+            else:
+                g.current_user = None
+        # docs: end-authn
+
+    @app.after_request
+    def add_cors_headers(res):
+        res.headers.add("Access-Control-Allow-Origin", "http://localhost:3000")
+        res.headers.add("Access-Control-Allow-Headers", "Accept,Content-Type")
+        res.headers.add("Access-Control-Allow-Methods", "DELETE,GET,OPTIONS,PATCH,POST")
+        res.headers.add("Access-Control-Allow-Credentials", "true")
+        return res
+
+    @app.after_request
+    def close_session(res):
+        if "session" in g:
+            g.session.close()
+        return res
+
+    return app
+
+from django.urls import include, path
+from rest_framework import routers
+
+from tutorial.quickstart import views
+
+router = routers.DefaultRouter()
+router.register(r'users', views.UserViewSet)
+router.register(r'groups', views.GroupViewSet)
+
+# Wire up our API using automatic URL routing.
+# Additionally, we include login URLs for the browsable API.
+urlpatterns = [
+    path('', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+]
+
+urlpatterns += router.urls
+    
+
+def stringify(x: int) -> str:
+    return str(x)
+
+def shadow_update_dict(d1: dict, d2: dict) -> Mapping:
+    return ChainMap(d2, d1)
+
+    """Add two numbers and return the result."""
+
+    """
+    >>> my_function(2, 3)
+    6
+    >>> my_function('a', 3)
+    'aaa'
+    """

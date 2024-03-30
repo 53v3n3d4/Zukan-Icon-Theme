@@ -1,11 +1,11 @@
 # Changelog
 
 ## [0.1.2] - 2024
-- Add alias: citation, flatbuffers, lua, mdx, opengl, vite, rollup
-- Add file type icons: flatbuffers, mdx, opengl, vite
-- Add preferences: flatbuffers, lua, mdx, opengl, vite
-- Change alias: citation, rollup, vite
-- Change preferences: citation
+- Add alias: citation, flatbuffers, lua, mdx, opengl, vite, rollup, rspack, storybook
+- Add file type icons: flatbuffers, lua, mdx, opengl, vite, storybook
+- Add preferences: flatbuffers, lua, mdx, opengl, vite, storybook
+- Change alias: citation, rollup, vite, rspack
+- Change preferences: citation, rspack
 
 ## [0.1.1] - 2024-02-11
 - Add alias: go, pnpm, turbo, typescript, rspack, swc, yarn

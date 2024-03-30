@@ -1,12 +1,10 @@
 %YAML 1.2
 ---
-name: JavaScript (Rspack)
-scope: source.js.rspack
+name: JavaScript (Storybook)
+scope: source.js.storybook
 hidden: true
 file_extensions:
-  - rspack.config.js
-  - rspack.config.cjs
-  - rspack.config.mjs
+  - stories.js
 contexts:
   main:
     - include: scope:source.js

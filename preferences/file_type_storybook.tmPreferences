@@ -2,11 +2,11 @@
 <plist version="1.0">
 	<dict>
 		<key>scope</key>
-		<string>source.js.rspack, source.ts.rspack</string>
+		<string>source.js.storybook, source.jsx.storybook, source.ts.storybook, source.tsx.storybook</string>
 		<key>settings</key>
 		<dict>
 			<key>icon</key>
-			<string>file_type_rspack</string>
+			<string>file_type_storybook</string>
 		</dict>
 	</dict>
 </plist>

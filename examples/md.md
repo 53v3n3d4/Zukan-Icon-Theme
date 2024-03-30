@@ -69,9 +69,11 @@ If your theme does have setting for file_type_icon, the setting below is enough.
 ]
 ```
 
+> Accent color
+
 ## Install
 
-The only way to install this icons now is manually.
+The only way to install this icons now is manually.  
 
 To install manually,
 - Download the [latest release](https://github.com/53v3n3d4/file-type-icons/releases) or clone this repo.

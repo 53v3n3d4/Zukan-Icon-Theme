@@ -45,4 +45,101 @@ h1 {
   --red: #e74c3c;
   --white: #fff;
   --white1: #f0f0f7;
+  --bs-font-sans-serif: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", "Noto Sans", "Liberation Sans", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --bs-font-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  --bs-gradient: linear-gradient(180deg, rgba(255, 255, 255, 0.15), rgba(255, 255, 255, 0));
+  --bs-body-font-family: var(--bs-font-sans-serif);
+  --bs-body-font-size: 1rem;
+  --bs-body-font-weight: 400;
+  --bs-body-line-height: 1.5;
+}
+
+.button {
+    background-color: var(--white1);
+}
+
+.container {
+    padding: 32px;
+    .content {
+      margin: 16px;
+        .btn {
+            padding: 12px 32px;
+            border-radius: 16px;
+            & span {
+                font-size: 18px;
+            }
+       
+        }
+       
+    }
+}
+
+button:hover::after, button:focus::after {
+  animation: none;
+  display: none;
+}
+
+
+.fakePress{
+  box-shadow:0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.fakePress:hover{
+  box-shadow:none;
+  transition: 0.2s;
+}
+
+.gravityButton {
+  display: grid;
+  place-items: center;
+  width: 192px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  // border: 1px dashed #fff2;
+  
+  & > button {
+    font: inherit;
+    width: 64px;
+    aspect-ratio: 1;
+    background: none;
+    border-radius: 50%;
+    border: 2px solid #fff;
+    transform: translate(var(--tx, 0), var(--ty, 0));
+    opacity: var(--opacity, 0.25);
+    cursor: pointer;
+    transition: all 0.2s ease-out;
+    
+    &:hover, &:focus-visible {
+      --_fill: var(--color, #fff);
+    }
+    
+    &:focus-visible {
+      outline: 2px solid #fff;
+      outline-offset: 2px;
+      opacity: 1;
+    }
+  }
+}
+
+
+@media (prefers-color-scheme: light) {
+  input[type=text],
+  input[type=text]:hover,
+  input[type=text]:focus {
+    background: var(--white);
+  }
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover, 
+  input:-webkit-autofill:focus, 
+  input:-webkit-autofill:active  {
+      -webkit-box-shadow: 0 0 0 30px var(--white) inset !important;
+      -webkit-text-fill-color: var(--black2) !important;
+  }
+}
+
+
+body {
+  font: 1rem/1.5 var(--bs-font-sans-serif);
+}
+a {
+  color: var(--bs-blue);
 }
