@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: JSON (Angular JS)
+scope: source.json.angularjs
+hidden: true
+file_extensions:
+  - angular.json
+contexts:
+  main:
+    - include: scope:source.json
+      apply_prototype: true

@@ -1,9 +1,9 @@
 # Changelog
 
 ## [0.1.2] - 2024
-- Add alias: citation, flatbuffers, lua, mdx, opengl, vite, rollup, rspack, storybook
-- Add file type icons: flatbuffers, lua, mdx, opengl, vite, storybook
-- Add preferences: flatbuffers, lua, mdx, opengl, vite, storybook
+- Add alias: angular, citation, flatbuffers, lua, mdx, opengl, svelte, vite, vue, rollup, rspack, storybook
+- Add file type icons: angular, flatbuffers, lua, mdx, opengl, svelte, vite, vue, storybook
+- Add preferences: angular, flatbuffers, lua, mdx, opengl, svelte, vite, vue, storybook
 - Change alias: citation, rollup, vite, rspack
 - Change file type icons: test.tsx, tsx
 - Change preferences: citation, rspack, test.tsx, tsx
