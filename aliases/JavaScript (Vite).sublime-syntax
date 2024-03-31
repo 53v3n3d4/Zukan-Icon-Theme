@@ -5,7 +5,6 @@ scope: source.js.vite
 hidden: true
 file_extensions:
   - vite.config.js
-  - vite.config.ts
   - vite.config.mjs
   - vite.config.mts
 contexts:

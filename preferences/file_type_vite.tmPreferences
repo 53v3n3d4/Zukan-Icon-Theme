@@ -2,7 +2,7 @@
 <plist version="1.0">
 	<dict>
 		<key>scope</key>
-		<string>source.js.vite</string>
+		<string>source.js.vite, source.ts.vite</string>
 		<key>settings</key>
 		<dict>
 			<key>icon</key>
