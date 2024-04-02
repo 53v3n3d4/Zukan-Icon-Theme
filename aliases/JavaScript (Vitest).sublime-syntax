@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+name: JavaScript (Vitest)
+scope: source.js.vitest
+hidden: true
+file_extensions:
+  - vitest.config.js
+  - vitest.config.cjs
+  - vitest.config.mjs
+contexts:
+  main:
+    - include: scope:source.js
+      apply_prototype: true

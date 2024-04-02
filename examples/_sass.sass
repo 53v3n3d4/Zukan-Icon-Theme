@@ -24,3 +24,67 @@ $density-config:
 !default
 
 @function opposite-direction($direction) 
+
+// styles.sass
+@use 'base'
+
+.inverse
+  background-color: base.$primary-color
+  color: white
+
+@mixin theme($theme: DarkGray)
+  background: $theme
+  box-shadow: 0 0 1px rgba($theme, .25)
+  color: #fff
+
+.info
+  @include theme
+
+.alert
+  @include theme($theme: DarkRed)
+
+.success
+  @include theme($theme: DarkGreen)
+
+
+@use "sass:math"
+
+.container
+  display: flex
+
+article[role="main"]
+  width: math.div(600px, 960px) * 100%
+
+aside[role="complementary"]
+  width: math.div(300px, 960px) * 100%
+  margin-left: auto
+
+/* This CSS will print because %message-shared is extended. */
+%message-shared
+  border: 1px solid #ccc
+  padding: 10px
+  color: #333
+
+// This CSS won't print because %equal-heights is never extended.
+%equal-heights
+  display: flex
+  flex-wrap: wrap
+
+.message
+  @extend %message-shared
+
+.success
+  @extend %message-shared
+  border-color: green
+
+.error
+  @extend %message-shared
+  border-color: red
+
+.warning
+  @extend %message-shared
+  border-color: yellow
+
+
+
+

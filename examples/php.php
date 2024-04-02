@@ -22,10 +22,15 @@ $a = 1_234_567; // decimal number (as of PHP 7.4.0)
 ?>
 
 <?php
-class foo
+class foo extends Exception
 {
     function do_foo()
     {
+        /**
+         * Comment text
+         * 
+         * @var array
+         */
         echo "Doing foo."; 
     }
 }

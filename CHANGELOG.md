@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.1.3] - 2024
+- Add alias: vitest
+- Add file type icons: vitest
+- Add preferences: vitest
+
 ## [0.1.2] - 2024-03-31
 - Add alias: angular, citation, flatbuffers, lua, mdx, opengl, svelte, vite, vue, rollup, rspack, storybook
 - Add file type icons: angular, flatbuffers, lua, mdx, opengl, svelte, vite, vue, storybook
