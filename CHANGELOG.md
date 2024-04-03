@@ -1,9 +1,9 @@
 # Changelog
 
 ## [0.1.3] - 2024
-- Add alias: prettier, vitest, unocss
-- Add file type icons: prettier, vitest, unocss
-- Add preferences: prettier, vitest, unocss
+- Add alias: codecov, prettier, vitest, unocss
+- Add file type icons: codecov, prettier, vitest, unocss
+- Add preferences: codecov, prettier, vitest, unocss
 
 ## [0.1.2] - 2024-03-31
 - Add alias: angular, citation, flatbuffers, lua, mdx, opengl, svelte, vite, vue, rollup, rspack, storybook
