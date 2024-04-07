@@ -1,9 +1,9 @@
 # Changelog
 
 ## [0.1.3] - 2024
-- Add alias: codecov, prettier, vitest, unocss, webgpu
-- Add file type icons: codecov, prettier, vitest, unocss, webgpu
-- Add preferences: codecov, prettier, vitest, unocss, webgpu
+- Add alias: codecov, nextjs, prettier, vitest, unocss, webgpu
+- Add file type icons: codecov, nextjs, prettier, vitest, unocss, webgpu
+- Add preferences: codecov, nextjs, prettier, vitest, unocss, webgpu
 - Change alias: cad
 
 ## [0.1.2] - 2024-03-31
