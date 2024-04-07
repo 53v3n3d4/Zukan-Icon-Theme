@@ -9,5 +9,7 @@ file_extensions:
   - stp
   - step
   - wrl
+  - obj
+  - mtl
 contexts:
   main: []
