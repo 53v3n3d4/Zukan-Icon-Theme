@@ -1,16 +1,18 @@
 ## File type icons
 
-![file type icons](https://github.com/53v3n3d4/file-type-icons/blob/main/assets/screenshot.png "Screenshot")
+![file type icons](assets/screenshot.png "Screenshot")
+
+> Icons from v0.1.0
 
 This is a slow work in progress (WIP).  
 
 File type icons for Sublime Text editor.  
 
-This package uses tmPreferences and sublime-syntax files.
+This package uses tmPreferences and sublime-syntax files.  
 
 ## Theme
 
-![treble with file type icons](https://github.com/53v3n3d4/file-type-icons/blob/main/assets/treble-light-screenshot.png "Treble Light Screenshot")
+![treble with file type icons](assets/treble-light-screenshot.png "Treble Light Screenshot")
 
 Currently, only Treble theme suported.  
 
@@ -23,7 +25,7 @@ To add new theme:
 - Rename it with new theme name, e.g. Default.sublime-theme
 - Maybe restart needed
 
-If your theme do not have settings for file_type_icon, the settings below has a hover and select effects.
+If your theme do not have settings for icon_file_type, the settings below has a hover and select effects.
 ```
 [
   {
@@ -45,7 +47,7 @@ If your theme do not have settings for file_type_icon, the settings below has a 
 ]
 ```
 
-If your theme does have setting for file_type_icon, the setting below is enough.  
+If your theme does have setting for icon_file_type, the setting below is enough.  
 ```
 [
   {
@@ -73,9 +75,16 @@ To uninstall manually, go to your Sublime Text folder.
 
 ## Icons not working
 
+The icons bellow will work if you rename `file-type-icons` folder to `zz-file-type-icons` and make it the last folder in `Packages` directory.
 - Svg
+- sublime-theme, sublime-color-scheme, sublime-settings (Few json sublime extensions like `hidden-theme` works with no need to rename folder)
+
+The icons bellow will not work even if you rename `file-type-icons` folder to `zzz-file-type-icons`
 - xml
-- sublime-theme, sublime-color-scheme, sublime-settings
+
+## Notes
+- If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work
+- If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work
 
 ## File icon packages :alien:
 
