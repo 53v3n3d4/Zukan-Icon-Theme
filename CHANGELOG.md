@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.2.0] - 2024
+- Rename project to Zukan Icon Theme
+- Add python setup: poetry, pytest, ruff
+
+### Build
+- Add data files
+
 ## [0.1.3] - 2024-04-22
 - Add alias: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu
 - Add file type icons: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu

@@ -1,0 +1,14 @@
+[paths]
+source = src
+
+[run]
+branch = true
+parallel = true
+;relative_files = true
+
+[report]
+show_missing = true
+precision = 2
+omit =
+    **/__main__.py
+    **/__init__.py

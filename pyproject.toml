@@ -1,0 +1,55 @@
+[tool.poetry]
+name = "Zukan Icon Theme"
+version = "0.2.0"
+description = "Icon theme for Sublime Text"
+license = "MIT"
+authors = ["Seven Eda <53v3n3d4@gmail.com>"]
+readme = "README.md"
+repository = "https://github.com/53v3n3d4/Zukan-Icon-Theme"
+# Install local package with poetry.
+# https://github.com/orgs/python-poetry/discussions/1135
+# https://python-poetry.org/docs/pyproject/#packages
+# Setting below need to run poetry scripts [tool.poetry.scripts].
+packages = [
+    { include = "../Zukan-Icon-Theme" }
+]
+
+[tool.poetry.dependencies]
+python = "~3.8"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+# need cairo installed. brew install cairo
+# poetry add cairosvg --group dev do not install cairosvg. Need to pip install cairosvg
+cairosvg = "^2.7.1"
+ruamel-yaml = "^0.18.6"
+
+[tool.poetry.group.test]
+optional = true
+
+[tool.poetry.group.test.dependencies]
+pytest = "^8.1.1"
+# poetry add pytest-cov --group test do not install pytest-cov. Need to pip install pytest-cov
+pytest-cov = "^5.0.0"
+# poetry add pyfakefs --group test do not install pyfakefs. Need to pip install pyfakefs
+pyfakefs = "^5.4.1"
+
+[tool.poetry.group.lint-format]
+optional = true
+
+[tool.poetry.group.lint-format.dependencies]
+ruff = "^0.3.7"
+
+[tool.poetry.scripts]
+# poetry run build --help
+# Examples:
+# Generate pngs, sublime-syntaxes and tmpreferences
+# poetry run build icon-theme -f src/data/afdesign.yaml
+# poetry run build icon-theme -a
+build = "src.build.scripts:main"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

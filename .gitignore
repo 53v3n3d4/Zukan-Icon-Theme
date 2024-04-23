@@ -1,2 +1,12 @@
 # misc
 .DS_Store
+
+# pytest
+__pycache__
+.pytest_cache
+
+# pytest cov
+.coverage
+
+# ruff
+.ruff_cache
