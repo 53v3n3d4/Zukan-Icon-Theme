@@ -23,15 +23,149 @@ enum WebEvent {
     Click { x: i64, y: i64 },
 }
 
+#[derive(Template)]
+#[template(path = "card.hbs")]
+pub struct CardTemplate {
+    pub cards: Vec<Card>,
+}
+
+#[cfg(any(feature = "plugin", feature = "plugin-bytecheck"))]
+#[cfg(not(any(feature = "plugin", feature = "plugin-bytecheck")))]
+
 // Globals are declared outside all other scopes.
 static LANGUAGE: &str = "Rust";
 const THRESHOLD: i32 = 10;
+
+pub static INDEX: &[u8] = b"<a href=\"test.html\">test.html</a>";
+type GenericError = Box<dyn std::error::Error + Send + Sync>;
+pub type Result<T> = std::result::Result<T, GenericError>;
 
 fn is_big(n: i32) -> bool {
     // Access constant in some function
     n > THRESHOLD
 }
 
+// label
+
+#![allow(unreachable_code)]
+
+fn main() {
+    'outer: loop {
+        println!("Entered the outer loop");
+
+        'inner: loop {
+            println!("Entered the inner loop");
+
+            // This would break only the inner loop
+            //break;
+
+            // This breaks the outer loop
+            break 'outer;
+        }
+
+        println!("This point will never be reached");
+    }
+
+    println!("Exited the outer loop");
+}
+
+
+// union
+// https://doc.rust-lang.org/rust-by-example/std/hash/hashset.html
+use std::collections::HashSet;
+
+
+    let mut a: HashSet<i32> = vec![1i32, 2, 3].into_iter().collect();
+    let mut b: HashSet<i32> = vec![2i32, 3, 4].into_iter().collect();
+
+    assert!(a.insert(4));
+    assert!(a.contains(&4));
+
+    // `HashSet::insert()` returns false if
+    // there was a value already present.
+    assert!(b.insert(4), "Value 4 is already in set B!");
+    // FIXME ^ Comment out this line
+
+    b.insert(5);
+
+    // If a collection's element type implements `Debug`,
+    // then the collection implements `Debug`.
+    // It usually prints its elements in the format `[elem1, elem2, ...]`
+    println!("A: {:?}", a);
+    println!("B: {:?}", b);
+
+    // Print [1, 2, 3, 4, 5] in arbitrary order
+    println!("Union: {:?}", a.union(&b).collect::<Vec<&i32>>());
+
+    // This should print [1]
+    println!("Difference: {:?}", a.difference(&b).collect::<Vec<&i32>>());
+
+    // Print [2, 3, 4] in arbitrary order.
+    println!("Intersection: {:?}", a.intersection(&b).collect::<Vec<&i32>>());
+
+    // Print [1, 5]
+    println!("Symmetric Difference: {:?}",
+             a.symmetric_difference(&b).collect::<Vec<&i32>>());
+
+// https://doc.rust-lang.org/std/collections/struct.HashSet.html#method.union
+#![allow(unused)]
+fn main() {
+    use std::collections::HashSet;
+    let a = HashSet::from([1, 2, 3]);
+    let b = HashSet::from([4, 2, 3, 4]);
+
+    /// Error Sublime Text 4143
+    /// Rust.sublime-syntax. Uncomment `union` block below, 
+    /// and all line after block become string color
+
+    // Print 1, 2, 3, 4 in arbitrary order.
+    // for x in a.union(&b) {
+    //     println!("{x}");
+    // }
+
+    let union: HashSet<_> = a.union(&b).collect();
+    assert_eq!(union, [1, 2, 3, 4].iter().collect());
+    }
+
+    union IntOrFloat {
+        i: u32,
+        f: f32,
+}
+
+a.union(&b).collect::<Vec<&i32>>());
+
+struct Sheep { naked: bool, name: &'static str }
+
+trait Animal {
+    // Associated function signature; `Self` refers to the implementor type.
+    fn new(name: &'static str) -> Self;
+
+    // Method signatures; these will return a string.
+    fn name(&self) -> &'static str;
+    fn noise(&self) -> &'static str;
+
+    // Traits can provide default method definitions.
+    fn talk(&self) {
+        println!("{} says {}", self.name(), self.noise());
+    }
+}
+
+impl Sheep {
+    fn is_naked(&self) -> bool {
+        self.naked
+    }
+
+    fn shear(&mut self) {
+        if self.is_naked() {
+            // Implementor methods can use the implementor's trait methods.
+            println!("{} is already naked...", self.name());
+        } else {
+            println!("{} gets a haircut!", self.name);
+
+            self.naked = true;
+        }
+    }
+}
 
 // `NanoSecond`, `Inch`, and `U64` are new names for `u64`.
 type NanoSecond = u64;

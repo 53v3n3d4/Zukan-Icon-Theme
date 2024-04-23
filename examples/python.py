@@ -1,5 +1,5 @@
 # Author: https://github.com/mauroreisvieira/github-sublime-theme/
-rom fractions import gcd
+from fractions import gcd
 
 class Fractions:
     """Some comment
