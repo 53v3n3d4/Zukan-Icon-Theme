@@ -1,10 +1,13 @@
 # Changelog
 
-## [0.1.3] - 2024
-- Add alias: codecov, nextjs, prettier, vitest, unocss, webgpu
-- Add file type icons: codecov, nextjs, prettier, vitest, unocss, webgpu
-- Add preferences: codecov, nextjs, prettier, vitest, unocss, webgpu
-- Change alias: cad
+## [0.1.3] - 2024-04-22
+- Add alias: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu
+- Add file type icons: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu
+- Add preferences: ai, codecov, netlify, nextjs, poetry, prettier, ps, pytest, ruff, unocss, vitest, webgpu
+- Change alias: javascript jest, javascript vitest, json ts, toml bun, plain text svelte
+- Remove alias: plain text swc 
+- Change preferences: swc
+- Change SVGs file type icons: c# -> csharp, test_js -> test-js, test_jsx -> test-jsx, test_ts -> test-ts, test_tsx -> test-tsx
 
 ## [0.1.2] - 2024-03-31
 - Add alias: angular, citation, flatbuffers, lua, mdx, opengl, svelte, vite, vue, rollup, rspack, storybook
