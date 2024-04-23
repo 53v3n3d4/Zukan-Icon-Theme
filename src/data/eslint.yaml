@@ -1,0 +1,55 @@
+%YAML 1.2
+---
+name: Eslint
+preferences:
+  scope: source.js.eslint, source.json.eslint, source.shell.eslint, source.yaml.eslint, text.plain.eslint
+  settings:
+    icon: eslint
+syntax:
+  - name: JavaScript (ESLint)
+    scope: source.js.eslint
+    hidden: true
+    file_extensions:
+      - .eslintrc.js
+      - .eslintrc.cjs
+      - eslint.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (ESLint)
+    scope: source.json.eslint
+    hidden: true
+    file_extensions:
+      - .eslintrc
+      - .eslintrc.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: Plain Text (ESLint)
+    scope: text.plain.eslint
+    hidden: true
+    file_extensions:
+      - .eslintcache
+    contexts:
+      main: []
+  - name: Shell Script (ESLint)
+    scope: source.shell.eslint
+    hidden: true
+    file_extensions:
+      - .eslintignore
+    contexts:
+      main:
+        - include: scope:source.shell
+          apply_prototype: true
+  - name: YAML (ESLint)
+    scope: source.yaml.eslint
+    hidden: true
+    file_extensions:
+      - .eslintrc.yaml
+      - .eslintrc.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

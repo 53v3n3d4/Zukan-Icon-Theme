@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+name: Go
+preferences:
+  scope: source.go
+  settings:
+    icon: go
+syntax:
+  - name: Plain Text (Go)
+    scope: source.go
+    hidden: true
+    file_extensions:
+      - go.mod
+      - go.sum
+    contexts:
+      main: []

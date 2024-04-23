@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Log
+preferences:
+  scope: text.plain.log
+  settings:
+    icon: log
+syntax:
+  - name: Plain Text (Log)
+    scope: text.plain.log
+    hidden: true
+    file_extensions:
+      - log
+    contexts:
+      main: []

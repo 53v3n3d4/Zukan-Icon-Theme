@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Lua
+preferences:
+  scope: source.lua, text.plain.lua
+  settings:
+    icon: lua
+
+# Do not have any syntax.

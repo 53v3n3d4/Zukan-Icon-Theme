@@ -1,0 +1,19 @@
+name = "Affinity Designer"
+
+[preferences]
+scope = "binary.afdesign"
+
+[preferences.settings]
+icon = "file_type_afdesign"
+
+[[syntax]]
+name = "Binary (Affinity Designer)"
+scope = "binary.afdesign"
+hidden = true
+file_extensions = [ "afdesign" ]
+
+[syntax.contexts]
+main = [ ]
+
+# TOML has no empty value, so if not present treat as main: []
+# [[syntax.contexts.main]]

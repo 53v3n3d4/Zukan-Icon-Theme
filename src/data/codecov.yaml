@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Codecov
+preferences:
+  scope: source.yaml.codecov
+  settings:
+    icon: codecov
+syntax:
+  - name: YAML (Codecov)
+    scope: source.yaml.codecov
+    hidden: true
+    file_extensions:
+      - codecov.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

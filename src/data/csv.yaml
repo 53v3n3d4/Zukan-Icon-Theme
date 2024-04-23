@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: CSV
+preferences:
+  scope: text.advanced_csv, text.csv
+  settings:
+    icon: csv
+syntax:
+  - name: Plain Text (CSV)
+    scope: text.csv
+    hidden: true
+    file_extensions:
+      - csv
+    contexts:
+      main: []

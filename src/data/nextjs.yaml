@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Next.js
+preferences:
+  scope: source.js.nextjs, source.ts.nextjs
+  settings:
+    icon: nextjs
+syntax:
+  - name: JavaScript (Next js)
+    scope: source.js.nextjs
+    hidden: true
+    file_extensions:
+      - next.config.js
+      - next.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Next js)
+    scope: source.ts.nextjs
+    hidden: true
+    file_extensions:
+      - next-env.d.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

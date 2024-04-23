@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: CMake
+preferences:
+  scope: source.cmake, source.cmakeeditor
+  settings:
+    icon: cmake
+syntax:
+  - name: Plain Text (CMake)
+    scope: source.cmake
+    hidden: true
+    file_extensions:
+      - CMakeLists.txt
+      - cmake
+    contexts:
+      main: []
+
+# Do not have source.cmakeeditor syntax

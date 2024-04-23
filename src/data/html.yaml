@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+name: HTML
+preferences:
+  scope: text.html.basic, text.html.plain
+  settings:
+    icon: html
+syntax:
+
+# Do not have any syntax.

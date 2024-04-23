@@ -1,0 +1,25 @@
+%YAML 1.2
+---
+name: Git
+preferences:
+  scope: source.git, source.shell.git, text.git, text.git.blame, text.git.keep
+  settings:
+    icon: git
+syntax:
+  - name: Git Blame
+    scope: text.git.blame
+    hidden: true
+    file_extensions:
+      - git-blame
+      - .gitblame
+    contexts:
+      main: []
+  - name: Git Keep
+    scope: text.git.keep
+    hidden: true
+    file_extensions:
+      - .gitkeep
+    contexts:
+      main: []
+
+# Do not have source or text git syntax, or shell.

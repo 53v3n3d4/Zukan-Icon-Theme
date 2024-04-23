@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Netlify
+preferences:
+  scope: source.toml.netlify
+  settings:
+    icon: netlify
+syntax:
+  - name: TOML (Netlify)
+    scope: source.toml.netlify
+    hidden: true
+    file_extensions:
+      - netlify.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

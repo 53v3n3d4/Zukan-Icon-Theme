@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: MDX
+preferences:
+  scope: text.html.markdown.mdx, source.jsx.embedded.markdown
+  settings:
+    icon: mdx
+syntax:
+  - name: Markdown (mdx)
+    scope: text.html.markdown.mdx
+    hidden: true
+    file_extensions:
+      - mdx
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true
+
+# Do not have a jsx syntax.

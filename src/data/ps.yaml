@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Adobe Photoshop
+preferences:
+  scope: binary.ps
+  settings:
+    icon: psd
+syntax:
+  - name: Binary (Adobe Photoshop)
+    scope: binary.ps
+    hidden: true
+    file_extensions:
+      - psd
+    contexts:
+      main: []

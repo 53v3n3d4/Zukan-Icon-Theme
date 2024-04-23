@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+name: Bun
+preferences:
+  scope: binary.bun, source.toml.bun
+  settings:
+    icon: bun
+syntax:
+  - name: Binary (Bun)
+    scope: binary.bun
+    hidden: true
+    file_extensions:
+      - bun
+      - bun.lockb
+    contexts:
+      main: []
+  - name: TOML (Bun)
+    scope: source.toml.bun
+    hidden: true
+    file_extensions:
+      - bunfig.toml
+    contexts:
+      main: []

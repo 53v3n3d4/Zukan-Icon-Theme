@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: makefile
+preferences:
+  scope: source.makefile
+  settings:
+    icon: makefile
+
+# Do not have any syntax.

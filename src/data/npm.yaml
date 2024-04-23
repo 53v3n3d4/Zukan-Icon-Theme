@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: npm
+preferences:
+  scope: source.json.npm, source.shell.npm
+  settings:
+    icon: npm
+syntax:
+  - name: JSON (npm)
+    scope: source.json.npm
+    hidden: true
+    file_extensions:
+      - package-lock.json
+      - package.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: Shell Script (npm)
+    scope: source.shell.npm
+    hidden: true
+    file_extensions:
+      - .npmignore
+      - .npmrc
+    contexts:
+      main:
+        - include: scope:source.shell
+          apply_prototype: true

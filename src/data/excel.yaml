@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: MS Excel
+preferences:
+  scope: binary.excel
+  settings:
+    icon: excel
+syntax:
+  - name: Binary (Microsoft Excel)
+    scope: binary.excel
+    hidden: true
+    file_extensions:
+      - xls
+      - xlsx
+      - xlsm
+      - xlsb
+      - xlt
+    contexts:
+      main: []

@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+name: Babel
+preferences:
+  scope: source.js.babel, source.json.babel
+  settings:
+    icon: babel
+syntax:
+  - name: JavaScript (Babel)
+    scope: source.js.babel
+    hidden: true
+    file_extensions:
+    - babel.config.js
+    - babel.config.cjs
+    - babel.config.mjs
+    contexts:
+      main:
+      - include: scope:source.js
+        apply_prototype: true
+  - name: JSON (Babel)
+    scope: source.json.babel
+    hidden: true
+    file_extensions:
+      - .babelrc
+      - babel.config.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

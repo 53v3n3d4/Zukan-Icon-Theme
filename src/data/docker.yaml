@@ -1,0 +1,34 @@
+%YAML 1.2
+---
+name: Docker
+preferences:
+  scope: source.dockerfile, source.shell.docker, source.yaml.docker
+  settings:
+    icon: docker
+syntax:
+  - name: Dockerfile
+    scope: source.dockerfile
+    hidden: true
+    file_extensions:
+      - Dockerfile
+      - dockerfile
+    contexts:
+      main: []
+  - name: Shell Script (Docker)
+    scope: source.shell.docker
+    hidden: true
+    file_extensions:
+      - .dockerignore
+    contexts:
+      main:
+        - include: scope:source.shell
+          apply_prototype: true
+  - name: YAML (Docker)
+    scope: source.yaml.docker
+    hidden: true
+    file_extensions:
+      - docker-compose.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

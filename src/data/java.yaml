@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Java
+preferences:
+  scope: source.java
+  settings:
+    icon: java
+
+# Do not have any syntax.

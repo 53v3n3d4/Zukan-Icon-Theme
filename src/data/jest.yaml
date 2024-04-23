@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Jest
+preferences:
+  scope: source.js.jest
+  settings:
+    icon: jest
+syntax:
+  - name: JavaScript (Jest)
+    scope: source.js.jest
+    hidden: true
+    file_extensions:
+      - jest.config.js
+      - jest.config.cjs
+      - jest.config.mjs
+      - jest.setup.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true

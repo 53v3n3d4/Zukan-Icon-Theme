@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Test JS
+preferences:
+  scope: source.js.unittest
+  settings:
+    icon: test-js
+syntax:
+  - name: UnitTest (JavaScript)
+    scope: source.js.unittest
+    hidden: true
+    file_extensions:
+      - spec.js
+      - test.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true

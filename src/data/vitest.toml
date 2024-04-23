@@ -1,0 +1,35 @@
+name = "Vitest"
+
+[preferences]
+scope = "source.js.vitest, source.ts.vitest"
+
+[preferences.settings]
+icon = "file_type_vitest"
+
+[[syntax]]
+name = "JavaScript (Vitest)"
+scope = "source.js.vitest"
+hidden = true
+file_extensions = [
+  "vitest.config.js",
+  "vitest.config.cjs",
+  "vitest.config.mjs",
+  "vitest.workspace"
+]
+
+[[syntax.contexts.main]]
+include = "scope:source.js"
+apply_prototype = true
+
+[[syntax]]
+name = "TypeScript (Vitest)"
+scope = "source.ts.vitest"
+hidden = true
+file_extensions = [ "vitest.config.ts", "vitest.config.cts", "vitest.config.mts" ]
+
+[[syntax.contexts.main]]
+include = "scope:source.ts"
+apply_prototype = true
+
+# TOML has no empty value, so if not present treat as main: []
+# [[syntax.contexts.main]]

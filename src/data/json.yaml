@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: JSON
+preferences:
+  scope: source.json
+  settings:
+    icon: json
+
+# Do not have any syntax.

@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: C
+preferences:
+  scope: source.c, source.objc
+  settings:
+    icon: c
+
+# Do not have any syntax.

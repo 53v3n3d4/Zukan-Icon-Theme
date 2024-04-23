@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: JS
+preferences:
+  scope: source.js
+  settings:
+    icon: js
+
+# Do not have any syntax.

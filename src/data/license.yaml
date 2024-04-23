@@ -1,0 +1,32 @@
+%YAML 1.2
+---
+name: License
+preferences:
+  scope: text.html.markdown.license, text.plain.license
+  settings:
+    icon: license
+syntax:
+  - name: Markdown (License)
+    scope: text.html.markdown.license
+    hidden: true
+    file_extensions:
+      - copying.md
+      - copyright.md
+      - COPYRIGHT.md
+      - license.md
+      - LICENSE.md
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true
+  - name: Plain Text (License)
+    scope: text.plain.license
+    hidden: true
+    file_extensions:
+      - copying
+      - copyright
+      - COPYRIGHT
+      - license
+      - LICENSE
+    contexts:
+      main: []

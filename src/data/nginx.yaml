@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: NGINX
+preferences:
+  scope: source.nginx
+  settings:
+    icon: nginx
+syntax:
+  - name: Plain Text (NGINX)
+    scope: source.nginx
+    hidden: true
+    file_extensions:
+      - conf.erb
+      - nginx.conf
+      - mime.types
+      - fastcgi_params
+      - scgi_params
+      - uwsgi_params
+    contexts:
+      main: []

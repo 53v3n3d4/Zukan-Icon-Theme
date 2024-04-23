@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Angular JS
+preferences:
+  scope: source.json.angularjs
+  settings:
+    icon: angular
+syntax:
+  - name: JSON (Angular JS)
+    scope: source.json.angularjs
+    hidden: true
+    file_extensions:
+    - angular.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true

@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Adobe Illustrator
+preferences:
+  scope: binary.ai
+  settings:
+    icon: ai
+syntax:
+  - name: Binary (Adobe Illustrator)
+    scope: binary.ai
+    hidden: true
+    file_extensions:
+      - ai
+    contexts:
+      main: []

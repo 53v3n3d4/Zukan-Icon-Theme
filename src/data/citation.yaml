@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+name: Citation
+preferences:
+  scope: text.html.markdown.citation, text.plain.citation, source.yaml.citation
+  settings:
+    icon: citation
+syntax:
+  - name: Markdown (Citation)
+    scope: text.html.markdown.citation
+    hidden: true
+    file_extensions:
+      - CITATION.md
+      - CITATIONS.md
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true
+  - name: YAML (Citation)
+    scope: source.yaml.citation
+    hidden: true
+    file_extensions:
+      - CITATION.cff
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Do not have a citation text.plain.citation

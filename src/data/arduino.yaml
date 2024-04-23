@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Arduino
+preferences:
+  scope: source.arduino, source.c++.arduino
+  settings:
+    icon: arduino
+syntax:
+  - name: Plain Text (Arduino)
+    scope: source.arduino
+    hidden: true
+    file_extensions:
+    - ino
+    - pde
+    contexts:
+      main: []
+
+# Do not have Arduino source c++ file extension

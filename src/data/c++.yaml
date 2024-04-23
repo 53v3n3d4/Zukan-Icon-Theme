@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+name: C++
+preferences:
+  scope: source.c++, source.objc++
+  settings:
+    icon: c++
+syntax:
+  - name: C++ (Header)
+    scope: source.c++.header
+    hidden: true
+    file_extensions:
+      - h
+      - h++
+      - hh
+      - hpp
+      - hxx
+    contexts:
+      main:
+        - include: scope:source.c++
+          apply_prototype: true
+
+# Do not have source.c++, source.objc++ syntax.

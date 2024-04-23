@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Flatbuffers
+preferences:
+  scope: source.fbs
+  settings:
+    icon: flatbuffers
+syntax:
+  - name: Plain Text (FlatBuffers)
+    scope: source.fbs
+    hidden: true
+    file_extensions:
+      - fbs
+    contexts:
+      main: []

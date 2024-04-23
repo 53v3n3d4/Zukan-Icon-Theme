@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Erlang
+preferences:
+  scope: source.erlang, text.html.erlang
+  settings:
+    icon: erlang
+
+# Do not have any syntax.

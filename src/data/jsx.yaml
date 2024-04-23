@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: JSX
+preferences:
+  scope: source.js.jsx, source.js.react, source.jsx
+  settings:
+    icon: json
+
+# Do not have any syntax.

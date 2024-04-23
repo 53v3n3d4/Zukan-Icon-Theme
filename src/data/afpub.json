@@ -1,0 +1,23 @@
+{
+    "name": "Affinity Publisher",
+    "preferences": {
+        "scope": "binary.afpub, binary.aftemplate",
+        "settings": {
+            "icon": "file_type_afpub"
+        }
+    },
+    "syntax": [
+        {
+            "name": "Binary (Affinity Publisher)",
+            "scope": "binary.afpub",
+            "hidden": true,
+            "file_extensions": [
+                "afpub",
+                "aftemplate"
+            ],
+            "contexts": {
+                "main": []
+            }
+        }
+    ]
+}

@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Affinity Photo
+preferences:
+  scope: binary.afphoto
+  settings:
+    icon: afphoto
+syntax:
+  - name: Binary (Affinity Photo)
+    scope: binary.afphoto
+    hidden: true
+    file_extensions:
+     - afphoto
+    contexts:
+      main: []

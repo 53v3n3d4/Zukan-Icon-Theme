@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: PDF
+preferences:
+  scope: binary.pdf
+  settings:
+    icon: pdf
+syntax:
+  - name: Binary (PDF)
+    scope: binary.pdf
+    hidden: true
+    file_extensions:
+      - pdf
+    contexts:
+      main: []

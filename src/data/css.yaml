@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: CSS
+preferences:
+  scope: source.css
+  settings:
+    icon: css
+
+# Do not have any syntax.
