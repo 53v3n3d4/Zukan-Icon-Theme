@@ -4,6 +4,9 @@
 - Rename project to Zukan Icon Theme
 - Add python setup: poetry, pytest, ruff
 
+### Alias, icons and preferences
+- Change file type icons: kotlin
+
 ### Build
 - Add data files
 - Add clean_svg
