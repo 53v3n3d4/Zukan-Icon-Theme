@@ -6,6 +6,11 @@
 
 ### Build
 - Add data files
+- Add clean_svg
+- Add icons
+- Add icons_syntaxes
+- Add preferences
+- Add scripts
 
 ## [0.1.3] - 2024-04-22
 - Add alias: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu
