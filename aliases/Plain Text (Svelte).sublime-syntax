@@ -6,4 +6,6 @@ hidden: true
 file_extensions:
   - svelte
 contexts:
-  main: []
+  main:
+    - include: scope:text.html.basic
+      apply_prototype: true

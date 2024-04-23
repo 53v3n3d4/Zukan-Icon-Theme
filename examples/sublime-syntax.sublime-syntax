@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: YAML (Y)
+scope: source.y
+hidden: true
+file_extensions:
+  - subl
+contexts:
+  main: []

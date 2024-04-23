@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: Plain Text (Bun)
+name: TOML (Bun)
 scope: source.toml.bun
 hidden: true
 file_extensions:

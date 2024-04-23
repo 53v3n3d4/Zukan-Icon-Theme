@@ -5,6 +5,9 @@ scope: source.js.jest
 hidden: true
 file_extensions:
   - jest.config.js
+  - jest.config.cjs
+  - jest.config.mjs
+  - jest.setup.js
 contexts:
   main:
     - include: scope:source.js
