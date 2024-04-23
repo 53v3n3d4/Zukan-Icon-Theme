@@ -1,4 +1,20 @@
-## File type icons
+## Repository and files/folders renamed
+
+https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository
+```
+$ git remote set-url origin https://github.com/53v3n3d4/Zukan-Icon-Theme.git
+
+
+```
+
+Files and folders that has been renamed, or is going to be, in version v0.2.0.
+| previous | new |
+|-----------|------|
+| file_type_(name).tmPreferences | (name).tmPreferences  |
+| file_type_(name).svg | (name).svg  |
+| file_type_(name).png | (name).png  |
+
+## Zukan Icon Theme
 
 ![file type icons](assets/screenshot.png "Screenshot")
 
@@ -73,14 +89,15 @@ To uninstall manually, go to your Sublime Text folder.
 - Menu `Sublime Text > Preferences > Browse packages...`
 - Then delete `file-type-icons` inside `Packages` folder
 
-## Icons not working
+## Icons that works depending on folder position
 
-The icons bellow will work if you rename `file-type-icons` folder to `zz-file-type-icons` and make it the last folder in `Packages` directory.
-- Svg
-- sublime-theme, sublime-color-scheme, sublime-settings (Few json sublime extensions like `hidden-theme` works with no need to rename folder)
+- Poetry  
+- Svg  
+- sublime-theme, sublime-color-scheme, sublime-settings... mostly sublime (Exceptions like `hidden-theme` works not depending on this condition)  
 
-The icons bellow will not work even if you rename `file-type-icons` folder to `zzz-file-type-icons`
-- xml
+## Icons that do not work
+
+- xml  
 
 ## Notes
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work
