@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: JS
+name: JavaScript
 preferences:
   scope: source.js
   settings:

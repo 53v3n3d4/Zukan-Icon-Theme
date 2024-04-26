@@ -1,0 +1,6 @@
+%YAML 1.2
+---
+name: Default
+preferences:
+  settings:
+    icon: file_type_default

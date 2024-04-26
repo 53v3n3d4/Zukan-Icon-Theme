@@ -2,14 +2,18 @@
 ---
 name: Adobe Photoshop
 preferences:
-  scope: binary.ps
+  scope: binary.image.ps
   settings:
     icon: psd
 syntax:
   - name: Binary (Adobe Photoshop)
-    scope: binary.ps
+    scope: binary.image.ps
     hidden: true
     file_extensions:
       - psd
     contexts:
-      main: []
+      main:
+        - include: scope:binary.image
+          apply_prototype: true
+
+# This icon do not work. ST uses file_type_image.

@@ -2,10 +2,19 @@
 ---
 name: Eslint
 preferences:
-  scope: source.js.eslint, source.json.eslint, source.shell.eslint, source.yaml.eslint, text.plain.eslint
+  scope: source.js.eslint, source.json.eslint, source.yaml.eslint, text.git.ignore.eslint, text.plain.eslint
   settings:
     icon: eslint
 syntax:
+  - name: Git (ESLint)
+    scope: text.git.ignore.eslint
+    hidden: true
+    file_extensions:
+      - .eslintignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
   - name: JavaScript (ESLint)
     scope: source.js.eslint
     hidden: true
@@ -34,15 +43,6 @@ syntax:
       - .eslintcache
     contexts:
       main: []
-  - name: Shell Script (ESLint)
-    scope: source.shell.eslint
-    hidden: true
-    file_extensions:
-      - .eslintignore
-    contexts:
-      main:
-        - include: scope:source.shell
-          apply_prototype: true
   - name: YAML (ESLint)
     scope: source.yaml.eslint
     hidden: true

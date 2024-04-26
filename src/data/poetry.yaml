@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Poetry
+preferences:
+  scope: source.toml.poetry
+  settings:
+    icon: poetry
+syntax:
+  - name: TOML (Poetry)
+    scope: source.toml.poetry
+    hidden: true
+    file_extensions:
+      - poetry.lock
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

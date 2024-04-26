@@ -4,6 +4,6 @@ name: JSX
 preferences:
   scope: source.js.jsx, source.js.react, source.jsx
   settings:
-    icon: json
+    icon: jsx
 
 # Do not have any syntax.

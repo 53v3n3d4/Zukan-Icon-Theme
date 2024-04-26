@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: YAML
+preferences:
+  scope: source.yaml
+  settings:
+    icon: yaml
+
+# Do not have any syntax.

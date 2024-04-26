@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Rails
+preferences:
+  scope: source.ruby.rails, text.html.rails, text.haml, source.css.rails, source.js.rails, source.sql.rails
+  settings:
+    icon: rails
+
+# Do not have any syntax.

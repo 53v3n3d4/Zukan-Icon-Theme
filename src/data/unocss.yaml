@@ -1,0 +1,34 @@
+%YAML 1.2
+---
+name: UnoCSS
+preferences:
+  scope: source.js.unocss, source.ts.unocss
+  settings:
+    icon: unocss
+syntax:
+  - name: JavaScript (UnoCSS)
+    scope: source.js.unocss
+    hidden: true
+    file_extensions:
+      - uno.config.js
+      - uno.config.mjs
+      - unocss.config.js
+      - unocss.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (UnoCSS)
+    scope: source.ts.unocss
+    hidden: true
+    file_extensions:
+      - uno.config.ts
+      - uno.config.mts
+      - unocss.config.ts
+      - unocss.config.mts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true
+
+

@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: WebGPU
+preferences:
+  scope: source.wgsl
+  settings:
+    icon: webgpu
+syntax:
+  - name: Plain Text (WebGPU)
+    scope: source.wgsl
+    hidden: true
+    file_extensions:
+      - wgsl
+    contexts:
+      main: []

@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Rust
+preferences:
+  scope: source.rust
+  settings:
+    icon: rust
+
+# Do not have any syntax.

@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Sass
+preferences:
+  scope: source.sass
+  settings:
+    icon: sass
+syntax:
+  - name: Plain Text (Sass)
+    scope: source.sass
+    hidden: true
+    file_extensions:
+      - sass
+    contexts:
+      main: []
+
+# Using same logo for SCSS but each has its file.

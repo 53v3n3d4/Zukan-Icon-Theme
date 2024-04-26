@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+name: Ruby
+preferences:
+  scope: source.ruby, source.shell.ruby, text.html.ruby, text.plain.ruby
+  settings:
+    icon: ruby
+syntax:
+  - name: Plain Text (Ruby)
+    scope: text.plain.ruby
+    hidden: true
+    file_extensions:
+      - Gemfile.lock
+      - .ruby-version
+      - .ruby-gemset
+      - .rspec
+    contexts:
+      main: []
+  - name: Shell Script (Ruby)
+    scope: source.shell.ruby
+    hidden: true
+    file_extensions:
+      - .rvmrc
+    contexts:
+      main:
+        - include: scope:source.shell
+          apply_prototype: true
+
+# Do not have html syntax.

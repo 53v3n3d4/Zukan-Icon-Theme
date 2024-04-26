@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: Vite
+preferences:
+  scope: source.js.vite, source.ts.vite
+  settings:
+    icon: vite
+syntax:
+  - name: JavaScript (Vite)
+    scope: source.js.vite
+    hidden: true
+    file_extensions:
+      - vite.config.js
+      - vite.config.mjs
+      - vite.config.mts
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Vite)
+    scope: source.ts.vite
+    hidden: true
+    file_extensions:
+      - vite.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

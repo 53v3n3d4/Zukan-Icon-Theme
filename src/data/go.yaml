@@ -12,5 +12,6 @@ syntax:
     file_extensions:
       - go.mod
       - go.sum
+      - go.work
     contexts:
       main: []

@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+name: Webpack
+preferences:
+  scope: source.js.webpack, source.ts.webpack
+  settings:
+    icon: webpack
+syntax:
+  - name: JavaScript (Webpack)
+    scope: source.js.webpack
+    hidden: true
+    file_extensions:
+      - webpack.config.js
+      - webpack.config.babel.js
+      - webpack.dev.js
+      - webpack.mix.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Webpack)
+    scope: source.ts.webpack
+    hidden: true
+    file_extensions:
+      - webpack.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

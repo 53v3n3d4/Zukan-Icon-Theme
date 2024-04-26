@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+name: MS Word
+preferences:
+  scope: binary.word
+  settings:
+    icon: word
+syntax:
+  - name: Binary (Microsoft Word)
+    scope: binary.word
+    hidden: true
+    file_extensions:
+      - doc
+      - docx
+      - docm
+      - docxml
+      - dotm
+      - dotx
+      - wri
+    contexts:
+      main: []

@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Test TS
+preferences:
+  scope: source.ts.unittest
+  settings:
+    icon: test-ts
+syntax:
+  - name: UnitTest (TypeScript)
+    scope: source.ts.unittest
+    hidden: true
+    file_extensions:
+      - spec.ts
+      - test.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+name: WebAssembly
+preferences:
+  scope: binary.webassembly, text.webassembly, source.wast
+  settings:
+    icon: webassembly
+syntax:
+  - name: Binary (WebAssembly)
+    scope: binary.webassembly
+    hidden: true
+    file_extensions:
+      - wasm
+    contexts:
+      main: []
+  - name: Plain Text (Wast)
+    scope: text.webassembly
+    hidden: true
+    file_extensions:
+      - wast
+      - wat
+    contexts:
+      main: []

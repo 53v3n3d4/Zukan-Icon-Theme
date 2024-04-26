@@ -1,12 +1,12 @@
 %YAML 1.2
 ---
-name: LESS
+name: Less.js
 preferences:
   scope: source.less
   settings:
     icon: less
 syntax:
-  - name: Plain Text (LESS)
+  - name: Plain Text (Less js)
     scope: source.less
     hidden: true
     file_extensions:

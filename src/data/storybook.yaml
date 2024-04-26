@@ -1,0 +1,44 @@
+%YAML 1.2
+---
+name: Storybook
+preferences:
+  scope: source.js.storybook, source.jsx.storybook, source.ts.storybook, source.tsx.storybook
+  settings:
+    icon: storybook
+syntax:
+  - name: JavaScript (Storybook)
+    scope: source.js.storybook
+    hidden: true
+    file_extensions:
+      - stories.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSX (Storybook)
+    scope: source.jsx.storybook
+    hidden: true
+    file_extensions:
+      - stories.jsx
+    contexts:
+      main:
+        - include: scope:source.jsx
+          apply_prototype: true
+  - name: TSX (Storybook)
+    scope: source.tsx.storybook
+    hidden: true
+    file_extensions:
+      - stories.tsx
+    contexts:
+      main:
+        - include: scope:source.tsx
+          apply_prototype: true
+  - name: TypeScript (Storybook)
+    scope: source.ts.storybook
+    hidden: true
+    file_extensions:
+      - stories.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

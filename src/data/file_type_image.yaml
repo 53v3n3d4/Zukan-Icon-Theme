@@ -1,0 +1,34 @@
+%YAML 1.2
+---
+name: Image
+preferences:
+  scope: binary.image
+  settings:
+    icon: file_type_image
+syntax:
+  - name: Binary (Image)
+    scope: binary.image
+    hidden: true
+    file_extensions:
+      - avif
+      - bmp
+      - emf
+      - gif
+      - jp2
+      - jpeg
+      - jpg
+      - heic
+      - png
+      - pnm
+      - ppm
+      - tga
+      - tif
+      - tiff
+      - webp
+      - xbm
+      - xpm
+    contexts:
+      main: []
+
+# It works for extensions heic and avif with icon name image
+# But only work for others extensions with icon name file_type_image

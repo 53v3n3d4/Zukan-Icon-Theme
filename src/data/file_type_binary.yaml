@@ -1,0 +1,7 @@
+%YAML 1.2
+---
+name: Binary
+preferences:
+  scope: binary.plain
+  settings:
+    icon: file_type_binary

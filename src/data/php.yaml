@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: PHP
+preferences:
+  scope: embedding.php, source.php
+  settings:
+    icon: php
+
+# Do not have any syntax.

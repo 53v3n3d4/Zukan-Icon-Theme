@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: Rspack
+preferences:
+  scope: source.js.rspack, source.ts.rspack
+  settings:
+    icon: rspack
+syntax:
+  - name: JavaScript (Rspack)
+    scope: source.js.rspack
+    hidden: true
+    file_extensions:
+      - rspack.config.js
+      - rspack.config.cjs
+      - rspack.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Rspack)
+    scope: source.ts.rspack
+    hidden: true
+    file_extensions:
+      - rspack.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

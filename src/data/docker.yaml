@@ -2,11 +2,20 @@
 ---
 name: Docker
 preferences:
-  scope: source.dockerfile, source.shell.docker, source.yaml.docker
+  scope: source.dockerfile, source.yaml.docker, text.git.ignore.docker
   settings:
     icon: docker
 syntax:
-  - name: Dockerfile
+  - name: Git (Docker)
+    scope: text.git.ignore.docker
+    hidden: true
+    file_extensions:
+      - .dockerignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
+  - name: Plain Text (Dockerfile)
     scope: source.dockerfile
     hidden: true
     file_extensions:
@@ -14,15 +23,6 @@ syntax:
       - dockerfile
     contexts:
       main: []
-  - name: Shell Script (Docker)
-    scope: source.shell.docker
-    hidden: true
-    file_extensions:
-      - .dockerignore
-    contexts:
-      main:
-        - include: scope:source.shell
-          apply_prototype: true
   - name: YAML (Docker)
     scope: source.yaml.docker
     hidden: true

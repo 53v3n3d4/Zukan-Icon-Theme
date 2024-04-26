@@ -1,0 +1,24 @@
+%YAML 1.2
+---
+name: pytest
+preferences:
+  scope: source.ini.pytest, source.python.pytest
+  settings:
+    icon: pytest
+syntax:
+  - name: INI (pytest)
+    scope: source.ini.pytest
+    hidden: true
+    file_extensions:
+      - pytest.ini
+    contexts:
+      main: []
+  - name: Python (pytest)
+    scope: source.python.pytest
+    hidden: true
+    file_extensions:
+      - conftest.py
+    contexts:
+      main:
+        - include: scope:source.python
+          apply_prototype: true

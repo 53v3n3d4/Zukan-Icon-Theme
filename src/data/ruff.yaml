@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Ruff
+preferences:
+  scope: source.toml.ruff
+  settings:
+    icon: ruff
+syntax:
+  - name: TOML (Ruff)
+    scope: source.toml.ruff
+    hidden: true
+    file_extensions:
+      - .ruff.toml
+      - ruff.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

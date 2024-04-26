@@ -2,17 +2,17 @@
 ---
 name: Node.js
 preferences:
-  scope: text.plain.nodejs
+  scope: source.shell.nodejs
   settings:
     icon: nodejs
 syntax:
-  - name: Plain Text (Node js)
-    scope: text.plain.nodejs
+  - name: Shell Script (Node js)
+    scope: source.shell.nodejs
     hidden: true
     file_extensions:
       - .node-version
       - .nvmrc
     contexts:
-      main: []
-
-# This could be shell instead of plain text. There are another examples npm
+      main:
+        - include: scope:source.shell
+          apply_prototype: true

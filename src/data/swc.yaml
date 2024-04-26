@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: SWC
+preferences:
+  scope: source.json.swc, source.js.swc
+  settings:
+    icon: swc
+syntax:
+  - name: JavaScript (SWC)
+    scope: source.js.swc
+    hidden: true
+    file_extensions:
+      - spack.config.js
+      - swcpack.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (SWC)
+    scope: source.json.swc
+    hidden: true
+    file_extensions:
+      - .swcrc
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

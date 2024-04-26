@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+name: TypeScript
+preferences:
+  scope: source.js.typescript, source.ts, source.json.typescript
+  settings:
+    icon: ts
+syntax:
+  - name: JSON (TypeScript)
+    scope: source.json.typescript
+    hidden: true
+    file_extensions:
+      - tsconfig.json
+      - tsconfig.base.json
+      - tsconfig.lib.json
+      - tsconfig.spec.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+
+# Do not have syntax js.typescript and ts.

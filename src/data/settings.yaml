@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+name: Settings
+preferences:
+  scope: source.env, source.ini, source.json.settings, text.plain.settings
+  settings:
+    icon: settings
+syntax:
+  - name: Plain Text (Settings)
+    scope: text.plain.settings
+    hidden: true
+    file_extensions:
+      - env
+      - cfg
+      - conf
+      - ini
+      - reg
+      - settings
+    contexts:
+      main: []
+
+# Do not have env, ini or json syntaxes,

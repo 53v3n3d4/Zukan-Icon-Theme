@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: Yarn
+preferences:
+  scope: source.yaml.yarn, source.js.yarn
+  settings:
+    icon: yarn
+syntax:
+  - name: JavaScript (Yarn)
+    scope: source.js.yarn
+    hidden: true
+    file_extensions:
+      - .pnp.cjs
+      - .pnp.loader.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: YAML (Yarn)
+    scope: source.yaml.yarn
+    hidden: true
+    file_extensions:
+      - yarn.lock
+      - .yarnrc.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

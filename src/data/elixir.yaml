@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+name: Elixir
+preferences:
+  scope: source.elixir, text.elixir, text.html.elixir, text.html.heex
+  settings:
+    icon: elixir
+syntax:
+  - name: HTML (Elixir)
+    scope: text.html.heex
+    hidden: true
+    file_extensions:
+      - eex
+      - html.eex
+      - html.leex
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: Plain Text (Elixir)
+    scope: source.elixir
+    hidden: true
+    file_extensions:
+      - ex
+      - exs
+    contexts:
+      main: []
+
+# Do not have a html syntax

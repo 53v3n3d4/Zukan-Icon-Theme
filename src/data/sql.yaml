@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: SQL
+preferences:
+  scope: source.sql
+  settings:
+    icon: sql
+
+# Do not have any syntax.

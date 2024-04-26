@@ -1,0 +1,50 @@
+%YAML 1.2
+---
+name: Sublime Text
+preferences:
+  scope: source.json.sublime, source.yaml.sublime.syntax, text.xml.sublime.snippet
+  settings:
+    icon: sublime
+syntax:
+  - name: JSON (Sublime)
+    scope: source.json.sublime
+    hidden: true
+    file_extensions:
+      - .no-sublime-package
+      - .sublime-project
+      - hidden-color-scheme
+      - hidden-theme
+      - sublime-build
+      - sublime-color-scheme
+      - sublime-commands
+      - sublime-completions
+      - sublime-keymap
+      - sublime-macro
+      - sublime-menu
+      - sublime-mousemap
+      - sublime-project
+      - sublime-settings
+      - sublime-theme
+      - sublime-workspace
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: XML (Sublime)
+    scope: text.xml.sublime.snippet
+    hidden: true
+    file_extensions:
+      - sublime-snippet
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true
+  - name: YAML (Sublime)
+    scope: source.yaml.sublime.syntax
+    hidden: true
+    file_extensions:
+      - sublime-syntax
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

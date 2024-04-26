@@ -16,5 +16,5 @@ syntax:
       main: []
 
 # syntax package has source.Kotlin with first letter capitalized.
-# test with not syntax package it worked with all lower case.
+# test with syntax package not installed. It worked with all lower case.
 # to do: test with package syntax and lowercase.

@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: Flatbuffers
+name: FlatBuffers
 preferences:
   scope: source.fbs
   settings:

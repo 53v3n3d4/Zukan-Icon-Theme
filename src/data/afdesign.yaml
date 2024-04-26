@@ -5,7 +5,6 @@ preferences:
   scope: binary.afdesign
   settings:
     icon: afdesign
-  # icon rename from file_type_afdesign <png, svg> -> afdesign
 syntax:
   - name: Binary (Affinity Designer)
     scope: binary.afdesign

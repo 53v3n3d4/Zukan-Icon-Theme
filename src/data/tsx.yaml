@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: TSX
+preferences:
+  scope: source.ts.react, source.tsx
+  settings:
+    icon: tsx
+
+# Do not have any syntax.

@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: SVG
+preferences:
+  scope: text.xml.svg
+  settings:
+    icon: svg
+syntax:
+  - name: XML (SVG)
+    scope: text.xml.svg
+    hidden: true
+    file_extensions:
+      - svg
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true

@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Text
+preferences:
+  scope: text.plain
+  settings:
+    icon: text
+
+# Do not have any syntax.

@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Turbo
+preferences:
+  scope: source.json.turbo
+  settings:
+    icon: turbo
+syntax:
+  - name: JSON (Turbo)
+    scope: source.json.turbo
+    hidden: true
+    file_extensions:
+      - turbo.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

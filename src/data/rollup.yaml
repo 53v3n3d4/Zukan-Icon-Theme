@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: Rollup
+preferences:
+  scope: source.js.rollup, source.ts.rollup
+  settings:
+    icon: rollup
+syntax:
+  - name: JavaScript (Rollup)
+    scope: source.js.rollup
+    hidden: true
+    file_extensions:
+      - rollup.config.js
+      - rollup.config.cjs
+      - rollup.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Rollup)
+    scope: source.ts.rollup
+    hidden: true
+    file_extensions:
+      - rollup.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: TOML
+preferences:
+  scope: source.toml
+  settings:
+    icon: toml
+# syntax:
+#   - name: Plain Text (TOML)
+#     scope: source.toml
+#     hidden: true
+#     file_extensions:
+#       - toml
+#     contexts:
+#       main: []
+
+# Adding syntax break highlight if package TOML is installed.

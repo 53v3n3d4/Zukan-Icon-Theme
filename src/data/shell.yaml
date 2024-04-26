@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Shell
+preferences:
+  scope: source.shell, source.shell.fish
+  settings:
+    icon: shell
+
+# Do not have any syntax.

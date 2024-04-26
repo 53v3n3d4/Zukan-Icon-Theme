@@ -1,16 +1,16 @@
 %YAML 1.2
 ---
-name: Angular JS
+name: Angular
 preferences:
   scope: source.json.angularjs
   settings:
     icon: angular
 syntax:
-  - name: JSON (Angular JS)
+  - name: JSON (Angular)
     scope: source.json.angularjs
     hidden: true
     file_extensions:
-    - angular.json
+      - angular.json
     contexts:
       main:
       - include: scope:source.json

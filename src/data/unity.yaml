@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Unity
+preferences:
+  scope: source.boo.unity3d, source.cs.unity3d, source.js.unity3d, source.shader
+  settings:
+    icon: unity
+syntax:
+  - name: Plain Text (Unity 3D Shader)
+    scope: source.shader
+    hidden: true
+    file_extensions:
+      - cginc
+      - shader
+    contexts:
+      main: []
+
+# Do not have boo, cs, js unity syntax.

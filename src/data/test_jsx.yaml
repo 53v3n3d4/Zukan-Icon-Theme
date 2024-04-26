@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Test JSX
+preferences:
+  scope: source.jsx.unittest
+  settings:
+    icon: test-jsx
+syntax:
+  - name: UnitTest (JSX)
+    scope: source.jsx.unittest
+    hidden: true
+    file_extensions:
+      - spec.jsx
+      - test.jsx
+    contexts:
+      main:
+        - include: scope:source.jsx
+          apply_prototype: true
