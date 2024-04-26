@@ -1,16 +1,22 @@
-# import errno
 import os
 
 from cairosvg import svg2png
+from src.build.helpers.clean_data import clean_yaml_tabs
 from src.build.helpers.color import Color
+from src.build.helpers.print_message import (
+    print_created_message,
+    print_message,
+    print_special_char,
+)
 from src.build.helpers.read_write_data import read_yaml_data
 from src.build.helpers.special_chars import special_chars
-from src.build.utils.build_dir_paths import (
-    DATA_PATH,
-    ICONS_PNG_TEST_PATH,
-    ICONS_TEST_PATH,
-    ICONS_TEST_NOT_EXIST_PATH,
-)
+
+# from src.build.utils.build_dir_paths import (
+#     DATA_PATH,
+#     ICONS_PNG_TEST_PATH,
+#     ICONS_TEST_PATH,
+#     ICONS_TEST_NOT_EXIST_PATH,
+# )
 from src.build.utils.file_extensions import PNG_EXTENSION, SVG_EXTENSION
 from src.build.utils.png_details import png_details
 
@@ -21,7 +27,7 @@ from src.build.utils.png_details import png_details
 # file_test = os.path.join(DATA_PATH, 'c++.yaml')
 # file_test = os.path.join(DATA_PATH, 'afdesign.yaml')
 # file_test = os.path.join(DATA_PATH, 'test_js.yaml')
-file_test = os.path.join(DATA_PATH, 'c#.yaml')
+# file_test = os.path.join(DATA_PATH, 'c#.yaml')
 # file_test = os.path.join(DATA_PATH, 'afdesign_not_exist.yaml')
 
 
@@ -54,90 +60,80 @@ class IconPNG:
         dir_destiny (str) -- path destination of PNG file.
         """
         try:
-            # YAML
-            if icon_data.endswith('.yaml') and os.path.exists(icon_data):
-                data = read_yaml_data(icon_data)
-                if data is None:
-                    print(
-                        f'{ Color.RED }[!] { os.path.basename(icon_data) }:'
-                        f'{ Color.END } yaml file is empty.'
+            data = read_yaml_data(icon_data)
+            # Check if preferences not exist. Or if icon key exist
+            # but value empty error.
+
+            if icon_data.endswith('.yaml') and (
+                not any('preferences' in d for d in data)
+                or data['preferences']['settings'].get('icon') is None
+            ):
+                print_message(
+                    os.path.basename(icon_data),
+                    'key icon is not defined or is None.',
+                    color=f'{ Color.RED }',
+                    color_end=f'{ Color.END }',
+                )
+                return data
+            elif icon_data.endswith('.yaml'):
+                svgfile = (
+                    f'{ data["preferences"]["settings"]["icon"] }' f'{ SVG_EXTENSION }'
+                )
+                # Do not allow PNG file name with certain special chars.
+                if special_chars(svgfile):
+                    print_special_char(
+                        os.path.basename(icon_data),
+                        data['preferences']['settings']['icon'],
                     )
-                # Check if preferences not exist. Or if icon key exist
-                # but value empty error.
-                elif (
-                    not any('preferences' in d for d in data)
-                    or data['preferences']['settings'].get('icon') is None
-                ):
-                    print(
-                        f'{ Color.RED }[!] { os.path.basename(icon_data) }:'
-                        f'{ Color.END } key icon is not defined or is None.'
+                # print(svgfile)
+                svgfile_path = os.path.join(dir_origin, svgfile)
+                # print(svgfile_path)
+                pngfile_base = data['preferences']['settings']['icon']
+                # print(pngfile_base)
+                if not os.path.exists(dir_destiny):
+                    os.makedirs(dir_destiny)
+                pngfile_path_base = os.path.join(dir_destiny, pngfile_base)
+                if svgfile.endswith('.svg') and os.path.exists(svgfile_path):
+                    for attribute in png_details:
+                        svg2png(
+                            url=svgfile_path,
+                            write_to=f'{ pngfile_path_base }{ attribute["suffix"] }'
+                            f'{ PNG_EXTENSION }',
+                            output_width=attribute['width'],
+                            output_height=attribute['height'],
+                        )
+                        print_created_message(
+                            os.path.basename(icon_data),
+                            pngfile_base,
+                            'done',
+                            filename=f' [{ svgfile }]',
+                            suffix=f'{ attribute["suffix"] }',
+                            extension=f'{ PNG_EXTENSION }',
+                        )
+                elif not svgfile.endswith('.svg'):
+                    print_message(
+                        svgfile,
+                        'file extension is not svg.',
+                        color=f'{ Color.RED }',
+                        color_end=f'{ Color.END }',
+                    )
+                elif not os.path.exists(svgfile_path):
+                    # Ansi color not working
+                    raise FileNotFoundError(
+                        f'[!] {svgfile}: origin directory { dir_origin } or file '
+                        f'does not exist.'
                     )
                 else:
-                    svgfile = (
-                        f'{ data["preferences"]["settings"]["icon"] }'
-                        f'{ SVG_EXTENSION }'
+                    raise ValueError(
+                        f'{ Color.RED }{ svgfile }{ Color.END }: icon svg file '
+                        f'does not exist.'
                     )
-                    # Do not allow PNG file name with certain special chars.
-                    if special_chars(svgfile):
-                        print(
-                            f'{ Color.RED }[!] { os.path.basename(icon_data) }:'
-                            f'{ Color.END } icon value { Color.RED }(filename '
-                            f'would be c#.svg){ Color.END }  can not contain '
-                            f'special characters.'
-                        )
-                    # print(svgfile)
-                    svgfile_path = os.path.join(dir_origin, svgfile)
-                    # print(svgfile_path)
-                    pngfile_base = data['preferences']['settings']['icon']
-                    # print(pngfile_base)
-                    if not os.path.exists(dir_destiny):
-                        os.makedirs(dir_destiny)
-                    pngfile_path_base = os.path.join(dir_destiny, pngfile_base)
-                    if svgfile.endswith('.svg') and os.path.exists(svgfile_path):
-                        for attribute in png_details:
-                            svg2png(
-                                url=svgfile_path,
-                                write_to=f'{ pngfile_path_base }{ attribute["suffix"] }'
-                                f'{ PNG_EXTENSION }',
-                                output_width=attribute['width'],
-                                output_height=attribute['height'],
-                            )
-                            print(
-                                f'{ Color.CYAN }[!] { os.path.basename(icon_data) } '
-                                f'[{ svgfile }]{ Color.END } -> { Color.YELLOW }'
-                                f'{ pngfile_base }{ attribute["suffix"] }'
-                                f'{ PNG_EXTENSION }{ Color.END } done.'
-                            )
-                    elif not svgfile.endswith('.svg'):
-                        print(
-                            f'{ Color.RED }{ svgfile }{ Color.END }: file extension '
-                            f'is not svg.'
-                        )
-                    elif not os.path.exists(svgfile_path):
-                        # Ansi color not working
-                        raise FileNotFoundError(
-                            f'[!] {svgfile}: origin directory { dir_origin } or file '
-                            f'does not exist.'
-                        )
-                    else:
-                        raise ValueError(
-                            f'{ Color.RED }{ svgfile }{ Color.END }: icon svg file '
-                            f'does not exist.'
-                        )
-            elif not icon_data.endswith('.yaml'):
-                print(
-                    f'{ Color.PURPLE }[!] { os.path.basename(icon_data) }'
-                    f'{ Color.END }: file extension is not yaml.'
-                )
+                return data
             else:
-                raise ValueError('Yaml file do not exist.')
-        except OSError as error:
-            # log here
-            print(error.args)
+                return icon_data
         except FileNotFoundError as error:
             # log here
             print(error.args, 'Icons Error')
-            # print(errno.ENOENT, os.strerror(errno.ENOENT), icon_data)
 
     def svg_to_png_all(dir_icon_data: str, dir_origin: str, dir_destiny: str):
         """

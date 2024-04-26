@@ -1,18 +1,25 @@
 import os
 
+from src.build.helpers.clean_data import clean_plist_tag, clean_yaml_tabs
 from src.build.helpers.color import Color
-from src.build.helpers.read_write_data import clean_tag, dump_plist_data, read_yaml_data
-from src.build.utils.build_dir_paths import (
-    DATA_PATH,
-    ICONS_TEST_NOT_EXIST_PATH,
-    PREFERENCES_TEST_PATH,
+from src.build.helpers.print_message import (
+    print_created_message,
+    print_message,
+    print_remove_tag,
 )
+from src.build.helpers.read_write_data import dump_plist_data, read_yaml_data
+
+# from src.build.utils.build_dir_paths import (
+#     DATA_PATH,
+#     ICONS_TEST_NOT_EXIST_PATH,
+#     PREFERENCES_TEST_PATH,
+# )
 from src.build.utils.file_extensions import PLIST_EXTENSION
-from src.build.utils.plist_unused_line import UNUSED_LINE
+# from src.build.utils.plist_unused_line import UNUSED_LINE
 
 # file_test = os.path.join(DATA_PATH, 'test_empty_file.yaml')
 # file_test = os.path.join(DATA_PATH, 'afpub.yaml')
-file_test = os.path.join(DATA_PATH, 'test_no_icon_file.yaml')
+# file_test = os.path.join(DATA_PATH, 'test_no_icon_file.yaml')
 # file_test = os.path.join(DATA_PATH, 'afpub_not_exist.yaml')
 # file_test = os.path.join(DATA_PATH, 'afpub_not_yaml.toml')
 
@@ -33,60 +40,54 @@ class Preference:
 
 
         Parameters:
-        icon_data(str) -- path to data file.
+        icon_data (str) -- path to data file.
         dir_destiny (str) -- path destination of icon sublime-synthax files.
         """
         try:
-            if icon_data.endswith('.yaml') and os.path.exists(icon_data):
-                data = read_yaml_data(icon_data)
-                if data is None:
-                    print(
-                        f'{ Color.RED }[!] { os.path.basename(icon_data) }:'
-                        f'{ Color.END } yaml file is empty.'
-                    )
-                # Check if dict preferences exist and if icon key exist with
-                # value not empty.
-                elif (
-                    any('preferences' in d for d in data)
-                    and data['preferences']['settings'].get('icon') is not None
-                ):
-                    # print(isinstance(data, dict))
-                    iconpreferences = (
-                        f'{ data["preferences"]["settings"]["icon"] }'
-                        f'{ PLIST_EXTENSION }'
-                    )
-                    # print(iconpreferences)
-                    if not os.path.exists(dir_destiny):
-                        os.makedirs(dir_destiny)
-                    iconpreferences_path = os.path.join(dir_destiny, iconpreferences)
-                    preferences_dict = data['preferences']
-                    # print(preferences_dict)
-                    # Write plist, tmPreferences file
-                    dump_plist_data(
-                        iconpreferences_path,
-                        preferences_dict,
-                        icon_data,
-                        iconpreferences,
-                    )
-                    # Clean tag <!DOCTYPE plist>. It will always exist after dump.
-                    clean_tag(iconpreferences_path)
-                    print(
-                        f'{ Color.CYAN }[!] { os.path.basename(icon_data) }'
-                        f'{ Color.END } -> Deleting { Color.YELLOW }tag <!DOCTYPE '
-                        f'plist>{ Color.END } from { iconpreferences }.'
-                    )
-                else:
-                    print(
-                        f'{ Color.RED }[!] { os.path.basename(icon_data) }:'
-                        f'{ Color.END } key preferences, scope and icon are required.'
-                    )
-            elif not icon_data.endswith('.yaml'):
-                print(
-                    f'{ Color.PURPLE }[!] { os.path.basename(icon_data) }'
-                    f'{ Color.END }: file extension is not yaml.'
+            data = read_yaml_data(icon_data)
+            # Check if dict preferences exist and if icon key exist with
+            # value not empty.
+            if (
+                any('preferences' in d for d in data)
+                and data['preferences']['settings'].get('icon') is not None
+                and data['preferences'].get('scope') is not None
+            ):
+                # print(isinstance(data, dict))
+                # print(data)
+                iconpreferences = (
+                    f'{ data["preferences"]["settings"]["icon"] }'
+                    f'{ PLIST_EXTENSION }'
                 )
+                # print(iconpreferences)
+                if not os.path.exists(dir_destiny):
+                    os.makedirs(dir_destiny)
+                iconpreferences_path = os.path.join(dir_destiny, iconpreferences)
+                preferences_dict = data['preferences']
+                # print(preferences_dict)
+                # Write plist, tmPreferences file
+                dump_plist_data(
+                    preferences_dict,
+                    iconpreferences_path,
+                )
+                print_created_message(
+                    os.path.basename(icon_data),
+                    iconpreferences,
+                    'created',
+                )
+                # Clean tag <!DOCTYPE plist>. It will always exist after dump.
+                clean_plist_tag(iconpreferences_path)
+                print_remove_tag(os.path.basename(icon_data), iconpreferences)
+            elif icon_data.endswith('.yaml'):
+                print_message(
+                    os.path.basename(icon_data),
+                    'keys preferences, scope and icon, are essentials. Exception for '
+                    'ST icons default.',
+                    color=f'{ Color.RED }',
+                    color_end=f'{ Color.END }',
+                )
+                return data
             else:
-                raise ValueError('Yaml file does not exist.')
+                return icon_data
         except FileNotFoundError as error:
             # log here
             print(error.args)
@@ -96,7 +97,7 @@ class Preference:
         Create all icons tmPreferences files from data files.
 
         Parameters:
-        dir_icon_data(str) -- path to directory with data files.
+        dir_icon_data (str) -- path to directory with data files.
         dir_destiny (str) -- path destination of icon sublime-synthax files.
         """
         try:

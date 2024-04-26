@@ -25,11 +25,11 @@ def filepath(url: str) -> str:
 
 # Build paths
 
+ALIASES_PATH = filepath('../../../aliases')
+# print('Aliases path is:' + os.path.realpath(ALIASES_PATH))
+
 ASSETS_PATH = filepath('../../../assets')
 # print('Assets path is:' + os.path.realpath(ASSETS_PATH))
-
-ALIASES_PATH = filepath('../../../aliases')
-# print('Icons syntaxes path is:' + os.path.realpath(ALIASES_PATH))
 
 # DATA_PATH = os.path.join(os.path.dirname(__file__), '../../data')
 DATA_PATH = filepath('../../data')
@@ -42,17 +42,22 @@ ICONS_PNG_PATH = filepath('../../../icons')
 ICONS_SVG_PATH = filepath('../../icons')
 # print('Icons svg path is:' + os.path.realpath(ICONS_SVG_PATH))
 
+ICONS_SYNTAXES_PATH = filepath('../../../icons_syntaxes')
+# print('Icons syntaxes path is:' + os.path.realpath(ICONS_SYNTAXES_PATH))
+
 PREFERENCES_PATH = filepath('../../../preferences')
 # print('Preferences path is:' + os.path.realpath(PREFERENCES_PATH))
 
 
 # Testing paths
 
+ICON_THEME_TEST_PATH = filepath('../../../tests_icon_theme')
+
+ICONS_PNG_TEST_PATH = filepath('../../icons_png_test')
+
 ICONS_TEST_PATH = filepath('../../icons_test')
 
 ICONS_TEST_NOT_EXIST_PATH = filepath('../../icons_test_not_exist')
-
-ICONS_PNG_TEST_PATH = filepath('../../icons_png_test')
 
 ICONS_SYNTAXES_TEST_PATH = filepath('../../icons_syntaxes_test')
 

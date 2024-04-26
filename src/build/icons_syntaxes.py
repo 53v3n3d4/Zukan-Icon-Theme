@@ -1,11 +1,14 @@
 import os
 
+# from src.build.helpers.clean_data import clean_yaml_tabs
 from src.build.helpers.color import Color
+from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import dump_yaml_data, read_yaml_data
-from src.build.utils.build_dir_paths import DATA_PATH, ICONS_SYNTAXES_TEST_PATH
+
+# from src.build.utils.build_dir_paths import DATA_PATH, ICONS_SYNTAXES_TEST_PATH
 from src.build.utils.file_extensions import SYNTAX_EXTENSION
 
-file_test = os.path.join(DATA_PATH, 'test_empty_file.yaml')
+# file_test = os.path.join(DATA_PATH, 'test_empty_file.yaml')
 # file_test = os.path.join(DATA_PATH, 'afpub.yaml')
 # file_test = os.path.join(DATA_PATH, 'css.yaml') # does not have syntax
 # file_test = os.path.join(DATA_PATH, 'afpub_not_exist.yaml')
@@ -26,52 +29,38 @@ class IconSyntax:
         It will be also the name of png and tmPreferences generated.
 
         Parameters:
-        icon_data(str) -- path to data file.
+        icon_data (str) -- path to data file.
         dir_destiny (str) -- path destination of icon sublime-synthax files.
         """
-        # YAML
         try:
-            # test line below in read_writer_data
-            if icon_data.endswith('.yaml') and os.path.exists(icon_data):
-                data = read_yaml_data(icon_data)
-                if data is None:
-                    print(
-                        f'{ Color.RED }[!] { os.path.basename(icon_data) }:'
-                        f'{ Color.END } yaml file is empty.'
+            data = read_yaml_data(icon_data)
+            # print(isinstance(data, dict))
+            # print(icon_data)
+            # Check if there is no syntax(list) and if syntax key is not
+            # empty.
+            if any('syntax' in d for d in data) and data.get('syntax') is not None:
+                for k in data['syntax']:
+                    # print(k['name'])
+                    iconsyntax = f'{ k["name"] }{ SYNTAX_EXTENSION }'
+                    if not os.path.exists(dir_destiny):
+                        os.makedirs(dir_destiny)
+                    iconsyntax_path = os.path.join(dir_destiny, iconsyntax)
+                    dump_yaml_data(k, iconsyntax_path)
+                    print_created_message(
+                        os.path.basename(icon_data),
+                        iconsyntax,
+                        'created',
                     )
-                # print(isinstance(data, dict))
-                # print(icon_data)
-                # Check if there is no syntax(list) and if syntax key is not
-                # empty.
-                elif (
-                    any('syntax' in d for d in data) and data.get('syntax') is not None
-                ):
-                    for k in data['syntax']:
-                        # print(k['name'])
-                        iconsyntax = f'{ k["name"] }{ SYNTAX_EXTENSION }'
-                        if not os.path.exists(dir_destiny):
-                            os.makedirs(dir_destiny)
-                        iconsyntax_path = os.path.join(dir_destiny, iconsyntax)
-                        # print(k)
-                        # YAML file is saving incorrect order. To do: try order.
-                        dump_yaml_data(k, iconsyntax_path)
-                        print(
-                            f'{ Color.CYAN }[!] { os.path.basename(icon_data) }'
-                            f'{ Color.END } -> { Color.YELLOW }{ iconsyntax }'
-                            f'{ Color.END } created.'
-                        )
-                else:
-                    print(
-                        f'{ Color.GREEN }[!] { os.path.basename(icon_data) }: '
-                        f'{ Color.END }file does not have any syntax.'
-                    )
-            elif not icon_data.endswith('.yaml'):
-                print(
-                    f'{ Color.PURPLE }[!] { os.path.basename(icon_data) }'
-                    f'{ Color.END }: file extension is not yaml.'
+            elif icon_data.endswith('.yaml'):
+                print_message(
+                    os.path.basename(icon_data),
+                    'file does not have any syntax.',
+                    color=f'{ Color.GREEN }',
+                    color_end=f'{ Color.END }',
                 )
+                return data
             else:
-                raise ValueError('Yaml file does not exist.')
+                return icon_data
         except FileNotFoundError as error:
             # log here
             print(error.args)
@@ -81,7 +70,7 @@ class IconSyntax:
         Generate all icons sublime-syntax files from data files.
 
         Parameters:
-        dir_icon_data(str) -- path to directory with data files.
+        dir_icon_data (str) -- path to directory with data files.
         dir_destiny (str) -- path destination of icon sublime-synthax files.
         """
         try:

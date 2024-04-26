@@ -10,10 +10,10 @@ def special_chars(filename: str) -> bool:
     Special chars allowed: '_'.
 
     Paramenters:
-    filename(str) -- PNG file name.
+    filename (str) -- PNG file name.
 
     Returns:
-    value(bool) -- condition if file name has or not special characters.
+    value (bool) -- condition if file name has or not special characters.
     """
     regex = re.compile('[@!#$%^&*()<>?/\|}{~:]')
     if regex.search(filename) is None:

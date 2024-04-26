@@ -2,7 +2,7 @@
 import os
 
 from src.build.helpers.color import Color
-from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
+# from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
 
 
 class RenameSVG:

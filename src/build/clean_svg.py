@@ -3,9 +3,10 @@ import re
 
 from collections.abc import Set
 from src.build.helpers.color import Color
+from src.build.helpers.print_message import print_message
 
-from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
-from src.build.utils.svg_unused_list import UNUSED_LIST
+# from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
+# from src.build.utils.svg_unused_list import UNUSED_LIST
 
 
 # file_test = os.path.join(ICONS_TEST_PATH, 'file_type_sql.svg')
@@ -44,17 +45,21 @@ class CleanSVG:
                     # replace string line from unused list
                     for line in replace_list:
                         if line in clean_file:
-                            clean_file = clean_file.replace(line, '')
-                            print(
-                                f'{ Color.CYAN }[!] { basename_svgfile }'
-                                f'{ Color.END }: line { Color.YELLOW }{ line } '
-                                f'{ Color.END }found and being deleted.'
+                            # clean_file = clean_file.replace(line, '')
+                            clean_file = _replace_line(clean_file, line)
+                            print_message(
+                                basename_svgfile,
+                                f'line { Color.YELLOW }{ line }{ Color.END } '
+                                f'found and being deleted.',
+                                color=f'{ Color.CYAN }',
+                                color_end=f'{ Color.END }',
                             )
                         else:
-                            print(
-                                f'{ Color.RED }[!] { basename_svgfile }'
-                                f'{ Color.END }: line { Color.YELLOW }{ line } '
-                                f'{ Color.END }not found.'
+                            print_message(
+                                basename_svgfile,
+                                f'line { Color.YELLOW }{ line }{ Color.END } not found.',
+                                color=f'{ Color.RED }',
+                                color_end=f'{ Color.END }',
                             )
                     # Regex to remove all serif:id="<text>".
                     # If left, svg file may not read in lib, also in finder(macOS)
@@ -64,23 +69,28 @@ class CleanSVG:
                         clean_file = re.sub(
                             r'\s+serif:id=".*?"', '', clean_file, flags=re.DOTALL
                         )
-                        print(
-                            f'{ Color.CYAN }[!] { basename_svgfile }'
-                            f'{ Color.END }: attribute { Color.YELLOW }{ word } '
-                            f'{ Color.END }found and being deleted.'
+                        print_message(
+                            basename_svgfile,
+                            f'attribute { Color.YELLOW }{ word }{ Color.END } '
+                            f'found and being deleted.',
+                            color=f'{ Color.CYAN }',
+                            color_end=f'{ Color.END }',
                         )
                     else:
-                        print(
-                            f'{ Color.RED }[!] { basename_svgfile }'
-                            f'{ Color.END }: attribute { Color.YELLOW }{ word } '
-                            f'{ Color.END }not found.'
+                        print_message(
+                            basename_svgfile,
+                            f'attribute { Color.YELLOW }{ word }{ Color.END } not found.',
+                            color=f'{ Color.RED }',
+                            color_end=f'{ Color.END }',
                         )
                 with open(svgfile, 'w') as f:
                     f.write(clean_file)
             else:
-                print(
-                    f'{ Color.PURPLE }[!] { basename_svgfile }{ Color.END }: '
-                    f'file extension is not svg.'
+                print_message(
+                    basename_svgfile,
+                    'file extension is not svg.',
+                    color=f'{ Color.PURPLE }',
+                    color_end=f'{ Color.END }',
                 )
         except FileNotFoundError as error:
             # log here
@@ -105,6 +115,19 @@ class CleanSVG:
         except FileNotFoundError as error:
             # log here
             print(error.args)
+
+
+def _replace_line(file_info: str, line: str) -> str:
+    """
+    Remove unwanted line from tmPreference file.
+
+    Parameters:
+    file_info (str) -- info of data file.
+
+    Returns:
+    str -- text with line removed if found.
+    """
+    return file_info.replace(line, '')
 
 
 # CleanSVG.clean_svg(file_test, UNUSED_LIST)

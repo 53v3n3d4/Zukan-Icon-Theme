@@ -1,6 +1,6 @@
 class Color:
     """
-    This colors are used to print text colors in command line.
+    These colors are used to print text colors in command line.
 
     Example:
     import Color
