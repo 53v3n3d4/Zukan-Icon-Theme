@@ -1,4 +1,6 @@
 # Ignored directories that will not be add on releases.
 assets/ export-ignore
 examples/ export-ignore
-src/ export-ignore
+src/build/ export-ignore
+src/icons/ export-ignore
+tests/ export-ignore
