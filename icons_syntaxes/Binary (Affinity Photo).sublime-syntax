@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Binary (Affinity Photo)
+scope: binary.afphoto
+hidden: true
+file_extensions:
+- afphoto
+contexts:
+  main: []

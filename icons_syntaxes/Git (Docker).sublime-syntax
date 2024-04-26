@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: Git (Docker)
+scope: text.git.ignore.docker
+hidden: true
+file_extensions:
+- .dockerignore
+contexts:
+  main:
+  - include: scope:text.git.ignore
+    apply_prototype: true

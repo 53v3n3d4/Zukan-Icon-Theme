@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>scope</key>
+	<string>source.ini.pytest, source.python.pytest</string>
+	<key>settings</key>
+	<dict>
+		<key>icon</key>
+		<string>pytest</string>
+	</dict>
+</dict>
+</plist>

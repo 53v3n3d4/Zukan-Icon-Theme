@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+name: JSON (TypeScript)
+scope: source.json.typescript
+hidden: true
+file_extensions:
+- tsconfig.json
+- tsconfig.base.json
+- tsconfig.lib.json
+- tsconfig.spec.json
+contexts:
+  main:
+  - include: scope:source.json
+    apply_prototype: true

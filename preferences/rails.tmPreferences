@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>scope</key>
+	<string>source.ruby.rails, text.html.rails, text.haml, source.css.rails, source.js.rails, source.sql.rails</string>
+	<key>settings</key>
+	<dict>
+		<key>icon</key>
+		<string>rails</string>
+	</dict>
+</dict>
+</plist>

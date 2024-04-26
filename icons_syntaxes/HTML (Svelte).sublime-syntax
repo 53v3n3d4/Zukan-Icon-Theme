@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: HTML (Svelte)
+scope: text.html.svelte
+hidden: true
+file_extensions:
+- svelte
+contexts:
+  main:
+  - include: scope:text.html.basic
+    apply_prototype: true

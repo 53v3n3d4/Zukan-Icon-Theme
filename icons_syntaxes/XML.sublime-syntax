@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: XML
+scope: text.xml
+hidden: true
+file_extensions:
+- xml
+contexts:
+  main: []

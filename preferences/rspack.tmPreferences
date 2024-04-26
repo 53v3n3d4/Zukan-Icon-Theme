@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>scope</key>
+	<string>source.js.rspack, source.ts.rspack</string>
+	<key>settings</key>
+	<dict>
+		<key>icon</key>
+		<string>rspack</string>
+	</dict>
+</dict>
+</plist>

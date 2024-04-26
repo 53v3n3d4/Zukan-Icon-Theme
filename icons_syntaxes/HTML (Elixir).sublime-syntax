@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+name: HTML (Elixir)
+scope: text.html.heex
+hidden: true
+file_extensions:
+- eex
+- html.eex
+- html.leex
+contexts:
+  main:
+  - include: scope:text.html.basic
+    apply_prototype: true

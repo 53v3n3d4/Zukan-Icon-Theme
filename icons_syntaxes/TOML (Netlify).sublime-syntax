@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: TOML (Netlify)
+scope: source.toml.netlify
+hidden: true
+file_extensions:
+- netlify.toml
+contexts:
+  main:
+  - include: scope:source.toml
+    apply_prototype: true

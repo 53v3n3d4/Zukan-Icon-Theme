@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: HTML (Vue)
+scope: text.html.vue
+hidden: true
+file_extensions:
+- vue
+contexts:
+  main:
+  - include: scope:text.html.basic
+    apply_prototype: true

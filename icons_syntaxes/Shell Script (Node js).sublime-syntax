@@ -1,0 +1,12 @@
+%YAML 1.2
+---
+name: Shell Script (Node js)
+scope: source.shell.nodejs
+hidden: true
+file_extensions:
+- .node-version
+- .nvmrc
+contexts:
+  main:
+  - include: scope:source.shell
+    apply_prototype: true

@@ -1,9 +1,0 @@
-%YAML 1.2
----
-name: Plain Text (Prettier)
-scope: text.plain.prettier
-hidden: true
-file_extensions:
-  - .prettierignore
-contexts:
-  main: []

@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: TypeScript (Next js)
+scope: source.ts.nextjs
+hidden: true
+file_extensions:
+- next-env.d.ts
+contexts:
+  main:
+  - include: scope:source.ts
+    apply_prototype: true

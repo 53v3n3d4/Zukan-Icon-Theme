@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+name: JavaScript (Rspack)
+scope: source.js.rspack
+hidden: true
+file_extensions:
+- rspack.config.js
+- rspack.config.cjs
+- rspack.config.mjs
+contexts:
+  main:
+  - include: scope:source.js
+    apply_prototype: true

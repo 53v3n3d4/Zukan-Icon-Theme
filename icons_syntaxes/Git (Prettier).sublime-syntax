@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: Git (Prettier)
+scope: text.git.ignore.prettier
+hidden: true
+file_extensions:
+- .prettierignore
+contexts:
+  main:
+  - include: scope:text.git.ignore
+    apply_prototype: true

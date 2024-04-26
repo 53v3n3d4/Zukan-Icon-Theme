@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+name: Binary (Affinity Publisher)
+scope: binary.afpub
+hidden: true
+file_extensions:
+- afpub
+- aftemplate
+contexts:
+  main: []
