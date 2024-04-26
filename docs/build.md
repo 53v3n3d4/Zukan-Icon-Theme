@@ -9,19 +9,18 @@ $ peotry run build -h
 ```
 
 ## Create icon theme
-Create pngs, sublime-syntax and tmPreferences files for icon.  
+Create pngs, sublime-syntax and tmPreferences files for icons.  
 
 Using argparse commands  
 ```sh
 # Environment need to be activated
-🚥 in ../Zukan-Icon-Theme$  python src/build/scripts.py icon-theme -h
-🚥 in ../Zukan-Icon-Theme$  python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
 # Create all pngs, sublime-syntax and tmPreferences
-🚥 in ../Zukan-Icon-Theme$  python src/build/scripts.py icon-theme -a
-# After doing all data files, this will data files instead of svg files.
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -a
 ```
 
-Using argparse trough poetry scripts  
+Using poetry scripts  
 ```sh
 $ poetry run build icon-theme -f src/data/afdesign.yaml
 # Create all pngs, sublime-syntax and tmPreferences
@@ -43,7 +42,7 @@ Using argparse commands
 # After migrating all data files, this will data files instead of svg files.
 ```
 
-Using argparse trough poetry scripts  
+Using poetry scripts  
 ```sh
 $ poetry run build clean -f src/icons/afdesign.svg
 # Clean all SVGs
@@ -68,10 +67,9 @@ Using argparse commands
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png -f src/data/afdesign.yaml
 # Create all PNGs
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png -a
-# After doing all data files, this will data files instead of svg files.
 ```
 
-Using argparse trough poetry scripts  
+Using poetry scripts  
 ```sh
 $ poetry run build png -f src/data/afdesign.yaml
 # Create all PNGs 
@@ -88,10 +86,9 @@ Using argparse commands
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax -f src/data/afdesign.yaml
 # Create all sublime-syntax files
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax -a
-# After doing all data files, this will data files instead of svg files.
 ```
 
-Using argparse trough poetry scripts  
+Using poetry scripts  
 ```sh
 $ poetry run build syntax -f src/data/afdesign.yaml
 # Create all sublime-syntax files
@@ -106,15 +103,34 @@ Using argparse commands
 # Environment need to be activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference -h
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference -f src/data/afdesign.yaml
-# Create all sublime-syntax files
+# Create all tnPreferences files
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference -a
-# After doing all data files, this will data files instead of svg files.
 ```
 
-Using argparse trough poetry scripts  
+Using poetry scripts  
 ```sh
 $ poetry run build preference -f src/data/afdesign.yaml
-# Create all sublime-syntax files
+# Create all tnPreferences files
 $ poetry run build preference -a
 ```
+
+## Create test files extensions
+Create icons themes files extensions.  
+
+Using argparse commands  
+```sh
+# Environment need to be activated
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme -f src/data/afdesign.yaml
+# Create all test files extensions files
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme -a
+```
+
+Using poetry scripts  
+```sh
+$ poetry run build preference -f src/data/afdesign.yaml
+# Create all test files extensions files
+$ poetry run build preference -a
+```
+
 

@@ -13,6 +13,7 @@ Files and folders that has been renamed, or is going to be, in version v0.2.0.
 | file_type_(name).tmPreferences | (name).tmPreferences  |
 | file_type_(name).svg | (name).svg  |
 | file_type_(name).png | (name).png  |
+| /aliases | /icons_syntaxes |
 
 ## Zukan Icon Theme
 
@@ -22,7 +23,7 @@ Files and folders that has been renamed, or is going to be, in version v0.2.0.
 
 This is a slow work in progress (WIP).  
 
-File type icons for Sublime Text editor.  
+Icons themes for Sublime Text editor.  
 
 This package uses tmPreferences and sublime-syntax files.  
 
@@ -97,9 +98,12 @@ To uninstall manually, go to your Sublime Text folder.
 
 ## Icons that do not work
 
-- xml  
+- Photoshop. It is using image icon
+- XML. It is using markup icon  
 
 ## Notes
+- This package uses tmPreferences and sublime-syntax files, it is heavily based on how [`A File Icon`](https://github.com/SublimeText/AFileIcon) package make icons work  
+- `file-type-icons` is old project name  
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work
 
