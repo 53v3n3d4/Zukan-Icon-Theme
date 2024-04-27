@@ -2,15 +2,17 @@
 
 ## [0.2.0] - 2024
 - Rename project to Zukan Icon Theme
+- Rename folder aliases -> icons_syntaxes
+- Rename files icons PNGs, SVGs, sublime-syntaxes and tmPreferences
 - Add python setup: poetry, pytest, ruff
 
 ### Alias, icons and preferences
-- Add icons: archive, Pipenv, pre-commit, Read the Docs, reStructuredText, tox
-- Add sublime-syntax: Elixir, file type iimage, Webpack
-- Change icons: Audio, Kotlin
-- Change sublime-syntax: Docker, Go, Node js, Prettier, Pyhton, Ruby
+- Add icon-theme: archive, Pipenv, pre-commit, Read the Docs, reStructuredText, tox
+- Add sublime-syntax: Elixir, file type iimage, Jest, Webpack
+- Change icon: Audio, Kotlin, Rspack
+- Change sublime-syntax: CAD, Docker, Go, Node js, Prettier, Pyhton, Ruby
 - Rename icons: Elixir, Fusion, TS, Unity, WebAssembly
-- Rename sublime-syntaxes file names: pytest, Less js, Next js, Node js, OpenGL, pnpm, README, Svelte, Test JSX, Test TSX, Vue
+- Rename sublime-syntax file name: pytest, Less js, Next js, Node js, OpenGL, pnpm, README, Svelte, Test JSX, Test TSX, Vue
 
 ### Build
 - Add data files

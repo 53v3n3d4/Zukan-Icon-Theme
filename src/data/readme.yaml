@@ -6,7 +6,6 @@ preferences:
   scope: text.html.markdown.readme, text.plain.readme
   settings:
     icon: readme
-  # icon rename from file_type_afdesign <png, svg> -> afdesign
 syntax:
   - name: Markdown (README)
     scope: text.html.markdown.readme

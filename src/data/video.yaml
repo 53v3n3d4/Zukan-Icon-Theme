@@ -10,20 +10,20 @@ syntax:
     scope: binary.video
     hidden: true
     file_extensions:
+      - 3gp
+      - 3gpp
       - avi
-      - mp4
-      - mov
-      - mkv
       - h264
+      - ogg
+      - ogm
+      - ogv
+      - mkv
+      - mov
+      - mp4
+      - m4v
+      - mpeg
+      - mpg
       - webm
       - wmv
-      - ogv
-      - ogg
-      - 3gp
-      - m4v
-      - mpg
-      - mpeg
-      - 3gpp
-      - ogm
     contexts:
       main: []

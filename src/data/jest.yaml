@@ -2,7 +2,7 @@
 ---
 name: Jest
 preferences:
-  scope: source.js.jest
+  scope: source.js.jest, source.json.jest, source.ts.jest
   settings:
     icon: jest
 syntax:
@@ -17,4 +17,22 @@ syntax:
     contexts:
       main:
         - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Jest)
+    scope: source.json.jest
+    hidden: true
+    file_extensions:
+      - jest.config.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: TypeScript (Jest)
+    scope: source.ts.jest
+    hidden: true
+    file_extensions:
+      - jest.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
           apply_prototype: true

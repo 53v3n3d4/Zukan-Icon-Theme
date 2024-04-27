@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.js.jest</string>
+	<string>source.js.jest, source.json.jest, source.ts.jest</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

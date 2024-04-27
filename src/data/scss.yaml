@@ -15,3 +15,4 @@ syntax:
       main: []
 
 # Using same logo for SCSS but each has its file.
+# Because tmPreferences also get file name from icon value.
