@@ -1,0 +1,24 @@
+%YAML 1.2
+---
+name: Archive
+preferences:
+  scope: binary.archive
+  settings:
+    icon: archive
+syntax:
+  - name: Binary (Archive)
+    scope: binary.archive
+    hidden: true
+    file_extensions:
+      - 7z
+      - 7zip
+      - gz
+      - pzip
+      - rar
+      - saz
+      - tar
+      - tgz
+      - wim
+      - zip
+    contexts:
+      main: []

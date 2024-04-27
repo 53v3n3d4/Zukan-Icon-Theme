@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Pipenv
+preferences:
+  scope: source.toml.pipenv
+  settings:
+    icon: pipenv
+syntax:
+  - name: TOML (Pipenv)
+    scope: source.toml.pipenv
+    hidden: true
+    file_extensions:
+      - Pipfile
+      - Pipfile.lock
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

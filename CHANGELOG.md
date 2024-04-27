@@ -5,6 +5,7 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Alias, icons and preferences
+- Add icons: archive, Pipenv, pre-commit, Read the Docs, reStructuredText, tox
 - Add sublime-syntax: Elixir, file type iimage, Webpack
 - Change icons: Audio, Kotlin
 - Change sublime-syntax: Docker, Go, Node js, Prettier, Pyhton, Ruby

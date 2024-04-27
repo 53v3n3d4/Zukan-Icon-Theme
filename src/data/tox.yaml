@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: tox
+preferences:
+  scope: source.ini.tox
+  settings:
+    icon: tox
+syntax:
+  - name: INI (tox)
+    scope: source.ini.tox
+    hidden: true
+    file_extensions:
+      - tox.ini
+    contexts:
+      main: []

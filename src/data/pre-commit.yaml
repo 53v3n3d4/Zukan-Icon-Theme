@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: pre-commit
+preferences:
+  scope: source.yaml.precommit
+  settings:
+    icon: pre-commit
+syntax:
+  - name: YAML (pre-commit)
+    scope: source.yaml.precommit
+    hidden: true
+    file_extensions:
+      - .pre-commit.config.yaml
+      - .pre-commit.hooks.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Read the Docs
+preferences:
+  scope: source.yaml.readthedocs
+  settings:
+    icon: readthedocs
+syntax:
+  - name: YAML (Read the Docs)
+    scope: source.yaml.readthedocs
+    hidden: true
+    file_extensions:
+      - .readthedocs.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
