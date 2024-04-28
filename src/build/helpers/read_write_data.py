@@ -1,3 +1,4 @@
+import errno
 import os
 import plistlib
 
@@ -20,7 +21,7 @@ def read_yaml_data(yaml_file: str) -> dict:
     file_data (dict) -- yaml contents
     """
     # Line below is inside function because we load using typ 'safe' to remove
-    # comments. But dump defaut 'rt' to not order keys.
+    # comments. Dump use defaut 'rt' to not order keys.
     yaml = YAML(typ='safe')
     try:
         if yaml_file.endswith('.yaml') and os.path.exists(yaml_file):
@@ -48,13 +49,21 @@ def read_yaml_data(yaml_file: str) -> dict:
             )
             return yaml_file
         else:
-            return yaml_file
-    except FileNotFoundError as error:
-        # log here
-        print(error.args)
+            raise FileNotFoundError(
+                print_message(
+                    os.path.abspath(yaml_file),
+                    'file or directory do not exist.',
+                    color=f'{ Color.RED }',
+                    color_end=f'{ Color.END }',
+                )
+            )
+    except FileNotFoundError:
+        print(errno.ENOENT, os.strerror(errno.ENOENT), yaml_file)
+    except OSError:
+        print(errno.EACCES, os.strerror(errno.EACCES), yaml_file)
 
 
-def dump_yaml_data(file_data, yaml_file):
+def dump_yaml_data(file_data: dict, yaml_file: str):
     """
     Write yaml file (sublime-syntaxes).
 
@@ -69,9 +78,10 @@ def dump_yaml_data(file_data, yaml_file):
     try:
         with open(yaml_file, 'w') as f:
             yaml.dump(file_data, f)
-    except FileNotFoundError as error:
-        # log here
-        print(error.args)
+    except FileNotFoundError:
+        print(errno.ENOENT, os.strerror(errno.ENOENT), yaml_file)
+    except OSError:
+        print(errno.EACCES, os.strerror(errno.EACCES), yaml_file)
 
 
 def dump_plist_data(preferences_dict: dict, plist_file: str):
@@ -88,6 +98,7 @@ def dump_plist_data(preferences_dict: dict, plist_file: str):
         # print(plistlib.dumps(preferences_dict))
         with open(plist_file, 'wb') as f:
             plistlib.dump(preferences_dict, f)
-    except FileNotFoundError as error:
-        # log here
-        print(error.args)
+    except FileNotFoundError:
+        print(errno.ENOENT, os.strerror(errno.ENOENT), plist_file)
+    except OSError:
+        print(errno.EACCES, os.strerror(errno.EACCES), plist_file)

@@ -38,7 +38,7 @@ def print_created_message(
     return print(
         f'{ Color.CYAN }[!] { filepath }{ filename }{ Color.END } '
         f'-> { Color.YELLOW }{ created_filename }{ suffix }'
-        f'{ extension }{ Color.END } { message }.'
+        f'{ extension }{ Color.END } { message }'
     )
 
 

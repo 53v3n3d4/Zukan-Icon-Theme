@@ -2,11 +2,12 @@
 
 import argparse
 import os
+import sys
 
 from src.build.clean_svg import CleanSVG
 from src.build.helpers.color import Color
 from src.build.helpers.create_test_icon_theme import TestIconTheme
-from src.build.helpers.print_message import print_build_message
+from src.build.helpers.print_message import print_build_message, print_message
 from src.build.icons import IconPNG
 from src.build.icons_syntaxes import IconSyntax
 from src.build.preferences import Preference
@@ -276,7 +277,7 @@ def main():
     )
 
     # Namespaces
-    args = parser.parse_args()
+    args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
     # Subparser - subcommands
     parser = args.subparser_name
 
@@ -294,7 +295,7 @@ def main():
             print_build_message('🛠️  Cleaning all SVGs:', args.directory)
             CleanSVG.clean_all_svgs(args.directory, args.list)
         else:
-            print(parser.print_help())
+            _error_message()
     # Icon Theme
     elif parser == 'icon-theme':
         if args.all and not (args.file or args.data):
@@ -337,7 +338,7 @@ def main():
             print_build_message('🛠️  Creating all icons sublime-syntaxes: ', args.syntax)
             IconSyntax.icons_syntaxes(args.data, args.syntax)
         else:
-            print(parser.print_help())
+            _error_message()
     # PNGs
     elif parser == 'png':
         if args.all and not (args.file or args.data):
@@ -352,7 +353,7 @@ def main():
             print_build_message('🛠️  Generating all icons PNGs: ', args.png)
             IconPNG.svg_to_png_all(args.data, args.icon, args.png)
         else:
-            print(parser.print_help())
+            _error_message()
     # tmPreferences
     elif parser == 'preference':
         if args.all and not (args.file or args.data):
@@ -370,7 +371,7 @@ def main():
             )
             Preference.preferences_all(args.data, args.tmpreference)
         else:
-            print(parser.print_help())
+            _error_message()
     # Sublime-syntaxes
     elif parser == 'syntax':
         if args.all and not (args.file or args.data):
@@ -386,7 +387,7 @@ def main():
             print_build_message('🛠️  Creating all icons sublime-syntaxes: ', args.syntax)
             IconSyntax.icons_syntaxes(args.data, args.syntax)
         else:
-            print(parser.print_help())
+            _error_message()
     # Tests icons themes
     elif parser == 'test-icon-theme':
         if args.all and not (args.file or args.data):
@@ -402,9 +403,18 @@ def main():
             print_build_message('🛠️  Creating all icons tests files: ', args.testspath)
             TestIconTheme.create_icons_files(args.data, args.testspath)
         else:
-            print(parser.print_help())
+            _error_message()
     else:
-        print(parser.print_help())
+        _error_message()
+
+
+def _error_message():
+    print_message(
+        'Error',
+        'You need pass an argument. Use --help to see options.',
+        color=f'{ Color.RED }',
+        color_end=f'{ Color.END }',
+    )
 
 
 if __name__ == '__main__':

@@ -1,6 +1,6 @@
+import errno
 import os
 
-# from src.build.helpers.clean_data import clean_yaml_tabs
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import dump_yaml_data, read_yaml_data
@@ -49,7 +49,7 @@ class IconSyntax:
                     print_created_message(
                         os.path.basename(icon_data),
                         iconsyntax,
-                        'created',
+                        'created.',
                     )
             elif icon_data.endswith('.yaml'):
                 print_message(
@@ -61,9 +61,10 @@ class IconSyntax:
                 return data
             else:
                 return icon_data
-        except FileNotFoundError as error:
-            # log here
-            print(error.args)
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), icon_data)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), icon_data)
 
     def icons_syntaxes(dir_icon_data: str, dir_destiny: str):
         """
@@ -80,9 +81,10 @@ class IconSyntax:
                 # print(icon_data_path)
                 IconSyntax.icon_syntax(icon_data_path, dir_destiny)
             return files_in_dir
-        except FileNotFoundError as error:
-            # log here
-            print(error.args, 'Icons error')
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), dir_icon_data)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), dir_icon_data)
 
 
 # IconSyntax.icon_syntax(file_test, ICONS_SYNTAXES_TEST_PATH)

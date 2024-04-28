@@ -25,9 +25,6 @@ def filepath(url: str) -> str:
 
 # Build paths
 
-ALIASES_PATH = filepath('../../../aliases')
-# print('Aliases path is:' + os.path.realpath(ALIASES_PATH))
-
 ASSETS_PATH = filepath('../../../assets')
 # print('Assets path is:' + os.path.realpath(ASSETS_PATH))
 

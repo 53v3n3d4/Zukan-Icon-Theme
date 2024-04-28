@@ -5,11 +5,11 @@ scope: text.plain.cad
 hidden: true
 file_extensions:
 - cad
+- mtl
+- obj
 - stl
 - stp
 - step
 - wrl
-- obj
-- mtl
 contexts:
   main: []

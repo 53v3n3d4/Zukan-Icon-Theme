@@ -1,7 +1,7 @@
+import errno
 import os
 
 from cairosvg import svg2png
-from src.build.helpers.clean_data import clean_yaml_tabs
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import (
     print_created_message,
@@ -105,35 +105,27 @@ class IconPNG:
                         print_created_message(
                             os.path.basename(icon_data),
                             pngfile_base,
-                            'done',
+                            'done.',
                             filename=f' [{ svgfile }]',
                             suffix=f'{ attribute["suffix"] }',
                             extension=f'{ PNG_EXTENSION }',
                         )
-                elif not svgfile.endswith('.svg'):
-                    print_message(
-                        svgfile,
-                        'file extension is not svg.',
-                        color=f'{ Color.RED }',
-                        color_end=f'{ Color.END }',
-                    )
-                elif not os.path.exists(svgfile_path):
-                    # Ansi color not working
-                    raise FileNotFoundError(
-                        f'[!] {svgfile}: origin directory { dir_origin } or file '
-                        f'does not exist.'
-                    )
                 else:
-                    raise ValueError(
-                        f'{ Color.RED }{ svgfile }{ Color.END }: icon svg file '
-                        f'does not exist.'
+                    raise FileNotFoundError(
+                        print_message(
+                            svgfile,
+                            'file or directory do not exist.',
+                            color=f'{ Color.RED }',
+                            color_end=f'{ Color.END }',
+                        )
                     )
                 return data
             else:
                 return icon_data
-        except FileNotFoundError as error:
-            # log here
-            print(error.args, 'Icons Error')
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), icon_data)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), icon_data)
 
     def svg_to_png_all(dir_icon_data: str, dir_origin: str, dir_destiny: str):
         """
@@ -152,9 +144,10 @@ class IconPNG:
                 # print(icon_data_path)
                 IconPNG.svg_to_png(icon_data_path, dir_origin, dir_destiny)
             return files_in_dir
-        except FileNotFoundError as error:
-            # log here
-            print(error.args, 'Icons error')
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), dir_icon_data)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), dir_icon_data)
 
 
 # IconPNG.svg_to_png(file_test, ICONS_TEST_NOT_EXIST_PATH, ICONS_PNG_TEST_PATH)

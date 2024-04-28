@@ -1,3 +1,4 @@
+import errno
 import os
 import re
 
@@ -92,9 +93,10 @@ class CleanSVG:
                     color=f'{ Color.PURPLE }',
                     color_end=f'{ Color.END }',
                 )
-        except FileNotFoundError as error:
-            # log here
-            print(error.args)
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), svgfile)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), svgfile)
 
     def clean_all_svgs(foldername: str, replace_list: Set):
         """
@@ -112,9 +114,10 @@ class CleanSVG:
                 # print(svg)
             # print(svgs_in_dir)
             return svgs_in_dir
-        except FileNotFoundError as error:
-            # log here
-            print(error.args)
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), foldername)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), foldername)
 
 
 def _replace_line(file_info: str, line: str) -> str:

@@ -1,7 +1,11 @@
+import errno
 import os
 
-from src.build.helpers.clean_data import clean_yaml_tabs
 from src.build.helpers.color import Color
+from src.build.helpers.print_message import (
+    print_created_message,
+    print_message,
+)
 from src.build.helpers.read_write_data import read_yaml_data
 # from src.build.utils.build_dir_paths import DATA_PATH, ICON_THEME_TEST_PATH
 
@@ -22,55 +26,42 @@ class TestIconTheme:
         icon_data (str) -- path to data file.
         dir_destiny (str) -- path destination of test extensions files.
         """
-        # YAML
         try:
-            # test line below in read_writer_data
-            if icon_data.endswith('.yaml') and os.path.exists(icon_data):
-                data = clean_yaml_tabs(icon_data)
-                data = read_yaml_data(icon_data)
-                if data is None:
-                    print(
-                        f'{ Color.RED }[!] { os.path.basename(icon_data) }:'
-                        f'{ Color.END } yaml file is empty.'
-                    )
-                elif (
-                    any('syntax' in d for d in data) and data.get('syntax') is not None
-                ):
-                    for k in data['syntax']:
-                        # print(k['file_extensions'])
-                        for e in k['file_extensions']:
-                            # print(e)
-                            if e.startswith('.'):
-                                test_file = f'{ e }'
-                                # print(test_file)
-                            else:
-                                test_file = f'{ e }.{ e }'
-                                # print(test_file)
-                            if not os.path.exists(dir_destiny):
-                                os.makedirs(dir_destiny)
-                            test_file_path = os.path.join(dir_destiny, test_file)
-                            with open(test_file_path, 'w'):
-                                pass
-                            print(
-                                f'{ Color.CYAN }[!] { os.path.basename(icon_data) }'
-                                f'{ Color.END } -> { Color.YELLOW }{ e }'
-                                f'{ Color.END } created.'
-                            )
-                else:
-                    print(
-                        f'{ Color.GREEN }[!] { os.path.basename(icon_data) }: '
-                        f'{ Color.END }file does not have any file extension.'
-                    )
-            elif not icon_data.endswith('.yaml'):
-                print(
-                    f'{ Color.PURPLE }[!] { os.path.basename(icon_data) }'
-                    f'{ Color.END }: file extension is not yaml.'
+            data = read_yaml_data(icon_data)
+            if any('syntax' in d for d in data) and data.get('syntax') is not None:
+                for k in data['syntax']:
+                    # print(k['file_extensions'])
+                    for e in k['file_extensions']:
+                        # print(e)
+                        if e.startswith('.'):
+                            test_file = f'{ e }'
+                            # print(test_file)
+                        else:
+                            test_file = f'{ e }.{ e }'
+                            # print(test_file)
+                        if not os.path.exists(dir_destiny):
+                            os.makedirs(dir_destiny)
+                        test_file_path = os.path.join(dir_destiny, test_file)
+                        with open(test_file_path, 'w'):
+                            pass
+                        print_created_message(
+                            os.path.basename(icon_data),
+                            e,
+                            'created.',
+                        )
+            elif icon_data.endswith('.yaml'):
+                print_message(
+                    os.path.basename(icon_data),
+                    'yaml file does not have any file extension key or value.',
+                    color=f'{ Color.GREEN }',
+                    color_end=f'{ Color.END }',
                 )
             else:
-                raise ValueError('Yaml file does not exist.')
-        except FileNotFoundError as error:
-            # log here
-            print(error.args)
+                return icon_data
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), icon_data)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), icon_data)
 
     def create_icons_files(dir_icon_data: str, dir_destiny: str):
         """
@@ -87,9 +78,10 @@ class TestIconTheme:
                 # print(icon_data_path)
                 TestIconTheme.create_icon_file(icon_data_path, dir_destiny)
             return files_in_dir
-        except FileNotFoundError as error:
-            # log here
-            print(error.args)
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), dir_icon_data)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), dir_icon_data)
 
 
 # TestIconTheme.create_icon_file(file_test, ICON_THEME_TEST_PATH)

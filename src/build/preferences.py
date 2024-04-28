@@ -1,6 +1,7 @@
+import errno
 import os
 
-from src.build.helpers.clean_data import clean_plist_tag, clean_yaml_tabs
+from src.build.helpers.clean_data import clean_plist_tag
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import (
     print_created_message,
@@ -72,7 +73,7 @@ class Preference:
                 print_created_message(
                     os.path.basename(icon_data),
                     iconpreferences,
-                    'created',
+                    'created.',
                 )
                 # Clean tag <!DOCTYPE plist>. It will always exist after dump.
                 clean_plist_tag(iconpreferences_path)
@@ -88,9 +89,10 @@ class Preference:
                 return data
             else:
                 return icon_data
-        except FileNotFoundError as error:
-            # log here
-            print(error.args)
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), icon_data)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), icon_data)
 
     def preferences_all(dir_icon_data: str, dir_destiny: str):
         """
@@ -107,9 +109,10 @@ class Preference:
                 # print(icon_data_path)
                 Preference.preferences(icon_data_path, dir_destiny)
             return files_in_dir
-        except FileNotFoundError as error:
-            # log here
-            print(error.args, 'Icons error')
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), dir_icon_data)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), dir_icon_data)
 
 
 # Preference.preferences(file_test, PREFERENCES_TEST_PATH)
