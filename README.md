@@ -54,7 +54,7 @@ If your theme do not have settings for icon_file_type, the settings below has a 
   {
     "class": "icon_file_type",
     "parents": [{"class": "tree_row", "attributes": ["hover"]}],
-    "layer0.opacity": 0.6
+    "layer0.opacity": 1.0
   },
   {
     "class": "icon_file_type",
@@ -80,26 +80,26 @@ If your theme does have setting for icon_file_type, the setting below is enough.
 The only way to install this icons now is manually.
 
 To install manually,
-- Download the [latest release](https://github.com/53v3n3d4/file-type-icons/releases) or clone this repo.
+- Download the [latest release](https://github.com/53v3n3d4/Zukan-Icon-Theme/releases) or clone this repo.
 - Menu `Sublime Text > Preferences > Browse packages...` to open destination folder
-- Then unzip `file-type-icons zip file` inside `Packages` folder. Or clone the repo inside `Packages`folder.
+- Then unzip `zukan-icon-theme zip file` inside `Packages` folder. Or clone the repo inside `Packages`folder.
 
 ## Uninstall
 
 To uninstall manually, go to your Sublime Text folder.
 - Menu `Sublime Text > Preferences > Browse packages...`
-- Then delete `file-type-icons` inside `Packages` folder
+- Then delete `Zukan-Icon-Theme` inside `Packages` folder
 
 ## Icons that works depending on folder position
 
 - Poetry  
-- Svg  
+- SVG  
 - sublime-theme, sublime-color-scheme, sublime-settings... mostly sublime (Exceptions like `hidden-theme` works not depending on this condition)  
 
 ## Icons that do not work
 
-- Photoshop. It is using image icon
-- XML. It is using markup icon  
+- Photoshop. ST use `file_type_image` icon
+- XML. ST use `file_type_markup` icon  
 
 ## Notes
 - This package uses tmPreferences and sublime-syntax files, it is heavily based on how [`A File Icon`](https://github.com/SublimeText/AFileIcon) package make icons work  

@@ -14,17 +14,17 @@ Create pngs, sublime-syntax and tmPreferences files for icons.
 Using argparse commands  
 ```sh
 # Environment need to be activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
 # Create all pngs, sublime-syntax and tmPreferences
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -a
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build icon-theme -f src/data/afdesign.yaml
 # Create all pngs, sublime-syntax and tmPreferences
-$ poetry run build icon-theme -a
+$ poetry run build icon-theme --all
 ```
 
 ## Clean SVG
@@ -35,10 +35,10 @@ Affinity designer program, used to export SVGs, produce them with unsed tags tha
 Using argparse commands  
 ```sh
 # Environment need to be activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean -f src/icons/afdesign.svg
 # Clean all SVGs
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean -a
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean --all
 # After migrating all data files, this will data files instead of svg files.
 ```
 
@@ -46,7 +46,7 @@ Using poetry scripts
 ```sh
 $ poetry run build clean -f src/icons/afdesign.svg
 # Clean all SVGs
-$ poetry run build clean -a
+$ poetry run build clean --all
 ```
 
 ## Generate PNGs
@@ -63,17 +63,17 @@ Create PNG icons in 3 sizes, Size and suffix details comes from png_details.py.
 Using argparse commands  
 ```sh
 # Environment need to be activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png -f src/data/afdesign.yaml
 # Create all PNGs
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png -a
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build png -f src/data/afdesign.yaml
 # Create all PNGs 
-$ poetry run build png -a
+$ poetry run build png --all
 ```
 
 ## Create sublime-syntaxes
@@ -82,17 +82,17 @@ Create icons sublime-syntaxes.
 Using argparse commands  
 ```sh
 # Environment need to be activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax -f src/data/afdesign.yaml
 # Create all sublime-syntax files
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax -a
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build syntax -f src/data/afdesign.yaml
 # Create all sublime-syntax files
-$ poetry run build syntax -a
+$ poetry run build syntax --all
 ```
 
 ## Create tmPreferences
@@ -101,36 +101,41 @@ Create icons tmPreferences.
 Using argparse commands  
 ```sh
 # Environment need to be activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference -f src/data/afdesign.yaml
 # Create all tnPreferences files
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference -a
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build preference -f src/data/afdesign.yaml
 # Create all tnPreferences files
-$ poetry run build preference -a
+$ poetry run build preference --all
 ```
 
 ## Create test files extensions
 Create icons themes files extensions.  
 
+The test files will be created inside folder `tests_icon_theme`.  
+
 Using argparse commands  
 ```sh
 # Environment need to be activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme -f src/data/afdesign.yaml
 # Create all test files extensions files
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme -a
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build preference -f src/data/afdesign.yaml
 # Create all test files extensions files
-$ poetry run build preference -a
+$ poetry run build preference --all
 ```
+
+> Creating test files will raise warnings on ST console for files that ST use like sublime-syntax.sublime-syntax.
+
 
 
