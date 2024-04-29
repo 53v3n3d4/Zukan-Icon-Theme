@@ -28,9 +28,7 @@ def read_yaml_data(yaml_file: str) -> dict:
             clean_yaml_tabs(yaml_file)
             with open(yaml_file) as f:
                 file_data = yaml.load(f)
-                # print( f'Yaml file, name is: { file_data["name"] }')
                 # yaml.dump(file_data, sys.stdout)
-                # return file_data
             if file_data is None:
                 print_message(
                     os.path.basename(yaml_file),
@@ -58,9 +56,9 @@ def read_yaml_data(yaml_file: str) -> dict:
                 )
             )
     except FileNotFoundError:
-        print(errno.ENOENT, os.strerror(errno.ENOENT), yaml_file)
+        print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + yaml_file)
     except OSError:
-        print(errno.EACCES, os.strerror(errno.EACCES), yaml_file)
+        print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + yaml_file)
 
 
 def dump_yaml_data(file_data: dict, yaml_file: str):
@@ -79,9 +77,9 @@ def dump_yaml_data(file_data: dict, yaml_file: str):
         with open(yaml_file, 'w') as f:
             yaml.dump(file_data, f)
     except FileNotFoundError:
-        print(errno.ENOENT, os.strerror(errno.ENOENT), yaml_file)
+        print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + yaml_file)
     except OSError:
-        print(errno.EACCES, os.strerror(errno.EACCES), yaml_file)
+        print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + yaml_file)
 
 
 def dump_plist_data(preferences_dict: dict, plist_file: str):
@@ -99,6 +97,6 @@ def dump_plist_data(preferences_dict: dict, plist_file: str):
         with open(plist_file, 'wb') as f:
             plistlib.dump(preferences_dict, f)
     except FileNotFoundError:
-        print(errno.ENOENT, os.strerror(errno.ENOENT), plist_file)
+        print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + plist_file)
     except OSError:
-        print(errno.EACCES, os.strerror(errno.EACCES), plist_file)
+        print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + plist_file)

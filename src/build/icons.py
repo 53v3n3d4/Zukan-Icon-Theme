@@ -123,9 +123,9 @@ class IconPNG:
             else:
                 return icon_data
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), icon_data)
+            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), icon_data)
+            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + icon_data)
 
     def svg_to_png_all(dir_icon_data: str, dir_origin: str, dir_destiny: str):
         """
@@ -145,9 +145,9 @@ class IconPNG:
                 IconPNG.svg_to_png(icon_data_path, dir_origin, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), dir_icon_data)
+            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + dir_icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), dir_icon_data)
+            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + dir_icon_data)
 
 
 # IconPNG.svg_to_png(file_test, ICONS_TEST_NOT_EXIST_PATH, ICONS_PNG_TEST_PATH)

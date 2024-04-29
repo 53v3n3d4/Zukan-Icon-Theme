@@ -14,15 +14,13 @@ def clean_plist_tag(file: str):
     try:
         with open(file, 'r+') as f:
             clean_file = f.read()
-            # print(clean_file)
             clean_file = _replace_line(clean_file)
-            # print(clean_file)
         with open(file, 'w') as f:
             f.write(clean_file)
     except FileNotFoundError:
-        print(errno.ENOENT, os.strerror(errno.ENOENT), file)
+        print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + file)
     except OSError:
-        print(errno.EACCES, os.strerror(errno.EACCES), file)
+        print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + file)
 
 
 def _replace_line(file_info: str) -> str:
@@ -53,9 +51,9 @@ def clean_yaml_tabs(file: str):
         with open(file, 'w') as f:
             f.write(clean_file)
     except FileNotFoundError:
-        print(errno.ENOENT, os.strerror(errno.ENOENT), file)
+        print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + file)
     except OSError:
-        print(errno.EACCES, os.strerror(errno.EACCES), file)
+        print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + file)
 
 
 def _replace_tabs(file_info: str) -> str:

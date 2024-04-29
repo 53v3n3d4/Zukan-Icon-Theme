@@ -66,6 +66,15 @@ class TestCleanPlistTag:
         result = _replace_line(test_line)
         assert result != test_removed
 
+    @pytest.fixture(autouse=True)
+    def test_write_plist_file_error(self, caplog):
+        caplog.clear()
+        with patch('build.helpers.clean_data.open') as mock_open:
+            mock_open.side_effect = OSError
+            clean_plist_tag('tests/build/files/plist.plist')
+        # This is capturing nothing, but expect a 13 Permission Error
+        assert caplog.record_tuples == []
+
 
 class TestCleanYamlTabs:
     @pytest.mark.parametrize('a, expected', [(test_yaml_file, test_yaml_expected)])
@@ -79,3 +88,12 @@ class TestCleanYamlTabs:
         test_spc_file = '  Text foo bar'
         result = _replace_tabs(test_tab_file)
         assert result == test_spc_file
+
+    @pytest.fixture(autouse=True)
+    def test_write_yaml_file_error(self, caplog):
+        caplog.clear()
+        with patch('build.helpers.clean_data.open') as mock_open:
+            mock_open.side_effect = OSError
+            clean_yaml_tabs('tests/build/files/yaml.yaml')
+        # This is capturing nothing, but expect a 13 Permission Error
+        assert caplog.record_tuples == []

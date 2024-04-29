@@ -62,9 +62,9 @@ class IconSyntax:
             else:
                 return icon_data
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), icon_data)
+            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), icon_data)
+            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + icon_data)
 
     def icons_syntaxes(dir_icon_data: str, dir_destiny: str):
         """
@@ -82,9 +82,9 @@ class IconSyntax:
                 IconSyntax.icon_syntax(icon_data_path, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), dir_icon_data)
+            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + dir_icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), dir_icon_data)
+            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + dir_icon_data)
 
 
 # IconSyntax.icon_syntax(file_test, ICONS_SYNTAXES_TEST_PATH)

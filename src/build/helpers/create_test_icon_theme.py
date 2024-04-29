@@ -59,9 +59,9 @@ class TestIconTheme:
             else:
                 return icon_data
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), icon_data)
+            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), icon_data)
+            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + icon_data)
 
     def create_icons_files(dir_icon_data: str, dir_destiny: str):
         """
@@ -79,9 +79,9 @@ class TestIconTheme:
                 TestIconTheme.create_icon_file(icon_data_path, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), dir_icon_data)
+            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + dir_icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), dir_icon_data)
+            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + dir_icon_data)
 
 
 # TestIconTheme.create_icon_file(file_test, ICON_THEME_TEST_PATH)

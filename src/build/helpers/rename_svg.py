@@ -1,7 +1,12 @@
 # Delete this after testing renaming files and folders.
+import errno
 import os
 
 from src.build.helpers.color import Color
+from src.build.helpers.print_message import (
+    print_created_message,
+    print_message,
+)
 # from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
 
 
@@ -24,19 +29,22 @@ class RenameSVG:
                 )
                 # print(new_name)
                 os.rename(previous_name, new_name)
-                print(
-                    f'{ Color.CYAN }[!] { name }{ Color.END } ->'
-                    f' { Color.YELLOW }{ new_name }{ Color.END }'
+                print_created_message(
+                    name,
+                    new_name,
+                    '.',
                 )
             else:
-                print(
-                    f'{ Color.PURPLE }[!] { name }{ Color.END }: file '
-                    f'extension is not svg.'
+                print_message(
+                    name,
+                    'file extension is not svg.',
+                    color=f'{ Color.PURPLE }',
+                    color_end=f'{ Color.END }',
                 )
-        except FileNotFoundError as error:
-            # log here
-            # print('File could not be found.')
-            print(error.args)
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + name)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + name)
 
     def rename_svgs_in_dir(dir_origin: str, dir_destiny: str):
         """
@@ -52,9 +60,10 @@ class RenameSVG:
             for name in files_in_dir:
                 RenameSVG.rename_svg(name, dir_origin, dir_destiny)
             return files_in_dir
-        except FileNotFoundError as error:
-            # log here
-            print(error.args)
+        except FileNotFoundError:
+            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + dir_origin)
+        except OSError:
+            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + dir_origin)
 
 
 # RenameSVG.rename_svg('file_type_afdesign.svg', ICONS_TEST_PATH, ICONS_TEST_PATH)
