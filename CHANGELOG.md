@@ -7,7 +7,7 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Alias, icons and preferences
-- Add icon-theme: archive, Pipenv, pre-commit, Read the Docs, reStructuredText, tox
+- Add icon-theme: archive, mypy, Pipenv, pre-commit, Read the Docs, reStructuredText, tox
 - Add sublime-syntax: Elixir, file type iimage, Jest, Webpack
 - Change icon: Audio, Kotlin, Rspack
 - Change sublime-syntax: CAD, Docker, Go, Node js, Prettier, Pyhton, Ruby

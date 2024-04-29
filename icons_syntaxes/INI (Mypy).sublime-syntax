@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+name: INI (Mypy)
+scope: source.ini.mypy
+hidden: true
+file_extensions:
+- .mypy.ini
+- mypy.ini
+contexts:
+  main: []

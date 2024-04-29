@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+name: my[py]
+preferences:
+  scope: source.ini.mypy
+  settings:
+    icon: mypy
+syntax:
+  - name: INI (Mypy)
+    scope: source.ini.mypy
+    hidden: true
+    file_extensions:
+      - .mypy.ini
+      - mypy.ini
+    contexts:
+      main: []
