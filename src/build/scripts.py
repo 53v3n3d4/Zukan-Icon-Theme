@@ -1,24 +1,26 @@
 #!/usr/bin/env python
 
 import argparse
-import os
 import sys
 
 from src.build.clean_svg import CleanSVG
 from src.build.helpers.color import Color
 from src.build.helpers.create_test_icon_theme import TestIconTheme
 from src.build.helpers.print_message import print_build_message, print_message
+from src.build.helpers.read_write_data import read_pickle_data
+from src.build.helpers.zukan_syntaxes import ZukanSyntax
 from src.build.icons import IconPNG
 from src.build.icons_syntaxes import IconSyntax
 from src.build.preferences import Preference
 from src.build.utils.build_dir_paths import (
     # ASSETS_PATH,
     DATA_PATH,
+    ICON_THEME_TEST_PATH,
     ICONS_PNG_PATH,
     ICONS_SVG_PATH,
     ICONS_SYNTAXES_PATH,
     PREFERENCES_PATH,
-    ICON_THEME_TEST_PATH,
+    ZUKAN_SYNTAXES_DATA_FILE,
 )
 from src.build.utils.svg_unused_list import UNUSED_LIST
 
@@ -26,7 +28,7 @@ from src.build.utils.svg_unused_list import UNUSED_LIST
 def main():
     # from https://gist.github.com/jirihnidek/3f5d36636198e852280f619847d22d9e
     # Create the top-level parser
-    parser = argparse.ArgumentParser(prog=f'{ Color.CYAN }Builder scripts{ Color.END }')
+    parser = argparse.ArgumentParser(prog=f'{ Color.CYAN }Build script{ Color.END }')
     # parser.add_argument('-d', '--debug', action='store_true', help='debug flag')
 
     # Create sub-parser
@@ -97,7 +99,7 @@ def main():
     parser_icontheme.add_argument(
         '-i',
         '--icon',
-        default=os.path.abspath(ICONS_SVG_PATH),
+        default=ICONS_SVG_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to icons SVGs folder.{ Color.END }',
@@ -105,7 +107,7 @@ def main():
     parser_icontheme.add_argument(
         '-p',
         '--png',
-        default=os.path.abspath(ICONS_PNG_PATH),
+        default=ICONS_PNG_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
@@ -113,7 +115,7 @@ def main():
     parser_icontheme.add_argument(
         '-s',
         '--syntax',
-        default=os.path.abspath(ICONS_SYNTAXES_PATH),
+        default=ICONS_SYNTAXES_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
@@ -121,7 +123,7 @@ def main():
     parser_icontheme.add_argument(
         '-t',
         '--tmpreference',
-        default=os.path.abspath(PREFERENCES_PATH),
+        default=PREFERENCES_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for tmPreferences files.{ Color.END }',
@@ -156,7 +158,7 @@ def main():
     parser_png.add_argument(
         '-i',
         '--icon',
-        default=os.path.abspath(ICONS_SVG_PATH),
+        default=ICONS_SVG_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to icons SVGs folder.{ Color.END }',
@@ -164,7 +166,7 @@ def main():
     parser_png.add_argument(
         '-p',
         '--png',
-        default=os.path.abspath(ICONS_PNG_PATH),
+        default=ICONS_PNG_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
@@ -199,7 +201,7 @@ def main():
     parser_preference.add_argument(
         '-t',
         '--tmpreference',
-        default=os.path.abspath(PREFERENCES_PATH),
+        default=PREFERENCES_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for tmPreferences files.{ Color.END }',
@@ -234,7 +236,7 @@ def main():
     parser_syntax.add_argument(
         '-s',
         '--syntax',
-        default=os.path.abspath(ICONS_SYNTAXES_PATH),
+        default=ICONS_SYNTAXES_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
@@ -270,10 +272,30 @@ def main():
     parser_test_icon_theme.add_argument(
         '-tp',
         '--testspath',
-        default=os.path.abspath(ICON_THEME_TEST_PATH),
+        default=ICON_THEME_TEST_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
+    )
+
+    # Create the parser for the "zukan-syntax" sub-command
+    parser_zukan_syntax = subparsers.add_parser(
+        'zukan-syntax',
+        help=f'{ Color.YELLOW }Create zukan syntax data file.{ Color.END }',
+    )
+    parser_zukan_syntax.add_argument(
+        '-w',
+        '--write',
+        action='store_true',
+        required=False,
+        help=f'{ Color.YELLOW }Dump zukan syntaxes data file.{ Color.END }',
+    )
+    parser_zukan_syntax.add_argument(
+        '-r',
+        '--read',
+        action='store_true',
+        required=False,
+        help=f'{ Color.YELLOW }Print zukan syntaxes data file.{ Color.END }',
     )
 
     # Namespaces
@@ -284,9 +306,7 @@ def main():
     # Clean
     if parser == 'clean':
         if args.all and not (args.file or args.directory):
-            print_build_message(
-                '🛠️  Cleaning all SVGs files: ', os.path.abspath(ICONS_SVG_PATH)
-            )
+            print_build_message('🛠️  Cleaning all SVGs files: ', ICONS_SVG_PATH)
             CleanSVG.clean_all_svgs(ICONS_SVG_PATH, args.list)
         elif args.file and not (args.all or args.directory):
             print_build_message('🛠️  Cleaning SVG:', args.file)
@@ -303,18 +323,16 @@ def main():
                 f'{ Color.BLUE }[⚙] Starting building all icons PNGs, sublime-syntaxes '
                 f'and tmPreferences.{ Color.END }'
             )
-            print_build_message(
-                '🛠️  Generating all icons PNGs: ', os.path.abspath(ICONS_PNG_PATH)
-            )
+            print_build_message('🛠️  Generating all icons PNGs: ', ICONS_PNG_PATH)
             IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png)
             print_build_message(
                 '🛠️  Creating all icons tmPreferences:',
-                os.path.abspath(PREFERENCES_PATH),
+                PREFERENCES_PATH,
             )
             Preference.preferences_all(DATA_PATH, args.tmpreference)
             print_build_message(
                 '🛠️  Creating all icons sublime-syntaxes: ',
-                os.path.abspath(ICONS_SYNTAXES_PATH),
+                ICONS_SYNTAXES_PATH,
             )
             IconSyntax.icons_syntaxes(DATA_PATH, args.syntax)
         elif args.file and not (args.all or args.data):
@@ -342,9 +360,7 @@ def main():
     # PNGs
     elif parser == 'png':
         if args.all and not (args.file or args.data):
-            print_build_message(
-                '🛠️  Generating all icons PNGs:', os.path.abspath(ICONS_PNG_PATH)
-            )
+            print_build_message('🛠️  Generating all icons PNGs:', ICONS_PNG_PATH)
             IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png)
         elif args.file and not (args.all or args.data):
             print_build_message('🛠️  Generating icon PNGs: ', args.png)
@@ -359,7 +375,7 @@ def main():
         if args.all and not (args.file or args.data):
             print_build_message(
                 '🛠️  Creating all icons tmPreferences: ',
-                os.path.abspath(PREFERENCES_PATH),
+                PREFERENCES_PATH,
             )
             Preference.preferences_all(DATA_PATH, args.tmpreference)
         elif args.file and not (args.all or args.data):
@@ -377,7 +393,7 @@ def main():
         if args.all and not (args.file or args.data):
             print_build_message(
                 '🛠️  Creating all icons sublime-syntaxes: ',
-                os.path.abspath(ICONS_SYNTAXES_PATH),
+                ICONS_SYNTAXES_PATH,
             )
             IconSyntax.icons_syntaxes(DATA_PATH, args.syntax)
         elif args.file and not (args.all or args.data):
@@ -393,7 +409,7 @@ def main():
         if args.all and not (args.file or args.data):
             print_build_message(
                 '🛠️  Creating all icons tests files: ',
-                os.path.abspath(ICON_THEME_TEST_PATH),
+                ICON_THEME_TEST_PATH,
             )
             TestIconTheme.create_icons_files(DATA_PATH, args.testspath)
         elif args.file and not (args.all or args.data):
@@ -404,6 +420,23 @@ def main():
             TestIconTheme.create_icons_files(args.data, args.testspath)
         else:
             _error_message()
+    # Zukan syntax
+    elif parser == 'zukan-syntax':
+        if args.write and not args.read:
+            print_build_message(
+                '🛠️  Writing zukan syntaxes data: ',
+                ZUKAN_SYNTAXES_DATA_FILE,
+            )
+            ZukanSyntax.write_zukan_data(DATA_PATH)
+        elif args.read and not args.write:
+            print_build_message(
+                '🛠️  Printing zukan syntaxes data: ',
+                ZUKAN_SYNTAXES_DATA_FILE,
+            )
+            read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
+        else:
+            _error_message()
+
     else:
         _error_message()
 

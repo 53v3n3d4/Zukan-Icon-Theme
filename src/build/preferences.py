@@ -1,11 +1,12 @@
-import errno
 import os
 
 from src.build.helpers.clean_data import clean_plist_tag
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import (
     print_created_message,
+    print_filenotfounderror,
     print_message,
+    print_oserror,
     print_remove_tag,
 )
 from src.build.helpers.read_write_data import dump_plist_data, read_yaml_data
@@ -90,9 +91,9 @@ class Preference:
             else:
                 return icon_data
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + icon_data)
+            print_filenotfounderror(icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + icon_data)
+            print_oserror(icon_data)
 
     def preferences_all(dir_icon_data: str, dir_destiny: str):
         """
@@ -110,9 +111,9 @@ class Preference:
                 Preference.preferences(icon_data_path, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + dir_icon_data)
+            print_filenotfounderror(dir_icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + dir_icon_data)
+            print_oserror(dir_icon_data)
 
 
 # Preference.preferences(file_test, PREFERENCES_TEST_PATH)

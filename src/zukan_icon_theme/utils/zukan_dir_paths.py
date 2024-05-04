@@ -14,11 +14,11 @@ def filepath(url: str) -> str:
     url (str) -- destination path.
 
     Returns:
-    FILEPATH (str) -- script directory + url path.
+    fp (str) -- script directory + url path.
     """
     if isinstance(url, str):
-        FILEPATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), url)
-        return FILEPATH
+        fp = os.path.abspath(os.path.join(os.path.dirname(__file__), url))
+        return fp
     else:
         raise ValueError('Url need to be string.')
 
@@ -26,10 +26,8 @@ def filepath(url: str) -> str:
 # Build paths
 
 ALIASES_PATH = filepath('../../../aliases')
-# print('Aliases path is:' + os.path.realpath(ALIASES_PATH))
 
 ASSETS_PATH = filepath('../../../assets')
-# print('Assets path is:' + os.path.realpath(ASSETS_PATH))
 
 # DATA_PATH = os.path.join(os.path.dirname(__file__), '../../data')
 DATA_PATH = filepath('../../data')
@@ -37,45 +35,35 @@ DATA_PATH = filepath('../../data')
 # print(DATA_PATH)
 
 ICONS_PNG_PATH = filepath('../../../icons')
-# print('Icons png path is:' + os.path.realpath(ICONS_PNG_PATH))
 
 ICONS_SVG_PATH = filepath('../../icons')
-# print('Icons svg path is:' + os.path.realpath(ICONS_SVG_PATH))
 
 ICONS_SYNTAXES_PATH = filepath('../../../icons_syntaxes')
-# print('Icons syntaxes path is:' + os.path.realpath(ICONS_SYNTAXES_PATH))
 
 PREFERENCES_PATH = filepath('../../../preferences')
-# print('Preferences path is:' + os.path.realpath(PREFERENCES_PATH))
+
+ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data.pkl')
 
 
 # Zukan Icon Theme plugin paths
 
-# Read sublime api reference
-# https://www.sublimetext.com/docs/api_reference.html
-# python modules not present https://www.sublimetext.com/docs/api_environments.html#modules
-
-# print(sublime.find_resources("*.sublime-theme"))
-# ZUKAN_PATH = filepath('../../../../Zukan Icon Theme')
-ZUKAN_PKG_PATH = filepath('../../../../../Packages/Zukan-Icon-Theme')
-# print('Zukan Icon Theme path is:' + os.path.realpath(ZUKAN_PATH))
-
 ZUKAN_ICONS_THEMES_PATH = filepath('../../../icons')
-# print('Zukan Icon Theme path is:' + os.path.realpath(ZUKAN_PATH))
 
 ZUKAN_INSTALLED_PKG_PATH = filepath(
-    '../../../../../Installed Packages/Zukan-Icon-Theme'
+    '../../../../../Installed Packages/Zukan Icon Theme.sublime-package'
 )
-# print('Zukan Icon Theme path is:' + os.path.realpath(ZUKAN_PATH))
+
+ZUKAN_PKG_ICONS_PATH = filepath('../../../icons')
+
+ZUKAN_PKG_ICONS_SYNTAXES_PATH = filepath('../../../icons_syntaxes')
+
+ZUKAN_PKG_PATH = filepath('../../../../../Packages/Zukan-Icon-Theme')
 
 PACKAGES_PATH = filepath('../../../../../Packages')
-# print('Packages path is:' + os.path.realpath(PACKAGES_PATH))
 
 INSTALLED_PACKAGES_PATH = filepath('../../../../../Installed Packages')
-# print('Installed Packages path is:' + os.path.realpath(INSTALLED_PACKAGES_PATH))
 
 SUBLIME_PATH = filepath('../../../../../../Sublime Text')
-# print('Sublime Text path is:' + os.path.realpath(SUBLIME_PATH))
 
 TEMPLATE_JSON = filepath(
     '../../../../../Packages/Zukan-Icon-Theme/src/zukan_icon_theme/utils/template.json'
@@ -85,4 +73,3 @@ TEMPLATE_JSON = filepath(
 # Testing only
 
 TEST_NOT_EXIST_ZUKAN_ICONS_THEMES_PATH = filepath('../../../not/icons')
-# print('Zukan Icon Theme path is:' + os.path.realpath(ZUKAN_PATH))

@@ -1,26 +1,27 @@
-import errno
-import os
-
 from src.build.utils.plist_unused_line import UNUSED_LINE
+from src.build.helpers.print_message import (
+    print_filenotfounderror,
+    print_oserror,
+)
 
 
-def clean_plist_tag(file: str):
+def clean_plist_tag(filename: str):
     """
     Clean tag <!DOCTYPE plist>. It is generated after plistlib dump.
 
     Parameters:
-    file (str) -- path to icon tmPreferences file
+    filename (str) -- path to icon tmPreferences file
     """
     try:
-        with open(file, 'r+') as f:
+        with open(filename, 'r+') as f:
             clean_file = f.read()
             clean_file = _replace_line(clean_file)
-        with open(file, 'w') as f:
+        with open(filename, 'w') as f:
             f.write(clean_file)
     except FileNotFoundError:
-        print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + file)
+        print_filenotfounderror(filename)
     except OSError:
-        print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + file)
+        print_oserror(filename)
 
 
 def _replace_line(file_info: str) -> str:
@@ -36,24 +37,24 @@ def _replace_line(file_info: str) -> str:
     return file_info.replace(UNUSED_LINE, '')
 
 
-def clean_yaml_tabs(file: str):
+def clean_yaml_tabs(filename: str):
     """
     Clean tabs to spaces. Reading error if tabs used in front of dict key.
 
     Parameters:
-    file (str) -- path to icon data file
+    filename (str) -- path to icon data file
     """
     try:
-        with open(file, 'r+') as f:
+        with open(filename, 'r+') as f:
             clean_file = f.read()
             clean_file = _replace_tabs(clean_file)
             # print(clean_file)
-        with open(file, 'w') as f:
+        with open(filename, 'w') as f:
             f.write(clean_file)
     except FileNotFoundError:
-        print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + file)
+        print_filenotfounderror(filename)
     except OSError:
-        print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + file)
+        print_oserror(filename)
 
 
 def _replace_tabs(file_info: str) -> str:

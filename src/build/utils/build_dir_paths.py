@@ -14,11 +14,11 @@ def filepath(url: str) -> str:
     url (str) -- destination path.
 
     Returns:
-    filepath (str) -- script directory + url path.
+    fp (str) -- script directory + url path.
     """
     if isinstance(url, str):
-        filepath = os.path.join(os.path.dirname(os.path.abspath(__file__)), url)
-        return filepath
+        fp = os.path.abspath(os.path.join(os.path.dirname(__file__), url))
+        return fp
     else:
         raise ValueError('Url need to be string.')
 
@@ -26,25 +26,18 @@ def filepath(url: str) -> str:
 # Build paths
 
 ASSETS_PATH = filepath('../../../assets')
-# print('Assets path is:' + os.path.realpath(ASSETS_PATH))
 
-# DATA_PATH = os.path.join(os.path.dirname(__file__), '../../data')
 DATA_PATH = filepath('../../data')
-# print('Data path is:' + os.path.realpath(DATA_PATH))
-# print(DATA_PATH)
 
 ICONS_PNG_PATH = filepath('../../../icons')
-# print('Icons png path is:' + os.path.realpath(ICONS_PNG_PATH))
 
 ICONS_SVG_PATH = filepath('../../icons')
-# print('Icons svg path is:' + os.path.realpath(ICONS_SVG_PATH))
 
 ICONS_SYNTAXES_PATH = filepath('../../../icons_syntaxes')
-# print('Icons syntaxes path is:' + os.path.realpath(ICONS_SYNTAXES_PATH))
 
 PREFERENCES_PATH = filepath('../../../preferences')
-# print('Preferences path is:' + os.path.realpath(PREFERENCES_PATH))
 
+ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data.pkl')
 
 # Testing paths
 

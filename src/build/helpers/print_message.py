@@ -1,3 +1,6 @@
+import errno
+import os
+
 from src.build.helpers.color import Color
 
 
@@ -94,4 +97,38 @@ def print_special_char(filepath: str, filename: str) -> str:
         f'{ Color.RED }[!] { filepath }:{ Color.END } icon value can not '
         f'contain special characters { Color.RED }(filename would be '
         f'{ filename }.png){ Color.END }.'
+    )
+
+
+def print_filenotfounderror(filename: str) -> str:
+    """
+    Errno ENOENT, FileNotFoundError message.
+
+    Parameters:
+    filename (str) -- path to file.
+
+    Returns:
+    str -- Errno code, description and filename.
+    """
+    return print(
+        errno.ENOENT,
+        os.strerror(errno.ENOENT),
+        f'-> { Color.RED }{ filename }{ Color.END }',
+    )
+
+
+def print_oserror(filename: str) -> str:
+    """
+    Errno EACCES, OSError message.
+
+    Parameters:
+    filename (str) -- path to file.
+
+    Returns:
+    str -- Errno code, description and filename.
+    """
+    return print(
+        errno.EACCES,
+        os.strerror(errno.EACCES),
+        f'-> { Color.RED }{ filename }{ Color.END }',
     )

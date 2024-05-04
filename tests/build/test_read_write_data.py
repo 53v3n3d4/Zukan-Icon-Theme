@@ -13,7 +13,7 @@ from pyfakefs.fake_filesystem_unittest import TestCase
 from unittest.mock import patch, mock_open
 
 # YAML
-test_yaml_file = 'foo/bar.yaml'
+test_yaml_file = 'tests/files/bar.yaml'
 test_yaml_expected = {
     'name': 'Vitest',
     'preferences': {
@@ -90,10 +90,10 @@ test_yaml_dict = {
     'contexts': {'main': []},
 }
 test_empty_yaml_file = ''
-test_toml_file = 'foo/bar.toml'
+test_toml_file = 'tests/files/bar.toml'
 
 # PLIST
-test_plist_file = 'foo/bar.plist'
+test_plist_file = 'tests/files/bar.plist'
 test_plist_expected = """<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -194,7 +194,7 @@ class TestYamlData:
         assert (
             out
             == '\x1b[91m[!] /Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan-Icon-Theme/tests/build/files/test_yaml_file_not_exist.yaml:\x1b[0m file or directory do not exist.\n'
-            '2 No such file or directory -> tests/build/files/test_yaml_file_not_exist.yaml\n'
+            '2 No such file or directory -> \x1b[91mtests/build/files/test_yaml_file_not_exist.yaml\x1b[0m\n'
         )
 
     @pytest.fixture(autouse=True)

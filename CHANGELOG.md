@@ -22,9 +22,12 @@
 - Add preferences
 - Add scripts
 - Add create_test_icon_theme
+- Add zukan_syntaxes
 
-## Plugin
+### Plugin
 - Add themes
+- Add move_folders
+- Add icons_sytanxes
 
 ## [0.1.3] - 2024-04-22
 - Add alias: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu

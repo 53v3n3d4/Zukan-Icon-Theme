@@ -1,11 +1,13 @@
-import errno
 import os
 import re
 
 from collections.abc import Set
 from src.build.helpers.color import Color
-from src.build.helpers.print_message import print_message
-
+from src.build.helpers.print_message import (
+    print_filenotfounderror,
+    print_message,
+    print_oserror,
+)
 # from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
 # from src.build.utils.svg_unused_list import UNUSED_LIST
 
@@ -94,30 +96,30 @@ class CleanSVG:
                     color_end=f'{ Color.END }',
                 )
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + svgfile)
+            print_filenotfounderror(svgfile)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + svgfile)
+            print_oserror(svgfile)
 
-    def clean_all_svgs(foldername: str, replace_list: Set):
+    def clean_all_svgs(dir_svg: str, replace_list: Set):
         """
         Clean a list of unused tags and attributes from SVGs files in a directory.
 
         Parameters:
-        foldername (str) -- path to directory with SVGs files.
+        dir_svg (str) -- path to directory with SVGs files.
         replace_list (Set) -- list of unused strings to be replaced.
         """
         try:
-            svgs_in_dir = os.listdir(foldername)
+            svgs_in_dir = os.listdir(dir_svg)
             for svg in svgs_in_dir:
-                svg = os.path.join(foldername, svg)
+                svg = os.path.join(dir_svg, svg)
                 CleanSVG.clean_svg(svg, replace_list)
                 # print(svg)
             # print(svgs_in_dir)
             return svgs_in_dir
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + foldername)
+            print_filenotfounderror(dir_svg)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + foldername)
+            print_oserror(dir_svg)
 
 
 def _replace_line(file_info: str, line: str) -> str:

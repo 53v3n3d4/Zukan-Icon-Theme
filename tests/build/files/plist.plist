@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>binary.afdesign</string>
+	<string>source.js.vitest, source.ts.vitest</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>
-		<string>afdesign</string>
+		<string>vitest</string>
 	</dict>
 </dict>
 </plist>

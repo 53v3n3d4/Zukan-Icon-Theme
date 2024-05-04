@@ -1,8 +1,12 @@
-import errno
 import os
 
 from src.build.helpers.color import Color
-from src.build.helpers.print_message import print_created_message, print_message
+from src.build.helpers.print_message import (
+    print_created_message,
+    print_filenotfounderror,
+    print_message,
+    print_oserror,
+)
 from src.build.helpers.read_write_data import dump_yaml_data, read_yaml_data
 
 # from src.build.utils.build_dir_paths import DATA_PATH, ICONS_SYNTAXES_TEST_PATH
@@ -62,9 +66,9 @@ class IconSyntax:
             else:
                 return icon_data
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + icon_data)
+            print_filenotfounderror(icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + icon_data)
+            print_oserror(icon_data)
 
     def icons_syntaxes(dir_icon_data: str, dir_destiny: str):
         """
@@ -82,9 +86,9 @@ class IconSyntax:
                 IconSyntax.icon_syntax(icon_data_path, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
-            print(errno.ENOENT, os.strerror(errno.ENOENT), '-> ' + dir_icon_data)
+            print_filenotfounderror(dir_icon_data)
         except OSError:
-            print(errno.EACCES, os.strerror(errno.EACCES), '-> ' + dir_icon_data)
+            print_oserror(dir_icon_data)
 
 
 # IconSyntax.icon_syntax(file_test, ICONS_SYNTAXES_TEST_PATH)
