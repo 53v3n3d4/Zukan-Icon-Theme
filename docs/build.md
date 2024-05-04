@@ -130,12 +130,31 @@ Using argparse commands
 
 Using poetry scripts  
 ```sh
-$ poetry run build preference -f src/data/afdesign.yaml
+$ poetry run build test-icon-theme -f src/data/afdesign.yaml
 # Create all test files extensions files
-$ poetry run build preference --all
+$ poetry run build test-icon-theme --all
 ```
 
 > Creating test files will raise warnings on ST console for files that ST use like sublime-syntax.sublime-syntax.
 
+## Create zukan syntaxes file
+Create a data file, with all icon syntaxes, to be used by plugin.  
 
+File will be created in folder `icons_syntaxes`.  
+
+Using argparse commands  
+```sh
+# Environment need to be activated
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --help
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --write
+# Print file
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --read
+```
+
+Using poetry scripts  
+```sh
+$ poetry run build zukan-syntax --write
+# Print file
+$ poetry run build zukan-syntax --read
+```
 

@@ -25,22 +25,20 @@ This is a slow work in progress (WIP).
 
 Icons themes for Sublime Text editor.  
 
-This package uses tmPreferences and sublime-syntax files.  
-
 ## Theme
 
 ![treble with file type icons](assets/treble-light-screenshot.png "Treble Light Screenshot")
 
 Currently, only Treble theme suported.  
 
-- [Treble Adaptive](https://github.com/53v3n3d4/file-type-icons/blob/main/icons/Treble%20Adaptive.sublime-theme)
-- [Treble Dark](https://github.com/53v3n3d4/file-type-icons/blob/main/icons/Treble%20Dark.sublime-theme)
-- [Treble Light](https://github.com/53v3n3d4/file-type-icons/blob/main/icons/Treble%20Light.sublime-theme)
+- [Treble Adaptive](https://github.com/53v3n3d4/file-type-icons/blob/main/icons/Treble%20Adaptive.sublime-theme)  
+- [Treble Dark](https://github.com/53v3n3d4/file-type-icons/blob/main/icons/Treble%20Dark.sublime-theme)  
+- [Treble Light](https://github.com/53v3n3d4/file-type-icons/blob/main/icons/Treble%20Light.sublime-theme)  
 
 To add new theme:
-- Duplicate one of the Treble files above inside icons folder
-- Rename it with new theme name, e.g. Default.sublime-theme
-- Maybe restart needed
+- Duplicate one of the Treble files above inside icons folder  
+- Rename it with new theme name, e.g. Default.sublime-theme  
+- Maybe restart needed  
 
 If your theme do not have settings for icon_file_type, the settings below has a hover and select effects.
 ```
@@ -77,18 +75,18 @@ If your theme does have setting for icon_file_type, the setting below is enough.
 
 ## Install
 
-The only way to install this icons now is manually.
+The only way to install this icons now is manually.  
 
-To install manually,
-- Download the [latest release](https://github.com/53v3n3d4/Zukan-Icon-Theme/releases) or clone this repo.
-- Menu `Sublime Text > Preferences > Browse packages...` to open destination folder
-- Then unzip `zukan-icon-theme zip file` inside `Packages` folder. Or clone the repo inside `Packages`folder.
+To install manually,  
+- Download the [latest release](https://github.com/53v3n3d4/Zukan-Icon-Theme/releases) or clone this repo.  
+- Menu `Sublime Text > Preferences > Browse packages...` to open destination folder  
+- Then unzip `zukan-icon-theme zip file` inside `Packages` folder. Or clone the repo inside `Packages`folder.  
 
 ## Uninstall
 
-To uninstall manually, go to your Sublime Text folder.
-- Menu `Sublime Text > Preferences > Browse packages...`
-- Then delete `Zukan-Icon-Theme` inside `Packages` folder
+To uninstall manually, go to your Sublime Text folder.  
+- Menu `Sublime Text > Preferences > Browse packages...`  
+- Then delete `Zukan-Icon-Theme` inside `Packages` folder  
 
 ## Icons that works depending on folder position
 
@@ -98,20 +96,20 @@ To uninstall manually, go to your Sublime Text folder.
 
 ## Icons that do not work
 
-- Photoshop. ST use `file_type_image` icon
+- Photoshop. ST use `file_type_image` icon  
 - XML. ST use `file_type_markup` icon  
 
 ## Notes
 - This package uses tmPreferences and sublime-syntax files, it is heavily based on how [`A File Icon`](https://github.com/SublimeText/AFileIcon) package make icons work  
 - `file-type-icons` is old project name  
-- If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work
-- If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work
+- If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
+- If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
 
 ## File icon packages :alien:
 
-- [A File Icon](https://github.com/SublimeText/AFileIcon)
-- [FileIcons](https://github.com/braver/FileIcons)
+- [A File Icon](https://github.com/SublimeText/AFileIcon)  
+- [FileIcons](https://github.com/braver/FileIcons)  
 
 ## License
 
-MIT license ([LICENSE-MIT](LICENSE))
+MIT license ([LICENSE-MIT](LICENSE))  
