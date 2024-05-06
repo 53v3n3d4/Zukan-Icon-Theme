@@ -6,7 +6,7 @@
 - Rename files icons PNGs, SVGs, sublime-syntaxes and tmPreferences
 - Add python setup: poetry, pytest, ruff
 
-### Alias, icons and preferences
+### Icons, icons-syntaxes and preferences
 - Add icon-theme: archive, mypy, Pipenv, pre-commit, Read the Docs, reStructuredText, tox
 - Add sublime-syntax: Elixir, file type iimage, Jest, Webpack
 - Change icon: Audio, Kotlin, Rspack
@@ -23,6 +23,7 @@
 - Add scripts
 - Add create_test_icon_theme
 - Add zukan_syntaxes
+- Add error logger
 
 ### Plugin
 - Add themes

@@ -1,13 +1,12 @@
+import errno
+import logging
 import os
 
 from src.build.helpers.color import Color
-from src.build.helpers.print_message import (
-    print_created_message,
-    print_filenotfounderror,
-    print_message,
-    print_oserror,
-)
+from src.build.helpers.print_message import print_created_message, print_message
 # from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
+
+logger = logging.getLogger(__name__)
 
 
 class RenameSVG:
@@ -42,9 +41,13 @@ class RenameSVG:
                     color_end=f'{ Color.END }',
                 )
         except FileNotFoundError:
-            print_filenotfounderror(name)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), name
+            )
         except OSError:
-            print_oserror(name)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), name
+            )
 
     def rename_svgs_in_dir(dir_origin: str, dir_destiny: str):
         """
@@ -61,9 +64,13 @@ class RenameSVG:
                 RenameSVG.rename_svg(name, dir_origin, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
-            print_filenotfounderror(dir_origin)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), dir_origin
+            )
         except OSError:
-            print_oserror(dir_origin)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), dir_origin
+            )
 
 
 # RenameSVG.rename_svg('file_type_afdesign.svg', ICONS_TEST_PATH, ICONS_TEST_PATH)

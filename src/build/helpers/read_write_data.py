@@ -1,15 +1,16 @@
-import os
 import _pickle as pickle
+import errno
+import logging
+import os
 import plistlib
 
 from ruamel.yaml import YAML
 from src.build.helpers.clean_data import clean_yaml_tabs
 from src.build.helpers.color import Color
-from src.build.helpers.print_message import (
-    print_filenotfounderror,
-    print_message,
-    print_oserror,
-)
+from src.build.helpers.print_message import print_message
+
+
+logger = logging.getLogger(__name__)
 
 
 def read_yaml_data(yaml_file: str) -> dict:
@@ -60,9 +61,13 @@ def read_yaml_data(yaml_file: str) -> dict:
                 )
             )
     except FileNotFoundError:
-        print_filenotfounderror(yaml_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), yaml_file
+        )
     except OSError:
-        print_oserror(yaml_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), yaml_file
+        )
 
 
 def dump_yaml_data(file_data: dict, yaml_file: str):
@@ -81,9 +86,13 @@ def dump_yaml_data(file_data: dict, yaml_file: str):
         with open(yaml_file, 'w') as f:
             yaml.dump(file_data, f)
     except FileNotFoundError:
-        print_filenotfounderror(yaml_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), yaml_file
+        )
     except OSError:
-        print_oserror(yaml_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), yaml_file
+        )
 
 
 def dump_plist_data(preferences_dict: dict, plist_file: str):
@@ -101,9 +110,13 @@ def dump_plist_data(preferences_dict: dict, plist_file: str):
         with open(plist_file, 'wb') as f:
             plistlib.dump(preferences_dict, f)
     except FileNotFoundError:
-        print_filenotfounderror(plist_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), plist_file
+        )
     except OSError:
-        print_oserror(plist_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), plist_file
+        )
 
 
 def read_pickle_data(pickle_file: str) -> dict:
@@ -134,9 +147,13 @@ def read_pickle_data(pickle_file: str) -> dict:
         print(pickle_data)
         return pickle_data
     except FileNotFoundError:
-        print_filenotfounderror(pickle_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), pickle_file
+        )
     except OSError:
-        print_oserror(pickle_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), pickle_file
+        )
 
 
 def dump_pickle_data(pickle_data: dict, pickle_file: str):
@@ -152,6 +169,10 @@ def dump_pickle_data(pickle_data: dict, pickle_file: str):
             # In ST Python 3.3, fail if use protocol 4 or 5
             pickle.dump(pickle_data, f, protocol=3)
     except FileNotFoundError:
-        print_filenotfounderror(pickle_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), pickle_file
+        )
     except OSError:
-        print_oserror(pickle_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), pickle_file
+        )

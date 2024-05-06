@@ -194,7 +194,6 @@ class TestYamlData:
         assert (
             out
             == '\x1b[91m[!] /Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan-Icon-Theme/tests/build/files/test_yaml_file_not_exist.yaml:\x1b[0m file or directory do not exist.\n'
-            '2 No such file or directory -> \x1b[91mtests/build/files/test_yaml_file_not_exist.yaml\x1b[0m\n'
         )
 
     @pytest.fixture(autouse=True)
@@ -203,8 +202,13 @@ class TestYamlData:
         with patch('build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError
             read_yaml_data('tests/build/files/yaml.yaml')
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'build.helpers.read_write_data',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/yaml.yaml'",
+            )
+        ]
 
     @pytest.fixture(autouse=True)
     def test_dump_yaml_file_error(self, caplog):
@@ -212,8 +216,13 @@ class TestYamlData:
         with patch('build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError
             dump_yaml_data(test_yaml_dict, 'tests/build/files/yaml.yaml')
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'build.helpers.read_write_data',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/yaml.yaml'",
+            )
+        ]
 
 
 class TestPlistData:
@@ -231,8 +240,13 @@ class TestPlistData:
         with patch('build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError
             dump_plist_data(test_plist_dict, 'tests/build/files/plist.plist')
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'build.helpers.read_write_data',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/plist.plist'",
+            )
+        ]
 
 
 file_yaml_test = os.path.join(DATA_PATH, 'afpub.yaml')

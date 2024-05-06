@@ -11,7 +11,7 @@ from ..utils.zukan_dir_paths import (
 from zipfile import ZipFile
 
 
-def filter_resources_themes(themes_list):
+def filter_resources_themes(themes_list: list) -> list:
     """
     Filter sublime-themes on root. Use sublime package.
 
@@ -38,7 +38,7 @@ def filter_resources_themes(themes_list):
 # print(filter_resources_themes(resources_list))
 
 
-def search_resources_sublime_themes():
+def search_resources_sublime_themes() -> list:
     """
     Search for sublime-themes then filter results. Use sublime package.
 
@@ -49,7 +49,7 @@ def search_resources_sublime_themes():
     return filter_resources_themes(themes_list)
 
 
-def filter_themes(themes_list):
+def filter_themes(themes_list: list) -> list:
     """
     Filter sublime-themes on root. Not use sublime api.
 
@@ -71,7 +71,7 @@ def filter_themes(themes_list):
     return filter_list
 
 
-def search_installed_pkgs_themes():
+def search_installed_pkgs_themes() -> list:
     """
     Search for sublime-theme files in ST Installed Packages.
 
@@ -95,7 +95,7 @@ def search_installed_pkgs_themes():
 # print(search_installed_pkgs_themes())
 
 
-def search_pkgs_themes():
+def search_pkgs_themes() -> list:
     """
     Search for sublime-theme files in ST Packages sub directories. Example:
     Packages/*/*.sublime-theme

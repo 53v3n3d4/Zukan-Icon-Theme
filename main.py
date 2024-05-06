@@ -16,7 +16,6 @@ from .src.zukan_icon_theme.utils.zukan_pkg_folders import zukan_pkg_folders
 # https://www.sublimetext.com/docs/api_reference.html
 # python modules not present https://www.sublimetext.com/docs/api_environments.html#modules
 
-
 # From A File Icon https://github.com/SublimeText/AFileIcon/blob/master/plugin.py
 # Clear module cache to force reloading all modules of this package.
 prefix = __package__ + '.'  # don't clear the base package
@@ -31,15 +30,12 @@ del prefix
 # This sometimes raise errors
 # sublime_plugin.reload_plugin(module_name)
 
-
 zukan_pkg_assets = os.path.join(ZUKAN_PKG_PATH + '/assets')
 test_path = os.path.join(zukan_pkg_assets, 'Zukan Icon Theme')
 
-
 # def plugin_loaded():
 #     ThemeFile.create_themes_files()
-#     MoveFolder.move_folders(zukan_pkg_folders)
-#     # Create icons sublime-syntaxes
+#     # MoveFolder.move_folders(zukan_pkg_folders)
 #     ZukanSyntax.create_icons_syntaxes()
 
 

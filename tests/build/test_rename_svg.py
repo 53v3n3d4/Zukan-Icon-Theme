@@ -28,14 +28,19 @@ class TestRename:
     def test_read_file_error(self, caplog):
         caplog.clear()
         with patch('src.build.helpers.rename_svg.open') as mock_open:
-            mock_open.side_effect = OSError
+            mock_open.side_effect = FileNotFoundError
             RenameSVG.rename_svg(
                 'tests/build/file_type_svg.svg',
                 'tests/build/files/',
                 'tests/build/files/',
             )
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'src.build.helpers.rename_svg',
+                40,
+                "[Errno 2] No such file or directory: 'tests/build/file_type_svg.svg'",
+            )
+        ]
 
     @pytest.fixture(autouse=True)
     def test_read_dir_error(self, caplog):
@@ -45,8 +50,13 @@ class TestRename:
             RenameSVG.rename_svgs_in_dir(
                 'tests/build/files/svg.svg', 'tests/build/files/'
             )
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'src.build.helpers.rename_svg',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/svg.svg'",
+            )
+        ]
 
     @pytest.fixture(autouse=True)
     def test_not_svg_file(self, capfd):

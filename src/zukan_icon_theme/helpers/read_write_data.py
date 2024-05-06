@@ -1,6 +1,7 @@
 import _pickle as pickle
 import os
 
+from .convert_to_commented import convert_to_commented
 from .print_message import print_filenotfounderror, print_oserror
 from ruamel.yaml import YAML
 
@@ -41,13 +42,14 @@ def dump_yaml_data(file_data: dict, yaml_file: str):
     file_data (dict) -- contents of yaml file.
     yaml_file (str) -- path to where yaml file will be saved.
     """
-    # Line below is inside because we use typ 'rt' instead of 'safe'.
-    # Important because if typ 'safe' it is going to order keys.
     yaml = YAML()
     yaml.version = (1, 2)
-    # yaml.preserve_quotes = True
-    # yaml.default_flow_style = False
-    # yaml.sort_keys = False
+
+    # Converting OrderedDict to ruamel CommentMap
+    # OrderedDict only necessary if using python 3.3
+    # Python 3.8, dict read ordered.
+    file_data = convert_to_commented(file_data)
+    # print(isinstance(file_data, dict))
     try:
         with open(yaml_file, 'w') as f:
             yaml.dump(file_data, f)

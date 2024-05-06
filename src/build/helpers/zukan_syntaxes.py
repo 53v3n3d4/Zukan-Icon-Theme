@@ -1,18 +1,18 @@
+import errno
+import logging
 import os
 
+from collections import OrderedDict
 from src.build.helpers.color import Color
-from src.build.helpers.print_message import (
-    print_created_message,
-    print_filenotfounderror,
-    print_message,
-    print_oserror,
-)
+from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import dump_pickle_data, read_yaml_data
 from src.build.utils.build_dir_paths import (
     # DATA_PATH,
     ICONS_SYNTAXES_PATH,
     ZUKAN_SYNTAXES_DATA_FILE,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class ZukanSyntax:
@@ -43,7 +43,10 @@ class ZukanSyntax:
                     for k in data['syntax']:
                         if not os.path.exists(ICONS_SYNTAXES_PATH):
                             os.makedirs(ICONS_SYNTAXES_PATH)
-                        dump_pickle_data(k, ZUKAN_SYNTAXES_DATA_FILE)
+                        # OrderedDict only necessary if using python 3.3
+                        # Python 3.8, dict read ordered.
+                        ordered_dict = OrderedDict(k)
+                        dump_pickle_data(ordered_dict, ZUKAN_SYNTAXES_DATA_FILE)
                         print_created_message(
                             os.path.basename(icon_data),
                             k['name'],
@@ -58,9 +61,13 @@ class ZukanSyntax:
                     )
             return files_in_dir
         except FileNotFoundError:
-            print_filenotfounderror(icon_data)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), icon_data
+            )
         except OSError:
-            print_oserror(icon_data)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), icon_data
+            )
 
 
 # ZukanSyntax.write_zukan_data(DATA_PATH)

@@ -1,13 +1,11 @@
+import errno
 import os
+import logging
 import re
 
 from collections.abc import Set
 from src.build.helpers.color import Color
-from src.build.helpers.print_message import (
-    print_filenotfounderror,
-    print_message,
-    print_oserror,
-)
+from src.build.helpers.print_message import print_message
 # from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
 # from src.build.utils.svg_unused_list import UNUSED_LIST
 
@@ -15,6 +13,8 @@ from src.build.helpers.print_message import (
 # file_test = os.path.join(ICONS_TEST_PATH, 'file_type_sql.svg')
 # file_test = os.path.join(ICONS_TEST_PATH, 'file_type_sql_npt_found.svg')
 # file_test = os.path.join(TEST_PATH, 'file_type_afdesign.svg')
+
+logger = logging.getLogger(__name__)
 
 
 class CleanSVG:
@@ -96,9 +96,13 @@ class CleanSVG:
                     color_end=f'{ Color.END }',
                 )
         except FileNotFoundError:
-            print_filenotfounderror(svgfile)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), svgfile
+            )
         except OSError:
-            print_oserror(svgfile)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), svgfile
+            )
 
     def clean_all_svgs(dir_svg: str, replace_list: Set):
         """
@@ -117,9 +121,13 @@ class CleanSVG:
             # print(svgs_in_dir)
             return svgs_in_dir
         except FileNotFoundError:
-            print_filenotfounderror(dir_svg)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), dir_svg
+            )
         except OSError:
-            print_oserror(dir_svg)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), dir_svg
+            )
 
 
 def _replace_line(file_info: str, line: str) -> str:

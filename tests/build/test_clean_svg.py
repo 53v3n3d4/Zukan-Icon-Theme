@@ -72,26 +72,42 @@ class TestClean:
         with patch('build.clean_svg.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
             CleanSVG.clean_svg('tests/build/files/svg.svg', unused_list)
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
-
-    @pytest.fixture(autouse=True)
-    def test_load_svgs_oserror(self, caplog):
-        caplog.clear()
-        with patch('build.clean_svg.open') as mock_open:
-            mock_open.side_effect = FileNotFoundError
-            CleanSVG.clean_all_svgs('tests/build/files/svg.svg', unused_list)
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'build.clean_svg',
+                40,
+                "[Errno 2] No such file or directory: 'tests/build/files/svg.svg'",
+            )
+        ]
 
     @pytest.fixture(autouse=True)
     def test_load_svgs_filenotfound_error(self, caplog):
         caplog.clear()
         with patch('build.clean_svg.open') as mock_open:
+            mock_open.side_effect = FileNotFoundError
+            CleanSVG.clean_all_svgs('tests/build/files/svg.svg', unused_list)
+        # Check if it is cache, should be Errno 2
+        assert caplog.record_tuples == [
+            (
+                'build.clean_svg',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/svg.svg'",
+            )
+        ]
+
+    @pytest.fixture(autouse=True)
+    def test_load_svgs_os_error(self, caplog):
+        caplog.clear()
+        with patch('build.clean_svg.open') as mock_open:
             mock_open.side_effect = OSError
             CleanSVG.clean_all_svgs('tests/build/files/svg.svg', unused_list)
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'build.clean_svg',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/svg.svg'",
+            )
+        ]
 
     @pytest.fixture(autouse=True)
     def test_write_svg_file_error(self, caplog):
@@ -99,8 +115,13 @@ class TestClean:
         with patch('build.clean_svg.open') as mock_open:
             mock_open.side_effect = OSError
             CleanSVG.clean_svg('tests/build/files/svg.svg', unused_list)
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'build.clean_svg',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/svg.svg'",
+            )
+        ]
 
     def test_replace_line(self):
         test_line = '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'

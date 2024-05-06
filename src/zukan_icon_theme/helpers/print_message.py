@@ -15,7 +15,7 @@ def print_filenotfounderror(filename: str) -> str:
     return print(
         errno.ENOENT,
         os.strerror(errno.ENOENT),
-        ('-> %s' % filename),
+        ('-> %r' % filename),
     )
 
 
@@ -32,5 +32,5 @@ def print_oserror(filename: str) -> str:
     return print(
         errno.EACCES,
         os.strerror(errno.EACCES),
-        ('-> %s' % filename),
+        ('-> %r' % filename),
     )

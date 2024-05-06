@@ -6,6 +6,7 @@ import sys
 from src.build.clean_svg import CleanSVG
 from src.build.helpers.color import Color
 from src.build.helpers.create_test_icon_theme import TestIconTheme
+from src.build.helpers.logger import logging
 from src.build.helpers.print_message import print_build_message, print_message
 from src.build.helpers.read_write_data import read_pickle_data
 from src.build.helpers.zukan_syntaxes import ZukanSyntax
@@ -23,6 +24,8 @@ from src.build.utils.build_dir_paths import (
     ZUKAN_SYNTAXES_DATA_FILE,
 )
 from src.build.utils.svg_unused_list import UNUSED_LIST
+
+logger = logging.getLogger(__name__)
 
 
 def main():
@@ -71,8 +74,8 @@ def main():
     # Create the parser for the "icon-theme" sub-command
     parser_icontheme = subparsers.add_parser(
         'icon-theme',
-        help=f'{ Color.YELLOW }Create icon theme PNGs, sublime-syntax '
-        f'and tmPreferences.{ Color.END }',
+        help=f'{ Color.YELLOW }Create icon theme PNGs and tmPreferences.'
+        f'{ Color.END }',
     )
     parser_icontheme.add_argument(
         '-a',
@@ -112,14 +115,14 @@ def main():
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
     )
-    parser_icontheme.add_argument(
-        '-s',
-        '--syntax',
-        default=ICONS_SYNTAXES_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
-    )
+    # parser_icontheme.add_argument(
+    #     '-s',
+    #     '--syntax',
+    #     default=ICONS_SYNTAXES_PATH,
+    #     type=str,
+    #     required=False,
+    #     help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
+    # )
     parser_icontheme.add_argument(
         '-t',
         '--tmpreference',
@@ -320,8 +323,8 @@ def main():
     elif parser == 'icon-theme':
         if args.all and not (args.file or args.data):
             print(
-                f'{ Color.BLUE }[⚙] Starting building all icons PNGs, sublime-syntaxes '
-                f'and tmPreferences.{ Color.END }'
+                f'{ Color.BLUE }[⚙] Starting building all icons PNGs and tmPreferences.'
+                f'{ Color.END }'
             )
             print_build_message('🛠️  Generating all icons PNGs: ', ICONS_PNG_PATH)
             IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png)
@@ -330,18 +333,18 @@ def main():
                 PREFERENCES_PATH,
             )
             Preference.preferences_all(DATA_PATH, args.tmpreference)
-            print_build_message(
-                '🛠️  Creating all icons sublime-syntaxes: ',
-                ICONS_SYNTAXES_PATH,
-            )
-            IconSyntax.icons_syntaxes(DATA_PATH, args.syntax)
+            # print_build_message(
+            #     '🛠️  Creating all icons sublime-syntaxes: ',
+            #     ICONS_SYNTAXES_PATH,
+            # )
+            # IconSyntax.icons_syntaxes(DATA_PATH, args.syntax)
         elif args.file and not (args.all or args.data):
             print_build_message('🛠️  Generating icon PNGs: ', args.png)
             IconPNG.svg_to_png(args.file, args.icon, args.png)
             print_build_message('🛠️  Creating icon tmPreferences: ', args.tmpreference)
             Preference.preferences(args.file, args.tmpreference)
-            print_build_message('🛠️  Creating icon sublime-syntaxes: ', args.syntax)
-            IconSyntax.icon_syntax(args.file, args.syntax)
+            # print_build_message('🛠️  Creating icon sublime-syntaxes: ', args.syntax)
+            # IconSyntax.icon_syntax(args.file, args.syntax)
         elif args.data and not (args.all or args.file):
             print(
                 f'{ Color.BLUE }[⚙] Starting building all icons PNGs, sublime-syntaxes '
@@ -353,8 +356,8 @@ def main():
                 '🛠️  Creating all icons tmPreferences: ', args.tmpreference
             )
             Preference.preferences_all(args.data, args.tmpreference)
-            print_build_message('🛠️  Creating all icons sublime-syntaxes: ', args.syntax)
-            IconSyntax.icons_syntaxes(args.data, args.syntax)
+            # print_build_message('🛠️  Creating all icons sublime-syntaxes: ', args.syntax)
+            # IconSyntax.icons_syntaxes(args.data, args.syntax)
         else:
             _error_message()
     # PNGs

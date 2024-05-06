@@ -1,12 +1,12 @@
+import errno
+import logging
 import os
 
 from src.build.helpers.clean_data import clean_plist_tag
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import (
     print_created_message,
-    print_filenotfounderror,
     print_message,
-    print_oserror,
     print_remove_tag,
 )
 from src.build.helpers.read_write_data import dump_plist_data, read_yaml_data
@@ -24,6 +24,8 @@ from src.build.utils.file_extensions import PLIST_EXTENSION
 # file_test = os.path.join(DATA_PATH, 'test_no_icon_file.yaml')
 # file_test = os.path.join(DATA_PATH, 'afpub_not_exist.yaml')
 # file_test = os.path.join(DATA_PATH, 'afpub_not_yaml.toml')
+
+logger = logging.getLogger(__name__)
 
 
 class Preference:
@@ -91,9 +93,13 @@ class Preference:
             else:
                 return icon_data
         except FileNotFoundError:
-            print_filenotfounderror(icon_data)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), icon_data
+            )
         except OSError:
-            print_oserror(icon_data)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), icon_data
+            )
 
     def preferences_all(dir_icon_data: str, dir_destiny: str):
         """
@@ -111,9 +117,19 @@ class Preference:
                 Preference.preferences(icon_data_path, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
-            print_filenotfounderror(dir_icon_data)
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                dir_icon_data,
+            )
         except OSError:
-            print_oserror(dir_icon_data)
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                dir_icon_data,
+            )
 
 
 # Preference.preferences(file_test, PREFERENCES_TEST_PATH)

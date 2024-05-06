@@ -31,20 +31,19 @@ def dir_exist(z, name):
     )
 
 
-def extract_folder(name):
+def extract_folder(name: str):
     # with ZipFile(package_control_installed_pkg, 'r') as zf:
     with ZipFile(ZUKAN_INSTALLED_PKG_PATH, 'r') as zf:
         if dir_exist(zf, name):
-            print('Moving {n} folder to {d}'.format(n=name, d=zukan_pkg_assets))
+            print('Moving %(n)s folder to %(d)s' % {'n': name, 'd': zukan_pkg_assets})
             for file_in_zip in zf.namelist():
                 if file_in_zip.startswith(name):
                     zf.extract(file_in_zip, zukan_pkg_assets)
         else:
             raise FileNotFoundError(
                 print(
-                    'Folder {n} does not exist in {p}.'.format(
-                        n=name, p=ZUKAN_INSTALLED_PKG_PATH
-                    )
+                    'Folder %(n)s does not exist in %(d)s.'
+                    % {'n': name, 'd': zukan_pkg_assets}
                 )
             )
 
@@ -60,7 +59,7 @@ class MoveFolder:
     Zukan package.
     """
 
-    def move_folder(name):
+    def move_folder(name: str):
         """
         Move icons and icons_syntaxes folder if project in folder Installed Packages.
 
@@ -82,7 +81,7 @@ class MoveFolder:
         except OSError:
             print_oserror(name)
 
-    def move_folders(zukan_folders):
+    def move_folders(zukan_folders: str):
         """
         Move icons and icons_syntaxes folder if project in folder Installed Packages.
 
@@ -98,7 +97,7 @@ class MoveFolder:
         except OSError:
             print_oserror('icons and/or icons_syntaxes folder.')
 
-    def remove_created_folder(name):
+    def remove_created_folder(name: str):
         """
         Remove created folder from Zukan Icon Theme installation.
 

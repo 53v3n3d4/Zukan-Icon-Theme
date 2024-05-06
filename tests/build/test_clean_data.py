@@ -72,8 +72,13 @@ class TestCleanPlistTag:
         with patch('build.helpers.clean_data.open') as mock_open:
             mock_open.side_effect = OSError
             clean_plist_tag('tests/build/files/plist.plist')
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'build.helpers.clean_data',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/plist.plist'",
+            )
+        ]
 
 
 class TestCleanYamlTabs:
@@ -95,5 +100,10 @@ class TestCleanYamlTabs:
         with patch('build.helpers.clean_data.open') as mock_open:
             mock_open.side_effect = OSError
             clean_yaml_tabs('tests/build/files/yaml.yaml')
-        # This is capturing nothing, but expect a 13 Permission Error
-        assert caplog.record_tuples == []
+        assert caplog.record_tuples == [
+            (
+                'build.helpers.clean_data',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/files/yaml.yaml'",
+            )
+        ]

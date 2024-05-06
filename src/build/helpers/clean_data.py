@@ -1,8 +1,10 @@
+import errno
+import logging
+import os
+
 from src.build.utils.plist_unused_line import UNUSED_LINE
-from src.build.helpers.print_message import (
-    print_filenotfounderror,
-    print_oserror,
-)
+
+logger = logging.getLogger(__name__)
 
 
 def clean_plist_tag(filename: str):
@@ -19,9 +21,13 @@ def clean_plist_tag(filename: str):
         with open(filename, 'w') as f:
             f.write(clean_file)
     except FileNotFoundError:
-        print_filenotfounderror(filename)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
+        )
     except OSError:
-        print_oserror(filename)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
+        )
 
 
 def _replace_line(file_info: str) -> str:
@@ -52,9 +58,13 @@ def clean_yaml_tabs(filename: str):
         with open(filename, 'w') as f:
             f.write(clean_file)
     except FileNotFoundError:
-        print_filenotfounderror(filename)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
+        )
     except OSError:
-        print_oserror(filename)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
+        )
 
 
 def _replace_tabs(file_info: str) -> str:

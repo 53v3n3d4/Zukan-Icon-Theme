@@ -10,7 +10,7 @@ from ..helpers.search_themes import (
 )
 from ..utils.zukan_dir_paths import (
     TEMPLATE_JSON,
-    ZUKAN_ICONS_THEMES_PATH,
+    ZUKAN_PKG_ICONS_PATH,
     TEST_NOT_EXIST_ZUKAN_ICONS_THEMES_PATH,
 )
 
@@ -27,7 +27,7 @@ class ThemeFile:
     Create, list and remove sublime-themes files in Zukan Icon Theme/icons folder
     """
 
-    def create_theme_file(theme_name):
+    def create_theme_file(theme_name: str):
         """
         Create sublime-theme file with icon_file_type scope. It copy josn template
         to Zukan Icon Theme/icons folder with the theme name.
@@ -42,8 +42,8 @@ class ThemeFile:
             # Check if installed theme file exist.
             if any(theme_name in t for t in all_themes):
                 origin = TEMPLATE_JSON
-                destiny = os.path.join(ZUKAN_ICONS_THEMES_PATH, theme_name)
-                # print(ZUKAN_ICONS_THEMES_PATH + theme_name)
+                destiny = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
+                # print(ZUKAN_PKG_ICONS_PATH + theme_name)
                 shutil.copy(origin, destiny)
                 print('[!] Creating icon theme: %s' % destiny)
                 return theme_name
@@ -76,7 +76,7 @@ class ThemeFile:
         except OSError:
             print_oserror(all_themes)
 
-    def delete_created_theme_file(theme_name):
+    def delete_created_theme_file(theme_name: str):
         """
         Delete sublime-theme file in Zukan Icon Theme/icons folder.
 
@@ -86,7 +86,7 @@ class ThemeFile:
         theme_name (str) -- installed theme name.
         """
         try:
-            theme_file = os.path.join(ZUKAN_ICONS_THEMES_PATH, theme_name)
+            theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
             os.remove(theme_file)
             print('[!] Deleting icon theme: %s' % theme_file)
             return theme_name
@@ -110,7 +110,7 @@ class ThemeFile:
         except OSError:
             print_oserror(zukan_installed_themes)
 
-    def list_created_themes_files():
+    def list_created_themes_files() -> list:
         """
         List all sublime-themes files in Zukan Icon Theme/icons folder.
 
@@ -119,10 +119,8 @@ class ThemeFile:
         """
         try:
             list_zukan_installed = []
-            icons_path = ZUKAN_ICONS_THEMES_PATH
-            # icons_path = TEST_NOT_EXIST_ZUKAN_ICONS_THEMES_PATH
-            if os.path.exists(icons_path):
-                for file in glob.glob(icons_path + '/*.sublime-theme'):
+            if os.path.exists(ZUKAN_PKG_ICONS_PATH):
+                for file in glob.glob(ZUKAN_PKG_ICONS_PATH + '/*.sublime-theme'):
                     list_zukan_installed.append(os.path.basename(file))
                 return list_zukan_installed
             else:

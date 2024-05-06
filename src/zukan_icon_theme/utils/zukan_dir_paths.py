@@ -47,15 +47,15 @@ ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data
 
 # Zukan Icon Theme plugin paths
 
-ZUKAN_ICONS_THEMES_PATH = filepath('../../../icons')
-
 ZUKAN_INSTALLED_PKG_PATH = filepath(
     '../../../../../Installed Packages/Zukan Icon Theme.sublime-package'
 )
 
-ZUKAN_PKG_ICONS_PATH = filepath('../../../icons')
+ZUKAN_PKG_ICONS_PATH = filepath('../../../../../Packages/Zukan-Icon-Theme/icons')
 
-ZUKAN_PKG_ICONS_SYNTAXES_PATH = filepath('../../../icons_syntaxes')
+ZUKAN_PKG_ICONS_SYNTAXES_PATH = filepath(
+    '../../../../../Packages/Zukan-Icon-Theme/icons_syntaxes'
+)
 
 ZUKAN_PKG_PATH = filepath('../../../../../Packages/Zukan-Icon-Theme')
 
@@ -65,10 +65,12 @@ INSTALLED_PACKAGES_PATH = filepath('../../../../../Installed Packages')
 
 SUBLIME_PATH = filepath('../../../../../../Sublime Text')
 
+# make path work for 2 cases. Installed Packages and Packages installs.
 TEMPLATE_JSON = filepath(
     '../../../../../Packages/Zukan-Icon-Theme/src/zukan_icon_theme/utils/template.json'
 )
 
+# LOGGING_FILE = filepath()
 
 # Testing only
 
