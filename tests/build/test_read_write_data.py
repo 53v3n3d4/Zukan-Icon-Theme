@@ -212,15 +212,15 @@ class TestPickletData:
         [
             (
                 TEST_PICKLE_ORDERED_DICT,
-                'tests/build/mocks/audio.pkl',
-                'tests/build/mocks/audio.pkl',
+                TEST_PICKLE_FILE,
+                TEST_PICKLE_FILE,
             )
         ],
     )
     def test_dump_pickle(self, a, b, expected):
         result = dump_pickle_data(a, b)
         return result
-        assert result == 'tests/build/mocks/audio.pkl'
+        assert result == TEST_PICKLE_FILE
 
     @pytest.fixture(autouse=True)
     def test_write_pickle_file_filenotfounderror(self, caplog):

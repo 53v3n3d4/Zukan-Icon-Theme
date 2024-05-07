@@ -1,7 +1,4 @@
-# import pytest
-
 from src.build.helpers.special_chars import special_chars
-# from pyfakefs.fake_filesystem_unittest import TestCase
 
 
 def test_special_chars_true():
