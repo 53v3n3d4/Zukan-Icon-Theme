@@ -9,19 +9,19 @@ from unittest.mock import patch
 class TestRename:
     @pytest.mark.parametrize(
         'a, expected',
-        [('tests/build/files/file_type_svg.svg', 'tests/build/files/svg.svg')],
+        [('tests/build/mocks/file_type_svg.svg', 'tests/build/mocks/svg.svg')],
     )
     def test_rename_svg(self, a, expected):
-        result = RenameSVG.rename_svg(a, 'tests/build/files/', 'tests/build/files/')
+        result = RenameSVG.rename_svg(a, 'tests/build/mocks/', 'tests/build/mocks/')
         return result
-        assert result == 'tests/build/files/svg.svg'
+        assert result == 'tests/build/mocks/svg.svg'
 
     @pytest.mark.parametrize('a, expected', [('file_type_svg.svg', 'svg.svg')])
     def test_rename_svgs_in_dir(self, a, expected):
         test_dir = 'file_type_svg.svg'
         result = RenameSVG.rename_svgs_in_dir(a, test_dir)
         return result
-        # assert result == 'tests/build/files/svg.svg'
+        # assert result == 'tests/build/mocks/svg.svg'
         assert result == 'svg.svg'
 
     @pytest.fixture(autouse=True)
@@ -31,8 +31,8 @@ class TestRename:
             mock_open.side_effect = FileNotFoundError
             RenameSVG.rename_svg(
                 'tests/build/file_type_svg.svg',
-                'tests/build/files/',
-                'tests/build/files/',
+                'tests/build/mocks/',
+                'tests/build/mocks/',
             )
         assert caplog.record_tuples == [
             (
@@ -48,19 +48,19 @@ class TestRename:
         with patch('src.build.helpers.rename_svg.open') as mock_open:
             mock_open.side_effect = OSError
             RenameSVG.rename_svgs_in_dir(
-                'tests/build/files/svg.svg', 'tests/build/files/'
+                'tests/build/mocks/svg.svg', 'tests/build/mocks/'
             )
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.rename_svg',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/files/svg.svg'",
+                "[Errno 13] Permission denied: 'tests/build/mocks/svg.svg'",
             )
         ]
 
     @pytest.fixture(autouse=True)
     def test_not_svg_file(self, capfd):
-        RenameSVG.rename_svg('plist.plist', 'tests/build/files/', 'tests/build/files/')
+        RenameSVG.rename_svg('plist.plist', 'tests/build/mocks/', 'tests/build/mocks/')
 
         out, err = capfd.readouterr()
         assert out == '\x1b[35m[!] plist.plist:\x1b[0m file extension is not svg.\n'

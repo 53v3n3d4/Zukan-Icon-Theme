@@ -1,7 +1,7 @@
 import os
 import pytest
 
-from build.utils.build_dir_paths import filepath, DATA_PATH
+from src.build.utils.build_dir_paths import filepath, DATA_PATH
 
 
 def test_param_is_string():

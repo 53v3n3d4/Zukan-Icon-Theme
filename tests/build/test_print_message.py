@@ -1,7 +1,7 @@
 import pytest
 
-from build.helpers.color import Color
-from build.helpers.print_message import (
+from src.build.helpers.color import Color
+from src.build.helpers.print_message import (
     print_build_message,
     print_created_message,
     print_message,

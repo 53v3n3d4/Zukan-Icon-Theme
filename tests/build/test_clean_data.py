@@ -1,58 +1,41 @@
 import pytest
 import unittest
 
-from build.helpers.clean_data import (
+from src.build.helpers.clean_data import (
     clean_plist_tag,
     clean_yaml_tabs,
     _replace_line,
     _replace_tabs,
 )
+from tests.build.mocks.constants_plist import (
+    TEST_PLIST_EXPECTED,
+    TEST_PLIST_FILE,
+)
+from tests.build.mocks.constants_yaml import (
+    TEST_YAML_EXPECTED,
+    TEST_YAML_FILE,
+)
 from unittest.mock import patch, mock_open
-
-
-test_plist_file = 'foo/bar.plist'
-test_plist_expected = """<?xml version="1.0" encoding="UTF-8"?>
-<plist version="1.0">
-<dict>
-    <key>scope</key>
-    <string>binary.afdesign</string>
-    <key>settings</key>
-    <dict>
-        <key>icon</key>
-        <string>afdesign</string>
-    </dict>
-</dict>
-</plist>
-"""
-test_yaml_file = 'foo/bar.yaml'
-test_yaml_expected = """%YAML 1.2
----
-name: Vitest
-preferences:
-scope: source.js.vitest, source.ts.vitest
-settings:
-icon: vitest
-"""
 
 
 class TestWriteFile(unittest.TestCase):
     def test_write_plist(self):
         with patch('builtins.open', mock_open()) as mocked_open:
-            clean_plist_tag(test_plist_file)
-            mocked_open.assert_called_with(test_plist_file, 'w')
+            clean_plist_tag(TEST_PLIST_FILE)
+            mocked_open.assert_called_with(TEST_PLIST_FILE, 'w')
 
     def test_write_yaml(self):
         with patch('builtins.open', mock_open()) as mocked_open:
-            clean_yaml_tabs(test_yaml_file)
-            mocked_open.assert_called_with(test_yaml_file, 'w')
+            clean_yaml_tabs(TEST_YAML_FILE)
+            mocked_open.assert_called_with(TEST_YAML_FILE, 'w')
 
 
 class TestCleanPlistTag:
-    @pytest.mark.parametrize('a, expected', [(test_plist_file, test_plist_expected)])
+    @pytest.mark.parametrize('a, expected', [(TEST_PLIST_FILE, TEST_PLIST_EXPECTED)])
     def test_clean_plist_tag(self, a, expected):
         result = clean_plist_tag(a)
         return result
-        assert result == test_plist_expected  # noqa: F821
+        assert result == TEST_PLIST_EXPECTED  # noqa: F821
 
     def test_replace_line(self):
         test_line = '<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">\n'
@@ -67,26 +50,40 @@ class TestCleanPlistTag:
         assert result != test_removed
 
     @pytest.fixture(autouse=True)
-    def test_write_plist_file_error(self, caplog):
+    def test_write_plist_file_filenotfounderror(self, caplog):
         caplog.clear()
-        with patch('build.helpers.clean_data.open') as mock_open:
-            mock_open.side_effect = OSError
-            clean_plist_tag('tests/build/files/plist.plist')
+        with patch('src.build.helpers.clean_data.open') as mock_open:
+            mock_open.side_effect = FileNotFoundError
+            clean_plist_tag('tests/build/mocks/not_found_plist.plist')
         assert caplog.record_tuples == [
             (
-                'build.helpers.clean_data',
+                'src.build.helpers.clean_data',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/files/plist.plist'",
+                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_plist.plist'",
+            )
+        ]
+
+    @pytest.fixture(autouse=True)
+    def test_write_plist_file_oserror(self, caplog):
+        caplog.clear()
+        with patch('src.build.helpers.clean_data.open') as mock_open:
+            mock_open.side_effect = OSError
+            clean_plist_tag('tests/build/mocks/plist.plist')
+        assert caplog.record_tuples == [
+            (
+                'src.build.helpers.clean_data',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/mocks/plist.plist'",
             )
         ]
 
 
 class TestCleanYamlTabs:
-    @pytest.mark.parametrize('a, expected', [(test_yaml_file, test_yaml_expected)])
+    @pytest.mark.parametrize('a, expected', [(TEST_YAML_FILE, TEST_YAML_EXPECTED)])
     def test_clean_yaml_tabs(self, a, expected):
         result = clean_yaml_tabs(a)
         return result
-        assert result == test_yaml_expected  # noqa: F821
+        assert result == TEST_YAML_EXPECTED  # noqa: F821
 
     def test_replace_tabs(self):
         test_tab_file = '\tText foo bar'
@@ -95,15 +92,29 @@ class TestCleanYamlTabs:
         assert result == test_spc_file
 
     @pytest.fixture(autouse=True)
-    def test_write_yaml_file_error(self, caplog):
+    def test_write_yaml_file_filenotfounferror(self, caplog):
         caplog.clear()
-        with patch('build.helpers.clean_data.open') as mock_open:
-            mock_open.side_effect = OSError
-            clean_yaml_tabs('tests/build/files/yaml.yaml')
+        with patch('src.build.helpers.clean_data.open') as mock_open:
+            mock_open.side_effect = FileNotFoundError
+            clean_yaml_tabs('tests/build/mocks/not_found_yaml.yaml')
         assert caplog.record_tuples == [
             (
-                'build.helpers.clean_data',
+                'src.build.helpers.clean_data',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/files/yaml.yaml'",
+                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
+            )
+        ]
+
+    @pytest.fixture(autouse=True)
+    def test_write_yaml_file_oserror(self, caplog):
+        caplog.clear()
+        with patch('src.build.helpers.clean_data.open') as mock_open:
+            mock_open.side_effect = OSError
+            clean_yaml_tabs('tests/build/mocks/yaml.yaml')
+        assert caplog.record_tuples == [
+            (
+                'src.build.helpers.clean_data',
+                40,
+                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
             )
         ]
