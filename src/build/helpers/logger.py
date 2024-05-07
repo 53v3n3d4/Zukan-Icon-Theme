@@ -26,7 +26,8 @@ class LevelFormatter(logging.Formatter):
         return formatter.format(record)
 
 
-# Copy from docs
+# Config below copied from python docs
+# https://docs.python.org/3/howto/logging.html#advanced-logging-tutorial
 # create logger
 logger = logging.getLogger()
 logger.setLevel(logging.INFO)

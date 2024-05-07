@@ -62,11 +62,17 @@ class ZukanSyntax:
             return files_in_dir
         except FileNotFoundError:
             logger.error(
-                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), icon_data
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                dir_icon_data,
             )
         except OSError:
             logger.error(
-                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), icon_data
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                dir_icon_data,
             )
 
 

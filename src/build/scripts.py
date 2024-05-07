@@ -82,8 +82,7 @@ def main():
         '--all',
         action='store_true',
         required=False,
-        help=f'{ Color.YELLOW }Create all PNGs, sublime-syntaxes and '
-        f'tmPreferences.{ Color.END }',
+        help=f'{ Color.YELLOW }Create all PNGs and tmPreferences.{ Color.END }',
     )
     parser_icontheme.add_argument(
         '-d',
