@@ -9,21 +9,21 @@ $ peotry run build -h
 ```
 
 ## Create icon theme
-Create pngs, sublime-syntax and tmPreferences files for icons.  
+Create pngs and tmPreferences files for icons.  
 
 Using argparse commands  
 ```sh
 # Environment need to be activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
-# Create all pngs, sublime-syntax and tmPreferences
+# Create all pngs and tmPreferences
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build icon-theme -f src/data/afdesign.yaml
-# Create all pngs, sublime-syntax and tmPreferences
+# Create all pngs and tmPreferences
 $ poetry run build icon-theme --all
 ```
 
