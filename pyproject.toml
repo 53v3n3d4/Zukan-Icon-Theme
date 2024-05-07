@@ -45,9 +45,9 @@ ruff = "^0.3.7"
 [tool.poetry.scripts]
 # poetry run build --help
 # Examples:
-# Generate pngs, sublime-syntaxes and tmpreferences
+# Generate pngs and tmpreferences
 # poetry run build icon-theme -f src/data/afdesign.yaml
-# poetry run build icon-theme -a
+# poetry run build icon-theme --all
 build = "src.build.scripts:main"
 
 [build-system]
