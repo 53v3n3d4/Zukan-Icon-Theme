@@ -1,0 +1,13 @@
+%YAML 1.2
+---
+name: JavaScript (Cypress)
+scope: source.js.cypress
+hidden: true
+file_extensions:
+- cypress.config.js
+- cypress.config.cjs
+- cypress.config.mjs
+contexts:
+  main:
+  - include: scope:source.js
+    apply_prototype: true

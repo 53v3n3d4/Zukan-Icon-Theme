@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: makefile (Erlang mk)
+scope: source.makefile.erlang.mk
+hidden: true
+file_extensions:
+- Erlang.mk
+contexts:
+  main:
+  - include: scope:source.makefile
+    apply_prototype: true

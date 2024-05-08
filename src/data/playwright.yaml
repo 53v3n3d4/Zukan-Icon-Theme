@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Playwright
+preferences:
+  scope: source.ts.playwright
+  settings:
+    icon: playwright
+syntax:
+  - name: TypeScript (Playwright)
+    scope: source.ts.playwright
+    hidden: true
+    file_extensions:
+     - playwright.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

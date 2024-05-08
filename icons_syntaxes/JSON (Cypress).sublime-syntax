@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: JSON (Cypress)
+scope: source.cypress.jest
+hidden: true
+file_extensions:
+- cypress.json
+contexts:
+  main:
+  - include: scope:source.json
+    apply_prototype: true

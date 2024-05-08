@@ -1,0 +1,37 @@
+%YAML 1.2
+---
+name: Cypress
+preferences:
+  scope: source.js.cypress, source.ts.cypress
+  settings:
+    icon: cypress
+syntax:
+  - name: JavaScript (Cypress)
+    scope: source.js.cypress
+    hidden: true
+    file_extensions:
+      - cypress.config.js
+      - cypress.config.cjs
+      - cypress.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Cypress)
+    scope: source.cypress.jest
+    hidden: true
+    file_extensions:
+      - cypress.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: TypeScript (Cypress)
+    scope: source.ts.cypress
+    hidden: true
+    file_extensions:
+      - cypress.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

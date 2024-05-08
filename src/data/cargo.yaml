@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Cargo
+preferences:
+  scope: source.toml.cargo
+  settings:
+    icon: cargo
+syntax:
+  - name: TOML (Cargo)
+    scope: source.toml.cargo
+    hidden: true
+    file_extensions:
+      - Cargo.lock
+      - Cargo.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
