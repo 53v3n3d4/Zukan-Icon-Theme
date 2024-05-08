@@ -1,3 +1,4 @@
+import logging
 import os
 import glob
 
@@ -8,6 +9,8 @@ from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_SYNTAXES_DATA_FILE,
 )
+
+logger = logging.getLogger(__name__)
 
 
 class ZukanSyntax:
@@ -26,26 +29,36 @@ class ZukanSyntax:
                 syntax_file_path = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename)
                 # print(syntax_file_path)
                 dump_yaml_data(s, syntax_file_path)
+            logger.info('sublime-syntaxes created.')
             return zukan_icons_syntaxes
         except FileNotFoundError:
-            print_filenotfounderror(filename)
+            # print_filenotfounderror(filename)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
+            )
         except OSError:
-            print_oserror(filename)
+            # print_oserror(filename)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
+            )
 
     def remove_icons_syntaxes():
         """
         Remove all sublime-syntaxes files, leaving pickle file.
         """
-        # dir_icons_syntaxes = os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        # for s in dir_icons_syntaxes:
-        #     if s.endswith('.sublime-syntax'):
-        #         os.remove
         try:
             for s in glob.iglob(
                 os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, '*.sublime-syntax')
             ):
                 os.remove(s)
+            logger.info('sublime-syntaxes removed.')
         except FileNotFoundError:
-            print_filenotfounderror(s)
+            # print_filenotfounderror(s)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), s
+            )
         except OSError:
-            print_oserror(s)
+            # print_oserror(s)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), s
+            )

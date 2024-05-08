@@ -3,6 +3,7 @@ import sublime
 import sublime_plugin
 import sys
 
+from .src.zukan_icon_theme.helpers.logger import logging
 from .src.zukan_icon_theme.lib.icons_syntaxes import ZukanSyntax
 from .src.zukan_icon_theme.lib.move_folders import MoveFolder
 from .src.zukan_icon_theme.lib.themes import ThemeFile
@@ -28,7 +29,9 @@ for module_name in [
 del prefix
 
 # This sometimes raise errors
-# sublime_plugin.reload_plugin(module_name)
+# sublime_plugin.reload_plugin(__name__)
+
+logger = logging.getLogger(__name__)
 
 zukan_pkg_assets = os.path.join(ZUKAN_PKG_PATH + '/assets')
 test_path = os.path.join(zukan_pkg_assets, 'Zukan Icon Theme')
@@ -40,7 +43,6 @@ test_path = os.path.join(zukan_pkg_assets, 'Zukan Icon Theme')
 
 
 # def plugin_unloaded():
-#     # delete created themes not needed. Remove created folder would remove
-#     # Packages/Zukan Icon Theme directory
+#     # Remove Packages/Zukan Icon Theme directory, if Installed Packacges Zukan exists
 #     # ThemeFile.delete_created_themes_files()
 #     MoveFolder.remove_created_folder(test_path)

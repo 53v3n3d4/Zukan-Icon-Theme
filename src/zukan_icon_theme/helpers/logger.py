@@ -1,7 +1,6 @@
 import logging
 
 from bisect import bisect
-from src.build.helpers.color import Color
 
 
 # Different formatters for each level.
@@ -46,18 +45,18 @@ ch.setLevel(logging.INFO)
 ch.setFormatter(
     LevelFormatter(
         {
-            logging.INFO: Color.GRAY
-            + '%(levelname)s | Zukan Icon Theme %(name)s %(message)s'
-            + Color.END,
-            logging.WARNING: Color.RED
-            + '%(asctime)s | %(levelname)s | Zukan Icon Theme pid=%(process)d %(name)s %(funcName)s:%(lineno)s %(message)s'
-            + Color.END,
+            logging.INFO: '%(levelname)s | Zukan Icon Theme %(filename)s %(message)s',
+            logging.WARNING: '%(asctime)s | %(levelname)s | Zukan Icon Theme pid=%(process)d %(filename)s %(funcName)s:%(lineno)s %(message)s',
         }
     )
 )
 
 # add ch to logger
 logger.addHandler(ch)
+
+# prevent root logger from catching this
+# https://github.com/SublimeText/PackageDev/blob/master/_logging.py
+# logger.propagate = False
 
 # 'application' code
 # logger.debug('debug message')

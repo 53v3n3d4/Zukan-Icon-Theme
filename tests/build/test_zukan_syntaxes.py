@@ -59,7 +59,7 @@ class TestIconZukanSyntax(TestCase):
         ZukanSyntax.write_zukan_data('data')
         self.assertTrue(os.path.exists('data'))
 
-    def test_params_zukan_syntax(self):
+    def test_params_write_zukan_data(self):
         ZukanSyntax.write_zukan_data('data')
         self.assertTrue(isinstance('data', str))
         self.assertFalse(isinstance('data', int))

@@ -7,7 +7,6 @@ from src.build.utils.build_dir_paths import filepath, DATA_PATH
 def test_param_is_string():
     TESTS_FOLDER = filepath('../tests')
     assert isinstance(TESTS_FOLDER, str)
-    # assert type(TESTS_FOLDER) is str
 
 
 # Using relpath, relative path from start directory, to make path

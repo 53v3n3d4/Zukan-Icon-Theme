@@ -1,9 +1,12 @@
 import _pickle as pickle
+import logging
 import os
 
 from .convert_to_commented import convert_to_commented
 from .print_message import print_filenotfounderror, print_oserror
 from ruamel.yaml import YAML
+
+logger = logging.getLogger(__name__)
 
 
 def read_pickle_data(pickle_file: str) -> dict:
@@ -25,13 +28,19 @@ def read_pickle_data(pickle_file: str) -> dict:
                 while True:
                     pickle_data.append(pickle.load(f))
             except EOFError:
-                print('[!] %s: End of file.' % os.path.basename(pickle_file))
+                logger.debug('%s end of file.', os.path.basename(pickle_file))
         # print(pickle_data)
         return pickle_data
     except FileNotFoundError:
-        print_filenotfounderror(pickle_file)
+        # print_filenotfounderror(pickle_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), pickle_file
+        )
     except OSError:
-        print_oserror(pickle_file)
+        # print_oserror(pickle_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), pickle_file
+        )
 
 
 def dump_yaml_data(file_data: dict, yaml_file: str):
@@ -54,6 +63,12 @@ def dump_yaml_data(file_data: dict, yaml_file: str):
         with open(yaml_file, 'w') as f:
             yaml.dump(file_data, f)
     except FileNotFoundError:
-        print_filenotfounderror(yaml_file)
+        # print_filenotfounderror(yaml_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), yaml_file
+        )
     except OSError:
-        print_oserror(yaml_file)
+        # print_oserror(yaml_file)
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), yaml_file
+        )

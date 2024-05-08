@@ -138,12 +138,13 @@ def read_pickle_data(pickle_file: str) -> dict:
                 while True:
                     pickle_data.append(pickle.load(f))
             except EOFError:
-                print_message(
-                    os.path.basename(pickle_file),
-                    'end of file.',
-                    color=f'{ Color.CYAN }',
-                    color_end=f'{ Color.END }',
-                )
+                # print_message(
+                #     os.path.basename(pickle_file),
+                #     'end of file.',
+                #     color=f'{ Color.CYAN }',
+                #     color_end=f'{ Color.END }',
+                # )
+                logger.debug('%s: end of file.', os.path.basename(pickle_file))
         print(pickle_data)
         return pickle_data
     except FileNotFoundError:

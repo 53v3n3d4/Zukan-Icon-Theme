@@ -1,4 +1,5 @@
 import glob
+import logging
 import os
 import shutil
 
@@ -14,6 +15,7 @@ from ..utils.zukan_dir_paths import (
     TEST_NOT_EXIST_ZUKAN_ICONS_THEMES_PATH,
 )
 
+logger = logging.getLogger(__name__)
 
 # installed_themes = search_installed_pkgs_themes()
 # pkg_themes = search_pkgs_themes()
@@ -45,19 +47,30 @@ class ThemeFile:
                 destiny = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
                 # print(ZUKAN_PKG_ICONS_PATH + theme_name)
                 shutil.copy(origin, destiny)
-                print('[!] Creating icon theme: %s' % destiny)
+                # print('[!] Zukan Icon Theme: creating icon theme %s' % destiny)
+                logger.info('creating icon theme %s', destiny)
                 return theme_name
             else:
                 raise FileNotFoundError(
-                    print(
-                        'Theme name does not exist. Use menu Command Palette > '
-                        'View Package File > theme name.'
+                    # print(
+                    #     'Zukan Icon Theme: theme name does not exist. Use menu '
+                    #     'Command Palette > View Package File > theme name.'
+                    # )
+                    logger.error(
+                        'theme name does not exist. Use menu Command Palette > View '
+                        'Package File > theme name.'
                     )
                 )
         except FileNotFoundError:
-            print_filenotfounderror(theme_name)
+            # print_filenotfounderror(theme_name)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), theme_name
+            )
         except OSError:
-            print_oserror(theme_name)
+            # print_oserror(theme_name)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), theme_name
+            )
 
     def create_themes_files():
         """
@@ -70,11 +83,20 @@ class ThemeFile:
                     ThemeFile.create_theme_file(theme)
                 return all_themes
             else:
-                raise FileNotFoundError(print('List is empty.'))
+                raise FileNotFoundError(
+                    # print('Zukan Icon Theme: list is empty.')
+                    logger.error('list is empty.')
+                )
         except FileNotFoundError:
-            print_filenotfounderror(all_themes)
+            # print_filenotfounderror(all_themes)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), all_themes
+            )
         except OSError:
-            print_oserror(all_themes)
+            # print_oserror(all_themes)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), all_themes
+            )
 
     def delete_created_theme_file(theme_name: str):
         """
@@ -88,12 +110,19 @@ class ThemeFile:
         try:
             theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
             os.remove(theme_file)
-            print('[!] Deleting icon theme: %s' % theme_file)
+            # print('[!] Zukan Icon Theme: deleting icon theme %s' % theme_file)
+            logger.info('deleting icon theme: %s', theme_file)
             return theme_name
         except FileNotFoundError:
-            print_filenotfounderror(theme_name)
+            # print_filenotfounderror(theme_name)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), theme_name
+            )
         except OSError:
-            print_oserror(theme_name)
+            # print_oserror(theme_name)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), theme_name
+            )
 
     def delete_created_themes_files():
         """
@@ -106,9 +135,21 @@ class ThemeFile:
                 ThemeFile.delete_created_theme_file(theme)
             return zukan_installed_themes
         except FileNotFoundError:
-            print_filenotfounderror(zukan_installed_themes)
+            # print_filenotfounderror(zukan_installed_themes)
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                zukan_installed_themes,
+            )
         except OSError:
-            print_oserror(zukan_installed_themes)
+            # print_oserror(zukan_installed_themes)
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                zukan_installed_themes,
+            )
 
     def list_created_themes_files() -> list:
         """
@@ -124,12 +165,27 @@ class ThemeFile:
                     list_zukan_installed.append(os.path.basename(file))
                 return list_zukan_installed
             else:
-                raise FileNotFoundError(print('File or directory do not exist.'))
+                raise FileNotFoundError(
+                    # print('Zukan Icon Theme: file or directory do not exist.')
+                    logger.error('file or directory do not exist.')
+                )
             return list_zukan_installed
         except FileNotFoundError:
-            print_filenotfounderror('Zukan Icon Theme/icons folder')
+            # print_filenotfounderror('Zukan Icon Theme/icons folder')
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                'Zukan Icon Theme/icons folder',
+            )
         except OSError:
-            print_oserror('Zukan Icon Theme/icons folder')
+            # print_oserror('Zukan Icon Theme/icons folder')
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                'Zukan Icon Theme/icons folder',
+            )
 
 
 # file_test = 'notexist.sublime-theme'

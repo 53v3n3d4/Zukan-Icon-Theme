@@ -1,3 +1,4 @@
+import logging
 import os
 import shutil
 
@@ -12,6 +13,7 @@ from ..utils.zukan_dir_paths import (
 from ..utils.zukan_pkg_folders import zukan_pkg_folders
 from zipfile import ZipFile
 
+logger = logging.getLogger(__name__)
 
 # Testing path
 zukan_pkg_assets = os.path.join(ZUKAN_PKG_PATH + '/assets')
@@ -35,16 +37,19 @@ def extract_folder(name: str):
     # with ZipFile(package_control_installed_pkg, 'r') as zf:
     with ZipFile(ZUKAN_INSTALLED_PKG_PATH, 'r') as zf:
         if dir_exist(zf, name):
-            print('Moving %(n)s folder to %(d)s' % {'n': name, 'd': zukan_pkg_assets})
+            # print('Zukan Icon Theme: moving %(n)s folder to %(d)s' % {'n': name, 'd': zukan_pkg_assets})
+            logger.debug('moving %s folder to %s', name, zukan_pkg_assets)
+
             for file_in_zip in zf.namelist():
                 if file_in_zip.startswith(name):
                     zf.extract(file_in_zip, zukan_pkg_assets)
         else:
             raise FileNotFoundError(
-                print(
-                    'Folder %(n)s does not exist in %(d)s.'
-                    % {'n': name, 'd': zukan_pkg_assets}
-                )
+                # print(
+                #     'Zukan Icon Theme: folder %(n)s does not exist in %(d)s.'
+                #     % {'n': name, 'd': zukan_pkg_assets}
+                # )
+                logger.error('folder %s does not exist in %s.', name, zukan_pkg_assets)
             )
 
 
@@ -69,17 +74,27 @@ class MoveFolder:
         try:
             # check if is in Installed Packages, move
             if os.path.exists(ZUKAN_INSTALLED_PKG_PATH):
-                print('Zukan exist in Installed folder.')
+                # print('Zukan Icon Theme exist in Installed folder.')
+                logger.debug('Zukan exist in Installed folder.')
                 extract_folder(name)
                 return name
             else:
                 raise FileNotFoundError(
-                    print('Folder %s does not exist in Installed Packages.' % name)
+                    # print('Zukan Icon Theme: folder %s does not exist in Installed Packages.' % name)
+                    logger.error(
+                        'folder %s does not exist in Installed Packages.', name
+                    )
                 )
         except FileNotFoundError:
-            print_filenotfounderror(name)
+            # print_filenotfounderror(name)
+            logger.error(
+                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), name
+            )
         except OSError:
-            print_oserror(name)
+            # print_oserror(name)
+            logger.error(
+                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), name
+            )
 
     def move_folders(zukan_folders: str):
         """
@@ -91,11 +106,24 @@ class MoveFolder:
         try:
             for folder in zukan_folders:
                 MoveFolder.move_folder(folder)
+            logger.info('icons and/or icons_syntaxes folders moved to Packages.')
             return zukan_folders
         except FileNotFoundError:
-            print_filenotfounderror('icons and/or icons_syntaxes folder.')
+            # print_filenotfounderror('Zukan Icon Theme: icons and/or icons_syntaxes folder.')
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                'icons and/or icons_syntaxes folder.',
+            )
         except OSError:
-            print_oserror('icons and/or icons_syntaxes folder.')
+            # print_oserror('Zukan Icon Theme: icons and/or icons_syntaxes folder.')
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                'icons and/or icons_syntaxes folder.',
+            )
 
     def remove_created_folder(name: str):
         """
@@ -108,17 +136,32 @@ class MoveFolder:
             if os.path.exists(ZUKAN_PKG_ICONS_PATH) or os.path.exists(
                 ZUKAN_PKG_ICONS_SYNTAXES_PATH
             ):
-                print('Folder %s exists in Packages' % name)
+                # print('Zukan Icon Theme: folder %s exists in Packages' % name)
+                logger.debug('folder %s exists in Packages', name)
                 # After testing, change to Packages/Zukan Icon Theme
                 shutil.rmtree(os.path.join(zukan_pkg_assets, name))
-                print('%s deleted.' % os.path.join(zukan_pkg_assets, name))
+                # print('[!] Zukan Icon Theme: %s deleted.' % os.path.join(zukan_pkg_assets, name))
+                logger.info('%s deleted.', os.path.join(zukan_pkg_assets, name))
                 return name
             else:
-                print('Folder does not exist in Packages.')
+                # print('Zukan Icon Theme: folder does not exist in Packages.')
+                logger.info('Zukan folders does not exist in Packages.')
         except FileNotFoundError:
-            print_filenotfounderror('icons and/or icons_syntaxes folder.')
+            # print_filenotfounderror('icons and/or icons_syntaxes folder.')
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                'icons and/or icons_syntaxes folder.',
+            )
         except OSError:
-            print_oserror('icons and/or icons_syntaxes folder.')
+            # print_oserror('icons and/or icons_syntaxes folder.')
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                'icons and/or icons_syntaxes folder.',
+            )
 
 
 # MoveFolder.move_folder(icons_folder)

@@ -2,8 +2,9 @@ import errno
 import logging
 import os
 
-from collections import OrderedDict
+# from collections import OrderedDict
 from src.build.helpers.color import Color
+from src.build.helpers.nested_ordered_dict import nested_ordered_dict
 from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import dump_pickle_data, read_yaml_data
 from src.build.utils.build_dir_paths import (
@@ -45,7 +46,8 @@ class ZukanSyntax:
                             os.makedirs(ICONS_SYNTAXES_PATH)
                         # OrderedDict only necessary if using python 3.3
                         # Python 3.8, dict read ordered.
-                        ordered_dict = OrderedDict(k)
+                        # ordered_dict = OrderedDict(k)
+                        ordered_dict = nested_ordered_dict(k)
                         dump_pickle_data(ordered_dict, ZUKAN_SYNTAXES_DATA_FILE)
                         print_created_message(
                             os.path.basename(icon_data),

@@ -7,12 +7,12 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Icons, icons-syntaxes and preferences
-- Add icon-theme: archive, mypy, Pipenv, pre-commit, Read the Docs, reStructuredText, tox
+- Add icon-theme: archive, Cargo, Cypress, Erlang.mk, mypy, Pipenv, Playwright, pre-commit, Read the Docs, Rebar3, reStructuredText, tox
 - Add sublime-syntax: Elixir, file type iimage, Jest, Webpack
-- Change icon: Audio, Kotlin, Rspack
+- Change icon: Audio, Kotlin, makefile, Rspack
 - Change sublime-syntax: CAD, Docker, Go, Node js, Prettier, Pyhton, Ruby
 - Rename icons: Elixir, Fusion, TS, Unity, WebAssembly
-- Rename sublime-syntax file name: pytest, Less js, Next js, Node js, OpenGL, pnpm, README, Svelte, Test JSX, Test TSX, Vue
+- Rename sublime-syntax file name: Less js, Next js, Node js, OpenGL, pnpm, pytest, README, Svelte, Test JSX, Test TSX, Vue
 
 ### Build
 - Add data files
@@ -29,6 +29,7 @@
 - Add themes
 - Add move_folders
 - Add icons_sytanxes
+- Add logger
 
 ## [0.1.3] - 2024-04-22
 - Add alias: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu
