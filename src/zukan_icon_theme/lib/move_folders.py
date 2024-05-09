@@ -4,6 +4,7 @@ import os
 import shutil
 
 # from ..helpers.print_message import print_filenotfounderror, print_oserror
+from ..helpers.read_extract_zip import extract_folder
 from ..utils.zukan_dir_paths import (
     # INSTALLED_PACKAGES_PATH,
     ZUKAN_INSTALLED_PKG_PATH,
@@ -11,8 +12,7 @@ from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_PKG_PATH,
 )
-from ..utils.zukan_pkg_folders import zukan_pkg_folders
-from zipfile import ZipFile
+# from ..utils.zukan_pkg_folders import zukan_pkg_folders
 
 logger = logging.getLogger(__name__)
 
@@ -25,38 +25,6 @@ icons_folder = 'Zukan Icon Theme/icons/'
 icons_syntaxes_folder = 'Zukan Icon Theme/icons_syntaxes/'
 
 test_path = os.path.join(zukan_pkg_assets, 'Zukan Icon Theme')
-
-
-def dir_exist(z, name):
-    return any(
-        file_in_zip.startswith('{n}'.format(n=name.rstrip('/')))
-        for file_in_zip in z.namelist()
-    )
-
-
-def extract_folder(name: str):
-    # with ZipFile(package_control_installed_pkg, 'r') as zf:
-    with ZipFile(ZUKAN_INSTALLED_PKG_PATH, 'r') as zf:
-        if dir_exist(zf, name):
-            # print('Zukan Icon Theme: moving %(n)s folder to %(d)s' % {'n': name, 'd': zukan_pkg_assets})
-            logger.debug('moving %s folder to %s', name, zukan_pkg_assets)
-
-            for file_in_zip in zf.namelist():
-                if file_in_zip.startswith(name):
-                    zf.extract(file_in_zip, zukan_pkg_assets)
-        else:
-            raise FileNotFoundError(
-                # print(
-                #     'Zukan Icon Theme: folder %(n)s does not exist in %(d)s.'
-                #     % {'n': name, 'd': zukan_pkg_assets}
-                # )
-                logger.error('folder %s does not exist in %s.', name, zukan_pkg_assets)
-            )
-
-
-# extract_folder(messages_folder)
-# extract_folder(icons_folder)
-# extract_folder(icons_syntaxes_folder)
 
 
 class MoveFolder:
@@ -77,7 +45,7 @@ class MoveFolder:
             if os.path.exists(ZUKAN_INSTALLED_PKG_PATH):
                 # print('Zukan Icon Theme exist in Installed folder.')
                 logger.debug('Zukan exist in Installed folder.')
-                extract_folder(name)
+                extract_folder(name, zukan_pkg_assets)
                 return name
             else:
                 raise FileNotFoundError(

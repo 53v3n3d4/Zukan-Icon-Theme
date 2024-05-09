@@ -13,33 +13,22 @@ from tests.build.mocks.constants_pickle import (
 
 class TestNestedOrderedDict:
     @pytest.mark.parametrize(
-        'a, expected', [(TEST_SUBLIME_SYNTAXES_DICT, TEST_PICKLE_NESTED_ORDERED_DICT)]
+        'a, expected',
+        [
+            (TEST_SUBLIME_SYNTAXES_DICT, TEST_PICKLE_NESTED_ORDERED_DICT),
+            (TEST_SUBLIME_SYNTAX_DICT, TEST_PICKLE_ORDERED_DICT),
+            ('milk way', 'milk way'),
+            (7, 7),
+        ],
     )
     def test_nested_ordered_dict(self, a, expected):
         result = nested_ordered_dict(a)
         assert result == expected
-        assert isinstance(a, list)
-        assert isinstance(expected, list)
-
-    @pytest.mark.parametrize(
-        'a, expected', [(TEST_SUBLIME_SYNTAX_DICT, TEST_PICKLE_ORDERED_DICT)]
-    )
-    def test_ordered_dict(self, a, expected):
-        result = nested_ordered_dict(a)
-        assert result == expected
-        assert isinstance(a, dict)
-        assert isinstance(expected, dict)
-
-    @pytest.mark.parametrize('a, expected', [('milk way', 'milk way')])
-    def test_string(self, a, expected):
-        result = nested_ordered_dict(a)
-        assert result == expected
-        assert isinstance(a, str)
-        assert isinstance(expected, str)
-
-    @pytest.mark.parametrize('a, expected', [(7, 7)])
-    def test_interger(self, a, expected):
-        result = nested_ordered_dict(a)
-        assert result == expected
-        assert isinstance(a, int)
-        assert isinstance(expected, int)
+        assert isinstance(TEST_SUBLIME_SYNTAXES_DICT, list)
+        assert isinstance(TEST_PICKLE_NESTED_ORDERED_DICT, list)
+        assert isinstance(TEST_SUBLIME_SYNTAX_DICT, dict)
+        assert isinstance(TEST_PICKLE_ORDERED_DICT, dict)
+        assert isinstance('milk way', str)
+        assert isinstance('milk way', str)
+        assert isinstance(7, int)
+        assert isinstance(7, int)

@@ -1,5 +1,4 @@
 import pytest
-import unittest
 
 from src.build.helpers.clean_data import (
     clean_plist_tag,
@@ -18,14 +17,14 @@ from tests.build.mocks.constants_yaml import (
 from unittest.mock import patch, mock_open
 
 
-class TestWriteFile(unittest.TestCase):
-    def test_write_plist(self):
-        with patch('builtins.open', mock_open()) as mocked_open:
+class TestWriteFile:
+    def test_mock_write_plist(self):
+        with patch('src.build.helpers.clean_data.open', mock_open()) as mocked_open:
             clean_plist_tag(TEST_PLIST_FILE)
             mocked_open.assert_called_with(TEST_PLIST_FILE, 'w')
 
     def test_write_yaml(self):
-        with patch('builtins.open', mock_open()) as mocked_open:
+        with patch('src.build.helpers.clean_data.open', mock_open()) as mocked_open:
             clean_yaml_tabs(TEST_YAML_FILE)
             mocked_open.assert_called_with(TEST_YAML_FILE, 'w')
 

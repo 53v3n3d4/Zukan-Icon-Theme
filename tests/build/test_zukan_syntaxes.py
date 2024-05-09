@@ -9,7 +9,7 @@ from tests.build.mocks.constants_pickle import (
 from tests.build.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
-    TEST_DATA_DIR,
+    TEST_DATA_DIR_EXCEPT_ZUKAN_FILE,
 )
 from unittest.mock import patch
 
@@ -17,11 +17,18 @@ from unittest.mock import patch
 class TestZukanSyntax:
     @pytest.mark.parametrize(
         'a, b, c, expected',
-        [(DIR_DATA, DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE, TEST_DATA_DIR)],
+        [
+            (
+                DIR_DATA,
+                DIR_DESTINY,
+                TEST_PICKLE_ZUKAN_FILE,
+                TEST_DATA_DIR_EXCEPT_ZUKAN_FILE,
+            )
+        ],
     )
     def test_write_zukan_data(self, a, b, c, expected):
         result = ZukanSyntax.write_zukan_data(a, b, c)
-        assert result == TEST_DATA_DIR
+        assert result == TEST_DATA_DIR_EXCEPT_ZUKAN_FILE
 
     @pytest.fixture(autouse=True)
     def test_write_zukan_data_filenotfounderror(self, caplog):

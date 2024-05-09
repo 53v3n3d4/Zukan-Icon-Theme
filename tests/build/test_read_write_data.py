@@ -1,7 +1,6 @@
 import _pickle as pickle
 import os
 import pytest
-import unittest
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.helpers.read_write_data import (
@@ -12,6 +11,7 @@ from src.build.helpers.read_write_data import (
     read_yaml_data,
 )
 from tests.build.mocks.constants_pickle import (
+    TEST_PICKLE_AUDIO_FILE,
     TEST_PICKLE_FILE,
     TEST_PICKLE_ORDERED_DICT,
 )
@@ -31,42 +31,52 @@ from tests.build.mocks.constants_yaml import (
 from unittest.mock import patch, mock_open
 
 
-class TestDumpFile(unittest.TestCase):
+class TestDumpFile:
     def test_dump_pickle(self):
-        with patch('builtins.open', mock_open()) as mocked_open:
+        with patch(
+            'src.build.helpers.read_write_data.open', mock_open()
+        ) as mocked_open:
             dump_pickle_data(TEST_PICKLE_ORDERED_DICT, TEST_PICKLE_FILE)
             mocked_open.assert_called_with(TEST_PICKLE_FILE, 'ab+')
 
     def test_dump_plist(self):
-        with patch('builtins.open', mock_open()) as mocked_open:
+        with patch(
+            'src.build.helpers.read_write_data.open', mock_open()
+        ) as mocked_open:
             dump_plist_data(TEST_PLIST_CONTENT, TEST_PLIST_FILE)
             mocked_open.assert_called_with(TEST_PLIST_FILE, 'wb')
 
     def test_dump_yaml(self):
-        with patch('builtins.open', mock_open()) as mocked_open:
+        with patch(
+            'src.build.helpers.read_write_data.open', mock_open()
+        ) as mocked_open:
             dump_yaml_data(TEST_YAML_CONTENT, TEST_YAML_FILE)
             mocked_open.assert_called_with(TEST_YAML_FILE, 'w')
 
 
-class TestLoadFile(unittest.TestCase):
+class TestLoadFile:
     def load_pickle(self, path):
         with open(path, 'rb') as f:
             return pickle.load(f)
 
     # From https://stackoverflow.com/questions/60761451/how-to-use-mock-open-with-pickle-load
     def test_load_pickle(self):
-        read_data = pickle.dumps({'a': 1, 'b': 2, 'c': 3})
-        with patch('builtins.open', mock_open(read_data=read_data)):
-            obj = TestLoadFile.load_pickle(self, TEST_PICKLE_FILE)
-        self.assertEqual({'a': 1, 'b': 2, 'c': 3}, obj)
+        read_data = pickle.dumps(TEST_PICKLE_ORDERED_DICT)
+        with patch(
+            'src.build.helpers.read_write_data.open', mock_open(read_data=read_data)
+        ):
+            result = TestLoadFile.load_pickle(self, TEST_PICKLE_AUDIO_FILE)
+            assert result == TEST_PICKLE_ORDERED_DICT
 
     def test_read_yaml_empty_file(self):
-        with patch('builtins.open', mock_open()):
+        with patch('src.build.helpers.read_write_data.open', mock_open()):
             file_data = read_yaml_data(TEST_YAML_EMPTY_FILE)
-            self.assertEqual(file_data, None)
+            assert file_data is None
 
     def test_read_yaml_file(self):
-        with patch('builtins.open', mock_open()) as mocked_open:
+        with patch(
+            'src.build.helpers.read_write_data.open', mock_open()
+        ) as mocked_open:
             read_yaml_data('tests/build/mocks/yaml.yaml')
             mocked_open.assert_called_with('tests/build/mocks/yaml.yaml')
 
