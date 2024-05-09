@@ -1,9 +1,10 @@
+import errno
 import glob
 import logging
 import os
 import shutil
 
-from ..helpers.print_message import print_filenotfounderror, print_oserror
+# from ..helpers.print_message import print_filenotfounderror, print_oserror
 from ..helpers.search_themes import (
     search_resources_sublime_themes,
     # search_installed_pkgs_themes,

@@ -2,16 +2,15 @@ import errno
 import logging
 import os
 
-# from collections import OrderedDict
 from src.build.helpers.color import Color
 from src.build.helpers.nested_ordered_dict import nested_ordered_dict
 from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import dump_pickle_data, read_yaml_data
-from src.build.utils.build_dir_paths import (
-    # DATA_PATH,
-    ICONS_SYNTAXES_PATH,
-    ZUKAN_SYNTAXES_DATA_FILE,
-)
+# from src.build.utils.build_dir_paths import (
+#     # DATA_PATH,
+#     # ICONS_SYNTAXES_PATH,
+#     ZUKAN_SYNTAXES_DATA_FILE,
+# )
 
 logger = logging.getLogger(__name__)
 
@@ -22,7 +21,7 @@ class ZukanSyntax:
     sublime-syntaxes.
     """
 
-    def write_zukan_data(dir_icon_data: str):
+    def write_zukan_data(dir_icon_data: str, dir_destiny: str, pickle_file: str):
         """
         Create zukan with icons sublime-syntaxes data.
 
@@ -32,8 +31,8 @@ class ZukanSyntax:
         icon_data (str) -- path to data file.
         """
         try:
-            if os.path.exists(ZUKAN_SYNTAXES_DATA_FILE):
-                os.remove(ZUKAN_SYNTAXES_DATA_FILE)
+            if os.path.exists(pickle_file):
+                os.remove(pickle_file)
             files_in_dir = os.listdir(dir_icon_data)
             for file_data in files_in_dir:
                 icon_data = os.path.join(dir_icon_data, file_data)
@@ -42,13 +41,13 @@ class ZukanSyntax:
                 # empty.
                 if any('syntax' in d for d in data) and data.get('syntax') is not None:
                     for k in data['syntax']:
-                        if not os.path.exists(ICONS_SYNTAXES_PATH):
-                            os.makedirs(ICONS_SYNTAXES_PATH)
+                        if not os.path.exists(dir_destiny):
+                            os.makedirs(dir_destiny)
                         # OrderedDict only necessary if using python 3.3
                         # Python 3.8, dict read ordered.
                         # ordered_dict = OrderedDict(k)
                         ordered_dict = nested_ordered_dict(k)
-                        dump_pickle_data(ordered_dict, ZUKAN_SYNTAXES_DATA_FILE)
+                        dump_pickle_data(ordered_dict, pickle_file)
                         print_created_message(
                             os.path.basename(icon_data),
                             k['name'],

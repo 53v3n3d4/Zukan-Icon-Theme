@@ -167,7 +167,7 @@ def dump_pickle_data(pickle_data: dict, pickle_file: str):
     """
     try:
         with open(pickle_file, 'ab+') as f:
-            # In ST Python 3.3, fail if use protocol 4 or 5
+            # Python 3.3, fail if use protocol 4 or 5
             pickle.dump(pickle_data, f, protocol=3)
     except FileNotFoundError:
         logger.error(

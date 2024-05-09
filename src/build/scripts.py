@@ -6,12 +6,11 @@ import sys
 from src.build.clean_svg import CleanSVG
 from src.build.helpers.color import Color
 from src.build.helpers.create_test_icon_theme import TestIconTheme
+from src.build.helpers.icons_syntaxes import IconSyntax
 from src.build.helpers.logger import logging
 from src.build.helpers.print_message import print_build_message, print_message
 from src.build.helpers.read_write_data import read_pickle_data
-from src.build.helpers.zukan_syntaxes import ZukanSyntax
 from src.build.icons import IconPNG
-from src.build.icons_syntaxes import IconSyntax
 from src.build.preferences import Preference
 from src.build.utils.build_dir_paths import (
     # ASSETS_PATH,
@@ -24,6 +23,7 @@ from src.build.utils.build_dir_paths import (
     ZUKAN_SYNTAXES_DATA_FILE,
 )
 from src.build.utils.svg_unused_list import UNUSED_LIST
+from src.build.zukan_syntaxes import ZukanSyntax
 
 logger = logging.getLogger(__name__)
 
@@ -299,6 +299,22 @@ def main():
         required=False,
         help=f'{ Color.YELLOW }Print zukan syntaxes data file.{ Color.END }',
     )
+    parser_zukan_syntax.add_argument(
+        '-s',
+        '--syntax',
+        default=ICONS_SYNTAXES_PATH,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to destiny for zukan data file.{ Color.END }',
+    )
+    parser_zukan_syntax.add_argument(
+        '-pf',
+        '--picklefile',
+        default=ZUKAN_SYNTAXES_DATA_FILE,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to zukan data file.{ Color.END }',
+    )
 
     # Namespaces
     args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
@@ -429,13 +445,13 @@ def main():
                 '🛠️  Writing zukan syntaxes data: ',
                 ZUKAN_SYNTAXES_DATA_FILE,
             )
-            ZukanSyntax.write_zukan_data(DATA_PATH)
+            ZukanSyntax.write_zukan_data(DATA_PATH, args.syntax, args.picklefile)
         elif args.read and not args.write:
             print_build_message(
                 '🛠️  Printing zukan syntaxes data: ',
                 ZUKAN_SYNTAXES_DATA_FILE,
             )
-            read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
+            read_pickle_data(args.picklefile)
         else:
             _error_message()
 
