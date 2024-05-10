@@ -1,11 +1,13 @@
 Build scripts used to create icons pngs, sublime-syntaxes and tmPreferences.  
 
 ```sh
-# Environment need to be activated
+# Environment activated
 🚥 in ../Zukan-Icon-Theme$  python src/build/scripts.py -h
+# Poetry with env activated
+$  build -h
 
 # Or, with poetry
-$ peotry run build -h
+$ poetry run build -h
 ```
 
 ## Create icon theme
@@ -13,7 +15,7 @@ Create pngs and tmPreferences files for icons.
 
 Using argparse commands  
 ```sh
-# Environment need to be activated
+# Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
 # Create all pngs and tmPreferences
@@ -27,6 +29,27 @@ $ poetry run build icon-theme -f src/data/afdesign.yaml
 $ poetry run build icon-theme --all
 ```
 
+## Create zukan syntaxes file
+Create a data file, with all icon syntaxes, to be used by plugin.  
+
+File will be created in folder `icons_syntaxes`.  
+
+Using argparse commands  
+```sh
+# Environment activated
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --help
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --write
+# Print file
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --read
+```
+
+Using poetry scripts  
+```sh
+$ poetry run build zukan-syntax --write
+# Print file
+$ poetry run build zukan-syntax --read
+```
+
 ## Clean SVG
 Clean unused tags and attributes in SVG.  
 
@@ -34,7 +57,7 @@ Affinity designer program, used to export SVGs, produce them with unsed tags tha
 
 Using argparse commands  
 ```sh
-# Environment need to be activated
+# Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean -f src/icons/afdesign.svg
 # Clean all SVGs
@@ -62,7 +85,7 @@ Create PNG icons in 3 sizes, Size and suffix details comes from png_details.py.
 
 Using argparse commands  
 ```sh
-# Environment need to be activated
+# Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png -f src/data/afdesign.yaml
 # Create all PNGs
@@ -81,7 +104,7 @@ Create icons sublime-syntaxes.
 
 Using argparse commands  
 ```sh
-# Environment need to be activated
+# Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax -f src/data/afdesign.yaml
 # Create all sublime-syntax files
@@ -100,7 +123,7 @@ Create icons tmPreferences.
 
 Using argparse commands  
 ```sh
-# Environment need to be activated
+# Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference -f src/data/afdesign.yaml
 # Create all tnPreferences files
@@ -121,7 +144,7 @@ The test files will be created inside folder `tests_icon_theme`.
 
 Using argparse commands  
 ```sh
-# Environment need to be activated
+# Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme -f src/data/afdesign.yaml
 # Create all test files extensions files
@@ -135,26 +158,4 @@ $ poetry run build test-icon-theme -f src/data/afdesign.yaml
 $ poetry run build test-icon-theme --all
 ```
 
-> Creating test files will raise warnings on ST console for files that ST use like sublime-syntax.sublime-syntax.
-
-## Create zukan syntaxes file
-Create a data file, with all icon syntaxes, to be used by plugin.  
-
-File will be created in folder `icons_syntaxes`.  
-
-Using argparse commands  
-```sh
-# Environment need to be activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --write
-# Print file
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --read
-```
-
-Using poetry scripts  
-```sh
-$ poetry run build zukan-syntax --write
-# Print file
-$ poetry run build zukan-syntax --read
-```
-
+> Creating test files will raise warnings on ST console for files that ST use like Sublime Text.sublime-syntax or Sublime Text.sublime-settings.
