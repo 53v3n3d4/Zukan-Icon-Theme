@@ -46,7 +46,8 @@ ch.setFormatter(
     LevelFormatter(
         {
             logging.INFO: '%(levelname)s | Zukan Icon Theme %(filename)s %(message)s',
-            logging.WARNING: '%(asctime)s | %(levelname)s | Zukan Icon Theme pid=%(process)d %(filename)s %(funcName)s:%(lineno)s %(message)s',
+            logging.WARNING: '%(asctime)s | %(levelname)s | Zukan Icon Theme '
+            'pid=%(process)d %(filename)s %(funcName)s:%(lineno)s %(message)s',
         }
     )
 )

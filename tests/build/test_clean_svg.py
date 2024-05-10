@@ -135,9 +135,17 @@ class TestCleanSVG(TestCase):
         CleanSVG.clean_svg('icons/file_type_ai.svg', UNUSED_LIST)
         self.assertTrue(os.path.exists('icons/file_type_ai.svg'))
 
+    def test_dir_exist(self):
+        CleanSVG.clean_all_svgs('icons', UNUSED_LIST)
+        self.assertTrue(os.path.exists('icons'))
+
     def test_file_not_found(self):
         CleanSVG.clean_svg('icons/file_type_babel.svg', UNUSED_LIST)
         self.assertFalse(os.path.exists('icons/file_type_babel.svg'))
+
+    def test_dir_not_found(self):
+        CleanSVG.clean_all_svgs('icons_not_found', UNUSED_LIST)
+        self.assertFalse(os.path.exists('icons_not_found'))
 
     def test_params_clean_svg(self):
         CleanSVG.clean_svg('icons/file_type_ai.svg', UNUSED_LIST)

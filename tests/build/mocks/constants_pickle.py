@@ -99,6 +99,6 @@ TEST_PICKLE_ORDERED_DICT = OrderedDict(
                 'wma',
             ],
         ),
-        ('contexts', {'main': []}),
+        ('contexts', OrderedDict([('main', [])])),
     ]
 )

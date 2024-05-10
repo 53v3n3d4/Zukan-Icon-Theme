@@ -5,7 +5,7 @@ from collections import OrderedDict
 # Python 3.8, dict read ordered.
 def nested_ordered_dict(d: dict) -> OrderedDict:
     """
-    OrderedDict in nesting dict before saving pickle file.
+    Convert recursively to OrderedDict, before saving pickle file.
 
     Parameters:
     d (dict) -- sublime-syntaxes dict.
@@ -26,7 +26,7 @@ def nested_ordered_dict(d: dict) -> OrderedDict:
         # for i in d:
         #     od = nested_ordered_dict(i)
 
-        od = [nested_ordered_dict(v) for v in d]
+        od = [nested_ordered_dict(i) for i in d]
         # od = [*map(nested_ordered_dict, d)]
         return od
     else:

@@ -283,7 +283,7 @@ def main():
     # Create the parser for the "zukan-syntax" sub-command
     parser_zukan_syntax = subparsers.add_parser(
         'zukan-syntax',
-        help=f'{ Color.YELLOW }Create zukan syntax data file.{ Color.END }',
+        help=f'{ Color.YELLOW }Create zukan syntaxes data file.{ Color.END }',
     )
     parser_zukan_syntax.add_argument(
         '-w',

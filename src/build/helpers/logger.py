@@ -50,8 +50,8 @@ ch.setFormatter(
             + '%(levelname)s | Zukan Icon Theme %(name)s %(message)s'
             + Color.END,
             logging.WARNING: Color.RED
-            + '%(asctime)s | %(levelname)s | Zukan Icon Theme pid=%(process)d %(name)s %(funcName)s:%(lineno)s %(message)s'
-            + Color.END,
+            + '%(asctime)s | %(levelname)s | Zukan Icon Theme pid=%(process)d'
+            ' %(name)s %(funcName)s:%(lineno)s %(message)s' + Color.END,
         }
     )
 )
