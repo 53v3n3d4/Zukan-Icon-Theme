@@ -3,7 +3,7 @@ import pytest
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.helpers.create_test_icon_theme import TestIconTheme
-from tests.build.mocks.tests_paths import (
+from tests.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
     TEST_DATA_DIR,
@@ -23,13 +23,13 @@ class TestCreateIconTheme:
         with patch('src.build.helpers.create_test_icon_theme.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
             TestIconTheme.create_icons_files(
-                'tests/build/mocks/not_found_yaml.yaml', DIR_DESTINY
+                'tests/mocks/not_found_yaml.yaml', DIR_DESTINY
             )
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.create_test_icon_theme',
                 40,
-                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
+                "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
             )
         ]
 
@@ -38,12 +38,12 @@ class TestCreateIconTheme:
         caplog.clear()
         with patch('src.build.helpers.create_test_icon_theme.open') as mock_open:
             mock_open.side_effect = OSError
-            TestIconTheme.create_icons_files('tests/build/mocks/yaml.yaml', DIR_DESTINY)
+            TestIconTheme.create_icons_files('tests/mocks/yaml.yaml', DIR_DESTINY)
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.create_test_icon_theme',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
+                "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
             )
         ]
 

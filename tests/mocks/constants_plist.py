@@ -42,4 +42,4 @@ TEST_PLIST_EXPECTED = """<?xml version="1.0" encoding="UTF-8"?>
 </plist>
 """
 
-TEST_PLIST_FILE = 'tests/mocks/bar.plist'
+TEST_PLIST_FILE = 'tests/bar.plist'

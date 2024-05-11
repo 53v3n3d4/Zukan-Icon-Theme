@@ -3,10 +3,10 @@ import pytest
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.zukan_syntaxes import ZukanSyntax
-from tests.build.mocks.constants_pickle import (
+from tests.mocks.constants_pickle import (
     TEST_PICKLE_ZUKAN_FILE,
 )
-from tests.build.mocks.tests_paths import (
+from tests.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
     TEST_DATA_DIR_EXCEPT_ZUKAN_FILE,
@@ -36,7 +36,7 @@ class TestZukanSyntax:
         with patch('src.build.zukan_syntaxes.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
             ZukanSyntax.write_zukan_data(
-                'tests/build/mocks/not_found_yaml.yaml',
+                'tests/mocks/not_found_yaml.yaml',
                 DIR_DESTINY,
                 TEST_PICKLE_ZUKAN_FILE,
             )
@@ -44,7 +44,7 @@ class TestZukanSyntax:
             (
                 'src.build.zukan_syntaxes',
                 40,
-                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
+                "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
             )
         ]
 
@@ -54,13 +54,13 @@ class TestZukanSyntax:
         with patch('src.build.zukan_syntaxes.open') as mock_open:
             mock_open.side_effect = OSError
             ZukanSyntax.write_zukan_data(
-                'tests/build/mocks/yaml.yaml', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE
+                'tests/mocks/yaml.yaml', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE
             )
         assert caplog.record_tuples == [
             (
                 'src.build.zukan_syntaxes',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
+                "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
             )
         ]
 

@@ -6,11 +6,11 @@ from src.build.helpers.clean_data import (
     _replace_line,
     _replace_tabs,
 )
-from tests.build.mocks.constants_plist import (
+from tests.mocks.constants_plist import (
     TEST_PLIST_EXPECTED,
     TEST_PLIST_FILE,
 )
-from tests.build.mocks.constants_yaml import (
+from tests.mocks.constants_yaml import (
     TEST_YAML_EXPECTED,
     TEST_YAML_FILE,
 )
@@ -53,12 +53,12 @@ class TestCleanPlistTag:
         caplog.clear()
         with patch('src.build.helpers.clean_data.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            clean_plist_tag('tests/build/mocks/not_found_plist.plist')
+            clean_plist_tag('tests/mocks/not_found_plist.plist')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.clean_data',
                 40,
-                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_plist.plist'",
+                "[Errno 2] No such file or directory: 'tests/mocks/not_found_plist.plist'",
             )
         ]
 
@@ -67,12 +67,12 @@ class TestCleanPlistTag:
         caplog.clear()
         with patch('src.build.helpers.clean_data.open') as mock_open:
             mock_open.side_effect = OSError
-            clean_plist_tag('tests/build/mocks/plist.plist')
+            clean_plist_tag('tests/mocks/plist.plist')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.clean_data',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/plist.plist'",
+                "[Errno 13] Permission denied: 'tests/mocks/plist.plist'",
             )
         ]
 
@@ -95,12 +95,12 @@ class TestCleanYamlTabs:
         caplog.clear()
         with patch('src.build.helpers.clean_data.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            clean_yaml_tabs('tests/build/mocks/not_found_yaml.yaml')
+            clean_yaml_tabs('tests/mocks/not_found_yaml.yaml')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.clean_data',
                 40,
-                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
+                "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
             )
         ]
 
@@ -109,11 +109,11 @@ class TestCleanYamlTabs:
         caplog.clear()
         with patch('src.build.helpers.clean_data.open') as mock_open:
             mock_open.side_effect = OSError
-            clean_yaml_tabs('tests/build/mocks/yaml.yaml')
+            clean_yaml_tabs('tests/mocks/yaml.yaml')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.clean_data',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
+                "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
             )
         ]

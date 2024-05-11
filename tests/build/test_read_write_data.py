@@ -10,18 +10,18 @@ from src.build.helpers.read_write_data import (
     read_pickle_data,
     read_yaml_data,
 )
-from tests.build.mocks.constants_pickle import (
+from tests.mocks.constants_pickle import (
     TEST_PICKLE_AUDIO_FILE,
     TEST_PICKLE_FILE,
     TEST_PICKLE_ORDERED_DICT,
 )
-from tests.build.mocks.constants_plist import (
+from tests.mocks.constants_plist import (
     TEST_PLIST_CONTENT,
     TEST_PLIST_DICT,
     TEST_PLIST_EXPECTED,
     TEST_PLIST_FILE,
 )
-from tests.build.mocks.constants_yaml import (
+from tests.mocks.constants_yaml import (
     TEST_YAML_CONTENT,
     TEST_YAML_DICT,
     TEST_YAML_EMPTY_FILE,
@@ -77,13 +77,13 @@ class TestLoadFile:
         with patch(
             'src.build.helpers.read_write_data.open', mock_open()
         ) as mocked_open:
-            read_yaml_data('tests/build/mocks/yaml.yaml')
-            mocked_open.assert_called_with('tests/build/mocks/yaml.yaml')
+            read_yaml_data('tests/mocks/yaml.yaml')
+            mocked_open.assert_called_with('tests/mocks/yaml.yaml')
 
 
 class TestYamlData:
     @pytest.mark.parametrize(
-        'a, expected', [('tests/build/mocks/yaml.yaml', TEST_YAML_EXPECTED)]
+        'a, expected', [('tests/mocks/yaml.yaml', TEST_YAML_EXPECTED)]
     )
     def test_load_yaml(self, a, expected):
         result = read_yaml_data(a)
@@ -99,26 +99,26 @@ class TestYamlData:
 
     @pytest.fixture(autouse=True)
     def test_empty_file(self, capfd):
-        read_yaml_data('tests/build/mocks/test_empty_file.yaml')
+        read_yaml_data('tests/mocks/test_empty_file.yaml')
 
         out, err = capfd.readouterr()
         assert out == '\x1b[91m[!] test_empty_file.yaml:\x1b[0m yaml file is empty.\n'
 
     @pytest.fixture(autouse=True)
     def test_not_yaml_file(self, capfd):
-        read_yaml_data('tests/build/mocks/plist.plist')
+        read_yaml_data('tests/mocks/plist.plist')
 
         out, err = capfd.readouterr()
         assert out == '\x1b[35m[!] plist.plist:\x1b[0m file extension is not yaml.\n'
 
     @pytest.fixture(autouse=True)
     def test_not_exist_yaml_file(self, capfd):
-        read_yaml_data('tests/build/mocks/test_yaml_file_not_exist.yaml')
+        read_yaml_data('tests/mocks/test_yaml_file_not_exist.yaml')
 
         out, err = capfd.readouterr()
         assert (
             out
-            == '\x1b[91m[!] /Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan-Icon-Theme/tests/build/mocks/test_yaml_file_not_exist.yaml:\x1b[0m file or directory do not exist.\n'
+            == '\x1b[91m[!] /Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan-Icon-Theme/tests/mocks/test_yaml_file_not_exist.yaml:\x1b[0m file or directory do not exist.\n'
         )
 
     @pytest.fixture(autouse=True)
@@ -126,12 +126,12 @@ class TestYamlData:
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            read_yaml_data('tests/build/mocks/not_found_yaml.yaml')
+            read_yaml_data('tests/mocks/not_found_yaml.yaml')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.read_write_data',
                 40,
-                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
+                "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
             )
         ]
 
@@ -140,12 +140,12 @@ class TestYamlData:
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError
-            read_yaml_data('tests/build/mocks/yaml.yaml')
+            read_yaml_data('tests/mocks/yaml.yaml')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.read_write_data',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
+                "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
             )
         ]
 
@@ -154,12 +154,12 @@ class TestYamlData:
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            dump_yaml_data(TEST_YAML_DICT, 'tests/build/mocks/not_found_yaml.yaml')
+            dump_yaml_data(TEST_YAML_DICT, 'tests/mocks/not_found_yaml.yaml')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.read_write_data',
                 40,
-                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
+                "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
             )
         ]
 
@@ -168,12 +168,12 @@ class TestYamlData:
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError
-            dump_yaml_data(TEST_YAML_DICT, 'tests/build/mocks/yaml.yaml')
+            dump_yaml_data(TEST_YAML_DICT, 'tests/mocks/yaml.yaml')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.read_write_data',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
+                "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
             )
         ]
 
@@ -192,12 +192,12 @@ class TestPlistData:
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            dump_plist_data(TEST_PLIST_DICT, 'tests/build/mocks/not_found_plist.plist')
+            dump_plist_data(TEST_PLIST_DICT, 'tests/mocks/not_found_plist.plist')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.read_write_data',
                 40,
-                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_plist.plist'",
+                "[Errno 2] No such file or directory: 'tests/mocks/not_found_plist.plist'",
             )
         ]
 
@@ -206,12 +206,12 @@ class TestPlistData:
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError
-            dump_plist_data(TEST_PLIST_DICT, 'tests/build/mocks/plist.plist')
+            dump_plist_data(TEST_PLIST_DICT, 'tests/mocks/plist.plist')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.read_write_data',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/plist.plist'",
+                "[Errno 13] Permission denied: 'tests/mocks/plist.plist'",
             )
         ]
 
@@ -238,13 +238,13 @@ class TestPickletData:
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
             dump_pickle_data(
-                TEST_PICKLE_ORDERED_DICT, 'tests/build/mocks/not_found_pickle.pkl'
+                TEST_PICKLE_ORDERED_DICT, 'tests/mocks/not_found_pickle.pkl'
             )
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.read_write_data',
                 40,
-                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_pickle.pkl'",
+                "[Errno 2] No such file or directory: 'tests/mocks/not_found_pickle.pkl'",
             )
         ]
 
@@ -253,12 +253,12 @@ class TestPickletData:
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError
-            dump_pickle_data(TEST_PICKLE_ORDERED_DICT, 'tests/build/mocks/plist.plist')
+            dump_pickle_data(TEST_PICKLE_ORDERED_DICT, 'tests/mocks/plist.plist')
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.read_write_data',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/plist.plist'",
+                "[Errno 13] Permission denied: 'tests/mocks/plist.plist'",
             )
         ]
 

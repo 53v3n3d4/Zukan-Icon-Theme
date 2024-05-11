@@ -6,15 +6,15 @@ from src.build.preferences import Preference
 from src.build.helpers.print_message import (
     print_created_message,
 )
-from tests.build.mocks.constants_preferences import (
+from tests.mocks.constants_preferences import (
     TEST_TMPREFERENCES_CREATED_MESSAGE,
     TEST_TMPREFERENCES_FILE,
 )
-from tests.build.mocks.constants_yaml import (
+from tests.mocks.constants_yaml import (
     TEST_YAML_EXPECTED,
     TEST_YAML_FILE,
 )
-from tests.build.mocks.tests_paths import (
+from tests.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
     TEST_DATA_DIR,
@@ -30,7 +30,7 @@ class TestPreferences:
 
     @pytest.fixture(autouse=True)
     def test_create_preferences_file(self, capfd):
-        Preference.preferences('tests/build/mocks/yaml.yaml', DIR_DESTINY)
+        Preference.preferences('tests/mocks/yaml.yaml', DIR_DESTINY)
 
         out, err = capfd.readouterr()
         assert (
@@ -41,7 +41,7 @@ class TestPreferences:
 
     def test_mock_create_preferences_file(self):
         with patch('src.build.preferences.open', mock_open()):
-            result = Preference.preferences('tests/build/mocks/yaml.yaml', DIR_DESTINY)
+            result = Preference.preferences('tests/mocks/yaml.yaml', DIR_DESTINY)
             assert result is None
 
     # To do: should get an Errno 13 not empty
@@ -51,7 +51,7 @@ class TestPreferences:
         with patch('src.build.preferences.open') as mock_open:
             mock_open.side_effect = OSError
             Preference.preferences(
-                'tests/build/mocks/yaml.yaml',
+                'tests/mocks/yaml.yaml',
                 DIR_DESTINY,
             )
         assert caplog.record_tuples == []
@@ -62,15 +62,15 @@ class TestPreferences:
         with patch('src.build.preferences.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
             Preference.preferences_all(
-                'tests/build/mocks/not_found_yaml.yaml',
-                'tests/build/mocks/',
+                'tests/mocks/not_found_yaml.yaml',
+                'tests/mocks/',
             )
         assert caplog.record_tuples == [
             (
                 (
                     'src.build.preferences',
                     40,
-                    "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
+                    "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
                 )
             )
         ]

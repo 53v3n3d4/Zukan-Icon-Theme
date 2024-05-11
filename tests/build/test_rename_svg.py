@@ -3,7 +3,7 @@ import pytest
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.helpers.rename_svg import RenameSVG
-from tests.build.mocks.tests_paths import (
+from tests.mocks.tests_paths import (
     DIR_ORIGIN,
     DIR_DESTINY,
 )
@@ -13,12 +13,12 @@ from unittest.mock import patch
 class TestRename:
     @pytest.mark.parametrize(
         'a, expected',
-        [('tests/build/mocks/file_type_svg.svg', 'tests/build/mocks/svg.svg')],
+        [('tests/mocks/file_type_svg.svg', 'tests/mocks/svg.svg')],
     )
     def test_rename_svg(self, a, expected):
         result = RenameSVG.rename_svg(a, DIR_ORIGIN, DIR_DESTINY)
         return result
-        assert result == 'tests/build/mocks/svg.svg'
+        assert result == 'tests/mocks/svg.svg'
 
     @pytest.mark.parametrize('a, expected', [('file_type_svg.svg', 'svg.svg')])
     def test_rename_svgs_in_dir(self, a, expected):
@@ -50,18 +50,18 @@ class TestRename:
         caplog.clear()
         with patch('src.build.helpers.rename_svg.open') as mock_open:
             mock_open.side_effect = OSError
-            RenameSVG.rename_svgs_in_dir('tests/build/mocks/svg.svg', DIR_DESTINY)
+            RenameSVG.rename_svgs_in_dir('tests/mocks/svg.svg', DIR_DESTINY)
         assert caplog.record_tuples == [
             (
                 'src.build.helpers.rename_svg',
                 40,
-                "[Errno 13] Permission denied: 'tests/build/mocks/svg.svg'",
+                "[Errno 13] Permission denied: 'tests/mocks/svg.svg'",
             )
         ]
 
     @pytest.fixture(autouse=True)
     def test_not_svg_file(self, capfd):
-        RenameSVG.rename_svg('plist.plist', 'tests/build/mocks/', 'tests/build/mocks/')
+        RenameSVG.rename_svg('plist.plist', 'tests/mocks/', 'tests/mocks/')
 
         out, err = capfd.readouterr()
         assert out == '\x1b[35m[!] plist.plist:\x1b[0m file extension is not svg.\n'

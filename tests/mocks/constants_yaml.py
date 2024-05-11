@@ -1,3 +1,6 @@
+from collections import OrderedDict
+
+
 TEST_YAML_CONTENT = """%YAML 1.2
 ---
 name: Vitest
@@ -78,4 +81,6 @@ TEST_YAML_EXPECTED = {
     ],
 }
 
-TEST_YAML_FILE = 'tests/mocks/bar.yaml'
+TEST_YAML_FILE = 'tests/foo/bar.yaml'
+
+TEST_YAML_ORDERED_DICT = OrderedDict([('a', 1), ('b', 2), ('c', 3)])

@@ -1,10 +1,10 @@
-DIR_DATA = 'tests/build/mocks'
+DIR_DATA = 'tests/mocks'
 
 DIR_DATA_NOT_FOUND = 'tests/build/mocks_not_found/'
 
-DIR_DESTINY = 'tests/build/mocks'
+DIR_DESTINY = 'tests/mocks'
 
-DIR_ORIGIN = 'tests/build/mocks'
+DIR_ORIGIN = 'tests/mocks'
 
 TEST_DATA_DIR = [
     'test_no_icon_file.yaml',
