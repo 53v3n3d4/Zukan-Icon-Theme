@@ -12,19 +12,13 @@ from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_PKG_PATH,
 )
-# from ..utils.zukan_pkg_folders import zukan_pkg_folders
+from ..utils.zukan_pkg_folders import ZUKAN_PKG_FOLDERS
 
 logger = logging.getLogger(__name__)
 
 # Testing path
 zukan_pkg_assets = os.path.join(ZUKAN_PKG_PATH + '/assets')
-
-
-# icons_folder = 'icons/'
-icons_folder = 'Zukan Icon Theme/icons/'
-icons_syntaxes_folder = 'Zukan Icon Theme/icons_syntaxes/'
-
-test_path = os.path.join(zukan_pkg_assets, 'Zukan Icon Theme')
+# test_path = os.path.join(zukan_pkg_assets, 'Zukan Icon Theme')
 
 
 class MoveFolder:
@@ -46,14 +40,10 @@ class MoveFolder:
                 # print('Zukan Icon Theme exist in Installed folder.')
                 logger.debug('Zukan exist in Installed folder.')
                 extract_folder(name, zukan_pkg_assets)
+                logger.info('%s folder moved to Packages.', name)
                 return name
             else:
-                raise FileNotFoundError(
-                    # print('Zukan Icon Theme: folder %s does not exist in Installed Packages.' % name)
-                    logger.error(
-                        'folder %s does not exist in Installed Packages.', name
-                    )
-                )
+                logger.debug('folder %s does not exist in Installed Packages.', name)
         except FileNotFoundError:
             # print_filenotfounderror(name)
             logger.error(
@@ -65,7 +55,7 @@ class MoveFolder:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), name
             )
 
-    def move_folders(zukan_folders: str):
+    def move_folders():
         """
         Move icons and icons_syntaxes folder if project in folder Installed Packages.
 
@@ -73,9 +63,9 @@ class MoveFolder:
         zukan_folders (str) -- list of folders.
         """
         try:
+            zukan_folders = ZUKAN_PKG_FOLDERS
             for folder in zukan_folders:
                 MoveFolder.move_folder(folder)
-            logger.info('icons and/or icons_syntaxes folders moved to Packages.')
             return zukan_folders
         except FileNotFoundError:
             # print_filenotfounderror('Zukan Icon Theme: icons and/or icons_syntaxes folder.')
@@ -96,14 +86,16 @@ class MoveFolder:
 
     def remove_created_folder(name: str):
         """
-        Remove created folder from Zukan Icon Theme installation.
+        Remove created folder from Zukan Icon Theme installation. Only
+        if Zukan installed through Package Control.
 
         Parameters:
         name (str) -- folder name.
         """
         try:
-            if os.path.exists(ZUKAN_PKG_ICONS_PATH) or os.path.exists(
-                ZUKAN_PKG_ICONS_SYNTAXES_PATH
+            if os.path.exists(ZUKAN_INSTALLED_PKG_PATH) and (
+                os.path.exists(ZUKAN_PKG_ICONS_PATH)
+                or os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
             ):
                 # print('Zukan Icon Theme: folder %s exists in Packages' % name)
                 logger.debug('folder %s exists in Packages', name)
@@ -114,14 +106,14 @@ class MoveFolder:
                 return name
             else:
                 # print('Zukan Icon Theme: folder does not exist in Packages.')
-                logger.info('Zukan folders does not exist in Packages.')
+                logger.info('Zukan folders does not exist in Installed Packages.')
         except FileNotFoundError:
             # print_filenotfounderror('icons and/or icons_syntaxes folder.')
             logger.error(
                 '[Errno %d] %s: %r',
                 errno.ENOENT,
                 os.strerror(errno.ENOENT),
-                'icons and/or icons_syntaxes folder.',
+                name,
             )
         except OSError:
             # print_oserror('icons and/or icons_syntaxes folder.')
@@ -129,12 +121,5 @@ class MoveFolder:
                 '[Errno %d] %s: %r',
                 errno.EACCES,
                 os.strerror(errno.EACCES),
-                'icons and/or icons_syntaxes folder.',
+                name,
             )
-
-
-# MoveFolder.move_folder(icons_folder)
-# MoveFolder.move_folders(zukan_pkg_folders)
-
-# print(MoveFolder.remove_created_folder(icons_folder))
-# MoveFolder.remove_created_folder(test_path)

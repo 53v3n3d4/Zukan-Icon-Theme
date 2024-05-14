@@ -4,9 +4,13 @@ from bisect import bisect
 from src.build.helpers.color import Color
 
 
-# Different formatters for each level.
+# Code from link below.
 # https://stackoverflow.com/questions/14844970/modifying-logging-message-format-based-on-message-logging-level-in-python3
 class LevelFormatter(logging.Formatter):
+    """
+    Different formatters for each level.
+    """
+
     def __init__(self, formats: dict, **kwargs):
         super().__init__()
 

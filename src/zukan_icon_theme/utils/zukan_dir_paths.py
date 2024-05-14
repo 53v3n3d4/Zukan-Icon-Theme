@@ -66,8 +66,13 @@ INSTALLED_PACKAGES_PATH = filepath('../../../../../Installed Packages')
 SUBLIME_PATH = filepath('../../../../../../Sublime Text')
 
 # make path work for 2 cases. Installed Packages and Packages installs.
+# or make Installed and Packages same Zukan Icon Theme or Zuka-Icon-Theme name
 TEMPLATE_JSON = filepath(
     '../../../../../Packages/Zukan-Icon-Theme/src/zukan_icon_theme/utils/template.json'
+)
+
+TEMPLATE_JSON_WITH_OPACITY = filepath(
+    '../../../../../Packages/Zukan-Icon-Theme/src/zukan_icon_theme/utils/template-with-opacity.json'
 )
 
 # LOGGING_FILE = filepath()

@@ -25,7 +25,7 @@ class ZukanSyntax:
         """
         Create zukan with icons sublime-syntaxes data.
 
-        The file will be saved in folder icons_syntaxes/
+        The file will be saved in folder icons_syntaxes.
 
         Parameters:
         icon_data (str) -- path to data file.
@@ -43,7 +43,7 @@ class ZukanSyntax:
                     for k in data['syntax']:
                         if not os.path.exists(dir_destiny):
                             os.makedirs(dir_destiny)
-                        # OrderedDict only necessary if using python 3.3
+                        # OrderedDict only necessary if using python 3.3.
                         # Python 3.8, dict read ordered.
                         # ordered_dict = OrderedDict(k)
                         ordered_dict = nested_ordered_dict(k)

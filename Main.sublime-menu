@@ -1,0 +1,33 @@
+[
+  {
+    "id": "preferences",
+    "children":
+    [
+      {
+        "caption": "Package Settings",
+        "id": "package-settings",
+        "children":
+        [
+          {
+            "caption": "Zukan Icon Theme",
+            "children":
+            [
+              {
+                "caption": "Rebuild files",
+                "command": "rebuild_files"
+              },
+              { "caption": "-" },
+              {
+                "caption": "CHANGELOG",
+                "command": "open_file",
+                "args": {
+                  "file": "${packages}/Zukan-Icon-Theme/CHANGELOG.md"
+                }
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+]

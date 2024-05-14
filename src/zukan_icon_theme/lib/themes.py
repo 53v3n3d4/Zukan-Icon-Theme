@@ -6,23 +6,16 @@ import shutil
 
 # from ..helpers.print_message import print_filenotfounderror, print_oserror
 from ..helpers.search_themes import (
+    list_theme_with_opacity,
     search_resources_sublime_themes,
-    # search_installed_pkgs_themes,
-    # search_pkgs_themes,
 )
 from ..utils.zukan_dir_paths import (
     TEMPLATE_JSON,
+    TEMPLATE_JSON_WITH_OPACITY,
     ZUKAN_PKG_ICONS_PATH,
-    TEST_NOT_EXIST_ZUKAN_ICONS_THEMES_PATH,
 )
 
 logger = logging.getLogger(__name__)
-
-# installed_themes = search_installed_pkgs_themes()
-# pkg_themes = search_pkgs_themes()
-# all_themes = installed_themes + pkg_themes
-all_themes = search_resources_sublime_themes()
-# print(all_themes)
 
 
 class ThemeFile:
@@ -41,15 +34,25 @@ class ThemeFile:
         theme_name (str) -- installed theme name.
         """
         try:
+            list_all_themes = search_resources_sublime_themes()
+            list_themes_has_opacity = list_theme_with_opacity()
+            list_themes_no_opacity = list(
+                set(list_all_themes).difference(list_themes_has_opacity)
+            )
             # Check if dir Packages/Zukan-Icon-Theme/icons do not exist
             # Check if installed theme file exist.
-            if any(theme_name in t for t in all_themes):
-                origin = TEMPLATE_JSON
-                destiny = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
-                # print(ZUKAN_PKG_ICONS_PATH + theme_name)
+            if any(theme_name in t for t in list_all_themes):
+                # print(theme_name)
+                destiny = os.path.join(
+                    ZUKAN_PKG_ICONS_PATH, os.path.basename(theme_name)
+                )
+                if theme_name in list_themes_has_opacity:
+                    origin = TEMPLATE_JSON
+                if theme_name in list_themes_no_opacity:
+                    origin = TEMPLATE_JSON_WITH_OPACITY
                 shutil.copy(origin, destiny)
                 # print('[!] Zukan Icon Theme: creating icon theme %s' % destiny)
-                logger.info('creating icon theme %s', destiny)
+                logger.info('creating icon theme %s', os.path.basename(destiny))
                 return theme_name
             else:
                 raise FileNotFoundError(
@@ -75,28 +78,34 @@ class ThemeFile:
 
     def create_themes_files():
         """
-        Create all sublime-themes files from instaled themes.
+        Create all sublime-themes files from installed themes.
         """
         try:
-            if all_themes is not None:
-                for theme in all_themes:
-                    # print(all_themes)
+            list_all_themes = search_resources_sublime_themes()
+            if list_all_themes is not None:
+                for theme in list_all_themes:
                     ThemeFile.create_theme_file(theme)
-                return all_themes
+                return list_all_themes
             else:
                 raise FileNotFoundError(
                     # print('Zukan Icon Theme: list is empty.')
                     logger.error('list is empty.')
                 )
         except FileNotFoundError:
-            # print_filenotfounderror(all_themes)
+            # print_filenotfounderror(list_all_themes)
             logger.error(
-                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), all_themes
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                list_all_themes,
             )
         except OSError:
-            # print_oserror(all_themes)
+            # print_oserror(list_all_themes)
             logger.error(
-                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), all_themes
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                list_all_themes,
             )
 
     def delete_created_theme_file(theme_name: str):
@@ -112,7 +121,7 @@ class ThemeFile:
             theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
             os.remove(theme_file)
             # print('[!] Zukan Icon Theme: deleting icon theme %s' % theme_file)
-            logger.info('deleting icon theme: %s', theme_file)
+            logger.info('deleting icon theme: %s', os.path.basename(theme_file))
             return theme_name
         except FileNotFoundError:
             # print_filenotfounderror(theme_name)
@@ -187,17 +196,3 @@ class ThemeFile:
                 os.strerror(errno.EACCES),
                 'Zukan Icon Theme/icons folder',
             )
-
-
-# file_test = 'notexist.sublime-theme'
-file_test = 'Treble Dark.sublime-theme.sublime-theme'
-# file_test = 'Treble Dark.sublime-theme'
-
-
-# ThemeFile.create_theme_file(file_test)
-# ThemeFile.create_themes_files()
-
-# print(ThemeFile.list_created_themes_files())
-
-# print(ThemeFile.delete_created_theme_file(file_test))
-# print(ThemeFile.delete_created_themes_files())

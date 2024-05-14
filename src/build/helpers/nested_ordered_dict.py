@@ -1,7 +1,7 @@
 from collections import OrderedDict
 
 
-# OrderedDict only necessary if using python 3.3
+# OrderedDict only necessary if using python 3.3.
 # Python 3.8, dict read ordered.
 def nested_ordered_dict(d: dict) -> OrderedDict:
     """

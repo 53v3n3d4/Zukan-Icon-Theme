@@ -16,7 +16,6 @@ def dir_exist(z, name):
 
 
 def extract_folder(name: str, dir_destiny: str):
-    # with ZipFile(package_control_installed_pkg, 'r') as zf:
     with ZipFile(ZUKAN_INSTALLED_PKG_PATH, 'r') as zf:
         if dir_exist(zf, name):
             # print('Zukan Icon Theme: moving %(n)s folder to %(d)s' % {'n': name, 'd': dir_destiny})
@@ -33,8 +32,3 @@ def extract_folder(name: str, dir_destiny: str):
                 # )
                 logger.error('folder %s does not exist in %s.', name, dir_destiny)
             )
-
-
-# extract_folder(messages_folder)
-# extract_folder(icons_folder)
-# extract_folder(icons_syntaxes_folder)

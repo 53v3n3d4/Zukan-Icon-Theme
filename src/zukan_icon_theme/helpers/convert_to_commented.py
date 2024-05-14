@@ -2,8 +2,9 @@ from collections import OrderedDict
 from ruamel.yaml.comments import CommentedMap
 
 
-# OrderedDict only necessary if using python 3.3
+# OrderedDict only necessary if using python 3.3.
 # Python 3.8, dict read ordered.
+# Code based on link below.
 # From https://stackoverflow.com/questions/53874345/how-do-i-dump-an-ordereddict-out-as-a-yaml-file
 def convert_to_commented(d: dict) -> dict:
     """
