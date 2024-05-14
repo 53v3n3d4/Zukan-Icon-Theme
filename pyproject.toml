@@ -15,12 +15,12 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-# .python-version file should be 3.8.19 or poetry install do not install 
-# could not dependencies
+# .python-version file should be 3.8.19 or poetry install could fail to
+# install dependencies
 python = "^3.8.19"
 
 [tool.poetry.group.dev.dependencies]
-# need cairo installed. brew install cairo
+# Need cairo installed. brew install cairo
 cairosvg = "^2.7.1"
 ruamel-yaml = "^0.18.6"
 
