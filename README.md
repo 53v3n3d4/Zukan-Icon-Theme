@@ -23,7 +23,7 @@ Files and folders that has been renamed, or is going to be, in version v0.2.0.
 
 This is a slow work in progress (WIP).  
 
-Icons themes for Sublime Text editor.  
+Icon theme for Sublime Text editor.  
 
 ## Theme
 
@@ -104,6 +104,10 @@ To uninstall manually, go to your Sublime Text folder.
 - `file-type-icons` is old project name  
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
+
+## Limitations
+- If you use a theme that has sublime-syntax and tmPreferences, this package may not work. Only icons not present on theme might show.  
+
 
 ## File icon packages :alien:
 

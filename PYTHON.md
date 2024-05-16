@@ -26,8 +26,10 @@ Package
 
 ## Install
 
+### Build
+
 ```sh
-# use specific python version
+# Use specific python version
 $ poetry env use path-to-python/3.8.19/bin/python
 $ poetry env use /Users/xxxxx/.pyenv/versions/3.8.19/bin/python
 $ poetry env info
@@ -44,6 +46,17 @@ $ cat .python-version
 $ poetry install
 ```
 
+### Plugin
+
+When developing, you may need to `Package Control: Satisfy Libraries` to install dependencies.  
+
+```
+# Select ST python interpreter in '.python-version' file
+# 3.3 or 3.8
+$ cat .python-version
+3.3
+```
+
 ## Poetry notes
 
 - If package do not install using `poetry add <package>` or during `poetry install`, use `pip install <package>`  
@@ -52,7 +65,7 @@ $ poetry install
 ## Tests
 
 ```sh
-# Environment need to be activated
+# Environment activated
 $ pytest
 ```
 Or
@@ -73,7 +86,7 @@ addopts = -ra -q
 
 ## Build
 
-Scripts used to generate icons files: pngs, syntaxes and preferences.  
+Scripts used to generate icons files: PNGs, syntaxes and preferences.  
 
 See [build.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/build.md)
 

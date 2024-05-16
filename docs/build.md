@@ -1,31 +1,31 @@
-Build scripts used to create icons pngs, sublime-syntaxes and tmPreferences.  
+Build scripts used to create icons PNGs, sublime-syntaxes and tmPreferences.  
 
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$  python src/build/scripts.py -h
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py -h
 # Poetry with env activated
-$  build -h
+$ build -h
 
-# Or, with poetry
+# Env deactivated, with poetry
 $ poetry run build -h
 ```
 
 ## Create icon theme
-Create pngs and tmPreferences files for icons.  
+Create PNGs and tmPreferences files for icons.  
 
 Using argparse commands  
 ```sh
 # Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
-# Create all pngs and tmPreferences
+# Create all PNGs and tmPreferences
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build icon-theme -f src/data/afdesign.yaml
-# Create all pngs and tmPreferences
+# Create all PNGs and tmPreferences
 $ poetry run build icon-theme --all
 ```
 
