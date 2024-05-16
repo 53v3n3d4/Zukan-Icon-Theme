@@ -61,7 +61,7 @@ logger.addHandler(ch)
 
 # prevent root logger from catching this
 # https://github.com/SublimeText/PackageDev/blob/master/_logging.py
-# logger.propagate = False
+logger.propagate = False
 
 # 'application' code
 # logger.debug('debug message')

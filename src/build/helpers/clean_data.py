@@ -45,7 +45,8 @@ def _replace_line(file_info: str) -> str:
 
 def clean_yaml_tabs(filename: str):
     """
-    Clean tabs to spaces. Reading error if tabs used in front of dict key.
+    Clean tabs, replace for spaces. Reading yaml error if tabs used in front of a
+    dict key.
 
     Parameters:
     filename (str) -- path to icon data file

@@ -72,11 +72,13 @@ def find_attributes(
         icon_file_type_list = [
             k for k in theme_content['rules'] if k['class'] == 'icon_file_type'
         ]
+        # print(theme)
+        # print(icon_file_type_list)
     elif 'rules' not in theme_content:
         icon_file_type_list = [
             k for k in theme_content if k['class'] == 'icon_file_type'
         ]
-        # print('no rules' + theme)
+        # print('no rules: ' + theme)
     for i in icon_file_type_list:
         if i.get('parents') is not None:
             for p in i.get('parents'):
@@ -102,13 +104,9 @@ def find_attributes_hidden_file(
         hidden_theme_name = sublime.find_resources(theme_content['extends'])
         for t in hidden_theme_name:
             hidden_theme_content = sublime.decode_value(sublime.load_resource(t))
-            # print(t)
-            if (
-                'rules' in hidden_theme_content
-                and 'extends' not in hidden_theme_content
-            ):
-                find_attributes(theme, hidden_theme_content, list_theme_has_attributes)
-            else:
+            # print('extends: ' + t)
+            find_attributes(theme, hidden_theme_content, list_theme_has_attributes)
+            if 'extends' in hidden_theme_content:
                 find_attributes_hidden_file(
                     theme, hidden_theme_content, list_theme_has_attributes
                 )
@@ -136,9 +134,8 @@ def list_theme_with_opacity() -> list:
         theme_content = sublime.decode_value(sublime.load_resource(theme))
         # print(theme_content)
         # print(theme)
-        if 'extends' not in theme_content:
-            find_attributes(theme, theme_content, list_theme_has_attributes)
-        elif 'extends' in theme_content:
+        find_attributes(theme, theme_content, list_theme_has_attributes)
+        if 'extends' in theme_content:
             find_attributes_hidden_file(theme, theme_content, list_theme_has_attributes)
     # print(list_theme_has_attributes)
     return list_theme_has_attributes

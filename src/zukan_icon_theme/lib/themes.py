@@ -25,7 +25,7 @@ class ThemeFile:
 
     def create_theme_file(theme_name: str):
         """
-        Create sublime-theme file with icon_file_type scope. It copy josn template
+        Create sublime-theme file with icon_file_type scope. Copy a json template
         to Zukan Icon Theme/icons folder with the theme name.
 
         Example: Treble Adaptive.sublime-theme

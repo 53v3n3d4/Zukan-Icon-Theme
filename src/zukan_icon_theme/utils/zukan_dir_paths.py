@@ -75,7 +75,6 @@ TEMPLATE_JSON_WITH_OPACITY = filepath(
     '../../../../../Packages/Zukan-Icon-Theme/src/zukan_icon_theme/utils/template-with-opacity.json'
 )
 
-# LOGGING_FILE = filepath()
 
 # Testing only
 
