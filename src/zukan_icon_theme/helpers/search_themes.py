@@ -68,10 +68,15 @@ def find_attributes(
     theme_content (dict) -- parsed json file, sublime-theme.
     list_theme_has_attributes (list) -- list of path theme that has attributes.
     """
-    icon_file_type_list = [
-        k for k in theme_content['rules'] if k['class'] == 'icon_file_type'
-    ]
-    # print(icon_file_type_list)
+    if 'rules' in theme_content:
+        icon_file_type_list = [
+            k for k in theme_content['rules'] if k['class'] == 'icon_file_type'
+        ]
+    elif 'rules' not in theme_content:
+        icon_file_type_list = [
+            k for k in theme_content if k['class'] == 'icon_file_type'
+        ]
+        # print('no rules' + theme)
     for i in icon_file_type_list:
         if i.get('parents') is not None:
             for p in i.get('parents'):
@@ -125,9 +130,7 @@ def list_theme_with_opacity() -> list:
     list_theme_has_attributes (list) -- list of installed theme with attributes hover
     and selected.
     """
-    # all_themes = sublime.find_resources('*.sublime-theme')
     all_themes = search_resources_sublime_themes()
-    # print(all_themes)
     list_theme_has_attributes = []
     for theme in all_themes:
         theme_content = sublime.decode_value(sublime.load_resource(theme))
