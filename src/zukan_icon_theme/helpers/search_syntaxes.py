@@ -1,5 +1,7 @@
 import sublime
 
+from ruamel.yaml import YAML
+
 
 class UserSyntax:
     def __init__(self, path, name, scope, hidden):
@@ -9,2317 +11,261 @@ class UserSyntax:
         self.hidden = hidden
 
     def visible_syntaxes_only():
-        syntaxes_list_true = []
+        syntaxes_list_visible = set()
         all_syntaxes = sublime.list_syntaxes()
         for s in all_syntaxes:
-            if s.hidden is not True:
+            if s.hidden is False:
                 # print(s.name, s.path)
-                syntaxes_list_true.append(s)
-        # print(syntaxes_list_true)
-        return syntaxes_list_true
-
-    # def build_list():
+                syntaxes_list_visible.add(s)
+        return syntaxes_list_visible
 
 
-# # https://www.sublimetext.com/docs/api_reference.html#sublime.Syntax
-# # https://www.sublimetext.com/docs/api_reference.html#sublime.list_syntaxes
-# # print(sublime.list_syntaxes())
-# list_syntaxes = [
-#     Syntax(
-#         'Packages/PHP/Embeddings/JavaScript (for PHP single-quoted).sublime-syntax',
-#         'JavaScript (for PHP single-quoted)',
-#         True,
-#         'source.js.embedded.string.quoted.single.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Python (pytest).sublime-syntax',
-#         'Python (pytest)',
-#         True,
-#         'source.python.pytest',
-#     ),
-#     Syntax(
-#         'Packages/Rails/CSS (Rails).sublime-syntax',
-#         'CSS (Rails)',
-#         False,
-#         'source.css.rails',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Protobuf).sublime-syntax',
-#         'Plain Text (Protobuf)',
-#         True,
-#         'source.proto',
-#     ),
-#     Syntax(
-#         'Packages/Objective-C/Objective-C.sublime-syntax',
-#         'Objective-C',
-#         False,
-#         'source.objc',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/Go (Embedded JS).sublime-syntax',
-#         'Go (Embedded JavaScript)',
-#         True,
-#         'source.go.embedded-backtick-string.js',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Markdown (License).sublime-syntax',
-#         'Markdown (License)',
-#         True,
-#         'text.html.markdown.license',
-#     ),
-#     Syntax(
-#         'Packages/Perl/Embeddings/RegExp (for Perl braces).sublime-syntax',
-#         'Regular Expression (Perl inside braces)',
-#         True,
-#         'source.regexp.perl.braces',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Bun).sublime-syntax',
-#         'Binary (Bun)',
-#         True,
-#         'binary.bun',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Protobuf).sublime-syntax',
-#         'Plain Text (Protobuf)',
-#         True,
-#         'source.proto',
-#     ),
-#     Syntax(
-#         'Packages/OCaml/camlp4.sublime-syntax', 'camlp4', False, 'source.camlp4.ocaml'
-#     ),
-#     Syntax('Packages/Python/Python.sublime-syntax', 'Python', False, 'source.python'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/INI (tox).sublime-syntax',
-#         'INI (tox)',
-#         True,
-#         'source.ini.tox',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/HTML (Elixir).sublime-syntax',
-#         'HTML (Elixir)',
-#         True,
-#         'text.html.heex',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Jest).sublime-syntax',
-#         'JavaScript (Jest)',
-#         True,
-#         'source.js.jest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Affinity Designer).sublime-syntax',
-#         'Binary (Affinity Designer)',
-#         True,
-#         'binary.afdesign',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/XML.sublime-syntax',
-#         'XML',
-#         True,
-#         'text.xml',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/HTML (Svelte).sublime-syntax',
-#         'HTML (Svelte)',
-#         True,
-#         'text.html.svelte',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Dockerfile).sublime-syntax',
-#         'Plain Text (Dockerfile)',
-#         True,
-#         'source.dockerfile',
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Rebase.sublime-syntax',
-#         'Git Rebase Todo',
-#         False,
-#         'text.git.rebase',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (WebGPU).sublime-syntax',
-#         'Plain Text (WebGPU)',
-#         True,
-#         'source.wgsl',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/INI (tox).sublime-syntax',
-#         'INI (tox)',
-#         True,
-#         'source.ini.tox',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Kotlin).sublime-syntax',
-#         'Plain Text (Kotlin)',
-#         True,
-#         'source.Kotlin',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Wast).sublime-syntax',
-#         'Plain Text (Wast)',
-#         True,
-#         'text.webassembly',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Prettier).sublime-syntax',
-#         'JavaScript (Prettier)',
-#         True,
-#         'source.js.prettier',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Affinity Photo).sublime-syntax',
-#         'Binary (Affinity Photo)',
-#         True,
-#         'binary.afphoto',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (ESLint).sublime-syntax',
-#         'Plain Text (ESLint)',
-#         True,
-#         'text.plain.eslint',
-#     ),
-#     Syntax(
-#         'Packages/Makefile/Makefile.sublime-syntax',
-#         'Makefile',
-#         False,
-#         'source.makefile',
-#     ),
-#     Syntax('Packages/CSS/CSS.sublime-syntax', 'CSS', False, 'source.css'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (Read the Docs).sublime-syntax',
-#         'YAML (Read the Docs)',
-#         True,
-#         'source.yaml.readthedocs',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/RegExp (for PHP).sublime-syntax',
-#         'Regular Expressions (PHP)',
-#         True,
-#         'source.regexp.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Markdown (mdx).sublime-syntax',
-#         'Markdown (mdx)',
-#         True,
-#         'text.html.markdown.mdx',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/INI (pytest).sublime-syntax',
-#         'INI (pytest)',
-#         True,
-#         'source.ini.pytest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/HTML (Svelte).sublime-syntax',
-#         'HTML (Svelte)',
-#         True,
-#         'text.html.svelte',
-#     ),
-#     Syntax(
-#         'Packages/Babel/support/Regular Expressions (JavaScript).sublime-syntax',
-#         'Regular Expressions (Javascript)',
-#         True,
-#         'source.regexp.js',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Git (Docker).sublime-syntax',
-#         'Git (Docker)',
-#         True,
-#         'text.git.ignore.docker',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (Jest).sublime-syntax',
-#         'TypeScript (Jest)',
-#         True,
-#         'source.ts.jest',
-#     ),
-#     Syntax(
-#         'Packages/Go/Markdown (Go).sublime-syntax',
-#         'Markdown (Go)',
-#         False,
-#         'text.html.markdown.go',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (CAD).sublime-syntax',
-#         'Plain Text (CAD)',
-#         True,
-#         'text.plain.cad',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Next js).sublime-syntax',
-#         'JavaScript (Next js)',
-#         True,
-#         'source.js.nextjs',
-#     ),
-#     Syntax('Packages/Lisp/Lisp.sublime-syntax', 'Lisp', False, 'source.lisp'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/HTML (Vue).sublime-syntax',
-#         'HTML (Vue)',
-#         True,
-#         'text.html.vue',
-#     ),
-#     Syntax(
-#         'Packages/ElixirSyntax/syntaxes/HTML (Surface).sublime-syntax',
-#         'HTML (Surface)',
-#         False,
-#         'text.html.surface',
-#     ),
-#     Syntax(
-#         'Packages/Markdown/Markdown.sublime-syntax',
-#         'Markdown',
-#         False,
-#         'text.html.markdown',
-#     ),
-#     Syntax('Packages/PHP/PHP Source.sublime-syntax', 'PHP Source', True, 'source.php'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Ruby).sublime-syntax',
-#         'Plain Text (Ruby)',
-#         True,
-#         'text.plain.ruby',
-#     ),
-#     Syntax('Packages/Java/Java.sublime-syntax', 'Java', False, 'source.java'),
-#     Syntax(
-#         'Packages/OCaml/OCamlyacc.sublime-syntax',
-#         'OCamlyacc',
-#         False,
-#         'source.ocamlyacc',
-#     ),
-#     Syntax(
-#         'Packages/Markdown/Shell (for Markdown).sublime-syntax',
-#         'Interactive Unix Shell',
-#         True,
-#         'source.shell.interactive.markdown',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Microsoft Excel).sublime-syntax',
-#         'Binary (Microsoft Excel)',
-#         True,
-#         'binary.excel',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Vite).sublime-syntax',
-#         'JavaScript (Vite)',
-#         True,
-#         'source.js.vite',
-#     ),
-#     Syntax(
-#         'Packages/Perl/Embeddings/RegExp (for Perl brackets).sublime-syntax',
-#         'Regular Expression (Perl inside square brackets)',
-#         True,
-#         'source.regexp.perl.brackets',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Video).sublime-syntax',
-#         'Binary (Video)',
-#         True,
-#         'binary.video',
-#     ),
-#     Syntax('Packages/Ruby/Ruby.sublime-syntax', 'Ruby', False, 'source.ruby'),
-#     Syntax(
-#         'Packages/Rails/HTML (Rails).sublime-syntax',
-#         'HTML (Rails)',
-#         False,
-#         'text.html.rails',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Rspack).sublime-syntax',
-#         'JavaScript (Rspack)',
-#         True,
-#         'source.js.rspack',
-#     ),
-#     Syntax(
-#         'Packages/ElixirSyntax/syntaxes/EEx.sublime-syntax', 'EEx', False, 'text.eex'
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Mailmap.sublime-syntax',
-#         'Git Mailmap',
-#         False,
-#         'text.git.mailmap',
-#     ),
-#     Syntax(
-#         'Packages/Babel/JavaScript (Babel).sublime-syntax',
-#         'JavaScript (Babel)',
-#         False,
-#         'source.js',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/CSS (for PHP single-quoted).sublime-syntax',
-#         'CSS (for PHP single-quoted)',
-#         True,
-#         'source.css.embedded.string.quoted.single.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/UnitTest (JavaScript).sublime-syntax',
-#         'UnitTest (JavaScript)',
-#         True,
-#         'source.js.unittest',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/CSS (for Go Embedded Backtick Strings).sublime-syntax',
-#         'CSS inside Go backtick string',
-#         True,
-#         'source.css.go-embedded-backtick-string',
-#     ),
-#     Syntax(
-#         'Packages/PHP/CSS (PHP).sublime-syntax', 'CSS (PHP)', False, 'source.css.php'
-#     ),
-#     Syntax('Packages/YAML/YAML.sublime-syntax', 'YAML', False, 'source.yaml'),
-#     Syntax(
-#         'Packages/Rails/Embeddings/Ruby (for HAML).sublime-syntax',
-#         'Ruby (for HAML)',
-#         True,
-#         'source.ruby.rails.embedded.haml',
-#     ),
-#     Syntax('Packages/User/JS.sublime-syntax', 'JS', False, 'source.js'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Git (ESLint).sublime-syntax',
-#         'Git (ESLint)',
-#         True,
-#         'text.git.ignore.eslint',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Arduino).sublime-syntax',
-#         'Plain Text (Arduino)',
-#         True,
-#         'source.arduino',
-#     ),
-#     Syntax('Packages/XML/XSL.sublime-syntax', 'XSL', False, 'text.xml.xsl'),
-#     Syntax(
-#         'Packages/Markdown/MultiMarkdown.sublime-syntax',
-#         'MultiMarkdown',
-#         False,
-#         'text.html.markdown.multimarkdown',
-#     ),
-#     Syntax(
-#         'Packages/Java/Embeddings/Java (for JSP).sublime-syntax',
-#         'Java (for JSP)',
-#         True,
-#         'source.java.embedded.jsp',
-#     ),
-#     Syntax('Packages/LaTeX/Bibtex.sublime-syntax', 'BibTeX', False, 'text.bibtex'),
-#     Syntax(
-#         'Packages/Regular Expressions/RegExp.sublime-syntax',
-#         'Regular Expression',
-#         False,
-#         'source.regexp',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/JavaScript (for Go Embedded Backtick Strings).sublime-syntax',
-#         'JavaScript (for Go Embedded Backtick Strings)',
-#         True,
-#         'source.js.go-embedded-backtick-string',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/C++ (Header).sublime-syntax',
-#         'C++ (Header)',
-#         True,
-#         'source.c++.header',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (Storybook).sublime-syntax',
-#         'TypeScript (Storybook)',
-#         True,
-#         'source.ts.storybook',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (Storybook).sublime-syntax',
-#         'TypeScript (Storybook)',
-#         True,
-#         'source.ts.storybook',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/CSS (for PHP Interpolated).sublime-syntax',
-#         'CSS (for PHP Interpolated)',
-#         True,
-#         'source.css.interpolated.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Unity 3D Shader).sublime-syntax',
-#         'Plain Text (Unity 3D Shader)',
-#         True,
-#         'source.shader',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (ESLint).sublime-syntax',
-#         'JSON (ESLint)',
-#         True,
-#         'source.json.eslint',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/UnitTest (TypeScript).sublime-syntax',
-#         'UnitTest (TypeScript)',
-#         True,
-#         'source.ts.unittest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Settings).sublime-syntax',
-#         'Plain Text (Settings)',
-#         True,
-#         'text.plain.settings',
-#     ),
-#     Syntax(
-#         'Packages/R/R Console.sublime-syntax', 'R Console', False, 'source.r-console'
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (CAD).sublime-syntax',
-#         'Plain Text (CAD)',
-#         True,
-#         'text.plain.cad',
-#     ),
-#     Syntax(
-#         'Packages/JavaScript/Regular Expressions (JavaScript).sublime-syntax',
-#         'Regular Expressions (Javascript)',
-#         True,
-#         'source.regexp.js',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Ruby).sublime-syntax',
-#         'Plain Text (Ruby)',
-#         True,
-#         'text.plain.ruby',
-#     ),
-#     Syntax('Packages/JavaScript/JSX.sublime-syntax', 'JSX', False, 'source.jsx'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Rspack).sublime-syntax',
-#         'JavaScript (Rspack)',
-#         True,
-#         'source.js.rspack',
-#     ),
-#     Syntax(
-#         'Packages/TCL/HTML (Tcl).sublime-syntax', 'HTML (Tcl)', False, 'text.html.tcl'
-#     ),
-#     Syntax(
-#         'Packages/Rails/SQL (Rails).sublime-syntax',
-#         'SQL (Rails)',
-#         False,
-#         'source.sql.rails',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (Rollup).sublime-syntax',
-#         'TypeScript (Rollup)',
-#         True,
-#         'source.ts.rollup',
-#     ),
-#     Syntax(
-#         'Packages/Java/JavaProperties.sublime-syntax',
-#         'Java Properties',
-#         False,
-#         'source.java-props',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (NGINX).sublime-syntax',
-#         'Plain Text (NGINX)',
-#         True,
-#         'source.nginx',
-#     ),
-#     Syntax(
-#         'Packages/Rails/Embeddings/JavaScript (for HAML).sublime-syntax',
-#         'JavaScript (for HAML)',
-#         True,
-#         'source.js.embedded.haml',
-#     ),
-#     Syntax(
-#         'Packages/Rails/Embeddings/CSS (for HAML).sublime-syntax',
-#         'CSS (for HAML)',
-#         True,
-#         'source.css.embedded.haml',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/YAML (for PHP Interpolated).sublime-syntax',
-#         'YAML (for PHP Interpolated)',
-#         True,
-#         'source.yaml.interpolated.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/HTML (Vue).sublime-syntax',
-#         'HTML (Vue)',
-#         True,
-#         'text.html.vue',
-#     ),
-#     Syntax(
-#         'Packages/ShellScript/Shell-Unix-Generic.sublime-syntax',
-#         'Shell-Unix-Generic',
-#         True,
-#         'source.shell',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Git Keep.sublime-syntax',
-#         'Git Keep',
-#         True,
-#         'text.git.keep',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (CSV).sublime-syntax',
-#         'Plain Text (CSV)',
-#         True,
-#         'text.csv',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (SCSS).sublime-syntax',
-#         'Plain Text (SCSS)',
-#         True,
-#         'source.scss',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (WebGPU).sublime-syntax',
-#         'Plain Text (WebGPU)',
-#         True,
-#         'source.wgsl',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Sass).sublime-syntax',
-#         'Plain Text (Sass)',
-#         True,
-#         'source.sass',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Jest).sublime-syntax',
-#         'JavaScript (Jest)',
-#         True,
-#         'source.js.jest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (ESLint).sublime-syntax',
-#         'JavaScript (ESLint)',
-#         True,
-#         'source.js.eslint',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (Codecov).sublime-syntax',
-#         'YAML (Codecov)',
-#         True,
-#         'source.yaml.codecov',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/PHP Source (for PHP).sublime-syntax',
-#         'PHP Source (for PHP)',
-#         True,
-#         'source.php.embedded.php',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/JavaScript (for PHP double-quoted).sublime-syntax',
-#         'JavaScript (for PHP double-quoted)',
-#         True,
-#         'source.js.embedded.string.quoted.double.php',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/JSON (for Go Embedded Backtick Strings).sublime-syntax',
-#         'JSON inside Go backtick string',
-#         True,
-#         'source.json.go-embedded-backtick-string',
-#     ),
-#     Syntax(
-#         'Packages/Python/Embeddings/RegExp (for Python).sublime-syntax',
-#         'Regular Expressions (Python)',
-#         True,
-#         'source.regexp.python',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (Read the Docs).sublime-syntax',
-#         'YAML (Read the Docs)',
-#         True,
-#         'source.yaml.readthedocs',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Yarn).sublime-syntax',
-#         'JavaScript (Yarn)',
-#         True,
-#         'source.js.yarn',
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Blame Ignore Revisions.sublime-syntax',
-#         'Git Blame Ignore Revisions',
-#         False,
-#         'text.git.blame.ignorerevs',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TOML (Netlify).sublime-syntax',
-#         'TOML (Netlify)',
-#         True,
-#         'source.toml.netlify',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Storybook).sublime-syntax',
-#         'JavaScript (Storybook)',
-#         True,
-#         'source.js.storybook',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TOML (Poetry).sublime-syntax',
-#         'TOML (Poetry)',
-#         True,
-#         'source.toml.poetry',
-#     ),
-#     Syntax(
-#         'Packages/Rust/Cargo.sublime-syntax',
-#         'Cargo Build Results',
-#         True,
-#         'source.build_results',
-#     ),
-#     Syntax(
-#         'Packages/Objective-C/Objective-C++.sublime-syntax',
-#         'Objective-C++',
-#         False,
-#         'source.objc++',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Git (Prettier).sublime-syntax',
-#         'Git (Prettier)',
-#         True,
-#         'text.git.ignore.prettier',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Archive).sublime-syntax',
-#         'Binary (Archive)',
-#         True,
-#         'binary.archive',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Git Keep.sublime-syntax',
-#         'Git Keep',
-#         True,
-#         'text.git.keep',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Less js).sublime-syntax',
-#         'Plain Text (Less js)',
-#         True,
-#         'source.less',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/JSON (for PHP Interpolated).sublime-syntax',
-#         'JSON (for PHP Interpolated)',
-#         True,
-#         'source.json.interpolated.php',
-#     ),
-#     Syntax('Packages/User/JSX2.sublime-syntax', 'JSX2', False, 'source.jsx'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/INI (Mypy).sublime-syntax',
-#         'INI (Mypy)',
-#         True,
-#         'source.ini.mypy',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TOML (Cargo).sublime-syntax',
-#         'TOML (Cargo)',
-#         True,
-#         'source.toml.cargo',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/UnitTest (TSX).sublime-syntax',
-#         'UnitTest (TSX)',
-#         True,
-#         'source.tsx.unittest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/XML (Sublime).sublime-syntax',
-#         'XML (Sublime)',
-#         True,
-#         'text.xml.sublime.snippet',
-#     ),
-#     Syntax('Packages/HTML/HTML.sublime-syntax', 'HTML', False, 'text.html.basic'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (SWC).sublime-syntax',
-#         'JSON (SWC)',
-#         True,
-#         'source.json.swc',
-#     ),
-#     Syntax('Packages/Rust/Rust.sublime-syntax', 'Rust', False, 'source.rust'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Shell Script (Node js).sublime-syntax',
-#         'Shell Script (Node js)',
-#         True,
-#         'source.shell.nodejs',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Shell Script (Python).sublime-syntax',
-#         'Shell Script (Python)',
-#         True,
-#         'source.shell.python',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Protobuf).sublime-syntax',
-#         'Binary (Protobuf)',
-#         True,
-#         'binary.proto',
-#     ),
-#     Syntax(
-#         'Packages/Java/Embeddings/CSS (for JSP).sublime-syntax',
-#         'CSS (for JSP)',
-#         True,
-#         'source.css.embedded.jsp',
-#     ),
-#     Syntax('Packages/User/TSX2.sublime-syntax', 'TSX2', False, 'source.tsx'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/INI (Mypy).sublime-syntax',
-#         'INI (Mypy)',
-#         True,
-#         'source.ini.mypy',
-#     ),
-#     Syntax('Packages/OCaml/OCaml.sublime-syntax', 'OCaml', False, 'source.ocaml'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Log).sublime-syntax',
-#         'Plain Text (Log)',
-#         True,
-#         'text.plain.log',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (Angular).sublime-syntax',
-#         'JSON (Angular)',
-#         True,
-#         'source.json.angularjs',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Python (pytest).sublime-syntax',
-#         'Python (pytest)',
-#         True,
-#         'source.python.pytest',
-#     ),
-#     Syntax(
-#         'Packages/ElixirSyntax/syntaxes/Elixir (EEx).sublime-syntax',
-#         'Elixir (EEx)',
-#         False,
-#         'source.elixir.eex',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (Rspack).sublime-syntax',
-#         'TypeScript (Rspack)',
-#         True,
-#         'source.ts.rspack',
-#     ),
-#     Syntax(
-#         'Packages/ElixirSyntax/syntaxes/HTML (EEx).sublime-syntax',
-#         'HTML (EEx)',
-#         False,
-#         'text.html.eex',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Microsoft Word).sublime-syntax',
-#         'Binary (Microsoft Word)',
-#         True,
-#         'binary.word',
-#     ),
-#     Syntax(
-#         'Packages/Java/Embeddings/Java (for HTML).sublime-syntax',
-#         'Java (for HTML)',
-#         True,
-#         'source.java.embedded.html',
-#     ),
-#     Syntax(
-#         'Packages/RestructuredText/reStructuredText.sublime-syntax',
-#         'reStructuredText',
-#         False,
-#         'text.restructuredtext',
-#     ),
-#     Syntax(
-#         'Packages/Ruby/Embeddings/JavaScript (for Ruby).sublime-syntax',
-#         'JavaScript (for Ruby)',
-#         True,
-#         'source.js.embedded.ruby',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Adobe Illustrator).sublime-syntax',
-#         'Binary (Adobe Illustrator)',
-#         True,
-#         'binary.ai',
-#     ),
-#     Syntax(
-#         'Packages/Rails/JavaScript (Rails).sublime-syntax',
-#         'JavaScript (Rails)',
-#         False,
-#         'source.js.rails',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Webpack).sublime-syntax',
-#         'JavaScript (Webpack)',
-#         True,
-#         'source.js.webpack',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Settings).sublime-syntax',
-#         'Plain Text (Settings)',
-#         True,
-#         'text.plain.settings',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Shell Script (npm).sublime-syntax',
-#         'Shell Script (npm)',
-#         True,
-#         'source.shell.npm',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Autodesk Fusion 360).sublime-syntax',
-#         'Binary (Autodesk Fusion 360)',
-#         True,
-#         'binary.f3d',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (Turbo).sublime-syntax',
-#         'JSON (Turbo)',
-#         True,
-#         'source.json.turbo',
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Config.sublime-syntax',
-#         'Git Config',
-#         False,
-#         'text.git.config',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (SWC).sublime-syntax',
-#         'JavaScript (SWC)',
-#         True,
-#         'source.js.swc',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (ESLint).sublime-syntax',
-#         'YAML (ESLint)',
-#         True,
-#         'source.yaml.eslint',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (pnpm).sublime-syntax',
-#         'JavaScript (pnpm)',
-#         True,
-#         'source.js.pnpm',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (SWC).sublime-syntax',
-#         'JavaScript (SWC)',
-#         True,
-#         'source.js.swc',
-#     ),
-#     Syntax(
-#         'Packages/Ruby/Embeddings/HTML (for Ruby).sublime-syntax',
-#         'HTML (for Ruby)',
-#         True,
-#         'text.html.embedded.ruby',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Rollup).sublime-syntax',
-#         'JavaScript (Rollup)',
-#         True,
-#         'source.js.rollup',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TOML (Pipenv).sublime-syntax',
-#         'TOML (Pipenv)',
-#         True,
-#         'source.toml.pipenv',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (README).sublime-syntax',
-#         'Plain Text (README)',
-#         True,
-#         'text.plain.readme',
-#     ),
-#     Syntax('Packages/Diff/Diff.sublime-syntax', 'Diff', False, 'source.diff'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Image).sublime-syntax',
-#         'Binary (Image)',
-#         True,
-#         'binary.image',
-#     ),
-#     Syntax(
-#         'Packages/Batch File/Batch File (Compound).sublime-syntax',
-#         'Batch File (Compound)',
-#         True,
-#         'source.dosbatch.compound',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (CMake).sublime-syntax',
-#         'Plain Text (CMake)',
-#         True,
-#         'source.cmake',
-#     ),
-#     Syntax(
-#         'Packages/Batch File/Batch File.sublime-syntax',
-#         'Batch File',
-#         False,
-#         'source.dosbatch',
-#     ),
-#     Syntax(
-#         'Packages/Perl/Embeddings/RegExp (for Perl).sublime-syntax',
-#         'Regular Expression (Perl)',
-#         True,
-#         'source.regexp.perl',
-#     ),
-#     Syntax('Packages/JSON/JSON.sublime-syntax', 'JSON', False, 'source.json'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Rollup).sublime-syntax',
-#         'JavaScript (Rollup)',
-#         True,
-#         'source.js.rollup',
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Commit.sublime-syntax',
-#         'Git Commit',
-#         False,
-#         'text.git.commit',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (Yarn).sublime-syntax',
-#         'YAML (Yarn)',
-#         True,
-#         'source.yaml.yarn',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Vitest).sublime-syntax',
-#         'JavaScript (Vitest)',
-#         True,
-#         'source.js.vitest',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/Go (Embedded XML).sublime-syntax',
-#         'Go (Embedded XML)',
-#         True,
-#         'source.go.embedded-backtick-string.xml',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Git Blame.sublime-syntax',
-#         'Git Blame',
-#         True,
-#         'text.git.blame',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (Citation).sublime-syntax',
-#         'YAML (Citation)',
-#         True,
-#         'source.yaml.citation',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (ESLint).sublime-syntax',
-#         'Plain Text (ESLint)',
-#         True,
-#         'text.plain.eslint',
-#     ),
-#     Syntax(
-#         'Packages/ElixirSyntax/syntaxes/HTML (HEEx).sublime-syntax',
-#         'HTML (HEEx)',
-#         False,
-#         'text.html.heex',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (OpenGL).sublime-syntax',
-#         'Plain Text (OpenGL)',
-#         True,
-#         'source.glsl',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/icons_syntaxes/Plain Text (README).sublime-syntax',
-#         'Plain Text (README)',
-#         True,
-#         'text.plain.readme',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/UnitTest (JavaScript).sublime-syntax',
-#         'UnitTest (JavaScript)',
-#         True,
-#         'source.js.unittest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/XML (SVG).sublime-syntax',
-#         'XML (SVG)',
-#         True,
-#         'text.xml.svg',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (Vite).sublime-syntax',
-#         'TypeScript (Vite)',
-#         True,
-#         'source.ts.vite',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Shell Script (npm).sublime-syntax',
-#         'Shell Script (npm)',
-#         True,
-#         'source.shell.npm',
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Log.sublime-syntax', 'Git Log', False, 'text.git.log'
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/HTML (for PHP Interpolated).sublime-syntax',
-#         'HTML (for PHP Interpolated)',
-#         True,
-#         'text.html.interpolated.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (Jest).sublime-syntax',
-#         'JSON (Jest)',
-#         True,
-#         'source.json.jest',
-#     ),
-#     Syntax('Packages/R/R.sublime-syntax', 'R', False, 'source.r'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Audio).sublime-syntax',
-#         'Binary (Audio)',
-#         True,
-#         'binary.audio',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (ESLint).sublime-syntax',
-#         'JavaScript (ESLint)',
-#         True,
-#         'source.js.eslint',
-#     ),
-#     Syntax('Packages/C++/C.sublime-syntax', 'C', False, 'source.c'),
-#     Syntax(
-#         'Packages/Git Formats/Git Common.sublime-syntax',
-#         'Git Common',
-#         True,
-#         'text.git.common',
-#     ),
-#     Syntax('Packages/XML/DTD.sublime-syntax', 'DTD', False, 'text.xml.dtd'),
-#     Syntax(
-#         'Packages/D/DMD Output.sublime-syntax',
-#         'DMD Output',
-#         True,
-#         'source.build_output.dmd',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Unity 3D Shader).sublime-syntax',
-#         'Plain Text (Unity 3D Shader)',
-#         True,
-#         'source.shader',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TSX (Storybook).sublime-syntax',
-#         'TSX (Storybook)',
-#         True,
-#         'source.tsx.storybook',
-#     ),
-#     Syntax(
-#         'Packages/R/Rd (R Documentation).sublime-syntax',
-#         'Rd (R Documentation)',
-#         False,
-#         'text.tex.latex.rd',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/HTML (Elixir).sublime-syntax',
-#         'HTML (Elixir)',
-#         True,
-#         'text.html.heex',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Prettier).sublime-syntax',
-#         'JavaScript (Prettier)',
-#         True,
-#         'source.js.prettier',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Bun).sublime-syntax',
-#         'Binary (Bun)',
-#         True,
-#         'binary.bun',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Shell Script (Node js).sublime-syntax',
-#         'Shell Script (Node js)',
-#         True,
-#         'source.shell.nodejs',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (Sublime).sublime-syntax',
-#         'JSON (Sublime)',
-#         True,
-#         'source.json.sublime',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Markdown (Citation).sublime-syntax',
-#         'Markdown (Citation)',
-#         True,
-#         'text.html.markdown.citation',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSX (Storybook).sublime-syntax',
-#         'JSX (Storybook)',
-#         True,
-#         'source.jsx.storybook',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (Sublime).sublime-syntax',
-#         'YAML (Sublime)',
-#         True,
-#         'source.yaml.sublime.syntax',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Webpack).sublime-syntax',
-#         'JavaScript (Webpack)',
-#         True,
-#         'source.js.webpack',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/XML (for Go Embedded Backtick Strings).sublime-syntax',
-#         'XML inside Go backtick string',
-#         True,
-#         'text.xml.go-embedded-backtick-string',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (UnoCSS).sublime-syntax',
-#         'TypeScript (UnoCSS)',
-#         True,
-#         'source.ts.unocss',
-#     ),
-#     Syntax(
-#         'Packages/SideBarEnhancements/FindFilesResults.sublime-syntax',
-#         'Find Files Results',
-#         True,
-#         'text.find-in-files',
-#     ),
-#     Syntax(
-#         'Packages/Java/Embeddings/JavaDoc.sublime-syntax',
-#         'JavaDoc',
-#         True,
-#         'text.html.javadoc',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/Go (Embedded JSON).sublime-syntax',
-#         'Go (Embedded JSON)',
-#         True,
-#         'source.go.embedded-backtick-string.json',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (Sublime).sublime-syntax',
-#         'YAML (Sublime)',
-#         True,
-#         'source.yaml.sublime.syntax',
-#     ),
-#     Syntax(
-#         'Packages/Makefile/Make Output.sublime-syntax',
-#         'Make Output',
-#         True,
-#         'source.build_output',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (License).sublime-syntax',
-#         'Plain Text (License)',
-#         True,
-#         'text.plain.license',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Vite).sublime-syntax',
-#         'JavaScript (Vite)',
-#         True,
-#         'source.js.vite',
-#     ),
-#     Syntax('Packages/D/D.sublime-syntax', 'D', False, 'source.d'),
-#     Syntax(
-#         'Packages/PHP/Embeddings/SQL (for PHP Interpolated).sublime-syntax',
-#         'SQL (for PHP Interpolated)',
-#         True,
-#         'source.sql.interpolated.php',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/Go (Embedded SQL).sublime-syntax',
-#         'Go (Embedded SQL)',
-#         True,
-#         'source.go.embedded-backtick-string.sql',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Log).sublime-syntax',
-#         'Plain Text (Log)',
-#         True,
-#         'text.plain.log',
-#     ),
-#     Syntax('Packages/PHP/PHP.sublime-syntax', 'PHP', False, 'embedding.php'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/XML (Sublime).sublime-syntax',
-#         'XML (Sublime)',
-#         True,
-#         'text.xml.sublime.snippet',
-#     ),
-#     Syntax('Packages/LaTeX/TeX.sublime-syntax', 'TeX', False, 'text.tex'),
-#     Syntax('Packages/Haskell/Cabal.sublime-syntax', 'Cabal', False, 'source.cabal'),
-#     Syntax(
-#         'Packages/JavaScript/JavaScript.sublime-syntax',
-#         'JavaScript',
-#         False,
-#         'source.js',
-#     ),
-#     Syntax('Packages/LaTeX/LaTeX.sublime-syntax', 'LaTeX', False, 'text.tex.latex'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (PDF).sublime-syntax',
-#         'Binary (PDF)',
-#         True,
-#         'binary.pdf',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Microsoft Word).sublime-syntax',
-#         'Binary (Microsoft Word)',
-#         True,
-#         'binary.word',
-#     ),
-#     Syntax(
-#         'Packages/Regular Expressions/File Pattern.sublime-syntax',
-#         'Sublime File Pattern',
-#         True,
-#         'source.file-pattern',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Swift).sublime-syntax',
-#         'Plain Text (Swift)',
-#         True,
-#         'source.swift',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Markdown (License).sublime-syntax',
-#         'Markdown (License)',
-#         True,
-#         'text.html.markdown.license',
-#     ),
-#     Syntax(
-#         'Packages/Erlang/HTML (Erlang).sublime-syntax',
-#         'HTML (Erlang)',
-#         False,
-#         'text.html.erlang',
-#     ),
-#     Syntax('Packages/Perl/Perl.sublime-syntax', 'Perl', False, 'source.perl'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Next js).sublime-syntax',
-#         'JavaScript (Next js)',
-#         True,
-#         'source.js.nextjs',
-#     ),
-#     Syntax(
-#         'Packages/Java/HTML (JSP).sublime-syntax', 'HTML (JSP)', False, 'text.html.jsp'
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Markdown (mdx).sublime-syntax',
-#         'Markdown (mdx)',
-#         True,
-#         'text.html.markdown.mdx',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/SQL (for Go Embedded Backtick Strings).sublime-syntax',
-#         'SQL inside Go backtick string',
-#         True,
-#         'source.sql.go-embedded-backtick-string',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/RegExp (for Go Embedded Backtick Strings).sublime-syntax',
-#         'RegExp inside Go backtick string',
-#         True,
-#         'source.regexp.go-embedded-backtick-string',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (Yarn).sublime-syntax',
-#         'YAML (Yarn)',
-#         True,
-#         'source.yaml.yarn',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (Babel).sublime-syntax',
-#         'JSON (Babel)',
-#         True,
-#         'source.json.babel',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (pnpm).sublime-syntax',
-#         'YAML (pnpm)',
-#         True,
-#         'source.yaml.pnpm',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Markdown (README).sublime-syntax',
-#         'Markdown (README)',
-#         True,
-#         'text.html.markdown.readme',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (NGINX).sublime-syntax',
-#         'Plain Text (NGINX)',
-#         True,
-#         'source.nginx',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (License).sublime-syntax',
-#         'Plain Text (License)',
-#         True,
-#         'text.plain.license',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Affinity Publisher).sublime-syntax',
-#         'Binary (Affinity Publisher)',
-#         True,
-#         'binary.afpub',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (pre-commit).sublime-syntax',
-#         'YAML (pre-commit)',
-#         True,
-#         'source.yaml.precommit',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Dockerfile).sublime-syntax',
-#         'Plain Text (Dockerfile)',
-#         True,
-#         'source.dockerfile',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/UnitTest (TSX).sublime-syntax',
-#         'UnitTest (TSX)',
-#         True,
-#         'source.tsx.unittest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (ESLint).sublime-syntax',
-#         'JSON (ESLint)',
-#         True,
-#         'source.json.eslint',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Markdown (README).sublime-syntax',
-#         'Markdown (README)',
-#         True,
-#         'text.html.markdown.readme',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Archive).sublime-syntax',
-#         'Binary (Archive)',
-#         True,
-#         'binary.archive',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (UnoCSS).sublime-syntax',
-#         'JavaScript (UnoCSS)',
-#         True,
-#         'source.js.unocss',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/XML (SVG).sublime-syntax',
-#         'XML (SVG)',
-#         True,
-#         'text.xml.svg',
-#     ),
-#     Syntax('Packages/XML/XML.sublime-syntax', 'XML', False, 'text.xml'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (Citation).sublime-syntax',
-#         'YAML (Citation)',
-#         True,
-#         'source.yaml.citation',
-#     ),
-#     Syntax(
-#         'Packages/ElixirSyntax/syntaxes/SQL (Elixir).sublime-syntax',
-#         'SQL (Elixir)',
-#         False,
-#         'source.ex.sql',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TOML (Bun).sublime-syntax',
-#         'TOML (Bun)',
-#         True,
-#         'source.toml.bun',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (pnpm).sublime-syntax',
-#         'YAML (pnpm)',
-#         True,
-#         'source.yaml.pnpm',
-#     ),
-#     Syntax(
-#         'Packages/Regular Expressions/Regex Replace.sublime-syntax',
-#         'Regular Expression Replacement',
-#         True,
-#         'source.regexp-replace',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/C++ (Header).sublime-syntax',
-#         'C++ (Header)',
-#         True,
-#         'source.c++.header',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Go).sublime-syntax',
-#         'Plain Text (Go)',
-#         True,
-#         'source.go',
-#     ),
-#     Syntax(
-#         'Packages/C#/Build.sublime-syntax',
-#         'NAnt Build File',
-#         False,
-#         'source.nant-build',
-#     ),
-#     Syntax('Packages/Go/Go.sublime-syntax', 'Go', False, 'source.go'),
-#     Syntax('Packages/User/TS.sublime-syntax', 'TS', False, 'source.ts'),
-#     Syntax(
-#         'Packages/Git Formats/Git Link.sublime-syntax',
-#         'Git Link',
-#         False,
-#         'text.git.link',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Git Blame.sublime-syntax',
-#         'Git Blame',
-#         True,
-#         'text.git.blame',
-#     ),
-#     Syntax(
-#         'Packages/LaTeX/LaTeX Log.sublime-syntax', 'LaTeX Log', False, 'text.log.latex'
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Attributes.sublime-syntax',
-#         'Git Attributes',
-#         False,
-#         'text.git.attributes',
-#     ),
-#     Syntax('Packages/Sass/Syntaxes/Sass.sublime-syntax', 'Sass', False, 'source.sass'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (Rspack).sublime-syntax',
-#         'TypeScript (Rspack)',
-#         True,
-#         'source.ts.rspack',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Git (Prettier).sublime-syntax',
-#         'Git (Prettier)',
-#         True,
-#         'text.git.ignore.prettier',
-#     ),
-#     Syntax(
-#         'Packages/Ruby/Embeddings/CSS (for Ruby).sublime-syntax',
-#         'CSS (for Ruby)',
-#         True,
-#         'source.css.embedded.ruby',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (ESLint).sublime-syntax',
-#         'YAML (ESLint)',
-#         True,
-#         'source.yaml.eslint',
-#     ),
-#     Syntax(
-#         'Packages/Haskell/Literate Haskell.sublime-syntax',
-#         'Literate Haskell',
-#         False,
-#         'text.tex.latex.haskell',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Arduino).sublime-syntax',
-#         'Plain Text (Arduino)',
-#         True,
-#         'source.arduino',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TOML (Ruff).sublime-syntax',
-#         'TOML (Ruff)',
-#         True,
-#         'source.toml.ruff',
-#     ),
-#     Syntax('Packages/C++/C++.sublime-syntax', 'C++', False, 'source.c++'),
-#     Syntax(
-#         'Packages/Go/Embeddings/Go (Embedded HTML).sublime-syntax',
-#         'Go (Embedded HTML)',
-#         True,
-#         'source.go.embedded-backtick-string.html',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (Rollup).sublime-syntax',
-#         'TypeScript (Rollup)',
-#         True,
-#         'source.ts.rollup',
-#     ),
-#     Syntax(
-#         'Packages/Perl/Embeddings/RegExp (for Perl parens).sublime-syntax',
-#         'Regular Expression (Perl inside parens)',
-#         True,
-#         'source.regexp.perl.parens',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Markdown (Citation).sublime-syntax',
-#         'Markdown (Citation)',
-#         True,
-#         'text.html.markdown.citation',
-#     ),
-#     Syntax(
-#         'Packages/ActionScript/ActionScript.sublime-syntax',
-#         'ActionScript',
-#         False,
-#         'source.actionscript.2',
-#     ),
-#     Syntax(
-#         'Packages/ShellScript/commands-builtin-shell-bash.sublime-syntax',
-#         'commands-builtin-shell-bash',
-#         True,
-#         'commands.builtin.shell.bash',
-#     ),
-#     Syntax(
-#         'Packages/Rails/Embeddings/HTML (for HAML).sublime-syntax',
-#         'HTML (for HAML)',
-#         True,
-#         'text.html.embedded.haml',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (WebAssembly).sublime-syntax',
-#         'Binary (WebAssembly)',
-#         True,
-#         'binary.webassembly',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Image).sublime-syntax',
-#         'Binary (Image)',
-#         True,
-#         'binary.image',
-#     ),
-#     Syntax(
-#         'Packages/ASP/HTML (ASP).sublime-syntax', 'HTML (ASP)', False, 'text.html.asp'
-#     ),
-#     Syntax('Packages/Groovy/Groovy.sublime-syntax', 'Groovy', False, 'source.groovy'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (PDF).sublime-syntax',
-#         'Binary (PDF)',
-#         True,
-#         'binary.pdf',
-#     ),
-#     Syntax(
-#         'Packages/PHP/JavaScript (PHP).sublime-syntax',
-#         'JavaScript (PHP)',
-#         False,
-#         'source.js.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Git (Docker).sublime-syntax',
-#         'Git (Docker)',
-#         True,
-#         'text.git.ignore.docker',
-#     ),
-#     Syntax('Packages/Binary/Binary.sublime-syntax', 'Binary', True, 'binary.plain'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (Babel).sublime-syntax',
-#         'JavaScript (Babel)',
-#         True,
-#         'source.js.babel',
-#     ),
-#     Syntax('Packages/Text/Plain text.tmLanguage', 'Plain Text', False, 'text.plain'),
-#     Syntax(
-#         'Packages/ASP/Embeddings/JavaScript (for ASP).sublime-syntax',
-#         'JavaScript (for ASP)',
-#         True,
-#         'source.js.embedded.asp',
-#     ),
-#     Syntax(
-#         'Packages/Babel/Styled Components.sublime-syntax',
-#         'Styled Components',
-#         True,
-#         'source.js.css',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Shell Script (Ruby).sublime-syntax',
-#         'Shell Script (Ruby)',
-#         True,
-#         'source.shell.ruby',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/icons_syntaxes/Markdown (README).sublime-syntax',
-#         'Markdown (README)',
-#         True,
-#         'text.html.markdown.readme',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Elixir).sublime-syntax',
-#         'Plain Text (Elixir)',
-#         True,
-#         'source.elixir',
-#     ),
-#     Syntax('Packages/Go/HTML (Go).sublime-syntax', 'HTML (Go)', False, 'text.html.go'),
-#     Syntax(
-#         'Packages/Ruby/Embeddings/SQL (for Ruby).sublime-syntax',
-#         'SQL (for Ruby)',
-#         True,
-#         'source.sql.embedded.ruby',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Yarn).sublime-syntax',
-#         'JavaScript (Yarn)',
-#         True,
-#         'source.js.yarn',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/HTML (for Go Embedded Backtick Strings).sublime-syntax',
-#         'HTML inside Go backtick string',
-#         True,
-#         'text.html.go-embedded-backtick-string',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Shell Script (Python).sublime-syntax',
-#         'Shell Script (Python)',
-#         True,
-#         'source.shell.python',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSX (Storybook).sublime-syntax',
-#         'JSX (Storybook)',
-#         True,
-#         'source.jsx.storybook',
-#     ),
-#     Syntax(
-#         'Packages/JavaScript/TypeScript.sublime-syntax',
-#         'TypeScript',
-#         False,
-#         'source.ts',
-#     ),
-#     Syntax('Packages/SQL/SQL.sublime-syntax', 'SQL', False, 'source.sql'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Microsoft Excel).sublime-syntax',
-#         'Binary (Microsoft Excel)',
-#         True,
-#         'binary.excel',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Markdown (Code of conduct).sublime-syntax',
-#         'Markdown (Code of conduct)',
-#         True,
-#         'text.html.markdown.codeofconduct',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (Webpack).sublime-syntax',
-#         'TypeScript (Webpack)',
-#         True,
-#         'source.ts.webpack',
-#     ),
-#     Syntax(
-#         'Packages/Ruby/Embeddings/ShellScript (for Ruby).sublime-syntax',
-#         'ShellScript (for Ruby)',
-#         True,
-#         'source.shell.embedded.ruby',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Affinity Publisher).sublime-syntax',
-#         'Binary (Affinity Publisher)',
-#         True,
-#         'binary.afpub',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (Vite).sublime-syntax',
-#         'TypeScript (Vite)',
-#         True,
-#         'source.ts.vite',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (CMake).sublime-syntax',
-#         'Plain Text (CMake)',
-#         True,
-#         'source.cmake',
-#     ),
-#     Syntax('Packages/Rails/HAML.sublime-syntax', 'HAML', False, 'text.haml'),
-#     Syntax(
-#         'Packages/Go/Embeddings/Go (Embedded Backtick String).sublime-syntax',
-#         'Go (Embedded Backtick String)',
-#         True,
-#         'source.go.embedded-backtick-string',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (Sublime).sublime-syntax',
-#         'JSON (Sublime)',
-#         True,
-#         'source.json.sublime',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/UnitTest (JSX).sublime-syntax',
-#         'UnitTest (JSX)',
-#         True,
-#         'source.jsx.unittest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (OpenGL).sublime-syntax',
-#         'Plain Text (OpenGL)',
-#         True,
-#         'source.glsl',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (Webpack).sublime-syntax',
-#         'TypeScript (Webpack)',
-#         True,
-#         'source.ts.webpack',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Audio).sublime-syntax',
-#         'Binary (Audio)',
-#         True,
-#         'binary.audio',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/JavaScript (for PHP Interpolated).sublime-syntax',
-#         'JavaScript (for PHP Interpolated)',
-#         True,
-#         'source.js.interpolated.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Vitest).sublime-syntax',
-#         'JavaScript (Vitest)',
-#         True,
-#         'source.js.vitest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TOML (Pipenv).sublime-syntax',
-#         'TOML (Pipenv)',
-#         True,
-#         'source.toml.pipenv',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Kotlin).sublime-syntax',
-#         'Plain Text (Kotlin)',
-#         True,
-#         'source.Kotlin',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Markdown (Code of conduct).sublime-syntax',
-#         'Markdown (Code of conduct)',
-#         True,
-#         'text.html.markdown.codeofconduct',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TOML (Cargo).sublime-syntax',
-#         'TOML (Cargo)',
-#         True,
-#         'source.toml.cargo',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TOML (Ruff).sublime-syntax',
-#         'TOML (Ruff)',
-#         True,
-#         'source.toml.ruff',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (Jest).sublime-syntax',
-#         'JSON (Jest)',
-#         True,
-#         'source.json.jest',
-#     ),
-#     Syntax('Packages/TCL/Tcl.sublime-syntax', 'Tcl', False, 'source.tcl'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (GraphQL).sublime-syntax',
-#         'Plain Text (GraphQL)',
-#         True,
-#         'source.graphql',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (Jest).sublime-syntax',
-#         'TypeScript (Jest)',
-#         True,
-#         'source.ts.jest',
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Code Owners.sublime-syntax',
-#         'Git Code Owners',
-#         False,
-#         'text.git.codeowners',
-#     ),
-#     Syntax(
-#         'Packages/HTML/HTML (Plain).sublime-syntax',
-#         'HTML (Plain)',
-#         True,
-#         'text.html.plain',
-#     ),
-#     Syntax('Packages/ASP/ASP.sublime-syntax', 'ASP', False, 'source.asp'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Video).sublime-syntax',
-#         'Binary (Video)',
-#         True,
-#         'binary.video',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Babel).sublime-syntax',
-#         'JavaScript (Babel)',
-#         True,
-#         'source.js.babel',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TOML (Bun).sublime-syntax',
-#         'TOML (Bun)',
-#         True,
-#         'source.toml.bun',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Elixir).sublime-syntax',
-#         'Plain Text (Elixir)',
-#         True,
-#         'source.elixir',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TOML (Netlify).sublime-syntax',
-#         'TOML (Netlify)',
-#         True,
-#         'source.toml.netlify',
-#     ),
-#     Syntax(
-#         'Packages/OCaml/OCamllex.sublime-syntax', 'OCamllex', False, 'source.ocamllex'
-#     ),
-#     Syntax(
-#         'Packages/Regular Expressions/RegExp (Basic).sublime-syntax',
-#         'Regular Expression (Basic)',
-#         True,
-#         'source.regexp.basic',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JavaScript (pnpm).sublime-syntax',
-#         'JavaScript (pnpm)',
-#         True,
-#         'source.js.pnpm',
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Commit Message.sublime-syntax',
-#         'Git Commit Message',
-#         False,
-#         'text.git.commit-message',
-#     ),
-#     Syntax(
-#         'Packages/ElixirSyntax/syntaxes/Elixir.sublime-syntax',
-#         'Elixir',
-#         False,
-#         'source.elixir',
-#     ),
-#     Syntax('Packages/Pascal/Pascal.sublime-syntax', 'Pascal', False, 'source.pascal'),
-#     Syntax(
-#         'Packages/Go/JavaScript (Go).sublime-syntax',
-#         'JavaScript (Go)',
-#         False,
-#         'source.js.go',
-#     ),
-#     Syntax(
-#         'Packages/Textile/Textile.sublime-syntax', 'Textile', False, 'text.html.textile'
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/XML.sublime-syntax',
-#         'XML',
-#         True,
-#         'text.xml',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (Turbo).sublime-syntax',
-#         'JSON (Turbo)',
-#         True,
-#         'source.json.turbo',
-#     ),
-#     Syntax(
-#         'Packages/Clojure/Clojure.sublime-syntax', 'Clojure', False, 'source.clojure'
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (WebAssembly).sublime-syntax',
-#         'Binary (WebAssembly)',
-#         True,
-#         'binary.webassembly',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Blender).sublime-syntax',
-#         'Binary (Blender)',
-#         True,
-#         'binary.blender',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/Go (Embedded CSS).sublime-syntax',
-#         'Go (Embedded CSS)',
-#         True,
-#         'source.go.embedded-backtick-string.css',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (Prettier).sublime-syntax',
-#         'YAML (Prettier)',
-#         True,
-#         'source.yaml.prettier',
-#     ),
-#     Syntax('Packages/Scala/Scala.sublime-syntax', 'Scala', False, 'source.scala'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/YAML (Docker).sublime-syntax',
-#         'YAML (Docker)',
-#         True,
-#         'source.yaml.docker',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/XML (for PHP Interpolated).sublime-syntax',
-#         'XML (for PHP Interpolated)',
-#         True,
-#         'text.xml.interpolated.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (Next js).sublime-syntax',
-#         'TypeScript (Next js)',
-#         True,
-#         'source.ts.nextjs',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/CSS (for PHP double-quoted).sublime-syntax',
-#         'CSS (for PHP double-quoted)',
-#         True,
-#         'source.css.embedded.string.quoted.double.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Adobe Illustrator).sublime-syntax',
-#         'Binary (Adobe Illustrator)',
-#         True,
-#         'binary.ai',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (Next js).sublime-syntax',
-#         'TypeScript (Next js)',
-#         True,
-#         'source.ts.nextjs',
-#     ),
-#     Syntax(
-#         'Packages/ShellScript/Bash.sublime-syntax', 'Bash', False, 'source.shell.bash'
-#     ),
-#     Syntax(
-#         'Packages/Java/Embeddings/JavaScript (for JSP).sublime-syntax',
-#         'JavaScript (for JSP)',
-#         True,
-#         'source.js.embedded.jsp',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Affinity Photo).sublime-syntax',
-#         'Binary (Affinity Photo)',
-#         True,
-#         'binary.afphoto',
-#     ),
-#     Syntax(
-#         'Packages/Git Formats/Git Ignore.sublime-syntax',
-#         'Git Ignore',
-#         False,
-#         'text.git.ignore',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (pre-commit).sublime-syntax',
-#         'YAML (pre-commit)',
-#         True,
-#         'source.yaml.precommit',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Adobe Photoshop).sublime-syntax',
-#         'Binary (Adobe Photoshop)',
-#         True,
-#         'binary.image.ps',
-#     ),
-#     Syntax(
-#         'Packages/Graphviz/DOT.sublime-syntax', 'Graphviz (DOT)', False, 'source.dot'
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Protobuf).sublime-syntax',
-#         'Binary (Protobuf)',
-#         True,
-#         'binary.proto',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TOML (Poetry).sublime-syntax',
-#         'TOML (Poetry)',
-#         True,
-#         'source.toml.poetry',
-#     ),
-#     Syntax('Packages/C#/C#.sublime-syntax', 'C#', False, 'source.cs'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Shell Script (Ruby).sublime-syntax',
-#         'Shell Script (Ruby)',
-#         True,
-#         'source.shell.ruby',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (Docker).sublime-syntax',
-#         'YAML (Docker)',
-#         True,
-#         'source.yaml.docker',
-#     ),
-#     Syntax('Packages/Matlab/Matlab.sublime-syntax', 'MATLAB', False, 'source.matlab'),
-#     Syntax(
-#         'Packages/PHP/Embeddings/Diff (for PHP Interpolated).sublime-syntax',
-#         'Diff (for PHP Interpolated)',
-#         True,
-#         'source.diff.interpolated.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (Angular).sublime-syntax',
-#         'JSON (Angular)',
-#         True,
-#         'source.json.angularjs',
-#     ),
-#     Syntax(
-#         'Packages/Perl/Embeddings/RegExp (for Perl angles).sublime-syntax',
-#         'Regular Expression (Perl inside angle brackets)',
-#         True,
-#         'source.regexp.perl.angles',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TypeScript (Vitest).sublime-syntax',
-#         'TypeScript (Vitest)',
-#         True,
-#         'source.ts.vitest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (UnoCSS).sublime-syntax',
-#         'TypeScript (UnoCSS)',
-#         True,
-#         'source.ts.unocss',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Autodesk Fusion 360).sublime-syntax',
-#         'Binary (Autodesk Fusion 360)',
-#         True,
-#         'binary.f3d',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Go).sublime-syntax',
-#         'Plain Text (Go)',
-#         True,
-#         'source.go',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (SWC).sublime-syntax',
-#         'JSON (SWC)',
-#         True,
-#         'source.json.swc',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (FlatBuffers).sublime-syntax',
-#         'Plain Text (FlatBuffers)',
-#         True,
-#         'source.fbs',
-#     ),
-#     Syntax(
-#         'Packages/ASP/Embeddings/CSS (for ASP).sublime-syntax',
-#         'CSS (for ASP)',
-#         True,
-#         'source.css.embedded.asp',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Wast).sublime-syntax',
-#         'Plain Text (Wast)',
-#         True,
-#         'text.webassembly',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/INI (pytest).sublime-syntax',
-#         'INI (pytest)',
-#         True,
-#         'source.ini.pytest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (GraphQL).sublime-syntax',
-#         'Plain Text (GraphQL)',
-#         True,
-#         'source.graphql',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/TOML (Prettier).sublime-syntax',
-#         'TOML (Prettier)',
-#         True,
-#         'source.toml.prettier',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Affinity Designer).sublime-syntax',
-#         'Binary (Affinity Designer)',
-#         True,
-#         'binary.afdesign',
-#     ),
-#     Syntax(
-#         'Packages/Rails/Embeddings/Markdown (for HAML).sublime-syntax',
-#         'Markdown (for HAML)',
-#         True,
-#         'text.html.markdown.embedded.haml',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TOML (Prettier).sublime-syntax',
-#         'TOML (Prettier)',
-#         True,
-#         'source.toml.prettier',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (CSV).sublime-syntax',
-#         'Plain Text (CSV)',
-#         True,
-#         'text.csv',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (Storybook).sublime-syntax',
-#         'JavaScript (Storybook)',
-#         True,
-#         'source.js.storybook',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Binary (Blender).sublime-syntax',
-#         'Binary (Blender)',
-#         True,
-#         'binary.blender',
-#     ),
-#     Syntax('Packages/Lua/Lua.sublime-syntax', 'Lua', False, 'source.lua'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Swift).sublime-syntax',
-#         'Plain Text (Swift)',
-#         True,
-#         'source.swift',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Git (ESLint).sublime-syntax',
-#         'Git (ESLint)',
-#         True,
-#         'text.git.ignore.eslint',
-#     ),
-#     Syntax(
-#         'Packages/Haskell/Haskell.sublime-syntax', 'Haskell', False, 'source.haskell'
-#     ),
-#     Syntax('Packages/Go/CSS (Go).sublime-syntax', 'CSS (Go)', False, 'source.css.go'),
-#     Syntax('Packages/Sass/Syntaxes/SCSS.sublime-syntax', 'SCSS', False, 'source.scss'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TypeScript (Vitest).sublime-syntax',
-#         'TypeScript (Vitest)',
-#         True,
-#         'source.ts.vitest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (TypeScript).sublime-syntax',
-#         'JSON (TypeScript)',
-#         True,
-#         'source.json.typescript',
-#     ),
-#     Syntax('Packages/JavaScript/TSX.sublime-syntax', 'TSX', False, 'source.tsx'),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (README).sublime-syntax',
-#         'Plain Text (README)',
-#         True,
-#         'text.plain.readme',
-#     ),
-#     Syntax('Packages/TOML/TOML.sublime-syntax', 'TOML', False, 'source.toml'),
-#     Syntax(
-#         'Packages/Makefile/Makefile Shell.sublime-syntax',
-#         'Makefile Shell',
-#         True,
-#         'source.shell.embedded.makefile',
-#     ),
-#     Syntax(
-#         'Packages/Rails/Ruby (Rails).sublime-syntax',
-#         'Ruby (Rails)',
-#         False,
-#         'source.ruby.rails',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (FlatBuffers).sublime-syntax',
-#         'Plain Text (FlatBuffers)',
-#         True,
-#         'source.fbs',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Plain Text (Less js).sublime-syntax',
-#         'Plain Text (Less js)',
-#         True,
-#         'source.less',
-#     ),
-#     Syntax(
-#         'Packages/PHP/Embeddings/SQL (for PHP).sublime-syntax',
-#         'SQL (for PHP)',
-#         True,
-#         'source.sql.embedded.php',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/Binary (Adobe Photoshop).sublime-syntax',
-#         'Binary (Adobe Photoshop)',
-#         True,
-#         'binary.image.ps',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (npm).sublime-syntax',
-#         'JSON (npm)',
-#         True,
-#         'source.json.npm',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (npm).sublime-syntax',
-#         'JSON (npm)',
-#         True,
-#         'source.json.npm',
-#     ),
-#     Syntax(
-#         'Packages/Haskell/Embeddings/HTML (for HSX).sublime-syntax',
-#         'HTML (for HSX)',
-#         True,
-#         'text.html.embedded.haskell',
-#     ),
-#     Syntax(
-#         'Packages/Go/Embeddings/Go (Embedded Regex).sublime-syntax',
-#         'Go (Embedded Regex)',
-#         True,
-#         'source.go.embedded-backtick-string.regexp',
-#     ),
-#     Syntax(
-#         'Packages/AppleScript/AppleScript.sublime-syntax',
-#         'AppleScript',
-#         False,
-#         'source.applescript',
-#     ),
-#     Syntax(
-#         'Packages/ElixirSyntax/syntaxes/PCRE (Erlang).sublime-syntax',
-#         'PCRE (Erlang)',
-#         True,
-#         'source.pcree',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/UnitTest (TypeScript).sublime-syntax',
-#         'UnitTest (TypeScript)',
-#         True,
-#         'source.ts.unittest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (Codecov).sublime-syntax',
-#         'YAML (Codecov)',
-#         True,
-#         'source.yaml.codecov',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/examples/sublime-syntax.sublime-syntax',
-#         'YAML (Y)',
-#         True,
-#         'source.y',
-#     ),
-#     Syntax('Packages/Erlang/Erlang.sublime-syntax', 'Erlang', False, 'source.erlang'),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JSON (TypeScript).sublime-syntax',
-#         'JSON (TypeScript)',
-#         True,
-#         'source.json.typescript',
-#     ),
-#     Syntax(
-#         'Packages/Zukan-Icon-Theme/assets/Zukan Icon Theme/icons_syntaxes/JSON (Babel).sublime-syntax',
-#         'JSON (Babel)',
-#         True,
-#         'source.json.babel',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/YAML (Prettier).sublime-syntax',
-#         'YAML (Prettier)',
-#         True,
-#         'source.yaml.prettier',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/UnitTest (JSX).sublime-syntax',
-#         'UnitTest (JSX)',
-#         True,
-#         'source.jsx.unittest',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/JavaScript (UnoCSS).sublime-syntax',
-#         'JavaScript (UnoCSS)',
-#         True,
-#         'source.js.unocss',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (Sass).sublime-syntax',
-#         'Plain Text (Sass)',
-#         True,
-#         'source.sass',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/Plain Text (SCSS).sublime-syntax',
-#         'Plain Text (SCSS)',
-#         True,
-#         'source.scss',
-#     ),
-#     Syntax(
-#         'Packages/Clojure/ClojureScript.sublime-syntax',
-#         'ClojureScript',
-#         False,
-#         'source.clojure.clojurescript',
-#     ),
-#     Syntax(
-#         'Packages/Zukan Icon Theme/Zukan Icon Theme/icons_syntaxes/TSX (Storybook).sublime-syntax',
-#         'TSX (Storybook)',
-#         True,
-#         'source.tsx.storybook',
-#     ),
-# ]
+def replace_tabs(file_info: str) -> str:
+    """
+    Replace tabs for double spaces.
+
+    Parameters:
+    file (str) -- info of data file.
+
+    Returns:
+    str -- text with tabs converted to double spaces if found.
+    """
+    return file_info.replace('\t', '  ')
+
+
+# this is slow
+def list_user_syntaxes_file_ext():
+    user_file_extensions = []
+    list_syntaxes = UserSyntax.visible_syntaxes_only()
+    for s in list_syntaxes:
+        # print('syntax name:' + s.name + '-> path:' + s.path + '-> scope:' + s.scope)
+        syntax_content = replace_tabs(sublime.load_resource(s.path))
+        yaml = YAML(typ='rt')
+        file_data = yaml.load(syntax_content)
+        # There is sublime-syntaxes with no 'file_extensions'.
+        # Also, not all are sublime-syntaxes, there is/are tmLanguage.
+        if 'file_extensions' in file_data:
+            # print(file_data['file_extensions'])
+            user_file_extensions.append(file_data['file_extensions'])
+    return flatten(user_file_extensions)
+
+
+# https://stackoverflow.com/questions/952914/how-do-i-make-a-flat-list-out-of-a-list-of-lists
+def flatten(xss):
+    return [x for xs in xss for x in xs]
+
+
+# reloading python 3.3 plugin Zukan-Icon-Theme.main
+# [['sty', 'cls'], ['cljs', 'cljc'], ['sql', 'ddl', 'dml'], ['css'], ['rd'], ['ruby.rail', 'rxml', 'builder', 'arb'], ['ts'], ['js', 'mjs', 'cjs', 'htc'], ['py', 'py3', 'pyw', 'pyi', 'pyx', 'pyx.in', 'pxd', 'pxd.in', 'pxi', 'pxi.in', 'rpy', 'cpy', 'gyp', 'gypi', 'vpy', 'smk', 'wscript', 'bazel', 'bzl'], ['tsx'], ['groovy', 'gvy', 'gradle'], ['gitconfig'], ['js.php'], ['vbs'], ['tsx'], ['diff', 'patch'], ['go'], ['eex'], ['adp'], ['d', 'di'], ['html.eex', 'html.leex'], ['erl', 'hrl', 'escript'], ['mll'], ['c', 'h'], ['md', 'mdown', 'mdwn', 'markdown', 'markdn'], ['tcl'], ['css.erb'], ['re'], ['pas', 'p', 'dpr'], ['css.php'], ['html', 'htm', 'shtml', 'xhtml'], [], ['js', 'jsx', 'es6', 'babel'], ['toml', 'tml', 'Cargo.lock', 'Gopkg.lock', 'Pipfile', 'poetry.lock'], ['lhs'], ['lisp', 'cl', 'clisp', 'l', 'mud', 'el', 'scm', 'ss', 'lsp', 'fasl', 'sld'], ['gohtml', 'go.html'], ['gitattributes'], ['mk', 'mak', 'make'], ['xsd', 'xsl', 'xslt'], ['tex', 'ltx'], ['yaml', 'yml', 'sublime-syntax'], ['rst', 'rest'], ['jsx'], ['sface'], ['mly'], ['dot', 'gv'], ['dtd', 'ent', 'mod'], ['heex'], ['java', 'bsh'], ['properties'], ['gomd', 'go.md', 'hugo'], ['ex.sql'], ['scala', 'sbt', 'sc'], ['bib'], ['clj', 'cljc', 'edn'], ['sass'], ['gocss', 'go.css'], ['jsp', 'jspf', 'jspx', 'jstl'], ['ex.eex', 'exs.eex'], ['matlab'], ['gojs', 'go.js'], ['asp', 'asa'], ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phps', 'phpt', 'phtml'], ['R'], ['gitignore'], ['m', 'h'], ['mm', 'M', 'h'], ['sh', 'bash', 'bashrc', 'ash', 'zsh'], ['sql.erb', 'erbsql'], ['json', 'jsonc', 'sublime-build', 'sublime-color-scheme', 'sublime-commands', 'sublime-completions', 'sublime-keymap', 'sublime-macro', 'sublime-menu', 'sublime-mousemap', 'sublime-project', 'sublime-settings', 'sublime-theme', 'sublime-workspace', 'ipynb', 'gltf', 'avsc'], ['gitlog'], ['ex', 'exs'], ['applescript', 'script editor'], ['ml', 'mli'], ['xml', 'tld', 'dtml', 'rng', 'rss', 'opml', 'svg', 'xaml'], ['rb', 'rbi', 'rbx', 'rjs', 'rabl', 'rake', 'capfile', 'jbuilder', 'gemspec', 'podspec', 'irbrc', 'pryrc', 'prawn', 'thor'], ['hs', 'hs-boot', 'hsig'], ['jsx'], ['yaws'], ['textile'], ['cpp', 'cc', 'cp', 'cxx', 'c++', 'C', 'h', 'hh', 'hpp', 'hxx', 'h++', 'inl', 'ipp', 'ixx', 'cppm'], ['haml'], ['scss'], ['rails', 'rhtml', 'erb', 'html.erb'], ['bat', 'cmd'], ['js.erb'], ['js', 'mjs', 'cjs', 'htc'], ['lua'], ['as'], ['mailmap'], ['rs'], ['.git'], ['cs', 'csx'], ['pl', 'pc', 'pm', 'pmc', 'pod', 't'], ['CODEOWNERS'], ['cabal', 'cabal.project'], ['ts'], ['git-blame-ignore-revs']]
+# Function time_listing, Time 11.73568606376648
+# reloading python 3.3 plugin Zukan-Icon-Theme.main
+# ['sty', 'cls', 'cljs', 'cljc', 'sql', 'ddl', 'dml', 'css', 'rd', 'ruby.rail', 'rxml', 'builder', 'arb', 'ts', 'js', 'mjs', 'cjs', 'htc', 'py', 'py3', 'pyw', 'pyi', 'pyx', 'pyx.in', 'pxd', 'pxd.in', 'pxi', 'pxi.in', 'rpy', 'cpy', 'gyp', 'gypi', 'vpy', 'smk', 'wscript', 'bazel', 'bzl', 'tsx', 'groovy', 'gvy', 'gradle', 'gitconfig', 'js.php', 'vbs', 'tsx', 'diff', 'patch', 'go', 'eex', 'adp', 'd', 'di', 'html.eex', 'html.leex', 'erl', 'hrl', 'escript', 'mll', 'c', 'h', 'md', 'mdown', 'mdwn', 'markdown', 'markdn', 'tcl', 'css.erb', 're', 'pas', 'p', 'dpr', 'css.php', 'html', 'htm', 'shtml', 'xhtml', 'js', 'jsx', 'es6', 'babel', 'toml', 'tml', 'Cargo.lock', 'Gopkg.lock', 'Pipfile', 'poetry.lock', 'lhs', 'lisp', 'cl', 'clisp', 'l', 'mud', 'el', 'scm', 'ss', 'lsp', 'fasl', 'sld', 'gohtml', 'go.html', 'gitattributes', 'mk', 'mak', 'make', 'xsd', 'xsl', 'xslt', 'tex', 'ltx', 'yaml', 'yml', 'sublime-syntax', 'rst', 'rest', 'jsx', 'sface', 'mly', 'dot', 'gv', 'dtd', 'ent', 'mod', 'heex', 'java', 'bsh', 'properties', 'gomd', 'go.md', 'hugo', 'ex.sql', 'scala', 'sbt', 'sc', 'bib', 'clj', 'cljc', 'edn', 'sass', 'gocss', 'go.css', 'jsp', 'jspf', 'jspx', 'jstl', 'ex.eex', 'exs.eex', 'matlab', 'gojs', 'go.js', 'asp', 'asa', 'php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phps', 'phpt', 'phtml', 'R', 'gitignore', 'm', 'h', 'mm', 'M', 'h', 'sh', 'bash', 'bashrc', 'ash', 'zsh', 'sql.erb', 'erbsql', 'json', 'jsonc', 'sublime-build', 'sublime-color-scheme', 'sublime-commands', 'sublime-completions', 'sublime-keymap', 'sublime-macro', 'sublime-menu', 'sublime-mousemap', 'sublime-project', 'sublime-settings', 'sublime-theme', 'sublime-workspace', 'ipynb', 'gltf', 'avsc', 'gitlog', 'ex', 'exs', 'applescript', 'script editor', 'ml', 'mli', 'xml', 'tld', 'dtml', 'rng', 'rss', 'opml', 'svg', 'xaml', 'rb', 'rbi', 'rbx', 'rjs', 'rabl', 'rake', 'capfile', 'jbuilder', 'gemspec', 'podspec', 'irbrc', 'pryrc', 'prawn', 'thor', 'hs', 'hs-boot', 'hsig', 'jsx', 'yaws', 'textile', 'cpp', 'cc', 'cp', 'cxx', 'c++', 'C', 'h', 'hh', 'hpp', 'hxx', 'h++', 'inl', 'ipp', 'ixx', 'cppm', 'haml', 'scss', 'rails', 'rhtml', 'erb', 'html.erb', 'bat', 'cmd', 'js.erb', 'js', 'mjs', 'cjs', 'htc', 'lua', 'as', 'mailmap', 'rs', '.git', 'cs', 'csx', 'pl', 'pc', 'pm', 'pmc', 'pod', 't', 'CODEOWNERS', 'cabal', 'cabal.project', 'ts', 'git-blame-ignore-revs']
+# Function time_listing, Time 11.709559917449951
+
+
+# syntax name:TeX-> path:Packages/LaTeX/TeX.sublime-syntax-> scope:text.tex
+# ['sty', 'cls']
+# syntax name:ClojureScript-> path:Packages/Clojure/ClojureScript.sublime-syntax-> scope:source.clojure.clojurescript
+# ['cljs', 'cljc']
+# syntax name:SQL-> path:Packages/SQL/SQL.sublime-syntax-> scope:source.sql
+# ['sql', 'ddl', 'dml']
+# syntax name:CSS-> path:Packages/CSS/CSS.sublime-syntax-> scope:source.css
+# ['css']
+# syntax name:Rd (R Documentation)-> path:Packages/R/Rd (R Documentation).sublime-syntax-> scope:text.tex.latex.rd
+# ['rd']
+# syntax name:Ruby (Rails)-> path:Packages/Rails/Ruby (Rails).sublime-syntax-> scope:source.ruby.rails
+# ['ruby.rail', 'rxml', 'builder', 'arb']
+# syntax name:TS-> path:Packages/User/TS.sublime-syntax-> scope:source.ts
+# ['ts']
+# syntax name:Git Rebase Todo-> path:Packages/Git Formats/Git Rebase.sublime-syntax-> scope:text.git.rebase
+# syntax name:JavaScript-> path:Packages/JavaScript/JavaScript.sublime-syntax-> scope:source.js
+# ['js', 'mjs', 'cjs', 'htc']
+# syntax name:Python-> path:Packages/Python/Python.sublime-syntax-> scope:source.python
+# ['py', 'py3', 'pyw', 'pyi', 'pyx', 'pyx.in', 'pxd', 'pxd.in', 'pxi', 'pxi.in', 'rpy', 'cpy', 'gyp', 'gypi', 'vpy', 'smk', 'wscript', 'bazel', 'bzl']
+# syntax name:TSX-> path:Packages/JavaScript/TSX.sublime-syntax-> scope:source.tsx
+# ['tsx']
+# syntax name:Groovy-> path:Packages/Groovy/Groovy.sublime-syntax-> scope:source.groovy
+# ['groovy', 'gvy', 'gradle']
+# syntax name:Git Config-> path:Packages/Git Formats/Git Config.sublime-syntax-> scope:text.git.config
+# ['gitconfig']
+# syntax name:JavaScript (PHP)-> path:Packages/PHP/JavaScript (PHP).sublime-syntax-> scope:source.js.php
+# ['js.php']
+# syntax name:ASP-> path:Packages/ASP/ASP.sublime-syntax-> scope:source.asp
+# ['vbs']
+# syntax name:TSX2-> path:Packages/User/TSX2.sublime-syntax-> scope:source.tsx
+# ['tsx']
+# syntax name:Git Commit Message-> path:Packages/Git Formats/Git Commit Message.sublime-syntax-> scope:text.git.commit-message
+# syntax name:Diff-> path:Packages/Diff/Diff.sublime-syntax-> scope:source.diff
+# ['diff', 'patch']
+# syntax name:Go-> path:Packages/Go/Go.sublime-syntax-> scope:source.go
+# ['go']
+# syntax name:EEx-> path:Packages/ElixirSyntax/syntaxes/EEx.sublime-syntax-> scope:text.eex
+# ['eex']
+# syntax name:HTML (Tcl)-> path:Packages/TCL/HTML (Tcl).sublime-syntax-> scope:text.html.tcl
+# ['adp']
+# syntax name:D-> path:Packages/D/D.sublime-syntax-> scope:source.d
+# ['d', 'di']
+# syntax name:Plain Text-> path:Packages/Text/Plain text.tmLanguage-> scope:text.plain
+# syntax name:HTML (EEx)-> path:Packages/ElixirSyntax/syntaxes/HTML (EEx).sublime-syntax-> scope:text.html.eex
+# ['html.eex', 'html.leex']
+# syntax name:Erlang-> path:Packages/Erlang/Erlang.sublime-syntax-> scope:source.erlang
+# ['erl', 'hrl', 'escript']
+# syntax name:OCamllex-> path:Packages/OCaml/OCamllex.sublime-syntax-> scope:source.ocamllex
+# ['mll']
+# syntax name:C-> path:Packages/C++/C.sublime-syntax-> scope:source.c
+# ['c', 'h']
+# syntax name:Markdown-> path:Packages/Markdown/Markdown.sublime-syntax-> scope:text.html.markdown
+# ['md', 'mdown', 'mdwn', 'markdown', 'markdn']
+# syntax name:Tcl-> path:Packages/TCL/Tcl.sublime-syntax-> scope:source.tcl
+# ['tcl']
+# syntax name:CSS (Rails)-> path:Packages/Rails/CSS (Rails).sublime-syntax-> scope:source.css.rails
+# ['css.erb']
+# syntax name:Regular Expression-> path:Packages/Regular Expressions/RegExp.sublime-syntax-> scope:source.regexp
+# ['re']
+# syntax name:Pascal-> path:Packages/Pascal/Pascal.sublime-syntax-> scope:source.pascal
+# ['pas', 'p', 'dpr']
+# syntax name:CSS (PHP)-> path:Packages/PHP/CSS (PHP).sublime-syntax-> scope:source.css.php
+# ['css.php']
+# syntax name:HTML-> path:Packages/HTML/HTML.sublime-syntax-> scope:text.html.basic
+# ['html', 'htm', 'shtml', 'xhtml']
+# syntax name:camlp4-> path:Packages/OCaml/camlp4.sublime-syntax-> scope:source.camlp4.ocaml
+# syntax name:R Console-> path:Packages/R/R Console.sublime-syntax-> scope:source.r-console
+# []
+# syntax name:JavaScript (Babel)-> path:Packages/Babel/JavaScript (Babel).sublime-syntax-> scope:source.js
+# ['js', 'jsx', 'es6', 'babel']
+# syntax name:TOML-> path:Packages/TOML/TOML.sublime-syntax-> scope:source.toml
+# ['toml', 'tml', 'Cargo.lock', 'Gopkg.lock', 'Pipfile', 'poetry.lock']
+# syntax name:Literate Haskell-> path:Packages/Haskell/Literate Haskell.sublime-syntax-> scope:text.tex.latex.haskell
+# ['lhs']
+# syntax name:Lisp-> path:Packages/Lisp/Lisp.sublime-syntax-> scope:source.lisp
+# ['lisp', 'cl', 'clisp', 'l', 'mud', 'el', 'scm', 'ss', 'lsp', 'fasl', 'sld']
+# syntax name:HTML (Go)-> path:Packages/Go/HTML (Go).sublime-syntax-> scope:text.html.go
+# ['gohtml', 'go.html']
+# syntax name:Git Attributes-> path:Packages/Git Formats/Git Attributes.sublime-syntax-> scope:text.git.attributes
+# ['gitattributes']
+# syntax name:Makefile-> path:Packages/Makefile/Makefile.sublime-syntax-> scope:source.makefile
+# ['mk', 'mak', 'make']
+# syntax name:XSL-> path:Packages/XML/XSL.sublime-syntax-> scope:text.xml.xsl
+# ['xsd', 'xsl', 'xslt']
+# syntax name:LaTeX-> path:Packages/LaTeX/LaTeX.sublime-syntax-> scope:text.tex.latex
+# ['tex', 'ltx']
+# syntax name:YAML-> path:Packages/YAML/YAML.sublime-syntax-> scope:source.yaml
+# ['yaml', 'yml', 'sublime-syntax']
+# syntax name:reStructuredText-> path:Packages/RestructuredText/reStructuredText.sublime-syntax-> scope:text.restructuredtext
+# ['rst', 'rest']
+# syntax name:JSX-> path:Packages/JavaScript/JSX.sublime-syntax-> scope:source.jsx
+# ['jsx']
+# syntax name:HTML (Surface)-> path:Packages/ElixirSyntax/syntaxes/HTML (Surface).sublime-syntax-> scope:text.html.surface
+# ['sface']
+# syntax name:OCamlyacc-> path:Packages/OCaml/OCamlyacc.sublime-syntax-> scope:source.ocamlyacc
+# ['mly']
+# syntax name:Graphviz (DOT)-> path:Packages/Graphviz/DOT.sublime-syntax-> scope:source.dot
+# ['dot', 'gv']
+# syntax name:DTD-> path:Packages/XML/DTD.sublime-syntax-> scope:text.xml.dtd
+# ['dtd', 'ent', 'mod']
+# syntax name:HTML (HEEx)-> path:Packages/ElixirSyntax/syntaxes/HTML (HEEx).sublime-syntax-> scope:text.html.heex
+# ['heex']
+# syntax name:Java-> path:Packages/Java/Java.sublime-syntax-> scope:source.java
+# ['java', 'bsh']
+# syntax name:Java Properties-> path:Packages/Java/JavaProperties.sublime-syntax-> scope:source.java-props
+# ['properties']
+# syntax name:Markdown (Go)-> path:Packages/Go/Markdown (Go).sublime-syntax-> scope:text.html.markdown.go
+# ['gomd', 'go.md', 'hugo']
+# syntax name:SQL (Elixir)-> path:Packages/ElixirSyntax/syntaxes/SQL (Elixir).sublime-syntax-> scope:source.ex.sql
+# ['ex.sql']
+# syntax name:Scala-> path:Packages/Scala/Scala.sublime-syntax-> scope:source.scala
+# ['scala', 'sbt', 'sc']
+# syntax name:BibTeX-> path:Packages/LaTeX/Bibtex.sublime-syntax-> scope:text.bibtex
+# ['bib']
+# syntax name:LaTeX Log-> path:Packages/LaTeX/LaTeX Log.sublime-syntax-> scope:text.log.latex
+# syntax name:Clojure-> path:Packages/Clojure/Clojure.sublime-syntax-> scope:source.clojure
+# ['clj', 'cljc', 'edn']
+# syntax name:Sass-> path:Packages/Sass/Syntaxes/Sass.sublime-syntax-> scope:source.sass
+# ['sass']
+# syntax name:CSS (Go)-> path:Packages/Go/CSS (Go).sublime-syntax-> scope:source.css.go
+# ['gocss', 'go.css']
+# syntax name:HTML (JSP)-> path:Packages/Java/HTML (JSP).sublime-syntax-> scope:text.html.jsp
+# ['jsp', 'jspf', 'jspx', 'jstl']
+# syntax name:Elixir (EEx)-> path:Packages/ElixirSyntax/syntaxes/Elixir (EEx).sublime-syntax-> scope:source.elixir.eex
+# ['ex.eex', 'exs.eex']
+# syntax name:MATLAB-> path:Packages/Matlab/Matlab.sublime-syntax-> scope:source.matlab
+# ['matlab']
+# syntax name:JavaScript (Go)-> path:Packages/Go/JavaScript (Go).sublime-syntax-> scope:source.js.go
+# ['gojs', 'go.js']
+# syntax name:NAnt Build File-> path:Packages/C#/Build.sublime-syntax-> scope:source.nant-build
+# syntax name:HTML (ASP)-> path:Packages/ASP/HTML (ASP).sublime-syntax-> scope:text.html.asp
+# ['asp', 'asa']
+# syntax name:PHP-> path:Packages/PHP/PHP.sublime-syntax-> scope:embedding.php
+# ['php', 'php3', 'php4', 'php5', 'php7', 'php8', 'phps', 'phpt', 'phtml']
+# syntax name:R-> path:Packages/R/R.sublime-syntax-> scope:source.r
+# ['R']
+# syntax name:Git Ignore-> path:Packages/Git Formats/Git Ignore.sublime-syntax-> scope:text.git.ignore
+# ['gitignore']
+# syntax name:Objective-C-> path:Packages/Objective-C/Objective-C.sublime-syntax-> scope:source.objc
+# ['m', 'h']
+# syntax name:Objective-C++-> path:Packages/Objective-C/Objective-C++.sublime-syntax-> scope:source.objc++
+# ['mm', 'M', 'h']
+# syntax name:Git Commit-> path:Packages/Git Formats/Git Commit.sublime-syntax-> scope:text.git.commit
+# syntax name:Bash-> path:Packages/ShellScript/Bash.sublime-syntax-> scope:source.shell.bash
+# ['sh', 'bash', 'bashrc', 'ash', 'zsh']
+# syntax name:SQL (Rails)-> path:Packages/Rails/SQL (Rails).sublime-syntax-> scope:source.sql.rails
+# ['sql.erb', 'erbsql']
+# syntax name:JSON-> path:Packages/JSON/JSON.sublime-syntax-> scope:source.json
+# ['json', 'jsonc', 'sublime-build', 'sublime-color-scheme', 'sublime-commands', 'sublime-completions', 'sublime-keymap', 'sublime-macro', 'sublime-menu', 'sublime-mousemap', 'sublime-project', 'sublime-settings', 'sublime-theme', 'sublime-workspace', 'ipynb', 'gltf', 'avsc']
+# syntax name:Git Log-> path:Packages/Git Formats/Git Log.sublime-syntax-> scope:text.git.log
+# ['gitlog']
+# syntax name:Elixir-> path:Packages/ElixirSyntax/syntaxes/Elixir.sublime-syntax-> scope:source.elixir
+# ['ex', 'exs']
+# syntax name:AppleScript-> path:Packages/AppleScript/AppleScript.sublime-syntax-> scope:source.applescript
+# ['applescript', 'script editor']
+# syntax name:OCaml-> path:Packages/OCaml/OCaml.sublime-syntax-> scope:source.ocaml
+# ['ml', 'mli']
+# syntax name:XML-> path:Packages/XML/XML.sublime-syntax-> scope:text.xml
+# ['xml', 'tld', 'dtml', 'rng', 'rss', 'opml', 'svg', 'xaml']
+# syntax name:Ruby-> path:Packages/Ruby/Ruby.sublime-syntax-> scope:source.ruby
+# ['rb', 'rbi', 'rbx', 'rjs', 'rabl', 'rake', 'capfile', 'jbuilder', 'gemspec', 'podspec', 'irbrc', 'pryrc', 'prawn', 'thor']
+# syntax name:Haskell-> path:Packages/Haskell/Haskell.sublime-syntax-> scope:source.haskell
+# ['hs', 'hs-boot', 'hsig']
+# syntax name:JSX2-> path:Packages/User/JSX2.sublime-syntax-> scope:source.jsx
+# ['jsx']
+# syntax name:HTML (Erlang)-> path:Packages/Erlang/HTML (Erlang).sublime-syntax-> scope:text.html.erlang
+# ['yaws']
+# syntax name:Textile-> path:Packages/Textile/Textile.sublime-syntax-> scope:text.html.textile
+# ['textile']
+# syntax name:C++-> path:Packages/C++/C++.sublime-syntax-> scope:source.c++
+# ['cpp', 'cc', 'cp', 'cxx', 'c++', 'C', 'h', 'hh', 'hpp', 'hxx', 'h++', 'inl', 'ipp', 'ixx', 'cppm']
+# syntax name:HAML-> path:Packages/Rails/HAML.sublime-syntax-> scope:text.haml
+# ['haml']
+# syntax name:SCSS-> path:Packages/Sass/Syntaxes/SCSS.sublime-syntax-> scope:source.scss
+# ['scss']
+# syntax name:HTML (Rails)-> path:Packages/Rails/HTML (Rails).sublime-syntax-> scope:text.html.rails
+# ['rails', 'rhtml', 'erb', 'html.erb']
+# syntax name:Batch File-> path:Packages/Batch File/Batch File.sublime-syntax-> scope:source.dosbatch
+# ['bat', 'cmd']
+# syntax name:JavaScript (Rails)-> path:Packages/Rails/JavaScript (Rails).sublime-syntax-> scope:source.js.rails
+# ['js.erb']
+# syntax name:JS-> path:Packages/User/JS.sublime-syntax-> scope:source.js
+# ['js', 'mjs', 'cjs', 'htc']
+# syntax name:Lua-> path:Packages/Lua/Lua.sublime-syntax-> scope:source.lua
+# ['lua']
+# syntax name:ActionScript-> path:Packages/ActionScript/ActionScript.sublime-syntax-> scope:source.actionscript.2
+# ['as']
+# syntax name:Git Mailmap-> path:Packages/Git Formats/Git Mailmap.sublime-syntax-> scope:text.git.mailmap
+# ['mailmap']
+# syntax name:Rust-> path:Packages/Rust/Rust.sublime-syntax-> scope:source.rust
+# ['rs']
+# syntax name:Git Link-> path:Packages/Git Formats/Git Link.sublime-syntax-> scope:text.git.link
+# ['.git']
+# syntax name:MultiMarkdown-> path:Packages/Markdown/MultiMarkdown.sublime-syntax-> scope:text.html.markdown.multimarkdown
+# syntax name:C#-> path:Packages/C#/C#.sublime-syntax-> scope:source.cs
+# ['cs', 'csx']
+# syntax name:Perl-> path:Packages/Perl/Perl.sublime-syntax-> scope:source.perl
+# ['pl', 'pc', 'pm', 'pmc', 'pod', 't']
+# syntax name:Git Code Owners-> path:Packages/Git Formats/Git Code Owners.sublime-syntax-> scope:text.git.codeowners
+# ['CODEOWNERS']
+# syntax name:Cabal-> path:Packages/Haskell/Cabal.sublime-syntax-> scope:source.cabal
+# ['cabal', 'cabal.project']
+# syntax name:TypeScript-> path:Packages/JavaScript/TypeScript.sublime-syntax-> scope:source.ts
+# ['ts']
+# syntax name:Git Blame Ignore Revisions-> path:Packages/Git Formats/Git Blame Ignore Revisions.sublime-syntax-> scope:text.git.blame.ignorerevs
+# ['git-blame-ignore-revs']

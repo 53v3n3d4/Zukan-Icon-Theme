@@ -27,9 +27,9 @@ class ZukanSyntax:
             zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
             for s in zukan_icons_syntaxes:
                 filename = s['name'] + '.sublime-syntax'
-                syntax_file_path = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename)
-                # print(syntax_file_path)
-                dump_yaml_data(s, syntax_file_path)
+                syntax_filepath = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename)
+                # print(syntax_filepath)
+                dump_yaml_data(s, syntax_filepath)
             logger.info('sublime-syntaxes created.')
             return zukan_icons_syntaxes
         except FileNotFoundError:
