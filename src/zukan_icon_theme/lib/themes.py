@@ -121,7 +121,7 @@ class ThemeFile:
             theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
             os.remove(theme_file)
             # print('[!] Zukan Icon Theme: deleting icon theme %s' % theme_file)
-            logger.info('deleting icon theme: %s', os.path.basename(theme_file))
+            logger.info('deleting icon theme %s', os.path.basename(theme_file))
             return theme_name
         except FileNotFoundError:
             # print_filenotfounderror(theme_name)

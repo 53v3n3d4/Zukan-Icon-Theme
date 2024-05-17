@@ -114,14 +114,22 @@ def main():
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
     )
-    # parser_icontheme.add_argument(
-    #     '-s',
-    #     '--syntax',
-    #     default=ICONS_SYNTAXES_PATH,
-    #     type=str,
-    #     required=False,
-    #     help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
-    # )
+    parser_icontheme.add_argument(
+        '-pf',
+        '--picklefile',
+        default=ZUKAN_SYNTAXES_DATA_FILE,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to zukan data file.{ Color.END }',
+    )
+    parser_icontheme.add_argument(
+        '-s',
+        '--syntax',
+        default=ICONS_SYNTAXES_PATH,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
+    )
     parser_icontheme.add_argument(
         '-t',
         '--tmpreference',
@@ -286,11 +294,12 @@ def main():
         help=f'{ Color.YELLOW }Create zukan syntaxes data file.{ Color.END }',
     )
     parser_zukan_syntax.add_argument(
-        '-w',
-        '--write',
-        action='store_true',
+        '-pf',
+        '--picklefile',
+        default=ZUKAN_SYNTAXES_DATA_FILE,
+        type=str,
         required=False,
-        help=f'{ Color.YELLOW }Dump zukan syntaxes data file.{ Color.END }',
+        help=f'{ Color.YELLOW }Path to zukan data file.{ Color.END }',
     )
     parser_zukan_syntax.add_argument(
         '-r',
@@ -308,12 +317,11 @@ def main():
         help=f'{ Color.YELLOW }Path to destiny for zukan data file.{ Color.END }',
     )
     parser_zukan_syntax.add_argument(
-        '-pf',
-        '--picklefile',
-        default=ZUKAN_SYNTAXES_DATA_FILE,
-        type=str,
+        '-w',
+        '--write',
+        action='store_true',
         required=False,
-        help=f'{ Color.YELLOW }Path to zukan data file.{ Color.END }',
+        help=f'{ Color.YELLOW }Dump zukan syntaxes data file.{ Color.END }',
     )
 
     # Namespaces
@@ -338,9 +346,14 @@ def main():
     elif parser == 'icon-theme':
         if args.all and not (args.file or args.data):
             print(
-                f'{ Color.BLUE }[⚙] Starting building all icons PNGs and tmPreferences.'
-                f'{ Color.END }'
+                f'{ Color.BLUE }[⚙] Starting building zukan syntax data file, all '
+                f'icons PNGs and tmPreferences.{ Color.END }'
             )
+            print_build_message(
+                '🛠️  Creating zukan syntaxes data file: ',
+                ZUKAN_SYNTAXES_DATA_FILE,
+            )
+            ZukanSyntax.write_zukan_data(DATA_PATH, args.syntax, args.picklefile)
             print_build_message('🛠️  Generating all icons PNGs: ', ICONS_PNG_PATH)
             IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png)
             print_build_message(
@@ -348,31 +361,32 @@ def main():
                 PREFERENCES_PATH,
             )
             Preference.preferences_all(DATA_PATH, args.tmpreference)
-            # print_build_message(
-            #     '🛠️  Creating all icons sublime-syntaxes: ',
-            #     ICONS_SYNTAXES_PATH,
-            # )
-            # IconSyntax.icons_syntaxes(DATA_PATH, args.syntax)
         elif args.file and not (args.all or args.data):
+            print_build_message(
+                '🛠️  Creating zukan syntaxes data file: ',
+                ZUKAN_SYNTAXES_DATA_FILE,
+            )
+            ZukanSyntax.write_zukan_data(DATA_PATH, args.syntax, args.picklefile)
             print_build_message('🛠️  Generating icon PNGs: ', args.png)
             IconPNG.svg_to_png(args.file, args.icon, args.png)
             print_build_message('🛠️  Creating icon tmPreferences: ', args.tmpreference)
             Preference.preferences(args.file, args.tmpreference)
-            # print_build_message('🛠️  Creating icon sublime-syntaxes: ', args.syntax)
-            # IconSyntax.icon_syntax(args.file, args.syntax)
         elif args.data and not (args.all or args.file):
             print(
-                f'{ Color.BLUE }[⚙] Starting building all icons PNGs, sublime-syntaxes '
-                f'and tmPreferences.{ Color.END }'
+                f'{ Color.BLUE }[⚙] Starting building zukan syntax data file, all '
+                f'icons PNGs and tmPreferences.{ Color.END }'
             )
+            print_build_message(
+                '🛠️  Creating zukan syntaxes data file: ',
+                ZUKAN_SYNTAXES_DATA_FILE,
+            )
+            ZukanSyntax.write_zukan_data(DATA_PATH, args.syntax, args.picklefile)
             print_build_message('🛠️  Generating all icons PNGs: ', args.png)
             IconPNG.svg_to_png_all(args.data, args.icon, args.png)
             print_build_message(
                 '🛠️  Creating all icons tmPreferences: ', args.tmpreference
             )
             Preference.preferences_all(args.data, args.tmpreference)
-            # print_build_message('🛠️  Creating all icons sublime-syntaxes: ', args.syntax)
-            # IconSyntax.icons_syntaxes(args.data, args.syntax)
         else:
             _error_message()
     # PNGs
