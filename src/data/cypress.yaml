@@ -2,7 +2,7 @@
 ---
 name: Cypress
 preferences:
-  scope: source.js.cypress, source.ts.cypress
+  scope: source.js.cypress, source.json.cypress, source.ts.cypress
   settings:
     icon: cypress
 syntax:
@@ -18,7 +18,7 @@ syntax:
         - include: scope:source.js
           apply_prototype: true
   - name: JSON (Cypress)
-    scope: source.cypress.jest
+    scope: source.json.cypress
     hidden: true
     file_extensions:
       - cypress.json

@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.js.cypress, source.ts.cypress</string>
+	<string>source.js.cypress, source.json.cypress, source.ts.cypress</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

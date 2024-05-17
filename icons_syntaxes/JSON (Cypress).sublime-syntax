@@ -1,7 +1,7 @@
 %YAML 1.2
 ---
 name: JSON (Cypress)
-scope: source.cypress.jest
+scope: source.json.cypress
 hidden: true
 file_extensions:
 - cypress.json
