@@ -7,7 +7,7 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Icons, icons-syntaxes and preferences
-- Add icon-theme: archive, Cargo, Cypress, Erlang.mk, mypy, Pipenv, Playwright, pre-commit, Read the Docs, Rebar3, reStructuredText, tox
+- Add icon-theme: archive, Cargo, Cypress, Erlang.mk, mypy, Pipenv, Playwright, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, reStructuredText, tox
 - Add sublime-syntax: Elixir, file type iimage, Jest, Webpack
 - Change icon: Audio, Kotlin, makefile, Rspack
 - Change sublime-syntax: CAD, Docker, Go, Node js, Prettier, Pyhton, Ruby
@@ -23,13 +23,14 @@
 - Add scripts
 - Add create_test_icon_theme
 - Add zukan_syntaxes
-- Add error logger
+- Add logger
 
 ### Plugin
 - Add themes
 - Add move_folders
 - Add icons_sytanxes
 - Add logger
+- Add sublime-menu and sublime-commands
 
 ## [0.1.3] - 2024-04-22
 - Add alias: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu

@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: JSON (Pyright)
+scope: source.json.pyright
+hidden: true
+file_extensions:
+- pyrightconfig.json
+contexts:
+  main:
+  - include: scope:source.json
+    apply_prototype: true

@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Pylint
+preferences:
+  scope: source.ini.pylint
+  settings:
+    icon: pylint
+syntax:
+  - name: INI (Pylint)
+    scope: source.ini.pylint
+    hidden: true
+    file_extensions:
+      - pylintrc
+    contexts:
+      main: []
