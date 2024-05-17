@@ -48,7 +48,7 @@ $ poetry install
 
 ### Plugin
 
-When developing, you may need to `Package Control: Satisfy Libraries` to install dependencies.  
+You may need to `Package Control: Satisfy Libraries` to install dependencies.  
 
 ```
 # Select ST python interpreter in '.python-version' file

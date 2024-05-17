@@ -11,7 +11,7 @@ $ poetry run build -h
 ```
 
 ## Create icon theme
-Create PNGs and tmPreferences files for icons.  
+Create zukan syntaxes file, PNGs and tmPreferences files for icons.  
 
 Using argparse commands  
 ```sh
@@ -32,7 +32,7 @@ $ poetry run build icon-theme --all
 ## Create zukan syntaxes file
 Create a data file, with all icon syntaxes, to be used by plugin.  
 
-File will be created in folder `icons_syntaxes`.  
+File will be created in `icons_syntaxes` folder.  
 
 Using argparse commands  
 ```sh
@@ -158,4 +158,4 @@ $ poetry run build test-icon-theme -f src/data/afdesign.yaml
 $ poetry run build test-icon-theme --all
 ```
 
-> Creating test files will raise warnings on ST console for files that ST use like Sublime Text.sublime-syntax or Sublime Text.sublime-settings.
+> Creating test files will raise warnings on ST console for files that ST use, like Sublime Text.sublime-syntax or Sublime Text.sublime-settings.
