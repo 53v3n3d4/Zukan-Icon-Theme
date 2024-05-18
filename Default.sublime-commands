@@ -1,4 +1,6 @@
 [
+    { "caption": "Zukan Icon Theme: Delete Theme", "command": "delete_theme"},
     { "caption": "Zukan Icon Theme: Delete Themes", "command": "delete_themes"},
+    { "caption": "Zukan Icon Theme: Install Theme", "command": "install_theme"},
     { "caption": "Zukan Icon Theme: Install Themes", "command": "install_themes"}
 ]

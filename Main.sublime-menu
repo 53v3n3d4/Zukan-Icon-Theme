@@ -18,7 +18,7 @@
               },
               { "caption": "-" },
               {
-                "caption": "CHANGELOG",
+                "caption": "Changelog",
                 "command": "open_file",
                 "args": {
                   "file": "${packages}/Zukan-Icon-Theme/CHANGELOG.md"

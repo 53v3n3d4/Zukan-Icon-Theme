@@ -14,7 +14,9 @@
 import os
 
 from .src.zukan_icon_theme.commands.commands import (
+    DeleteTheme,
     DeleteThemes,
+    InstallTheme,
     InstallThemes,
     RebuildFiles,
 )
@@ -30,7 +32,6 @@ from .src.zukan_icon_theme.utils.zukan_dir_paths import (
 
 # https://www.sublimetext.com/docs/api_reference.html
 # python modules not present https://www.sublimetext.com/docs/api_environments.html#modules
-
 
 logger = logging.getLogger(__name__)
 

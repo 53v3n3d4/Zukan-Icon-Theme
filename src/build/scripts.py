@@ -74,7 +74,8 @@ def main():
     # Create the parser for the "icon-theme" sub-command
     parser_icontheme = subparsers.add_parser(
         'icon-theme',
-        help=f'{ Color.YELLOW }Create icon theme PNGs and tmPreferences.'
+        help=f'{ Color.YELLOW }Create zukan syntaxes file, icon theme PNGs and '
+        'tmPreferences.'
         f'{ Color.END }',
     )
     parser_icontheme.add_argument(
@@ -346,7 +347,7 @@ def main():
     elif parser == 'icon-theme':
         if args.all and not (args.file or args.data):
             print(
-                f'{ Color.BLUE }[⚙] Starting building zukan syntax data file, all '
+                f'{ Color.BLUE }[⚙] Starting building zukan syntaxes data file, all '
                 f'icons PNGs and tmPreferences.{ Color.END }'
             )
             print_build_message(
