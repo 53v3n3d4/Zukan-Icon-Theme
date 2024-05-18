@@ -13,7 +13,7 @@
             "children":
             [
               {
-                "caption": "Rebuild files",
+                "caption": "Rebuild Files",
                 "command": "rebuild_files"
               },
               { "caption": "-" },

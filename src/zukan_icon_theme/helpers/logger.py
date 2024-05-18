@@ -24,8 +24,10 @@ class LevelFormatter(logging.Formatter):
         )
 
     def format(self, record: logging.LogRecord) -> str:
-        idx = bisect(self.formats, (record.levelno,), hi=len(self.formats) - 1)
-        level, formatter = self.formats[idx]
+        # print(self.formats)
+        if self.formats:
+            idx = bisect(self.formats, (record.levelno,), hi=len(self.formats) - 1)
+            level, formatter = self.formats[idx]
         return formatter.format(record)
 
 

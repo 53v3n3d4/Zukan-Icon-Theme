@@ -1,5 +1,9 @@
 import sublime
 
+from .read_write_data import read_pickle_data
+from ..utils.zukan_dir_paths import (
+    ZUKAN_SYNTAXES_DATA_FILE,
+)
 from ruamel.yaml import YAML
 
 
@@ -20,6 +24,28 @@ class UserSyntax:
         return syntaxes_list_visible
 
 
+def compare_scopes():
+    list_scopes_to_remove = []
+    zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
+    user_syntaxes = UserSyntax.visible_syntaxes_only()
+    for x in zukan_icons_syntaxes:
+        for y in user_syntaxes:
+            if x['scope'] == y.scope:
+                list_scopes_to_remove.append(x)
+    return list_scopes_to_remove
+
+
+def list_syntax_to_dump():
+    zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
+    for x in zukan_icons_syntaxes:
+        if x not in compare_scopes():
+            print(x)
+
+
+def print_syntax_content(filepath):
+    return print(replace_tabs(sublime.load_resource(filepath)))
+
+
 def replace_tabs(file_info: str) -> str:
     """
     Replace tabs for double spaces.
@@ -33,16 +59,21 @@ def replace_tabs(file_info: str) -> str:
     return file_info.replace('\t', '  ')
 
 
-# this is slow
 def list_user_syntaxes_file_ext():
+    """
+    List file_extensions in sublime-syntaxes installed.
+    """
     user_file_extensions = []
     list_syntaxes = UserSyntax.visible_syntaxes_only()
     for s in list_syntaxes:
         # print('syntax name:' + s.name + '-> path:' + s.path + '-> scope:' + s.scope)
         syntax_content = replace_tabs(sublime.load_resource(s.path))
+        # syntax_content = sublime.load_binary_resource(s.path)
+        # print(syntax_content)
+        # this is slow
         yaml = YAML(typ='rt')
         file_data = yaml.load(syntax_content)
-        # There is sublime-syntaxes with no 'file_extensions'.
+        # There are sublime-syntaxes with no key 'file_extensions'.
         # Also, not all are sublime-syntaxes, there is/are tmLanguage.
         if 'file_extensions' in file_data:
             # print(file_data['file_extensions'])
@@ -52,6 +83,9 @@ def list_user_syntaxes_file_ext():
 
 # https://stackoverflow.com/questions/952914/how-do-i-make-a-flat-list-out-of-a-list-of-lists
 def flatten(xss):
+    """
+    Flast list of lists.
+    """
     return [x for xs in xss for x in xs]
 
 

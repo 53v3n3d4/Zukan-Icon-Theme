@@ -5,8 +5,8 @@ import glob
 
 # from ..helpers.print_message import print_filenotfounderror, print_oserror
 from ..helpers.read_write_data import dump_yaml_data, read_pickle_data
+from ..helpers.search_syntaxes import compare_scopes
 from ..utils.zukan_dir_paths import (
-    ASSETS_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_SYNTAXES_DATA_FILE,
 )
@@ -26,10 +26,13 @@ class ZukanSyntax:
         try:
             zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
             for s in zukan_icons_syntaxes:
-                filename = s['name'] + '.sublime-syntax'
-                syntax_filepath = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename)
-                # print(syntax_filepath)
-                dump_yaml_data(s, syntax_filepath)
+                if s not in compare_scopes():
+                    filename = s['name'] + '.sublime-syntax'
+                    syntax_filepath = os.path.join(
+                        ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+                    )
+                    # print(syntax_filepath)
+                    dump_yaml_data(s, syntax_filepath)
             logger.info('sublime-syntaxes created.')
             return zukan_icons_syntaxes
         except FileNotFoundError:
