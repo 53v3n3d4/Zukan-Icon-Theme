@@ -14,11 +14,15 @@
 import os
 
 from .src.zukan_icon_theme.commands.commands import (
+    DeleteSyntax,
+    DeleteSyntaxes,
     DeleteTheme,
     DeleteThemes,
+    InstallSyntax,
     InstallTheme,
     InstallThemes,
     RebuildFiles,
+    RebuildSyntaxes,
 )
 from .src.zukan_icon_theme.helpers.logger import logging
 from .src.zukan_icon_theme.lib.icons_syntaxes import ZukanSyntax
