@@ -2,16 +2,78 @@
 ---
 name: Go
 preferences:
-  scope: source.go
+  scope: source.css.go, source.go, source.gosum, source.gomod, source.js.go, text.html.go, text.html.markdown.go
   settings:
     icon: go
 syntax:
-  - name: Plain Text (Go)
-    scope: source.go
+  - name: CSS (Go)
+    scope: source.css.go
+    hidden: true
+    file_extensions:
+      - go.css
+      - gocss
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+  - name: Go (go mod)
+    scope: source.gomod
     hidden: true
     file_extensions:
       - go.mod
-      - go.sum
       - go.work
     contexts:
       main: []
+  - name: Go (go sum)
+    scope: source.gosum
+    hidden: true
+    file_extensions:
+      - go.sum
+    contexts:
+      main: []
+  - name: HTML (Go)
+    scope: text.html.go
+    hidden: true
+    file_extensions:
+      - go.html
+      - gohtml
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: JavaScript (Go)
+    scope: source.js.go
+    hidden: true
+    file_extensions:
+      - go.js
+      - gojs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: Markdown (Go)
+    scope: text.html.markdown.go
+    hidden: true
+    file_extensions:
+      - go.md
+      - gomd
+      - hugo
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true
+
+# Package TOML
+# go dep, depreceated
+# Gopkg.lock -> toml
+# ST Package
+# syntax name:HTML (Go)-> path:Packages/Go/HTML (Go).sublime-syntax-> scope:text.html.go
+# ['gohtml', 'go.html']
+# syntax name:Markdown (Go)-> path:Packages/Go/Markdown (Go).sublime-syntax-> scope:text.html.markdown.go
+# ['gomd', 'go.md', 'hugo']
+# syntax name:CSS (Go)-> path:Packages/Go/CSS (Go).sublime-syntax-> scope:source.css.go
+# ['gocss', 'go.css']
+# syntax name:JavaScript (Go)-> path:Packages/Go/JavaScript (Go).sublime-syntax-> scope:source.js.go
+# ['gojs', 'go.js']
+# Package Gomod
+# go.mod, go.sum, go.work

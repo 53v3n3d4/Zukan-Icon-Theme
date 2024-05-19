@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: SQL (Elixir)
+scope: source.ex.sql
+hidden: true
+file_extensions:
+- ex.sql
+contexts:
+  main: []

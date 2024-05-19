@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: EEx
+scope: text.eex
+hidden: true
+file_extensions:
+- eex
+contexts:
+  main: []

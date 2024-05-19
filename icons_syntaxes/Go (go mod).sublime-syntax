@@ -1,11 +1,10 @@
 %YAML 1.2
 ---
-name: Plain Text (Go)
-scope: source.go
+name: Go (go mod)
+scope: source.gomod
 hidden: true
 file_extensions:
 - go.mod
-- go.sum
 - go.work
 contexts:
   main: []

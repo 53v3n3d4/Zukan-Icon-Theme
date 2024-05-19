@@ -2,22 +2,18 @@
 ---
 name: Elixir
 preferences:
-  scope: source.elixir, text.elixir, text.html.elixir, text.html.heex
+  scope: source.ex.sql, source.elixir, source.elixir.eex, text.eex, text.html.eex, text.html.heex
   settings:
     icon: elixir
 syntax:
-  - name: HTML (Elixir)
-    scope: text.html.heex
+  - name: EEx
+    scope: text.eex
     hidden: true
     file_extensions:
       - eex
-      - html.eex
-      - html.leex
     contexts:
-      main:
-        - include: scope:text.html.basic
-          apply_prototype: true
-  - name: Plain Text (Elixir)
+      main: []
+  - name: Elixir
     scope: source.elixir
     hidden: true
     file_extensions:
@@ -25,5 +21,51 @@ syntax:
       - exs
     contexts:
       main: []
+  - name: Elixir (EEx)
+    scope: source.elixir
+    hidden: true
+    file_extensions:
+      - ex.eex
+      - exs.eex
+    contexts:
+      main: []
+  - name: HTML (EEx)
+    scope: text.html.eex
+    hidden: true
+    file_extensions:
+      - html.eex
+      - html.leex
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: HTML (HEEx)
+    scope: text.html.heex
+    hidden: true
+    file_extensions:
+      - heex
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: SQL (Elixir)
+    scope: source.ex.sql
+    hidden: true
+    file_extensions:
+      - ex.sql
+    contexts:
+      main: []
 
-# Do not have a html syntax
+# Package ElixirSyntax
+# syntax name:EEx-> path:Packages/ElixirSyntax/syntaxes/EEx.sublime-syntax-> scope:text.eex
+# ['eex']
+# syntax name:HTML (EEx)-> path:Packages/ElixirSyntax/syntaxes/HTML (EEx).sublime-syntax-> scope:text.html.eex
+# ['html.eex', 'html.leex']
+# syntax name:HTML (HEEx)-> path:Packages/ElixirSyntax/syntaxes/HTML (HEEx).sublime-syntax-> scope:text.html.heex
+# ['heex']
+# syntax name:SQL (Elixir)-> path:Packages/ElixirSyntax/syntaxes/SQL (Elixir).sublime-syntax-> scope:source.ex.sql
+# ['ex.sql']
+# syntax name:Elixir (EEx)-> path:Packages/ElixirSyntax/syntaxes/Elixir (EEx).sublime-syntax-> scope:source.elixir.eex
+# ['ex.eex', 'exs.eex']
+# syntax name:Elixir-> path:Packages/ElixirSyntax/syntaxes/Elixir.sublime-syntax-> scope:source.elixir
+# ['ex', 'exs']

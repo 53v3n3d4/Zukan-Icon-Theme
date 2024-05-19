@@ -1,12 +1,10 @@
 %YAML 1.2
 ---
-name: HTML (Elixir)
+name: HTML (HEEx)
 scope: text.html.heex
 hidden: true
 file_extensions:
-- eex
-- html.eex
-- html.leex
+- heex
 contexts:
   main:
   - include: scope:text.html.basic
