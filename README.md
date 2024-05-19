@@ -34,23 +34,32 @@ To install manually,
 - Menu `Sublime Text > Preferences > Browse packages...` to open destination folder  
 - Then unzip `zukan-icon-theme zip file` inside `Packages` folder. Or clone the repo inside `Packages`folder.  
 
-> You may see a console message, regarding `ruamel-yaml` dependecy, when first install this package. ST may install it and inform that a restart is needed.
+> You may see a console message, regarding `ruamel-yaml` dependecy, when first install this package. ST may install it and inform that a restart is needed.  
 
-> `ruamel-yaml` is/will be used to create icons sublime-sytnaxes files in `icon-syntaxes` folder.
+> `ruamel-yaml` is/will be used to create icons sublime-syntaxes files in `icon-syntaxes` folder.  
 
 ### Theme
 
-To make icon theme works with your theme, you can use `Tools > Command Palette`. Type `zukan` and select `Zukan Icon Theme: Install Themes`.  
+To make icon theme works with your theme, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Install Themes`.  
 
-This command install for all existing themes in your ST.
+This command install for all existing themes in your ST.  
 
 If you prefer to create manually, see [theme.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/theme.md).  
+
+### Syntax
+
+To delete duplicated syntaxes, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Syntaxes`.  
 
 ## Uninstall
 
 To uninstall manually, go to your Sublime Text folder.  
 - Menu `Sublime Text > Preferences > Browse packages...`  
 - Then delete `Zukan-Icon-Theme` inside `Packages` folder  
+
+### Dependecies
+
+ST4 uninstall orphans dependencies. So dependency `ruamel-yaml` should be deleted when you uninstall/remove package, if not used by other packages.
+
 
 ## Icons that works depending on folder position
 
@@ -68,10 +77,8 @@ To uninstall manually, go to your Sublime Text folder.
 - `file-type-icons` is old project name  
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
-
-## Limitations
 - If you use a theme that has sublime-syntax and tmPreferences, only icons, not present on theme, might show.  
-
+- Temporary not show icons, use `disable package` at 'Tools > Command Palette... > Package Control: Disable Package'. Select `Zukan Icon Theme` on list  
 
 ## File icon packages :alien:
 

@@ -3,9 +3,9 @@
 > Sublime Text 4 uses python 3.8 and Sublime Text 3 uses Python 3.3  
 Link https://www.sublimetext.com/docs/porting_guide.html#python-3-3  
 
-> Build package uses python 3.8.19, probably will try upgrade to latest later.
+> Build package uses python 3.8.19, probably will try upgrade to latest later.  
 
-> Plugin follow ST python versions.
+> Plugin follow ST python versions.  
 
 ```
 Package
@@ -68,7 +68,7 @@ $ cat .python-version
 # Environment activated
 $ pytest
 ```
-Or
+Or  
 ```
 $ poetry run pytest
 ```
@@ -86,10 +86,12 @@ addopts = -ra -q
 
 ## Build
 
-Scripts used to generate icons files: PNGs, syntaxes and preferences.  
+Scripts used to generate icons files: syntaxes data file, PNGs and preferences.  
 
-See [build.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/build.md)
+See [build.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/build.md).  
 
 ## Plugin
 
-See [plugin.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/plugin.md)
+Install sublime-themes and sublime-syntaxes for icons.  
+
+See [plugin.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/plugin.md).  

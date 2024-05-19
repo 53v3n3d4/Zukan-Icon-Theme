@@ -158,4 +158,4 @@ $ poetry run build test-icon-theme -f src/data/afdesign.yaml
 $ poetry run build test-icon-theme --all
 ```
 
-> Creating test files will raise warnings on ST console for files that ST use, like Sublime Text.sublime-syntax or Sublime Text.sublime-settings.
+> Creating test files may raise parsing errors for files that ST use, like Sublime Text.sublime-syntax or Sublime Text.sublime-settings.

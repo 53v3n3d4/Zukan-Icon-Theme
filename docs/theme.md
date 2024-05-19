@@ -9,7 +9,7 @@ Create new theme file:
 - Rename it with your theme name, e.g. Default.sublime-theme  
 - Maybe restart needed  
 
-If your theme do not have settings for `icon_file_type`, the settings below has a hover and select effects.
+If your theme do not have settings for `icon_file_type`, the settings below has a hover and select effects.  
 ```
 [
   {
@@ -44,7 +44,7 @@ If your theme does have setting for `icon_file_type`, the setting below is enoug
 
 ## Deleting theme manually
 
-If you do not want Zukan to display in one of you theme, follow steps below.  
+If you do not want Zukan to display in one of your theme, follow steps below.  
 
 To manually delete a theme, go to your Sublime Text folder.  
 - Menu `Sublime Text > Preferences > Browse packages...`  
