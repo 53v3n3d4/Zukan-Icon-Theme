@@ -48,7 +48,7 @@ If you prefer to create manually, see [theme.md](https://github.com/53v3n3d4/Zuk
 
 ### Syntax
 
-To delete duplicated syntaxes, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Syntaxes`.  
+To delete duplicated syntaxes that already exist on your ST, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Syntaxes`.  
 
 ## Uninstall
 
