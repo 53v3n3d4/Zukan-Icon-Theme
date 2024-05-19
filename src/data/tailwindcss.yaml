@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Tailwind CSS
+preferences:
+  scope: source.js.tailwindcss
+  settings:
+    icon: tailwindcss
+syntax:
+  - name: JavaScript (Tailwind CSS)
+    scope: source.js.tailwindcss
+    hidden: true
+    file_extensions:
+      - tailwind.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true

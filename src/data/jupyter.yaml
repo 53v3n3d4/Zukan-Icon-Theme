@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Jupyter
+preferences:
+  scope: source.json.jupyter, source.python.jupyter
+  settings:
+    icon: jupyter
+syntax:
+  - name: JSON (Jupyter)
+    scope: source.json.jupyter
+    hidden: true
+    file_extensions:
+      - ipynb
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
+  - name: Python (Jupyter)
+    scope: source.python.jupyter
+    hidden: true
+    file_extensions:
+      - jupyter_application_config.py
+      - jupyter_notebook_config.py
+    contexts:
+      main:
+      - include: scope:source.python
+        apply_prototype: true
