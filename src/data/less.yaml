@@ -6,11 +6,15 @@ preferences:
   settings:
     icon: less
 syntax:
-  - name: Plain Text (Less js)
+  - name: Less
     scope: source.less
     hidden: true
     file_extensions:
       - less
       - css.less
     contexts:
-      main: []
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+
+# Package Less

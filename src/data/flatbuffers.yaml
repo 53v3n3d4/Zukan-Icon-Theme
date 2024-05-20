@@ -2,14 +2,20 @@
 ---
 name: FlatBuffers
 preferences:
-  scope: source.fbs
+  scope: source.webidl.fbs
   settings:
     icon: flatbuffers
 syntax:
-  - name: Plain Text (FlatBuffers)
-    scope: source.fbs
+  - name: IDL (FlatBuffers)
+    scope: source.webidl.fbs
     hidden: true
     file_extensions:
       - fbs
     contexts:
-      main: []
+      main:
+        - include: scope:source.webidl
+          apply_prototype: true
+
+# Package IDL-Syntax
+
+# Package WebIDL

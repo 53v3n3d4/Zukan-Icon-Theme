@@ -2,8 +2,36 @@
 ---
 name: Java
 preferences:
-  scope: source.java
+  scope: source.java, source.java-props, text.html.jsp
   settings:
     icon: java
+syntax:
+  - name: HTML (JSP)
+    scope: text.html.jsp
+    hidden: true
+    file_extensions:
+      - jsp
+      - jspf
+      - jstl
+      - jspx
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: Java
+    scope: source.java
+    hidden: true
+    file_extensions:
+      - bsh
+      - java
+    contexts:
+      main: []
+  - name: Java Properties
+    scope: source.java-props
+    hidden: true
+    file_extensions:
+      - properties
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

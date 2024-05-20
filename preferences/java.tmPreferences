@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.java</string>
+	<string>source.java, source.java-props, text.html.jsp</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

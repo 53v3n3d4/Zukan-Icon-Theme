@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.arduino, source.c++.arduino</string>
+	<string>source.arduino, source.iot</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

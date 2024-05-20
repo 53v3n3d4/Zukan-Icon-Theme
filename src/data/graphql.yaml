@@ -6,12 +6,14 @@ preferences:
   settings:
     icon: graphql
 syntax:
-  - name: Plain Text (GraphQL)
+  - name: GraphQL
     scope: source.graphql
     hidden: true
     file_extensions:
+      - gql
       - graphql
       - graphqls
-      - gql
     contexts:
       main: []
+
+# Package GraphQL

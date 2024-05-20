@@ -2,11 +2,11 @@
 ---
 name: Arduino
 preferences:
-  scope: source.arduino, source.c++.arduino
+  scope: source.arduino, source.iot
   settings:
     icon: arduino
 syntax:
-  - name: Plain Text (Arduino)
+  - name: Arduino
     scope: source.arduino
     hidden: true
     file_extensions:
@@ -14,5 +14,17 @@ syntax:
     - pde
     contexts:
       main: []
+  # - name: Arduino (Deviot)
+  #   scope: source.iot
+  #   hidden: true
+  #   file_extensions:
+  #   - ino
+  #   - pde
+  #   contexts:
+  #     main: []
 
-# Do not have Arduino source c++ file extension
+# Package arduino-cli
+
+# Package Arduino-like IDE
+
+# Package Deviot (Arduino IDE)

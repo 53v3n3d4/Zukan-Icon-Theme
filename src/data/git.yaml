@@ -2,16 +2,51 @@
 ---
 name: Git
 preferences:
-  scope: source.git, source.shell.git, text.git, text.git.blame, text.git.keep
+  scope: text.git, text.git.attributes, text.git.blame, text.git.blame.ignorerevs, text.git.codeowners, text.git.config, text.git.ignore, text.git.keep, text.git.link, text.git.log, text.git.mailmap
   settings:
     icon: git
 syntax:
+  - name: Git Attributes
+    scope: text.git.attributes
+    hidden: true
+    file_extensions:
+      - gitattributes
+    contexts:
+      main: []
   - name: Git Blame
     scope: text.git.blame
     hidden: true
     file_extensions:
       - git-blame
       - .gitblame
+    contexts:
+      main: []
+  - name: Git Blame Ignore Revisions
+    scope: text.git.blame.ignorerevs
+    hidden: true
+    file_extensions:
+      - git-blame-ignore-revs
+    contexts:
+      main: []
+  - name: Git Code Owners
+    scope: text.git.codeowners
+    hidden: true
+    file_extensions:
+      - CODEOWNERS
+    contexts:
+      main: []
+  - name: Git Config
+    scope: text.git.config
+    hidden: true
+    file_extensions:
+      - gitconfig
+    contexts:
+      main: []
+  - name: Git Ignore
+    scope: text.git.ignore
+    hidden: true
+    file_extensions:
+      - gitignore
     contexts:
       main: []
   - name: Git Keep
@@ -21,5 +56,27 @@ syntax:
       - .gitkeep
     contexts:
       main: []
+  - name: Git Link
+    scope: text.git.link
+    hidden: true
+    file_extensions:
+      - .git
+    contexts:
+      main: []
+  - name: Git Log
+    scope: text.git.log
+    hidden: true
+    file_extensions:
+      - gitlog
+    contexts:
+      main: []
+  - name: Git Mailmap
+    scope: text.git.mailmap
+    hidden: true
+    file_extensions:
+      - mailmap
+    contexts:
+      main: []
 
-# Do not have source or text git syntax, or shell.
+# ST Package
+# Could put all inside 'text.git', but this will also show in status st only git.

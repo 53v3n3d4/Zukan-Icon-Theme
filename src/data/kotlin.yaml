@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: kotlin
 syntax:
-  - name: Plain Text (Kotlin)
+  - name: Kotlin
     scope: source.Kotlin
     hidden: true
     file_extensions:
@@ -15,6 +15,4 @@ syntax:
     contexts:
       main: []
 
-# syntax package has source.Kotlin with first letter capitalized.
-# test with syntax package not installed. It worked with all lower case.
-# to do: test with package syntax and lowercase.
+# Package Kotlin

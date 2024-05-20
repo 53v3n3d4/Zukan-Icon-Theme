@@ -5,5 +5,16 @@ preferences:
   scope: source.js
   settings:
     icon: js
+syntax:
+  - name: JavaScript
+    scope: source.js
+    hidden: true
+    file_extensions:
+      - js
+      - cjs
+      - htc
+      - mjs
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

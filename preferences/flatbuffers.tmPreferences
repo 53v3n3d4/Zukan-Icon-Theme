@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.fbs</string>
+	<string>source.webidl.fbs</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

@@ -2,9 +2,21 @@
 ---
 name: HTML
 preferences:
-  scope: text.html.basic, text.html.plain
+  scope: text.html.basic
   settings:
     icon: html
 syntax:
+  - name: HTML
+    scope: text.html.basic
+    hidden: true
+    file_extensions:
+      - html
+      - htm
+      - shtml
+      - xhtml
+    contexts:
+      main:
+        - include: scope:text.html.plain
+          apply_prototype: true
 
-# Do not have any syntax.
+# ST Package

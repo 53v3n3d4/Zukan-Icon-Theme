@@ -5,5 +5,16 @@ preferences:
   scope: source.json
   settings:
     icon: json
+syntax:
+  - name: JSON
+    scope: source.json
+    hidden: true
+    file_extensions:
+      - avsc
+      - gltf
+      - json
+      - jsonc
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

@@ -2,8 +2,18 @@
 ---
 name: JSX
 preferences:
-  scope: source.js.jsx, source.js.react, source.jsx
+  scope: source.js.jsx, source.jsx
   settings:
     icon: jsx
+syntax:
+  - name: JSX
+    scope: source.jsx
+    hidden: true
+    file_extensions:
+      - jsx
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package
+
+# Package JSX

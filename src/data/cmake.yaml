@@ -38,12 +38,13 @@ syntax:
       - CMakeCache.txt
     contexts:
       main: []
-  - name: CMakeEditor
-    scope: source.cmakeeditor
-    hidden: true
-    file_extensions:
-      - CMakeLists.txt
-    contexts:
+  # - name: CMakeEditor
+  #   scope: source.cmakeeditor
+  #   hidden: true
+  #   file_extensions:
+  #     - CMakeLists.txt
+  #   contexts:
+  #     main: []
 
 # Package CMake
 # Package CMakeEditor
