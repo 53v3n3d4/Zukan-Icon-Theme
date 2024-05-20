@@ -2,7 +2,7 @@
 ---
 name: MDX
 preferences:
-  scope: text.html.markdown.mdx, source.jsx.embedded.markdown
+  scope: source.jsx.embedded.markdown, text.html.embedded.mdx, text.html.markdown.mdx
   settings:
     icon: mdx
 syntax:
@@ -16,4 +16,4 @@ syntax:
         - include: scope:text.html.markdown
           apply_prototype: true
 
-# Do not have a jsx syntax.
+# Package MDX

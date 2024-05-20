@@ -6,6 +6,31 @@ preferences:
   settings:
     icon: python
 syntax:
+  - name: Python
+    scope: source.python
+    hidden: true
+    file_extensions:
+      - bazel
+      - bzl
+      - cpy
+      - gyp
+      - gypi
+      - pxd
+      - pxd.in
+      - pxi
+      - pxi.in
+      - py
+      - py3
+      - pyi
+      - pyx
+      - pyx.in
+      - pyw
+      - rpy
+      - smk
+      - vpy
+      - wscript
+    contexts:
+      main: []
   - name: Shell Script (Python)
     scope: source.shell.python
     hidden: true

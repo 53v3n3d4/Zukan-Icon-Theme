@@ -5,5 +5,17 @@ preferences:
   scope: text.html.markdown
   settings:
     icon: markdown
+syntax:
+  - name: Markdown
+    scope: text.html.markdown
+    hidden: true
+    file_extensions:
+      - md
+      - mdwn
+      - mdown
+      - markdn
+      - markdown
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

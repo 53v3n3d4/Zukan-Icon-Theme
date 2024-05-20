@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: Plain Text (NGINX)
+name: NGINX
 scope: source.nginx
 hidden: true
 file_extensions:

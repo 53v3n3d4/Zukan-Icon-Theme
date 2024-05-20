@@ -1,9 +1,11 @@
 %YAML 1.2
 ---
-name: Plain Text (Protobuf)
+name: Protocol Buffer
 scope: source.proto
 hidden: true
 file_extensions:
 - proto
+- protobuf
+- protodevel
 contexts:
   main: []

@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.ruby.rails, text.html.rails, text.haml, source.css.rails, source.js.rails, source.sql.rails</string>
+	<string>source.css.rails, source.js.rails, source.ruby.rails, source.sql.rails, text.haml, text.html.rails</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

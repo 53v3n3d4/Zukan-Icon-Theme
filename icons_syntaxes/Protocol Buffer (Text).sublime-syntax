@@ -1,0 +1,14 @@
+%YAML 1.2
+---
+name: Protocol Buffer (Text)
+scope: text.prototxt
+hidden: true
+file_extensions:
+- pb.txt
+- pbtxt
+- proto.text
+- prototxt
+- textpb
+- textproto
+contexts:
+  main: []

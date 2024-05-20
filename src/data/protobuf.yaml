@@ -2,7 +2,7 @@
 ---
 name: Protobuf
 preferences:
-  scope: binary.proto, source.proto
+  scope: binary.proto, source.proto, text.prototxt
   settings:
     icon: protobuf
 syntax:
@@ -13,10 +13,26 @@ syntax:
       - pb
     contexts:
       main: []
-  - name: Plain Text (Protobuf)
+  - name: Protocol Buffer
     scope: source.proto
     hidden: true
     file_extensions:
       - proto
+      - protobuf
+      - protodevel
     contexts:
       main: []
+  - name: Protocol Buffer (Text)
+    scope: text.prototxt
+    hidden: true
+    file_extensions:
+      - pb.txt
+      - pbtxt
+      - proto.text
+      - prototxt
+      - textpb
+      - textproto
+    contexts:
+      main: []
+
+# Package Protobuf Syntax Hightlighting

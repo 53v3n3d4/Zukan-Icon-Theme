@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>binary.proto, source.proto</string>
+	<string>binary.proto, source.proto, text.prototxt</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: Plain Text (OpenGL)
+name: OpenGL
 scope: source.glsl
 hidden: true
 file_extensions:

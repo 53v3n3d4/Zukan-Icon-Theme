@@ -2,8 +2,16 @@
 ---
 name: Lua
 preferences:
-  scope: source.lua, text.plain.lua
+  scope: source.lua
   settings:
     icon: lua
+syntax:
+  - name: Lua
+    scope: source.lua
+    hidden: true
+    file_extensions:
+      - lua
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

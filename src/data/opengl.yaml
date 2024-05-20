@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: opengl
 syntax:
-  - name: Plain Text (OpenGL)
+  - name: OpenGL
     scope: source.glsl
     hidden: true
     file_extensions:
@@ -35,3 +35,5 @@ syntax:
       - rcall
     contexts:
       main: []
+
+# Package OpenGL Shading Language (GLSL)

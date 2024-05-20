@@ -5,5 +5,15 @@ preferences:
   scope: source.makefile
   settings:
     icon: makefile
+syntax:
+  - name: makefile
+    scope: source.makefile
+    hidden: true
+    file_extensions:
+      - mk
+      - mak
+      - make
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

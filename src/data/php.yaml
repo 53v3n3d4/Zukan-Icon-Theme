@@ -2,8 +2,44 @@
 ---
 name: PHP
 preferences:
-  scope: embedding.php, source.php
+  scope: embedding.php, source.css.php, source.js.php
   settings:
     icon: php
+syntax:
+  - name: CSS (PHP)
+    scope: source.css.php
+    hidden: true
+    file_extensions:
+      - css.php
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+  - name: JavaScript (PHP)
+    scope: source.js.php
+    hidden: true
+    file_extensions:
+      - js.php
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: PHP
+    scope: embedding.php
+    hidden: true
+    file_extensions:
+      - php
+      - php3
+      - php4
+      - php5
+      - php7
+      - php8
+      - phps
+      - phpt
+      - phtml
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
 
-# Do not have any syntax.
+# ST Package

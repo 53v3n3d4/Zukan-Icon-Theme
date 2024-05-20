@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: nginx
 syntax:
-  - name: Plain Text (NGINX)
+  - name: NGINX
     scope: source.nginx
     hidden: true
     file_extensions:
@@ -18,3 +18,5 @@ syntax:
       - uwsgi_params
     contexts:
       main: []
+
+# Package nginx

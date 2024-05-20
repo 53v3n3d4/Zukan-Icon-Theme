@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>text.html.markdown.mdx, source.jsx.embedded.markdown</string>
+	<string>source.jsx.embedded.markdown, text.html.embedded.mdx, text.html.markdown.mdx</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

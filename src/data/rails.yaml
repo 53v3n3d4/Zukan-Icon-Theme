@@ -2,8 +2,68 @@
 ---
 name: Rails
 preferences:
-  scope: source.ruby.rails, text.html.rails, text.haml, source.css.rails, source.js.rails, source.sql.rails
+  scope: source.css.rails, source.js.rails, source.ruby.rails, source.sql.rails, text.haml, text.html.rails
   settings:
     icon: rails
+syntax:
+  - name: CSS (Rails)
+    scope: source.css.rails
+    hidden: true
+    file_extensions:
+      - css.erb
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+  - name: HAML
+    scope: text.haml
+    hidden: true
+    file_extensions:
+      - haml
+    contexts:
+      main: []
+  - name: HTML (Rails)
+    scope: text.html.rails
+    hidden: true
+    file_extensions:
+      - erb
+      - html.erb
+      - rails
+      - rhtml
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: JavaScript (Rails)
+    scope: source.js.rails
+    hidden: true
+    file_extensions:
+      - js.erb
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: Ruby (Rails)
+    scope: source.ruby.rails
+    hidden: true
+    file_extensions:
+      - arb
+      - builder
+      - ruby.rail
+      - rxml
+    contexts:
+      main:
+        - include: scope:source.ruby
+          apply_prototype: true
+  - name: SQL (Rails)
+    scope: source.sql.rails
+    hidden: true
+    file_extensions:
+      - erbsql
+      - sql.erb
+    contexts:
+      main:
+        - include: scope:source.sql
+          apply_prototype: true
 
-# Do not have any syntax.
+# ST Package
