@@ -2,11 +2,11 @@
 ---
 name: CMake
 preferences:
-  scope: source.cmake, source.cmakeeditor
+  scope: source.cmake, source.cmake.config.c++, source.cmake.config.c, source.cmakecache, source.cmakeeditor
   settings:
     icon: cmake
 syntax:
-  - name: Plain Text (CMake)
+  - name: CMake
     scope: source.cmake
     hidden: true
     file_extensions:
@@ -14,5 +14,36 @@ syntax:
       - cmake
     contexts:
       main: []
+  - name: CMake C++ Header
+    scope: source.cmake.config.c++
+    hidden: true
+    file_extensions:
+      - h++.in
+      - hh.in
+      - hpp.in
+      - hxx.in
+    contexts:
+      main: []
+  - name: CMake C Header
+    scope: source.cmake.config.c
+    hidden: true
+    file_extensions:
+      - h.in
+    contexts:
+      main: []
+  - name: CMakeCache
+    scope: source.cmakecache
+    hidden: true
+    file_extensions:
+      - CMakeCache.txt
+    contexts:
+      main: []
+  - name: CMakeEditor
+    scope: source.cmakeeditor
+    hidden: true
+    file_extensions:
+      - CMakeLists.txt
+    contexts:
 
-# Do not have source.cmakeeditor syntax
+# Package CMake
+# Package CMakeEditor

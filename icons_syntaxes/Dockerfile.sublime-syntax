@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: Plain Text (Dockerfile)
+name: Dockerfile
 scope: source.dockerfile
 hidden: true
 file_extensions:

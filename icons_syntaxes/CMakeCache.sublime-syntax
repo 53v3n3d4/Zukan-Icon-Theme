@@ -1,10 +1,9 @@
 %YAML 1.2
 ---
-name: Elixir (EEx)
-scope: source.elixir.eex
+name: CMakeCache
+scope: source.cmakecache
 hidden: true
 file_extensions:
-- ex.eex
-- exs.eex
+- CMakeCache.txt
 contexts:
   main: []

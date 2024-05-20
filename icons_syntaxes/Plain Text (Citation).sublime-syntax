@@ -1,0 +1,10 @@
+%YAML 1.2
+---
+name: Plain Text (Citation)
+scope: text.plain.citation
+hidden: true
+file_extensions:
+- CITATION
+- CITATIONS
+contexts:
+  main: []

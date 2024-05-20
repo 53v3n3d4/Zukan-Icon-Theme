@@ -5,5 +5,13 @@ preferences:
   scope: source.css
   settings:
     icon: css
+syntax:
+  - name: CSS
+    scope: source.css
+    hidden: true
+    file_extensions:
+    - css
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

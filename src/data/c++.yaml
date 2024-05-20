@@ -6,18 +6,35 @@ preferences:
   settings:
     icon: c++
 syntax:
-  - name: C++ (Header)
-    scope: source.c++.header
+  - name: C++
+    scope: source.c++
     hidden: true
     file_extensions:
-      - h
+      - c++
+      - cc
+      - cp
+      - cpp
+      - cppm
+      - cxx
+      - C
       - h++
+      - h
       - hh
       - hpp
       - hxx
+      - inl
+      - ipp
+      - ixx
     contexts:
-      main:
-        - include: scope:source.c++
-          apply_prototype: true
+      main: []
+  - name: Objective-C++
+    scope: source.objc++
+    hidden: true
+    file_extensions:
+      - h
+      - mm
+      - M
+    contexts:
+      main: []
 
-# Do not have source.c++, source.objc++ syntax.
+# ST Package

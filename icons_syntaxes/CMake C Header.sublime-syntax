@@ -1,10 +1,9 @@
 %YAML 1.2
 ---
-name: Elixir (EEx)
-scope: source.elixir.eex
+name: CMake C Header
+scope: source.cmake.config.c
 hidden: true
 file_extensions:
-- ex.eex
-- exs.eex
+- h.in
 contexts:
   main: []

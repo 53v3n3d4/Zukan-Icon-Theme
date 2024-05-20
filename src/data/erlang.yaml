@@ -5,5 +5,24 @@ preferences:
   scope: source.erlang, text.html.erlang
   settings:
     icon: erlang
+syntax:
+  - name: Erlang
+    scope: source.erlang
+    hidden: true
+    file_extensions:
+      - erl
+      - escript
+      - hrl
+    contexts:
+      main: []
+  - name: HTML (Erlang)
+    scope: text.html.erlang
+    hidden: true
+    file_extensions:
+      - yaws
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
 
-# Do not have any syntax.
+# ST Package

@@ -1,0 +1,12 @@
+%YAML 1.2
+---
+name: BibTeX (Citation)
+scope: text.bibtex.citation
+hidden: true
+file_extensions:
+- CITATION.bib
+- CITATIONS.bib
+contexts:
+  main:
+  - include: scope:text.bibtex
+    apply_prototype: true

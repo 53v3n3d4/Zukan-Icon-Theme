@@ -2,7 +2,7 @@
 ---
 name: CSV
 preferences:
-  scope: text.advanced_csv, text.csv
+  scope: text.csv
   settings:
     icon: csv
 syntax:

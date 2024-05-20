@@ -2,10 +2,20 @@
 ---
 name: Citation
 preferences:
-  scope: text.html.markdown.citation, text.plain.citation, source.yaml.citation
+  scope: text.bibtex.citation, text.html.markdown.citation, text.plain.citation, source.yaml.citation
   settings:
     icon: citation
 syntax:
+  - name: BibTeX (Citation)
+    scope: text.bibtex.citation
+    hidden: true
+    file_extensions:
+      - CITATION.bib
+      - CITATIONS.bib
+    contexts:
+      main:
+        - include: scope:text.bibtex
+          apply_prototype: true
   - name: Markdown (Citation)
     scope: text.html.markdown.citation
     hidden: true
@@ -16,6 +26,14 @@ syntax:
       main:
         - include: scope:text.html.markdown
           apply_prototype: true
+  - name: Plain Text (Citation)
+    scope: text.plain.citation
+    hidden: true
+    file_extensions:
+      - CITATION
+      - CITATIONS
+    contexts:
+      main: []
   - name: YAML (Citation)
     scope: source.yaml.citation
     hidden: true
@@ -25,5 +43,3 @@ syntax:
       main:
         - include: scope:source.yaml
           apply_prototype: true
-
-# Do not have a citation text.plain.citation

@@ -5,5 +5,14 @@ preferences:
   scope: source.cs
   settings:
     icon: csharp
+syntax:
+  - name: C#
+    scope: source.cs
+    hidden: true
+    file_extensions:
+    - cs
+    - csx
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

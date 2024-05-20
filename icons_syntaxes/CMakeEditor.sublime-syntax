@@ -1,0 +1,8 @@
+%YAML 1.2
+---
+name: CMakeEditor
+scope: source.cmakeeditor
+hidden: true
+file_extensions:
+- CMakeLists.txt
+contexts:

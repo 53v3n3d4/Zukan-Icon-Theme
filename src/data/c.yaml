@@ -5,5 +5,22 @@ preferences:
   scope: source.c, source.objc
   settings:
     icon: c
+syntax:
+  - name: C
+    scope: source.c
+    hidden: true
+    file_extensions:
+    - c
+    - h
+    contexts:
+      main: []
+  - name: Objective-C
+    scope: source.objc
+    hidden: true
+    file_extensions:
+    - h
+    - m
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

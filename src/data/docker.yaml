@@ -15,7 +15,7 @@ syntax:
       main:
         - include: scope:text.git.ignore
           apply_prototype: true
-  - name: Plain Text (Dockerfile)
+  - name: Dockerfile
     scope: source.dockerfile
     hidden: true
     file_extensions:
@@ -32,3 +32,5 @@ syntax:
       main:
         - include: scope:source.yaml
           apply_prototype: true
+
+# Package Dockerfile Syntax Highlighting

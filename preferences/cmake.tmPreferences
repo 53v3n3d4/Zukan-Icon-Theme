@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.cmake, source.cmakeeditor</string>
+	<string>source.cmake, source.cmake.config.c++, source.cmake.config.c, source.cmakecache, source.cmakeeditor</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: Plain Text (CMake)
+name: CMake
 scope: source.cmake
 hidden: true
 file_extensions:
