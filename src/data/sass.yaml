@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: sass
 syntax:
-  - name: Plain Text (Sass)
+  - name: Sass
     scope: source.sass
     hidden: true
     file_extensions:
@@ -14,4 +14,4 @@ syntax:
     contexts:
       main: []
 
-# Using same logo for SCSS but each has its file.
+# Package Sass

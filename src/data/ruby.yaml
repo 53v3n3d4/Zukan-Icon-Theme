@@ -2,28 +2,40 @@
 ---
 name: Ruby
 preferences:
-  scope: source.ruby, source.shell.ruby, text.html.ruby, text.plain.ruby
+  scope: source.ruby, source.ruby.lockfile
   settings:
     icon: ruby
 syntax:
-  - name: Plain Text (Ruby)
-    scope: text.plain.ruby
+  - name: Ruby
+    scope: source.ruby
     hidden: true
     file_extensions:
-      - Gemfile.lock
-      - .ruby-version
-      - .ruby-gemset
-      - .rspec
+      - rb
+      - rbi
+      - rbx
+      - rjs
+      - rabl
+      - rake
+      - thor
+      - irbrc
+      - pryrc
+      - prawn
+      - capfile
+      - jbuilder
+      - gemspec
+      - podspec
     contexts:
       main: []
-  - name: Shell Script (Ruby)
-    scope: source.shell.ruby
+  - name: Ruby Lockfile
+    scope: source.ruby.lockfile
     hidden: true
     file_extensions:
-      - .rvmrc
+      - gemfile.lock
+      - Gemfile.lock
     contexts:
       main:
-        - include: scope:source.shell
+        - include: scope:source.ruby
           apply_prototype: true
 
-# Do not have html syntax.
+# ST Package
+# Currently Ruby Gemfile.lock add separated because source.ruby get deleted.

@@ -1,9 +1,12 @@
 %YAML 1.2
 ---
-name: Shell Script (Ruby)
-scope: source.shell.ruby
+name: Shell Script (RVM)
+scope: source.shell.rvm
 hidden: true
 file_extensions:
+- .ruby-env
+- .ruby-gemset
+- .ruby-version
 - .rvmrc
 contexts:
   main:

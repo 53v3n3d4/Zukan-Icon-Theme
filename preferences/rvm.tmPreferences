@@ -2,11 +2,11 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.ruby, source.ruby.lockfile</string>
+	<string>source.shell.rvm</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>
-		<string>ruby</string>
+		<string>rvm</string>
 	</dict>
 </dict>
 </plist>

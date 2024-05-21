@@ -5,5 +5,13 @@ preferences:
   scope: source.rust
   settings:
     icon: rust
+syntax:
+  - name: Rust
+    scope: source.rust
+    hidden: true
+    file_extensions:
+      - rs
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

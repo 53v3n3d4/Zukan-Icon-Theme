@@ -5,5 +5,14 @@ preferences:
   scope: text.restructuredtext
   settings:
     icon: restructuredtext
+syntax:
+  - name: reStructuredText
+    scope: text.restructuredtext
+    hidden: true
+    file_extensions:
+      - rst
+      - rest
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

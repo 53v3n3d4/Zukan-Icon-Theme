@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: SCSS
+scope: source.scss
+hidden: true
+file_extensions:
+- scss
+contexts:
+  main:
+  - include: scope:source.css
+    apply_prototype: true

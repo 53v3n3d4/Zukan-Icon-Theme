@@ -7,13 +7,13 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Icons, icons-syntaxes and preferences
-- Add icon-theme: archive, Cargo, Cypress, Erlang.mk, Jupyter, mypy, Pipenv, Playwright, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, reStructuredText, Tailwind CSS, tox
-- Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, TOML, Webpack
+- Add icon-theme: archive, Cargo, Cypress, Erlang.mk, Jupyter, mypy, Pipenv, Playwright, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, reStructuredText, Rspec, RVM, Tailwind CSS, tox
+- Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, TOML, Webpack
 - Change icon: Audio, Kotlin, makefile, Rspack
 - Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby
-- Change tmPreferences: Arduino, Citation, CMake, CSV, Flatbuffers, git, HTML, Java, JSX, Lua, MDX, PHP
+- Change tmPreferences: Arduino, Citation, CMake, CSV, Flatbuffers, git, HTML, Java, JSX, Lua, MDX, PHP, Ruby
 - Rename icons: Elixir, Fusion, TS, Unity, WebAssembly
-- Rename sublime-syntax file name: Arduino, Docker, GraphQL, Kotlin, Less js, Next js, NGINX, Node js, OpenGL, pnpm, pytest, Protobuf, README, Svelte, Test JSX, Test TSX, Vue
+- Rename sublime-syntax file name: Arduino, Docker, GraphQL, Kotlin, Less js, Next js, NGINX, Node js, OpenGL, pnpm, pytest, Protobuf, README, Sass, SCSS, Svelte, Test JSX, Test TSX, Vue
 
 ### Build
 - Add data files

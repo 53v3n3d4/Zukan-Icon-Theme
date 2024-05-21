@@ -1,9 +1,9 @@
 %YAML 1.2
 ---
-name: Plain Text (SCSS)
-scope: source.scss
+name: Sass
+scope: source.sass
 hidden: true
 file_extensions:
-- scss
+- sass
 contexts:
   main: []

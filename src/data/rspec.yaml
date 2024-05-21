@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: RSpec
+preferences:
+  scope: source.ruby.rspec
+  settings:
+    icon: rspec
+syntax:
+  - name: Ruby (RSpec)
+    scope: source.ruby.rspec
+    hidden: true
+    file_extensions:
+      - .rspec
+      - .rspec-local
+    contexts:
+      main:
+        - include: scope:source.ruby
+          apply_prototype: true
