@@ -26,10 +26,10 @@ class DeleteSyntax(sublime_plugin.TextCommand):
 
     def run(self, edit, syntax_name: str):
         message = "Are you sure you want to delete '{s}'?".format(
-            s=os.path.join(ZUKAN_PKG_ICONS_PATH, syntax_name)
+            s=os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name)
         )
-        if sublime.ok_cancel_dialog(message) == True:
-            ZukanSyntax.remove_icon_syntax(syntax_name)
+        if sublime.ok_cancel_dialog(message) is True:
+            ZukanSyntax.delete_icon_syntax(syntax_name)
 
     def input(self, args: dict):
         # print(args)
@@ -66,8 +66,8 @@ class DeleteSyntaxes(sublime_plugin.ApplicationCommand):
             message = "Are you sure you want to delete all syntaxes in '{f}'?".format(
                 f=ZUKAN_PKG_ICONS_SYNTAXES_PATH
             )
-            if sublime.ok_cancel_dialog(message) == True:
-                ZukanSyntax.remove_icons_syntaxes()
+            if sublime.ok_cancel_dialog(message) is True:
+                ZukanSyntax.delete_icons_syntaxes()
         else:
             raise TypeError(
                 logger.info('it does not exist any created syntax, list is empty')
@@ -84,7 +84,7 @@ class DeleteTheme(sublime_plugin.TextCommand):
         message = "Are you sure you want to delete '{t}'?".format(
             t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
         )
-        if sublime.ok_cancel_dialog(message) == True:
+        if sublime.ok_cancel_dialog(message) is True:
             ThemeFile.delete_created_theme_file(theme_name)
 
     def input(self, args: dict):
@@ -122,7 +122,7 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
             message = "Are you sure you want to delete all themes in '{f}'?".format(
                 f=ZUKAN_PKG_ICONS_PATH
             )
-            if sublime.ok_cancel_dialog(message) == True:
+            if sublime.ok_cancel_dialog(message) is True:
                 ThemeFile.delete_created_themes_files()
         else:
             raise TypeError(
@@ -234,7 +234,7 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
         sublime-theme and sublime-syntax files.
         """
         try:
-            ZukanSyntax.remove_icons_syntaxes()
+            ZukanSyntax.delete_icons_syntaxes()
             if os.path.exists(ZUKAN_INSTALLED_PKG_PATH):
                 MoveFolder.move_folders()
         finally:
@@ -250,6 +250,7 @@ class RebuildSyntaxes(sublime_plugin.ApplicationCommand):
 
     def run(self):
         try:
-            ZukanSyntax.remove_icons_syntaxes()
+            ZukanSyntax.delete_icons_syntaxes()
         finally:
             ZukanSyntax.create_icons_syntaxes()
+            ZukanSyntax.edit_contexts_scopes()

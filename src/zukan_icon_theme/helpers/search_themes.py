@@ -6,7 +6,7 @@ def filter_resources_themes(themes_list: list) -> list:
     """
     Filter sublime-themes on root. Use sublime package.
 
-    Example: Zukan Icon Theme/icons/Treble Adaptive.sublime-theme
+    Example: Packages/Zukan Icon Theme/icons/Treble Adaptive.sublime-theme
     is excluded.
 
     Paramenters:

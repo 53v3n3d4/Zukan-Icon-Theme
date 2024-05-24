@@ -14,7 +14,14 @@ class UserSyntax:
         self.scope = scope
         self.hidden = hidden
 
-    def visible_syntaxes_only():
+    def visible_syntaxes_only() -> set:
+        """
+        Create a list of user ST installed syntaxes, visible only.
+
+        Returns:
+        syntaxes_list_visible (set) -- list of user ST installed syntaxes, excluded
+        hidden syntaxes.
+        """
         syntaxes_list_visible = set()
         all_syntaxes = sublime.list_syntaxes()
         for s in all_syntaxes:
@@ -24,7 +31,14 @@ class UserSyntax:
         return syntaxes_list_visible
 
 
-def compare_scopes():
+def compare_scopes() -> list:
+    """
+    Compare scopes from user ST installed syntaxes and zukan icon syntaxes.
+
+    Returns:
+    list_scopes_to_remove (list) -- scopes list that are present in both, user ST
+    installed syntaxes and zukan icon syntaxes.
+    """
     list_scopes_to_remove = []
     zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
     user_syntaxes = UserSyntax.visible_syntaxes_only()
@@ -36,19 +50,19 @@ def compare_scopes():
 
 
 def list_syntax_to_dump():
+    """
+    Print syntax that will be dumped. Used for testing only,
+    """
     zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
     for x in zukan_icons_syntaxes:
         if x not in compare_scopes():
             print(x)
 
 
-def print_syntax_content(filepath):
-    return print(replace_tabs(sublime.load_resource(filepath)))
-
-
 def replace_tabs(file_info: str) -> str:
     """
-    Replace tabs for double spaces.
+    Replace tabs for double spaces. Used by 'list_user_syntaxes_file_ext' for
+    testing only.
 
     Parameters:
     file (str) -- info of data file.
@@ -61,7 +75,7 @@ def replace_tabs(file_info: str) -> str:
 
 def list_user_syntaxes_file_ext():
     """
-    List file_extensions in sublime-syntaxes installed.
+    List file_extensions in sublime-syntaxes installed. Used for testing only.
     """
     user_file_extensions = []
     list_syntaxes = UserSyntax.visible_syntaxes_only()
@@ -78,13 +92,13 @@ def list_user_syntaxes_file_ext():
         if 'file_extensions' in file_data:
             # print(file_data['file_extensions'])
             user_file_extensions.append(file_data['file_extensions'])
-    return flatten(user_file_extensions)
+    return user_file_extensions
 
 
 # https://stackoverflow.com/questions/952914/how-do-i-make-a-flat-list-out-of-a-list-of-lists
 def flatten(xss):
     """
-    Flast list of lists.
+    Flast list of lists. Used for testing only.
     """
     return [x for xs in xss for x in xs]
 

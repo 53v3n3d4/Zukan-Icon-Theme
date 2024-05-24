@@ -6,6 +6,10 @@ import os
 from .convert_to_commented import convert_to_commented
 
 # from .print_message import print_filenotfounderror, print_oserror
+from ..utils.contexts_scopes import (
+    CONTEXTS_MAIN,
+)
+from collections import OrderedDict
 from ruamel.yaml import YAML
 
 logger = logging.getLogger(__name__)
@@ -74,3 +78,63 @@ def dump_yaml_data(file_data: dict, yaml_file: str):
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), yaml_file
         )
+
+
+def read_yaml_data(yaml_file: str) -> dict:
+    """
+    YAML reader.
+
+    Read icons sublime-syntax files.
+
+    Paramenters:
+    yaml_file (str) -- path to yaml file
+
+    Returns:
+    file_data (dict) -- yaml contents
+    """
+    # If use typ='safe', it is not ordering correct.
+    yaml = YAML()
+    try:
+        with open(yaml_file) as f:
+            file_data = yaml.load(f)
+        return file_data
+    except FileNotFoundError:
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), yaml_file
+        )
+    except OSError:
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), yaml_file
+        )
+
+
+def edit_contexts_main(file_path: str, scope: str = None):
+    """
+    Edit contexts main in zukan icons sublime-syntax files. If syntax not installed or
+    disable it changes contexts main for empty list. This avoid error for syntax not
+    found.
+
+    If ST versions lower than 4075, it used other contexts main format. See comment below.
+
+    Parameters:
+    file_path (str) -- path to icon syntax file.
+    scope (Optional[str]) -- scope name, default to None.
+    """
+    file_content = read_yaml_data(file_path)
+    ordered_dict = OrderedDict(file_content)
+    # print(ordered_dict)
+    if scope is not None:
+        # Could not find other references, got this contexts main format, for ST versions
+        # lower than 4075, from A File Icon package.
+        include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
+        include_scope = 'scope:{s}'.format(s=scope)
+        CONTEXTS_MAIN['contexts']['main'] = [
+            {'include': include_scope_prop},
+            {'include': include_scope},
+        ]
+    if scope is None:
+        CONTEXTS_MAIN['contexts']['main'] = []
+    # print(CONTEXTS_MAIN)
+    ordered_dict.update(CONTEXTS_MAIN)
+    # print(ordered_dict)
+    dump_yaml_data(ordered_dict, file_path)

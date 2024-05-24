@@ -1,11 +1,19 @@
 import errno
+import glob
 import logging
 import os
-import glob
+import sublime
 
 # from ..helpers.print_message import print_filenotfounderror, print_oserror
-from ..helpers.read_write_data import dump_yaml_data, read_pickle_data
+from ..helpers.read_write_data import (
+    dump_yaml_data,
+    edit_contexts_main,
+    read_pickle_data,
+)
 from ..helpers.search_syntaxes import compare_scopes
+from ..utils.contexts_scopes import (
+    CONTEXTS_SCOPES,
+)
 from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_SYNTAXES_DATA_FILE,
@@ -73,9 +81,9 @@ class ZukanSyntax:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
             )
 
-    def remove_icon_syntax(syntax_name: str):
+    def delete_icon_syntax(syntax_name: str):
         """
-        Remove sublime-syntax file in Zukan Icon Theme/icons_syntaxes folder.
+        Delete sublime-syntax file in Zukan Icon Theme/icons_syntaxes folder.
 
         Example: Binary (Adobe Illustrator).sublime-syntax
 
@@ -102,16 +110,16 @@ class ZukanSyntax:
                 syntax_name,
             )
 
-    def remove_icons_syntaxes():
+    def delete_icons_syntaxes():
         """
-        Remove all sublime-syntaxes files, leaving pickle file.
+        Delete all sublime-syntaxes files, leaving pickle file.
         """
         try:
             for s in glob.iglob(
                 os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, '*.sublime-syntax')
             ):
                 os.remove(s)
-            logger.info('sublime-syntaxes removed.')
+            logger.info('sublime-syntaxes deleted.')
         except FileNotFoundError:
             # print_filenotfounderror(s)
             logger.error(
@@ -122,6 +130,28 @@ class ZukanSyntax:
             logger.error(
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), s
             )
+
+    def edit_contexts_scopes():
+        logger.info('checking contexts scopes if syntax not installed.')
+        for c in CONTEXTS_SCOPES:
+            if sublime.find_syntax_by_scope(c['scope']):
+                # print(c)
+                for i in ZukanSyntax.list_created_icons_syntaxes():
+                    # ST3 change contexts main
+                    if c['startsWith'] in i and int(sublime.version()) < 4075:
+                        # print(i)
+                        edit_contexts_main(
+                            os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, i), c['scope']
+                        )
+            else:
+                # Syntaxes not installed or disabled
+                for i in ZukanSyntax.list_created_icons_syntaxes():
+                    # Change contexts main empty if not installed or disable
+                    if c['startsWith'] in i:
+                        # print(i)
+                        edit_contexts_main(
+                            os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, i), None
+                        )
 
     def list_created_icons_syntaxes():
         try:
