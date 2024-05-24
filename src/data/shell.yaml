@@ -2,8 +2,29 @@
 ---
 name: Shell
 preferences:
-  scope: source.shell, source.shell.fish
+  scope: source.shell, source.shell.bash, source.shell.fish
   settings:
     icon: shell
+syntax:
+  - name: Bash
+    scope: source.shell.bash
+    hidden: true
+    file_extensions:
+      - ash
+      - bash
+      - bashrc
+      - sh
+      - zsh
+    contexts:
+      main: []
+  - name: Fish
+    scope: source.shell.fish
+    hidden: true
+    file_extensions:
+      - fish
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package, source shell is hidden.
+
+# Package fish

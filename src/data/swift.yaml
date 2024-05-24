@@ -6,10 +6,15 @@ preferences:
   settings:
     icon: swift
 syntax:
-  - name: Plain Text (Swift)
+  - name: Swift
     scope: source.swift
     hidden: true
     file_extensions:
       - swift
+      - swiftinterface
     contexts:
       main: []
+
+# Package Decent Swift Syntax
+# Package Swift Next
+# Package Swift

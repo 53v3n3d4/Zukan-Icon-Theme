@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: codeofconduct
 syntax:
-  - name: Markdown (Code of conduct)
+  - name: Markdown (Code of Conduct)
     scope: text.html.markdown.codeofconduct
     hidden: true
     file_extensions:

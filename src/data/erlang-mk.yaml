@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: erlang-mk
 syntax:
-  - name: makefile (Erlang mk)
+  - name: Makefile (Erlang mk)
     scope: source.makefile.erlang.mk
     hidden: true
     file_extensions:

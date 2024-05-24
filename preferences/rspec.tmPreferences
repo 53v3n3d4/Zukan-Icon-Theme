@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.ruby.rspec</string>
+	<string>source.ruby.rspecfile</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

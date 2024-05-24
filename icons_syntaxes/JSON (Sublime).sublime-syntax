@@ -6,6 +6,7 @@ hidden: true
 file_extensions:
 - .no-sublime-package
 - .sublime-project
+- sublime_session
 - hidden-color-scheme
 - hidden-theme
 - sublime-build

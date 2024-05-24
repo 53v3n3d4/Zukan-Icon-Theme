@@ -5,13 +5,13 @@ preferences:
   scope: source.toml
   settings:
     icon: toml
-# syntax:
-#   - name: Plain Text (TOML)
-#     scope: source.toml
-#     hidden: true
-#     file_extensions:
-#       - toml
-#     contexts:
-#       main: []
+syntax:
+  - name: TOML
+    scope: source.toml
+    hidden: true
+    file_extensions:
+      - toml
+    contexts:
+      main: []
 
-# Adding syntax break highlight if package TOML is installed.
+# Package TOML

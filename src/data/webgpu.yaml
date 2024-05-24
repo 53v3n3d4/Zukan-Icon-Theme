@@ -6,10 +6,12 @@ preferences:
   settings:
     icon: webgpu
 syntax:
-  - name: Plain Text (WebGPU)
+  - name: WGSL
     scope: source.wgsl
     hidden: true
     file_extensions:
       - wgsl
     contexts:
       main: []
+
+# Package WGSL

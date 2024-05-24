@@ -12,4 +12,5 @@ syntax:
     file_extensions:
       - pylintrc
     contexts:
-      main: []
+        - include: scope:source.ini
+          apply_prototype: true

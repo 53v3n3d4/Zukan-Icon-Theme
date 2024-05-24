@@ -20,4 +20,6 @@ syntax:
     file_extensions:
       - bunfig.toml
     contexts:
-      main: []
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

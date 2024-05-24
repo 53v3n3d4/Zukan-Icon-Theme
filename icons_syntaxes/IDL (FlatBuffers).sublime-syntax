@@ -6,6 +6,4 @@ hidden: true
 file_extensions:
 - fbs
 contexts:
-  main:
-  - include: scope:source.webidl
-    apply_prototype: true
+  main: []

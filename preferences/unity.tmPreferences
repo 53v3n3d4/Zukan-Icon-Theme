@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.boo.unity3d, source.cs.unity3d, source.js.unity3d, source.shader</string>
+	<string>source.shader, source.unity_shader</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

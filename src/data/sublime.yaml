@@ -12,6 +12,7 @@ syntax:
     file_extensions:
       - .no-sublime-package
       - .sublime-project
+      - sublime_session
       - hidden-color-scheme
       - hidden-theme
       - sublime-build
@@ -48,3 +49,6 @@ syntax:
       main:
         - include: scope:source.yaml
           apply_prototype: true
+
+# ST Package: JSON and YAML.
+

@@ -5,5 +5,15 @@ preferences:
   scope: source.sql
   settings:
     icon: sql
+syntax:
+  - name: SQL
+    scope: source.sql
+    hidden: true
+    file_extensions:
+      - ddl
+      - dml
+      - sql
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

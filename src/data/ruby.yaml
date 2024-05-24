@@ -18,12 +18,12 @@ syntax:
       - rake
       - thor
       - irbrc
-      - pryrc
       - prawn
+      - pryrc
       - capfile
-      - jbuilder
       - gemspec
       - podspec
+      - jbuilder
     contexts:
       main: []
   - name: Ruby Lockfile

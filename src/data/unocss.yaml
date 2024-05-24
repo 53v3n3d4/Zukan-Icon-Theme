@@ -30,5 +30,3 @@ syntax:
       main:
         - include: scope:source.ts
           apply_prototype: true
-
-

@@ -2,7 +2,7 @@
 ---
 name: WebAssembly
 preferences:
-  scope: binary.webassembly, text.webassembly, source.wast
+  scope: binary.webassembly, source.wast, source.wit
   settings:
     icon: webassembly
 syntax:
@@ -13,11 +13,21 @@ syntax:
       - wasm
     contexts:
       main: []
-  - name: Plain Text (Wast)
-    scope: text.webassembly
+  - name: WAST (WebAssembly Text)
+    scope: source.wast
     hidden: true
     file_extensions:
       - wast
       - wat
     contexts:
       main: []
+  - name: WIT
+    scope: source.wit
+    hidden: true
+    file_extensions:
+      - wit
+    contexts:
+      main: []
+
+# Package WebAssembly Text Syntax
+# Package WasmInterfaceType

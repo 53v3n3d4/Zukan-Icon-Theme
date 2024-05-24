@@ -1,6 +1,6 @@
 %YAML 1.2
 ---
-name: makefile (Erlang mk)
+name: Makefile (Erlang mk)
 scope: source.makefile.erlang.mk
 hidden: true
 file_extensions:

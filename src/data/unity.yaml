@@ -2,11 +2,11 @@
 ---
 name: Unity
 preferences:
-  scope: source.boo.unity3d, source.cs.unity3d, source.js.unity3d, source.shader
+  scope: source.shader, source.unity_shader
   settings:
     icon: unity
 syntax:
-  - name: Plain Text (Unity 3D Shader)
+  - name: UnityShader
     scope: source.shader
     hidden: true
     file_extensions:
@@ -14,5 +14,22 @@ syntax:
       - shader
     contexts:
       main: []
+  # - name: Unity3D Shader
+  #   scope: source.unity_shader
+  #   hidden: true
+  #   file_extensions:
+  #     - cginc
+  #     - shader
+  #   contexts:
+  #     main: []
 
-# Do not have boo, cs, js unity syntax.
+# Package Unity Shader
+# Package Unity3D Shader Highlighter and Snippets source.unity_shader
+
+# Unity Shader -> test to see if conflict
+# name: UnityShader-CG
+# file_extensions:
+#   - cginc
+#   - compute
+#   - hlsl
+# scope: source.c

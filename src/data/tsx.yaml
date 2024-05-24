@@ -2,8 +2,16 @@
 ---
 name: TSX
 preferences:
-  scope: source.ts.react, source.tsx
+  scope: source.tsx
   settings:
     icon: tsx
+syntax:
+  - name: TSX
+    scope: source.tsx
+    hidden: true
+    file_extensions:
+      - tsx
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

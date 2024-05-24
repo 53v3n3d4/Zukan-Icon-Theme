@@ -5,10 +5,6 @@ scope: text.plain.settings
 hidden: true
 file_extensions:
 - env
-- cfg
-- conf
-- ini
-- reg
 - settings
 contexts:
   main: []

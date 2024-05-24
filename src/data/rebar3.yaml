@@ -13,4 +13,5 @@ syntax:
       - rebar.config
       - rebar3.config
     contexts:
-      main: []
+        - include: scope:source.ini
+          apply_prototype: true

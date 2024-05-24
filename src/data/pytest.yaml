@@ -12,7 +12,8 @@ syntax:
     file_extensions:
       - pytest.ini
     contexts:
-      main: []
+        - include: scope:source.ini
+          apply_prototype: true
   - name: Python (pytest)
     scope: source.python.pytest
     hidden: true

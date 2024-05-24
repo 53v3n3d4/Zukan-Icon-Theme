@@ -5,5 +5,14 @@ preferences:
   scope: source.yaml
   settings:
     icon: yaml
+syntax:
+  - name: YAML
+    scope: source.yaml
+    hidden: true
+    file_extensions:
+      - yml
+      - yaml
+    contexts:
+      main: []
 
-# Do not have any syntax.
+# ST Package

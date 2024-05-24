@@ -16,6 +16,13 @@ syntax:
       main:
         - include: scope:source.css
           apply_prototype: true
+  - name: Go
+    scope: source.go
+    hidden: true
+    file_extensions:
+      - go
+    contexts:
+      main: []
   - name: Go (go mod)
     scope: source.gomod
     hidden: true

@@ -2,7 +2,7 @@
 ---
 name: TypeScript
 preferences:
-  scope: source.js.typescript, source.ts, source.json.typescript
+  scope: source.ts, source.json.typescript
   settings:
     icon: ts
 syntax:
@@ -18,5 +18,12 @@ syntax:
       main:
         - include: scope:source.json
           apply_prototype: true
+  - name: TypeScript
+    scope: source.ts
+    hidden: true
+    file_extensions:
+      - ts
+    contexts:
+      main: []
 
-# Do not have syntax js.typescript and ts.
+# ST Package

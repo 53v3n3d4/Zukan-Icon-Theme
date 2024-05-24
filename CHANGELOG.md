@@ -8,12 +8,12 @@
 
 ### Icons, icons-syntaxes and preferences
 - Add icon-theme: archive, Cargo, Cypress, Erlang.mk, Jupyter, mypy, Pipenv, Playwright, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, reStructuredText, Rspec, RVM, Tailwind CSS, tox
-- Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, TOML, Webpack
+- Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
 - Change icon: Audio, Kotlin, makefile, Rspack
-- Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby
+- Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby, Sublime Text
 - Change tmPreferences: Arduino, Citation, CMake, CSV, Flatbuffers, git, HTML, Java, JSX, Lua, MDX, PHP, Ruby
 - Rename icons: Elixir, Fusion, TS, Unity, WebAssembly
-- Rename sublime-syntax file name: Arduino, Docker, GraphQL, Kotlin, Less js, Next js, NGINX, Node js, OpenGL, pnpm, pytest, Protobuf, README, Sass, SCSS, Svelte, Test JSX, Test TSX, Vue
+- Rename sublime-syntax file name: Arduino, Code of Conduct, Docker, GraphQL, Kotlin, Less js, Next js, NGINX, Node js, OpenGL, pnpm, pytest, Protobuf, README, Sass, SCSS, Svelte, Test JSX, Test TSX, Unity, Vue, WebAssembly, WebGPU
 
 ### Build
 - Add data files

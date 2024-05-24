@@ -2,21 +2,61 @@
 ---
 name: Settings
 preferences:
-  scope: source.env, source.ini, source.json.settings, text.plain.settings
+  scope: source.env, source.ini, source.reg, text.plain.settings
   settings:
     icon: settings
 syntax:
+  - name: DotENV
+    scope: source.env
+    hidden: true
+    file_extensions:
+      - .env
+      - .env.default
+      - .env.defaults
+      - .env.dev
+      - .env.development
+      - .env.development.local
+      - .env.dist
+      - .env.dusk.local
+      - .env.example
+      - .env.local
+      - .env.prod
+      - .env.production
+      - .env.production.local
+      - .env.sample
+      - .env.staging
+      - .env.test
+      - .env.test.local
+      - .env.testing
+      - .envrc
+      - .flaskenv
+    contexts:
+      main: []
+  - name: INI
+    scope: source.ini
+    hidden: true
+    file_extensions:
+      - cfg
+      - conf
+      - ini
+    contexts:
+      main: []
   - name: Plain Text (Settings)
     scope: text.plain.settings
     hidden: true
     file_extensions:
       - env
-      - cfg
-      - conf
-      - ini
-      - reg
       - settings
     contexts:
       main: []
+  - name: REG
+    scope: source.reg
+    hidden: true
+    file_extensions:
+      - reg
+    contexts:
+      main: []
 
-# Do not have env, ini or json syntaxes,
+# Package INI: INI and REG
+
+# Package DotENV
