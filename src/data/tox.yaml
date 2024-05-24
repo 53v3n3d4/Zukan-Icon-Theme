@@ -12,5 +12,6 @@ syntax:
     file_extensions:
       - tox.ini
     contexts:
+      main:
         - include: scope:source.ini
           apply_prototype: true
