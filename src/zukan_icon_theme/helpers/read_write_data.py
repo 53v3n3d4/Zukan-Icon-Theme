@@ -111,8 +111,8 @@ def read_yaml_data(yaml_file: str) -> dict:
 def edit_contexts_main(file_path: str, scope: str = None):
     """
     Edit contexts main in zukan icons sublime-syntax files. If syntax not installed or
-    disable it changes contexts main for empty list. This avoid error for syntax not
-    found.
+    disabled, it changes contexts main for empty list. This avoid error in console for 
+    syntax not found.
 
     If ST versions lower than 4075, it used other contexts main format. See comment below.
 

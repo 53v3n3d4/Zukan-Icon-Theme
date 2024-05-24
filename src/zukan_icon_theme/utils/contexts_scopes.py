@@ -1,8 +1,8 @@
 CONTEXTS_MAIN = {'contexts': {'main': []}}
 
 # Scopes used in 'contexts', sublime-syntax files. In case, syntax not installed
-# or disable, this needs to be removed. Or user receive an error
-# message in console about syntax not found.
+# or disable, this needs to be removed. Or user receive an error message in console,
+# about syntax not found.
 CONTEXTS_SCOPES = [
     {'scope': 'source.ini', 'startsWith': 'INI ('},
     {'scope': 'source.js', 'startsWith': 'JavaScript ('},
@@ -23,7 +23,9 @@ CONTEXTS_SCOPES = [
     {'scope': 'text.html.markdown', 'startsWith': 'Markdown ('},
     # {'scope': 'text.plain', 'startsWith': 'Plain Text ('},
     {'scope': 'text.xml', 'startsWith': 'XML ('},
-    # Custmos
+    # Specific file
+    {'scope': 'source.css', 'startsWith': 'Less'},
+    {'scope': 'source.css', 'startsWith': 'SCSS'},
     {'scope': 'source.js', 'startsWith': 'UnitTest (JavaScript)'},
     {'scope': 'source.jsx', 'startsWith': 'UnitTest (JSX)'},
     {'scope': 'source.tsx', 'startsWith': 'UnitTest (TSX)'},

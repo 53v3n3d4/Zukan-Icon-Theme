@@ -131,13 +131,30 @@ class ZukanSyntax:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), s
             )
 
+    def edit_context_scope(syntax_name: str):
+        logger.info('checking icon context scope if syntax not installed.')
+        for c in CONTEXTS_SCOPES:
+            if sublime.find_syntax_by_scope(c['scope']):
+                # Change to compat with ST3 contexts main
+                if c['startsWith'] in syntax_name and int(sublime.version()) < 4075:
+                    edit_contexts_main(
+                        os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name), c['scope']
+                    )
+            else:
+                # Syntaxes not installed or disabled
+                # Change contexts main empty if not installed or disable
+                if c['startsWith'] in syntax_name:
+                    edit_contexts_main(
+                        os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name), None
+                    )
+
     def edit_contexts_scopes():
-        logger.info('checking contexts scopes if syntax not installed.')
+        logger.info('checking icons contexts scopes if syntax not installed.')
         for c in CONTEXTS_SCOPES:
             if sublime.find_syntax_by_scope(c['scope']):
                 # print(c)
                 for i in ZukanSyntax.list_created_icons_syntaxes():
-                    # ST3 change contexts main
+                    # Change to compat with ST3 contexts main
                     if c['startsWith'] in i and int(sublime.version()) < 4075:
                         # print(i)
                         edit_contexts_main(
@@ -153,7 +170,14 @@ class ZukanSyntax:
                             os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, i), None
                         )
 
-    def list_created_icons_syntaxes():
+    def list_created_icons_syntaxes() -> list:
+        """
+        List all sublime-syntax files in Zukan Icon Theme/icons_syntaxes folder.
+
+        Returns:
+        list_syntaxes_installed (list) -- list of sublime-syntaxes in folder
+        icons_syntaxes/.
+        """
         try:
             list_syntaxes_installed = []
             if os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH):

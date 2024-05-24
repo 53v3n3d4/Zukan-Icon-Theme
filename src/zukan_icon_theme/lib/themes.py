@@ -166,20 +166,20 @@ class ThemeFile:
         List all sublime-themes files in Zukan Icon Theme/icons folder.
 
         Returns:
-        list_zukan_installed (list) -- list of sublime-themes in folder icons/.
+        list_themes_installed (list) -- list of sublime-themes in folder icons/.
         """
         try:
-            list_zukan_installed = []
+            list_themes_installed = []
             if os.path.exists(ZUKAN_PKG_ICONS_PATH):
                 for file in glob.glob(ZUKAN_PKG_ICONS_PATH + '/*.sublime-theme'):
-                    list_zukan_installed.append(os.path.basename(file))
-                return list_zukan_installed
+                    list_themes_installed.append(os.path.basename(file))
+                return list_themes_installed
             else:
                 raise FileNotFoundError(
                     # print('Zukan Icon Theme: file or directory do not exist.')
                     logger.error('file or directory do not exist.')
                 )
-            return list_zukan_installed
+            return list_themes_installed
         except FileNotFoundError:
             # print_filenotfounderror('Zukan Icon Theme/icons folder')
             logger.error(

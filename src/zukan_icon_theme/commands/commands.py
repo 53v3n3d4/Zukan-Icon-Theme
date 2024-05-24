@@ -138,6 +138,7 @@ class InstallSyntax(sublime_plugin.TextCommand):
     def run(self, edit, syntax_name: str):
         file_name, file_extension = os.path.splitext(syntax_name)
         ZukanSyntax.create_icon_syntax(file_name)
+        ZukanSyntax.edit_context_scope(syntax_name)
 
     def input(self, args: dict):
         return InstallSyntaxInputHandler()
@@ -188,7 +189,7 @@ class InstallTheme(sublime_plugin.TextCommand):
 
 class InstallThemeInputHandler(sublime_plugin.ListInputHandler):
     """
-    List of installed themes, created themes excluded, and return theme_name
+    List of installed themes, excluding created themes, and return theme_name
     to InstallTheme.
     """
 
