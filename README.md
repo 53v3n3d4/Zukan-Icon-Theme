@@ -48,7 +48,7 @@ If you prefer to create manually, see [theme.md](https://github.com/53v3n3d4/Zuk
 
 ### Syntax
 
-To delete duplicated syntaxes that already exist on your ST, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Syntaxes`.  
+To avoid duplicated syntaxes that already exist on your ST, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Syntaxes`.  
 
 ## Uninstall
 
@@ -56,9 +56,9 @@ To uninstall manually, go to your Sublime Text folder.
 - Menu `Sublime Text > Preferences > Browse packages...`  
 - Then delete `Zukan-Icon-Theme` inside `Packages` folder  
 
-### Dependecies
+> Dependecies
 
-ST4 uninstall orphans dependencies. So dependency `ruamel-yaml` should be deleted when you uninstall/remove package, if not used by other packages.
+> ST4 uninstall orphans dependencies. So dependency `ruamel-yaml` should be deleted when you uninstall/remove package, if not used by other packages.
 
 
 ## Icons that works depending on folder position
@@ -78,7 +78,7 @@ ST4 uninstall orphans dependencies. So dependency `ruamel-yaml` should be delete
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
 - If you use a theme that has sublime-syntax and tmPreferences, only icons, not present on theme, might show.  
-- Temporary not show icons, use `disable package` at 'Tools > Command Palette... > Package Control: Disable Package'. Select `Zukan Icon Theme` on list  
+- Temporary not show icons, use `disable package` at `Tools > Command Palette... > Package Control: Disable Package'. Select `Zukan Icon Theme` on list  
 
 ## File icon packages :alien:
 
