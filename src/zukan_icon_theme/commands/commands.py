@@ -239,6 +239,7 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
                 MoveFolder.move_folders()
         finally:
             ZukanSyntax.create_icons_syntaxes()
+            ZukanSyntax.edit_contexts_scopes()
             ThemeFile.create_themes_files()
 
 
