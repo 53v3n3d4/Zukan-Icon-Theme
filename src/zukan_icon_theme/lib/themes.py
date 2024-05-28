@@ -2,7 +2,6 @@ import errno
 import glob
 import logging
 import os
-import shutil
 
 from ..helpers.read_write_data import dump_json_data
 from ..helpers.search_themes import (
@@ -50,11 +49,8 @@ class ThemeFile:
                 )
                 if theme_name in list_themes_has_opacity:
                     file_content = TEMPLATE_JSON
-                    # ordered_dict = OrderedDict(file_content)
                 if theme_name in list_themes_no_opacity:
                     file_content = TEMPLATE_JSON_WITH_OPACITY
-                    # ordered_dict = OrderedDict(file_content)
-                # print(ordered_dict)
                 dump_json_data(file_content, theme_filepath)
                 logger.info('creating icon theme %s', os.path.basename(theme_filepath))
                 return theme_name

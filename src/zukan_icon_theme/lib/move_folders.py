@@ -10,14 +10,11 @@ from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_PKG_PATH,
+    ZUKAN_PKG_SRC_PATH,
 )
 from ..utils.zukan_pkg_folders import ZUKAN_PKG_FOLDERS
 
 logger = logging.getLogger(__name__)
-
-# Testing path
-zukan_pkg_assets = os.path.join(ZUKAN_PKG_PATH + '/assets')
-# test_path = os.path.join(zukan_pkg_assets, 'Zukan Icon Theme')
 
 
 class MoveFolder:
@@ -86,12 +83,15 @@ class MoveFolder:
         name (str) -- folder name.
         """
         try:
-            if os.path.exists(ZUKAN_INSTALLED_PKG_PATH) and (
-                os.path.exists(ZUKAN_PKG_ICONS_PATH)
-                or os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+            if (
+                not os.path.exists(ZUKAN_PKG_SRC_PATH)
+                and os.path.exists(ZUKAN_INSTALLED_PKG_PATH)
+                and (
+                    os.path.exists(ZUKAN_PKG_ICONS_PATH)
+                    or os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+                )
             ):
                 logger.debug('folder %s exists in Packages', name)
-                # After testing, change to Packages/Zukan Icon Theme
                 shutil.rmtree(ZUKAN_PKG_PATH)
                 logger.info('%s deleted.', ZUKAN_PKG_PATH)
                 return name

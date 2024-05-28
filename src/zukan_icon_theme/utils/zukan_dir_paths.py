@@ -51,6 +51,8 @@ ZUKAN_PKG_ICONS_SYNTAXES_PATH = os.path.join(
     sublime.packages_path(), 'Zukan-Icon-Theme', 'icons_syntaxes'
 )
 
+ZUKAN_PKG_SRC_PATH = os.path.join(sublime.packages_path(), 'Zukan-Icon-Theme', 'src')
+
 # ZUKAN_PKG_PATH = filepath('../../../../../Packages/Zukan-Icon-Theme')
 ZUKAN_PKG_PATH = os.path.join(sublime.packages_path(), 'Zukan-Icon-Theme')
 
