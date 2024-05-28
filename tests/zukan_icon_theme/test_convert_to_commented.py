@@ -20,9 +20,9 @@ class TestConvertToCommented:
         [
             (TEST_SUBLIME_SYNTAXES_DICT, TEST_PICKLE_NESTED_ORDERED_DICT),
             (TEST_SUBLIME_SYNTAX_DICT, TEST_PICKLE_ORDERED_DICT),
+            (TEST_YAML_ORDERED_DICT, TEST_YAML_ORDERED_DICT),
             ('milk way', 'milk way'),
             (7, 7),
-            (TEST_YAML_ORDERED_DICT, TEST_YAML_ORDERED_DICT),
         ],
     )
     def test_convert_to_commented(self, a, expected):
@@ -32,6 +32,7 @@ class TestConvertToCommented:
         assert isinstance(TEST_PICKLE_NESTED_ORDERED_DICT, list)
         assert isinstance(TEST_SUBLIME_SYNTAX_DICT, dict)
         assert isinstance(TEST_PICKLE_ORDERED_DICT, dict)
+        assert isinstance(TEST_YAML_ORDERED_DICT, dict)
         assert isinstance('milk way', str)
         assert isinstance('milk way', str)
         assert isinstance(7, int)

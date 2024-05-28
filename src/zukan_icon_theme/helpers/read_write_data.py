@@ -1,11 +1,10 @@
 import _pickle as pickle
 import errno
+import json
 import logging
 import os
 
 from .convert_to_commented import convert_to_commented
-
-# from .print_message import print_filenotfounderror, print_oserror
 from ..utils.contexts_scopes import (
     CONTEXTS_MAIN,
 )
@@ -38,12 +37,10 @@ def read_pickle_data(pickle_file: str) -> dict:
         # print(pickle_data)
         return pickle_data
     except FileNotFoundError:
-        # print_filenotfounderror(pickle_file)
         logger.error(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), pickle_file
         )
     except OSError:
-        # print_oserror(pickle_file)
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), pickle_file
         )
@@ -69,12 +66,10 @@ def dump_yaml_data(file_data: dict, yaml_file: str):
         with open(yaml_file, 'w') as f:
             yaml.dump(file_data, f)
     except FileNotFoundError:
-        # print_filenotfounderror(yaml_file)
         logger.error(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), yaml_file
         )
     except OSError:
-        # print_oserror(yaml_file)
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), yaml_file
         )
@@ -110,11 +105,8 @@ def read_yaml_data(yaml_file: str) -> dict:
 
 def edit_contexts_main(file_path: str, scope: str = None):
     """
-    Edit contexts main in zukan icons sublime-syntax files. If syntax not installed or
-    disabled, it changes contexts main for empty list. This avoid error in console for 
-    syntax not found.
-
-    If ST versions lower than 4075, it used other contexts main format. See comment below.
+    Edit contexts main for empty list if scope None. If scope exists, it changes
+    for a format compat to ST version < 4075.
 
     Parameters:
     file_path (str) -- path to icon syntax file.
@@ -122,7 +114,7 @@ def edit_contexts_main(file_path: str, scope: str = None):
     """
     file_content = read_yaml_data(file_path)
     ordered_dict = OrderedDict(file_content)
-    # print(ordered_dict)
+    # print(ordered_dict['contexts']['main'])
     if scope is not None:
         # Could not find other references, got this contexts main format, for ST versions
         # lower than 4075, from A File Icon package.
@@ -138,3 +130,24 @@ def edit_contexts_main(file_path: str, scope: str = None):
     ordered_dict.update(CONTEXTS_MAIN)
     # print(ordered_dict)
     dump_yaml_data(ordered_dict, file_path)
+
+
+def dump_json_data(file_data: dict, json_file: str):
+    """
+    Write json file (sublime-themes).
+
+    Parameters:
+    file_data (dict) -- contents of json file.
+    json_file (str) -- path to where json file will be saved.
+    """
+    try:
+        with open(json_file, 'w') as f:
+            json.dump(file_data, f, indent=4)
+    except FileNotFoundError:
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), json_file
+        )
+    except OSError:
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), json_file
+        )

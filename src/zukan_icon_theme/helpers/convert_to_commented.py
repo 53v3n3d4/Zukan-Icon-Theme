@@ -20,16 +20,8 @@ def convert_to_commented(d: dict) -> dict:
         od = CommentedMap()
         for k, v in d.items():
             od[k] = convert_to_commented(v)
-
-        # od = CommentedMap((k, convert_to_commented(v)) for k, v in d.items())
-        # print(od)
-
         return od
     elif isinstance(d, list):
-        # od = []
-        # for i in d:
-        #     od = convert_to_commented(i)
-
         od = [convert_to_commented(i) for i in d]
         return od
     else:

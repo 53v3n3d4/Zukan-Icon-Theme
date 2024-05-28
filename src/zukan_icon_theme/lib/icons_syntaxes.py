@@ -4,20 +4,22 @@ import logging
 import os
 import sublime
 
-# from ..helpers.print_message import print_filenotfounderror, print_oserror
 from ..helpers.read_write_data import (
     dump_yaml_data,
     edit_contexts_main,
     read_pickle_data,
+    read_yaml_data,
 )
 from ..helpers.search_syntaxes import compare_scopes
 from ..utils.contexts_scopes import (
     CONTEXTS_SCOPES,
+    CONTEXTS_MAIN,
 )
 from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_SYNTAXES_DATA_FILE,
 )
+from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 
@@ -44,12 +46,10 @@ class ZukanSyntax:
             logger.info('%s created.', filename)
             return zukan_icons_syntaxes
         except FileNotFoundError:
-            # print_filenotfounderror(filename)
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
             )
         except OSError:
-            # print_oserror(filename)
             logger.error(
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
             )
@@ -71,12 +71,10 @@ class ZukanSyntax:
             logger.info('sublime-syntaxes created.')
             return zukan_icons_syntaxes
         except FileNotFoundError:
-            # print_filenotfounderror(filename)
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
             )
         except OSError:
-            # print_oserror(filename)
             logger.error(
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
             )
@@ -121,35 +119,73 @@ class ZukanSyntax:
                 os.remove(s)
             logger.info('sublime-syntaxes deleted.')
         except FileNotFoundError:
-            # print_filenotfounderror(s)
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), s
             )
         except OSError:
-            # print_oserror(s)
             logger.error(
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), s
             )
 
     def edit_context_scope(syntax_name: str):
-        logger.info('checking icon context scope if syntax not installed.')
-        for c in CONTEXTS_SCOPES:
-            if sublime.find_syntax_by_scope(c['scope']):
-                # Change to compat with ST3 contexts main
-                if c['startsWith'] in syntax_name and int(sublime.version()) < 4075:
-                    edit_contexts_main(
-                        os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name), c['scope']
-                    )
-            else:
-                # Syntaxes not installed or disabled
-                # Change contexts main empty if not installed or disable
-                if c['startsWith'] in syntax_name:
-                    edit_contexts_main(
-                        os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name), None
-                    )
+        """
+        Edit contexts main in zukan icon sublime-syntax file.
+
+        If syntax not installed or disabled, it changes contexts main for empty list.
+        This avoid error in console about syntax not found.
+
+        Parameters:
+        syntax_name (str) -- icon syntax filename.
+        """
+        logger.info('editing icon context scope if syntax not installed.')
+        syntax_file = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name)
+        file_content = read_yaml_data(syntax_file)
+        ordered_dict = OrderedDict(file_content)
+        # print(ordered_dict['contexts']['main'])
+        for od in ordered_dict['contexts']['main']:
+            # Only with contexts main include
+            if od['include']:
+                # print(od['include'])
+                scope = od['include'].replace('scope:', '')
+                # print(scope)
+                if (
+                    sublime.find_syntax_by_scope(scope)
+                    and scope is not None
+                    and int(sublime.version()) > 4075
+                ):
+                    return ordered_dict
+                if (
+                    sublime.find_syntax_by_scope(scope)
+                    and scope is not None
+                    and int(sublime.version()) < 4075
+                ):
+                    # Could not find other references, got this contexts main format,
+                    # for ST versions lower than 4075, from A File Icon package.
+                    include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
+                    include_scope = 'scope:{s}'.format(s=scope)
+                    CONTEXTS_MAIN['contexts']['main'] = [
+                        {'include': include_scope_prop},
+                        {'include': include_scope},
+                    ]
+                if scope is None:
+                    print(ordered_dict)
+                    CONTEXTS_MAIN['contexts']['main'] = []
+                # print(CONTEXTS_MAIN)
+                ordered_dict.update(CONTEXTS_MAIN)
+                # print(ordered_dict)
+                dump_yaml_data(ordered_dict, syntax_file)
 
     def edit_contexts_scopes():
-        logger.info('checking icons contexts scopes if syntax not installed.')
+        """
+        Edit contexts main in zukan icons sublime-syntax files.
+
+        If syntax not installed or disabled, it changes contexts main for empty list.
+        This avoid error in console about syntax not found.
+
+        Parameters:
+        syntax_name (str) -- icon syntax filename.
+        """
+        logger.info('editing icons contexts scopes if syntax not installed.')
         for c in CONTEXTS_SCOPES:
             if sublime.find_syntax_by_scope(c['scope']):
                 # print(c)
@@ -197,7 +233,6 @@ class ZukanSyntax:
                 'Zukan Icon Theme/icons_syntaxes folder',
             )
         except OSError:
-            # print_oserror(s)
             logger.error(
                 '[Errno %d] %s: %r',
                 errno.EACCES,
