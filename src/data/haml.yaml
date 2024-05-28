@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Haml
+preferences:
+  scope: text.haml
+  settings:
+    icon: haml
+syntax:
+  - name: HAML
+    scope: text.haml
+    hidden: true
+    file_extensions:
+      - haml
+    contexts:
+      main: []
+
+# ST Package

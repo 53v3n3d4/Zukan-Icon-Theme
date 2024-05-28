@@ -2,11 +2,11 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.css.rails, source.js.rails, source.ruby.rails, source.sql.rails, text.html.rails</string>
+	<string>text.haml</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>
-		<string>rails</string>
+		<string>haml</string>
 	</dict>
 </dict>
 </plist>

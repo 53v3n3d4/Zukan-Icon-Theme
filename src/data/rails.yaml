@@ -2,7 +2,7 @@
 ---
 name: Rails
 preferences:
-  scope: source.css.rails, source.js.rails, source.ruby.rails, source.sql.rails, text.haml, text.html.rails
+  scope: source.css.rails, source.js.rails, source.ruby.rails, source.sql.rails, text.html.rails
   settings:
     icon: rails
 syntax:
@@ -15,13 +15,6 @@ syntax:
       main:
         - include: scope:source.css
           apply_prototype: true
-  - name: HAML
-    scope: text.haml
-    hidden: true
-    file_extensions:
-      - haml
-    contexts:
-      main: []
   - name: HTML (Rails)
     scope: text.html.rails
     hidden: true
