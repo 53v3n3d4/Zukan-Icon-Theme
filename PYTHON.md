@@ -37,7 +37,7 @@ Virtualenv
 Python:         3.8.19
 Implementation: CPython
 
-# Check if .python-version file has correct version. Important for poetry install.
+# Check if .python-version file has correct version. Important for 'poetry install'.
 # It could be 3.3 or 3.8 because Sublime Text interpreter.
 $ cat .python-version
 3.8.19

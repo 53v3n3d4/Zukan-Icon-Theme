@@ -52,16 +52,16 @@ It deletes all created sublime-theme files in `icons` folder.
 
 ### Install Syntax
 
-It install a sublime-syntax file from zukan icons syntaxes list, excluded already installed in plugin or ST.  
+It install a sublime-syntax file from zukan icons syntaxes list, excluding already installed in plugin or ST.  
 
 ### Install Theme
 
-It install a sublime-theme file from a list of user installed themes, excluded already installed in plugin.  
+It install a sublime-theme file from a list of user installed themes, excluding already installed in plugin.  
 
 ### Install Themes
 
-It install all sublime-theme files from a list of user installed themes, excluded already installed in plugin.  
+It install all sublime-theme files from a list of user installed themes, excluding already installed in plugin.  
 
 ### Rebuild Syntaxes
 
-It removes all previous sublime-syntax files in `icons_syntaxes`, before install all zukan icons syntaxes, excluded user installed syntaxes.
+It removes all previous sublime-syntax files in `icons_syntaxes`, before install all zukan icons syntaxes, excluding user installed syntaxes.

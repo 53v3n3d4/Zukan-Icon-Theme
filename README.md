@@ -78,7 +78,7 @@ To uninstall manually, go to your Sublime Text folder.
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
 - If you use a theme that has sublime-syntax and tmPreferences, only icons, not present on theme, might show.  
-- Temporary not show icons, use `disable package` at `Tools > Command Palette... > Package Control: Disable Package'. Select `Zukan Icon Theme` on list  
+- Temporary not show icons, use `disable package` at `Tools > Command Palette... > Package Control: Disable Package`. Select `Zukan Icon Theme` on list  
 
 ## File icon packages :alien:
 
