@@ -23,11 +23,13 @@ def filepath(url: str) -> str:
     else:
         raise ValueError('Url need to be string.')
 
+# Zukan-Icon-Theme.src.zukan_icon_theme.utils
+PACKAGE_NAME = __package__.split('.', 1)[0]
 
 # ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data.pkl')
 ZUKAN_SYNTAXES_DATA_FILE = os.path.join(
     sublime.packages_path(),
-    'Zukan-Icon-Theme',
+    PACKAGE_NAME,
     'icons_syntaxes',
     'zukan_syntaxes_data.pkl',
 )
@@ -36,25 +38,25 @@ ZUKAN_SYNTAXES_DATA_FILE = os.path.join(
 #     '../../../../../Installed Packages/Zukan Icon Theme.sublime-package'
 # )
 ZUKAN_INSTALLED_PKG_PATH = os.path.join(
-    sublime.installed_packages_path(), 'Zukan-Icon-Theme.sublime-package'
+    sublime.installed_packages_path(), PACKAGE_NAME + '.sublime-package'
 )
 
 # ZUKAN_PKG_ICONS_PATH = filepath('../../../../../Packages/Zukan-Icon-Theme/icons')
 ZUKAN_PKG_ICONS_PATH = os.path.join(
-    sublime.packages_path(), 'Zukan-Icon-Theme', 'icons'
+    sublime.packages_path(), PACKAGE_NAME, 'icons'
 )
 
 # ZUKAN_PKG_ICONS_SYNTAXES_PATH = filepath(
 #     '../../../../../Packages/Zukan-Icon-Theme/icons_syntaxes'
 # )
 ZUKAN_PKG_ICONS_SYNTAXES_PATH = os.path.join(
-    sublime.packages_path(), 'Zukan-Icon-Theme', 'icons_syntaxes'
+    sublime.packages_path(), PACKAGE_NAME, 'icons_syntaxes'
 )
 
-ZUKAN_PKG_SRC_PATH = os.path.join(sublime.packages_path(), 'Zukan-Icon-Theme', 'src')
+ZUKAN_PKG_SRC_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'src')
 
 # ZUKAN_PKG_PATH = filepath('../../../../../Packages/Zukan-Icon-Theme')
-ZUKAN_PKG_PATH = os.path.join(sublime.packages_path(), 'Zukan-Icon-Theme')
+ZUKAN_PKG_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME)
 
 # Testing only
 

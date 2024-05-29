@@ -53,8 +53,7 @@ def plugin_loaded():
     """
     try:
         if (
-            os.path.exists(ZUKAN_INSTALLED_PKG_PATH)
-            and not os.path.exists(ZUKAN_PKG_ICONS_PATH)
+            not os.path.exists(ZUKAN_PKG_ICONS_PATH)
             and not os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
         ):
             MoveFolder.move_folders()
@@ -67,8 +66,8 @@ def plugin_loaded():
             # Edit icons syntaxes contexts main if syntax not installed or ST3
             ZukanSyntax.edit_contexts_scopes()
         if not any(
-            syntax.endswith('.sublime-theme')
-            for syntax in os.listdir(ZUKAN_PKG_ICONS_PATH)
+            theme.endswith('.sublime-theme')
+            for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
         ):
             ThemeFile.create_themes_files()
 

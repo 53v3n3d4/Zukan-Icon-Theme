@@ -3,6 +3,7 @@ CONTEXTS_MAIN = {'contexts': {'main': []}}
 # Scopes used in 'contexts', sublime-syntax files. In case, syntax not installed
 # or disable, this needs to be removed. Or user receive an error message in console,
 # about syntax not found.
+# Contexts main are important for highlighting while also keep icon showing.
 CONTEXTS_SCOPES = [
     {'scope': 'source.ini', 'startsWith': 'INI ('},
     {'scope': 'source.js', 'startsWith': 'JavaScript ('},

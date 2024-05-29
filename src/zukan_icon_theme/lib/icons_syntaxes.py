@@ -12,8 +12,8 @@ from ..helpers.read_write_data import (
 )
 from ..helpers.search_syntaxes import compare_scopes
 from ..utils.contexts_scopes import (
-    CONTEXTS_SCOPES,
     CONTEXTS_MAIN,
+    CONTEXTS_SCOPES,
 )
 from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
@@ -181,9 +181,6 @@ class ZukanSyntax:
 
         If syntax not installed or disabled, it changes contexts main for empty list.
         This avoid error in console about syntax not found.
-
-        Parameters:
-        syntax_name (str) -- icon syntax filename.
         """
         logger.info('editing icons contexts scopes if syntax not installed.')
         for c in CONTEXTS_SCOPES:

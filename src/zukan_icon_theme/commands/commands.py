@@ -138,6 +138,7 @@ class InstallSyntax(sublime_plugin.TextCommand):
     def run(self, edit, syntax_name: str):
         file_name, file_extension = os.path.splitext(syntax_name)
         ZukanSyntax.create_icon_syntax(file_name)
+        # Edit icon syntax contexts main if syntax not installed or ST3.
         ZukanSyntax.edit_context_scope(syntax_name)
 
     def input(self, args: dict):
@@ -235,11 +236,12 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
         sublime-theme and sublime-syntax files.
         """
         try:
+            # ThemeFile.delete_created_themes_files()
             ZukanSyntax.delete_icons_syntaxes()
-            if os.path.exists(ZUKAN_INSTALLED_PKG_PATH):
-                MoveFolder.move_folders()
+            MoveFolder.move_folders()
         finally:
             ZukanSyntax.create_icons_syntaxes()
+            # Edit icons syntaxes contexts main if syntax not installed or ST3
             ZukanSyntax.edit_contexts_scopes()
             ThemeFile.create_themes_files()
 
@@ -255,4 +257,5 @@ class RebuildSyntaxes(sublime_plugin.ApplicationCommand):
             ZukanSyntax.delete_icons_syntaxes()
         finally:
             ZukanSyntax.create_icons_syntaxes()
+            # Edit icons syntaxes contexts main if syntax not installed or ST3
             ZukanSyntax.edit_contexts_scopes()
