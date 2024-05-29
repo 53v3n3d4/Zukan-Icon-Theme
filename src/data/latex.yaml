@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: LaTeX
+preferences:
+  scope: text.tex.latex
+  settings:
+    icon: latex
+syntax:
+  - name: LaTeX
+    scope: text.tex.latex
+    hidden: true
+    file_extensions:
+      - tex
+      - ltx
+    contexts:
+      main: []
+
+# ST Package

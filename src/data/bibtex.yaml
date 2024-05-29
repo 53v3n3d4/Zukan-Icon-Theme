@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: BibTeX
+preferences:
+  scope: text.bibtex
+  settings:
+    icon: bibtex
+syntax:
+  - name: BibTeX
+    scope: text.bibtex
+    hidden: true
+    file_extensions:
+      - bib
+    contexts:
+      main: []
+
+# ST Package

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plist version="1.0">
+<dict>
+	<key>scope</key>
+	<string>text.tex.latex</string>
+	<key>settings</key>
+	<dict>
+		<key>icon</key>
+		<string>latex</string>
+	</dict>
+</dict>
+</plist>
