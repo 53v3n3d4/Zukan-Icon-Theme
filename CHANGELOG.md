@@ -7,7 +7,7 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Icons, icons-syntaxes and preferences
-- Add icon-theme: archive, Cargo, Cypress, Erlang.mk, Haml, Jupyter, mypy, Pipenv, Playwright, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, reStructuredText, Rspec, RVM, Tailwind CSS, tox
+- Add icon-theme: archive, Avro, Cargo, Cypress, Erlang.mk, glTF, Haml, Jupyter, mypy, Pipenv, Playwright, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, reStructuredText, Rspec, RVM, Tailwind CSS, tox
 - Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
 - Change icon: Audio, Kotlin, makefile, Rspack
 - Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby, Sublime Text

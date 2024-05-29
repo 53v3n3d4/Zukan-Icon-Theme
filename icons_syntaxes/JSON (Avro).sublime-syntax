@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: JSON (Avro)
+scope: source.json.avro
+hidden: true
+file_extensions:
+- avsc
+contexts:
+  main:
+  - include: scope:source.json
+    apply_prototype: true

@@ -10,8 +10,6 @@ syntax:
     scope: source.json
     hidden: true
     file_extensions:
-      - avsc
-      - gltf
       - json
       - jsonc
     contexts:

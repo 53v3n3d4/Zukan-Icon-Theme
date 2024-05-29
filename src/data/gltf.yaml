@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: glTF
+preferences:
+  scope: binary.gltf, source.json.gltf
+  settings:
+    icon: gltf
+syntax:
+  - name: Binary (glTF)
+    scope: binary.gltf
+    hidden: true
+    file_extensions:
+     - glb
+    contexts:
+      main: []
+  - name: JSON (glTF)
+    scope: source.json.gltf
+    hidden: true
+    file_extensions:
+      - gltf
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+
+# ST Package
