@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: ClojureDart
+preferences:
+  scope: source.clojure.clojuredart
+  settings:
+    icon: clojuredart
+syntax:
+  - name: ClojureDart
+    scope: source.clojure.clojuredart
+    hidden: true
+    file_extensions:
+      - cljd
+    contexts:
+      main:
+        - include: scope:source.clojure
+          apply_prototype: true

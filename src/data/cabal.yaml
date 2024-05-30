@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Cabal
+preferences:
+  scope: source.cabal
+  settings:
+    icon: cabal
+syntax:
+  - name: Cabal
+    scope: source.cabal
+    hidden: true
+    file_extensions:
+      - cabal
+      - cabal.project
+    contexts:
+      main: []
+
+# ST Package

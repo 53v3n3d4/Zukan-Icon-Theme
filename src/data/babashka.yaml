@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Babashka
+preferences:
+  scope: source.clojure.babashka
+  settings:
+    icon: babashka
+syntax:
+  - name: Babashka
+    scope: source.clojure.babashka
+    hidden: true
+    file_extensions:
+      - bb
+    contexts:
+      main:
+        - include: scope:source.clojure
+          apply_prototype: true

@@ -18,13 +18,16 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.tsx', 'startsWith': 'TSX ('},
     {'scope': 'source.webidl', 'startsWith': 'IDL ('},
     {'scope': 'source.yaml', 'startsWith': 'YAML ('},
-    {'scope': 'text.bibtex', 'startsWith': 'BibTex ('},
+    {'scope': 'text.bibtex', 'startsWith': 'BibTeX ('},
     {'scope': 'text.git.ignore', 'startsWith': 'Git ('},
     {'scope': 'text.html.basic', 'startsWith': 'HTML ('},
     {'scope': 'text.html.markdown', 'startsWith': 'Markdown ('},
     # {'scope': 'text.plain', 'startsWith': 'Plain Text ('},
     {'scope': 'text.xml', 'startsWith': 'XML ('},
     # Specific file
+    {'scope': 'source.clojure', 'startsWith': 'Babashka'},
+    {'scope': 'source.clojure', 'startsWith': 'ClojureDart'},
+    {'scope': 'source.clojure', 'startsWith': 'ClojureScript'},
     {'scope': 'source.css', 'startsWith': 'Less'},
     {'scope': 'source.css', 'startsWith': 'SCSS'},
     {'scope': 'source.js', 'startsWith': 'UnitTest (JavaScript)'},
@@ -32,4 +35,5 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.tsx', 'startsWith': 'UnitTest (TSX)'},
     {'scope': 'source.ts', 'startsWith': 'UnitTest (TypeScript)'},
     {'scope': 'text.html.basic', 'startsWith': 'XML (SVG)'},
+    {'scope': 'text.tex.latex', 'startsWith': 'Literate Haskell'},
 ]
