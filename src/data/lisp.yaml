@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Lisp
+preferences:
+  scope: source.lisp
+  settings:
+    icon: lisp
+syntax:
+  - name: Lisp
+    scope: source.lisp
+    hidden: true
+    file_extensions:
+      - cl
+      - clisp
+      - el
+      - fasl # Scheme dialect of Lisp
+      - l
+      - lisp
+      - lsp
+      - mud
+      - ss
+      - scm
+      - sld  # Scheme r7rs library
+    contexts:
+      main: []
+
+# ST Package

@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+name: ClojureScript
+preferences:
+  scope: source.clojure.clojurescript
+  settings:
+    icon: clojurescript
+syntax:
+  - name: ClojureScript
+    scope: source.clojure.clojurescript
+    hidden: true
+    file_extensions:
+      - cljc
+      - cljs
+    contexts:
+      main:
+        - include: scope:source.clojure
+          apply_prototype: true
+
+# ST Package
+# cljc is on source.clojure and source.clojure.clojurescript. But icon clojurescript
+# is applied by ST.

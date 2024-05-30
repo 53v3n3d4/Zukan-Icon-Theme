@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: Haskell
+preferences:
+  scope: source.haskell, text.tex.latex.haskell
+  settings:
+    icon: haskell
+syntax:
+  - name: Haskell
+    scope: source.haskell
+    hidden: true
+    file_extensions:
+      - hs
+      - hs-boot
+      - hsig
+    contexts:
+      main: []
+  - name: Literate Haskell
+    scope: text.tex.latex.haskell
+    hidden: true
+    file_extensions:
+      - lhs
+    contexts:
+      main:
+        - include: scope:text.tex.latex
+          apply_prototype: true
+
+# ST Package
