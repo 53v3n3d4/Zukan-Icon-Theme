@@ -123,15 +123,8 @@ class ThemeFile:
         """
         Delete all sublime-themes files in Zukan Icon Theme/icons folder.
         """
-        # zukan_installed_themes = ThemeFile.list_created_themes_files()
-        # print(zukan_installed_themes)
         try:
-            # for theme in zukan_installed_themes:
-            #     ThemeFile.delete_created_theme_file(theme)
-            # return zukan_installed_themes
-            for t in glob.iglob(
-                os.path.join(ZUKAN_PKG_ICONS_PATH, '*.sublime-theme')
-            ):
+            for t in glob.iglob(os.path.join(ZUKAN_PKG_ICONS_PATH, '*.sublime-theme')):
                 os.remove(t)
                 logger.info('deleting icon theme %s', os.path.basename(t))
         except FileNotFoundError:
@@ -139,14 +132,14 @@ class ThemeFile:
                 '[Errno %d] %s: %r',
                 errno.ENOENT,
                 os.strerror(errno.ENOENT),
-                zukan_installed_themes,
+                t,
             )
         except OSError:
             logger.error(
                 '[Errno %d] %s: %r',
                 errno.EACCES,
                 os.strerror(errno.EACCES),
-                zukan_installed_themes,
+                t,
             )
 
     def list_created_themes_files() -> list:

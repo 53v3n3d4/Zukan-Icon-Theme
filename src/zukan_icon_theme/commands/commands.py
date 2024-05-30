@@ -10,7 +10,6 @@ from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
 from ..utils.zukan_dir_paths import (
-    ZUKAN_INSTALLED_PKG_PATH,
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_SYNTAXES_DATA_FILE,
@@ -236,7 +235,7 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
         sublime-theme and sublime-syntax files.
         """
         try:
-            # ThemeFile.delete_created_themes_files()
+            ThemeFile.delete_created_themes_files()
             ZukanSyntax.delete_icons_syntaxes()
             MoveFolder.move_folders()
         finally:
