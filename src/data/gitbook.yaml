@@ -1,16 +1,16 @@
 %YAML 1.2
 ---
-name: Read the Docs
+name: GitBook
 preferences:
-  scope: source.yaml.readthedocs
+  scope: source.yaml.gitbook
   settings:
-    icon: readthedocs
+    icon: gitbook
 syntax:
-  - name: YAML (Read the Docs)
-    scope: source.yaml.readthedocs
+  - name: YAML (GitBook)
+    scope: source.yaml.gitbook
     hidden: true
     file_extensions:
-      - .readthedocs.yml
+      - .gitbook.yaml
     contexts:
       main:
         - include: scope:source.yaml

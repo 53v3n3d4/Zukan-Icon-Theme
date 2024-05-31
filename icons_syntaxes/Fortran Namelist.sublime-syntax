@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Fortran Namelist
+scope: source.fortran-namelist
+hidden: true
+file_extensions:
+- namelist
+contexts:
+  main: []

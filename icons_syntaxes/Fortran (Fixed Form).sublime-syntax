@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+name: Fortran (Fixed Form)
+scope: source.fixedform-fortran
+hidden: true
+file_extensions:
+- f
+- F
+- f77
+- F77
+- for
+- FOR
+- fpp
+- FPP
+contexts:
+  main: []

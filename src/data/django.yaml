@@ -1,0 +1,47 @@
+%YAML 1.2
+---
+name: Django
+preferences:
+  scope: text.django
+  settings:
+    icon: django
+syntax:
+  - name: CSS (Django)
+    scope: text.django
+    hidden: true
+    file_extensions:
+      # - css
+      - css.djt
+      - dj.css
+      - djcss
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+  - name: HTML (Django)
+    scope: text.django
+    hidden: true
+    file_extensions:
+      # - html
+      - djt
+      - dj.html
+      - djhtml
+      - html.djt
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: XML (Django)
+    scope: text.django
+    hidden: true
+    file_extensions:
+      - dj.xml
+      - djxml
+      # - xml
+      - xml.djt
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true
+
+# Package Django Syntax

@@ -1,0 +1,63 @@
+%YAML 1.2
+---
+name: Fortran
+preferences:
+  scope: source.fixedform-fortran, source.fortran, source.modern-fortran, source.fortran-namelist
+  settings:
+    icon: fortran
+syntax:
+  - name: Fortran (Fixed Form)
+    scope: source.fixedform-fortran
+    hidden: true
+    file_extensions:
+      - f
+      - F
+      - f77
+      - F77
+      - for
+      - FOR
+      - fpp
+      - FPP
+    contexts:
+      main: []
+  - name: Fortran (Modern)
+    scope: source.modern-fortran
+    hidden: true
+    file_extensions:
+      - f90
+      - F90
+      - f95
+      - F95
+      - f03
+      - F03
+      - f08
+      - F08
+    contexts:
+      main: []
+  - name: Fortran Namelist
+    scope: source.fortran-namelist
+    hidden: true
+    file_extensions:
+      - namelist
+    contexts:
+      main: []
+  - name: Modern-Fortran
+    scope: source.fortran
+    hidden: true
+    file_extensions:
+      - f90
+      - F90
+      - f95
+      - F95
+      - f03
+      - F03
+      - f08
+      - F08
+      - f18
+      - F18
+    contexts:
+      main: []
+
+# Package Fortran
+
+# Package ModernFortran
