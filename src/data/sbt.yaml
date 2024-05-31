@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: sbt
+preferences:
+  scope: source.scala.sbt
+  settings:
+    icon: sbt
+syntax:
+  - name: Scala (sbt)
+    scope: source.scala.sbt
+    hidden: true
+    file_extensions:
+    - sbt
+    contexts:
+      main:
+        - include: scope:source.scala
+          apply_prototype: true
+
+# ST Package

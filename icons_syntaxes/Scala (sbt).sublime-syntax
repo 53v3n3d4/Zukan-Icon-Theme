@@ -1,0 +1,11 @@
+%YAML 1.2
+---
+name: Scala (sbt)
+scope: source.scala.sbt
+hidden: true
+file_extensions:
+- sbt
+contexts:
+  main:
+  - include: scope:source.scala
+    apply_prototype: true

@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Scala
+preferences:
+  scope: source.scala
+  settings:
+    icon: scala
+syntax:
+  - name: Scala
+    scope: source.scala
+    hidden: true
+    file_extensions:
+    - sc
+    - scala
+    contexts:
+      main: []
+
+# ST Package

@@ -5,6 +5,7 @@ CONTEXTS_MAIN = {'contexts': {'main': []}}
 # about syntax not found.
 # Contexts main are important for highlighting while also keep icon showing.
 CONTEXTS_SCOPES = [
+    {'scope': 'source.groovy', 'startsWith': 'Groovy ('},
     {'scope': 'source.ini', 'startsWith': 'INI ('},
     {'scope': 'source.js', 'startsWith': 'JavaScript ('},
     {'scope': 'source.json', 'startsWith': 'JSON ('},
@@ -12,6 +13,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.makefile', 'startsWith': 'Makefile ('},
     {'scope': 'source.python', 'startsWith': 'Python ('},
     {'scope': 'source.ruby', 'startsWith': 'Ruby ('},
+    {'scope': 'source.scala', 'startsWith': 'Scala ('},
     {'scope': 'source.shell', 'startsWith': 'Shell ('},
     {'scope': 'source.toml', 'startsWith': 'TOML ('},
     {'scope': 'source.ts', 'startsWith': 'TypeScript ('},
