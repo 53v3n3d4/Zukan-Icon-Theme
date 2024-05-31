@@ -1,0 +1,23 @@
+%YAML 1.2
+---
+name: Plist
+preferences:
+  scope: text.plist
+  settings:
+    icon: plist
+syntax:
+  - name: XML (Plist)
+    scope: text.plist
+    hidden: true
+    file_extensions:
+      - plist
+      - tmLanguage
+      - tmPreferences
+      - tmSnippet
+      - tmTheme
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true
+
+# Package plist

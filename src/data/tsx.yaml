@@ -2,7 +2,7 @@
 ---
 name: TSX
 preferences:
-  scope: source.tsx
+  scope: source.ts.react, source.tsx
   settings:
     icon: tsx
 syntax:
@@ -15,3 +15,5 @@ syntax:
       main: []
 
 # ST Package
+
+# Package JSCustom: source.ts.react

@@ -2,7 +2,7 @@
 ---
 name: JSX
 preferences:
-  scope: source.js.jsx, source.jsx
+  scope: source.js.jsx, source.js.react, source.jsx
   settings:
     icon: jsx
 syntax:
@@ -17,3 +17,5 @@ syntax:
 # ST Package
 
 # Package JSX
+
+# Package JSCustom: source.js.react

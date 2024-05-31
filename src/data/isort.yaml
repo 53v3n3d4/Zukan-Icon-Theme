@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: isort
+preferences:
+  scope: source.ini.isort
+  settings:
+    icon: isort
+syntax:
+  - name: INI (isort)
+    scope: source.ini.isort
+    hidden: true
+    file_extensions:
+      - .isort.cfg
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
