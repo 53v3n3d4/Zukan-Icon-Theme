@@ -2,7 +2,7 @@
 <plist version="1.0">
 <dict>
 	<key>scope</key>
-	<string>source.erlang, text.html.erlang</string>
+	<string>source.erlang</string>
 	<key>settings</key>
 	<dict>
 		<key>icon</key>

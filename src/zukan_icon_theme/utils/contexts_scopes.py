@@ -5,6 +5,7 @@ CONTEXTS_MAIN = {'contexts': {'main': []}}
 # about syntax not found.
 # Contexts main are important for highlighting while also keep icon showing.
 CONTEXTS_SCOPES = [
+    {'scope': 'source.css', 'startsWith': 'CSS ('},
     {'scope': 'source.groovy', 'startsWith': 'Groovy ('},
     {'scope': 'source.ini', 'startsWith': 'INI ('},
     {'scope': 'source.js', 'startsWith': 'JavaScript ('},

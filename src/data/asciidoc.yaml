@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: AsciiDoc
+preferences:
+  scope: text.asciidoc
+  settings:
+    icon: asciidoc
+syntax:
+  - name: AsciiDoc (Asciidoctor)
+    scope: text.asciidoc
+    hidden: true
+    file_extensions:
+      - ad
+      - adoc
+      - asciidoc
+    contexts:
+      main: []
+
+# Package Asciidoctor

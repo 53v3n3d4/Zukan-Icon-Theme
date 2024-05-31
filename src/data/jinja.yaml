@@ -1,0 +1,129 @@
+%YAML 1.2
+---
+name: Jinja
+preferences:
+  scope: source.css.jinja, source.json.jinja, source.js.jinja, source.yaml.jinja, text.html.jinja, text.jinja, text.html.markdown.jinja, text.xml.jinja
+  settings:
+    icon: jinja
+syntax:
+  - name: CSS (Jinja)
+    scope: source.css.jinja
+    hidden: true
+    file_extensions:
+      - css.j2
+      - css.jinja
+      - css.jinja2
+      - j2.css
+      - jinja.css
+      - jinja2.css
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+  - name: HTML (Jinja)
+    scope: text.html.jinja
+    hidden: true
+    file_extensions:
+      - htm.j2
+      - htm.jinja
+      - htm.jinja2
+      - html.j2
+      - html.jinja
+      - html.jinja2
+      - j2
+      - jinja
+      - jinja2
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: JavaScript (Jinja)
+    scope: source.js.jinja
+    hidden: true
+    file_extensions:
+      - j2.js
+      - jinja.js
+      - jinja2.js
+      - js.j2
+      - js.jinja
+      - js.jinja2
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Jinja)
+    scope: source.json.jinja
+    hidden: true
+    file_extensions:
+      - j2.json
+      - jinja.json
+      - jinja2.json
+      - json.j2
+      - json.jinja
+      - json.jinja2
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: Markdown (Jinja)
+    scope: text.html.markdown.jinja
+    hidden: true
+    file_extensions:
+      - j2.md
+      - jinja.md
+      - jinja2.md
+      - md.j2
+      - md.jinja
+      - md.jinja2
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true
+  - name: Text (Jinja)
+    scope: text.jinja
+    hidden: true
+    file_extensions:
+      - j2.txt
+      - jinja.txt
+      - jinja2.txt
+      - txt.j2
+      - txt.jinja
+      - txt.jinja2
+    contexts:
+      main: []
+  - name: XML (Jinja)
+    scope: text.xml.jinja
+    hidden: true
+    file_extensions:
+      - j2.xml
+      - jinja.xml
+      - jinja2.xml
+      - xml.j2
+      - xml.jinja
+      - xml.jinja2
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true
+  - name: YAML (Jinja)
+    scope: source.yaml.jinja
+    hidden: true
+    file_extensions:
+      - j2.yml
+      - jinja.yml
+      - jinja2.yml
+      - j2.yaml
+      - jinja.yaml
+      - jinja2.yaml
+      - yml.j2
+      - yml.jinja
+      - yml.jinja2
+      - yaml.j2
+      - yaml.jinja
+      - yaml.jinja2
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Package Jinja2

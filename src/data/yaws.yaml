@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Yaws
+preferences:
+  scope: text.html.erlang
+  settings:
+    icon: yaws
+syntax:
+  - name: HTML (Yaws)
+    scope: text.html.erlang
+    hidden: true
+    file_extensions:
+      - yaws
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+
+# ST Package
