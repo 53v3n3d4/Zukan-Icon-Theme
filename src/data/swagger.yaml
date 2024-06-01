@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Swagger
+preferences:
+  scope: source.json.swagger, source.yaml.swagger
+  settings:
+    icon: swagger
+syntax:
+  - name: JSON (Swagger)
+    scope: source.json.swagger
+    hidden: true
+    file_extensions:
+      - swagger.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: YAML (Swagger)
+    scope: source.yaml.swagger
+    hidden: true
+    file_extensions:
+      - swagger.yml
+      - swagger.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

@@ -7,7 +7,7 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Icons, icons-syntaxes and preferences
-- Add icon-theme: archive, AsciiDoc, Avro, Babashka, BibTeX, Cabal, Cap'n Proto, Cargo, Cert, Clojure, ClojureDart, ClojureScript, Cypress, Dart, Django, Erlang.mk, Fortran, GitBook Gradle, Groovy, glTF, Haml, Handlebars, Haskell, isort, Jinja, Jupyter, LaTeX, Lisp, mypy, NumPy, OCaml, Pipenv, Playwright, Plist, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Tailwind CSS, TeX, tox, Yaws
+- Add icon-theme: archive, AsciiDoc, Avro, Babashka, BibTeX, Cabal, Cap'n Proto, Cargo, Cert, Clojure, ClojureDart, ClojureScript, Cypress, Dart, Django, Eleventy, Erlang.mk, Font, Fortran, GitBook Gradle, Groovy, glTF, Haml, Handlebars, Haskell, isort, Jinja, Jupyter, LaTeX, Lisp, mypy, NumPy, OCaml, Pipenv, Playwright, Plist, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Swagger, Tailwind CSS, TeX, tox, Yaws
 - Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
 - Change icon: Audio, Kotlin, makefile, Rspack
 - Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby, Sublime Text
