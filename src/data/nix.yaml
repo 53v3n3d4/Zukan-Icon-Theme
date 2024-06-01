@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Nix
+preferences:
+  scope: source.nix
+  settings:
+    icon: nix
+syntax:
+  - name: Nix
+    scope: source.nix
+    hidden: true
+    file_extensions:
+      - nix
+    contexts:
+      main: []
+
+# Package Nix

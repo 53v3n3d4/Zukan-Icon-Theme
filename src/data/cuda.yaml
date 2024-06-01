@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+name: CUDA
+preferences:
+  scope: source.cuda-c++
+  settings:
+    icon: cuda
+syntax:
+  - name: C++ (CUDA)
+    scope: source.cuda-c++
+    hidden: true
+    file_extensions:
+      - cu
+      - cuh
+    contexts:
+      main:
+        - include: scope:source.c++
+          apply_prototype: true
+
+# Package CUDA C++
+
+# Package CUDA Snippets

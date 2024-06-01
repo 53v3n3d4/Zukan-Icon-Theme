@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Composer
+preferences:
+  scope: source.json.composer
+  settings:
+    icon: composer
+syntax:
+  - name: JSON (Composer)
+    scope: source.json.composer
+    hidden: true
+    file_extensions:
+      - composer.json
+      - composer.lock
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
