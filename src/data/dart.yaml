@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Dart
+preferences:
+  scope: source.dart, source.pubspec
+  settings:
+    icon: dart
+syntax:
+  - name: Dart
+    scope: source.dart
+    hidden: true
+    file_extensions:
+      - dart
+    contexts:
+      main: []
+  - name: YAML (Dart)
+    scope: source.pubspec
+    hidden: true
+    file_extensions:
+      - pubspec.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Package Dart

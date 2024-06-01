@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+name: NumPy
+preferences:
+  scope: binary.numpy
+  settings:
+    icon: numpy
+syntax:
+  - name: Binary (NumPy)
+    scope: binary.numpy
+    hidden: true
+    file_extensions:
+      - npy
+      - npz
+    contexts:
+      main: []
