@@ -1,0 +1,32 @@
+%YAML 1.2
+---
+name: OCaml
+preferences:
+  scope: source.ocaml, source.ocamllex, source.ocamlyacc
+  settings:
+    icon: ocaml
+syntax:
+  - name: OCaml
+    scope: source.ocaml
+    hidden: true
+    file_extensions:
+      - ml
+      - mli
+    contexts:
+      main: []
+  - name: ocamllex
+    scope: source.ocamllex
+    hidden: true
+    file_extensions:
+      - mll
+    contexts:
+      main: []
+  - name: ocamlyacc
+    scope: source.ocamlyacc
+    hidden: true
+    file_extensions:
+      - mly
+    contexts:
+      main: []
+
+# ST Package

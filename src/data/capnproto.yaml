@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Cap'n Proto
+preferences:
+  scope: source.capnp
+  settings:
+    icon: capnproto
+syntax:
+  - name: Cap n Proto
+    scope: source.capnp
+    hidden: true
+    file_extensions:
+      - capnp
+    contexts:
+      main: []
+
+# Package Cap'n Proto Syntax

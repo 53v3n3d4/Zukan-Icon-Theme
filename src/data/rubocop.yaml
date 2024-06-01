@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: RuboCop
+preferences:
+  scope: source.yaml.rubocop
+  settings:
+    icon: rubocop
+syntax:
+  - name: YAML (RuboCop)
+    scope: source.yaml.rubocop
+    hidden: true
+    file_extensions:
+      - .rubocop.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
