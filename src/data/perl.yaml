@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+name: Perl
+preferences:
+  scope: source.perl
+  settings:
+    icon: perl
+syntax:
+  - name: Perl
+    scope: source.perl
+    hidden: true
+    file_extensions:
+      - pc
+      - pl
+      - pm
+      - pmc
+      - pod
+      - t
+    contexts:
+      main: []
+
+# ST Package

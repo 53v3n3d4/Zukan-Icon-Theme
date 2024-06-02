@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Hex
+preferences:
+  scope: source.elixir.hex
+  settings:
+    icon: hex
+syntax:
+  - name: Elixir (Hex)
+    scope: source.elixir.hex
+    hidden: true
+    file_extensions:
+      - mix.exs
+      - mix.lock
+    contexts:
+      main:
+        - include: scope:source.elixir
+          apply_prototype: true

@@ -12,7 +12,9 @@ syntax:
     file_extensions:
       - .editorconfig
     contexts:
-      main: []
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
 
 # Package EditorConfig
 # Package INI hidden file

@@ -1,0 +1,49 @@
+%YAML 1.2
+---
+name: Liquid
+preferences:
+  scope: source.css.liquid, source.js.liquid, source.json.liquid, text.html.liquid
+  settings:
+    icon: liquid
+syntax:
+  - name: CSS (Liquid)
+    scope: source.css.liquid
+    hidden: true
+    file_extensions:
+      - css.liquid
+      - liquid.css
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+  - name: HTML (Liquid)
+    scope: text.html.liquid
+    hidden: true
+    file_extensions:
+      - liquid
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: JavaScript (Liquid)
+    scope: source.js.liquid
+    hidden: true
+    file_extensions:
+      - js.liquid
+      - liquid.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Liquid)
+    scope: source.json.liquid
+    hidden: true
+    file_extensions:
+      - json.liquid
+      - liquid.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+
+# Package Liquid
