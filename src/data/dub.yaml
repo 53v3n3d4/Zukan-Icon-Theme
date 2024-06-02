@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: DUB
+preferences:
+  scope: source.sdl.dub, source.json.dub
+  settings:
+    icon: dub
+syntax:
+  - name: JSON (DUB)
+    scope: source.json.dub
+    hidden: true
+    file_extensions:
+      - dub.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: SDlang (DUB)
+    scope: source.sdl.dub
+    hidden: true
+    file_extensions:
+      - dub.sdl
+    contexts:
+      main:
+        - include: scope:source.sdl
+          apply_prototype: true
+
+# Package SDlang: source.sdl

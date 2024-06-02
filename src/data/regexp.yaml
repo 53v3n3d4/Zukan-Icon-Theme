@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Regular Expression
+preferences:
+  scope: source.regexp
+  settings:
+    icon: regexp
+syntax:
+  - name: Regular Expression
+    scope: source.regexp
+    hidden: true
+    file_extensions:
+      - re
+    contexts:
+      main: []
+
+# ST Package

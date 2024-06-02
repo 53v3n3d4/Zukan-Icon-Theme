@@ -5,16 +5,20 @@ CONTEXTS_MAIN = {'contexts': {'main': []}}
 # about syntax not found.
 # Contexts main are important for highlighting while also keep icon showing.
 CONTEXTS_SCOPES = [
+    {'scope': 'source.c++', 'startsWith': 'C++ ('},
     {'scope': 'source.css', 'startsWith': 'CSS ('},
+    {'scope': 'source.elixir', 'startsWith': 'Elixir ('},
     {'scope': 'source.groovy', 'startsWith': 'Groovy ('},
     {'scope': 'source.ini', 'startsWith': 'INI ('},
     {'scope': 'source.js', 'startsWith': 'JavaScript ('},
     {'scope': 'source.json', 'startsWith': 'JSON ('},
     {'scope': 'source.jsx', 'startsWith': 'JSX ('},
+    {'scope': 'source.Kotlin', 'startsWith': 'Kotlin ('},
     {'scope': 'source.makefile', 'startsWith': 'Makefile ('},
     {'scope': 'source.python', 'startsWith': 'Python ('},
     {'scope': 'source.ruby', 'startsWith': 'Ruby ('},
     {'scope': 'source.scala', 'startsWith': 'Scala ('},
+    {'scope': 'source.sdl', 'startsWith': 'SDlang ('},
     {'scope': 'source.shell', 'startsWith': 'Shell ('},
     {'scope': 'source.toml', 'startsWith': 'TOML ('},
     {'scope': 'source.ts', 'startsWith': 'TypeScript ('},
@@ -33,6 +37,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.clojure', 'startsWith': 'ClojureScript'},
     {'scope': 'source.css', 'startsWith': 'Less'},
     {'scope': 'source.css', 'startsWith': 'SCSS'},
+    {'scope': 'source.ini', 'startsWith': 'EditorConfig'},
     {'scope': 'source.js', 'startsWith': 'UnitTest (JavaScript)'},
     {'scope': 'source.jsx', 'startsWith': 'UnitTest (JSX)'},
     {'scope': 'source.tsx', 'startsWith': 'UnitTest (TSX)'},

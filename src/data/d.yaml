@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: D
+preferences:
+  scope: source.d
+  settings:
+    icon: d
+syntax:
+  - name: D
+    scope: source.d
+    hidden: true
+    file_extensions:
+      - d
+      - di
+    contexts:
+      main: []
+
+# ST Package
