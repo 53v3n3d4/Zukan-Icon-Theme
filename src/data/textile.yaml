@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Textile
+preferences:
+  scope: text.html.textile
+  settings:
+    icon: textile
+syntax:
+  - name: Textile
+    scope: text.html.textile
+    hidden: true
+    file_extensions:
+      - textile
+    contexts:
+      main: []
+
+# ST Package

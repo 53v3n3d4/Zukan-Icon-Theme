@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: PHPUnit
+preferences:
+  scope: text.xml.phpunit
+  settings:
+    icon: phpunit
+syntax:
+  - name: XML (PHPUnit)
+    scope: text.xml.phpunit
+    hidden: true
+    file_extensions:
+      - phpunit.xml
+      - phpunit.xml.dist
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true
+
+# Package plist

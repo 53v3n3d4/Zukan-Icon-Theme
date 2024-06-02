@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: PHPStan
+preferences:
+  scope: source.neon.phpstan
+  settings:
+    icon: phpstan
+syntax:
+  - name: PHPStan
+    scope: source.neon.phpstan
+    hidden: true
+    file_extensions:
+      - phpstan.dist.neon
+      - phpstan.neon
+      - phpstan.neon.dist
+    contexts:
+      main: []
