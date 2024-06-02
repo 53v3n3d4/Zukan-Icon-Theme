@@ -9,7 +9,7 @@
 ### Icons, icons-syntaxes and preferences
 - Add icon-theme: archive, AsciiDoc, Avro, Babashka, BibTeX, Cabal, Cap'n Proto, Cargo, Cert, Clojure, ClojureDart, ClojureScript, Composer, CUDA, Cypress, D, Dart, Diff, Django, DUB, EditorConfig, Eleventy, Erlang.mk, Figma, Font, Fortran, GitBook Gradle, Groovy, glTF, Haml, Handlebars, Haskell, Hex, isort, Jinja, Jupyter, LaTeX, Liquid, Lisp, mypy, Nix, NumPy, OCaml, Perl, PHPStan, PHPUnit, Pipenv, Playwright, Plist, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, Regular Expression, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Swagger, Tailwind CSS, TeX, Textile, tox, Yaws
 - Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
-- Change icon: Audio, Kotlin, makefile, Rspack
+- Change icon: Audio, Kotlin, makefile, Node js, Rspack
 - Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby, Sublime Text
 - Change tmPreferences: Arduino, Citation, CMake, CSV, Flatbuffers, git, HTML, Java, JSX, Lua, MDX, PHP, Ruby
 - Rename icons: Elixir, Fusion, TS, Unity, WebAssembly
