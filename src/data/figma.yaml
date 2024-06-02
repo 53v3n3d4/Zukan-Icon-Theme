@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+name: Figma
+preferences:
+  scope: binary.figma
+  settings:
+    icon: figma
+syntax:
+  - name: Binary (Figma)
+    scope: binary.figma
+    hidden: true
+    file_extensions:
+      - fig
+      - jam
+    contexts:
+      main: []

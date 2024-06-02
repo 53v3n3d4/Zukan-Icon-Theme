@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: EditorConfig
+preferences:
+  scope: source.ini.editorconfig
+  settings:
+    icon: editorconfig
+syntax:
+  - name: EditorConfig
+    scope: source.ini.editorconfig
+    hidden: true
+    file_extensions:
+      - .editorconfig
+    contexts:
+      main: []
+
+# Package EditorConfig
+# Package INI hidden file
+# https://github.com/sindresorhus/editorconfig-sublime/pull/100

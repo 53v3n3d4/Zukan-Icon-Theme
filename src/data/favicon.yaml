@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Favicon
+preferences:
+  scope: binary.plain.favicon, text.xml.svg.favicon
+  settings:
+    icon: favicon
+syntax:
+  - name: Binary (Favicon)
+    scope: binary.plain.favicon
+    hidden: true
+    file_extensions:
+     - favicon.ico
+     - favicon.png
+    contexts:
+      main:
+        - include: scope:binary.plain
+          apply_prototype: true
+  - name: SVG (Favicon)
+    scope: text.xml.svg.favicon
+    hidden: true
+    file_extensions:
+     - favicon.svg
+    contexts:
+      main:
+        - include: scope:text.xml.svg
+          apply_prototype: true
