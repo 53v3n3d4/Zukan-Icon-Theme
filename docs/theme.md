@@ -5,11 +5,11 @@ To manually add a theme, go to your Sublime Text folder.
 - Then add the theme file inside `Packages/Zukan Icon Theme/icons` folder  
 
 Create new theme file:  
-- Duplicate one of the Treble files inside icons folder. Or copy code below  
+- Copy code below  
 - Rename it with your theme name, e.g. Default.sublime-theme  
 - Maybe restart needed  
 
-If your theme do not have settings for `icon_file_type`, the settings below has a hover and select effects.  
+If your theme do not have settings for `icon_file_type`, the settings below has a hover and selected effects.  
 ```
 [
   {

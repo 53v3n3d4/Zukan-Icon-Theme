@@ -36,19 +36,19 @@ They can be accessed through `Tools > Command Palette...`. Type `zukan` to see t
 
 ### Delete Syntax
 
-It deletes a sublime-syntax file from a list of created syntaxes.  
+It delete a sublime-syntax file from a list of created syntaxes.  
 
 ### Delete Syntaxes
 
-It deletes all created sublime-syntax files in `icons_syntaxes` folder.  
+It delete all created sublime-syntax files in `icons_syntaxes` folder.  
 
 ### Delete Theme
 
-It deletes a sublime-theme file from a list of created themes.  
+It delete a sublime-theme file from a list of created themes.  
 
 ### Delete Themes
 
-It deletes all created sublime-theme files in `icons` folder.  
+It delete all created sublime-theme files in `icons` folder.  
 
 ### Install Syntax
 
@@ -64,4 +64,4 @@ It install all sublime-theme files from a list of user installed themes, excludi
 
 ### Rebuild Syntaxes
 
-It removes all previous sublime-syntax files in `icons_syntaxes`, before install all zukan icons syntaxes, excluding user installed syntaxes.
+It remove all previous sublime-syntax files in `icons_syntaxes`, before install all zukan icons syntaxes, excluding user installed syntaxes.

@@ -71,6 +71,7 @@ To uninstall manually, go to your Sublime Text folder.
 
 - Photoshop. ST use `file_type_image` icon  
 - XML. ST use `file_type_markup` icon  
+- Favicon. ST use  `file_type_image` icon for binary files  
 
 ## Notes
 - This package uses tmPreferences and sublime-syntax files, it is heavily based on how [`A File Icon`](https://github.com/SublimeText/AFileIcon) package make icons work  
