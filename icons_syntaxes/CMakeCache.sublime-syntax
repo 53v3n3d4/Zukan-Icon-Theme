@@ -1,9 +1,0 @@
-%YAML 1.2
----
-name: CMakeCache
-scope: source.cmakecache
-hidden: true
-file_extensions:
-- CMakeCache.txt
-contexts:
-  main: []

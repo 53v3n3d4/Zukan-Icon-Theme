@@ -1,9 +1,0 @@
-%YAML 1.2
----
-name: CMake C Header
-scope: source.cmake.config.c
-hidden: true
-file_extensions:
-- h.in
-contexts:
-  main: []

@@ -1,9 +1,0 @@
-%YAML 1.2
----
-name: Go (go sum)
-scope: source.gosum
-hidden: true
-file_extensions:
-- go.sum
-contexts:
-  main: []

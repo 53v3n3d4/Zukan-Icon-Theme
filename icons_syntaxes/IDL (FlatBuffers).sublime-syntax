@@ -1,9 +1,0 @@
-%YAML 1.2
----
-name: IDL (FlatBuffers)
-scope: source.webidl.fbs
-hidden: true
-file_extensions:
-- fbs
-contexts:
-  main: []

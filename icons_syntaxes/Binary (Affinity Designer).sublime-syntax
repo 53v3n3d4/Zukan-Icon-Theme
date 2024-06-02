@@ -1,9 +1,0 @@
-%YAML 1.2
----
-name: Binary (Affinity Designer)
-scope: binary.afdesign
-hidden: true
-file_extensions:
-- afdesign
-contexts:
-  main: []

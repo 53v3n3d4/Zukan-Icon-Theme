@@ -1,9 +1,0 @@
-%YAML 1.2
----
-name: Binary (glTF)
-scope: binary.gltf
-hidden: true
-file_extensions:
-- glb
-contexts:
-  main: []

@@ -1,9 +1,0 @@
-%YAML 1.2
----
-name: Binary (WebAssembly)
-scope: binary.webassembly
-hidden: true
-file_extensions:
-- wasm
-contexts:
-  main: []
