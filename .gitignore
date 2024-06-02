@@ -13,3 +13,6 @@ __pycache__
 
 # test icon theme
 tests_icon_theme
+
+# zukan
+/icons_syntaxes/*.sublime-syntax
