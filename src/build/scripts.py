@@ -6,12 +6,12 @@ import sys
 from src.build.clean_svg import CleanSVG
 from src.build.helpers.color import Color
 from src.build.helpers.create_test_icon_theme import TestIconTheme
+from src.build.helpers.preferences import Preference
 from src.build.helpers.icons_syntaxes import IconSyntax
 from src.build.helpers.logger import logging
 from src.build.helpers.print_message import print_build_message, print_message
 from src.build.helpers.read_write_data import read_pickle_data
 from src.build.icons import IconPNG
-from src.build.preferences import Preference
 from src.build.utils.build_dir_paths import (
     # ASSETS_PATH,
     DATA_PATH,
