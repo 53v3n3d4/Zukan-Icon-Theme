@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: ActionScript
+preferences:
+  scope: source.actionscript.2
+  settings:
+    icon: actionscript
+syntax:
+  - name: ActionScript
+    scope: source.actionscript.2
+    hidden: true
+    file_extensions:
+      - as
+    contexts:
+      main: []
+
+# ST Package

@@ -7,7 +7,7 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Icons, icons-syntaxes and preferences
-- Add icon-theme: archive, AsciiDoc, Avro, Babashka, BibTeX, Cabal, Cap'n Proto, Cargo, Cert, Clojure, ClojureDart, ClojureScript, Composer, CUDA, Cypress, D, Dart, Diff, Django, DUB, EditorConfig, Eleventy, Erlang.mk, Figma, Font, Fortran, GitBook Gradle, Groovy, glTF, Haml, Handlebars, Haskell, Hex, isort, Jinja, Jupyter, LaTeX, Liquid, Lisp, mypy, Nix, NumPy, OCaml, Perl, PHPStan, PHPUnit, Pipenv, Playwright, Plist, pre-commit, Pylint, Pyright, Read the Docs, Rebar3, Regular Expression, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Swagger, Tailwind CSS, TeX, Textile, tox, Yaws
+- Add icon-theme: ActionScript, archive, AsciiDoc, Avro, Babashka, Batch File, BibTeX, Cabal, Cap'n Proto, Cargo, Cert, Clojure, ClojureDart, ClojureScript, Composer, CUDA, Cypress, D, Dart, Diff, Django, DUB, EditorConfig, Eleventy, Erlang.mk, Figma, Font, Fortran, GitBook Gradle, Groovy, glTF, Haml, Handlebars, Haskell, Hex, isort, Jinja, Jupyter, LaTeX, Liquid, Lisp, mypy, Nix, NumPy, OCaml, Perl, PHPStan, PHPUnit, Pipenv, Playwright, Plist, pre-commit, Pylint, Pyright, R, Read the Docs, Rebar3, Regular Expression, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Swagger, Tailwind CSS, TeX, Textile, tox, Yaws
 - Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
 - Change icon: Audio, Kotlin, makefile, Node js, Rspack
 - Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby, Sublime Text
@@ -25,6 +25,7 @@
 - Add create_test_icon_theme
 - Add zukan_syntaxes
 - Add logger
+- Add zukan_preferences
 
 ### Plugin
 - Add themes
@@ -32,6 +33,7 @@
 - Add icons_sytanxes
 - Add logger
 - Add sublime-menu and sublime-commands
+- Add icons_preferences
 
 ## [0.1.3] - 2024-04-22
 - Add alias: codecov, netlify, nextjs, poetry, prettier, pytest, ruff, unocss, vitest, webgpu

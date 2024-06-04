@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: R
+preferences:
+  scope: source.r, text.tex.latex.rd
+  settings:
+    icon: r
+syntax:
+  - name: R
+    scope: source.r
+    hidden: true
+    file_extensions:
+      - R
+    contexts:
+      main: []
+  - name: Rd (R Documentation)
+    scope: text.tex.latex.rd
+    hidden: true
+    file_extensions:
+      - rd
+    contexts:
+      main:
+      - include: scope:text.tex.latex#comments
+        apply_prototype: true
+
+# ST Package
