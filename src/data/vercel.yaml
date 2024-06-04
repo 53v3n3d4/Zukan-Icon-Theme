@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: Vercel
+preferences:
+  scope: source.json.vercel, text.git.ignore.vercel
+  settings:
+    icon: vercel
+syntax:
+  - name: Git (Vercel)
+    scope: text.git.ignore.vercel
+    hidden: true
+    file_extensions:
+      - .nowignore
+      - .vercelignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
+  - name: JSON (Vercel)
+    scope: source.json.vercel
+    hidden: true
+    file_extensions:
+      - now.json
+      - vercel.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

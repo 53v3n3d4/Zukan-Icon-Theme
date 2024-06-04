@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: PHP CS Fixer
+preferences:
+  scope: embedding.php.phpcsfixer
+  settings:
+    icon: phpcsfixer
+syntax:
+  - name: PHP (PHP CS Fixer)
+    scope: embedding.php.phpcsfixer
+    hidden: true
+    file_extensions:
+      - .php-cs-fixer.php
+    contexts:
+      main:
+        - include: scope:embedding.php
+          apply_prototype: true
