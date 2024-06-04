@@ -3,10 +3,14 @@ import errno
 import json
 import logging
 import os
+import plistlib
 
 from .convert_to_commented import convert_to_commented
 from ..utils.contexts_scopes import (
     CONTEXTS_MAIN,
+)
+from ..utils.st_py_version import (
+    PYTHON_VERSION,
 )
 from collections import OrderedDict
 from ruamel.yaml import YAML
@@ -150,4 +154,29 @@ def dump_json_data(file_data: dict, json_file: str):
     except OSError:
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), json_file
+        )
+
+
+def dump_plist_data(preferences_dict: dict, plist_file: str):
+    """
+    Write plist file (tmPreferences).
+
+    Parameters:
+    preferences_dict (dict) --  key preferences from yaml file.
+    plist_file (str) -- path to directory where tmPreferences will be saved.
+    """
+    try:
+        # Plist
+        with open(plist_file, 'wb') as f:
+            if PYTHON_VERSION < 3.8:
+                plistlib.writePlist(preferences_dict, f)
+            else:
+                plistlib.dump(preferences_dict, f)
+    except FileNotFoundError:
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), plist_file
+        )
+    except OSError:
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), plist_file
         )

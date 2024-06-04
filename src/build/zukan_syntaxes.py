@@ -21,14 +21,16 @@ class ZukanSyntax:
     sublime-syntaxes.
     """
 
-    def write_zukan_data(dir_icon_data: str, dir_destiny: str, pickle_file: str):
+    def write_syntax_data(dir_icon_data: str, dir_destiny: str, pickle_file: str):
         """
         Create zukan with icons sublime-syntaxes data.
 
         The file will be saved in folder icons_syntaxes.
 
         Parameters:
-        icon_data (str) -- path to data file.
+        dir_icon_data (str) -- path to directory with data files.
+        dir_destiny (str) -- path destination of icon sublime-synthax files.
+        pickle_file (str) -- path to zukan syntaxes data file.
         """
         try:
             if os.path.exists(pickle_file):
@@ -51,7 +53,7 @@ class ZukanSyntax:
                         print_created_message(
                             os.path.basename(icon_data),
                             k['name'],
-                            'added to zukan data file.',
+                            'added to zukan syntaxes data file.',
                         )
                 elif icon_data.endswith('.yaml'):
                     print_message(
@@ -75,6 +77,3 @@ class ZukanSyntax:
                 os.strerror(errno.EACCES),
                 dir_icon_data,
             )
-
-
-# ZukanSyntax.write_zukan_data(DATA_PATH)

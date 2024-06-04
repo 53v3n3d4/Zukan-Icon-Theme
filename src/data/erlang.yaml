@@ -2,7 +2,7 @@
 ---
 name: Erlang
 preferences:
-  scope: source.erlang, text.html.erlang
+  scope: source.erlang
   settings:
     icon: erlang
 syntax:
@@ -15,14 +15,5 @@ syntax:
       - hrl
     contexts:
       main: []
-  - name: HTML (Erlang)
-    scope: text.html.erlang
-    hidden: true
-    file_extensions:
-      - yaws
-    contexts:
-      main:
-        - include: scope:text.html.basic
-          apply_prototype: true
 
 # ST Package

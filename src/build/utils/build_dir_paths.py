@@ -37,6 +37,10 @@ ICONS_SYNTAXES_PATH = filepath('../../../icons_syntaxes')
 
 PREFERENCES_PATH = filepath('../../../preferences')
 
+ZUKAN_PREFERENCES_DATA_FILE = filepath(
+    '../../../preferences/zukan_preferences_data.pkl'
+)
+
 ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data.pkl')
 
 # Testing paths

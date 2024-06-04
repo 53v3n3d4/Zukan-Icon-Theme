@@ -3,7 +3,7 @@ import re
 import sublime
 
 from ..utils.zukan_dir_paths import (
-    ZUKAN_EXCLUDE_HIDDEN_THEME_PATH,
+    PKG_ZUKAN_ICON_THEME_FOLDER,
 )
 
 logger = logging.getLogger(__name__)
@@ -97,11 +97,9 @@ def find_attributes_hidden_file(
     hidden_theme_name = sublime.find_resources(theme_content['extends'])
     # Exclude Zukan created themes, important for Rebuild Files command.
     hidden_theme_name = [
-        h
-        for h in hidden_theme_name
-        if not h.startswith(ZUKAN_EXCLUDE_HIDDEN_THEME_PATH)
+        h for h in hidden_theme_name if not h.startswith(PKG_ZUKAN_ICON_THEME_FOLDER)
     ]
-    logger.debug('list theme opa, theme content %s', hidden_theme_name)
+    logger.debug('list theme opa, hidden_theme_name list %s', hidden_theme_name)
     for t in hidden_theme_name:
         hidden_theme_content = sublime.decode_value(sublime.load_resource(t))
         # print('extends: ' + t)

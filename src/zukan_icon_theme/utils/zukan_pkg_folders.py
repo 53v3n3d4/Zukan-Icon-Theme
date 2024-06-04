@@ -1,1 +1,1 @@
-ZUKAN_PKG_FOLDERS = ['icons', 'icons_syntaxes']
+ZUKAN_PKG_FOLDERS = ['icons', 'icons_syntaxes', 'preferences']

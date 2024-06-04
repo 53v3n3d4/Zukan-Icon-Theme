@@ -15,7 +15,7 @@ def special_chars(filename: str) -> bool:
     Returns:
     value (bool) -- condition if file name has or not special characters.
     """
-    regex = re.compile('[@!#$%^&*()<>?/\|}{~:]')
+    regex = re.compile(r'[@!#$%^&*()<>?/\|}{~:]')
     if regex.search(filename) is None:
         value = False
     else:

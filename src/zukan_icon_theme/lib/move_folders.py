@@ -24,7 +24,7 @@ class MoveFolder:
 
     def move_folder(name: str):
         """
-        Move icons and icons_syntaxes folder if project in folder Installed Packages.
+        Move folder if package is in folder Installed Packages.
 
         Parameters:
         name (str) -- folder name.
@@ -51,7 +51,8 @@ class MoveFolder:
 
     def move_folders():
         """
-        Move icons and icons_syntaxes folder if project in folder Installed Packages.
+        Move icons, icons_syntaxes and preferences folders if project in folder
+        Installed Packages.
         """
         try:
             zukan_folders = ZUKAN_PKG_FOLDERS

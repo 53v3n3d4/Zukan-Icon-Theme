@@ -135,7 +135,7 @@ class ZukanSyntax:
         This avoid error in console about syntax not found.
 
         Parameters:
-        syntax_name (str) -- icon syntax filename.
+        syntax_name (str) -- icon syntax file name.
         """
         logger.info('editing icon context scope if syntax not installed.')
         syntax_file = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name)
@@ -168,7 +168,7 @@ class ZukanSyntax:
                         {'include': include_scope},
                     ]
                 if scope is None:
-                    print(ordered_dict)
+                    # print(ordered_dict)
                     CONTEXTS_MAIN['contexts']['main'] = []
                 # print(CONTEXTS_MAIN)
                 ordered_dict.update(CONTEXTS_MAIN)

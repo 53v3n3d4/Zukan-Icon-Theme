@@ -3,6 +3,7 @@ import os
 import sublime
 import sublime_plugin
 
+from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.move_folders import MoveFolder
 from ..lib.themes import ThemeFile
@@ -11,11 +12,69 @@ from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
 from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_PATH,
+    ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
+    ZUKAN_PREFERENCES_DATA_FILE,
     ZUKAN_SYNTAXES_DATA_FILE,
 )
 
 logger = logging.getLogger(__name__)
+
+
+class DeletePreference(sublime_plugin.TextCommand):
+    """
+    Sublime command to delete preference from a list of created preferences.
+    """
+
+    def run(self, edit, preference_name: str):
+        message = "Are you sure you want to delete '{p}'?".format(
+            p=os.path.join(ZUKAN_PKG_ICONS_PREFERENCES_PATH, preference_name)
+        )
+        if sublime.ok_cancel_dialog(message) is True:
+            ZukanPreference.delete_icons_preference(preference_name)
+
+    def input(self, args: dict):
+        return DeletePreferenceInputHandler()
+
+
+class DeletePreferenceInputHandler(sublime_plugin.ListInputHandler):
+    """
+    List of created preferences and return preference_name to DeletePreference.
+    """
+
+    def name(self) -> str:
+        return 'preference_name'
+
+    def placeholder(self) -> str:
+        return 'List of created preferences'
+
+    def list_items(self) -> list:
+        if ZukanPreference.list_created_icons_preferences():
+            return sorted(ZukanPreference.list_created_icons_preferences())
+        else:
+            raise TypeError(
+                logger.info('it does not exist any created preference, list is empty')
+            )
+
+
+class DeletePreferences(sublime_plugin.ApplicationCommand):
+    """
+    Sublime command to delete all preferences in 'preferences' folder.
+    """
+
+    def run(self):
+        if ZukanPreference.list_created_icons_preferences():
+            message = (
+                "Are you sure you want to delete all preferences in '{f}'?".format(
+                    f=ZUKAN_PKG_ICONS_PREFERENCES_PATH
+                )
+            )
+            if sublime.ok_cancel_dialog(message) is True:
+                ZukanPreference.delete_icons_preferences()
+        else:
+            raise TypeError(
+                logger.info('it does not exist any created preference, list is empty')
+            )
 
 
 class DeleteSyntax(sublime_plugin.TextCommand):
@@ -126,6 +185,53 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
         else:
             raise TypeError(
                 logger.info('it does not exist any created theme, list is empty')
+            )
+
+
+class InstallPreference(sublime_plugin.TextCommand):
+    """
+    Sublime command to create preference from zukan preferences list.
+    """
+
+    def run(self, edit, preference_name: str):
+        file_name, file_extension = os.path.splitext(preference_name)
+        ZukanPreference.create_icon_preference(file_name)
+        # Remove plist tag <!DOCTYPE plist>
+        ZukanPreference.delete_plist_tag(preference_name)
+
+    def input(self, args: dict):
+        return InstallPreferenceInputHandler()
+
+
+class InstallPreferenceInputHandler(sublime_plugin.ListInputHandler):
+    """
+    Zukan preferences list, created preferences excluded, and return preference_name
+    to InstallPreference.
+    """
+
+    def name(self) -> str:
+        return 'preference_name'
+
+    def placeholder(self) -> str:
+        return 'Zukan preferences list'
+
+    def list_items(self) -> list:
+        list_preferences_not_installed = []
+        zukan_icons_preferences = read_pickle_data(ZUKAN_PREFERENCES_DATA_FILE)
+        for p in zukan_icons_preferences:
+            list_preferences_not_installed.append(
+                p['settings']['icon'] + '.tmPreferences'
+            )
+        list_preferences_not_installed = list(
+            set(list_preferences_not_installed).difference(
+                ZukanPreference.list_created_icons_preferences()
+            )
+        )
+        if list_preferences_not_installed:
+            return sorted(list_preferences_not_installed)
+        else:
+            raise TypeError(
+                logger.info('all preferences are already created, list is empty.')
             )
 
 
@@ -243,6 +349,24 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
             # Edit icons syntaxes contexts main if syntax not installed or ST3
             ZukanSyntax.edit_contexts_scopes()
             ThemeFile.create_themes_files()
+            ZukanPreference.create_icons_preferences()
+            # Remove plist tag <!DOCTYPE plist>
+            ZukanPreference.delete_plist_tags()
+
+
+class RebuildPreferences(sublime_plugin.ApplicationCommand):
+    """
+    Sublime command to rebuild tmPreferences. First, try to remove all previous
+    files.
+    """
+
+    def run(self):
+        try:
+            ZukanPreference.delete_icons_preferences()
+        finally:
+            ZukanPreference.create_icons_preferences()
+            # Remove plist tag <!DOCTYPE plist>
+            ZukanPreference.delete_plist_tags()
 
 
 class RebuildSyntaxes(sublime_plugin.ApplicationCommand):
