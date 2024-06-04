@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Toit
+preferences:
+  scope: source.toit
+  settings:
+    icon: toit
+syntax:
+  - name: Toit
+    scope: source.toit
+    hidden: true
+    file_extensions:
+      - toit
+    contexts:
+      main: []
+
+# Package Toit

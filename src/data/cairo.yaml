@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Cairo
+preferences:
+  scope: source.cairo
+  settings:
+    icon: cairo
+syntax:
+  - name: Cairo
+    scope: source.cairo
+    hidden: true
+    file_extensions:
+      - cairo
+    contexts:
+      main: []
+
+# Package Ethereum

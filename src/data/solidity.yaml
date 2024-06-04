@@ -1,0 +1,25 @@
+%YAML 1.2
+---
+name: Solidity
+preferences:
+  scope: source.solidity, source.yul
+  settings:
+    icon: solidity
+syntax:
+  - name: Solidity
+    scope: source.solidity
+    hidden: true
+    file_extensions:
+      - sol
+    contexts:
+      main: []
+  - name: Yul
+    scope: source.yul
+    hidden: true
+    file_extensions:
+      - yul
+      - yulp
+    contexts:
+      main: []
+
+# Package Ethereum

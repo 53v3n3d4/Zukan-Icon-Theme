@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Redis
+preferences:
+  scope: binary.redis
+  settings:
+    icon: redis
+syntax:
+  - name: Binary (Redis)
+    scope: binary.redis
+    hidden: true
+    file_extensions:
+      - rdb
+    contexts:
+      main: []
