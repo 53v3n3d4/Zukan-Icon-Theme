@@ -1,6 +1,8 @@
 import os
 import sublime
 
+from .file_extensions import PICKLE_EXTENSION, SUBLIME_PACKAGE_EXTENSION
+
 
 def filepath(url: str) -> str:
     """
@@ -33,14 +35,14 @@ PKG_ZUKAN_ICON_THEME_FOLDER = os.path.join('Packages', PACKAGE_NAME)
 #     '../../../../../Installed Packages/Zukan Icon Theme.sublime-package'
 # )
 ZUKAN_INSTALLED_PKG_PATH = os.path.join(
-    sublime.installed_packages_path(), PACKAGE_NAME + '.sublime-package'
+    sublime.installed_packages_path(), PACKAGE_NAME + SUBLIME_PACKAGE_EXTENSION
 )
 
 # ZUKAN_PKG_ICONS_PATH = filepath('../../../../../Packages/Zukan-Icon-Theme/icons')
 ZUKAN_PKG_ICONS_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'icons')
 
 ZUKAN_PKG_ICONS_PREFERENCES_PATH = os.path.join(
-    sublime.packages_path(), PACKAGE_NAME, 'preferences'
+    sublime.packages_path(), PACKAGE_NAME, 'icons_preferences'
 )
 
 # ZUKAN_PKG_ICONS_SYNTAXES_PATH = filepath(
@@ -58,8 +60,8 @@ ZUKAN_PKG_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME)
 ZUKAN_PREFERENCES_DATA_FILE = os.path.join(
     sublime.packages_path(),
     PACKAGE_NAME,
-    'preferences',
-    'zukan_preferences_data.pkl',
+    'icons_preferences',
+    'zukan_preferences_data' + PICKLE_EXTENSION,
 )
 
 # ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data.pkl')
@@ -67,7 +69,7 @@ ZUKAN_SYNTAXES_DATA_FILE = os.path.join(
     sublime.packages_path(),
     PACKAGE_NAME,
     'icons_syntaxes',
-    'zukan_syntaxes_data.pkl',
+    'zukan_syntaxes_data' + PICKLE_EXTENSION,
 )
 
 # Testing only

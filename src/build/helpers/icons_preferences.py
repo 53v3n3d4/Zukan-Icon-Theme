@@ -16,7 +16,7 @@ from src.build.helpers.read_write_data import dump_plist_data, read_yaml_data
 #     ICONS_TEST_NOT_EXIST_PATH,
 #     PREFERENCES_TEST_PATH,
 # )
-from src.build.utils.file_extensions import PLIST_EXTENSION
+from src.build.utils.file_extensions import TMPREFERENCES_EXTENSION
 # from src.build.utils.plist_unused_line import UNUSED_LINE
 
 # file_test = os.path.join(DATA_PATH, 'test_empty_file.yaml')
@@ -60,7 +60,7 @@ class Preference:
                 # print(data)
                 iconpreferences = (
                     f'{ data["preferences"]["settings"]["icon"] }'
-                    f'{ PLIST_EXTENSION }'
+                    f'{ TMPREFERENCES_EXTENSION }'
                 )
                 # print(iconpreferences)
                 if not os.path.exists(dir_destiny):

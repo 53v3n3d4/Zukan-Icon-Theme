@@ -35,10 +35,10 @@ ICONS_SVG_PATH = filepath('../../icons')
 
 ICONS_SYNTAXES_PATH = filepath('../../../icons_syntaxes')
 
-PREFERENCES_PATH = filepath('../../../preferences')
+ICONS_PREFERENCES_PATH = filepath('../../../icons_preferences')
 
 ZUKAN_PREFERENCES_DATA_FILE = filepath(
-    '../../../preferences/zukan_preferences_data.pkl'
+    '../../../icons_preferences/zukan_preferences_data.pkl'
 )
 
 ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data.pkl')

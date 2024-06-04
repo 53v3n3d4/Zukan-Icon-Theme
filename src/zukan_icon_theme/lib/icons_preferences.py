@@ -8,6 +8,9 @@ from ..helpers.read_write_data import (
     dump_plist_data,
     read_pickle_data,
 )
+from ..utils.file_extensions import (
+    TMPREFERENCES_EXTENSION,
+)
 from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PREFERENCES_DATA_FILE,
@@ -29,7 +32,7 @@ class ZukanPreference:
             zukan_icons_preferences = read_pickle_data(ZUKAN_PREFERENCES_DATA_FILE)
             for p in zukan_icons_preferences:
                 if p['settings']['icon'] == preference_name:
-                    filename = p['settings']['icon'] + '.tmPreferences'
+                    filename = p['settings']['icon'] + TMPREFERENCES_EXTENSION
                     preferences_filepath = os.path.join(
                         ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
                     )
@@ -52,7 +55,7 @@ class ZukanPreference:
         try:
             zukan_icons_preferences = read_pickle_data(ZUKAN_PREFERENCES_DATA_FILE)
             for p in zukan_icons_preferences:
-                filename = p['settings']['icon'] + '.tmPreferences'
+                filename = p['settings']['icon'] + TMPREFERENCES_EXTENSION
                 preferences_filepath = os.path.join(
                     ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
                 )
@@ -107,7 +110,9 @@ class ZukanPreference:
         """
         try:
             for p in glob.iglob(
-                os.path.join(ZUKAN_PKG_ICONS_PREFERENCES_PATH, '*.tmPreferences')
+                os.path.join(
+                    ZUKAN_PKG_ICONS_PREFERENCES_PATH, '*' + TMPREFERENCES_EXTENSION
+                )
             ):
                 os.remove(p)
             logger.info('tmPreferences deleted.')
@@ -139,7 +144,11 @@ class ZukanPreference:
         """
         try:
             logger.debug('deleting plist tag <!DOCTYPE plist>.')
-            for p in glob.glob(ZUKAN_PKG_ICONS_PREFERENCES_PATH + '/*.tmPreferences'):
+            for p in glob.glob(
+                os.path.join(
+                    ZUKAN_PKG_ICONS_PREFERENCES_PATH, '*' + TMPREFERENCES_EXTENSION
+                )
+            ):
                 clean_plist_tag(p)
             return p
         except FileNotFoundError:
@@ -169,7 +178,9 @@ class ZukanPreference:
             list_preferences_installed = []
             if os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH):
                 for file in glob.glob(
-                    ZUKAN_PKG_ICONS_PREFERENCES_PATH + '/*.tmPreferences'
+                    os.path.join(
+                        ZUKAN_PKG_ICONS_PREFERENCES_PATH, '*' + TMPREFERENCES_EXTENSION
+                    )
                 ):
                     list_preferences_installed.append(os.path.basename(file))
                 return list_preferences_installed

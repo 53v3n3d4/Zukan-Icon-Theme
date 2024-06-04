@@ -15,6 +15,9 @@ from ..utils.contexts_scopes import (
     CONTEXTS_MAIN,
     CONTEXTS_SCOPES,
 )
+from ..utils.file_extensions import (
+    SUBLIME_SYNTAX_EXTENSION,
+)
 from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_SYNTAXES_DATA_FILE,
@@ -37,7 +40,7 @@ class ZukanSyntax:
             zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
             for s in zukan_icons_syntaxes:
                 if s not in compare_scopes() and s['name'] == syntax_name:
-                    filename = s['name'] + '.sublime-syntax'
+                    filename = s['name'] + SUBLIME_SYNTAX_EXTENSION
                     syntax_filepath = os.path.join(
                         ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
                     )
@@ -62,7 +65,7 @@ class ZukanSyntax:
             zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
             for s in zukan_icons_syntaxes:
                 if s not in compare_scopes():
-                    filename = s['name'] + '.sublime-syntax'
+                    filename = s['name'] + SUBLIME_SYNTAX_EXTENSION
                     syntax_filepath = os.path.join(
                         ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
                     )
@@ -114,7 +117,9 @@ class ZukanSyntax:
         """
         try:
             for s in glob.iglob(
-                os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, '*.sublime-syntax')
+                os.path.join(
+                    ZUKAN_PKG_ICONS_SYNTAXES_PATH, '*' + SUBLIME_SYNTAX_EXTENSION
+                )
             ):
                 os.remove(s)
             logger.info('sublime-syntaxes deleted.')
@@ -215,7 +220,9 @@ class ZukanSyntax:
             list_syntaxes_installed = []
             if os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH):
                 for file in glob.glob(
-                    ZUKAN_PKG_ICONS_SYNTAXES_PATH + '/*.sublime-syntax'
+                    os.path.join(
+                        ZUKAN_PKG_ICONS_SYNTAXES_PATH, '*' + SUBLIME_SYNTAX_EXTENSION
+                    )
                 ):
                     list_syntaxes_installed.append(os.path.basename(file))
                 return list_syntaxes_installed

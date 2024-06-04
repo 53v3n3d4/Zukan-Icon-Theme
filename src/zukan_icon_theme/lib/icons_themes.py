@@ -8,6 +8,9 @@ from ..helpers.search_themes import (
     list_theme_with_opacity,
     search_resources_sublime_themes,
 )
+from ..utils.file_extensions import (
+    SUBLIME_THEME_EXTENSION,
+)
 from ..utils.theme_templates import (
     TEMPLATE_JSON,
     TEMPLATE_JSON_WITH_OPACITY,
@@ -124,7 +127,9 @@ class ThemeFile:
         Delete all sublime-themes files in Zukan Icon Theme/icons folder.
         """
         try:
-            for t in glob.iglob(os.path.join(ZUKAN_PKG_ICONS_PATH, '*.sublime-theme')):
+            for t in glob.iglob(
+                os.path.join(ZUKAN_PKG_ICONS_PATH, '*' + SUBLIME_THEME_EXTENSION)
+            ):
                 os.remove(t)
                 logger.info('deleting icon theme %s', os.path.basename(t))
         except FileNotFoundError:
@@ -153,7 +158,7 @@ class ThemeFile:
             list_themes_installed = []
             if os.path.exists(ZUKAN_PKG_ICONS_PATH):
                 for file in glob.glob(
-                    os.path.join(ZUKAN_PKG_ICONS_PATH, '*.sublime-theme')
+                    os.path.join(ZUKAN_PKG_ICONS_PATH, '*' + SUBLIME_THEME_EXTENSION)
                 ):
                     list_themes_installed.append(os.path.basename(file))
                 return list_themes_installed

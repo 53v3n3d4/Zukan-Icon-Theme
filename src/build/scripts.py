@@ -6,7 +6,7 @@ import sys
 from src.build.clean_svg import CleanSVG
 from src.build.helpers.color import Color
 from src.build.helpers.create_test_icon_theme import TestIconTheme
-from src.build.helpers.preferences import Preference
+from src.build.helpers.icons_preferences import Preference
 from src.build.helpers.icons_syntaxes import IconSyntax
 from src.build.helpers.logger import logging
 from src.build.helpers.print_message import print_build_message, print_message
@@ -19,7 +19,7 @@ from src.build.utils.build_dir_paths import (
     ICONS_PNG_PATH,
     ICONS_SVG_PATH,
     ICONS_SYNTAXES_PATH,
-    PREFERENCES_PATH,
+    ICONS_PREFERENCES_PATH,
     ZUKAN_PREFERENCES_DATA_FILE,
     ZUKAN_SYNTAXES_DATA_FILE,
 )
@@ -136,7 +136,7 @@ def main():
     parser_icontheme.add_argument(
         '-t',
         '--tmpreference',
-        default=PREFERENCES_PATH,
+        default=ICONS_PREFERENCES_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for tmPreferences files.{ Color.END }',
@@ -222,7 +222,7 @@ def main():
     parser_preference.add_argument(
         '-t',
         '--tmpreference',
-        default=PREFERENCES_PATH,
+        default=ICONS_PREFERENCES_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for tmPreferences files.{ Color.END }',
@@ -314,7 +314,7 @@ def main():
     parser_zukan_preference.add_argument(
         '-t',
         '--tmpreference',
-        default=PREFERENCES_PATH,
+        default=ICONS_PREFERENCES_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for preferences data file.{ Color.END }',
@@ -464,7 +464,7 @@ def main():
         if args.all and not (args.file or args.data):
             print_build_message(
                 '🛠️  Creating all icons tmPreferences: ',
-                PREFERENCES_PATH,
+                ICONS_PREFERENCES_PATH,
             )
             Preference.preferences_all(DATA_PATH, args.tmpreference)
         elif args.file and not (args.all or args.data):

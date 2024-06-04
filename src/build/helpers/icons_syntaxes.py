@@ -7,7 +7,7 @@ from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import dump_yaml_data, read_yaml_data
 
 # from src.build.utils.build_dir_paths import DATA_PATH, ICONS_SYNTAXES_TEST_PATH
-from src.build.utils.file_extensions import SYNTAX_EXTENSION
+from src.build.utils.file_extensions import SUBLIME_SYNTAX_EXTENSION
 
 # file_test = os.path.join(DATA_PATH, 'test_empty_file.yaml')
 # file_test = os.path.join(DATA_PATH, 'afpub.yaml')
@@ -44,7 +44,7 @@ class IconSyntax:
             if any('syntax' in d for d in data) and data.get('syntax') is not None:
                 for k in data['syntax']:
                     # print(k['name'])
-                    iconsyntax = f'{ k["name"] }{ SYNTAX_EXTENSION }'
+                    iconsyntax = f'{ k["name"] }{ SUBLIME_SYNTAX_EXTENSION }'
                     if not os.path.exists(dir_destiny):
                         os.makedirs(dir_destiny)
                     iconsyntax_path = os.path.join(dir_destiny, iconsyntax)

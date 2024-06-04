@@ -5,8 +5,8 @@ import sublime_plugin
 
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
+from ..lib.icons_themes import ThemeFile
 from ..lib.move_folders import MoveFolder
-from ..lib.themes import ThemeFile
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
