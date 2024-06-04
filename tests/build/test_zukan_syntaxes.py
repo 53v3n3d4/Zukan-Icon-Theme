@@ -26,16 +26,16 @@ class TestZukanSyntax:
             )
         ],
     )
-    def test_write_zukan_data(self, a, b, c, expected):
-        result = ZukanSyntax.write_zukan_data(a, b, c)
+    def test_write_syntax_data(self, a, b, c, expected):
+        result = ZukanSyntax.write_syntax_data(a, b, c)
         assert result == TEST_DATA_DIR_EXCEPT_ZUKAN_FILE
 
     @pytest.fixture(autouse=True)
-    def test_write_zukan_data_filenotfounderror(self, caplog):
+    def test_write_syntax_data_filenotfounderror(self, caplog):
         caplog.clear()
         with patch('src.build.zukan_syntaxes.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            ZukanSyntax.write_zukan_data(
+            ZukanSyntax.write_syntax_data(
                 'tests/mocks/not_found_yaml.yaml',
                 DIR_DESTINY,
                 TEST_PICKLE_ZUKAN_FILE,
@@ -49,11 +49,11 @@ class TestZukanSyntax:
         ]
 
     @pytest.fixture(autouse=True)
-    def test_write_zukan_data_oserror(self, caplog):
+    def test_write_syntax_data_oserror(self, caplog):
         caplog.clear()
         with patch('src.build.zukan_syntaxes.open') as mock_open:
             mock_open.side_effect = OSError
-            ZukanSyntax.write_zukan_data(
+            ZukanSyntax.write_syntax_data(
                 'tests/mocks/yaml.yaml', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE
             )
         assert caplog.record_tuples == [
@@ -76,11 +76,11 @@ class TestIconZukanSyntax(TestCase):
         cls.fake_fs().create_file('data/angular.yaml')
 
     def test_dir_exist(self):
-        ZukanSyntax.write_zukan_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
+        ZukanSyntax.write_syntax_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
         self.assertTrue(os.path.exists('data'))
 
-    def test_params_write_zukan_data(self):
-        ZukanSyntax.write_zukan_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
+    def test_params_write_syntax_data(self):
+        ZukanSyntax.write_syntax_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
         self.assertTrue(isinstance('data', str))
         self.assertFalse(isinstance('data', int))
         self.assertFalse(isinstance('data', list))
