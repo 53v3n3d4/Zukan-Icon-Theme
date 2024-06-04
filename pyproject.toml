@@ -15,7 +15,7 @@ packages = [
 ]
 
 [tool.poetry.dependencies]
-# .python-version file should be 3.8.19 or poetry install could fail to
+# .python-version file should be 3.8.19 while using 'poetry install' could fail to
 # install dependencies
 python = "^3.8.19"
 
@@ -35,7 +35,7 @@ ruff = "^0.4.4"
 [tool.poetry.scripts]
 # poetry run build --help
 # Examples:
-# Generate PNGs and tmpreferences
+# Generate PNGs, zukan preferences and syntaxes file.
 # poetry run build icon-theme -f src/data/afdesign.yaml
 # poetry run build icon-theme --all
 build = "src.build.scripts:main"
