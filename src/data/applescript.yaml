@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: AppleScript
+preferences:
+  scope: source.applescript
+  settings:
+    icon: applescript
+syntax:
+  - name: AppleScript
+    scope: source.applescript
+    hidden: true
+    file_extensions:
+      - applescript
+      - script editor
+    contexts:
+      main: []
+
+# ST Package

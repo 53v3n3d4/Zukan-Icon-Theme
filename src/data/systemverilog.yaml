@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: SystemVerilog
+preferences:
+  scope: source.systemverilog
+  settings:
+    icon: systemverilog
+syntax:
+  - name: SystemVerilog
+    scope: source.systemverilog
+    hidden: true
+    file_extensions:
+      - sv
+      - svh
+      - v
+      - vh
+    contexts:
+      main: []
+
+# Package SystemVerilog

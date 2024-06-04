@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Julia
+preferences:
+  scope: source.julia
+  settings:
+    icon: julia
+syntax:
+  - name: Julia
+    scope: source.julia
+    hidden: true
+    file_extensions:
+      - jl
+    contexts:
+      main: []
+
+# Package Julia
