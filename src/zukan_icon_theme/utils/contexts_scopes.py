@@ -5,6 +5,7 @@ CONTEXTS_MAIN = {'contexts': {'main': []}}
 # about syntax not found.
 # Contexts main are important for highlighting while also keep icon showing.
 CONTEXTS_SCOPES = [
+    {'scope': 'embedding.php', 'startsWith': 'PHP ('},
     {'scope': 'source.c++', 'startsWith': 'C++ ('},
     {'scope': 'source.css', 'startsWith': 'CSS ('},
     {'scope': 'source.elixir', 'startsWith': 'Elixir ('},

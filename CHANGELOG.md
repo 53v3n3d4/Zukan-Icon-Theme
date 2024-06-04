@@ -7,7 +7,7 @@
 - Add python setup: poetry, pytest, ruff
 
 ### Icons, icons-syntaxes and preferences
-- Add icon-theme: ActionScript, AppleScript, archive, AsciiDoc, Astro, Avro, Babashka, Batch File, BibTeX, Cabal, Cap'n Proto, Cargo, Cert, Clojure, ClojureDart, ClojureScript, Composer, CUDA, Cypress, D, Dart, Diff, Django, DUB, EditorConfig, Eleventy, Erlang.mk, Figma, Font, Fortran, GitBook Gradle, Groovy, glTF, Haml, Handlebars, Haskell, Hex, isort, Julia, Jinja, Jupyter, LaTeX, Liquid, Lisp, mypy, Nix, NumPy, OCaml, Perl, PHP CS Fixer, PHPStan, PHPUnit, Pipenv, Playwright, Plist, pre-commit, Pylint, Pyright, R, Read the Docs, Rebar3, Regular Expression, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Swagger, SystemVerilog Tailwind CSS, TeX, Textile, tox, Vercel, Yaws
+- Add icon-theme: ActionScript, AppleScript, archive, AsciiDoc, Astro, Avro, Babashka, Batch File, BibTeX, Biome, Cabal, Cap'n Proto, Cargo, Cassandra, Cert, Clojure, ClojureDart, ClojureScript, Composer, CUDA, Cypress, D, Dart, Diff, Django, DUB, EditorConfig, Eleventy, Erlang.mk, Figma, Font, Fortran, GitBook Gradle, Groovy, glTF, Haml, Handlebars, Haskell, Hex, Hugo, isort, Julia, Jinja, Jupyter, LaTeX, Liquid, Lisp, mypy, Nix, NumPy, OCaml, Perl, PHP CS Fixer, PHPStan, PHPUnit, Pipenv, PostCSS, Playwright, Plist, pre-commit, Pylint, Pyright, R, Read the Docs, Rebar3, Regular Expression, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Swagger, SystemVerilog Tailwind CSS, TeX, Textile, tox, Vercel, Yaws
 - Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
 - Change icon: Audio, Kotlin, makefile, Node js, Rspack
 - Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby, Sublime Text
@@ -20,7 +20,7 @@
 - Add clean_svg
 - Add icons
 - Add icons_syntaxes
-- Add preferences
+- Add icons_preferences
 - Add scripts
 - Add create_test_icon_theme
 - Add zukan_syntaxes
@@ -28,7 +28,7 @@
 - Add zukan_preferences
 
 ### Plugin
-- Add themes
+- Add icons_themes
 - Add move_folders
 - Add icons_sytanxes
 - Add logger

@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Cassandra
+preferences:
+  scope: source.cql
+  settings:
+    icon: cassandra
+syntax:
+  - name: Cassandra
+    scope: source.cql
+    hidden: true
+    file_extensions:
+      - cql
+    contexts:
+      main: []

@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Biome
+preferences:
+  scope: source.json.biome
+  settings:
+    icon: biome
+syntax:
+  - name: JSON (Biome)
+    scope: source.json.biome
+    hidden: true
+    file_extensions:
+      - biome.json
+      - biome.jsonc
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

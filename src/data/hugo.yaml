@@ -1,0 +1,42 @@
+%YAML 1.2
+---
+name: Hugo
+preferences:
+  scope: source.json.hugo, source.toml.hugo, source.yaml.hugo, text.plain.hugo
+  settings:
+    icon: hugo
+syntax:
+  - name: JSON (Hugo)
+    scope: source.json.hugo
+    hidden: true
+    file_extensions:
+      - hugo.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: Plain Text (Hugo)
+    scope: text.plain.hugo
+    hidden: true
+    file_extensions:
+      - .hugo_build.lock
+    contexts:
+      main: []
+  - name: TOML (Hugo)
+    scope: source.toml.hugo
+    hidden: true
+    file_extensions:
+      - hugo.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
+  - name: YAML (Hugo)
+    scope: source.yaml.hugo
+    hidden: true
+    file_extensions:
+      - hugo.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

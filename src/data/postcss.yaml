@@ -1,0 +1,90 @@
+%YAML 1.2
+---
+name: PostCSS
+preferences:
+  scope: source.css.postcss.sugarss, source.js.postcss, source.json.postcss, source.postcss, source.sss, source.ts.postcss, source.yaml.postcss, text.plain.postcss
+  settings:
+    icon: postcss
+syntax:
+  - name: CSS (SugarSS)
+    scope: source.css.postcss.sugarss
+    hidden: true
+    file_extensions:
+      - sss
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+  - name: JavaScript (PostCSS)
+    scope: source.js.postcss
+    hidden: true
+    file_extensions:
+      - .postcssrc.js
+      - .postcssrc.cjs
+      - .postcssrc.mjs
+      - postcss.config.js
+      - postcss.config.cjs
+      - postcss.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (PostCSS)
+    scope: source.json.postcss
+    hidden: true
+    file_extensions:
+      - .postcssrc.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: Plain Text (PostCSS)
+    scope: text.plain.postcss
+    hidden: true
+    file_extensions:
+      - .postcssrc
+    contexts:
+      main: []
+  - name: PostCSS
+    scope: source.postcss
+    hidden: true
+    file_extensions:
+      - pcss
+      - postcss
+    contexts:
+      main: []
+  - name: TypeScript (PostCSS)
+    scope: source.ts.postcss
+    hidden: true
+    file_extensions:
+      - .postcssrc.ts
+      - .postcssrc.cts
+      - .postcssrc.mts
+      - postcss.config.ts
+      - postcss.config.cts
+      - postcss.config.mts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true
+  - name: YAML (PostCSS)
+    scope: source.yaml.postcss
+    hidden: true
+    file_extensions:
+      - .postcssrc.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+  # - name: CSS (SugarSS)
+  #   scope: source.sss
+  #   hidden: true
+  #   file_extensions:
+  #     - sss
+  #   contexts:
+  #     main:
+  #       - include: scope:source.css
+  #         apply_prototype: true
+
+# Package Syntax Highlighting for PostCSS: source.css.postcss.sugarss, source.postcss
+# Package Syntax Highlighting for SSS SugarSS: source.sss
