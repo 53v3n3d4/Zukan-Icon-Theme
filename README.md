@@ -14,16 +14,19 @@ Files and folders that has been renamed, or is going to be, in version v0.2.0.
 | file_type_(name).svg | (name).svg  |
 | file_type_(name).png | (name).png  |
 | /aliases | /icons_syntaxes |
+| /preferences | /icons_preferences |
 
 ## Zukan Icon Theme
-
-![file type icons](assets/screenshot.png "Screenshot")
-
-> Icons from v0.1.0
 
 This is a slow work in progress (WIP).  
 
 Icon theme for Sublime Text editor.  
+
+
+![file type icons](assets/sample.svg "Sample")
+
+> Icons from v0.2.0
+
 
 ## Install
 
@@ -46,7 +49,7 @@ This command install for all existing themes in your ST.
 
 If you prefer to create manually, see [theme.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/theme.md).  
 
-### Preferences
+### Preference
 
 After update repo, at moment, use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Preferences`.  
 
@@ -77,10 +80,10 @@ To uninstall manually, go to your Sublime Text folder.
 - Photoshop. ST use `file_type_image` icon  
 - XML. ST use `file_type_markup` icon  
 
-## ST Package syntax icons that use generic icon
-- DTD use `file_type_markup`
-- Pascal use `file_type_source`
-- XSL use `file_type_markup`
+## ST Package syntax icons that are using generic icon
+- DTD use `file_type_markup`  
+- Pascal use `file_type_source`  
+- XSL use `file_type_markup`  
 
 ## Notes
 - This package uses tmPreferences and sublime-syntax files, it is heavily based on how [`A File Icon`](https://github.com/SublimeText/AFileIcon) package make icons work  
