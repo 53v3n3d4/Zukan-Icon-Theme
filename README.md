@@ -46,6 +46,10 @@ This command install for all existing themes in your ST.
 
 If you prefer to create manually, see [theme.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/theme.md).  
 
+### Preferences
+
+After update repo, at moment, use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Preferences`.  
+
 ### Syntax
 
 To avoid duplicated syntaxes that already exist on your ST, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Syntaxes`.  
@@ -69,9 +73,14 @@ To uninstall manually, go to your Sublime Text folder.
 
 ## Icons that do not work
 
+- Favicon. ST use  `file_type_image` icon for binary files  
 - Photoshop. ST use `file_type_image` icon  
 - XML. ST use `file_type_markup` icon  
-- Favicon. ST use  `file_type_image` icon for binary files  
+
+## ST Package syntax icons that use generic icon
+- DTD use `file_type_markup`
+- Pascal use `file_type_source`
+- XSL use `file_type_markup`
 
 ## Notes
 - This package uses tmPreferences and sublime-syntax files, it is heavily based on how [`A File Icon`](https://github.com/SublimeText/AFileIcon) package make icons work  

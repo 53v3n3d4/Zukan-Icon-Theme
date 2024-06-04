@@ -11,7 +11,7 @@ $ poetry run build -h
 ```
 
 ## Create icon theme
-Create zukan syntaxes file, PNGs and tmPreferences files for icons.  
+Create PNGs, zukan preferences and syntaxes files for icons.  
 
 Using argparse commands  
 ```sh
@@ -48,6 +48,27 @@ Using poetry scripts
 $ poetry run build zukan-syntax --write
 # Print file
 $ poetry run build zukan-syntax --read
+```
+
+## Create zukan preferences file
+Create a data file, with all icon preferences, to be used by plugin.  
+
+File will be created in `preferences` folder.  
+
+Using argparse commands  
+```sh
+# Environment activated
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --help
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --write
+# Print file
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --read
+```
+
+Using poetry scripts  
+```sh
+$ poetry run build zukan-preference --write
+# Print file
+$ poetry run build zukan-preference --read
 ```
 
 ## Clean SVG

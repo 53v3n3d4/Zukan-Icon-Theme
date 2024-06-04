@@ -34,6 +34,14 @@ There is a list of icons that are not working in [`README.md`](https://github.co
 
 They can be accessed through `Tools > Command Palette...`. Type `zukan` to see the commands available.  
 
+### Delete Preference
+
+It delete a tmPreference file from a list of created preferences.  
+
+### Delete Preferences
+
+It delete all created tmPreferences files in `preferences` folder.  
+
 ### Delete Syntax
 
 It delete a sublime-syntax file from a list of created syntaxes.  
@@ -50,6 +58,10 @@ It delete a sublime-theme file from a list of created themes.
 
 It delete all created sublime-theme files in `icons` folder.  
 
+### Install Preference
+
+It install a tmPreferences file from zukan preferences list, excluding already installed in plugin.  
+
 ### Install Syntax
 
 It install a sublime-syntax file from zukan icons syntaxes list, excluding already installed in plugin or ST.  
@@ -60,7 +72,11 @@ It install a sublime-theme file from a list of user installed themes, excluding 
 
 ### Install Themes
 
-It install all sublime-theme files from a list of user installed themes, excluding already installed in plugin.  
+It install all sublime-theme files from a list of user installed themes.  
+
+### Rebuild Preferences
+
+It remove all previous tmPreferences files in `preferences`, before install all zukan icons preferences.
 
 ### Rebuild Syntaxes
 
