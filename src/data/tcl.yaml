@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Tcl
+preferences:
+  scope: source.tcl, text.html.tcl
+  settings:
+    icon: tcl
+syntax:
+  - name: HTML (Tcl)
+    scope: text.html.tcl
+    hidden: true
+    file_extensions:
+      - adp
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: Tcl
+    scope: source.tcl
+    hidden: true
+    file_extensions:
+      - tcl
+    contexts:
+      main: []
+
+# ST Package

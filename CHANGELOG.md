@@ -5,9 +5,10 @@
 - Rename folder aliases -> icons_syntaxes
 - Rename files icons PNGs, SVGs, sublime-syntaxes and tmPreferences
 - Add python setup: poetry, pytest, ruff
+- Rename folder preferences -> icons_preferences
 
 ### Icons, icons-syntaxes and preferences
-- Add icon-theme: ActionScript, AppleScript, archive, AsciiDoc, ASP, Astro, Avro, Babashka, Batch File, BibTeX, Biome, Cabal, Caddyserver, Cairo, Cap'n Proto, Cargo, Cassandra, Cert, Clojure, ClojureDart, ClojureScript, Composer, Conda, CUDA, Cypress, D, Dart, Diff, Django, DUB, EditorConfig, Eleventy, Erlang.mk, Figma, Font, Fortran, GitBook Gradle, Groovy, glTF, Haml, Handlebars, Haskell, Hex, Hugo, isort, Julia, Jinja, Jupyter, LaTeX, Liquid, Lisp, mypy, Nix, NumPy, Nushell, OCaml, Perl, PHP CS Fixer, PHPStan, PHPUnit, Pipenv, PostCSS, Playwright, Plist, pre-commit, Pylint, Pyright, R, Read the Docs, Rebar3, Redis, Regular Expression, Renovate, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Solidity, Swagger, SystemVerilog Tailwind CSS, TeX, Textile, Toit, tox, Typst, Vercel, Vyper, Yaws
+- Add icon-theme: ActionScript, AppleScript, archive, AsciiDoc, ASP, Astro, Avro, Babashka, Batch File, BibTeX, Biome, Cabal, Caddyserver, Cairo, Cap'n Proto, Cargo, Cassandra, Cert, Clojure, ClojureDart, ClojureScript, Composer, Conda, CUDA, Cypress, D, Dart, Diff, Django, DUB, EditorConfig, Eleventy, Erlang.mk, Figma, Font, Fortran, GitBook Gradle, Graphviz (DOT), Groovy, glTF, Haml, Handlebars, Haskell, Hex, Hugo, isort, Julia, Jinja, Jupyter, LaTeX, Liquid, Lisp, MATLAB, mypy, Nix, NumPy, Nushell, OCaml, Perl, PHP CS Fixer, PHPStan, PHPUnit, Pine, Pipenv, PostCSS, Playwright, Plist, pre-commit, Pylint, Pyright, R, Read the Docs, Rebar3, Redis, Regular Expression, Renovate, reStructuredText, Rspec, RuboCop, RVM, sbt, Scala, Solidity, Swagger, SystemVerilog Tailwind CSS, Tcl, TeX, Textile, tmux, Toit, tox, Typst, Vercel, Vyper, Yaws
 - Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
 - Change icon: Audio, Kotlin, makefile, Node js, Rspack
 - Change sublime-syntax: CAD, Docker, Flatbuffers, Node js, Prettier, Pyhton, Ruby, Sublime Text

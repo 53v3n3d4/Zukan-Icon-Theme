@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: MATLAB
+preferences:
+  scope: source.matlab
+  settings:
+    icon: matlab
+syntax:
+  - name: MATLAB
+    scope: source.matlab
+    hidden: true
+    file_extensions:
+      - matlab
+    contexts:
+      main: []
+
+# ST Package

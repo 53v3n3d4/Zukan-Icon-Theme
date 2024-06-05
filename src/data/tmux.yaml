@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+name: tmux
+preferences:
+  scope: source.tmux
+  settings:
+    icon: tmux
+syntax:
+  - name: tmux
+    scope: source.tmux
+    hidden: true
+    file_extensions:
+      - .tmux
+      - .tmux.conf
+      - tmux
+      - tmux.conf
+    contexts:
+      main: []
+
+# Package Tmux Syntax Highlight, only .tmux.conf
+# https://github.com/gerardroche/sublime-tmux
