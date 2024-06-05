@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: ASP
+preferences:
+  scope: source.asp
+  settings:
+    icon: asp
+syntax:
+  - name: ASP
+    scope: source.asp
+    hidden: true
+    file_extensions:
+      - vbs
+    contexts:
+      main: []
+
+# ST Package

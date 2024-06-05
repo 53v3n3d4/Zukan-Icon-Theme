@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Conda
+preferences:
+  scope: source.yaml.conda
+  settings:
+    icon: conda
+syntax:
+  - name: YAML (Conda)
+    scope: source.yaml.conda
+    hidden: true
+    file_extensions:
+      - .condarc
+      - condarc
+      - condarc.yml
+      - condarc.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

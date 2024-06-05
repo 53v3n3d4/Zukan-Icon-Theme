@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Caddyserver
+preferences:
+  scope: source.Caddyfile
+  settings:
+    icon: caddyserver
+syntax:
+  - name: Caddyfile
+    scope: source.Caddyfile
+    hidden: true
+    file_extensions:
+      - Caddyfile
+    contexts:
+      main: []
+
+# Package Caddyfile Syntax
