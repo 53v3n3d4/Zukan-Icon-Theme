@@ -1,0 +1,24 @@
+%YAML 1.2
+---
+name: Typst
+preferences:
+  scope: source.typst, text.typst
+  settings:
+    icon: typst
+syntax:
+  - name: Typst
+    scope: text.typst
+    hidden: true
+    file_extensions:
+      - typ
+    contexts:
+      main: []
+  - name: Typst Code
+    scope: source.typst
+    hidden: true
+    file_extensions:
+      - typc
+    contexts:
+      main: []
+
+# Package Typst

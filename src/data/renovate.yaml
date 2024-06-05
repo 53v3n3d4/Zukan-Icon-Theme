@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+name: Renovate
+preferences:
+  scope: source.json.renovate, source.json5.renovate
+  settings:
+    icon: renovate
+syntax:
+  - name: JSON (Renovate)
+    scope: source.json.renovate
+    hidden: true
+    file_extensions:
+      - .renovaterc
+      - .renovaterc.json
+      - renovate.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: JSON5 (Renovate)
+    scope: source.json5.renovate
+    hidden: true
+    file_extensions:
+      - .renovaterc.json5
+      - renovate.json5
+    contexts:
+      main: []
+
+# JSON5 context main empty, no JSON5 syntax found.

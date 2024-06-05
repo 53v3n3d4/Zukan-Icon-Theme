@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Nushell
+preferences:
+  scope: source.shell.nu
+  settings:
+    icon: nushell
+syntax:
+  - name: Nushell
+    scope: source.shell.nu
+    hidden: true
+    file_extensions:
+      - nu
+    contexts:
+      main: []
+
+# Package Nushell
