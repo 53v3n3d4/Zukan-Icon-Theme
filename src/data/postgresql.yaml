@@ -2,10 +2,19 @@
 ---
 name: PostgreSQL
 preferences:
-  scope: source.pgsql
+  scope: source.ini.pgsql, source.pgsql
   settings:
     icon: postgresql
 syntax:
+  - name: INI (PostgreSQL)
+    scope: source.ini.pgsql
+    hidden: true
+    file_extensions:
+      - postgresql.conf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
   - name: SQL (PostgreSQL)
     scope: source.pgsql
     hidden: true

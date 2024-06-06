@@ -2,14 +2,33 @@
 ---
 name: Cassandra
 preferences:
-  scope: source.cql
+  scope: source.cql, source.ini.cassandra, source.yaml.cassandra
   settings:
     icon: cassandra
 syntax:
-  - name: Cassandra
+  - name: CQL (Cassandra)
     scope: source.cql
     hidden: true
     file_extensions:
       - cql
     contexts:
       main: []
+  - name: INI (Cassandra)
+    scope: source.ini.cassandra
+    hidden: true
+    file_extensions:
+      - cqlshrc
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: YAML (Cassandra)
+    scope: source.yaml.cassandra
+    hidden: true
+    file_extensions:
+      - cassandra.yaml
+      - metrics-reporter-config.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

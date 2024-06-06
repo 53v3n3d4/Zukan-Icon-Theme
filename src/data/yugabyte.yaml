@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Yugabyte
+preferences:
+  scope: source.ini.yugabyte
+  settings:
+    icon: yugabyte
+syntax:
+  - name: INI (Yugabyte)
+    scope: source.ini.yugabyte
+    hidden: true
+    file_extensions:
+      - ysql_pg.conf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true

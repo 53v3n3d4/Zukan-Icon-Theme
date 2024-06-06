@@ -2,7 +2,7 @@
 ---
 name: Log
 preferences:
-  scope: text.plain.log
+  scope: source.loghighlight, text.logfile, text.plain.log
   settings:
     icon: log
 syntax:
@@ -13,3 +13,6 @@ syntax:
       - log
     contexts:
       main: []
+
+# Package Log Highlight source.loghighlight
+# Package LogView text.logfile

@@ -2,18 +2,25 @@
 ---
 name: MySQL
 preferences:
-  scope: source.mysql
+  scope: source.ini.mysql, text.plain.mysql
   settings:
     icon: mysql
 syntax:
-  - name: SQL (MySQL)
-    scope: source.mysql
+  - name: INI (MySQL)
+    scope: source.ini.mysql
+    hidden: true
+    file_extensions:
+      - my.cnf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: Plain Text (MySQL)
+    scope: text.plain.mysql
     hidden: true
     file_extensions:
       - ib_logfile0
       - ib_logfile1
-      - my.cnf
       - mysql.sock
-      # - sql
     contexts:
       main: []

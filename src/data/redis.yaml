@@ -2,7 +2,7 @@
 ---
 name: Redis
 preferences:
-  scope: binary.redis
+  scope: binary.redis, source.ini.redis
   settings:
     icon: redis
 syntax:
@@ -13,3 +13,12 @@ syntax:
       - rdb
     contexts:
       main: []
+  - name: INI (Redis)
+    scope: source.ini.redis
+    hidden: true
+    file_extensions:
+      - redis.conf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
