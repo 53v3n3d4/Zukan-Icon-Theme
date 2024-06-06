@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Knip
+preferences:
+  scope: source.json.knip
+  settings:
+    icon: knip
+syntax:
+  - name: JSON (Knip)
+    scope: source.json.knip
+    hidden: true
+    file_extensions:
+      - knip.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true

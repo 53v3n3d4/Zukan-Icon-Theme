@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Nx
+preferences:
+  scope: source.json.nx
+  settings:
+    icon: nx
+syntax:
+  - name: JSON (Nx)
+    scope: source.json.nx
+    hidden: true
+    file_extensions:
+      - nx.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true

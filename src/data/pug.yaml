@@ -1,0 +1,37 @@
+%YAML 1.2
+---
+name: Pug
+preferences:
+  scope: source.json.pug, source.js.pug, text.pug
+  settings:
+    icon: pug
+syntax:
+  - name: JavaScript (Pug)
+    scope: source.js.pug
+    hidden: true
+    file_extensions:
+      - .pug-lintrc.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Pug)
+    scope: source.json.pug
+    hidden: true
+    file_extensions:
+      - .pug-lintrc
+      - .pug-lintrc.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
+  - name: Pug
+    scope: text.pug
+    hidden: true
+    file_extensions:
+      - pug
+    contexts:
+      main: []
+
+# Package Pug
+# Package SublimeLinter-pug-lint

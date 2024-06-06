@@ -1,0 +1,45 @@
+%YAML 1.2
+---
+name: Nuxt
+preferences:
+  scope: source.ini.nuxt, source.js.nuxt, source.ts.nuxt, text.git.ignore.nuxt
+  settings:
+    icon: nuxt
+syntax:
+  - name: Git (Nuxt)
+    scope: text.git.ignore.nuxt
+    hidden: true
+    file_extensions:
+      - .nuxtignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
+  - name: INI (Nuxt)
+    scope: source.ini.nuxt
+    hidden: true
+    file_extensions:
+      - .nuxtrc
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: JavaScript (Nuxt)
+    scope: source.js.nuxt
+    hidden: true
+    file_extensions:
+      - nuxt.config.js
+      - nuxt.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Nuxt)
+    scope: source.ts.nuxt
+    hidden: true
+    file_extensions:
+      - nuxt.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

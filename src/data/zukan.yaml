@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Zukan
+preferences:
+  scope: source.json.zukan
+  settings:
+    icon: zukan
+syntax:
+  - name: JSON (Zukan)
+    scope: source.json.zukan
+    hidden: true
+    file_extensions:
+      - Zukan Icon Theme.sublime-commands
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Sentry
+preferences:
+  scope: source.ini.sentry, source.python.sentry
+  settings:
+    icon: sentry
+syntax:
+  - name: INI (Sentry)
+    scope: source.ini.sentry
+    hidden: true
+    file_extensions:
+      - .sentryclirc
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: Python (Sentry)
+    scope: source.python.sentry
+    hidden: true
+    file_extensions:
+      - sentry.conf.py
+    contexts:
+      main:
+        - include: scope:source.python
+          apply_prototype: true

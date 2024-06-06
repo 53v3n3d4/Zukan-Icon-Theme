@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Symfony
+preferences:
+  scope: source.json.symfony
+  settings:
+    icon: symfony
+syntax:
+  - name: JSON (Symfony)
+    scope: source.json.symfony
+    hidden: true
+    file_extensions:
+      - symfony.lock
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

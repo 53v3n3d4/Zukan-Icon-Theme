@@ -2,7 +2,7 @@
 ---
 name: Vue
 preferences:
-  scope: text.html.vue
+  scope: source.js.vue, text.html.vue
   settings:
     icon: vue
 syntax:
@@ -14,4 +14,24 @@ syntax:
     contexts:
       main:
         - include: scope:text.html.basic
+          apply_prototype: true
+  - name: JavaScript (Vue)
+    scope: source.js.vue
+    hidden: true
+    file_extensions:
+      - vue.config.js
+      - vue.config.cjs
+      - vue.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Vue)
+    scope: source.json.vue
+    hidden: true
+    file_extensions:
+      - .vuerc
+    contexts:
+      main:
+        - include: scope:source.json
           apply_prototype: true

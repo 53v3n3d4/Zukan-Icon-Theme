@@ -1,0 +1,9 @@
+%YAML 1.2
+---
+name: Nant
+preferences:
+  scope: source.nant-build
+  settings:
+    icon: nant
+
+# ST Package

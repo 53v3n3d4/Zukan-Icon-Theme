@@ -2,7 +2,7 @@
 ---
 name: Svelte
 preferences:
-  scope: text.html.svelte
+  scope: source.js.svelte, text.html.svelte
   settings:
     icon: svelte
 syntax:
@@ -14,4 +14,13 @@ syntax:
     contexts:
       main:
         - include: scope:text.html.basic
+          apply_prototype: true
+  - name: JavaScript (Svelte)
+    scope: source.js.svelte
+    hidden: true
+    file_extensions:
+      - svelte.config.js
+    contexts:
+      main:
+        - include: scope:source.js
           apply_prototype: true
