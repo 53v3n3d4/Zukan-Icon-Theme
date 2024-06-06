@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: SQLite
+preferences:
+  scope: source.sqlite
+  settings:
+    icon: sqlite
+syntax:
+  - name: SQL (SQLite)
+    scope: source.sqlite
+    hidden: true
+    file_extensions:
+      # - db
+      # - db3
+      # - s3db
+      # - sl3
+      - sqlite
+      - sqlite3
+    contexts:
+      main: []

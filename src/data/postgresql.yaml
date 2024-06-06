@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: PostgreSQL
+preferences:
+  scope: source.pgsql
+  settings:
+    icon: postgresql
+syntax:
+  - name: SQL (PostgreSQL)
+    scope: source.pgsql
+    hidden: true
+    file_extensions:
+      - psql
+      - pgsql
+      # - sql
+    contexts:
+      main: []
+
+# Package PostgreSQL Syntax Highlighting

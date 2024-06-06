@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: MySQL
+preferences:
+  scope: source.mysql
+  settings:
+    icon: mysql
+syntax:
+  - name: SQL (MySQL)
+    scope: source.mysql
+    hidden: true
+    file_extensions:
+      - ib_logfile0
+      - ib_logfile1
+      - my.cnf
+      - mysql.sock
+      # - sql
+    contexts:
+      main: []
