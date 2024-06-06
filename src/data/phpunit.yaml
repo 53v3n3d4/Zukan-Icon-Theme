@@ -17,4 +17,4 @@ syntax:
         - include: scope:text.xml
           apply_prototype: true
 
-# Package plist
+# Package PHPUnit

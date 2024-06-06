@@ -22,12 +22,12 @@ from ..utils.zukan_dir_paths import (
 logger = logging.getLogger(__name__)
 
 
-class ThemeFile:
+class ZukanTheme:
     """
     Create, list and remove sublime-themes files in Zukan Icon Theme/icons folder
     """
 
-    def create_theme_file(theme_name: str):
+    def create_icon_theme(theme_name: str):
         """
         Create sublime-theme file with icon_file_type scope. Copy a json template
         to Zukan Icon Theme/icons folder with the theme name.
@@ -72,7 +72,7 @@ class ThemeFile:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), theme_name
             )
 
-    def create_themes_files():
+    def create_icons_themes():
         """
         Create all sublime-themes files from installed themes.
         """
@@ -80,7 +80,7 @@ class ThemeFile:
             list_all_themes = search_resources_sublime_themes()
             if list_all_themes is not None:
                 for theme in list_all_themes:
-                    ThemeFile.create_theme_file(theme)
+                    ZukanTheme.create_icon_theme(theme)
                 return list_all_themes
             else:
                 raise FileNotFoundError(logger.error('list is empty.'))

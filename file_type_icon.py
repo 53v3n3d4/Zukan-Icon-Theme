@@ -35,7 +35,7 @@ from .src.zukan_icon_theme.commands.commands import (  # noqa: E402
 from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
 from .src.zukan_icon_theme.lib.icons_preferences import ZukanPreference  # noqa: E402
 from .src.zukan_icon_theme.lib.icons_syntaxes import ZukanSyntax  # noqa: E402
-from .src.zukan_icon_theme.lib.icons_themes import ThemeFile  # noqa: E402
+from .src.zukan_icon_theme.lib.icons_themes import ZukanTheme  # noqa: E402
 from .src.zukan_icon_theme.lib.move_folders import MoveFolder  # noqa: E402
 from .src.zukan_icon_theme.utils.zukan_dir_paths import (  # noqa: E402
     ZUKAN_PKG_ICONS_PATH,
@@ -72,7 +72,7 @@ def plugin_loaded():
             theme.endswith('.sublime-theme')
             for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
         ):
-            ThemeFile.create_themes_files()
+            ZukanTheme.create_icons_themes()
         if not any(
             preferences.endswith('.tmPreferences')
             for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)

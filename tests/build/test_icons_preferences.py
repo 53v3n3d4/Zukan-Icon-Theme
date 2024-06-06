@@ -2,7 +2,7 @@ import os
 import pytest
 
 from pyfakefs.fake_filesystem_unittest import TestCase
-from src.build.helpers.preferences import Preference
+from src.build.helpers.icons_preferences import Preference
 from src.build.helpers.print_message import (
     print_created_message,
 )
@@ -40,7 +40,7 @@ class TestPreferences:
         )
 
     def test_mock_create_preferences_file(self):
-        with patch('src.build.helpers.preferences.open', mock_open()):
+        with patch('src.build.helpers.icons_preferences.open', mock_open()):
             result = Preference.preferences('tests/mocks/yaml.yaml', DIR_DESTINY)
             assert result is None
 
@@ -48,7 +48,7 @@ class TestPreferences:
     @pytest.fixture(autouse=True)
     def test_preferences_oserror(self, caplog):
         caplog.clear()
-        with patch('src.build.helpers.preferences.open') as mock_open:
+        with patch('src.build.helpers.icons_preferences.open') as mock_open:
             mock_open.side_effect = OSError
             Preference.preferences(
                 'tests/mocks/yaml.yaml',
@@ -59,7 +59,7 @@ class TestPreferences:
     @pytest.fixture(autouse=True)
     def test_preferences_all_filenotfounderror(self, caplog):
         caplog.clear()
-        with patch('src.build.helpers.preferences.open') as mock_open:
+        with patch('src.build.helpers.icons_preferences.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
             Preference.preferences_all(
                 'tests/mocks/not_found_yaml.yaml',
@@ -68,7 +68,7 @@ class TestPreferences:
         assert caplog.record_tuples == [
             (
                 (
-                    'src.build.helpers.preferences',
+                    'src.build.helpers.icons_preferences',
                     40,
                     "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
                 )
@@ -79,7 +79,7 @@ class TestPreferences:
     @pytest.fixture(autouse=True)
     def test_preferences_all_oserror(self, caplog):
         caplog.clear()
-        with patch('src.build.helpers.preferences.open') as mock_open:
+        with patch('src.build.helpers.icons_preferences.open') as mock_open:
             mock_open.side_effect = OSError
             Preference.preferences_all(
                 DIR_DATA,

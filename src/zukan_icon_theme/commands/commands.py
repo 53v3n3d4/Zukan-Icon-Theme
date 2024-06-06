@@ -5,7 +5,7 @@ import sublime_plugin
 
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
-from ..lib.icons_themes import ThemeFile
+from ..lib.icons_themes import ZukanTheme
 from ..lib.move_folders import MoveFolder
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
@@ -143,7 +143,7 @@ class DeleteTheme(sublime_plugin.TextCommand):
             t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
         )
         if sublime.ok_cancel_dialog(message) is True:
-            ThemeFile.delete_created_theme_file(theme_name)
+            ZukanTheme.delete_created_theme_file(theme_name)
 
     def input(self, args: dict):
         # print(args)
@@ -162,8 +162,8 @@ class DeleteThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of created themes'
 
     def list_items(self) -> list:
-        if ThemeFile.list_created_themes_files():
-            return sorted(ThemeFile.list_created_themes_files())
+        if ZukanTheme.list_created_themes_files():
+            return sorted(ZukanTheme.list_created_themes_files())
         else:
             raise TypeError(
                 logger.info('it does not exist any created theme, list is empty')
@@ -176,12 +176,12 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
     """
 
     def run(self):
-        if ThemeFile.list_created_themes_files():
+        if ZukanTheme.list_created_themes_files():
             message = "Are you sure you want to delete all themes in '{f}'?".format(
                 f=ZUKAN_PKG_ICONS_PATH
             )
             if sublime.ok_cancel_dialog(message) is True:
-                ThemeFile.delete_created_themes_files()
+                ZukanTheme.delete_created_themes_files()
         else:
             raise TypeError(
                 logger.info('it does not exist any created theme, list is empty')
@@ -287,7 +287,7 @@ class InstallTheme(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, theme_name: str):
-        ThemeFile.create_theme_file(theme_name)
+        ZukanTheme.create_icon_theme(theme_name)
 
     def input(self, args: dict):
         return InstallThemeInputHandler()
@@ -309,7 +309,7 @@ class InstallThemeInputHandler(sublime_plugin.ListInputHandler):
         list_themes_not_installed = []
         for name in search_resources_sublime_themes():
             file_path, file_name = name.rsplit('/', 1)
-            if file_name not in ThemeFile.list_created_themes_files():
+            if file_name not in ZukanTheme.list_created_themes_files():
                 list_themes_not_installed.append(name)
         if list_themes_not_installed:
             return sorted(list_themes_not_installed)
@@ -327,7 +327,7 @@ class InstallThemes(sublime_plugin.ApplicationCommand):
     """
 
     def run(self):
-        ThemeFile.create_themes_files()
+        ZukanTheme.create_icons_themes()
 
 
 class RebuildFiles(sublime_plugin.ApplicationCommand):
@@ -341,14 +341,15 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
         sublime-theme and sublime-syntax files.
         """
         try:
-            ThemeFile.delete_created_themes_files()
+            ZukanPreference.delete_icons_preferences()
+            ZukanTheme.delete_created_themes_files()
             ZukanSyntax.delete_icons_syntaxes()
             MoveFolder.move_folders()
         finally:
             ZukanSyntax.create_icons_syntaxes()
             # Edit icons syntaxes contexts main if syntax not installed or ST3
             ZukanSyntax.edit_contexts_scopes()
-            ThemeFile.create_themes_files()
+            ZukanTheme.create_icons_themes()
             ZukanPreference.create_icons_preferences()
             # Remove plist tag <!DOCTYPE plist>
             ZukanPreference.delete_plist_tags()
