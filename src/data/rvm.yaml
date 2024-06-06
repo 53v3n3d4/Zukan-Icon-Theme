@@ -2,19 +2,19 @@
 ---
 name: RVM
 preferences:
-  scope: source.shell.rvm
+  scope: source.ini.rvm
   settings:
     icon: rvm
 syntax:
-  - name: Shell Script (RVM)
-    scope: source.shell.rvm
+  - name: INI (RVM)
+    scope: source.ini.rvm
     hidden: true
     file_extensions:
       - .ruby-env
       - .ruby-gemset
-      - .ruby-version
+      # - .ruby-version
       - .rvmrc
     contexts:
       main:
-        - include: scope:source.shell
+        - include: scope:source.ini
           apply_prototype: true

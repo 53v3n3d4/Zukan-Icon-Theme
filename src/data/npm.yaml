@@ -2,10 +2,28 @@
 ---
 name: npm
 preferences:
-  scope: source.json.npm, source.shell.npm
+  scope: source.ini.npm, source.json.npm, text.git.ignore.npm
   settings:
     icon: npm
 syntax:
+  - name: Git (npm)
+    scope: text.git.ignore.npm
+    hidden: true
+    file_extensions:
+      - .npmignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
+  - name: INI (npm)
+    scope: source.ini.npm
+    hidden: true
+    file_extensions:
+      - .npmrc
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
   - name: JSON (npm)
     scope: source.json.npm
     hidden: true
@@ -15,14 +33,4 @@ syntax:
     contexts:
       main:
         - include: scope:source.json
-          apply_prototype: true
-  - name: Shell Script (npm)
-    scope: source.shell.npm
-    hidden: true
-    file_extensions:
-      - .npmignore
-      - .npmrc
-    contexts:
-      main:
-        - include: scope:source.shell
           apply_prototype: true

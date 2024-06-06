@@ -1,0 +1,38 @@
+%YAML 1.2
+---
+name: Mocha
+preferences:
+  scope: source.js.mocha, source.json.mocha, source.yaml.mocha
+  settings:
+    icon: mocha
+syntax:
+  - name: JavaScript (Mocha)
+    scope: source.js.mocha
+    hidden: true
+    file_extensions:
+      - .mocharc.js
+      - .mocharc.cjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Mocha)
+    scope: source.json.mocha
+    hidden: true
+    file_extensions:
+      - .mocharc.json
+      - .mocharc.jsonc
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: YAML (Mocha)
+    scope: source.yaml.mocha
+    hidden: true
+    file_extensions:
+      - .mocharc.yml
+      - .mocharc.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

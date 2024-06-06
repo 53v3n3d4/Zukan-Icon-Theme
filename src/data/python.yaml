@@ -2,7 +2,7 @@
 ---
 name: Python
 preferences:
-  scope: source.python, source.shell.python
+  scope: source.ini.python, source.python
   settings:
     icon: python
 syntax:
@@ -31,12 +31,12 @@ syntax:
       - wscript
     contexts:
       main: []
-  - name: Shell Script (Python)
-    scope: source.shell.python
+  - name: INI (Python)
+    scope: source.ini.python
     hidden: true
     file_extensions:
       - .python-version
     contexts:
       main:
-        - include: scope:source.shell
+        - include: scope:source.ini
           apply_prototype: true

@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Flutter
+preferences:
+  scope: source.ini.flutter, source.json.flutter
+  settings:
+    icon: flutter
+syntax:
+  - name: INI (Flutter)
+    scope: source.ini.flutter
+    hidden: true
+    file_extensions:
+      - .flutter-plugins
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: JSON (Flutter)
+    scope: source.json.flutter
+    hidden: true
+    file_extensions:
+      - .flutter-plugins-dependencies
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

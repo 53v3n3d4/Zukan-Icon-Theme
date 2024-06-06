@@ -2,10 +2,19 @@
 ---
 name: Ruby
 preferences:
-  scope: source.ruby, source.ruby.lockfile
+  scope: source.ini.ruby, source.ruby, source.ruby.lockfile
   settings:
     icon: ruby
 syntax:
+  - name: INI (Ruby)
+    scope: source.ini.ruby
+    hidden: true
+    file_extensions:
+      - .ruby-version
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
   - name: Ruby
     scope: source.ruby
     hidden: true

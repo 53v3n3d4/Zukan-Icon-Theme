@@ -1,0 +1,42 @@
+%YAML 1.2
+---
+name: Stylelint
+preferences:
+  scope: source.js.stylelint, source.json.stylelint, source.yaml.stylelint
+  settings:
+    icon: stylelint
+syntax:
+  - name: JavaScript (Stylelint)
+    scope: source.js.stylelint
+    hidden: true
+    file_extensions:
+      - .stylelintrc.js
+      - .stylelintrc.cjs
+      - .stylelintrc.mjs
+      - stylelint.config.js
+      - stylelint.config.cjs
+      - stylelint.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Stylelint)
+    scope: source.json.stylelint
+    hidden: true
+    file_extensions:
+      - .stylelintrc
+      - .stylelintrc.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: YAML (Stylelint)
+    scope: source.yaml.stylelint
+    hidden: true
+    file_extensions:
+      - .stylelintrc.yml
+      - .stylelintrc.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
