@@ -2,7 +2,7 @@
 ---
 name: Vue
 preferences:
-  scope: source.js.vue, text.html.vue
+  scope: source.js.vue, source.json.vue, text.html.vue
   settings:
     icon: vue
 syntax:
