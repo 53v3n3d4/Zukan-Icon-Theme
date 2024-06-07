@@ -2,10 +2,18 @@
 ---
 name: Zukan
 preferences:
-  scope: source.json.zukan
+  scope: binary.zukan, source.json.zukan
   settings:
     icon: zukan
 syntax:
+  - name: Binary (Zukan)
+    scope: binary.zukan
+    hidden: true
+    file_extensions:
+      - zukan_preferences_data.pkl
+      - zukan_syntaxes_data.pkl
+    contexts:
+      main: []
   - name: JSON (Zukan)
     scope: source.json.zukan
     hidden: true

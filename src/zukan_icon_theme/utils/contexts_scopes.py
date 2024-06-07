@@ -6,12 +6,15 @@ CONTEXTS_MAIN = {'contexts': {'main': []}}
 # Contexts main are important for highlighting while also keep icon showing.
 CONTEXTS_SCOPES = [
     {'scope': 'embedding.php', 'startsWith': 'PHP ('},
+    {'scope': 'embedding.php', 'startsWith': 'HTML ('},
     {'scope': 'source.c++', 'startsWith': 'C++ ('},
     {'scope': 'source.css', 'startsWith': 'CSS ('},
+    {'scope': 'source.css.php', 'startsWith': 'CSS ('},
     {'scope': 'source.elixir', 'startsWith': 'Elixir ('},
     {'scope': 'source.groovy', 'startsWith': 'Groovy ('},
     {'scope': 'source.ini', 'startsWith': 'INI ('},
     {'scope': 'source.js', 'startsWith': 'JavaScript ('},
+    {'scope': 'source.js.php', 'startsWith': 'JavaScript ('},
     {'scope': 'source.json', 'startsWith': 'JSON ('},
     {'scope': 'source.jsx', 'startsWith': 'JSX ('},
     {'scope': 'source.Kotlin', 'startsWith': 'Kotlin ('},

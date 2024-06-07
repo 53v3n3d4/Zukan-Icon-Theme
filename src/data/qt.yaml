@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: Qt
+preferences:
+  scope: source.qml, source.qmldir
+  settings:
+    icon: qt
+syntax:
+  - name: QML
+    scope: source.qml
+    hidden: true
+    file_extensions:
+      - qml
+      - qbs
+      - qmltypes
+    contexts:
+      main: []
+  - name: QML Module (qmldir)
+    scope: source.qmldir
+    hidden: true
+    file_extensions:
+      - qmldir
+    contexts:
+      main:
+        - include: scope:source.qml
+          apply_prototype: true
+
+# Package QML

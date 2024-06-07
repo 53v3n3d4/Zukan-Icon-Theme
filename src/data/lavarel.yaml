@@ -1,0 +1,38 @@
+%YAML 1.2
+---
+name: Lavarel
+preferences:
+  scope: source.css.blade, source.js.blade, text.html.blade
+  settings:
+    icon: lavarel
+syntax:
+  - name: CSS (Blade)
+    scope: source.css.blade
+    hidden: true
+    file_extensions:
+      - blade.css
+    contexts:
+      main:
+        - include: scope:source.css.php
+          apply_prototype: true
+  - name: HTML (Blade)
+    scope: text.html.blade
+    hidden: true
+    file_extensions:
+      - blade
+      - blade.php
+    contexts:
+      main:
+        - include: scope:embedding.php
+          apply_prototype: true
+  - name: JavaScript (Blade)
+    scope: source.js.blade
+    hidden: true
+    file_extensions:
+      - blade.js
+    contexts:
+      main:
+        - include: scope:source.js.php
+          apply_prototype: true
+
+# Package Laravel Blade Highlighter

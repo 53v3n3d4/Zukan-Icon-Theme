@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Fish
+preferences:
+  scope: source.shell.fish
+  settings:
+    icon: fish
+syntax:
+  - name: Fish
+    scope: source.shell.fish
+    hidden: true
+    file_extensions:
+      - fish
+    contexts:
+      main: []
+
+# Package fish

@@ -2,7 +2,7 @@
 ---
 name: Shell
 preferences:
-  scope: source.shell, source.shell.bash, source.shell.fish
+  scope: source.shell, source.shell.bash
   settings:
     icon: shell
 syntax:
@@ -17,14 +17,5 @@ syntax:
       - zsh
     contexts:
       main: []
-  - name: Fish
-    scope: source.shell.fish
-    hidden: true
-    file_extensions:
-      - fish
-    contexts:
-      main: []
 
 # ST Package, source shell is hidden.
-
-# Package fish

@@ -2,7 +2,7 @@
 ---
 name: Nim
 preferences:
-  scope: source.nim, source.nimcfg, source.nimscf
+  scope: source.nim, source.nimcfg, source.nimscf, source.nim_filter
   settings:
     icon: nim
 syntax:
@@ -31,3 +31,5 @@ syntax:
       main: []
 
 # Package Nim
+
+# Package NimPlus source.nim_filter

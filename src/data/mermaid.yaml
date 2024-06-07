@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Mermaid
+preferences:
+  scope: source.mermaid
+  settings:
+    icon: mermaid
+syntax:
+  - name: mermaid
+    scope: source.mermaid
+    hidden: true
+    file_extensions:
+      - mermaid
+      - mmd
+    contexts:
+      main: []
+
+# Package Mermaid
