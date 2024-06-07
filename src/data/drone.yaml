@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Drone
+preferences:
+  scope: source.yaml.pipeline.drone
+  settings:
+    icon: drone
+syntax:
+  - name: YAML (Drone)
+    scope: source.yaml.pipeline.drone
+    hidden: true
+    file_extensions:
+      - .drone.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Package YamlPipelines

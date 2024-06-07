@@ -1,0 +1,45 @@
+%YAML 1.2
+---
+name: Terraform
+preferences:
+  scope: source.hcl, source.json.terraform, source.terraform, source.terraform-vars
+  settings:
+    icon: terraform
+syntax:
+  - name: HCL
+    scope: source.hcl
+    hidden: true
+    file_extensions:
+      - hcl
+    contexts:
+      main:
+        - include: scope:source.terraform
+          apply_prototype: true
+  - name: JSON (Terraform)
+    scope: source.json.terraform
+    hidden: true
+    file_extensions:
+      - tfstate
+    contexts:
+      main:
+        - include: scope:source.json
+  - name: Terraform
+    scope: source.terraform
+    hidden: true
+    file_extensions:
+      - tf
+      # - hcl
+      - nomad
+    contexts:
+      main: []
+  - name: Terraform (variables)
+    scope: source.terraform-vars
+    hidden: true
+    file_extensions:
+      - tfvars
+    contexts:
+      main:
+        - include: scope:source.terraform
+          apply_prototype: true
+
+# Package Terraform

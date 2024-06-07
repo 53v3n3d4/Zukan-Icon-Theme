@@ -2,7 +2,7 @@
 ---
 name: ASP
 preferences:
-  scope: source.asp
+  scope: source.asp, source.vbs
   settings:
     icon: asp
 syntax:
@@ -13,5 +13,24 @@ syntax:
       - vbs
     contexts:
       main: []
+  - name: VBScript
+    scope: source.vbs
+    hidden: true
+    file_extensions:
+      - acf
+      - acm
+      - acr
+      - bas
+      # - cls  # TeX has same extension
+      - frm
+      - vba
+      # - vbs
+      - vbe
+      - wsc
+      - wsf
+    contexts:
+      main: []
 
 # ST Package
+
+# Package VBScript source.vbs

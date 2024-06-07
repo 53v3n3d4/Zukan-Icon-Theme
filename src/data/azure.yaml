@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Azure
+preferences:
+  scope: source.yaml.pipeline.azure-devops
+  settings:
+    icon: azure
+syntax:
+  - name: YAML (Azure)
+    scope: source.yaml.pipeline.azure-devops
+    hidden: true
+    file_extensions:
+      - azure-pipelines.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Package YamlPipelines

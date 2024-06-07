@@ -17,6 +17,7 @@ syntax:
     scope: source.pubspec
     hidden: true
     file_extensions:
+      - pubspec.lock
       - pubspec.yaml
     contexts:
       main:

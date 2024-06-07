@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Kong
+preferences:
+  scope: source.yaml.kong
+  settings:
+    icon: kong
+syntax:
+  - name: YAML (Kong)
+    scope: source.yaml.kong
+    hidden: true
+    file_extensions:
+      - kong.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Package YamlPipelines

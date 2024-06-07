@@ -1,0 +1,33 @@
+%YAML 1.2
+---
+name: Nim
+preferences:
+  scope: source.nim, source.nimcfg, source.nimscf
+  settings:
+    icon: nim
+syntax:
+  - name: Nim
+    scope: source.nim
+    hidden: true
+    file_extensions:
+      - nim
+      - nims
+      - nimble
+    contexts:
+      main: []
+  - name: Nim CFG
+    scope: source.nimcfg
+    hidden: true
+    file_extensions:
+      - nim.cfg
+    contexts:
+      main: []
+  - name: Nim Source Code Filter
+    scope: source.nimscf
+    hidden: true
+    file_extensions:
+      - nimf
+    contexts:
+      main: []
+
+# Package Nim

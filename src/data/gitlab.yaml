@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: GitLab
+preferences:
+  scope: source.yaml.pipeline.gitlab
+  settings:
+    icon: gitlab
+syntax:
+  - name: YAML (GitLab)
+    scope: source.yaml.pipeline.gitlab
+    hidden: true
+    file_extensions:
+      - .gitlab-ci.yml
+      - gitlab-ci.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Package YamlPipelines
