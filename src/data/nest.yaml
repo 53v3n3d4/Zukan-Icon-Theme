@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Nest
+preferences:
+  scope: source.json.nest
+  settings:
+    icon: nest
+syntax:
+  - name: JSON (Nest)
+    scope: source.json.nest
+    hidden: true
+    file_extensions:
+      - .nest-cli.json
+      - .nestconfig.json
+      - nest-cli.json
+      - nestconfig.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true

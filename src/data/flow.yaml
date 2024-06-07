@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Flow
+preferences:
+  scope: source.ini.flow
+  settings:
+    icon: flow
+syntax:
+  - name: INI (Flow)
+    scope: source.ini.flow
+    hidden: true
+    file_extensions:
+      - .flowconfig 
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true

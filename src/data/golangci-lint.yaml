@@ -1,0 +1,36 @@
+%YAML 1.2
+---
+name: GolangCI-Lint
+preferences:
+  scope: source.json.golangcilint, source.toml.golangcilint, source.yaml.golangcilint
+  settings:
+    icon: golangci-lint
+syntax:
+  - name: JSON (GolangCI-Lint)
+    scope: source.json.golangcilint
+    hidden: true
+    file_extensions:
+      - .golangci.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
+  - name: TOML (GolangCI-Lint)
+    scope: source.toml.golangcilint
+    hidden: true
+    file_extensions:
+      - .golangci.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
+  - name: YAML (GolangCI-Lint)
+    scope: source.yaml.golangcilint
+    hidden: true
+    file_extensions:
+      - .golangci.yml
+      - .golangci.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

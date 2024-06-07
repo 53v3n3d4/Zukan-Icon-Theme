@@ -2,10 +2,19 @@
 ---
 name: Nx
 preferences:
-  scope: source.json.nx
+  scope: source.json.nx, text.git.ignore.nx
   settings:
     icon: nx
 syntax:
+  - name: Git (Nx)
+    scope: text.git.ignore.nx
+    hidden: true
+    file_extensions:
+      - .nxignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
   - name: JSON (Nx)
     scope: source.json.nx
     hidden: true

@@ -2,19 +2,10 @@
 ---
 name: Ruby
 preferences:
-  scope: source.ini.ruby, source.ruby, source.ruby.lockfile
+  scope: source.ruby, source.ruby.lockfile, source.shell.ruby
   settings:
     icon: ruby
 syntax:
-  - name: INI (Ruby)
-    scope: source.ini.ruby
-    hidden: true
-    file_extensions:
-      - .ruby-version
-    contexts:
-      main:
-        - include: scope:source.ini
-          apply_prototype: true
   - name: Ruby
     scope: source.ruby
     hidden: true
@@ -44,6 +35,15 @@ syntax:
     contexts:
       main:
         - include: scope:source.ruby
+          apply_prototype: true
+  - name: Shell Script (Ruby)
+    scope: source.shell.ruby
+    hidden: true
+    file_extensions:
+      - .ruby-version
+    contexts:
+      main:
+        - include: scope:source.shell
           apply_prototype: true
 
 # ST Package

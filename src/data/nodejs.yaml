@@ -2,17 +2,17 @@
 ---
 name: Node.js
 preferences:
-  scope: source.ini.nodejs
+  scope: source.shell.nodejs
   settings:
     icon: nodejs
 syntax:
-  - name: INI (Node js)
-    scope: source.ini.nodejs
+  - name: Shell Script (Node js)
+    scope: source.shell.nodejs
     hidden: true
     file_extensions:
       - .node-version
       - .nvmrc
     contexts:
       main:
-        - include: scope:source.ini
+        - include: scope:source.shell
           apply_prototype: true

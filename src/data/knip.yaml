@@ -2,16 +2,39 @@
 ---
 name: Knip
 preferences:
-  scope: source.json.knip
+  scope: source.js.knip, source.json.knip, source.ts.knip
   settings:
     icon: knip
 syntax:
+  - name: JavaScript (Knip)
+    scope: source.js.knip
+    hidden: true
+    file_extensions:
+      - knip.js
+      - knip.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
   - name: JSON (Knip)
     scope: source.json.knip
     hidden: true
     file_extensions:
+      - .knip.json
+      - .knip.jsonc
       - knip.json
+      - knip.jsonc
     contexts:
       main:
       - include: scope:source.json
         apply_prototype: true
+  - name: TypeScript (Knip)
+    scope: source.ts.knip
+    hidden: true
+    file_extensions:
+      - knip.ts
+      - knip.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true
