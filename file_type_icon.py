@@ -1,5 +1,6 @@
 import os
 import sys
+import threading
 
 # From A File Icon https://github.com/SublimeText/AFileIcon/blob/master/plugin.py
 # Clear module cache to force reloading all modules of this package.
@@ -65,21 +66,39 @@ def plugin_loaded():
             syntax.endswith('.sublime-syntax')
             for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
         ):
-            ZukanSyntax.create_icons_syntaxes()
-            # Edit icons syntaxes contexts main if syntax not installed or ST3
-            ZukanSyntax.edit_contexts_scopes()
+            # ZukanSyntax.create_icons_syntaxes()
+            # # Edit icons syntaxes contexts main if syntax not installed or ST3
+            # ZukanSyntax.edit_contexts_scopes()
+            def syntax_thread():
+                ZukanSyntax.create_icons_syntaxes()
+                # Edit icons syntaxes contexts main if syntax not installed or ST3
+                ZukanSyntax.edit_contexts_scopes()
+
+            ts = threading.Thread(target=syntax_thread).start()
+
         if not any(
             theme.endswith('.sublime-theme')
             for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
         ):
-            ZukanTheme.create_icons_themes()
+            # ZukanTheme.create_icons_themes()
+            def theme_thread():
+                ZukanTheme.create_icons_themes()
+
+            tt = threading.Thread(target=theme_thread).start()
+
         if not any(
             preferences.endswith('.tmPreferences')
             for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
         ):
-            ZukanPreference.create_icons_preferences()
-            # Remove plist tag <!DOCTYPE plist>
-            ZukanPreference.delete_plist_tags()
+            # ZukanPreference.create_icons_preferences()
+            # # Remove plist tag <!DOCTYPE plist>
+            # ZukanPreference.delete_plist_tags()
+            def preference_thread():
+                ZukanPreference.create_icons_preferences()
+                # Remove plist tag <!DOCTYPE plist>
+                ZukanPreference.delete_plist_tags()
+
+            tp = threading.Thread(target=preference_thread).start()
 
 
 def plugin_unloaded():

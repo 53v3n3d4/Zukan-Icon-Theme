@@ -99,7 +99,7 @@ class ZukanTheme:
                 list_all_themes,
             )
 
-    def delete_created_theme_file(theme_name: str):
+    def delete_icon_theme(theme_name: str):
         """
         Delete sublime-theme file in Zukan Icon Theme/icons folder.
 
@@ -122,7 +122,7 @@ class ZukanTheme:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), theme_name
             )
 
-    def delete_created_themes_files():
+    def delete_icons_themes():
         """
         Delete all sublime-themes files in Zukan Icon Theme/icons folder.
         """
@@ -147,7 +147,7 @@ class ZukanTheme:
                 t,
             )
 
-    def list_created_themes_files() -> list:
+    def list_created_icons_themes() -> list:
         """
         List all sublime-themes files in Zukan Icon Theme/icons folder.
 
