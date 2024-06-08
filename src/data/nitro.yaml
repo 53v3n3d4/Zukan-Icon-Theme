@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Nitro
+preferences:
+  scope: source.js.nitro, source.ts.nitro
+  settings:
+    icon: nitro
+syntax:
+  - name: JavaScript (Nitro)
+    scope: source.js.nitro
+    hidden: true
+    file_extensions:
+      - nitro.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Nitro)
+    scope: source.ts.nitro
+    hidden: true
+    file_extensions:
+      - nitro.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

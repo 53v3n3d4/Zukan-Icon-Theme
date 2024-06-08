@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Smarty
+preferences:
+  scope: text.html.smarty
+  settings:
+    icon: smarty
+# syntax:
+#   - name: HTML (Smarty)
+#     scope: text.html.smarty
+#     hidden: true
+#     file_extensions:
+#       - tpl
+#     contexts:
+#       main:
+#         - include: scope:text.html.basic
+#           apply_prototype: true
+
+# Package Smarty
+# Leaving for now tpl comment. User need to select.

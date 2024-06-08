@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Gitpod
+preferences:
+  scope: source.yaml.gitpod
+  settings:
+    icon: gitpod
+syntax:
+  - name: YAML (Gitpod)
+    scope: source.yaml.gitpod
+    hidden: true
+    file_extensions:
+      - .gitpod.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

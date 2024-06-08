@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Deno
+preferences:
+  scope: source.json.deno
+  settings:
+    icon: deno
+syntax:
+  - name: JSON (Deno)
+    scope: source.json.deno
+    hidden: true
+    file_extensions:
+      - deno.json
+      - deno.jsonc
+      - deno.lock
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

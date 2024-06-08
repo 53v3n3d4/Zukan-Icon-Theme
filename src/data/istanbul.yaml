@@ -1,0 +1,37 @@
+%YAML 1.2
+---
+name: Istanbul
+preferences:
+  scope: source.js.nyc, source.json.nyc, source.yaml.nyc
+  settings:
+    icon: istanbul
+syntax:
+  - name: JavaScript (nyc)
+    scope: source.js.nyc
+    hidden: true
+    file_extensions:
+      - nyc.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (nyc)
+    scope: source.json.nyc
+    hidden: true
+    file_extensions:
+      - .nycrc
+      - .nycrc.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: YAML (nyc)
+    scope: source.yaml.nyc
+    hidden: true
+    file_extensions:
+      - .nycrc.yml
+      - .nycrc.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

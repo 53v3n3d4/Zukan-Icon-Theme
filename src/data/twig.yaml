@@ -1,0 +1,39 @@
+%YAML 1.2
+---
+name: Twig
+preferences:
+  scope: source.css.twig, source.js.twig, text.html.twig
+  settings:
+    icon: twig
+syntax:
+  - name: CSS (Twig)
+    scope: source.css.twig
+    hidden: true
+    file_extensions:
+      - css.twig
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
+  - name: HTML (Twig)
+    scope: text.html.twig
+    hidden: true
+    file_extensions:
+      - twig
+      - htm.twig
+      - html.twig
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: JavaScript (Twig)
+    scope: source.js.twig
+    hidden: true
+    file_extensions:
+      - js.twig
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+
+# Package Twig

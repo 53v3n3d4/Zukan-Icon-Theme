@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+name: NSIS
+preferences:
+  scope: source.nsis
+  settings:
+    icon: nsis
+syntax:
+  - name: NSIS
+    scope: source.nsis
+    hidden: true
+    file_extensions:
+      - nsi
+      - nsh
+      - bnsi
+      - bnsh
+      - nsdinc
+    contexts:
+      main: []
+
+# Package NSIS Bundle for Sublime Text 3

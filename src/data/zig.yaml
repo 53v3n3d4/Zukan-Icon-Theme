@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Zig
+preferences:
+  scope: source.zig
+  settings:
+    icon: zig
+syntax:
+  - name: Zig
+    scope: source.zig
+    hidden: true
+    file_extensions:
+      - zig
+    contexts:
+      main: []
+
+# Package Zig
