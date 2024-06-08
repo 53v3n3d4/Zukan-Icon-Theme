@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Firebase
+preferences:
+  scope: source.json.firebase
+  settings:
+    icon: firebase
+syntax:
+  - name: JSON (Firebase)
+    scope: source.json.firebase
+    hidden: true
+    file_extensions:
+      - .firebaserc
+      - firebase.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true

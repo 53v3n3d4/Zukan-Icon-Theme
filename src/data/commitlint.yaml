@@ -1,0 +1,54 @@
+%YAML 1.2
+---
+name: commitlint
+preferences:
+  scope: source.js.commitlint, source.json.commitlint, source.ts.commitlint, source.yaml.commitlint
+  settings:
+    icon: commitlint
+syntax:
+  - name: JavaScript (commitlint)
+    scope: source.js.commitlint
+    hidden: true
+    file_extensions:
+      - .commitlintrc.js
+      - .commitlintrc.cjs
+      - .commitlintrc.mjs
+      - commitlint.config.js
+      - commitlint.config.cjs
+      - commitlint.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (commitlint)
+    scope: source.json.commitlint
+    hidden: true
+    file_extensions:
+      - .commitlintrc
+      - .commitlintrc.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: TypeScript (commitlint)
+    scope: source.ts.commitlint
+    hidden: true
+    file_extensions:
+      - .commitlintrc.ts
+      - .commitlintrc.cts
+      - commitlint.config.ts
+      - commitlint.config.cts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true
+  - name: YAML (commitlint)
+    scope: source.yaml.commitlint
+    hidden: true
+    file_extensions:
+      - .commitlintrc.yml
+      - .commitlintrc.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
