@@ -18,3 +18,4 @@ tests_icon_theme
 /icons/*.sublime-theme
 /icons_preferences/*.tmPreferences
 /icons_syntaxes/*.sublime-syntax
+/sublime/zukan-version.sublime-settings
