@@ -41,21 +41,15 @@ To install manually,
 
 > `ruamel-yaml` is/will be used to create icons sublime-syntaxes files in `icon-syntaxes` folder.  
 
+If new install, cloning this repo, the default is to create all icons files and make it show on all themes installed.
+
 ### Theme
 
-To make icon theme works with your theme, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Install Themes`.  
+If you do not want this icons in a specific theme. You can delete the icon theme, go to `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Delete Theme`.
 
-This command install for all existing themes in your ST.  
+This option deletes all icons preferences and syntaxes files. So when you move to a theme that you want this icons, it will rebuild all files.
 
-If you prefer to create manually, see [theme.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/theme.md).  
-
-### Preference
-
-After update repo, at moment, use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Preferences`.  
-
-### Syntax
-
-To avoid duplicated syntaxes that already exist on your ST, you can use `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Rebuild Syntaxes`.  
+If you prefer to create or delete a theme manually, see [theme.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/theme.md).  
 
 ## Uninstall
 
@@ -67,6 +61,11 @@ To uninstall manually, go to your Sublime Text folder.
 
 > ST4 uninstall orphans dependencies. So dependency `ruamel-yaml` should be deleted when you uninstall/remove package, if not used by other packages.
 
+## Upgrade
+
+ST auto upgrade packages plugins. So this package will get icons PNGs and data files auto upgraded. Icons preferences and syntaxes are build based on user syntaxes and themes installed.
+
+We are auto upgrading icons preferences and syntaxes by default. If you do not want it, there is a option `rebuild_on_upgrade` on [`Zukan Icon Theme.sublime-settings`](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/sublime/Zukan&20Icon%20Theme.sublime-settings). Change to `false` to disable auto rebuild.
 
 ## Icons that works depending on folder position
 
@@ -81,7 +80,7 @@ To uninstall manually, go to your Sublime Text folder.
 - Photoshop. ST use `file_type_image` icon  
 - XML. ST use `file_type_markup` icon  
 
-## ST Package syntax that are using generic icon
+## ST Package syntaxes that are using generic icon
 - DTD use `file_type_markup`  
 - Pascal use `file_type_source`  
 - XSL use `file_type_markup`  
