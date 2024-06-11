@@ -49,19 +49,6 @@ class SettingsEvent:
         # Also if change theme, icons are showing.
         sublime.run_command('refresh_folder_list')
 
-    def user_preferences_changed():
-        user_preferences = sublime.load_settings('Preferences.sublime-settings')
-
-        user_preferences.add_on_change('Preferences', SettingsEvent.get_user_theme)
-
-    def zukan_pkg_upgraded():
-        # if version changed, upgrade rebuild syntax and preferences.
-        zukan_pkg_version = sublime.load_settings('Zukan Icon Theme.sublime-settings')
-
-        zukan_pkg_version.add_on_change(
-            'Zukan Icon Theme', SettingsEvent.upgrade_zukan_files
-        )
-
     def upgrade_zukan_files():
         logger.debug('If package upgraded, begin rebuild...')
         pkg_version = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
@@ -88,3 +75,16 @@ class SettingsEvent:
         if not os.path.exists(ZUKAN_VERSION_FILE):
             content = {'version': pkg_version}
             dump_json_data(content, ZUKAN_VERSION_FILE)
+
+    def user_preferences_changed():
+        user_preferences = sublime.load_settings('Preferences.sublime-settings')
+
+        user_preferences.add_on_change('Preferences', SettingsEvent.get_user_theme)
+
+    def zukan_pkg_upgraded():
+        # if version changed, upgrade rebuild syntax and preferences.
+        zukan_pkg_version = sublime.load_settings('Zukan Icon Theme.sublime-settings')
+
+        zukan_pkg_version.add_on_change(
+            'Zukan Icon Theme', SettingsEvent.upgrade_zukan_files
+        )

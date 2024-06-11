@@ -4,6 +4,7 @@ import sublime
 import sublime_plugin
 
 from ..events.install import InstallEvent
+from ..events.settings import SettingsEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
@@ -11,6 +12,9 @@ from ..lib.move_folders import MoveFolder
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
+from ..utils.file_extensions import (
+    SUBLIME_SYNTAX_EXTENSION,
+)
 from ..utils.zukan_dir_paths import (
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
@@ -145,6 +149,8 @@ class DeleteTheme(sublime_plugin.TextCommand):
         )
         if sublime.ok_cancel_dialog(message) is True:
             ZukanTheme.delete_icon_theme(theme_name)
+            # Check if selected theme was deleted
+            SettingsEvent.get_user_theme()
 
     def input(self, args: dict):
         # print(args)
@@ -183,6 +189,8 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
             )
             if sublime.ok_cancel_dialog(message) is True:
                 ZukanTheme.delete_icons_themes()
+                # Check if selected theme was deleted
+                SettingsEvent.get_user_theme()
         else:
             raise TypeError(
                 logger.info('it does not exist any created theme, list is empty')
@@ -270,7 +278,7 @@ class InstallSyntaxInputHandler(sublime_plugin.ListInputHandler):
         zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
         for s in zukan_icons_syntaxes:
             if s not in compare_scopes():
-                list_syntaxes_not_installed.append(s['name'] + '.sublime-syntax')
+                list_syntaxes_not_installed.append(s['name'] + SUBLIME_SYNTAX_EXTENSION)
         list_syntaxes_not_installed = list(
             set(list_syntaxes_not_installed).difference(
                 ZukanSyntax.list_created_icons_syntaxes()
@@ -291,7 +299,9 @@ class InstallTheme(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_name: str):
         ZukanTheme.create_icon_theme(theme_name)
-
+        # Check if selected theme was installed
+        SettingsEvent.get_user_theme()
+            
     def input(self, args: dict):
         return InstallThemeInputHandler()
 
@@ -331,7 +341,8 @@ class InstallThemes(sublime_plugin.ApplicationCommand):
 
     def run(self):
         ZukanTheme.create_icons_themes()
-
+        # Check if selected theme was installed
+        SettingsEvent.get_user_theme()
 
 class RebuildFiles(sublime_plugin.ApplicationCommand):
     """

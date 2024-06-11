@@ -12,7 +12,6 @@
     // syntaxes and themes, only data files and icons PNGs are 
     // updated by ST.
     //
-    // If true, will auto  rebuild of icons syntaxes and icons
-    // preferences.
+    // If true, will auto rebuild icons syntaxes and preferences.
     "rebuild_on_upgrade": true,
 }
