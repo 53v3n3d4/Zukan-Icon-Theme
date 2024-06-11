@@ -47,7 +47,7 @@ If new install, cloning this repo, the default is to create all icons files and 
 
 If you do not want this icons in a specific theme. You can delete the icon theme, go to `Tools > Command Palette...`. Type `zukan` and select `Zukan Icon Theme: Delete Theme`.
 
-This option deletes all icons preferences and syntaxes files. So when you move to a theme that you want this icons, it will rebuild all files.
+This option deletes all icons preferences and syntaxes files. So when you move to a theme that you want them, it will rebuild all files.
 
 If you prefer to create or delete a theme manually, see [theme.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/theme.md).  
 
@@ -65,7 +65,7 @@ To uninstall manually, go to your Sublime Text folder.
 
 ST auto upgrade packages plugins. So this package will get icons PNGs and data files auto upgraded. Icons preferences and syntaxes are build based on user syntaxes and themes installed.
 
-We are auto upgrading icons preferences and syntaxes by default. If you do not want it, there is a option `rebuild_on_upgrade` on [`Zukan Icon Theme.sublime-settings`](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/sublime/Zukan&20Icon%20Theme.sublime-settings). Change to `false` to disable auto rebuild.
+We are auto upgrading icons preferences and syntaxes by default. If you do not want it, there is a option `rebuild_on_upgrade` on [`Zukan Icon Theme.sublime-settings`](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/sublime/Zukan%20Icon%20Theme.sublime-settings). Change to `false` to disable auto rebuild.
 
 ## Icons that works depending on folder position
 
