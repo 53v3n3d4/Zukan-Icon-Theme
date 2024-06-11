@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Behat
+preferences:
+  scope: feature.behat, source.yaml.behat
+  settings:
+    icon: behat
+syntax:
+  - name: Behat
+    scope: feature.behat
+    hidden: true
+    file_extensions:
+      - feature
+    contexts:
+      main: []
+  - name: YAML (Behat)
+    scope: source.yaml.behat
+    hidden: true
+    file_extensions:
+      - behat.yml
+      - behat.yml.dist
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Package Behat

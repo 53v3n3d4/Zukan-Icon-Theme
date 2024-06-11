@@ -19,6 +19,8 @@ syntax:
     hidden: true
     file_extensions:
       - Zukan Icon Theme.sublime-commands
+      - Zukan Icon Theme.sublime-settings
+      - zukan-version.sublime-settings
     contexts:
       main:
         - include: scope:source.json

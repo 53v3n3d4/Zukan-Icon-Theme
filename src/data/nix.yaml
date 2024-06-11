@@ -2,10 +2,19 @@
 ---
 name: Nix
 preferences:
-  scope: source.nix
+  scope: source.ini.nix, source.nix
   settings:
     icon: nix
 syntax:
+  - name: INI (Nix)
+    scope: source.ini.nix
+    hidden: true
+    file_extensions:
+      - nix.cnf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
   - name: Nix
     scope: source.nix
     hidden: true

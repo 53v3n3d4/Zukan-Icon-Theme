@@ -2,7 +2,7 @@
 ---
 name: Lavarel
 preferences:
-  scope: source.css.blade, source.js.blade, text.html.blade
+  scope: source.css.blade, source.js.blade, text.html.artisan, text.html.blade
   settings:
     icon: lavarel
 syntax:
@@ -14,6 +14,15 @@ syntax:
     contexts:
       main:
         - include: scope:source.css.php
+          apply_prototype: true
+  - name: HTML (Lavarel)
+    scope: text.html.blade
+    hidden: true
+    file_extensions:
+      - artisan
+    contexts:
+      main:
+        - include: scope:embedding.php
           apply_prototype: true
   - name: HTML (Blade)
     scope: text.html.blade

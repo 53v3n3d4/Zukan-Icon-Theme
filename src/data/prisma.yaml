@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Prisma
+preferences:
+  scope: source.prisma
+  settings:
+    icon: prisma
+syntax:
+  - name: Prisma
+    scope: source.prisma
+    hidden: true
+    file_extensions:
+      - prisma
+    contexts:
+      main: []
+
+# Package Prisma
