@@ -18,14 +18,14 @@ Using argparse commands
 # Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
-# Create all PNGs and tmPreferences
+# Create PNGs, syntaxes and preferences files
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build icon-theme -f src/data/afdesign.yaml
-# Create all PNGs and tmPreferences
+# Create PNGs, syntaxes and preferences files
 $ poetry run build icon-theme --all
 ```
 

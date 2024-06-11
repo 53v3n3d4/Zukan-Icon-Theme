@@ -23,9 +23,9 @@ This is a slow work in progress (WIP).
 Icon theme for Sublime Text editor.  
 
 
-![file type icons](assets/sample.svg "Sample")
+![file icon](assets/sample.svg "File icon sample")
 
-> Icons from v0.2.0
+> File icons from v0.2.0
 
 
 ## Install
@@ -76,11 +76,12 @@ To uninstall manually, go to your Sublime Text folder.
 
 ## Icons that do not work
 
-- Favicon. ST use  `file_type_image` icon for binary files  
+- Favicon. ST use  `file_type_image` icon for binary files. `favicon.svg` works.  
+- GitLab. ST use `yaml` icon for `gitlab-ci.yml`. `.gitlab-ci.yml` works.  
 - Photoshop. ST use `file_type_image` icon  
 - XML. ST use `file_type_markup` icon  
 
-## ST Package syntax icons that are using generic icon
+## ST Package syntax that are using generic icon
 - DTD use `file_type_markup`  
 - Pascal use `file_type_source`  
 - XSL use `file_type_markup`  
@@ -91,7 +92,7 @@ To uninstall manually, go to your Sublime Text folder.
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
 - If you use a theme that has sublime-syntax and tmPreferences, only icons, not present on theme, might show.  
-- Temporary not show icons, use `disable package` at `Tools > Command Palette... > Package Control: Disable Package`. Select `Zukan Icon Theme` on list  
+- Currently, when rebuild files, if icons do not show all correctly. Restart fix. Affecting only the current theme, other themes if exists are not affect. Duplicating a folder also seems to reload. Command `refresh_folder_list` seems not reload icons.
 
 ## File icon packages :alien:
 

@@ -86,12 +86,12 @@ addopts = -ra -q
 
 ## Build
 
-Scripts used to generate icons files: syntaxes data file, PNGs and preferences.  
+Scripts used to generate icons files: PNGs preferences and syntaxes data files.  
 
 See [build.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/build.md).  
 
 ## Plugin
 
-Install sublime-themes and sublime-syntaxes for icons.  
+Install icons tmPreferences, sublime-theme and sublime-syntax files.  
 
 See [plugin.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/plugin.md).  
