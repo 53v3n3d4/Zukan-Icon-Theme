@@ -32,6 +32,14 @@ class ZukanSyntax:
     Create and remove sublime-syntaxes in icons_syntaxes folder.
     """
 
+    def build_icon_syntax(file_name: str, syntax_name: str):
+        ZukanSyntax.create_icon_syntax(file_name)
+        ZukanSyntax.edit_context_scope(syntax_name)
+
+    def build_icons_syntaxes():
+        ZukanSyntax.create_icons_syntaxes()
+        ZukanSyntax.edit_contexts_scopes()
+
     def create_icon_syntax(syntax_name: str):
         """
         Create icon sublime-syntax file.

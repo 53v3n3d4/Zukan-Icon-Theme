@@ -72,6 +72,10 @@ ZUKAN_SYNTAXES_DATA_FILE = os.path.join(
     'zukan_syntaxes_data' + PICKLE_EXTENSION,
 )
 
+ZUKAN_VERSION_FILE = os.path.join(
+    sublime.packages_path(), PACKAGE_NAME, 'sublime', 'zukan-version.sublime-settings'
+)
+
 # Testing only
 
 # TEST_NOT_EXIST_ZUKAN_ICONS_THEMES_PATH = filepath('../../../not/icons')

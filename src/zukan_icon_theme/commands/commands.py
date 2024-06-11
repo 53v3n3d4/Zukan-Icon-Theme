@@ -2,8 +2,8 @@ import logging
 import os
 import sublime
 import sublime_plugin
-import threading
 
+from ..events.install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
@@ -243,9 +243,11 @@ class InstallSyntax(sublime_plugin.TextCommand):
 
     def run(self, edit, syntax_name: str):
         file_name, file_extension = os.path.splitext(syntax_name)
-        ZukanSyntax.create_icon_syntax(file_name)
+        # ZukanSyntax.create_icon_syntax(file_name)
         # Edit icon syntax contexts main if syntax not installed or ST3.
-        ZukanSyntax.edit_context_scope(syntax_name)
+        # ZukanSyntax.edit_context_scope(syntax_name)
+
+        InstallEvent.install_syntax(file_name, syntax_name)
 
     def input(self, args: dict):
         return InstallSyntaxInputHandler()
@@ -347,24 +349,7 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
             ZukanSyntax.delete_icons_syntaxes()
             MoveFolder.move_folders()
         finally:
-
-            def syntax_thread():
-                ZukanSyntax.create_icons_syntaxes()
-                # Edit icons syntaxes contexts main if syntax not installed or ST3
-                ZukanSyntax.edit_contexts_scopes()
-
-            def theme_thread():
-                ZukanTheme.create_icons_themes()
-
-            def preference_thread():
-                ZukanPreference.create_icons_preferences()
-                # Remove plist tag <!DOCTYPE plist>
-                ZukanPreference.delete_plist_tags()
-
-            ts = threading.Thread(target=syntax_thread).start()
-            tt = threading.Thread(target=theme_thread).start()
-            tp = threading.Thread(target=preference_thread).start()
-            # t.join()
+            InstallEvent.new_install_manually()
 
 
 class RebuildPreferences(sublime_plugin.ApplicationCommand):
@@ -392,12 +377,4 @@ class RebuildSyntaxes(sublime_plugin.ApplicationCommand):
         try:
             ZukanSyntax.delete_icons_syntaxes()
         finally:
-
-            def syntax_thread():
-                ZukanSyntax.create_icons_syntaxes()
-                # Edit icons syntaxes contexts main if syntax not installed or ST3
-                ZukanSyntax.edit_contexts_scopes()
-
-            ts = threading.Thread(target=syntax_thread)
-            ts.start()
-            # ts.join()
+            InstallEvent.install_syntaxes()

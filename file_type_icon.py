@@ -1,6 +1,5 @@
 import os
 import sys
-import threading
 
 # From A File Icon https://github.com/SublimeText/AFileIcon/blob/master/plugin.py
 # Clear module cache to force reloading all modules of this package.
@@ -29,15 +28,15 @@ from .src.zukan_icon_theme.commands.commands import (  # noqa: E402
     RebuildPreferences,  # noqa: F401
     RebuildSyntaxes,  # noqa: F401
 )
-
-# from .src.zukan_icon_theme.commands.listeners import (  # noqa: E402
-#     ThemeSettingListener,  # noqa: F401
-# )
+from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
+from .src.zukan_icon_theme.events.settings import SettingsEvent  # noqa: E402
 from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
-from .src.zukan_icon_theme.lib.icons_preferences import ZukanPreference  # noqa: E402
-from .src.zukan_icon_theme.lib.icons_syntaxes import ZukanSyntax  # noqa: E402
-from .src.zukan_icon_theme.lib.icons_themes import ZukanTheme  # noqa: E402
 from .src.zukan_icon_theme.lib.move_folders import MoveFolder  # noqa: E402
+from .src.zukan_icon_theme.utils.file_extensions import (  # noqa: E402
+    SUBLIME_SYNTAX_EXTENSION,
+    SUBLIME_THEME_EXTENSION,
+    TMPREFERENCES_EXTENSION,
+)
 from .src.zukan_icon_theme.utils.zukan_dir_paths import (  # noqa: E402
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
@@ -52,53 +51,50 @@ logger = logging.getLogger(__name__)
 
 
 def plugin_loaded():
-    """
-    Try move folders if installed trough Package Control. Then install
-    sublime-theme and sublime-syntax files.
-    """
-    try:
-        if not os.path.exists(ZUKAN_PKG_ICONS_PATH) and not os.path.exists(
-            ZUKAN_PKG_ICONS_SYNTAXES_PATH
-        ):
-            MoveFolder.move_folders()
-    finally:
-        if not any(
-            syntax.endswith('.sublime-syntax')
+    # New install from Package Control.
+    # If installed using sublime-package, rebuild generate error the same as
+    # on load. Even after restart and  all icons working fine.
+    # Installing via clone, this does not happen. Only diff is move_folders,
+    # they use same func.
+    # If change for other themes, the icons are showing with no issues.
+    if not os.path.exists(ZUKAN_PKG_ICONS_PATH) and not os.path.exists(
+        ZUKAN_PKG_ICONS_SYNTAXES_PATH
+    ):
+        InstallEvent.new_install_pkg_control()
+
+    # New install from repo clone. No icon themes, preferences or syntaxes.
+    if (
+        not any(
+            preference.endswith(TMPREFERENCES_EXTENSION)
+            for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+        )
+        and not any(
+            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
             for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        ):
-            # ZukanSyntax.create_icons_syntaxes()
-            # # Edit icons syntaxes contexts main if syntax not installed or ST3
-            # ZukanSyntax.edit_contexts_scopes()
-            def syntax_thread():
-                ZukanSyntax.create_icons_syntaxes()
-                # Edit icons syntaxes contexts main if syntax not installed or ST3
-                ZukanSyntax.edit_contexts_scopes()
-
-            ts = threading.Thread(target=syntax_thread).start()
-
-        if not any(
-            theme.endswith('.sublime-theme')
+        )
+        and not any(
+            theme.endswith(SUBLIME_THEME_EXTENSION)
             for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
-        ):
-            # ZukanTheme.create_icons_themes()
-            def theme_thread():
-                ZukanTheme.create_icons_themes()
+        )
+    ):
+        InstallEvent.new_install_manually()
 
-            tt = threading.Thread(target=theme_thread).start()
+    # Check user theme, if has or not icon theme created. Then delete or create
+    # files if needed.
+    SettingsEvent.get_user_theme()
 
-        if not any(
-            preferences.endswith('.tmPreferences')
-            for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-        ):
-            # ZukanPreference.create_icons_preferences()
-            # # Remove plist tag <!DOCTYPE plist>
-            # ZukanPreference.delete_plist_tags()
-            def preference_thread():
-                ZukanPreference.create_icons_preferences()
-                # Remove plist tag <!DOCTYPE plist>
-                ZukanPreference.delete_plist_tags()
+    # Check if user theme changed.
+    # Currently, rebuild preferences and syntaxes if delete all.
+    SettingsEvent.user_preferences_changed()
 
-            tp = threading.Thread(target=preference_thread).start()
+    # Check if package is upgraded.
+    SettingsEvent.zukan_pkg_upgraded()
+
+    # 'refresh_folder_list' do not help force reload. But deleting or duplicating a
+    # folder with at least 5 files, it will realod file icons.
+    # Or if change theme, the icons are showing with no issues.
+    # sublime.run_command('revert')
+    # sublime.run_command('refresh_folder_list')
 
 
 def plugin_unloaded():

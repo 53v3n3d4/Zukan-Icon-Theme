@@ -24,6 +24,11 @@ class ZukanPreference:
     Create and remove tmPreferences in preferences folder.
     """
 
+    def build_icons_preferences():
+        ZukanPreference.create_icons_preferences()
+        # Remove plist tag <!DOCTYPE plist>
+        ZukanPreference.delete_plist_tags()
+
     def create_icon_preference(preference_name: str):
         """
         Create icon tmPreferences file.
