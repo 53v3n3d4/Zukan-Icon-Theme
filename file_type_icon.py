@@ -84,17 +84,10 @@ def plugin_loaded():
     SettingsEvent.get_user_theme()
 
     # Check if user theme changed.
-    # Currently, rebuild preferences and syntaxes if delete all.
     SettingsEvent.user_preferences_changed()
 
     # Check if package is upgraded.
-    SettingsEvent.zukan_pkg_upgraded()
-
-    # 'refresh_folder_list' do not help force reload. But deleting or duplicating a
-    # folder with at least 5 files, it will realod file icons.
-    # Or if change theme, the icons are showing with no issues.
-    # sublime.run_command('revert')
-    # sublime.run_command('refresh_folder_list')
+    SettingsEvent.zukan_preferences_changed()
 
 
 def plugin_unloaded():

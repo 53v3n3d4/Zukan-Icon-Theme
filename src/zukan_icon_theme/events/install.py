@@ -1,21 +1,22 @@
 import logging
+import sublime
 import threading
 
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..lib.move_folders import MoveFolder
-from ..helpers.read_write_data import read_pickle_data
-from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.thread_progress import ThreadProgress
-from ..utils.zukan_dir_paths import (
-    ZUKAN_SYNTAXES_DATA_FILE,
-)
 
 logger = logging.getLogger(__name__)
 
 
 class InstallEvent:
+    """
+    Install actions like 'first install' and upgrade package. And also
+    syntaxes installation that is using Thread.
+    """
+
     def install_syntax(file_name: str, syntax_name: str):
         ts = threading.Thread(
             target=ZukanSyntax.build_icon_syntax, args=(file_name, syntax_name)
@@ -29,7 +30,7 @@ class InstallEvent:
         ThreadProgress(ts, 'Building zukan syntaxes', 'Build done')
 
     def install_batch():
-        ZukanTheme.create_icons_themes()
+        # ZukanTheme.create_icons_themes()
         ZukanPreference.build_icons_preferences()
         ZukanSyntax.build_icons_syntaxes()
 
@@ -38,9 +39,21 @@ class InstallEvent:
         ZukanSyntax.build_icons_syntaxes()
 
     def install_upgrade_thread():
+        ZUKAN_RESTART_MESSAGE = sublime.load_settings(
+            'Zukan Icon Theme.sublime-settings'
+        ).get('zukan_restart_message')
+
+        if ZUKAN_RESTART_MESSAGE is True:
+            dialog_message = (
+                'Zukan icons has been upgraded.\n\n'
+                'You may have to restart ST if all icons do not load correct in current theme.'
+            )
+        if ZUKAN_RESTART_MESSAGE is False:
+            dialog_message = None
+
         t = threading.Thread(target=InstallEvent.install_upgrade)
         t.start()
-        ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done')
+        ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
 
     def new_install_manually():
         # Creating themes in main thread helps a little with the error not showing all
@@ -55,10 +68,25 @@ class InstallEvent:
         # threading.Thread(target=ZukanTheme.create_icons_themes).start()
         # threading.Thread(target=ZukanPreference.build_icons_preferences).start()
 
-        t = threading.Thread(target=InstallEvent.install_batch)
-        t.start()
-        ThreadProgress(t, 'Building zukan files', 'Build done')
-        # t.join()
+        try:
+            ZUKAN_RESTART_MESSAGE = sublime.load_settings(
+                'Zukan Icon Theme.sublime-settings'
+            ).get('zukan_restart_message')
+
+            if ZUKAN_RESTART_MESSAGE is True:
+                dialog_message = (
+                    'Zukan icons has been built.\n\n'
+                    'You may have to restart ST if all icons do not load correct in current theme.'
+                )
+            if ZUKAN_RESTART_MESSAGE is False:
+                dialog_message = None
+
+            t = threading.Thread(target=InstallEvent.install_batch)
+            t.start()
+            ThreadProgress(t, 'Building zukan files', 'Build done', dialog_message)
+        finally:
+            # Testing if order helps prompt show icons. Building themes last.
+            ZukanTheme.create_icons_themes()
 
     def new_install_pkg_control():
         """

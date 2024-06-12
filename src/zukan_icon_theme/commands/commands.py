@@ -143,11 +143,24 @@ class DeleteTheme(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, theme_name: str):
-        # print(theme_name)
-        message = "Are you sure you want to delete '{t}'?".format(
-            t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
-        )
-        if sublime.ok_cancel_dialog(message) is True:
+        # 'zukan_restart_message' setting
+        ZUKAN_RESTART_MESSAGE = sublime.load_settings(
+            'Zukan Icon Theme.sublime-settings'
+        ).get('zukan_restart_message')
+
+        if ZUKAN_RESTART_MESSAGE is True:
+            dialog_message = (
+                'You may have to restart ST, for all icons do not show.\n\n'
+                'Are you sure you want to delete "{t}"?'.format(
+                    t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
+                )
+            )
+        if ZUKAN_RESTART_MESSAGE is False:
+            dialog_message = 'Are you sure you want to delete "{t}"?'.format(
+                t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
+            )
+
+        if sublime.ok_cancel_dialog(dialog_message) is True:
             ZukanTheme.delete_icon_theme(theme_name)
             # Check if selected theme was deleted
             SettingsEvent.get_user_theme()
@@ -184,10 +197,26 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
 
     def run(self):
         if ZukanTheme.list_created_icons_themes():
-            message = "Are you sure you want to delete all themes in '{f}'?".format(
-                f=ZUKAN_PKG_ICONS_PATH
-            )
-            if sublime.ok_cancel_dialog(message) is True:
+            # 'zukan_restart_message' setting
+            ZUKAN_RESTART_MESSAGE = sublime.load_settings(
+                'Zukan Icon Theme.sublime-settings'
+            ).get('zukan_restart_message')
+
+            if ZUKAN_RESTART_MESSAGE is True:
+                dialog_message = (
+                    'You may have to restart ST, for all icons do not show.\n\n'
+                    'Are you sure you want to delete all themes in "{f}"?'.format(
+                        f=ZUKAN_PKG_ICONS_PATH
+                    )
+                )
+            if ZUKAN_RESTART_MESSAGE is False:
+                dialog_message = (
+                    'Are you sure you want to delete all themes in "{f}"?'.format(
+                        f=ZUKAN_PKG_ICONS_PATH
+                    )
+                )
+
+            if sublime.ok_cancel_dialog(dialog_message) is True:
                 ZukanTheme.delete_icons_themes()
                 # Check if selected theme was deleted
                 SettingsEvent.get_user_theme()
@@ -298,10 +327,24 @@ class InstallTheme(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, theme_name: str):
+        # 'zukan_restart_message' setting
+        ZUKAN_RESTART_MESSAGE = sublime.load_settings(
+            'Zukan Icon Theme.sublime-settings'
+        ).get('zukan_restart_message')
+
+        if ZUKAN_RESTART_MESSAGE is True:
+            dialog_message = (
+                'You may have to restart ST, if all icons do not load in '
+                'selected theme.'
+            )
+        if ZUKAN_RESTART_MESSAGE is False:
+            dialog_message = None
+
+        sublime.message_dialog(dialog_message)
         ZukanTheme.create_icon_theme(theme_name)
         # Check if selected theme was installed
         SettingsEvent.get_user_theme()
-            
+
     def input(self, args: dict):
         return InstallThemeInputHandler()
 
@@ -340,9 +383,24 @@ class InstallThemes(sublime_plugin.ApplicationCommand):
     """
 
     def run(self):
+        # 'zukan_restart_message' setting
+        ZUKAN_RESTART_MESSAGE = sublime.load_settings(
+            'Zukan Icon Theme.sublime-settings'
+        ).get('zukan_restart_message')
+
+        if ZUKAN_RESTART_MESSAGE is True:
+            dialog_message = (
+                'You may have to restart ST, if all icons do not load in current '
+                'theme.'
+            )
+        if ZUKAN_RESTART_MESSAGE is False:
+            dialog_message = None
+
+        sublime.message_dialog(dialog_message)
         ZukanTheme.create_icons_themes()
         # Check if selected theme was installed
         SettingsEvent.get_user_theme()
+
 
 class RebuildFiles(sublime_plugin.ApplicationCommand):
     """

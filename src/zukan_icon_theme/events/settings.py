@@ -26,10 +26,24 @@ class SettingsEvent:
         if theme_name not in ZukanTheme.list_created_icons_themes():
             # Delete preferences to avoid error unable to decode 'icon_file_type'
             # Example of extensions that this errors show: HAML, LICENSE, README, Makefile
-            ZukanPreference.delete_icons_preferences()
-            ZukanSyntax.delete_icons_syntaxes()
+            if any(
+                syntax.endswith('.sublime-syntax')
+                for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+            ):
+                ZukanSyntax.delete_icons_syntaxes()
+            if any(
+                preferences.endswith('.tmPreferences')
+                for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+            ):
+                ZukanPreference.delete_icons_preferences()
 
         if theme_name in ZukanTheme.list_created_icons_themes():
+            if not any(
+                preferences.endswith('.tmPreferences')
+                for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+            ):
+                threading.Thread(target=ZukanPreference.build_icons_preferences).start()
+
             if not any(
                 syntax.endswith('.sublime-syntax')
                 for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
@@ -38,24 +52,10 @@ class SettingsEvent:
                 ts.start()
                 ThreadProgress(ts, 'Building zukan files', 'Build done')
 
-            if not any(
-                preferences.endswith('.tmPreferences')
-                for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-            ):
-                threading.Thread(target=ZukanPreference.build_icons_preferences).start()
-
-        # Not refreshing file types. But if create or delete a file/folder in sidebar
-        # it seems to reload sidebar.
-        # Also if change theme, icons are showing.
-        sublime.run_command('refresh_folder_list')
-
-    def upgrade_zukan_files():
+    def upgrade_zukan_files(auto_upgraded: bool):
         logger.debug('If package upgraded, begin rebuild...')
         pkg_version = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
             'version'
-        )
-        auto_upgraded = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
-            'rebuild_on_upgrade'
         )
 
         if os.path.exists(ZUKAN_VERSION_FILE) and auto_upgraded is True:
@@ -76,15 +76,24 @@ class SettingsEvent:
             content = {'version': pkg_version}
             dump_json_data(content, ZUKAN_VERSION_FILE)
 
+    def zukan_options_settings():
+        # auto_upgraded setting
+        auto_upgraded = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
+            'rebuild_on_upgrade'
+        )
+
+        if auto_upgraded is True:
+            SettingsEvent.upgrade_zukan_files(auto_upgraded)
+
     def user_preferences_changed():
         user_preferences = sublime.load_settings('Preferences.sublime-settings')
 
         user_preferences.add_on_change('Preferences', SettingsEvent.get_user_theme)
 
-    def zukan_pkg_upgraded():
+    def zukan_preferences_changed():
         # if version changed, upgrade rebuild syntax and preferences.
         zukan_pkg_version = sublime.load_settings('Zukan Icon Theme.sublime-settings')
 
         zukan_pkg_version.add_on_change(
-            'Zukan Icon Theme', SettingsEvent.upgrade_zukan_files
+            'Zukan Icon Theme', SettingsEvent.zukan_options_settings
         )

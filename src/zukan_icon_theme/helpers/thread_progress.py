@@ -39,12 +39,14 @@ class ThreadProgress:
     thread -- the thread to track for activity
     message -- the message to display next to the activity indicator
     success_message -- the message to display once the thread is complete
+    dialog_message -- the message to display in a dialog once the thread is complete
     """
 
-    def __init__(self, thread, message, success_message):
+    def __init__(self, thread, message, success_message, dialog_message=None):
         self.thread = thread
         self.message = message
         self.success_message = success_message
+        self.dialog_message = dialog_message
         self.addend = 1
         self.size = 3
         self.last_view = None
@@ -70,6 +72,8 @@ class ThreadProgress:
                 return
             active_view.set_status('_zukan', self.success_message)
             sublime.set_timeout(cleanup, 1000)
+            if self.dialog_message is not None:
+                sublime.message_dialog(self.dialog_message)
             return
 
         before = i % self.size
