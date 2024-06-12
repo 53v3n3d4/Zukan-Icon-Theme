@@ -19,6 +19,10 @@ To make an icon show on ST, a sublime-theme is created in `icons` folder.
 
 Plugin use two templates. One with, and another without, attributes for hover and selected effect.  
 
+## Preferefences
+
+Icon preferences files register the scopes and PNG for each icon. This is also important, for this package, to allow not show icons in a specific theme and future icons customizations.  
+
 ## Syntaxes
 
 Aside icons PNGs, tmPreferences and sublime-theme file, there are cases where the plugin use a sublime-syntax to show icons:  
@@ -76,8 +80,8 @@ It install all sublime-theme files from a list of user installed themes.
 
 ### Rebuild Preferences
 
-It remove all previous tmPreferences files in `preferences`, before install all zukan icons preferences.
+It remove all previous tmPreferences files in `preferences`, before install all zukan icons preferences.  
 
 ### Rebuild Syntaxes
 
-It remove all previous sublime-syntax files in `icons_syntaxes`, before install all zukan icons syntaxes, excluding user installed syntaxes.
+It remove all previous sublime-syntax files in `icons_syntaxes`, before install all zukan icons syntaxes, excluding user installed syntaxes.  
