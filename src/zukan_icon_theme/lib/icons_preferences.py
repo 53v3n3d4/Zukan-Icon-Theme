@@ -25,6 +25,10 @@ class ZukanPreference:
     """
 
     def build_icons_preferences():
+        """
+        Batch create preferences and delete plist tags, to use with Thread together
+        in install events.
+        """
         ZukanPreference.create_icons_preferences()
         # Remove plist tag <!DOCTYPE plist>
         ZukanPreference.delete_plist_tags()

@@ -33,16 +33,31 @@ class ZukanSyntax:
     """
 
     def build_icon_syntax(file_name: str, syntax_name: str):
+        """
+        Batch create syntax and edit context scope, to use with Thread together
+        in install events.
+
+        Parameters:
+        file_name (str) -- syntax file name, without extension.
+        syntax_name (str) -- syntax name, file name and extension.
+        """
         ZukanSyntax.create_icon_syntax(file_name)
         ZukanSyntax.edit_context_scope(syntax_name)
 
     def build_icons_syntaxes():
+        """
+        Batch create syntaxes and edit contexts scopes, to use with Thread together
+        in install events.
+        """
         ZukanSyntax.create_icons_syntaxes()
         ZukanSyntax.edit_contexts_scopes()
 
     def create_icon_syntax(syntax_name: str):
         """
         Create icon sublime-syntax file.
+
+        Parameters:
+        syntax_name (str) -- syntax name, file name and extension.
         """
         try:
             zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
