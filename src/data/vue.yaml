@@ -35,3 +35,5 @@ syntax:
       main:
         - include: scope:source.json
           apply_prototype: true
+
+# Package Vue

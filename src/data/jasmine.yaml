@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Jasmine
+preferences:
+  scope: source.json.jasmine
+  settings:
+    icon: jasmine
+syntax:
+  - name: JSON (Jasmine)
+    scope: source.json.jasmine
+    hidden: true
+    file_extensions:
+      - jasmine.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true

@@ -6,11 +6,11 @@ preferences:
   settings:
     icon: fsharp
 syntax:
-  - name: C#
+  - name: F#
     scope: source.fsharp
     hidden: true
     file_extensions:
-      - fs
+      - fs # using OpenGL icon
       - fsi
       - fsx
     contexts:
