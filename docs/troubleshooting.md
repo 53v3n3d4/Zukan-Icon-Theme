@@ -19,8 +19,8 @@ If you do not want it, you can turn off. Go to menu `Sublime Text > Settings > P
 
 It seems to affect only the current theme. If change to another installed theme, icons shows correct.
 
-```markdown
-**Solution:** 
+**Solution**
+```
 Restart fix. 
 
 Or, if installed via clone repo, duplicante a folder with 5 files or more, seems to force reload.
@@ -32,8 +32,8 @@ When delete one or all themes, an icon can still show, even deleted, or an error
 
 They will be no error in console. If deleted only one theme, others themes seems to be working fine.  
 
-```markdown
-**Solution:** 
+**Solution**
+```
 Restart fix. 
 
 Or, if installed via clone repo, duplicante a folder with 5 files or more, seems to force reload.
@@ -45,17 +45,17 @@ If theme package has more than one theme. Usually, this affect only the current 
 
 This also may happen, when a specific theme that do not have icon theme, is followed by run command `Zukan Icon Theme: Install Theme` in `Command Palette...`. This theme may not prompt show icons correct.  
 
-```markdown
-**Solution:** 
+**Solution**
+```
 Restart fix. 
 
 Or, if installed via clone repo, duplicante a folder with 5 files or more, seems to force reload.
 ```
 
 
-### Current Theme or another icon package is overriding Zukan Theme
+### Theme or another icon package is overriding Zukan icons
 
-So if a theme has its own tmPreferences and sublime-syntax file, Zukan icons will usually complete with icons that do not exist.  
+If a theme has its own tmPreferences and sublime-syntax files, Zukan icons will usually complete with icons that do not exist.  
 
 ST seems to apply plugins in order, read first starting with `Installed Packages` in alphabetical order then go to `Packages`.  
 
@@ -63,11 +63,11 @@ ST seems to apply plugins in order, read first starting with `Installed Packages
 
 It is same situation, Zukan icons will complete with icons that do not exist.
 
-```markdown
 **Solution**
+```
 If user is using a theme or another icon package, and install Zukan icons.
 
-The solution is to use Zukan icons for icons that do not exist.
+The solution is to use Zukan icons to complete with icons that do not exist.
 
-Overiding other packages icons in these situations is not possible currently, as explained above, without changing others packages.
+Overiding other packages icons in these situations is not possible currently, as explained above.
 ```
