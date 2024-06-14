@@ -150,8 +150,8 @@ class DeleteTheme(sublime_plugin.TextCommand):
 
         if ZUKAN_RESTART_MESSAGE is True:
             dialog_message = (
-                'You may have to restart ST, for all icons do not show.\n\n'
-                'Are you sure you want to delete "{t}"?'.format(
+                'Are you sure you want to delete "{t}"?\n\n'
+                'You may have to restart ST, for all icons do not show.'.format(
                     t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
                 )
             )
@@ -204,8 +204,8 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
 
             if ZUKAN_RESTART_MESSAGE is True:
                 dialog_message = (
-                    'You may have to restart ST, for all icons do not show.\n\n'
-                    'Are you sure you want to delete all themes in "{f}"?'.format(
+                    'Are you sure you want to delete all themes in "{f}"?\n\n'
+                    'You may have to restart ST, for all icons do not show.'.format(
                         f=ZUKAN_PKG_ICONS_PATH
                     )
                 )

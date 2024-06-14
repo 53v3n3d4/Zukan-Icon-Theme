@@ -90,7 +90,6 @@ class SettingsEvent:
         pkg_version = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
             'version'
         )
-        print(pkg_version)
 
         if os.path.exists(ZUKAN_VERSION_FILE) and auto_upgraded is True:
             installed_pkg_version = sublime.load_settings(
@@ -144,8 +143,8 @@ class SettingsEvent:
         """
         Listen to 'Zukan Icon Theme.sublime-settings'.
         """
-        zukan_pkg_version = sublime.load_settings('Zukan Icon Theme.sublime-settings')
+        zukan_preferences = sublime.load_settings('Zukan Icon Theme.sublime-settings')
 
-        zukan_pkg_version.add_on_change(
+        zukan_preferences.add_on_change(
             'Zukan Icon Theme', SettingsEvent.zukan_options_settings
         )

@@ -34,7 +34,7 @@ class LevelFormatter(logging.Formatter):
 
 def get_setting_log_level():
     """
-    Get 'log_level'setting in 'Zukan Icon Theme.sublime-settings'.
+    Get 'log_level' setting in 'Zukan Icon Theme.sublime-settings'.
 
     It also handle all init and coonfig logger.
 

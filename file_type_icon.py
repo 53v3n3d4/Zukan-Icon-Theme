@@ -53,7 +53,7 @@ logger = logging.getLogger(__name__)
 def plugin_loaded():
     # New install from Package Control.
     # If installed using sublime-package, rebuild generate error the same as
-    # on load. Even after restart and  all icons working fine.
+    # on load. Even after restart and all icons working fine.
     # Installing via clone, this does not happen. Only diff is move_folders,
     # they use same func.
     # If change for other themes, the icons are showing with no issues.
@@ -83,10 +83,11 @@ def plugin_loaded():
     # files if needed.
     SettingsEvent.get_user_theme()
 
-    # Check if user theme changed.
+    # Check if user preferences changed.
     SettingsEvent.user_preferences_changed()
 
-    # Check if package is upgraded.
+    # Check if zukan preferences changed.
+    # Package auto upgraded setting.
     SettingsEvent.zukan_preferences_changed()
 
 
