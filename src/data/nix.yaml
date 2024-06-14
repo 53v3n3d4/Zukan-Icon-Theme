@@ -2,7 +2,7 @@
 ---
 name: Nix
 preferences:
-  scope: source.ini.nix, source.nix
+  scope: source.ini.nix, source.json.nix, source.nix
   settings:
     icon: nix
 syntax:
@@ -22,5 +22,14 @@ syntax:
       - nix
     contexts:
       main: []
+  - name: JSON (Nix)
+    scope: source.json.nix
+    hidden: true
+    file_extensions:
+      - flake.lock
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
 
 # Package Nix

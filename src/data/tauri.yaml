@@ -1,0 +1,46 @@
+%YAML 1.2
+---
+name: Tauri
+preferences:
+  scope: source.json.tauri, source.json5.tauri, source.toml.tauri, text.git.ignore.tauri
+  settings:
+    icon: tauri
+syntax:
+  - name: Git (Tauri)
+    scope: text.git.ignore.tauri
+    hidden: true
+    file_extensions:
+      - .taurignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
+  - name: JSON (Tauri)
+    scope: source.json.tauri
+    hidden: true
+    file_extensions:
+      - tauri.conf.json
+      - tauri.conf.nightly.json
+      - tauri.conf.release.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: JSON5 (Tauri)
+    scope: source.json5.tauri
+    hidden: true
+    file_extensions:
+      - tauri.conf.json5
+    contexts:
+      main: []
+  - name: TOML (Tauri)
+    scope: source.toml.tauri
+    hidden: true
+    file_extensions:
+      - Tauri.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
+
+# JSON5 context main empty, no JSON5 syntax found.

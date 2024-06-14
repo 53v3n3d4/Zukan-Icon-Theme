@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Dioxus
+preferences:
+  scope: source.toml.dioxus
+  settings:
+    icon: dioxus
+syntax:
+  - name: TOML (Dioxus)
+    scope: source.toml.dioxus
+    hidden: true
+    file_extensions:
+      - Dioxus.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
