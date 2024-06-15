@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Ada
+preferences:
+  scope: source.ada
+  settings:
+    icon: ada
+syntax:
+  - name: Ada
+    scope: source.ada
+    hidden: true
+    file_extensions:
+      - adb
+      - ads
+    contexts:
+      main: []
+
+# Package Ada
