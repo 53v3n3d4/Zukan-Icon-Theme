@@ -63,15 +63,18 @@ class InstallEvent:
         """
         Using Thread to build upgraded files, to avoid ST freezing.
         """
+        VERSION = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
+            'version'
+        )
         ZUKAN_RESTART_MESSAGE = sublime.load_settings(
             'Zukan Icon Theme.sublime-settings'
         ).get('zukan_restart_message')
 
         if ZUKAN_RESTART_MESSAGE is True:
             dialog_message = (
-                'Zukan icons has been upgraded.\n\n'
+                'Zukan icons has been upgraded to v.{v}.\n\n'
                 'You may have to restart ST if all icons do not load correct in '
-                'current theme.'
+                'current theme.'.format(v=VERSION)
             )
         if ZUKAN_RESTART_MESSAGE is False:
             dialog_message = None

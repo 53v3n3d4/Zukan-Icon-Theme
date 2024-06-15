@@ -78,7 +78,7 @@ class SettingsEvent:
                 ts.start()
                 ThreadProgress(ts, 'Building zukan files', 'Build done')
 
-    def upgrade_zukan_files(auto_upgraded: bool):
+    def upgrade_zukan_files():
         """
         Event for setting 'version' in 'Zukan Icon Theme.sublime-settings'.
 
@@ -89,6 +89,10 @@ class SettingsEvent:
         logger.debug('If package upgraded, begin rebuild...')
         pkg_version = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
             'version'
+        )
+
+        auto_upgraded = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
+            'rebuild_on_upgrade'
         )
 
         if os.path.exists(ZUKAN_VERSION_FILE) and auto_upgraded is True:
@@ -124,12 +128,7 @@ class SettingsEvent:
         Call upgrade zukan files function if 'rebuild_on_upgrade' is True.
         """
         # auto_upgraded setting
-        auto_upgraded = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
-            'rebuild_on_upgrade'
-        )
-
-        if auto_upgraded is True:
-            SettingsEvent.upgrade_zukan_files(auto_upgraded)
+        SettingsEvent.upgrade_zukan_files()
 
     def user_preferences_changed():
         """

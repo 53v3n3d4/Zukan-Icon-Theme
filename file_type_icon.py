@@ -83,11 +83,13 @@ def plugin_loaded():
     # files if needed.
     SettingsEvent.get_user_theme()
 
+    # Package auto upgraded setting.
+    SettingsEvent.upgrade_zukan_files()
+
     # Check if user preferences changed.
     SettingsEvent.user_preferences_changed()
 
     # Check if zukan preferences changed.
-    # Package auto upgraded setting.
     SettingsEvent.zukan_preferences_changed()
 
 
