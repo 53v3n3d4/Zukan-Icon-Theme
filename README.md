@@ -65,7 +65,7 @@ To uninstall manually, go to your Sublime Text folder.
 
 ST auto upgrade packages plugins. So this package will get icons PNGs and data files auto upgraded. Icons preferences and syntaxes are build based on user syntaxes and themes installed.  
 
-We are auto upgrading icons preferences and syntaxes by default. If you can disable it, turn option `rebuild_on_upgrade` to `false`, on [`Zukan Icon Theme.sublime-settings`](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/sublime/Zukan%20Icon%20Theme.sublime-settings).  
+We are auto upgrading icons preferences and syntaxes by default. You can disable it, go to menu `Sublime Text > Settings > Package Settings > Zukan Icon Theme > Settings` and change `rebuild_on_upgrade` to `false`.  
 
 ## Icons that works depending on folder position
 
