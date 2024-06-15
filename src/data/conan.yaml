@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Conan
+preferences:
+  scope: source.ini.conan, source.python.conan
+  settings:
+    icon: conan
+syntax:
+  - name: INI (Conan)
+    scope: source.ini.conan
+    hidden: true
+    file_extensions:
+      - conanfile.txt
+    contexts:
+      main:
+      - include: scope:source.ini
+        apply_prototype: true
+  - name: Python (Conan)
+    scope: source.python.conan
+    hidden: true
+    file_extensions:
+      - conanfile.py
+    contexts:
+      main:
+        - include: scope:source.python
+          apply_prototype: true

@@ -8,7 +8,7 @@
     // - Delete one or all themes
     //
     // Default is true. 
-    // Turn to false. if do not want to display this diablog.
+    // Turn to false, if do not want to display this diablog.
     "zukan_restart_message": true,
 
     // This setting control if user want to auto upgrade
@@ -45,7 +45,7 @@
     // Do not change version. Neither use this option.
     // It is used to upgrade package if 'rebuild_on_upgrade'
     // is true
-    "version": "0.1.74",
+    "version": "0.1.75",
 
     // https://docs.python.org/3/library/logging.html
     // It currently only accept Python library logging default

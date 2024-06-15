@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: MkDocs
+preferences:
+  scope: source.yaml.mkdocs
+  settings:
+    icon: mkdocs
+syntax:
+  - name: YAML (MkDocs)
+    scope: source.yaml.mkdocs
+    hidden: true
+    file_extensions:
+      - mkdocs.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

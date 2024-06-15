@@ -1,0 +1,35 @@
+%YAML 1.2
+---
+name: Pyre
+preferences:
+  scope: source.json.pyre, source.json.pysa, source.python.pysa
+  settings:
+    icon: pyre
+syntax:
+  - name: JSON (Pyre)
+    scope: source.json.pyre
+    hidden: true
+    file_extensions:
+      - .pyre_configuration
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
+  - name: JSON (Pysa)
+    scope: source.json.pysa
+    hidden: true
+    file_extensions:
+      - taint.config
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
+  - name: Python (Pysa)
+    scope: source.python.pysa
+    hidden: true
+    file_extensions:
+      - pysa
+    contexts:
+      main:
+        - include: scope:source.python
+          apply_prototype: true
