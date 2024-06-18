@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Flask
+preferences:
+  scope: source.env.flask
+  settings:
+    icon: flask
+syntax:
+  - name: DotENV (Flask)
+    scope: source.env.flask
+    hidden: true
+    file_extensions:
+      - .flaskenv
+    contexts:
+      main:
+        - include: scope:source.env
+          apply_prototype: true

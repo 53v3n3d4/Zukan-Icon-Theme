@@ -29,7 +29,7 @@ syntax:
       - .env.test.local
       - .env.testing
       - .envrc
-      - .flaskenv
+      # - .flaskenv
     contexts:
       main: []
   - name: INI

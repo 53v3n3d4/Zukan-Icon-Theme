@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Scala Steward
+preferences:
+  scope: source.hocon.scalasteward
+  settings:
+    icon: scalasteward
+syntax:
+  - name: Hocon (Scala Steward)
+    scope: source.hocon.scalasteward
+    hidden: true
+    file_extensions:
+      - .scala-steward.conf
+      - scala-steward.conf
+    contexts:
+      main:
+      - include: scope:source.hocon
+        apply_prototype: true
+
+# Contexts scope Package HOCON Syntax Highlighting

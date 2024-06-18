@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Maven
+preferences:
+  scope: text.xml.maven
+  settings:
+    icon: maven
+syntax:
+  - name: XML (Maven)
+    scope: text.xml.maven
+    hidden: true
+    file_extensions:
+      - pom.xml
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true

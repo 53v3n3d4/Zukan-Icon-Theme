@@ -50,7 +50,7 @@
     // Do not change version. Neither use this option.
     // It is used to upgrade package if 'rebuild_on_upgrade'
     // is true
-    "version": "0.1.75",
+    "version": "0.1.76",
 
     // https://docs.python.org/3/library/logging.html
     // It currently only accept Python library logging default
