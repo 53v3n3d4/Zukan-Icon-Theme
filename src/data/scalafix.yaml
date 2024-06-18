@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Scalafix
+preferences:
+  scope: source.hocon.scalafix
+  settings:
+    icon: scalafix
+syntax:
+  - name: Hocon (Scalafix)
+    scope: source.hocon.scalafix
+    hidden: true
+    file_extensions:
+      - .scalafix.conf
+    contexts:
+      main:
+      - include: scope:source.hocon
+        apply_prototype: true
+
+# Contexts scope Package HOCON Syntax Highlighting

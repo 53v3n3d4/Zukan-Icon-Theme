@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+name: SVGO
+preferences:
+  scope: source.js.svgo
+  settings:
+    icon: svgo
+syntax:
+  - name: JavaScript (SVGO)
+    scope: source.js.svgo
+    hidden: true
+    file_extensions:
+      - svgo.config.js
+      - svgo.config.cjs
+      - svgo.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+
+# Package SVGO

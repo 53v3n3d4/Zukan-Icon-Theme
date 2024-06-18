@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Scalameta
+preferences:
+  scope: source.hocon.scalameta
+  settings:
+    icon: scalameta
+syntax:
+  - name: Hocon (Scalafmt)
+    scope: source.hocon.scalameta
+    hidden: true
+    file_extensions:
+      - .scalafmt.conf
+    contexts:
+      main:
+      - include: scope:source.hocon
+        apply_prototype: true
+
+# Contexts scope Package HOCON Syntax Highlighting

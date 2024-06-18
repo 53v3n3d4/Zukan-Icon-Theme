@@ -12,6 +12,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.css.php', 'startsWith': 'CSS ('},
     {'scope': 'source.elixir', 'startsWith': 'Elixir ('},
     {'scope': 'source.groovy', 'startsWith': 'Groovy ('},
+    {'scope': 'source.hocon', 'startsWith': 'Hocon ('},
     {'scope': 'source.ini', 'startsWith': 'INI ('},
     {'scope': 'source.js', 'startsWith': 'JavaScript ('},
     {'scope': 'source.js.php', 'startsWith': 'JavaScript ('},

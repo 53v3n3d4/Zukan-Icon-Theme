@@ -1,0 +1,43 @@
+%YAML 1.2
+---
+name: Bazel
+preferences:
+  scope: source.bazel, source.shell.bazel, source.starlark
+  settings:
+    icon: bazel
+syntax:
+  - name: Bazel
+    scope: source.bazel
+    hidden: true
+    file_extensions:
+      # - BUILD
+      # - WORKSPACE
+      - bazel
+      - bzl
+    contexts:
+      main: []
+  - name: Shell (Bazel)
+    scope: source.shell.bazel
+    hidden: true
+    file_extensions:
+      - .bazelrc
+      - .bazelversion
+    contexts:
+      main:
+        - include: scope:source.shell
+          apply_prototype: true
+  - name: Starlark
+    scope: source.starlark
+    hidden: true
+    file_extensions:
+      # - BUILD
+      # - WORKSPACE
+      # - bazel
+      # - bzl
+      - sky
+      - star
+    contexts:
+      main: []
+
+# Package BazelSyntax
+# Package Starlark
