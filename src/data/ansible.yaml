@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+name: Ansible
+preferences:
+  scope: source.ansible, source.ini.ansible
+  settings:
+    icon: ansible
+syntax:
+  - name: INI (Ansible)
+    scope: source.ini.ansible
+    hidden: true
+    file_extensions:
+      - .ansible.cfg
+      - ansible.cfg
+      - ANSIBLE_CONFIG
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+
+# Package Ansible source.ansible. No syntax because use yaml extension.

@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: PDM
+preferences:
+  scope: source.toml.pdm
+  settings:
+    icon: pdm
+syntax:
+  - name: TOML (PDM)
+    scope: source.toml.pdm
+    hidden: true
+    file_extensions:
+      - pdm.lock
+      - pdm.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
