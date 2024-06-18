@@ -5,11 +5,11 @@ from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..lib.move_folders import MoveFolder
-from ..helpers.get_settings import (
-    load_settings,
+from ..helpers.get_settings import load_settings
+from ..helpers.thread_progress import ThreadProgress
+from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
-from ..helpers.thread_progress import ThreadProgress
 
 logger = logging.getLogger(__name__)
 
@@ -42,9 +42,6 @@ class InstallEvent:
         ts.start()
         ThreadProgress(ts, 'Building zukan syntaxes', 'Build done')
 
-    # Testing create themes separate, to check if change order helps.
-    # If decide to use themes separated, this function will be equal
-    # to install upgrade below.
     def install_batch():
         """
         Batch build preferences and syntaxes, to use with Thread together in

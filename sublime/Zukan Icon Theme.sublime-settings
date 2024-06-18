@@ -61,6 +61,6 @@
     // - ERROR
     // - CRITICAL
     //
-    // A ST restart is needed when change value.
+    // Default is INFO. A ST restart is needed when change value.
     "log_level": "INFO"
 }

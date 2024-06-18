@@ -1,23 +1,23 @@
 import logging
 import os
-import sublime
 import threading
 
 from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
-from ..helpers.get_settings import (
-    load_settings,
-    USER_SETTINGS,
-    ZUKAN_SETTINGS,
-    ZUKAN_VERSION,
-)
+from ..helpers.get_settings import load_settings
 from ..helpers.read_write_data import dump_json_data
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
     TMPREFERENCES_EXTENSION,
+)
+from ..utils.file_settings import (
+    USER_SETTINGS,
+    ZUKAN_SETTINGS,
+    ZUKAN_SETTINGS_OPTIONS,
+    ZUKAN_VERSION,
 )
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
@@ -90,28 +90,14 @@ class SettingsEvent:
         """
         Print to console, current Zukan settings options.
         """
-        # LOG_LEVEL = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
-        #     'log_level'
-        # )
         log_level = load_settings(ZUKAN_SETTINGS, 'log_level')
 
         if log_level == 'DEBUG':
             print('==== Zukan Icon Theme settings ====')
-            print('log_level: {l}'.format(l=log_level))
 
-            version = load_settings(ZUKAN_SETTINGS, 'version')
-            print('version: {v}'.format(v=version))
-
-            zukan_restart_message = load_settings(
-                ZUKAN_SETTINGS, 'zukan_restart_message'
-            )
-            print('zukan_restart_message: {z}'.format(z=zukan_restart_message))
-
-            rebuild_on_upgrade = load_settings(ZUKAN_SETTINGS, 'rebuild_on_upgrade')
-            print('rebuild_on_upgrade: {r}'.format(r=rebuild_on_upgrade))
-
-            auto_install_theme = load_settings(ZUKAN_SETTINGS, 'auto_install_theme')
-            print('auto_install_theme: {a}'.format(a=auto_install_theme))
+            for s in ZUKAN_SETTINGS_OPTIONS:
+                setting_option = load_settings(ZUKAN_SETTINGS, s)
+                print('{s}: {v}'.format(s=s, v=setting_option))
 
             print('==== === ==== === === ==== === ====')
 
@@ -170,7 +156,8 @@ class SettingsEvent:
         """
         Listen to 'Preferences.sublime-settings'.
         """
-        user_preferences = sublime.load_settings(USER_SETTINGS)
+        # user_preferences = sublime.load_settings(USER_SETTINGS)
+        user_preferences = load_settings(USER_SETTINGS)
 
         user_preferences.add_on_change('Preferences', SettingsEvent.get_user_theme)
 
@@ -178,7 +165,8 @@ class SettingsEvent:
         """
         Listen to 'Zukan Icon Theme.sublime-settings'.
         """
-        zukan_preferences = sublime.load_settings(ZUKAN_SETTINGS)
+        # zukan_preferences = sublime.load_settings(ZUKAN_SETTINGS)
+        zukan_preferences = load_settings(ZUKAN_SETTINGS)
 
         zukan_preferences.add_on_change(
             'Zukan Icon Theme', SettingsEvent.zukan_options_settings
