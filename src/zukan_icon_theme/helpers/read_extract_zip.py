@@ -1,6 +1,6 @@
 import logging
 
-from ..utils.zukan_dir_paths import (
+from ..utils.zukan_paths import (
     ZUKAN_INSTALLED_PKG_PATH,
 )
 from zipfile import ZipFile

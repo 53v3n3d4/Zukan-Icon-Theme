@@ -1,7 +1,7 @@
 import sublime
 
 from .read_write_data import read_pickle_data
-from ..utils.zukan_dir_paths import (
+from ..utils.zukan_paths import (
     ZUKAN_SYNTAXES_DATA_FILE,
 )
 from ruamel.yaml import YAML

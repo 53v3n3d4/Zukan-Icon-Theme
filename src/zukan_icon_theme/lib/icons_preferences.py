@@ -11,7 +11,7 @@ from ..helpers.read_write_data import (
 from ..utils.file_extensions import (
     TMPREFERENCES_EXTENSION,
 )
-from ..utils.zukan_dir_paths import (
+from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PREFERENCES_DATA_FILE,
 )

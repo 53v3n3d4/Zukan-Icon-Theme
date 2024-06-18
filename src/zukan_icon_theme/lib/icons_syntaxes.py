@@ -18,7 +18,7 @@ from ..utils.contexts_scopes import (
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
 )
-from ..utils.zukan_dir_paths import (
+from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_SYNTAXES_DATA_FILE,
 )

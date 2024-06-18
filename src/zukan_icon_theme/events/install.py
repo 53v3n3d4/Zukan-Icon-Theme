@@ -1,11 +1,14 @@
 import logging
-import sublime
 import threading
 
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..lib.move_folders import MoveFolder
+from ..helpers.get_settings import (
+    load_settings,
+    ZUKAN_SETTINGS,
+)
 from ..helpers.thread_progress import ThreadProgress
 
 logger = logging.getLogger(__name__)
@@ -47,9 +50,17 @@ class InstallEvent:
         Batch build preferences and syntaxes, to use with Thread together in
         new install manually.
         """
-        # ZukanTheme.create_icons_themes()
+        # Check 'auto_install_theme' avoid duplicate create themes when True.
+        # Because deleting theme already triggers event to create themes.
+        auto_install_theme = load_settings(ZUKAN_SETTINGS, 'auto_install_theme')
+        if auto_install_theme is False:
+            ZukanTheme.create_icons_themes()
+
         ZukanPreference.build_icons_preferences()
         ZukanSyntax.build_icons_syntaxes()
+
+        version = load_settings(ZUKAN_SETTINGS, 'version')
+        logger.info('Zukan icons v%s has been built.', version)
 
     def install_upgrade():
         """
@@ -63,20 +74,16 @@ class InstallEvent:
         """
         Using Thread to build upgraded files, to avoid ST freezing.
         """
-        VERSION = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
-            'version'
-        )
-        ZUKAN_RESTART_MESSAGE = sublime.load_settings(
-            'Zukan Icon Theme.sublime-settings'
-        ).get('zukan_restart_message')
+        version = load_settings(ZUKAN_SETTINGS, 'version')
+        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
-        if ZUKAN_RESTART_MESSAGE is True:
+        if zukan_restart_message is True:
             dialog_message = (
-                'Zukan icons has been upgraded to v.{v}.\n\n'
-                'You may have to restart ST if all icons do not load correct in '
-                'current theme.'.format(v=VERSION)
+                'Zukan icons has been upgraded to v{v}.\n\n'
+                'You may have to restart ST, if all icons do not load correct in '
+                'current theme.'.format(v=version)
             )
-        if ZUKAN_RESTART_MESSAGE is False:
+        if zukan_restart_message is False:
             dialog_message = None
 
         t = threading.Thread(target=InstallEvent.install_upgrade)
@@ -94,40 +101,21 @@ class InstallEvent:
         # 'refresh_folder_list' do not help force reload. But deleting or duplicating a
         # folder with at least 5 files, it will realod file icons.
         # If change themes, the icons is working with no problem.
+        version = load_settings(ZUKAN_SETTINGS, 'version')
+        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
-        # ZukanTheme.create_icons_themes()
-        # InstallEvent.install_syntaxes()
+        if zukan_restart_message is True:
+            dialog_message = (
+                'Zukan icons v{v} has been built.\n\n'
+                'You may have to restart ST, if all icons do not load correct in '
+                'current theme.'.format(v=version)
+            )
+        if zukan_restart_message is False:
+            dialog_message = None
 
-        # threading.Thread(target=ZukanTheme.create_icons_themes).start()
-        # threading.Thread(target=ZukanPreference.build_icons_preferences).start()
-
-        try:
-            ZUKAN_RESTART_MESSAGE = sublime.load_settings(
-                'Zukan Icon Theme.sublime-settings'
-            ).get('zukan_restart_message')
-
-            if ZUKAN_RESTART_MESSAGE is True:
-                dialog_message = (
-                    'Zukan icons has been built.\n\n'
-                    'You may have to restart ST if all icons do not load correct in '
-                    'current theme.'
-                )
-            if ZUKAN_RESTART_MESSAGE is False:
-                dialog_message = None
-
-            t = threading.Thread(target=InstallEvent.install_batch)
-            t.start()
-            ThreadProgress(t, 'Building zukan files', 'Build done', dialog_message)
-        finally:
-            # Testing if order helps prompt show icons. Building themes last.
-            # Check 'auto_install_theme' avoid duplicate create themes when True.
-            # Because deleting theme already triggers event to create themes.
-            AUTO_INSTALL_THEME = sublime.load_settings(
-                'Zukan Icon Theme.sublime-settings'
-            ).get('auto_install_theme')
-
-            if AUTO_INSTALL_THEME is False:
-                ZukanTheme.create_icons_themes()
+        t = threading.Thread(target=InstallEvent.install_batch)
+        t.start()
+        ThreadProgress(t, 'Building zukan files', 'Build done', dialog_message)
 
     def new_install_pkg_control():
         """

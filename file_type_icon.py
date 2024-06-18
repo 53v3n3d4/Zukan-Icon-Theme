@@ -37,7 +37,7 @@ from .src.zukan_icon_theme.utils.file_extensions import (  # noqa: E402
     SUBLIME_THEME_EXTENSION,
     TMPREFERENCES_EXTENSION,
 )
-from .src.zukan_icon_theme.utils.zukan_dir_paths import (  # noqa: E402
+from .src.zukan_icon_theme.utils.zukan_paths import (  # noqa: E402
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
@@ -51,19 +51,26 @@ logger = logging.getLogger(__name__)
 
 
 def plugin_loaded():
-    # New install from Package Control.
-    # If installed using sublime-package, rebuild generate error the same as
-    # on load. Even after restart and all icons working fine.
-    # Installing via clone, this does not happen. Only diff is move_folders,
-    # they use same func.
-    # If change for other themes, the icons are showing with no issues.
-    if not os.path.exists(ZUKAN_PKG_ICONS_PATH) and not os.path.exists(
-        ZUKAN_PKG_ICONS_SYNTAXES_PATH
+    # Check user theme, if has or not icon theme created. Then delete or create
+    # files if needed.
+    if os.path.exists(ZUKAN_PKG_ICONS_PATH) and (
+        any(
+            preference.endswith(TMPREFERENCES_EXTENSION)
+            for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+        )
+        or any(
+            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
+            for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+        )
+        or any(
+            theme.endswith(SUBLIME_THEME_EXTENSION)
+            for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
+        )
     ):
-        InstallEvent.new_install_pkg_control()
+        SettingsEvent.get_user_theme()
 
     # New install from repo clone. No icon themes, preferences or syntaxes.
-    if (
+    if os.path.exists(ZUKAN_PKG_ICONS_PATH) and (
         not any(
             preference.endswith(TMPREFERENCES_EXTENSION)
             for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
@@ -79,9 +86,13 @@ def plugin_loaded():
     ):
         InstallEvent.new_install_manually()
 
-    # Check user theme, if has or not icon theme created. Then delete or create
-    # files if needed.
-    SettingsEvent.get_user_theme()
+    # New install from Package Control, a sublime-package file.
+    if (
+        not os.path.exists(ZUKAN_PKG_ICONS_PATH)
+        and not os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+        and not os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+    ):
+        InstallEvent.new_install_pkg_control()
 
     # Package auto upgraded setting.
     SettingsEvent.upgrade_zukan_files()
@@ -91,6 +102,9 @@ def plugin_loaded():
 
     # Check if zukan preferences changed.
     SettingsEvent.zukan_preferences_changed()
+
+    # Print to console current Zukan settings if 'log_level' DEBUG
+    SettingsEvent.get_user_zukan_preferences()
 
 
 def plugin_unloaded():

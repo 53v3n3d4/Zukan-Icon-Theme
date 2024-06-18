@@ -8,14 +8,13 @@ from ..events.settings import SettingsEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
-from ..lib.move_folders import MoveFolder
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
 )
-from ..utils.zukan_dir_paths import (
+from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
@@ -335,12 +334,10 @@ class InstallTheme(sublime_plugin.TextCommand):
         if ZUKAN_RESTART_MESSAGE is True:
             dialog_message = (
                 'You may have to restart ST, if all icons do not load in '
-                'selected theme.'
+                'current theme.'
             )
-        if ZUKAN_RESTART_MESSAGE is False:
-            dialog_message = None
+            sublime.message_dialog(dialog_message)
 
-        sublime.message_dialog(dialog_message)
         ZukanTheme.create_icon_theme(theme_name)
         # Check if selected theme was installed
         SettingsEvent.get_user_theme()
@@ -393,10 +390,8 @@ class InstallThemes(sublime_plugin.ApplicationCommand):
                 'You may have to restart ST, if all icons do not load in current '
                 'theme.'
             )
-        if ZUKAN_RESTART_MESSAGE is False:
-            dialog_message = None
+            sublime.message_dialog(dialog_message)
 
-        sublime.message_dialog(dialog_message)
         ZukanTheme.create_icons_themes()
         # Check if selected theme was installed
         SettingsEvent.get_user_theme()
@@ -416,7 +411,6 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
             ZukanPreference.delete_icons_preferences()
             ZukanTheme.delete_icons_themes()
             ZukanSyntax.delete_icons_syntaxes()
-            MoveFolder.move_folders()
         finally:
             InstallEvent.new_install_manually()
 

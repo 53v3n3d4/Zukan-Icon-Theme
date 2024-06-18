@@ -28,16 +28,21 @@
     // - ST function 'add_on_change' is triggered by 'Preferences'
     // - ST start
     //
-    // If true, commands like 'Zukan Icon Theme: Delete Theme' will
-    // have no effect. Since themes will be created after deleted.
-    //
-    // Another command that will have no effect is 'Zukan Icon Theme:
-    // Delete Syntaxes'. When deleting all syntaxes, ST seems to 
-    // activate 'add_on_change' on 'Preferences'. And will be followed
-    // by syntaxes and themes installs.
+    // If true, commands below will have no effect since themes will
+    // be created after deleted:
+    // - 'Zukan Icon Theme: Delete Theme'
+    // - 'Zukan Icon Theme: Delete Themes'
+    // - 'Zukan Icon Theme: Delete Syntaxes', when deleting all syntaxes,
+    // ST seems to activate 'add_on_change' on 'Preferences'. And will
+    // be followed by syntaxes and themes installs.
+    // - 'Zukan Icon Theme: Install Theme'
+    // - 'Zukan Icon Theme: Install Themes'
     //
     // Other commands continue to work, for example delete and create
-    // preferences. And, delete a single syntax.
+    // preferences.
+    //
+    // Command 'Zukan Icon Theme: Delete Syntaxes' works, but since
+    // ST activate 'add_on_change', will be followed by themes install.
     //
     // Default is false.
     "auto_install_theme": false,
@@ -55,5 +60,7 @@
     // - WARNING
     // - ERROR
     // - CRITICAL
+    //
+    // A ST restart is needed when change value.
     "log_level": "INFO"
 }

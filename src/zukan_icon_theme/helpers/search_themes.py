@@ -2,7 +2,7 @@ import logging
 import re
 import sublime
 
-from ..utils.zukan_dir_paths import (
+from ..utils.zukan_paths import (
     PKG_ZUKAN_ICON_THEME_FOLDER,
 )
 
@@ -44,7 +44,7 @@ def search_resources_sublime_themes() -> list:
 
 
 def find_attributes(
-    theme: str, theme_content: dict, list_theme_has_attributes: list
+    theme: str, theme_content: dict, theme_has_attributes: list
 ) -> list:
     """
     Search in sublime-theme files if they use icon_file_type. And, if
@@ -60,7 +60,8 @@ def find_attributes(
     Paramenters:
     theme (str) -- path theme name.
     theme_content (dict) -- parsed json file, sublime-theme.
-    list_theme_has_attributes (list) -- list of path theme that has attributes.
+    theme_has_attributes (list) -- list if theme and its hidden themes have
+    attributes hover and selected.
     """
     if 'rules' in theme_content:
         icon_file_type_list = [
@@ -79,12 +80,12 @@ def find_attributes(
                 if p['class'] == 'tree_row' and all(
                     a in p['attributes'] for a in ['hover', 'selected']
                 ):
-                    # print(theme)
-                    list_theme_has_attributes.append(theme)
+                    logger.debug('%s has attributes', theme)
+                    theme_has_attributes.append(True)
 
 
 def find_attributes_hidden_file(
-    theme: str, theme_content: dict, list_theme_has_attributes: list
+    theme: str, theme_content: dict, theme_has_attributes: list
 ) -> list:
     """
     Recursively search for attributes, in hidden-theme files.
@@ -92,25 +93,26 @@ def find_attributes_hidden_file(
     Paramenters:
     theme (str) -- path theme name.
     theme_content (dict) -- parsed json file, hidden-theme.
-    list_theme_has_attributes (list) -- list of path theme that has attributes.
+    theme_has_attributes (list) -- list if theme and its hidden themes have
+    attributes hover and selected.
     """
     hidden_theme_name = sublime.find_resources(theme_content['extends'])
     # Exclude Zukan created themes, important for Rebuild Files command.
     hidden_theme_name = [
         h for h in hidden_theme_name if not h.startswith(PKG_ZUKAN_ICON_THEME_FOLDER)
     ]
-    logger.debug('list theme opa, hidden_theme_name list %s', hidden_theme_name)
     for t in hidden_theme_name:
         hidden_theme_content = sublime.decode_value(sublime.load_resource(t))
-        # print('extends: ' + t)
-        find_attributes(theme, hidden_theme_content, list_theme_has_attributes)
+        logger.debug('extends %s', t)
+        find_attributes(theme, hidden_theme_content, theme_has_attributes)
+        logger.debug('%s theme_has_attributes is %s', t, theme_has_attributes)
         if 'extends' in hidden_theme_content:
             find_attributes_hidden_file(
-                theme, hidden_theme_content, list_theme_has_attributes
+                theme, hidden_theme_content, theme_has_attributes
             )
 
 
-def list_theme_with_opacity() -> list:
+def theme_with_opacity(theme_name: str) -> bool:
     """
     Create a themes list that use icon_file_type, with attributes 'hover' and
     'selected'.
@@ -122,16 +124,19 @@ def list_theme_with_opacity() -> list:
         "layer0.opacity": 1.0
     }
 
+    Parameters:
+    theme_name (str) -- theme name.
+
     Returns:
-    list_theme_has_attributes (list) -- list of installed theme with attributes hover
-    and selected.
+    (bool) -- True or False.
     """
-    all_themes = search_resources_sublime_themes()
-    list_theme_has_attributes = []
-    for theme in all_themes:
-        theme_content = sublime.decode_value(sublime.load_resource(theme))
-        find_attributes(theme, theme_content, list_theme_has_attributes)
-        if 'extends' in theme_content:
-            find_attributes_hidden_file(theme, theme_content, list_theme_has_attributes)
-    # print(list_theme_has_attributes)
-    return list_theme_has_attributes
+    theme_has_attributes = []
+    theme_content = sublime.decode_value(sublime.load_resource(theme_name))
+    find_attributes(theme_name, theme_content, theme_has_attributes)
+    if 'extends' in theme_content:
+        find_attributes_hidden_file(theme_name, theme_content, theme_has_attributes)
+
+    if True in theme_has_attributes:
+        return True
+    else:
+        return False

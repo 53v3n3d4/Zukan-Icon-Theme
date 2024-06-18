@@ -4,7 +4,7 @@ import os
 import shutil
 
 from ..helpers.read_extract_zip import extract_folder
-from ..utils.zukan_dir_paths import (
+from ..utils.zukan_paths import (
     ZUKAN_INSTALLED_PKG_PATH,
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,

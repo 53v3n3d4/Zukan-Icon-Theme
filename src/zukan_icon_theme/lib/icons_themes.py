@@ -5,8 +5,8 @@ import os
 
 from ..helpers.read_write_data import dump_json_data
 from ..helpers.search_themes import (
-    list_theme_with_opacity,
     search_resources_sublime_themes,
+    theme_with_opacity,
 )
 from ..utils.file_extensions import (
     SUBLIME_THEME_EXTENSION,
@@ -15,7 +15,7 @@ from ..utils.theme_templates import (
     TEMPLATE_JSON,
     TEMPLATE_JSON_WITH_OPACITY,
 )
-from ..utils.zukan_dir_paths import (
+from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PATH,
 )
 
@@ -39,19 +39,15 @@ class ZukanTheme:
         """
         try:
             list_all_themes = search_resources_sublime_themes()
-            list_themes_has_opacity = list_theme_with_opacity()
-            list_themes_no_opacity = list(
-                set(list_all_themes).difference(list_themes_has_opacity)
-            )
             # Check if installed theme file exist.
             if any(theme_name in t for t in list_all_themes):
                 # print(theme_name)
                 theme_filepath = os.path.join(
                     ZUKAN_PKG_ICONS_PATH, os.path.basename(theme_name)
                 )
-                if theme_name in list_themes_has_opacity:
+                if theme_with_opacity(theme_name) is True:
                     file_content = TEMPLATE_JSON
-                if theme_name in list_themes_no_opacity:
+                if theme_with_opacity(theme_name) is False:
                     file_content = TEMPLATE_JSON_WITH_OPACITY
                 dump_json_data(file_content, theme_filepath)
                 logger.info('creating icon theme %s', os.path.basename(theme_filepath))
