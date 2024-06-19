@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: NuGet
+preferences:
+  scope: binary.archive.nuget, text.xml.nuget
+  settings:
+    icon: nuget
+syntax:
+  - name: Binary (NuGet)
+    scope: binary.archive.nuget
+    hidden: true
+    file_extensions:
+      - nupkg
+    contexts:
+      main: []
+  - name: XML (NuGet)
+    scope: text.xml.nuget
+    hidden: true
+    file_extensions:
+      - nuget.config
+      - NuGet.Config
+      - nuspec
+      - snupkg
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true
