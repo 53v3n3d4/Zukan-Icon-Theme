@@ -1,24 +1,4 @@
-## Repository and files/folders renamed
-
-https://docs.github.com/en/repositories/creating-and-managing-repositories/renaming-a-repository
-```
-$ git remote set-url origin https://github.com/53v3n3d4/Zukan-Icon-Theme.git
-
-
-```
-
-Files and folders that has been renamed, or is going to be, in version v0.2.0.
-| previous | new |
-|-----------|------|
-| file_type_(name).tmPreferences | (name).tmPreferences  |
-| file_type_(name).svg | (name).svg  |
-| file_type_(name).png | (name).png  |
-| /aliases | /icons_syntaxes |
-| /preferences | /icons_preferences |
-
 ## Zukan Icon Theme
-
-This is a slow work in progress (WIP).  
 
 Icon theme for Sublime Text editor.  
 
@@ -63,9 +43,11 @@ To uninstall manually, go to your Sublime Text folder.
 
 ## Upgrade
 
-ST auto upgrade packages plugins. So this package will get icons PNGs and data files auto upgraded. Icons preferences and syntaxes are build based on user syntaxes and themes installed.  
+Package Control, by default, auto upgrade packages plugins. So this package will get icons PNGs and data files auto upgraded. Icons preferences and syntaxes are build based on user syntaxes and themes installed.  
 
-We are auto upgrading icons preferences and syntaxes by default. You can disable it, go to menu `Sublime Text > Settings > Package Settings > Zukan Icon Theme > Settings` and change `rebuild_on_upgrade` to `false`.  
+We are auto upgrading icons preferences and syntaxes by default.  
+
+You can disable it, go to menu `Sublime Text > Settings > Package Settings > Zukan Icon Theme > Settings` and change `rebuild_on_upgrade` to `false`.  
 
 ## Icons that works depending on folder position
 

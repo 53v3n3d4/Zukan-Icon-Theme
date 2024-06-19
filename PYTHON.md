@@ -64,6 +64,8 @@ $ cat .python-version
 
 ## Tests
 
+### Build tests
+
 ```sh
 # Environment activated
 $ pytest
@@ -82,6 +84,19 @@ To disable coverage (pytest-cov)
 # Pass other arguments
 # See https://docs.pytest.org/en/8.0.x/reference/customize.html
 addopts = -ra -q
+```
+
+### Plugin tests
+
+Using ST package `UnitTesting`.  
+
+Go to `Tools > Command Palette...` select `UnitTesting: Test Package` type `Zukan Icon Theme`.  
+
+```
+# .coveragerc
+; Comment [paths] to coverage plugin
+; [paths]
+; source = src
 ```
 
 ## Build
