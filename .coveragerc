@@ -1,5 +1,6 @@
-[paths]
-source = src
+; Comment [paths] to coverage plugin
+; [paths]
+; source = src
 
 [run]
 branch = true

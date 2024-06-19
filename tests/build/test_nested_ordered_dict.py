@@ -29,6 +29,4 @@ class TestNestedOrderedDict:
         assert isinstance(TEST_SUBLIME_SYNTAX_DICT, dict)
         assert isinstance(TEST_PICKLE_ORDERED_DICT, dict)
         assert isinstance('milk way', str)
-        assert isinstance('milk way', str)
-        assert isinstance(7, int)
         assert isinstance(7, int)
