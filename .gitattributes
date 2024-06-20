@@ -6,3 +6,9 @@ src/build/ export-ignore
 src/data/ export-ignore
 src/icons/ export-ignore
 tests/ export-ignore
+
+# Ignored files that will not be add on releases.
+.coveragerc
+pytest.ini
+ruff.toml
+unittesting.json
