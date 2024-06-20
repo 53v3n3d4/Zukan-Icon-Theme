@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: AppVeyor
+preferences:
+  scope: source.yaml.appveyor
+  settings:
+    icon: appveyor
+syntax:
+  - name: YAML (AppVeyor)
+    scope: source.yaml.appveyor
+    hidden: true
+    file_extensions:
+      - .appveyor.yml
+      - appveyor.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

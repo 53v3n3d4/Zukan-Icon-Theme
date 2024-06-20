@@ -1,0 +1,32 @@
+%YAML 1.2
+---
+name: esbuild
+preferences:
+  scope: source.js.esbuild, source.ts.esbuild
+  settings:
+    icon: esbuild
+syntax:
+  - name: JavaScript (esbuild)
+    scope: source.js.esbuild
+    hidden: true
+    file_extensions:
+      - esbuild.js
+      - esbuild.cjs
+      - esbuild.mjs
+      - esbuild.config.js
+      - esbuild.config.cjs
+      - esbuild.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (esbuild)
+    scope: source.ts.esbuild
+    hidden: true
+    file_extensions:
+      - esbuild.ts
+      - esbuild.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true
