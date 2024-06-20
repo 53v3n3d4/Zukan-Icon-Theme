@@ -1,15 +1,15 @@
-; Comment [paths] to coverage plugin
-; [paths]
-; source = src
-
 [run]
 branch = true
 parallel = true
 ;relative_files = true
 
+; Comment [paths] to coverage plugin
+; [paths]
+; source = src
+
 [report]
-show_missing = true
-precision = 2
 omit =
     **/__main__.py
     **/__init__.py
+precision = 2
+show_missing = true

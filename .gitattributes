@@ -1,14 +1,14 @@
 # Ignored directories that will not be add on releases.
-assets/ export-ignore
-docs/ export-ignore
-examples/ export-ignore
-src/build/ export-ignore
-src/data/ export-ignore
-src/icons/ export-ignore
-tests/ export-ignore
+assets/       export-ignore
+docs/         export-ignore
+examples/     export-ignore
+src/build/    export-ignore
+src/data/     export-ignore
+src/icons/    export-ignore
+tests/        export-ignore
 
 # Ignored files that will not be add on releases.
-.coveragerc
-pytest.ini
-ruff.toml
-unittesting.json
+.coveragerc         export-ignore
+pytest.ini          export-ignore
+ruff.toml           export-ignore
+unittesting.json    export-ignore
