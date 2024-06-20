@@ -15,8 +15,10 @@ logger = logging.getLogger(__name__)
 #     )
 
 
-def extract_folder(name: str, dir_destiny: str):
-    with ZipFile(ZUKAN_INSTALLED_PKG_PATH, 'r') as zf:
+def extract_folder(
+    name: str, dir_destiny: str, zip_file_path: str = ZUKAN_INSTALLED_PKG_PATH
+):
+    with ZipFile(zip_file_path, 'r') as zf:
         # if dir_exist(zf, name):
         if any(
             file_in_zip.startswith('{n}'.format(n=name.rstrip('/')))

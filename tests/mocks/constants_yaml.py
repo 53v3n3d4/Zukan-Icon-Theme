@@ -34,6 +34,30 @@ contexts:
       apply_prototype: true
 """
 
+TEST_YAML_CONTENT_EDIT_CONTEXTS_MAIN_WITH_SCOPES = """%YAML 1.2
+---
+name: JSON (Lerna)
+scope: source.json.lerna
+hidden: true
+file_extensions:
+- lerna.json
+contexts:
+  main:
+  - include: scope:source.json#prototype
+  - include: scope:source.json
+"""
+
+TEST_YAML_CONTENT_EDIT_CONTEXTS_MAIN_WITHOUT_SCOPES = """%YAML 1.2
+---
+name: JSON (Lerna)
+scope: source.json.lerna
+hidden: true
+file_extensions:
+- lerna.json
+contexts:
+  main: []
+"""
+
 TEST_YAML_DICT = {
     'name': 'Binary (Affinity Designer)',
     'scope': 'binary.afdesign',
@@ -84,3 +108,30 @@ TEST_YAML_EXPECTED = {
 TEST_YAML_FILE = 'tests/foo/bar.yaml'
 
 TEST_YAML_ORDERED_DICT = OrderedDict([('a', 1), ('b', 2), ('c', 3)])
+
+TEST_YAML_ORDERED_DICT_EDIT_CONTEXTS_MAIN = OrderedDict(
+    [
+        ('name', 'JSON (Lerna)'),
+        ('scope', 'source.json.lerna'),
+        ('hidden', True),
+        ('file_extensions', ['lerna.json']),
+        (
+            'contexts',
+            OrderedDict(
+                [
+                    (
+                        'main',
+                        [
+                            OrderedDict(
+                                [
+                                    ('include', 'scope:source.json'),
+                                    ('apply_prototype', True),
+                                ]
+                            )
+                        ],
+                    )
+                ]
+            ),
+        ),
+    ]
+)

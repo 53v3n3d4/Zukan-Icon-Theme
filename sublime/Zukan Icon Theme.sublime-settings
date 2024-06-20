@@ -24,25 +24,28 @@
     // If true, will auto rebuild icons syntaxes and preferences.
     "rebuild_on_upgrade": true,
 
-    // This option will auto install themes in the following cases:
+    // This option will auto install themes in the following
+    // cases:
     // - ST function 'add_on_change' is triggered by 'Preferences'
     // - ST start
     //
-    // If true, commands below will have no effect since themes will
-    // be created after deleted:
+    // If true, commands below will have no effect since themes
+    // will be created after deleted:
     // - 'Zukan Icon Theme: Delete Theme'
     // - 'Zukan Icon Theme: Delete Themes'
-    // - 'Zukan Icon Theme: Delete Syntaxes', when deleting all syntaxes,
-    // ST seems to activate 'add_on_change' on 'Preferences'. And will
-    // be followed by syntaxes and themes installs.
+    // - 'Zukan Icon Theme: Delete Syntaxes', when deleting all
+    // syntaxes, ST seems to activate 'add_on_change' on 
+    // 'Preferences'. And will be followed by syntaxes and themes
+    // installs.
     // - 'Zukan Icon Theme: Install Theme'
     // - 'Zukan Icon Theme: Install Themes'
     //
-    // Other commands continue to work, for example delete and create
-    // preferences.
+    // Other commands continue to work, for example delete and
+    // create preferences.
     //
-    // Command 'Zukan Icon Theme: Delete Syntaxes' works, but since
-    // ST activate 'add_on_change', will be followed by themes install.
+    // Command 'Zukan Icon Theme: Delete Syntaxes' works, but
+    // since ST activate 'add_on_change', will be followed by
+    // themes install.
     //
     // Default is false.
     "auto_install_theme": false,

@@ -1,5 +1,4 @@
 import importlib
-import plistlib
 import os
 import sublime
 

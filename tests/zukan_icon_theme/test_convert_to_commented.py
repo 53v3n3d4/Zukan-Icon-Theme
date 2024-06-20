@@ -1,5 +1,4 @@
 import importlib
-import sublime
 
 from unittest import TestCase
 

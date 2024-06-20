@@ -11,10 +11,6 @@ PKG_ZUKAN_ICON_THEME_FOLDER = os.path.join('Packages', PACKAGE_NAME)
 
 # Zukan dir paths
 
-ZUKAN_INSTALLED_PKG_PATH = os.path.join(
-    sublime.installed_packages_path(), PACKAGE_NAME + SUBLIME_PACKAGE_EXTENSION
-)
-
 ZUKAN_PKG_ICONS_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'icons')
 
 ZUKAN_PKG_ICONS_PREFERENCES_PATH = os.path.join(
@@ -32,6 +28,10 @@ ZUKAN_PKG_SRC_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'src')
 ZUKAN_PKG_SUBLIME_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'sublime')
 
 # Zukan file paths
+
+ZUKAN_INSTALLED_PKG_PATH = os.path.join(
+    sublime.installed_packages_path(), PACKAGE_NAME + SUBLIME_PACKAGE_EXTENSION
+)
 
 ZUKAN_PREFERENCES_DATA_FILE = os.path.join(
     sublime.packages_path(),

@@ -1,6 +1,5 @@
 import _pickle as pickle
 import importlib
-import plistlib
 import os
 import sublime
 
@@ -129,6 +128,46 @@ class TestLoadPickleData(TestCase):
             read_write_data.read_pickle_data('tests/pickle.pkl')
 
 
+class TestEditContextMain(TestCase):
+    def test_edit_contexts_main_with_scope(self):
+        test_file_path = os.path.join(
+            sublime.packages_path(),
+            'Zukan-Icon-Theme',
+            'tests',
+            'mocks',
+            'yaml_edit_contexts_main.yaml',
+        )
+        read_write_data.dump_yaml_data(
+            constants_yaml.TEST_YAML_ORDERED_DICT_EDIT_CONTEXTS_MAIN, test_file_path
+        )
+        read_write_data.edit_contexts_main(test_file_path, 'source.json')
+        with open(test_file_path, 'r+') as f:
+            result = f.read()
+        self.assertEqual(
+            constants_yaml.TEST_YAML_CONTENT_EDIT_CONTEXTS_MAIN_WITH_SCOPES,
+            result,
+        )
+
+    def test_edit_contexts_main_without_scope(self):
+        test_file_path = os.path.join(
+            sublime.packages_path(),
+            'Zukan-Icon-Theme',
+            'tests',
+            'mocks',
+            'yaml_edit_contexts_main.yaml',
+        )
+        read_write_data.dump_yaml_data(
+            constants_yaml.TEST_YAML_ORDERED_DICT_EDIT_CONTEXTS_MAIN, test_file_path
+        )
+        read_write_data.edit_contexts_main(test_file_path, None)
+        with open(test_file_path, 'r+') as f:
+            result = f.read()
+        self.assertEqual(
+            constants_yaml.TEST_YAML_CONTENT_EDIT_CONTEXTS_MAIN_WITHOUT_SCOPES,
+            result,
+        )
+
+
 class TestWriteYamlData(TestCase):
     def test_file_exist(self):
         test_file_path = os.path.join(
@@ -253,8 +292,8 @@ class TestReadPickleData(TestCase):
             constants_pickle.TEST_PICKLE_AUDIO_FILE,
         )
         read_write_data.read_pickle_data(test_file_path)
-        self.assertIsInstance('data/pickle.pkl', str)
-        self.assertNotIsInstance('data/pickle.pkl', int)
-        self.assertNotIsInstance('data/pickle.pkl', list)
-        self.assertNotIsInstance('data/pickle.pkl', bool)
-        self.assertNotIsInstance('data/pickle.pkl', dict)
+        self.assertIsInstance(test_file_path, str)
+        self.assertNotIsInstance(test_file_path, int)
+        self.assertNotIsInstance(test_file_path, list)
+        self.assertNotIsInstance(test_file_path, bool)
+        self.assertNotIsInstance(test_file_path, dict)

@@ -109,3 +109,7 @@ def plugin_loaded():
 
 def plugin_unloaded():
     MoveFolder.remove_created_folder(ZUKAN_PKG_PATH)
+
+    # Clear 'add_on_change'
+    SettingsEvent.user_preferences_clear()
+    SettingsEvent.zukan_preferences_clear()

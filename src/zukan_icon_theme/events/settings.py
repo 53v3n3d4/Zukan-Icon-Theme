@@ -152,22 +152,32 @@ class SettingsEvent:
         # auto_upgraded setting
         SettingsEvent.upgrade_zukan_files()
 
+    def user_preferences_clear():
+        """
+        Clear 'add_on_change' 'Preferences.sublime-settings'.
+        """
+        user_preferences = load_settings(USER_SETTINGS)
+        user_preferences.clear_on_change('Preferences')
+
     def user_preferences_changed():
         """
         Listen to 'Preferences.sublime-settings'.
         """
-        # user_preferences = sublime.load_settings(USER_SETTINGS)
         user_preferences = load_settings(USER_SETTINGS)
-
         user_preferences.add_on_change('Preferences', SettingsEvent.get_user_theme)
+
+    def zukan_preferences_clear():
+        """
+        Clear 'add_on_change' 'Zukan Icon Theme.sublime-settings'.
+        """
+        zukan_preferences = load_settings(ZUKAN_SETTINGS)
+        zukan_preferences.clear_on_change('Zukan Icon Theme')
 
     def zukan_preferences_changed():
         """
         Listen to 'Zukan Icon Theme.sublime-settings'.
         """
-        # zukan_preferences = sublime.load_settings(ZUKAN_SETTINGS)
         zukan_preferences = load_settings(ZUKAN_SETTINGS)
-
         zukan_preferences.add_on_change(
             'Zukan Icon Theme', SettingsEvent.zukan_options_settings
         )
