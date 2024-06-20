@@ -9,6 +9,7 @@ DIR_ORIGIN = 'tests/mocks'
 TEST_DATA_DIR = [
     'test_no_icon_file.yaml',
     'pickle.pkl',
+    'constants_json.py',
     'vitest.svg',
     'constants_pickle.py',
     'Vitest.vitest.config.ts',
@@ -31,6 +32,7 @@ TEST_DATA_DIR = [
     'audio.pkl',
     'Vitest.vitest.workspace',
     'preferences.tmPreferences',
+    'json.json',
     'yaml.yaml',
     'JavaScript (Vitest).sublime-syntax',
     'constants_icons_syntaxes.py',
@@ -46,6 +48,7 @@ TEST_DATA_DIR = [
 TEST_DATA_DIR_EMPTY_YAML_FILE = [
     'test_no_icon_file.yaml',
     'pickle.pkl',
+    'constants_json.py',
     'vitest.svg',
     'constants_pickle.py',
     'Vitest.vitest.config.ts',
@@ -68,6 +71,7 @@ TEST_DATA_DIR_EMPTY_YAML_FILE = [
     'audio.pkl',
     'Vitest.vitest.workspace',
     'preferences.tmPreferences',
+    'json.json',
     'yaml.yaml',
     'constants_tmpreferences.py',
     'JavaScript (Vitest).sublime-syntax',
@@ -82,6 +86,7 @@ TEST_DATA_DIR_EMPTY_YAML_FILE = [
 TEST_DATA_DIR_EXCEPT_ZUKAN_FILE = [
     'test_no_icon_file.yaml',
     'pickle.pkl',
+    'constants_json.py',
     'vitest.svg',
     'constants_pickle.py',
     'Vitest.vitest.config.ts',
@@ -104,6 +109,7 @@ TEST_DATA_DIR_EXCEPT_ZUKAN_FILE = [
     'audio.pkl',
     'Vitest.vitest.workspace',
     'preferences.tmPreferences',
+    'json.json',
     'yaml.yaml',
     'JavaScript (Vitest).sublime-syntax',
     'constants_icons_syntaxes.py',

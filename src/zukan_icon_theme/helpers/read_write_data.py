@@ -155,32 +155,36 @@ def dump_json_data(file_data: dict, json_file: str):
         logger.error(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), json_file
         )
+        raise
     except OSError:
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), json_file
         )
+        raise
 
 
-def dump_plist_data(preferences_dict: dict, plist_file: str):
+def dump_plist_data(plist_dict: dict, plist_file: str):
     """
     Write plist file (tmPreferences).
 
     Parameters:
-    preferences_dict (dict) --  key preferences from yaml file.
+    plist_dict (dict) --  key preferences from yaml file.
     plist_file (str) -- path to directory where tmPreferences will be saved.
     """
     try:
         # Plist
         with open(plist_file, 'wb') as f:
             if PYTHON_VERSION < 3.8:
-                plistlib.writePlist(preferences_dict, f)
+                plistlib.writePlist(plist_dict, f)
             else:
-                plistlib.dump(preferences_dict, f)
+                plistlib.dump(plist_dict, f)
     except FileNotFoundError:
         logger.error(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), plist_file
         )
+        raise
     except OSError:
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), plist_file
         )
+        raise

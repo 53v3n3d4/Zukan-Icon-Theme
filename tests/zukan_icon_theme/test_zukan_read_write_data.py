@@ -7,12 +7,19 @@ import sublime
 from unittest import TestCase
 from unittest.mock import mock_open, patch
 
+constants_json = importlib.import_module('Zukan-Icon-Theme.tests.mocks.constants_json')
 constants_pickle = importlib.import_module(
     'Zukan-Icon-Theme.tests.mocks.constants_pickle'
+)
+constants_plist = importlib.import_module(
+    'Zukan-Icon-Theme.tests.mocks.constants_plist'
 )
 constants_yaml = importlib.import_module('Zukan-Icon-Theme.tests.mocks.constants_yaml')
 read_write_data = importlib.import_module(
     'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data'
+)
+theme_templates = importlib.import_module(
+    'Zukan-Icon-Theme.src.zukan_icon_theme.utils.theme_templates'
 )
 
 
@@ -56,6 +63,51 @@ class TestDumpYamlData(TestCase):
         with self.assertRaises(OSError) as e:
             read_write_data.dump_yaml_data(
                 constants_yaml.TEST_YAML_CONTENT, 'tests/yaml.yaml'
+            )
+
+
+class TestDumpJsonData(TestCase):
+    def test_write_file_filenotfounderror(self):
+        with self.assertRaises(FileNotFoundError) as e:
+            read_write_data.dump_json_data(
+                theme_templates.TEMPLATE_JSON, 'tests/mocks/not_found_json.json'
+            )
+        self.assertEqual(
+            "[Errno 2] No such file or directory: 'tests/mocks/not_found_json.json'",
+            str(e.exception),
+        )
+
+    @patch('Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data')
+    def test_read_file_oserror(self, read_pickle_data_mock):
+        read_pickle_data_mock.side_effect = OSError(
+            "[Errno 13] Permission denied: 'testspjson.json'"
+        )
+        with self.assertRaises(OSError) as e:
+            read_write_data.dump_json_data(
+                theme_templates.TEMPLATE_JSON, 'tests/json.json'
+            )
+
+
+class TestDumpPlistData(TestCase):
+    def test_write_file_filenotfounderror(self):
+        with self.assertRaises(FileNotFoundError) as e:
+            read_write_data.dump_plist_data(
+                constants_plist.TEST_PLIST_DICT_PLUGIN,
+                'tests/mocks/not_found_plist.plist',
+            )
+        self.assertEqual(
+            "[Errno 2] No such file or directory: 'tests/mocks/not_found_plist.plist'",
+            str(e.exception),
+        )
+
+    @patch('Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data')
+    def test_read_file_oserror(self, read_pickle_data_mock):
+        read_pickle_data_mock.side_effect = OSError(
+            "[Errno 13] Permission denied: 'testsplist.plist'"
+        )
+        with self.assertRaises(OSError) as e:
+            read_write_data.dump_plist_data(
+                constants_plist.TEST_PLIST_DICT_PLUGIN, 'tests/plist.plist'
             )
 
 
@@ -112,6 +164,76 @@ class TestWriteYamlData(TestCase):
         self.assertNotIsInstance(constants_yaml.TEST_YAML_EXPECTED, list)
         self.assertNotIsInstance(constants_yaml.TEST_YAML_EXPECTED, bool)
         self.assertNotIsInstance(constants_yaml.TEST_YAML_EXPECTED, str)
+
+
+class TestWriteJsonData(TestCase):
+    def test_file_exist(self):
+        test_file_path = os.path.join(
+            sublime.packages_path(),
+            'Zukan-Icon-Theme',
+            'tests',
+            'mocks',
+            constants_json.TEST_JSON_FILE,
+        )
+        read_write_data.dump_json_data(theme_templates.TEMPLATE_JSON, test_file_path)
+        self.assertTrue(os.path.exists(test_file_path))
+
+    def test_dump_params(self):
+        test_file_path = os.path.join(
+            sublime.packages_path(),
+            'Zukan-Icon-Theme',
+            'tests',
+            'mocks',
+            constants_json.TEST_JSON_FILE,
+        )
+        read_write_data.dump_json_data(theme_templates.TEMPLATE_JSON, test_file_path)
+        self.assertIsInstance(test_file_path, str)
+        self.assertNotIsInstance(test_file_path, int)
+        self.assertNotIsInstance(test_file_path, list)
+        self.assertNotIsInstance(test_file_path, bool)
+        self.assertNotIsInstance(test_file_path, dict)
+        self.assertIsInstance(theme_templates.TEMPLATE_JSON, list)
+        self.assertNotIsInstance(theme_templates.TEMPLATE_JSON, dict)
+        self.assertNotIsInstance(theme_templates.TEMPLATE_JSON, int)
+        self.assertNotIsInstance(theme_templates.TEMPLATE_JSON, bool)
+        self.assertNotIsInstance(theme_templates.TEMPLATE_JSON, str)
+
+
+class TestWritePlistData(TestCase):
+    def test_file_exist(self):
+        test_file_path = os.path.join(
+            sublime.packages_path(),
+            'Zukan-Icon-Theme',
+            'tests',
+            'mocks',
+            constants_plist.TEST_PLIST_FILE_PLUGIN,
+        )
+        read_write_data.dump_plist_data(
+            constants_plist.TEST_PLIST_DICT_PLUGIN, test_file_path
+        )
+        self.assertTrue(os.path.exists(test_file_path))
+
+    def test_dump_params(self):
+        test_file_path = os.path.join(
+            sublime.packages_path(),
+            'Zukan-Icon-Theme',
+            'tests',
+            'mocks',
+            constants_plist.TEST_PLIST_FILE_PLUGIN,
+        )
+        read_write_data.dump_plist_data(
+            constants_plist.TEST_PLIST_DICT_PLUGIN, test_file_path
+        )
+        self.assertIsInstance(test_file_path, str)
+        self.assertNotIsInstance(test_file_path, int)
+        self.assertNotIsInstance(test_file_path, list)
+        self.assertNotIsInstance(test_file_path, bool)
+        self.assertNotIsInstance(test_file_path, dict)
+        self.assertIsInstance(constants_plist.TEST_PLIST_DICT_PLUGIN, dict)
+        self.assertNotIsInstance(constants_plist.TEST_PLIST_DICT_PLUGIN, int)
+        self.assertNotIsInstance(constants_plist.TEST_PLIST_DICT_PLUGIN, list)
+        self.assertNotIsInstance(constants_plist.TEST_PLIST_DICT_PLUGIN, bool)
+        self.assertNotIsInstance(constants_plist.TEST_PLIST_DICT_PLUGIN, str)
 
 
 class TestReadPickleData(TestCase):
