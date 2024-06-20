@@ -44,10 +44,12 @@ def read_pickle_data(pickle_file: str) -> dict:
         logger.error(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), pickle_file
         )
+        raise
     except OSError:
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), pickle_file
         )
+        raise
 
 
 def dump_yaml_data(file_data: dict, yaml_file: str):
@@ -73,10 +75,12 @@ def dump_yaml_data(file_data: dict, yaml_file: str):
         logger.error(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), yaml_file
         )
+        raise
     except OSError:
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), yaml_file
         )
+        raise
 
 
 def read_yaml_data(yaml_file: str) -> dict:

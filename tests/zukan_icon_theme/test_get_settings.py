@@ -1,6 +1,7 @@
 import importlib
 import sublime
-import unittest
+
+from unittest import TestCase
 
 get_settings = importlib.import_module(
     'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.get_settings'
@@ -10,14 +11,14 @@ file_settings = importlib.import_module(
 )
 
 
-class TestLoadSettings(unittest.TestCase):
+class TestLoadSettings(TestCase):
     def test_load_settings(self):
-        x = get_settings.load_settings(file_settings.USER_SETTINGS)
+        x = get_settings.load_settings(file_settings.USER_SETTINGS, None)
         y = sublime.load_settings(file_settings.USER_SETTINGS)
         self.assertTrue(x, y)
 
     def test_load_settings_not_equal(self):
-        x = get_settings.load_settings(file_settings.USER_SETTINGS)
+        x = get_settings.load_settings(file_settings.USER_SETTINGS, None)
         y = sublime.load_settings(file_settings.ZUKAN_SETTINGS)
         self.assertNotEqual(x, y)
 

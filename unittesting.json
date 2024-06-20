@@ -1,5 +1,4 @@
 {
     "tests_dir" : "tests/zukan_icon_theme",
-    "capture_console": true,
-    "coverage": true
+    "capture_console": true
 }

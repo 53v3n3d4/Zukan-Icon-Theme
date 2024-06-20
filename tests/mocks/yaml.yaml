@@ -6,26 +6,26 @@ preferences:
   settings:
     icon: vitest
 syntax:
-  - name: JavaScript (Vitest)
-    scope: source.js.vitest
-    hidden: true
-    file_extensions:
-      - vitest.config.js
-      - vitest.config.cjs
-      - vitest.config.mjs
-      - vitest.workspace
-    contexts:
-      main:
-        - include: scope:source.js
-          apply_prototype: true
-  - name: TypeScript (Vitest)
-    scope: source.ts.vitest
-    hidden: true
-    file_extensions:
-      - vitest.config.ts
-      - vitest.config.cts
-      - vitest.config.mts
-    contexts:
-      main:
-        - include: scope:source.ts
-          apply_prototype: true
+- name: JavaScript (Vitest)
+  scope: source.js.vitest
+  hidden: true
+  file_extensions:
+  - vitest.config.js
+  - vitest.config.cjs
+  - vitest.config.mjs
+  - vitest.workspace
+  contexts:
+    main:
+    - include: scope:source.js
+      apply_prototype: true
+- name: TypeScript (Vitest)
+  scope: source.ts.vitest
+  hidden: true
+  file_extensions:
+  - vitest.config.ts
+  - vitest.config.cts
+  - vitest.config.mts
+  contexts:
+    main:
+    - include: scope:source.ts
+      apply_prototype: true

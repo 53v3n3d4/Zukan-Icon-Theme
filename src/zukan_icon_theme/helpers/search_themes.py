@@ -128,7 +128,7 @@ def theme_with_opacity(theme_name: str) -> bool:
     theme_name (str) -- theme name.
 
     Returns:
-    (bool) -- True or False.
+    (bool) -- True or False for theme or its hidden-theme(s) has attributes.
     """
     theme_has_attributes = []
     theme_content = sublime.decode_value(sublime.load_resource(theme_name))

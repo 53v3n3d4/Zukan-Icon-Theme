@@ -1,7 +1,8 @@
 import importlib
 import os
 import sublime
-import unittest
+
+from unittest import TestCase
 
 
 zukan_paths = importlib.import_module(
@@ -18,7 +19,7 @@ ZUKAN_INSTALLED_PKG_PATH = os.path.join(
 ZUKAN_PKG_PATH = os.path.join(sublime.packages_path(), 'Zukan-Icon-Theme')
 
 
-class TestZukanPaths(unittest.TestCase):
+class TestZukanPaths(TestCase):
     def test_zukan_path(self):
         self.assertEqual(
             ZUKAN_INSTALLED_PKG_PATH,

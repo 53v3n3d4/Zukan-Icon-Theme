@@ -24,10 +24,12 @@ def clean_plist_tag(filename: str):
         logger.error(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
         )
+        raise
     except OSError:
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
         )
+        raise
 
 
 def _replace_line(file_info: str) -> str:

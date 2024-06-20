@@ -99,7 +99,7 @@ class SettingsEvent:
                 setting_option = load_settings(ZUKAN_SETTINGS, s)
                 print('{s}: {v}'.format(s=s, v=setting_option))
 
-            print('==== === ==== === === ==== === ====')
+            print('------------------------------------')
 
     def upgrade_zukan_files():
         """

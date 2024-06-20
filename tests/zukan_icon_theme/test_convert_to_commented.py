@@ -1,6 +1,7 @@
 import importlib
 import sublime
-import unittest
+
+from unittest import TestCase
 
 convert_to_commented = importlib.import_module(
     'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.convert_to_commented'
@@ -29,8 +30,8 @@ params_list = [
 ]
 
 
-class TestConvertToCommented(unittest.TestCase):
-    def test_works_as_expected(self):
+class TestConvertToCommented(TestCase):
+    def test_convert_to_commented(self):
         for p1, p2 in params_list:
             with self.subTest(params_list):
                 self.assertEqual(p1, p2)
