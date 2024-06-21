@@ -11,5 +11,6 @@ syntax:
     hidden: true
     file_extensions:
       - afdesign
+      - afdesign~lock~
     contexts:
       main: []
