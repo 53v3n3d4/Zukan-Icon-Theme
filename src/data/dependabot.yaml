@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: GitHub Dependabot
+preferences:
+  scope: source.yaml.dependabot
+  settings:
+    icon: dependabot
+syntax:
+  - name: YAML (GitHub Dependabot)
+    scope: source.yaml.dependabot
+    hidden: true
+    file_extensions:
+      - dependabot.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

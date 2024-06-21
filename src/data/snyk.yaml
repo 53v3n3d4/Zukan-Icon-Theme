@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Snyk
+preferences:
+  scope: source.yaml.snyk
+  settings:
+    icon: snyk
+syntax:
+  - name: YAML (Snyk)
+    scope: source.yaml.snyk
+    hidden: true
+    file_extensions:
+      - .snyk
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

@@ -6,11 +6,11 @@ preferences:
   settings:
     icon: github
 # syntax:
-#   - name: YAML (GitHub)
-#     scope: source.yaml.pipeline.github-actions
+#   - name: YAML (Dependabot)
+#     scope: source.yaml.github
 #     hidden: true
 #     file_extensions:
-#       -
+#       - dependabot.yaml
 #     contexts:
 #       main:
 #         - include: scope:source.yaml
