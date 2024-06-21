@@ -8,18 +8,20 @@ from zipfile import ZipFile
 logger = logging.getLogger(__name__)
 
 
-# def dir_exist(z, name):
-#     return any(
-#         file_in_zip.startswith('{n}'.format(n=name.rstrip('/')))
-#         for file_in_zip in z.namelist()
-#     )
-
-
 def extract_folder(
     name: str, dir_destiny: str, zip_file_path: str = ZUKAN_INSTALLED_PKG_PATH
 ):
+    """
+    Extract folder when package installed using Package Control. File sublime-package
+    is a zip file.
+
+    Parameters:
+    name (str) -- folder name.
+    dir_destiny (str) -- path where will extract folder.
+    zip_file_path (Optional[str])  -- path to zip file, default to
+    'ZUKAN_INSTALLED_PKG_PATH'.
+    """
     with ZipFile(zip_file_path, 'r') as zf:
-        # if dir_exist(zf, name):
         if any(
             file_in_zip.startswith('{n}'.format(n=name.rstrip('/')))
             for file_in_zip in zf.namelist()

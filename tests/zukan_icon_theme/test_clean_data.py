@@ -72,7 +72,7 @@ class TestCleanPlistTag(TestCase):
         clean_plist_tag_mock.side_effect = OSError(
             "[Errno 13] Permission denied: 'tests/mock/plist.plist'"
         )
-        with self.assertRaises(OSError) as e:
+        with self.assertRaises(OSError):
             clean_data.clean_plist_tag('tests/mocks/plist.plist')
 
     # def test_write_plist_file_stdout(self):

@@ -105,10 +105,12 @@ def read_yaml_data(yaml_file: str) -> dict:
         logger.error(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), yaml_file
         )
+        raise
     except OSError:
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), yaml_file
         )
+        raise
 
 
 def edit_contexts_main(file_path: str, scope: str = None):

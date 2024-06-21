@@ -1,3 +1,5 @@
+TEST_DIR_ICONS_PREFERENCES = 'icons_preferences'
+
 TEST_TMPREFERENCES_CONTENT = """<?xml version="1.0" encoding="UTF-8"?>
 <plist version="1.0">
 <dict>

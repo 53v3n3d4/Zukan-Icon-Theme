@@ -6,7 +6,7 @@ from src.build.helpers.icons_preferences import Preference
 from src.build.helpers.print_message import (
     print_created_message,
 )
-from tests.mocks.constants_preferences import (
+from tests.mocks.constants_icons_preferences import (
     TEST_TMPREFERENCES_CREATED_MESSAGE,
     TEST_TMPREFERENCES_FILE,
 )

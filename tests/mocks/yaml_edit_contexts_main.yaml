@@ -6,4 +6,6 @@ hidden: true
 file_extensions:
 - lerna.json
 contexts:
-  main: []
+  main:
+  - include: scope:source.json
+    apply_prototype: true
