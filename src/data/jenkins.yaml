@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Jenkins
+preferences:
+  scope: source.groovy.jenkins
+  settings:
+    icon: jenkins
+syntax:
+  - name: Groovy (Jenkins)
+    scope: source.groovy.jenkins
+    hidden: true
+    file_extensions:
+    - Jenkinsfile
+    contexts:
+      main:
+        - include: scope:source.groovy
+          apply_prototype: true
+
+# Package Jenkinsfile - jenkinsfile.log

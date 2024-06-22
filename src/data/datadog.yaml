@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Datadog
+preferences:
+  scope: source.json.datadog, source.yaml.datadog
+  settings:
+    icon: datadog
+syntax:
+  - name: JSON (Datadog)
+    scope: source.json.datadog
+    hidden: true
+    file_extensions:
+      - datadog-ci.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
+  - name: YAML (Datadog)
+    scope: source.yaml.datadog
+    hidden: true
+    file_extensions:
+      - datadog.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
