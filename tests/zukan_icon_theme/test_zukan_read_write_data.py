@@ -65,9 +65,11 @@ class TestDumpYamlData(TestCase):
             str(e.exception),
         )
 
-    @patch('Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data')
-    def test_read_file_oserror(self, read_pickle_data_mock):
-        read_pickle_data_mock.side_effect = OSError(
+    @patch(
+        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.dump_yaml_data'
+    )
+    def test_read_file_oserror(self, dump_yaml_data_mock):
+        dump_yaml_data_mock.side_effect = OSError(
             "[Errno 13] Permission denied: 'testsyaml.yaml'"
         )
         with self.assertRaises(OSError):
@@ -85,7 +87,9 @@ class TestLoadYamlData(TestCase):
             str(e.exception),
         )
 
-    @patch('Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data')
+    @patch(
+        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.read_yaml_data'
+    )
     def test_read_file_oserror(self, read_yaml_data_mock):
         read_yaml_data_mock.side_effect = OSError(
             "[Errno 13] Permission denied: 'testsyaml.yaml'"
@@ -105,9 +109,11 @@ class TestDumpJsonData(TestCase):
             str(e.exception),
         )
 
-    @patch('Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data')
-    def test_read_file_oserror(self, read_pickle_data_mock):
-        read_pickle_data_mock.side_effect = OSError(
+    @patch(
+        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.dump_json_data'
+    )
+    def test_read_file_oserror(self, dump_json_data_mock):
+        dump_json_data_mock.side_effect = OSError(
             "[Errno 13] Permission denied: 'testspjson.json'"
         )
         with self.assertRaises(OSError):
@@ -128,9 +134,11 @@ class TestDumpPlistData(TestCase):
             str(e.exception),
         )
 
-    @patch('Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data')
-    def test_read_file_oserror(self, read_pickle_data_mock):
-        read_pickle_data_mock.side_effect = OSError(
+    @patch(
+        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.dump_plist_data'
+    )
+    def test_read_file_oserror(self, dump_plist_data_mock):
+        dump_plist_data_mock.side_effect = OSError(
             "[Errno 13] Permission denied: 'testsplist.plist'"
         )
         with self.assertRaises(OSError):
@@ -148,7 +156,9 @@ class TestLoadPickleData(TestCase):
             str(e.exception),
         )
 
-    @patch('Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data')
+    @patch(
+        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.read_pickle_data'
+    )
     def test_read_file_oserror(self, read_pickle_data_mock):
         read_pickle_data_mock.side_effect = OSError(
             "[Errno 13] Permission denied: 'testspickle.pkl'"

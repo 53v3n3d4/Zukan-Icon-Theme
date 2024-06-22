@@ -1,7 +1,7 @@
 import importlib
 
 from unittest import TestCase
-from unittest.mock import Mock
+from unittest.mock import Mock, patch
 
 constants_icons_themes = importlib.import_module(
     'Zukan-Icon-Theme.tests.mocks.constants_icons_themes'
@@ -30,13 +30,22 @@ class TestFilterResourcesThemes(TestCase):
 
 
 class TestSearchResourcesSublimeThemes(TestCase):
-    def test_mock_search_resources_sublime_themes(self):
-        filter_themes_list = ['a', 'b', 'c']
-        mock = Mock()
-        mock.search_themes.search_resources_sublime_themes(filter_themes_list)
-        mock.search_themes.search_resources_sublime_themes.assert_called_with(
-            filter_themes_list
+    @patch(
+        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.search_themes.search_resources_sublime_themes'
+    )
+    def test_mock_search_resources_sublime_themes(
+        self, search_resources_sublime_themes_mock
+    ):
+        search_resources_sublime_themes_mock.return_value = (
+            constants_icons_themes.TEST_FILTER_THEMES_LIST_EXPECTED
         )
+
+        self.assertEqual(
+            search_themes.search_resources_sublime_themes(),
+            constants_icons_themes.TEST_FILTER_THEMES_LIST_EXPECTED,
+        )
+        self.assertEqual(search_resources_sublime_themes_mock.call_count, 1)
+        search_resources_sublime_themes_mock.assert_called_once()
 
 
 class TestFilterThemes(TestCase):

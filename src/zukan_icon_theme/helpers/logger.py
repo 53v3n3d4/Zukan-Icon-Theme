@@ -1,6 +1,10 @@
 import logging
 import sublime
 
+from .get_settings import load_settings
+from ..utils.file_settings import (
+    ZUKAN_SETTINGS,
+)
 from bisect import bisect
 
 
@@ -32,35 +36,17 @@ class LevelFormatter(logging.Formatter):
         return formatter.format(record)
 
 
-def get_setting_log_level():
+def logging_config(log_level: str):
     """
-    Get 'log_level' setting in 'Zukan Icon Theme.sublime-settings'.
+    Config logger.
 
-    It also handle all init and coonfig logger.
+    Config below copied from python docs
+    https://docs.python.org/3/howto/logging.html#advanced-logging-tutorial
 
-    Initialize logging is faster than get 'log_level'. So it is being
-    initialize using 'set_timeout_async'.
+    Parameters:
+    log_level (str) --  log level name.
     """
 
-    log_level = sublime.load_settings('Zukan Icon Theme.sublime-settings').get(
-        'log_level'
-    )
-
-    if log_level == 'DEBUG':
-        log_level = logging.DEBUG
-    elif log_level == 'INFO':
-        log_level = logging.INFO
-    elif log_level == 'WARNING':
-        log_level = logging.WARNING
-    elif log_level == 'ERROR':
-        log_level = logging.ERROR
-    elif log_level == 'CRITICAL':
-        log_level = logging.CRITICAL
-    else:
-        log_level = logging.INFO
-
-    # Config below copied from python docs
-    # https://docs.python.org/3/howto/logging.html#advanced-logging-tutorial
     # create logger
     logger = logging.getLogger()
     logger.setLevel(log_level)
@@ -100,6 +86,33 @@ def get_setting_log_level():
     # logger.error('error message')
     # logger.critical('critical message')
 
+
+def get_setting_log_level():
+    """
+    Get 'log_level' setting in 'Zukan Icon Theme.sublime-settings'.
+
+    Initialize logging is faster than get 'log_level'. So it is being
+    initialize using 'set_timeout_async'.
+    """
+
+    log_level = load_settings(ZUKAN_SETTINGS, 'log_level')
+
+    if log_level == 'DEBUG':
+        log_level = logging.DEBUG
+    elif log_level == 'INFO':
+        log_level = logging.INFO
+    elif log_level == 'WARNING':
+        log_level = logging.WARNING
+    elif log_level == 'ERROR':
+        log_level = logging.ERROR
+    elif log_level == 'CRITICAL':
+        log_level = logging.CRITICAL
+    else:
+        log_level = logging.INFO
+
+    logging_config(log_level)
+
+    return log_level
 
 # sublime.load_settings takes more time to get log_level than logging in
 # 'file_type_icons' file to init logging.
