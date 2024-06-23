@@ -5,13 +5,13 @@ import sublime
 import threading
 
 from unittest import TestCase
-from unittest.mock import Mock, patch
+from unittest.mock import Mock
 
 constants_pickle = importlib.import_module(
-    'Zukan-Icon-Theme.tests.mocks.constants_pickle'
+    'Zukan Icon Theme.tests.mocks.constants_pickle'
 )
 thread_progress = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.thread_progress'
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.thread_progress'
 )
 
 message = 'Load yaml file'
@@ -20,9 +20,10 @@ dialog_message = None
 
 test_file_path = os.path.join(
     sublime.packages_path(),
-    'Zukan-Icon-Theme',
+    'Zukan Icon Theme',
     constants_pickle.TEST_PICKLE_AUDIO_FILE,
 )
+
 
 class TestThreadProgress(TestCase):
     def load_pickle(self, path):

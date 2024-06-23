@@ -3,15 +3,15 @@ import importlib
 from unittest import TestCase
 
 convert_to_commented = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.convert_to_commented'
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.convert_to_commented'
 )
 constants_icons_syntaxes = importlib.import_module(
-    'Zukan-Icon-Theme.tests.mocks.constants_icons_syntaxes'
+    'Zukan Icon Theme.tests.mocks.constants_icons_syntaxes'
 )
 constants_pickle = importlib.import_module(
-    'Zukan-Icon-Theme.tests.mocks.constants_pickle'
+    'Zukan Icon Theme.tests.mocks.constants_pickle'
 )
-constants_yaml = importlib.import_module('Zukan-Icon-Theme.tests.mocks.constants_yaml')
+constants_yaml = importlib.import_module('Zukan Icon Theme.tests.mocks.constants_yaml')
 
 
 params_list = [

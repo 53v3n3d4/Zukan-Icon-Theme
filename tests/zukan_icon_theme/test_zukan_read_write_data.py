@@ -6,19 +6,19 @@ import sublime
 from unittest import TestCase
 from unittest.mock import mock_open, patch
 
-constants_json = importlib.import_module('Zukan-Icon-Theme.tests.mocks.constants_json')
+constants_json = importlib.import_module('Zukan Icon Theme.tests.mocks.constants_json')
 constants_pickle = importlib.import_module(
-    'Zukan-Icon-Theme.tests.mocks.constants_pickle'
+    'Zukan Icon Theme.tests.mocks.constants_pickle'
 )
 constants_plist = importlib.import_module(
-    'Zukan-Icon-Theme.tests.mocks.constants_plist'
+    'Zukan Icon Theme.tests.mocks.constants_plist'
 )
-constants_yaml = importlib.import_module('Zukan-Icon-Theme.tests.mocks.constants_yaml')
+constants_yaml = importlib.import_module('Zukan Icon Theme.tests.mocks.constants_yaml')
 read_write_data = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data'
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data'
 )
 theme_templates = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.utils.theme_templates'
+    'Zukan Icon Theme.src.zukan_icon_theme.utils.theme_templates'
 )
 
 
@@ -31,12 +31,12 @@ class TestLoadFile(TestCase):
     def test_load_pickle(self):
         read_data = pickle.dumps(constants_pickle.TEST_PICKLE_ORDERED_DICT)
         with patch(
-            'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.open',
+            'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data',
             mock_open(read_data=read_data),
         ):
             test_file_path = os.path.join(
                 sublime.packages_path(),
-                'Zukan-Icon-Theme',
+                'Zukan Icon Theme',
                 constants_pickle.TEST_PICKLE_AUDIO_FILE,
             )
             result = TestLoadFile.load_pickle(self, test_file_path)
@@ -45,7 +45,7 @@ class TestLoadFile(TestCase):
     def test_load_yaml(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml.yaml',
@@ -66,7 +66,7 @@ class TestDumpYamlData(TestCase):
         )
 
     @patch(
-        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.dump_yaml_data'
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.dump_yaml_data'
     )
     def test_read_file_oserror(self, dump_yaml_data_mock):
         dump_yaml_data_mock.side_effect = OSError(
@@ -88,7 +88,7 @@ class TestLoadYamlData(TestCase):
         )
 
     @patch(
-        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.read_yaml_data'
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.read_yaml_data'
     )
     def test_read_file_oserror(self, read_yaml_data_mock):
         read_yaml_data_mock.side_effect = OSError(
@@ -110,7 +110,7 @@ class TestDumpJsonData(TestCase):
         )
 
     @patch(
-        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.dump_json_data'
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.dump_json_data'
     )
     def test_read_file_oserror(self, dump_json_data_mock):
         dump_json_data_mock.side_effect = OSError(
@@ -135,7 +135,7 @@ class TestDumpPlistData(TestCase):
         )
 
     @patch(
-        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.dump_plist_data'
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.dump_plist_data'
     )
     def test_read_file_oserror(self, dump_plist_data_mock):
         dump_plist_data_mock.side_effect = OSError(
@@ -157,7 +157,7 @@ class TestLoadPickleData(TestCase):
         )
 
     @patch(
-        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data.read_pickle_data'
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.read_pickle_data'
     )
     def test_read_file_oserror(self, read_pickle_data_mock):
         read_pickle_data_mock.side_effect = OSError(
@@ -171,7 +171,7 @@ class TestEditContextMain(TestCase):
     def test_edit_contexts_main_with_scope(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml_edit_contexts_main.yaml',
@@ -190,7 +190,7 @@ class TestEditContextMain(TestCase):
     def test_edit_contexts_main_without_scope(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml_edit_contexts_main.yaml',
@@ -211,7 +211,7 @@ class TestWriteYamlData(TestCase):
     def test_file_exist(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml.yaml',
@@ -224,7 +224,7 @@ class TestWriteYamlData(TestCase):
     def test_dump_params(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml.yaml',
@@ -248,7 +248,7 @@ class TestReadYamlData(TestCase):
     def test_file_exist(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml.yaml',
@@ -259,7 +259,7 @@ class TestReadYamlData(TestCase):
     def test_read_params(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml.yaml',
@@ -276,7 +276,7 @@ class TestEditYamlDataContextsMain(TestCase):
     def test_file_exist(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml_edit_contexts_main.yaml',
@@ -289,7 +289,7 @@ class TestEditYamlDataContextsMain(TestCase):
     def test_edit_yaml_params(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'yaml_edit_contexts_main.yaml',
@@ -323,7 +323,7 @@ class TestWriteJsonData(TestCase):
     def test_file_exist(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             constants_json.TEST_JSON_FILE,
@@ -334,7 +334,7 @@ class TestWriteJsonData(TestCase):
     def test_dump_params(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             constants_json.TEST_JSON_FILE,
@@ -356,7 +356,7 @@ class TestWritePlistData(TestCase):
     def test_file_exist(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             constants_plist.TEST_PLIST_FILE_PLUGIN,
@@ -369,7 +369,7 @@ class TestWritePlistData(TestCase):
     def test_dump_params(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             constants_plist.TEST_PLIST_FILE_PLUGIN,
@@ -393,7 +393,7 @@ class TestReadPickleData(TestCase):
     def test_file_exist(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             constants_pickle.TEST_PICKLE_AUDIO_FILE,
         )
         read_write_data.read_pickle_data(test_file_path)
@@ -402,7 +402,7 @@ class TestReadPickleData(TestCase):
     def test_read_pickle_params(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             constants_pickle.TEST_PICKLE_AUDIO_FILE,
         )
         read_write_data.read_pickle_data(test_file_path)

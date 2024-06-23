@@ -111,15 +111,16 @@ class TestYamlData:
         out, err = capfd.readouterr()
         assert out == '\x1b[35m[!] plist.plist:\x1b[0m file extension is not yaml.\n'
 
-    @pytest.fixture(autouse=True)
-    def test_not_exist_yaml_file(self, capfd):
-        read_yaml_data('tests/mocks/test_yaml_file_not_exist.yaml')
+    # This only work is one computer
+    # @pytest.fixture(autouse=True)
+    # def test_not_exist_yaml_file(self, capfd):
+    #     read_yaml_data('tests/mocks/test_yaml_file_not_exist.yaml')
 
-        out, err = capfd.readouterr()
-        assert (
-            out
-            == '\x1b[91m[!] /Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan-Icon-Theme/tests/mocks/test_yaml_file_not_exist.yaml:\x1b[0m file or directory do not exist.\n'
-        )
+    #     out, err = capfd.readouterr()
+    #     assert (
+    #         out
+    #         == '\x1b[91m[!] /Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan Icon Theme/tests/mocks/test_yaml_file_not_exist.yaml:\x1b[0m file or directory do not exist.\n'
+    #     )
 
     @pytest.fixture(autouse=True)
     def test_read_file_filenotfounderror(self, caplog):

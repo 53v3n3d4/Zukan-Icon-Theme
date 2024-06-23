@@ -16,7 +16,7 @@
                 "caption": "Settings",
                 "command": "edit_settings", "args":
                 {
-                    "base_file": "${packages}/Zukan-Icon-Theme/sublime/Zukan Icon Theme.sublime-settings",
+                    "base_file": "${packages}/Zukan Icon Theme/sublime/Zukan Icon Theme.sublime-settings",
                     "default": "{\n\t$0\n}\n"
                 }
               },
@@ -29,7 +29,7 @@
                 "caption": "Changelog",
                 "command": "open_file",
                 "args": {
-                  "file": "${packages}/Zukan-Icon-Theme/CHANGELOG.md"
+                  "file": "${packages}/Zukan Icon Theme/CHANGELOG.md"
                 }
               }
             ]

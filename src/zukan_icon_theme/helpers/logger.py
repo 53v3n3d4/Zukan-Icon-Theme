@@ -114,6 +114,7 @@ def get_setting_log_level():
 
     return log_level
 
+
 # sublime.load_settings takes more time to get log_level than logging in
 # 'file_type_icons' file to init logging.
 sublime.set_timeout_async(get_setting_log_level)

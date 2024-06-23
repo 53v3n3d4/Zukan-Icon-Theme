@@ -4,10 +4,10 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 constants_icons_themes = importlib.import_module(
-    'Zukan-Icon-Theme.tests.mocks.constants_icons_themes'
+    'Zukan Icon Theme.tests.mocks.constants_icons_themes'
 )
 search_themes = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.search_themes'
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes'
 )
 
 
@@ -31,7 +31,7 @@ class TestFilterResourcesThemes(TestCase):
 
 class TestSearchResourcesSublimeThemes(TestCase):
     @patch(
-        'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.search_themes.search_resources_sublime_themes'
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.search_resources_sublime_themes'
     )
     def test_mock_search_resources_sublime_themes(
         self, search_resources_sublime_themes_mock

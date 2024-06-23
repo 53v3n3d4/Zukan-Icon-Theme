@@ -7,13 +7,13 @@ from unittest import TestCase
 from unittest.mock import Mock, patch
 
 clean_data = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.clean_data'
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.clean_data'
 )
 constants_plist = importlib.import_module(
-    'Zukan-Icon-Theme.tests.mocks.constants_plist'
+    'Zukan Icon Theme.tests.mocks.constants_plist'
 )
 read_write_data = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_write_data'
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data'
 )
 
 
@@ -37,7 +37,7 @@ class TestCleanPlistTag(TestCase):
             with self.subTest(params_list):
                 test_file_path = os.path.join(
                     sublime.packages_path(),
-                    'Zukan-Icon-Theme',
+                    'Zukan Icon Theme',
                     'tests',
                     'mocks',
                     constants_plist.TEST_PLIST_FILE_PLUGIN,
@@ -67,7 +67,7 @@ class TestCleanPlistTag(TestCase):
             "[Errno 2] No such file or directory: 'tests/bar.plist'", str(e.exception)
         )
 
-    @patch('Zukan-Icon-Theme.src.zukan_icon_theme.helpers.clean_data')
+    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.clean_data')
     def test_write_plist_file_oserror(self, clean_plist_tag_mock):
         clean_plist_tag_mock.side_effect = OSError(
             "[Errno 13] Permission denied: 'tests/mock/plist.plist'"

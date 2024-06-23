@@ -6,13 +6,13 @@ from unittest import TestCase
 from unittest.mock import Mock
 
 constants_icons_preferences = importlib.import_module(
-    'Zukan-Icon-Theme.tests.mocks.constants_icons_preferences'
+    'Zukan Icon Theme.tests.mocks.constants_icons_preferences'
 )
 read_extract_zip = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.read_extract_zip'
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_extract_zip'
 )
 file_extensions = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.utils.file_extensions'
+    'Zukan Icon Theme.src.zukan_icon_theme.utils.file_extensions'
 )
 
 
@@ -25,14 +25,14 @@ class TestReadExtractZip(TestCase):
     def test_extract_folder(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'Zukan-Icon-Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
         )
         dir_destiny = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
         )
@@ -47,13 +47,13 @@ class TestReadExtractZip(TestCase):
         with self.assertRaises(FileNotFoundError) as e:
             test_file_path = os.path.join(
                 sublime.packages_path(),
-                'Zukan-Icon-Theme',
+                'Zukan Icon Theme',
                 'tests',
                 'Zukan-Icon-Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
             )
             dir_destiny = os.path.join(
                 sublime.packages_path(),
-                'Zukan-Icon-Theme',
+                'Zukan Icon Theme',
                 'tests',
                 'mocks',
             )
@@ -61,7 +61,7 @@ class TestReadExtractZip(TestCase):
                 'icons_preferences', dir_destiny, test_file_path
             )
         self.assertEqual(
-            "[Errno 2] No such file or directory: '/Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan-Icon-Theme/tests/Zukan-Icon-Theme.sublime-package'",
+            "[Errno 2] No such file or directory: '/Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan Icon Theme/tests/Zukan-Icon-Theme.sublime-package'",
             str(e.exception),
         )
 
@@ -70,14 +70,14 @@ class TestExtractZipFolder(TestCase):
     def test_file_exist(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'Zukan-Icon-Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
         )
         dir_destiny = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
         )
@@ -91,14 +91,14 @@ class TestExtractZipFolder(TestCase):
     def test_extract_zip_params(self):
         test_file_path = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
             'Zukan-Icon-Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
         )
         dir_destiny = os.path.join(
             sublime.packages_path(),
-            'Zukan-Icon-Theme',
+            'Zukan Icon Theme',
             'tests',
             'mocks',
         )

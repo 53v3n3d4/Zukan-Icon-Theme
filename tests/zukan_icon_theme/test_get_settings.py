@@ -4,10 +4,10 @@ import sublime
 from unittest import TestCase
 
 get_settings = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.helpers.get_settings'
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.get_settings'
 )
 file_settings = importlib.import_module(
-    'Zukan-Icon-Theme.src.zukan_icon_theme.utils.file_settings'
+    'Zukan Icon Theme.src.zukan_icon_theme.utils.file_settings'
 )
 
 
