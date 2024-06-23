@@ -3,7 +3,7 @@
 > Sublime Text 4 uses python 3.8 and Sublime Text 3 uses Python 3.3  
 Link https://www.sublimetext.com/docs/porting_guide.html#python-3-3  
 
-> Build package uses python 3.8.19, probably will try upgrade to latest later.  
+> Build package uses python 3.12.3.  
 
 > Plugin follow ST python versions.  
 
@@ -21,7 +21,8 @@ Package
 ├── main.py
 ├── pyproject.toml
 ├── pytest.ini
-└── ruff.toml
+├── ruff.toml
+└── unittesting.json
 ```
 
 ## Install
@@ -30,17 +31,17 @@ Package
 
 ```sh
 # Use specific python version
-$ poetry env use path-to-python/3.8.19/bin/python
-$ poetry env use /Users/xxxxx/.pyenv/versions/3.8.19/bin/python
+$ poetry env use path-to-python/3.12.3/bin/python
+$ poetry env use /Users/xxxxx/.pyenv/versions/3.12.3/bin/python
 $ poetry env info
 Virtualenv
-Python:         3.8.19
+Python:         3.12.3
 Implementation: CPython
 
 # Check if .python-version file has correct version. Important for 'poetry install'.
 # It could be 3.3 or 3.8 because Sublime Text interpreter.
 $ cat .python-version
-3.8.19
+3.12.3
 
 # install
 $ poetry install
@@ -91,6 +92,10 @@ addopts = -ra -q
 Using ST package `UnitTesting`.  
 
 Go to `Tools > Command Palette...` select `UnitTesting: Test Package` type `Zukan Icon Theme`.  
+
+> Tests files are not bundled with releases. Need to clone repo.  
+
+> `.python-version` needs to be 3.8. There is no `subTest` in 3.3.
 
 ```
 # .coveragerc

@@ -1,3 +1,13 @@
+## Change pre v0.2.0
+
+**Rename Repo when clone 'Zukan Icon Theme'**  
+
+This is important for Main.sublime-menu works and tests.  
+
+> Mac/Linux `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git Zukan\ Icon\ Theme`
+> Windows `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git "Zukan Icon Theme"`
+
+
 ## Zukan Icon Theme
 
 Icon theme for Sublime Text editor.  
@@ -5,7 +15,7 @@ Icon theme for Sublime Text editor.
 
 ![file icon](assets/sample.svg "File icon sample")
 
-> File icons from v0.2.0
+> File icons in v0.2.0
 
 
 ## Install
@@ -16,10 +26,14 @@ To install manually,
 - Download the [latest release](https://github.com/53v3n3d4/Zukan-Icon-Theme/releases) or clone this repo.  
 - Menu `Sublime Text > Preferences > Browse packages...` to open destination folder  
 - Then unzip `zukan-icon-theme zip file` inside `Packages` folder. Or clone the repo inside `Packages`folder.  
+- Rename folder `Zukan-Icon-Theme` to `Zukan Icon Theme`. This is important for Main.sublime-menu works and tests.  
+
+> Mac/Linux `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git Zukan\ Icon\ Theme`
+> Windows `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git "Zukan Icon Theme"`
 
 > You may see a console message, regarding `ruamel-yaml` dependecy, when first install this package. ST may install it and inform that a restart is needed.  
 
-> `ruamel-yaml` is/will be used to create icons sublime-syntaxes files in `icon-syntaxes` folder.  
+> `ruamel-yaml` is used to create icons sublime-syntaxes files in `icon-syntaxes` folder.  
 
 If new install, cloning this repo, the default is to create all icons files and make them show on all themes installed.  
 
@@ -43,7 +57,7 @@ To uninstall manually, go to your Sublime Text folder.
 
 ## Upgrade
 
-Package Control, by default, auto upgrade packages plugins. So this package will get icons PNGs and data files auto upgraded. Icons preferences and syntaxes are build based on user syntaxes and themes installed.  
+Package Control, by default, auto upgrade packages plugins. So this package will get icons PNGs and data files auto upgraded. Icons preferences and syntaxes are built based on user syntaxes and themes installed.  
 
 We are auto upgrading icons preferences and syntaxes by default.  
 
