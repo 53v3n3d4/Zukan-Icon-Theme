@@ -26,3 +26,6 @@ syntax:
       main:
         - include: scope:source.json
           apply_prototype: true
+
+# Do not rename 'Zukan-Icon-Theme.sublime-package' without dashs.
+# Build syntaxes will fail.

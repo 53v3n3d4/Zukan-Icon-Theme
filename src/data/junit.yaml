@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: JUnit
+preferences:
+  scope: source.java-props.junit
+  settings:
+    icon: junit
+syntax:
+  - name: Java Properties (JUnit)
+    scope: source.java-props.junit
+    hidden: true
+    file_extensions:
+      - junit-platform.properties
+    contexts:
+      main:
+        - include: scope:source.java-props
+          apply_prototype: true
