@@ -10,11 +10,11 @@ logger_message = logging.getLogger(__name__)
 
 # https://docs.python.org/3/howto/logging.html#logging-levels
 params_list = [
-    ('CRITICAL', 50),
-    ('ERROR', 40),
-    ('WARNING', 30),
-    ('INFO', 20),
     ('DEBUG', 10),
+    ('INFO', 20),
+    ('WARNING', 30),
+    ('ERROR', 40),
+    ('CRITICAL', 50),
 ]
 
 
@@ -25,7 +25,7 @@ class TestGetSettingLogLevel(TestCase):
         mock.logger.get_setting_log_level.assert_called_once()
 
     @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.load_settings')
-    def test_mock_log_level_debug(self, log_level_mock):
+    def test_getting_log_level(self, log_level_mock):
         for p1, p2 in params_list:
             with self.subTest(params_list):
                 log_level_mock.return_value = p1

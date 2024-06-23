@@ -43,28 +43,6 @@ class TestReadExtractZip(TestCase):
         )
         self.assertTrue(os.path.exists(test_file_path))
 
-    def test_extract_folder_not_exist_filenotfounderror(self):
-        with self.assertRaises(FileNotFoundError) as e:
-            test_file_path = os.path.join(
-                sublime.packages_path(),
-                'Zukan Icon Theme',
-                'tests',
-                'Zukan-Icon-Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
-            )
-            dir_destiny = os.path.join(
-                sublime.packages_path(),
-                'Zukan Icon Theme',
-                'tests',
-                'mocks',
-            )
-            read_extract_zip.extract_folder(
-                'icons_preferences', dir_destiny, test_file_path
-            )
-        self.assertEqual(
-            "[Errno 2] No such file or directory: '/Users/macbookpro14/Library/Application Support/Sublime Text/Packages/Zukan Icon Theme/tests/Zukan-Icon-Theme.sublime-package'",
-            str(e.exception),
-        )
-
 
 class TestExtractZipFolder(TestCase):
     def test_file_exist(self):

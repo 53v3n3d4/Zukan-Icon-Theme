@@ -16,6 +16,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.hocon', 'startsWith': 'Hocon ('},
     {'scope': 'source.ini', 'startsWith': 'INI ('},
     {'scope': 'source.js', 'startsWith': 'JavaScript ('},
+    {'scope': 'source.java-props', 'startsWith': 'Java Properties ('},
     {'scope': 'source.js.php', 'startsWith': 'JavaScript ('},
     {'scope': 'source.json', 'startsWith': 'JSON ('},
     {'scope': 'source.jsx', 'startsWith': 'JSX ('},
