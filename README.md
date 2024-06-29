@@ -13,7 +13,7 @@ This is important for Main.sublime-menu works and tests.
 Icon theme for Sublime Text editor.  
 
 
-![file icon](assets/file-icons-concat-sample.svg "File icon sample")
+![file icon](assets/file-icons-concat-sample.svg "File icon sample"){:height="460px" width="552px"}
 
 > File icons in v0.2.0
 
