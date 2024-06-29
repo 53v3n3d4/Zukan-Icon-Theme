@@ -93,6 +93,26 @@ $ poetry run build clean -f src/icons/afdesign.svg
 $ poetry run build clean --all
 ```
 
+## Concat SVG
+Concat SVG file. It generates the SVG used in README and [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md).  
+
+Using argparse commands  
+```sh
+# Environment activated
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py concat --help
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py concat -a
+# Concat SVG file.
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py concat --all
+# After migrating all data files, this will data files instead of svg files.
+```
+
+Using poetry scripts  
+```sh
+$ poetry run build concat -isa -isano 30
+# Concat SVG file.
+$ poetry run build concat --all --iconsperrow 6
+```
+
 ## Generate PNGs
 Generate PNGs file from SVGs.  
 

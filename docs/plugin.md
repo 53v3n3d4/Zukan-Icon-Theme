@@ -1,3 +1,8 @@
+# Plugin
+
+If installed using Package Control, plugin create a 'Zukan Icon Theme' folder in 'Packages'.  
+
+We need this folder, to create, edit or delete, icons sublime-themes, icons tmPreferences and icons sublime-syntax files. And `Installed Packages` uses a zip file.  
 
 ## Install
 

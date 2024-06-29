@@ -1,6 +1,6 @@
 ## Change pre v0.2.0
 
-**Rename Repo when clone 'Zukan Icon Theme'**  
+**Rename Repo to 'Zukan Icon Theme'**  
 
 This is important for Main.sublime-menu works and tests.  
 
@@ -8,15 +8,16 @@ This is important for Main.sublime-menu works and tests.
 > Windows `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git "Zukan Icon Theme"`
 
 
-## Zukan Icon Theme
+## Install
 
 Icon theme for Sublime Text editor.  
 
 
-![file icon](assets/sample.svg "File icon sample")
+![file icon](assets/file-icons-concat-sample.svg "File icon sample")
 
 > File icons in v0.2.0
 
+> All file icons, see [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md)
 
 ## Install
 
@@ -26,7 +27,7 @@ To install manually,
 - Download the [latest release](https://github.com/53v3n3d4/Zukan-Icon-Theme/releases) or clone this repo.  
 - Menu `Sublime Text > Preferences > Browse packages...` to open destination folder  
 - Then unzip `zukan-icon-theme zip file` inside `Packages` folder. Or clone the repo inside `Packages`folder.  
-- Rename folder `Zukan-Icon-Theme` to `Zukan Icon Theme`. This is important for Main.sublime-menu works and tests.  
+- Rename folder `Zukan-Icon-Theme` to `Zukan Icon Theme`. This is important for Main.sublime-menu and tests.  
 
 > Mac/Linux `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git Zukan\ Icon\ Theme`
 > Windows `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git "Zukan Icon Theme"`
@@ -91,6 +92,7 @@ If icons not prompt show correct, restart ST may be the solution. See [troublesh
 - `file-type-icons` is old project name  
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
+- ST3 support is limited, icons work but managing syntax is limited  
 
 ## File icon packages :alien:
 
