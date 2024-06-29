@@ -1,3 +1,3 @@
 ## Icons
 
-![file icons](../assets/file-icons-concat.svg "File icons stickers")
+<img src="assets/file-icons-concat.svg" width="552" height="4232" alt="file icons">
