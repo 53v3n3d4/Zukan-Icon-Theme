@@ -5,6 +5,7 @@ import sys
 
 from src.build.clean_svg import CleanSVG
 from src.build.helpers.color import Color
+from src.build.helpers.concat_svgs import ConcatSVG
 from src.build.helpers.create_test_icon_theme import TestIconTheme
 from src.build.helpers.icons_preferences import Preference
 from src.build.helpers.icons_syntaxes import IconSyntax
@@ -14,6 +15,8 @@ from src.build.helpers.read_write_data import read_pickle_data
 from src.build.icons import IconPNG
 from src.build.utils.build_dir_paths import (
     # ASSETS_PATH,
+    CONCAT_SVGS_FILE,
+    CONCAT_SVGS_FILE_SAMPLE,
     DATA_PATH,
     ICON_THEME_TEST_PATH,
     ICONS_PNG_PATH,
@@ -71,6 +74,64 @@ def main():
         default=UNUSED_LIST,
         required=False,
         help=f'{ Color.YELLOW }List(str) of unused tags to be removed.{ Color.END }',
+    )
+
+    # Create the parser for the "concat" sub-command
+    parser_concat = subparsers.add_parser(
+        'concat',
+        help=f'{ Color.YELLOW }Concat icons SVGs.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-a',
+        '--all',
+        action='store_true',
+        required=False,
+        help=f'{ Color.YELLOW }Concat SVG file with all icons.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-cf',
+        '--concatfile',
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to concat SVG file.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-d',
+        '--data',
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to folder data.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-i',
+        '--icon',
+        default=ICONS_SVG_PATH,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to icons SVGs folder.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-isa',
+        '--issample',
+        action='store_true',
+        required=False,
+        help=f'{ Color.YELLOW }Concat SVG file from random selection.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-isano',
+        '--issamplenumbers',
+        type=int,
+        default=30,
+        required=False,
+        help=f'{ Color.YELLOW }Boolean value. Number of icons in random sample.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-ipr',
+        '--iconsperrow',
+        type=int,
+        default=5,
+        required=False,
+        help=f'{ Color.YELLOW }Boolean value. Icons per row in concat SVG.{ Color.END }',
     )
 
     # Create the parser for the "icon-theme" sub-command
@@ -387,6 +448,36 @@ def main():
         elif args.directory and not (args.all or args.file):
             print_build_message('🛠️  Cleaning all SVGs:', args.directory)
             CleanSVG.clean_all_svgs(args.directory, args.list)
+        else:
+            _error_message()
+    # Concat
+    if parser == 'concat':
+        if args.issample:
+            print_build_message(
+                '🛠️  Concatenating sample SVGs: ', CONCAT_SVGS_FILE_SAMPLE
+            )
+            if args.concatfile is None:
+                args.concatfile = CONCAT_SVGS_FILE_SAMPLE
+            ConcatSVG.write_concat_svgs(
+                DATA_PATH,
+                args.icon,
+                args.concatfile,
+                args.issample,
+                args.issamplenumbers,
+                args.iconsperrow,
+            )
+        elif not args.issample:
+            print_build_message('🛠️  Concatenating sample SVGs: ', CONCAT_SVGS_FILE)
+            if args.concatfile is None:
+                args.concatfile = CONCAT_SVGS_FILE
+            ConcatSVG.write_concat_svgs(
+                DATA_PATH,
+                args.icon,
+                args.concatfile,
+                args.issample,
+                args.issamplenumbers,
+                args.iconsperrow,
+            )
         else:
             _error_message()
     # Icon Theme

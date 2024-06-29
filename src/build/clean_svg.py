@@ -1,14 +1,23 @@
 import errno
 import os
 import logging
+import random
 import re
+import string
 
 from collections.abc import Set
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import print_message
-# from src.build.utils.build_dir_paths import ICONS_TEST_PATH, ICONS_TEST_NOT_EXIST_PATH
+from src.build.utils.build_dir_paths import (
+    # ICONS_TEST_PATH,
+    # ICONS_TEST_NOT_EXIST_PATH,
+    ICONS_SVG_PATH,
+)
+from src.build.utils.svg_common_ids import AFDESIGNER_COMMON_IDS_NAMES
 # from src.build.utils.svg_unused_list import UNUSED_LIST
 
+# file_test = os.path.join(ICONS_SVG_PATH, 'rvm.svg')
+# file_test = os.path.join(ICONS_SVG_PATH, 'cassandra.svg')
 
 # file_test = os.path.join(ICONS_TEST_PATH, 'file_type_sql.svg')
 # file_test = os.path.join(ICONS_TEST_PATH, 'file_type_sql_npt_found.svg')
@@ -86,6 +95,10 @@ class CleanSVG:
                             color=f'{ Color.RED }',
                             color_end=f'{ Color.END }',
                         )
+                    # Clean Affinity Designer common id names.
+                    # They conflict between icons, messing gradient, clips and effects
+                    # colors when concat them together.
+                    clean_file = edit_svg_id(clean_file)
                 with open(svgfile, 'w') as f:
                     f.write(clean_file)
             else:
@@ -142,6 +155,46 @@ def _replace_line(file_info: str, line: str) -> str:
     """
     return file_info.replace(line, '')
 
+
+def edit_svg_id(clean_file):
+    """
+    Edit common ids names from Affinity Designer. They conflict each other when
+    concat SVG.
+
+    New name id needs to be unique to avoid change SVG everytime clean is done,
+    otherwise will generate unnecessary commits.
+
+    Common id names: _clip, _Effect, _Linear and _Gradient.
+
+    Affinity Designer enumerates them starting with 1 and up, one index for all.
+
+    Example: '_clip83', '_Effect84', '_Linear85', '_Linear86', '_Gradient87'
+    """
+    alphabet = string.ascii_lowercase + string.digits
+
+    for s in AFDESIGNER_COMMON_IDS_NAMES:
+        if s in clean_file:
+            # The max i found in SVG is rvm.svg, where i = 85.
+            # Looking until 99.
+            for i in range(100):
+                name_id = f'{ s }{ i }'
+                # print(name_id)
+                if name_id in clean_file:
+                    # print(name_id)
+                    s_uuid = ''.join(random.choices(alphabet, k=7))
+                    new_name_id = f'{ s }-{ s_uuid }'
+                    # print(new_name_id)
+                    # Change for id with shortuuid.
+                    # Check if, e.g., '_Linear1' is not '_Linear11'.
+                    # Regex 'name_id' followed by ')' or '"'
+                    clean_file = re.sub(
+                        rf'({ name_id })(ˆ?+["|)])', rf'{ new_name_id}\2', clean_file
+                    )
+    # print(clean_file)
+    return clean_file
+
+
+# edit_svg_id(file_test)
 
 # CleanSVG.clean_svg(file_test, UNUSED_LIST)
 # print(file_test)

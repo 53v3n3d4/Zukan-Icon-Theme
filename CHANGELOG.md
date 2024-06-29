@@ -27,6 +27,7 @@
 - Add zukan_syntaxes
 - Add logger
 - Add zukan_preferences
+- Add concat_svgs
 
 ### Plugin
 - Add icons_themes

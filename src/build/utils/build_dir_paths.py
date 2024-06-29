@@ -23,7 +23,7 @@ def filepath(url: str) -> str:
         raise ValueError('Url need to be string.')
 
 
-# Build paths
+# Dir paths
 
 ASSETS_PATH = filepath('../../../assets')
 
@@ -36,6 +36,14 @@ ICONS_SVG_PATH = filepath('../../icons')
 ICONS_SYNTAXES_PATH = filepath('../../../icons_syntaxes')
 
 ICONS_PREFERENCES_PATH = filepath('../../../icons_preferences')
+
+
+# File paths
+
+
+CONCAT_SVGS_FILE = filepath('../../../assets/file-icons-concat.svg')
+
+CONCAT_SVGS_FILE_SAMPLE = filepath('../../../assets/file-icons-concat-sample.svg')
 
 ZUKAN_PREFERENCES_DATA_FILE = filepath(
     '../../../icons_preferences/zukan_preferences_data.pkl'
