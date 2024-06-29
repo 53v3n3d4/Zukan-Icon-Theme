@@ -12,7 +12,7 @@ This is important for Main.sublime-menu works and tests.
 
 Icon theme for Sublime Text editor.  
 
-<img src="assets/file-icons-concat-sample.svg" width="460" height="552" alt="file icon">
+<img src="assets/file-icons-concat-sample.svg" width="728" height="460" alt="file icon">
 
 > File icons in v0.2.0
 
@@ -91,7 +91,7 @@ If icons not prompt show correct, restart ST may be the solution. See [troublesh
 - `file-type-icons` is old project name  
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
-- ST3 support is limited, icons work but managing syntax is limited  
+- ST3 support is not avaiable  
 
 ## File icon packages :alien:
 
