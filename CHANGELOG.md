@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.2.2] - 2024
+- Change icon: C#
+
 ## [0.2.1] - 2024-06-30
 - Fix old version in sublime-settings
 
