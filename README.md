@@ -91,7 +91,7 @@ If icons not prompt show correct, restart ST may be the solution. See [troublesh
 - `file-type-icons` is old project name  
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
-- ST3 support is not avaiable  
+- For Sublime Text 4  
 
 ## File icon packages :alien:
 
