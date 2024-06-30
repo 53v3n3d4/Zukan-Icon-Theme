@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.2.1] - 2024-06-30
+- Fix old version in sublime-settings
+
 ## [0.2.0] - 2024-06-30
 - Rename project to Zukan Icon Theme
 - Rename folder aliases -> icons_syntaxes
