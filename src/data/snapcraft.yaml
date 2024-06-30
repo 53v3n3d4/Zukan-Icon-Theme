@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Snapcraft
+preferences:
+  scope: source.yaml.snapcraft
+  settings:
+    icon: snapcraft
+syntax:
+  - name: YAML (Snapcraft)
+    scope: source.yaml.snapcraft
+    hidden: true
+    file_extensions:
+      - snapcraft.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

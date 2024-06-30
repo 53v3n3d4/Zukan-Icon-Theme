@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Rush
+preferences:
+  scope: source.json.rush
+  settings:
+    icon: rush
+syntax:
+  - name: JSON (Rush)
+    scope: source.json.rush
+    hidden: true
+    file_extensions:
+      - rush.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

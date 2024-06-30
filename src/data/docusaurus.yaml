@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Docusaurus
+preferences:
+  scope: source.js.docusaurus, source.ts.docusaurus
+  settings:
+    icon: docusaurus
+syntax:
+  - name: JavaScript (Docusaurus)
+    scope: source.js.docusaurus
+    hidden: true
+    file_extensions:
+      - docusaurus.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Docusaurus)
+    scope: source.ts.docusaurus
+    hidden: true
+    file_extensions:
+      - docusaurus.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true
