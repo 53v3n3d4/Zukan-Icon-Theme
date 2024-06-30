@@ -1,0 +1,34 @@
+%YAML 1.2
+---
+name: Cucumber
+preferences:
+  scope: source.ruby.rspec.cucumber.steps, source.yaml.cucumber, text.gherkin.feature
+  settings:
+    icon: cucumber
+syntax:
+  - name: Cucumber
+    scope: text.gherkin.feature
+    hidden: true
+    file_extensions:
+      - feature
+    contexts:
+      main: []
+  - name: Cucumber Steps
+    scope: source.ruby.rspec.cucumber.steps
+    hidden: true
+    file_extensions:
+      - steps.rb
+    contexts:
+      main: []
+  - name: YAML (Cucumber)
+    scope: source.yaml.cucumber
+    hidden: true
+    file_extensions:
+      - cucumber.yml
+      - cucumber.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Package Cucumber

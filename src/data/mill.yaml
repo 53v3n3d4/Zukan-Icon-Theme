@@ -1,0 +1,28 @@
+%YAML 1.2
+---
+name: Mill
+preferences:
+  scope: source.scala.mill, source.shell.mill
+  settings:
+    icon: mill
+syntax:
+  - name: Scala (Mill)
+    scope: source.scala.mill
+    hidden: true
+    file_extensions:
+    - build.sc
+    contexts:
+      main:
+        - include: scope:source.scala
+          apply_prototype: true
+  - name: Shell Script (Mill)
+    scope: source.shell.mill
+    hidden: true
+    file_extensions:
+      - .mill-version
+    contexts:
+      main:
+        - include: scope:source.shell
+          apply_prototype: true
+
+# ST Package

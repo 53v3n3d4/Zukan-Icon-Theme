@@ -6,13 +6,13 @@ preferences:
   settings:
     icon: behat
 syntax:
-  - name: Behat
-    scope: feature.behat
-    hidden: true
-    file_extensions:
-      - feature
-    contexts:
-      main: []
+  # - name: Behat
+  #   scope: feature.behat
+  #   hidden: true
+  #   file_extensions:
+  #     - feature
+  #   contexts:
+  #     main: []
   - name: YAML (Behat)
     scope: source.yaml.behat
     hidden: true
@@ -25,3 +25,4 @@ syntax:
           apply_prototype: true
 
 # Package Behat
+# Package Cucumber same extension feature.

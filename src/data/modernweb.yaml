@@ -1,0 +1,22 @@
+%YAML 1.2
+---
+name: Modern Web
+preferences:
+  scope: source.js.modernweb
+  settings:
+    icon: modernweb
+syntax:
+  - name: JavaScript (Modern Web)
+    scope: source.js.modernweb
+    hidden: true
+    file_extensions:
+      - web-dev-server.config.js
+      - web-dev-server.config.cjs
+      - web-dev-server.config.mjs
+      - web-test-runner.config.js
+      - web-test-runner.config.cjs
+      - web-test-runner.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
