@@ -36,10 +36,11 @@ class ThreadProgress:
     Animates an indicator in the status area while a thread runs
 
     Parameters:
-    thread -- the thread to track for activity
-    message -- the message to display next to the activity indicator
-    success_message -- the message to display once the thread is complete
-    dialog_message -- the message to display in a dialog once the thread is complete
+    thread (str) -- the thread to track for activity
+    message (str) -- the message to display next to the activity indicator
+    success_message (str) -- the message to display once the thread is complete
+    dialog_message (Optional[str]) -- the message to display in a dialog once the
+    thread is complete. Default is None.
     """
 
     def __init__(self, thread, message, success_message, dialog_message=None):

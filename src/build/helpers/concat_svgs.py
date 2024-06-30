@@ -95,7 +95,7 @@ class ConcatSVG:
             d='M100,6.494L100,93.506C100,97.09 97.164,100 93.671,100L6.329,'
             '100C2.836,100 0,97.09 0,93.506L0,6.494C0,2.91 2.836,0 6.329,0L93.671,'
             '0C97.164,0 100,2.91 100,6.494Z',
-            style='fill:rgba(235,235,235,0.4);',
+            style='fill:rgba(235,235,235,1);',
         )
 
         return sticker_rect
@@ -140,7 +140,8 @@ class ConcatSVG:
             'tspan',
             x='20',
             dy='1.6em',
-            style='font-family:"ArialMT", "Arial", sans-serif;font-size:6px;fill:rgb(155,155,155)',
+            style='font-family:"ArialMT", "Arial", sans-serif;font-size:6px;'
+            'fill:rgb(155,155,155)',
         )
         description.text = svgfile_name
 
@@ -270,8 +271,8 @@ class ConcatSVG:
         """
         Calculate max icons per file, given a max height.
 
-        GitHub seems to cut after 21 line if is by px would be 1932px. But 22
-        display part. If row height is 92px. Seems limited to 2000px.
+        GitHub Markdown viewer seems to cut after 21 line, in pixels would be 1932px.
+        The 22 line display only part of. If row height is 92px. Seems limited to 2000px.
 
         Parameters:
         row_height (int) -- row height of concat SVG file.
@@ -334,8 +335,7 @@ class ConcatSVG:
         max_range = ConcatSVG.max_icons_per_file(row_height, icons_per_row, max_height)
         logger.debug('max number of icons per list is %d', max_range)
 
-        # concat_svg_height top_margin + (lines * 92) < 2000
-        # items lines * icons per row
+        # Split list based on given height.
         for items in range(0, len(icons_list), max_range):
             chunk = icons_list[items : items + max_range]
             logger.debug('items in list: %s', chunk)

@@ -111,21 +111,6 @@ def main():
         help=f'{ Color.YELLOW }Path to icons SVGs folder.{ Color.END }',
     )
     parser_concat.add_argument(
-        '-isa',
-        '--issample',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Concat SVG file from random selection.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-isano',
-        '--issamplenumbers',
-        type=int,
-        default=30,
-        required=False,
-        help=f'{ Color.YELLOW }Boolean value. Number of icons in random sample.{ Color.END }',
-    )
-    parser_concat.add_argument(
         '-ipr',
         '--iconsperrow',
         type=int,
@@ -140,6 +125,21 @@ def main():
         default=2000,
         required=False,
         help=f'{ Color.YELLOW }Boolean value. Max height of concat SVG file.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-sa',
+        '--sample',
+        action='store_true',
+        required=False,
+        help=f'{ Color.YELLOW }Concat SVG file from random selection.{ Color.END }',
+    )
+    parser_concat.add_argument(
+        '-sano',
+        '--samplenumbers',
+        type=int,
+        default=30,
+        required=False,
+        help=f'{ Color.YELLOW }Boolean value. Number of icons in random sample.{ Color.END }',
     )
 
     # Create the parser for the "icon-theme" sub-command
@@ -460,7 +460,7 @@ def main():
             _error_message()
     # Concat
     if parser == 'concat':
-        if args.issample:
+        if args.sample:
             print_build_message(
                 '🛠️  Concatenating sample SVGs: ', CONCAT_SVGS_FILE_SAMPLE
             )
@@ -470,12 +470,12 @@ def main():
                 DATA_PATH,
                 args.icon,
                 args.concatfile,
-                args.issample,
-                args.issamplenumbers,
+                args.sample,
+                args.samplenumbers,
                 args.iconsperrow,
                 args.maxheight,
             )
-        elif not args.issample:
+        elif not args.sample:
             print_build_message('🛠️  Concatenating sample SVGs: ', CONCAT_SVGS_FILE)
             if args.concatfile is None:
                 args.concatfile = CONCAT_SVGS_FILE
@@ -483,8 +483,8 @@ def main():
                 DATA_PATH,
                 args.icon,
                 args.concatfile,
-                args.issample,
-                args.issamplenumbers,
+                args.sample,
+                args.samplenumbers,
                 args.iconsperrow,
                 args.maxheight,
             )
