@@ -133,6 +133,14 @@ def main():
         required=False,
         help=f'{ Color.YELLOW }Boolean value. Icons per row in concat SVG.{ Color.END }',
     )
+    parser_concat.add_argument(
+        '-mh',
+        '--maxheight',
+        type=int,
+        default=2000,
+        required=False,
+        help=f'{ Color.YELLOW }Boolean value. Max height of concat SVG file.{ Color.END }',
+    )
 
     # Create the parser for the "icon-theme" sub-command
     parser_icontheme = subparsers.add_parser(
@@ -465,6 +473,7 @@ def main():
                 args.issample,
                 args.issamplenumbers,
                 args.iconsperrow,
+                args.maxheight,
             )
         elif not args.issample:
             print_build_message('🛠️  Concatenating sample SVGs: ', CONCAT_SVGS_FILE)
@@ -477,6 +486,7 @@ def main():
                 args.issample,
                 args.issamplenumbers,
                 args.iconsperrow,
+                args.maxheight,
             )
         else:
             _error_message()

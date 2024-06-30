@@ -29,13 +29,13 @@ class ConcatSVG:
     """
     Concat all icons SVGs or a random sample.
 
-    SVGs are concat side by side, orientation horizontally. Currently, it places
+    SVGs are concat side by side, orientation horizontally. By default, it places
     5 icons in each row.
 
     Two lists mode: all icons sorted by name. Name is the key name in data file, not
     SVG file name.
 
-    The other list mode is sample, used in README. Total of 30 icons are randomly
+    The other list mode is sample, used in README. By default 30 icons are randomly
     selected.
 
     When writing the concat file, it does not re calculate positions after putting all
@@ -66,7 +66,7 @@ class ConcatSVG:
         svg_tag = ElementTree.Element(
             'svg',
         )
-        logger.debug(svg_attributes)
+        logger.debug('%r', svg_attributes)
 
         for k, v in svg_attributes.items():
             if k in SVG_ELEMENTS_ATTRIBUTES_LIST:
@@ -164,10 +164,11 @@ class ConcatSVG:
         icon_svg_tag = svg_data.getroot()
         icon_svg_tag.set('width', '32')
         icon_svg_tag.set('height', '28.4')
+        icon_svg_tag.set('viewbox', '0 0 32 28.4')
         icon_svg_tag.set('x', '23')
         icon_svg_tag.set('y', '17')
 
-        logger.debug(icon_svg_tag.attrib)
+        logger.debug('%r', icon_svg_tag.attrib)
 
         return icon_svg_tag
 
@@ -246,7 +247,7 @@ class ConcatSVG:
                         list_svgs.add(icon_svg)
 
             sorted_list = sorted(list_svgs, key=lambda d: d[0].upper())
-            logger.debug(sorted_list)
+            logger.debug('%r', sorted_list)
 
             return sorted_list
 
@@ -265,6 +266,25 @@ class ConcatSVG:
                 dir_icon_data,
             )
 
+    def max_icons_per_file(row_height: int, icons_per_row: int, max_height: int) -> int:
+        """
+        Calculate max icons per file, given a max height.
+
+        GitHub seems to cut after 21 line if is by px would be 1932px. But 22
+        display part. If row height is 92px. Seems limited to 2000px.
+
+        Parameters:
+        row_height (int) -- row height of concat SVG file.
+        icons_per_row (int) -- number of icons per row.
+        max_height (int) --  max height of concat SVG file.
+
+        Returns:
+        icons_per_list (int) - max number of icons per file.
+        """
+        lines = max_height // row_height
+        icons_per_list = lines * icons_per_row
+        return icons_per_list
+
     def write_concat_svgs(
         dir_icon_data: str,
         dir_origin: str,
@@ -272,73 +292,108 @@ class ConcatSVG:
         is_sample: bool = False,
         sample_no: int = 30,
         icons_per_row: int = 5,
+        max_height: int | None = 2000,
     ):
         """
-        Write concat SVG file, all icons or a sample of 30 icons.
+        Write concat SVG file, all icons or a sample of icons.
 
         Orientation: horizontal.
+
+        Max height is for GitHub README, currently, it cut SVG after around
+        2000px.
 
         Paramenters:
         dir_icon_data (str) -- path to directory with data files.
         dir_origin (str) -- path to SVG file.
         concat_svg_file (str) -- path to concat SVG file.
-        is_sample (bool) -- True for create the sample icons file.
-        sample_no (int) -- numbers of SVGs in concat sample file.
-        icons_per_row (int) -- number of icons per row.
+        is_sample (Optional[bool]) -- True for create the sample icons file. Default
+        is False.
+        sample_no (Optional[int]) -- numbers of SVGs in concat sample file. Default
+        is 30.
+        icons_per_row (Optional[int]) -- number of icons per row. Default is 5.
+        max_height (Optional[int]) -- max concat SVG height.
         """
         # sticker_size = (77, 79)
-        concat_svg_width = 92 * icons_per_row
+        row_height = 92
+        column_width = 91
 
         if is_sample is False:
             print('Write concat SVGs mode all icons')
             icons_list = ConcatSVG.sorted_icons_list(dir_icon_data, dir_origin)
-            concat_svg_height = round(len(icons_list) / icons_per_row) * 92
+            # concat_svg_height = round(len(icons_list) / icons_per_row) * row_height
 
         if is_sample is True:
             print('Write concat SVGs mode sample icons')
             icons_list_full = ConcatSVG.sorted_icons_list(dir_icon_data, dir_origin)
             icons_list = random.sample(icons_list_full, sample_no)
-            concat_svg_height = round(len(icons_list) / icons_per_row) * 92
+            # concat_svg_height = round(len(icons_list) / icons_per_row) * row_height
 
-        logger.debug('concat SVG height ' + str(concat_svg_height))
+        # Will be added to concat file name, if more than one file saved.
+        chunk_counter = 0
 
-        # Main 'svg' element, root.
-        concat_svgs_content = ConcatSVG.create_element_svg(
-            {
-                'viewbox': f'0 0 { concat_svg_width } { concat_svg_height }',
-            }
-        )
+        max_range = ConcatSVG.max_icons_per_file(row_height, icons_per_row, max_height)
+        logger.debug('max number of icons per list is %d', max_range)
 
-        # Insert stickers
-        icon_sticker_position = {'x': 12, 'y': 8}
+        # concat_svg_height top_margin + (lines * 92) < 2000
+        # items lines * icons per row
+        for items in range(0, len(icons_list), max_range):
+            chunk = icons_list[items : items + max_range]
+            logger.debug('items in list: %s', chunk)
 
-        for i, icon in enumerate(icons_list):
-            icon_svg_file = os.path.join(ICONS_SVG_PATH, icon[1])
-            logger.debug('svg path ' + icon_svg_file)
-            icon_sticker = ConcatSVG.create_icon_sticker(
-                icon_svg_file,
-                str(icon_sticker_position['x']),
-                str(icon_sticker_position['y']),
-                icon[0],
-                icon[2],
-            )
-            concat_svgs_content.append(icon_sticker)
-            print_created_message(
-                os.path.basename(icon_svg_file),
-                icon[0],
-                'added to concat SVG file.',
+            concat_svg_width = column_width * icons_per_row
+            concat_svg_height = round(len(chunk) / icons_per_row) * row_height
+            print(
+                'SVG file size is: '
+                + str(concat_svg_width)
+                + 'x'
+                + str(concat_svg_height)
             )
 
-            # Next position in row.
-            # 5 stickers per row.
-            icon_sticker_position['x'] += 91
+            # Main 'svg' element, root.
+            concat_svgs_content = ConcatSVG.create_element_svg(
+                {
+                    'viewbox': f'0 0 { concat_svg_width } { concat_svg_height }',
+                }
+            )
 
-            counter = i + 1
+            # Insert stickers
+            icon_sticker_position = {'x': 12, 'y': 8}
 
-            # After 5 stickers, start new row.
-            if counter % icons_per_row == 0:
-                icon_sticker_position['x'] = 12
-                icon_sticker_position['y'] += 92
+            for i, icon in enumerate(chunk):
+                icon_svg_file = os.path.join(ICONS_SVG_PATH, icon[1])
+                logger.debug('svg path %s', icon_svg_file)
+                icon_sticker = ConcatSVG.create_icon_sticker(
+                    icon_svg_file,
+                    str(icon_sticker_position['x']),
+                    str(icon_sticker_position['y']),
+                    icon[0],
+                    icon[2],
+                )
+                concat_svgs_content.append(icon_sticker)
+                print_created_message(
+                    os.path.basename(icon_svg_file),
+                    icon[0],
+                    'added to concat SVG file.',
+                )
 
-        with open(concat_svg_file, 'w') as f:
-            f.write(ElementTree.tostring(concat_svgs_content).decode('utf-8'))
+                # Next position in row.
+                icon_sticker_position['x'] += column_width
+
+                counter = i + 1
+
+                # After n numbers of stickers, start new row.
+                if counter % icons_per_row == 0:
+                    icon_sticker_position['x'] = 12
+                    icon_sticker_position['y'] += row_height
+
+            if chunk_counter == 0:
+                svgfile_path = concat_svg_file
+
+            if chunk_counter > 0:
+                file_name, file_extension = os.path.splitext(concat_svg_file)
+                svgfile_path = file_name + '-' + str(chunk_counter) + file_extension
+
+            with open(svgfile_path, 'w') as f:
+                f.write(ElementTree.tostring(concat_svgs_content).decode('utf-8'))
+
+            chunk_counter += 1
