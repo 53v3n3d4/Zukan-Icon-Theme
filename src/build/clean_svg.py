@@ -98,7 +98,7 @@ class CleanSVG:
                     # Clean Affinity Designer common id names.
                     # They conflict between icons, messing gradient, clips and effects
                     # colors when concat them together.
-                    clean_file = edit_svg_id(clean_file)
+                    clean_file = edit_svg_id(clean_file, basename_svgfile)
                 with open(svgfile, 'w') as f:
                     f.write(clean_file)
             else:
@@ -156,7 +156,7 @@ def _replace_line(file_info: str, line: str) -> str:
     return file_info.replace(line, '')
 
 
-def edit_svg_id(clean_file):
+def edit_svg_id(clean_file: str, basename_svgfile: str):
     """
     Edit common ids names from Affinity Designer. They conflict each other when
     concat SVG.
@@ -190,6 +190,28 @@ def edit_svg_id(clean_file):
                     clean_file = re.sub(
                         rf'({ name_id })(ˆ?+["|)])', rf'{ new_name_id}\2', clean_file
                     )
+                    print_message(
+                        basename_svgfile,
+                        f'attribute { Color.YELLOW }{ name_id }{ Color.END } '
+                        f'found and being renamed.',
+                        color=f'{ Color.CYAN }',
+                        color_end=f'{ Color.END }',
+                    )
+            else:
+                print_message(
+                    basename_svgfile,
+                    f'attribute { Color.YELLOW }{ s }{ Color.END } already renamed.',
+                    color=f'{ Color.RED }',
+                    color_end=f'{ Color.END }',
+                )
+        else:
+            print_message(
+                basename_svgfile,
+                f'attribute { Color.YELLOW }{ s }{ Color.END } not found.',
+                color=f'{ Color.RED }',
+                color_end=f'{ Color.END }',
+            )
+
     # print(clean_file)
     return clean_file
 
