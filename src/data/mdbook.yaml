@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: mdBook
+preferences:
+  scope: source.toml.mdbook
+  settings:
+    icon: mdbook
+syntax:
+  - name: TOML (mdBook)
+    scope: source.toml.mdbook
+    hidden: true
+    file_extensions:
+      - book.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

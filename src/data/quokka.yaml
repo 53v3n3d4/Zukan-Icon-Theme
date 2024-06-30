@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Quokka
+preferences:
+  scope: source.json.quokka
+  settings:
+    icon: quokka
+syntax:
+  - name: JSON (Quokka)
+    scope: source.json.quokka
+    hidden: true
+    file_extensions:
+      - .quokka
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true
+
+# Package Quokka

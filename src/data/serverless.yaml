@@ -1,0 +1,44 @@
+%YAML 1.2
+---
+name: Serverless
+preferences:
+  scope: source.js.serverless, source.json.serverless, source.ts.serverless, source.yaml.serverless
+  settings:
+    icon: serverless
+syntax:
+  - name: JavaScript (Serverless)
+    scope: source.js.serverless
+    hidden: true
+    file_extensions:
+      - serverless.js
+    contexts:
+      main:
+      - include: scope:source.js
+        apply_prototype: true
+  - name: JSON (Serverless)
+    scope: source.json.serverless
+    hidden: true
+    file_extensions:
+      - serverless.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: TypeScript (Serverless)
+    scope: source.ts.serverless
+    hidden: true
+    file_extensions:
+      - serverless.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true
+  - name: YAML (Serverless)
+    scope: source.yaml.serverless
+    hidden: true
+    file_extensions:
+      - serverless.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

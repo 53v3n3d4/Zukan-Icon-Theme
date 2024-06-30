@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Crowdin
+preferences:
+  scope: source.yaml.crowdin
+  settings:
+    icon: crowdin
+syntax:
+  - name: YAML (Crowdin)
+    scope: source.yaml.crowdin
+    hidden: true
+    file_extensions:
+      - crowdin.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

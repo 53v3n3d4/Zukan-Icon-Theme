@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Nunjucks
+preferences:
+  scope: text.html.njk, text.html.njk.php
+  settings:
+    icon: nunjucks
+syntax:
+  - name: Nunjucks
+    scope: text.html.njk
+    hidden: true
+    file_extensions:
+      - njk
+      - nunjucks
+    contexts:
+      main: []
+
+# Package Nunjucks
