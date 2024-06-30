@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.0] - 2024
+## [0.2.0] - 2024-06-30
 - Rename project to Zukan Icon Theme
 - Rename folder aliases -> icons_syntaxes
 - Rename files icons PNGs, SVGs, sublime-syntaxes and tmPreferences
