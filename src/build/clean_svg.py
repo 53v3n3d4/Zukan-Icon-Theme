@@ -98,7 +98,7 @@ class CleanSVG:
                     # Clean Affinity Designer common id names.
                     # They conflict between icons, messing gradient, clips and effects
                     # colors when concat them together.
-                    clean_file = edit_svg_id(clean_file, basename_svgfile)
+                    clean_file = CleanSVG.edit_svg_id(clean_file, basename_svgfile)
                 with open(svgfile, 'w') as f:
                     f.write(clean_file)
             else:
@@ -142,6 +142,65 @@ class CleanSVG:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), dir_svg
             )
 
+    def edit_svg_id(clean_file: str, basename_svgfile: str):
+        """
+        Edit common ids names from Affinity Designer. They conflict each other when
+        concat SVG.
+
+        New name id needs to be unique to avoid change SVG everytime clean is done,
+        otherwise will generate unnecessary commits.
+
+        Common id names: _clip, _Effect, _Linear and _Gradient.
+
+        Affinity Designer enumerates them starting with 1 and up, one index for all.
+
+        Example: '_clip83', '_Effect84', '_Linear85', '_Linear86', '_Gradient87'
+        """
+        alphabet = string.ascii_lowercase + string.digits
+
+        for s in AFDESIGNER_COMMON_IDS_NAMES:
+            if s in clean_file:
+                # The max i found in SVG is rvm.svg, where i = 85.
+                # Looking until 99.
+                for i in range(100):
+                    name_id = f'{ s }{ i }'
+                    # print(name_id)
+                    if name_id in clean_file:
+                        # print(name_id)
+                        s_uuid = ''.join(random.choices(alphabet, k=7))
+                        new_name_id = f'{ s }-{ s_uuid }'
+                        # print(new_name_id)
+                        # Change for id with shortuuid.
+                        # Check if, e.g., '_Linear1' is not '_Linear11'.
+                        # Regex 'name_id' followed by ')' or '"'
+                        clean_file = re.sub(
+                            rf'({ name_id })(ˆ?+["|)])', rf'{ new_name_id}\2', clean_file
+                        )
+                        print_message(
+                            basename_svgfile,
+                            f'id { Color.YELLOW }{ name_id }{ Color.END } '
+                            f'found and being renamed.',
+                            color=f'{ Color.CYAN }',
+                            color_end=f'{ Color.END }',
+                        )
+                else:
+                    print_message(
+                        basename_svgfile,
+                        f'id { Color.YELLOW }{ s }{ Color.END } already renamed.',
+                        color=f'{ Color.RED }',
+                        color_end=f'{ Color.END }',
+                    )
+            else:
+                print_message(
+                    basename_svgfile,
+                    f'id { Color.YELLOW }{ s }{ Color.END } not found.',
+                    color=f'{ Color.RED }',
+                    color_end=f'{ Color.END }',
+                )
+
+        # print(clean_file)
+        return clean_file
+
 
 def _replace_line(file_info: str, line: str) -> str:
     """
@@ -156,67 +215,6 @@ def _replace_line(file_info: str, line: str) -> str:
     return file_info.replace(line, '')
 
 
-def edit_svg_id(clean_file: str, basename_svgfile: str):
-    """
-    Edit common ids names from Affinity Designer. They conflict each other when
-    concat SVG.
-
-    New name id needs to be unique to avoid change SVG everytime clean is done,
-    otherwise will generate unnecessary commits.
-
-    Common id names: _clip, _Effect, _Linear and _Gradient.
-
-    Affinity Designer enumerates them starting with 1 and up, one index for all.
-
-    Example: '_clip83', '_Effect84', '_Linear85', '_Linear86', '_Gradient87'
-    """
-    alphabet = string.ascii_lowercase + string.digits
-
-    for s in AFDESIGNER_COMMON_IDS_NAMES:
-        if s in clean_file:
-            # The max i found in SVG is rvm.svg, where i = 85.
-            # Looking until 99.
-            for i in range(100):
-                name_id = f'{ s }{ i }'
-                # print(name_id)
-                if name_id in clean_file:
-                    # print(name_id)
-                    s_uuid = ''.join(random.choices(alphabet, k=7))
-                    new_name_id = f'{ s }-{ s_uuid }'
-                    # print(new_name_id)
-                    # Change for id with shortuuid.
-                    # Check if, e.g., '_Linear1' is not '_Linear11'.
-                    # Regex 'name_id' followed by ')' or '"'
-                    clean_file = re.sub(
-                        rf'({ name_id })(ˆ?+["|)])', rf'{ new_name_id}\2', clean_file
-                    )
-                    print_message(
-                        basename_svgfile,
-                        f'attribute { Color.YELLOW }{ name_id }{ Color.END } '
-                        f'found and being renamed.',
-                        color=f'{ Color.CYAN }',
-                        color_end=f'{ Color.END }',
-                    )
-            else:
-                print_message(
-                    basename_svgfile,
-                    f'attribute { Color.YELLOW }{ s }{ Color.END } already renamed.',
-                    color=f'{ Color.RED }',
-                    color_end=f'{ Color.END }',
-                )
-        else:
-            print_message(
-                basename_svgfile,
-                f'attribute { Color.YELLOW }{ s }{ Color.END } not found.',
-                color=f'{ Color.RED }',
-                color_end=f'{ Color.END }',
-            )
-
-    # print(clean_file)
-    return clean_file
-
-
-# edit_svg_id(file_test)
 
 # CleanSVG.clean_svg(file_test, UNUSED_LIST)
 # print(file_test)

@@ -271,7 +271,7 @@ class ConcatSVG:
         """
         Calculate max icons per file, given a max height.
 
-        GitHub Markdown viewer seems to cut after 21 line, in pixels would be 1932px.
+        GitHub Markdown viewer seems to cut after 21 row, in pixels would be 1932px.
         The 22 line display only part of. If row height is 92px. Seems limited to 2000px.
 
         Parameters:
@@ -282,8 +282,8 @@ class ConcatSVG:
         Returns:
         icons_per_list (int) - max number of icons per file.
         """
-        lines = max_height // row_height
-        icons_per_list = lines * icons_per_row
+        rows = max_height // row_height
+        icons_per_list = rows * icons_per_row
         return icons_per_list
 
     def write_concat_svgs(
@@ -321,13 +321,11 @@ class ConcatSVG:
         if is_sample is False:
             print('Write concat SVGs mode all icons')
             icons_list = ConcatSVG.sorted_icons_list(dir_icon_data, dir_origin)
-            # concat_svg_height = round(len(icons_list) / icons_per_row) * row_height
 
         if is_sample is True:
             print('Write concat SVGs mode sample icons')
             icons_list_full = ConcatSVG.sorted_icons_list(dir_icon_data, dir_origin)
             icons_list = random.sample(icons_list_full, sample_no)
-            # concat_svg_height = round(len(icons_list) / icons_per_row) * row_height
 
         # Will be added to concat file name, if more than one file saved.
         chunk_counter = 0
