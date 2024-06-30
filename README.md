@@ -8,7 +8,7 @@ This is important for Main.sublime-menu works and tests.
 > Windows `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git "Zukan Icon Theme"`
 
 
-## Install
+## Zukan Icon Theme
 
 Icon theme for Sublime Text editor.  
 
