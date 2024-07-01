@@ -1,0 +1,40 @@
+%YAML 1.2
+---
+name: Puppeteer
+preferences:
+  scope: source.js.puppeteer, source.json.puppeteer, source.yaml.puppeteer
+  settings:
+    icon: puppeteer
+syntax:
+  - name: JavaScript (Puppeteer)
+    scope: source.js.puppeteer
+    hidden: true
+    file_extensions:
+      - .puppeteerrc.js
+      - .puppeteerrc.cjs
+      - puppeteer.config.js
+      - puppeteer.config.cjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (Puppeteer)
+    scope: source.json.puppeteer
+    hidden: true
+    file_extensions:
+      - .puppeteerrc
+      - .puppeteerrc.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: YAML (Puppeteer)
+    scope: source.yaml.puppeteer
+    hidden: true
+    file_extensions:
+      - .puppeteerrc
+      - .puppeteerrc.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

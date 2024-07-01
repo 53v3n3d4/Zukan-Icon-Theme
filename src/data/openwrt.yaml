@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: OpenWrt
+preferences:
+  scope: source.uci
+  settings:
+    icon: openwrt
+syntax:
+  - name: OpenWrt
+    scope: source.uci
+    hidden: true
+    file_extensions:
+      - uci
+    contexts:
+      main: []
+
+# Package OpenWrt

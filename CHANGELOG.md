@@ -1,7 +1,11 @@
 # Changelog
 
 ## [0.2.2] - 2024
-- Change icon: C#
+- Change icon support rectangle round corner.
+
+### Icons, icons-syntaxes and preferences
+- Add icon-theme: Puppeteer, OpenWrt
+- Change icon: C#, Diff, YAML
 
 ## [0.2.1] - 2024-06-30
 - Fix old version in sublime-settings
