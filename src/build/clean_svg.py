@@ -28,9 +28,9 @@ logger = logging.getLogger(__name__)
 
 class CleanSVG:
     """
-    Clean unused tags and attributes in SVG.
+    Clean unused tags, ids and attributes in SVG.
 
-    Affinity designer program, used to  export SVGs, produce them with unsed tags
+    Affinity Designer program, used to  export SVGs, produce them with unsed tags
     that needs to be deleted. Error can raise depending on lib used.
 
     The tags and attributes below will be deleted:
@@ -39,6 +39,11 @@ class CleanSVG:
     3- Inside svg tag, delete attribute xmlns:serif="http://www.serif.com/"
     4- Regex clean serif:id="text" attribute
     There are files that do not have item 4. Example: angular.svg
+
+    Affinity Designer use common ids names indexed that conflict when concat SVGs.
+    These names are renamed when clean is used.
+
+    Common id names: _clip, _Effect, _Linear and _Gradient.
     """
 
     def clean_svg(svgfile: str, replace_list: Set):
@@ -170,11 +175,13 @@ class CleanSVG:
                         s_uuid = ''.join(random.choices(alphabet, k=7))
                         new_name_id = f'{ s }-{ s_uuid }'
                         # print(new_name_id)
-                        # Change for id with shortuuid.
+                        # Change name id number with shortuuid.
                         # Check if, e.g., '_Linear1' is not '_Linear11'.
                         # Regex 'name_id' followed by ')' or '"'
                         clean_file = re.sub(
-                            rf'({ name_id })(ˆ?+["|)])', rf'{ new_name_id}\2', clean_file
+                            rf'({ name_id })(ˆ?+["|)])',
+                            rf'{ new_name_id}\2',
+                            clean_file,
                         )
                         print_message(
                             basename_svgfile,
@@ -213,7 +220,6 @@ def _replace_line(file_info: str, line: str) -> str:
     str -- text with line removed if found.
     """
     return file_info.replace(line, '')
-
 
 
 # CleanSVG.clean_svg(file_test, UNUSED_LIST)

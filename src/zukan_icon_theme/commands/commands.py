@@ -111,7 +111,9 @@ class DeleteSyntaxInputHandler(sublime_plugin.ListInputHandler):
 
     def list_items(self) -> list:
         if ZukanSyntax.list_created_icons_syntaxes():
-            return sorted(ZukanSyntax.list_created_icons_syntaxes())
+            return sorted(
+                ZukanSyntax.list_created_icons_syntaxes(), key=lambda x: x.upper()
+            )
         else:
             raise TypeError(
                 logger.info('it does not exist any created syntax, list is empty')
@@ -313,7 +315,7 @@ class InstallSyntaxInputHandler(sublime_plugin.ListInputHandler):
             )
         )
         if list_syntaxes_not_installed:
-            return sorted(list_syntaxes_not_installed)
+            return sorted(list_syntaxes_not_installed, key=lambda x: x.upper())
         else:
             raise TypeError(
                 logger.info('all syntaxes are already created, list is empty.')
