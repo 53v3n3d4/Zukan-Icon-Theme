@@ -3,22 +3,19 @@ import logging
 import os
 import random
 
+from collections.abc import Set
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import (
     print_created_message,
     print_message,
 )
 from src.build.helpers.read_write_data import read_yaml_data
-from src.build.utils.build_dir_paths import (
-    ICONS_SVG_PATH,
-)
 from src.build.utils.file_extensions import (
     SVG_EXTENSION,
 )
 from src.build.utils.svg_element_attributes import (
     SVG_ELEMENTS_ATTRIBUTES_LIST,
 )
-from collections.abc import Set
 from xml.etree import ElementTree
 
 
@@ -39,7 +36,7 @@ class ConcatSVG:
     selected.
 
     When writing the concat file, it does not re calculate positions after putting all
-    icons, rects and texts together in new position. It only insert SVG inside SVG.
+    icons, rects and texts together into new position. It only insert SVG inside SVG.
 
     A few links with info about transforming and flattening:
     - https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform-origin
@@ -130,7 +127,7 @@ class ConcatSVG:
         title = ElementTree.SubElement(
             sticker_text_tag,
             'tspan',
-            x='20',
+            x='19',
             dy='.6em',
         )
         # print(len(sticker_name))
@@ -138,7 +135,7 @@ class ConcatSVG:
         description = ElementTree.SubElement(
             sticker_text_tag,
             'tspan',
-            x='20',
+            x='19',
             dy='1.6em',
             style='font-family:"ArialMT", "Arial", sans-serif;font-size:6px;'
             'fill:rgb(155,155,155)',
@@ -147,12 +144,12 @@ class ConcatSVG:
 
         return sticker_text
 
-    def edit_icon_svg(icon_svg_file: str):
+    def edit_icon_svg(svgfile_path: str):
         """
         Edit icon SVG size and position, sub element of 'svg' element.
 
         Paramenters:
-        icon_svg_file (str) -- path to SVG file.
+        svgfile_path (str) -- path to SVG file.
 
         Returns:
         icon_svg_tag - return an ElementTree instance.
@@ -160,7 +157,7 @@ class ConcatSVG:
         # Avoid auto insert namespace. Example 'ns0:'
         ElementTree.register_namespace('', 'http://www.w3.org/2000/svg')
 
-        svg_data = ElementTree.parse(icon_svg_file)
+        svg_data = ElementTree.parse(svgfile_path)
 
         icon_svg_tag = svg_data.getroot()
         icon_svg_tag.set('width', '32')
@@ -174,7 +171,7 @@ class ConcatSVG:
         return icon_svg_tag
 
     def create_icon_sticker(
-        icon_svg_file: str, x: str, y: str, sticker_name: str, svgfile_name: str
+        svgfile_path: str, x: str, y: str, sticker_name: str, svgfile_name: str
     ):
         """
         Create sticker, sub element of 'svg' element.
@@ -182,7 +179,7 @@ class ConcatSVG:
         Sticker is made of an icon, text and rect.
 
         Paramenters:
-        icon_svg_file (str) -- path to SVG file.
+        svgfile_path (str) -- path to SVG file.
         x (str) -- 'svg' attribute x. A string(int)
         x (str) -- 'svg' attribute y. A string(int)
         sticker_name (str) -- icon name is the key name in data file. Not the
@@ -202,7 +199,7 @@ class ConcatSVG:
         )
         ConcatSVG.create_rounded_rect(sticker)
         ConcatSVG.write_icon_name(sticker, sticker_name, svgfile_name)
-        icon = ConcatSVG.edit_icon_svg(icon_svg_file)
+        icon = ConcatSVG.edit_icon_svg(svgfile_path)
         sticker.append(icon)
 
         return sticker
@@ -289,7 +286,7 @@ class ConcatSVG:
     def write_concat_svgs(
         dir_icon_data: str,
         dir_origin: str,
-        concat_svg_file: str,
+        concat_svgfile: str,
         is_sample: bool = False,
         sample_no: int = 30,
         icons_per_row: int = 5,
@@ -306,13 +303,13 @@ class ConcatSVG:
         Paramenters:
         dir_icon_data (str) -- path to directory with data files.
         dir_origin (str) -- path to SVG file.
-        concat_svg_file (str) -- path to concat SVG file.
+        concat_svgfile (str) -- path to concat SVG file.
         is_sample (Optional[bool]) -- True for create the sample icons file. Default
         is False.
         sample_no (Optional[int]) -- numbers of SVGs in concat sample file. Default
         is 30.
         icons_per_row (Optional[int]) -- number of icons per row. Default is 5.
-        max_height (Optional[int]) -- max concat SVG height.
+        max_height (Optional[int]) -- max concat SVG height. Default is 2000.
         """
         # sticker_size = (77, 79)
         row_height = 92
@@ -358,10 +355,9 @@ class ConcatSVG:
             icon_sticker_position = {'x': 12, 'y': 8}
 
             for i, icon in enumerate(chunk):
-                icon_svg_file = os.path.join(ICONS_SVG_PATH, icon[1])
-                logger.debug('svg path %s', icon_svg_file)
+                logger.debug('svg path %s', icon[1])
                 icon_sticker = ConcatSVG.create_icon_sticker(
-                    icon_svg_file,
+                    icon[1],
                     str(icon_sticker_position['x']),
                     str(icon_sticker_position['y']),
                     icon[0],
@@ -369,7 +365,7 @@ class ConcatSVG:
                 )
                 concat_svgs_content.append(icon_sticker)
                 print_created_message(
-                    os.path.basename(icon_svg_file),
+                    icon[2],
                     icon[0],
                     'added to concat SVG file.',
                 )
@@ -385,10 +381,10 @@ class ConcatSVG:
                     icon_sticker_position['y'] += row_height
 
             if chunk_counter == 0:
-                svgfile_path = concat_svg_file
+                svgfile_path = concat_svgfile
 
             if chunk_counter > 0:
-                file_name, file_extension = os.path.splitext(concat_svg_file)
+                file_name, file_extension = os.path.splitext(concat_svgfile)
                 svgfile_path = file_name + '-' + str(chunk_counter) + file_extension
 
             with open(svgfile_path, 'w') as f:

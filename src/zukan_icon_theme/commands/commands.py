@@ -8,11 +8,15 @@ from ..events.settings import SettingsEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
+from ..helpers.get_settings import load_settings
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
+)
+from ..utils.file_settings import (
+    ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PATH,
@@ -145,18 +149,16 @@ class DeleteTheme(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_name: str):
         # 'zukan_restart_message' setting
-        ZUKAN_RESTART_MESSAGE = sublime.load_settings(
-            'Zukan Icon Theme.sublime-settings'
-        ).get('zukan_restart_message')
+        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
-        if ZUKAN_RESTART_MESSAGE is True:
+        if zukan_restart_message is True:
             dialog_message = (
                 'Are you sure you want to delete "{t}"?\n\n'
                 'You may have to restart ST, for all icons do not show.'.format(
                     t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
                 )
             )
-        if ZUKAN_RESTART_MESSAGE is False:
+        if zukan_restart_message is False:
             dialog_message = 'Are you sure you want to delete "{t}"?'.format(
                 t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
             )
@@ -199,18 +201,18 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
     def run(self):
         if ZukanTheme.list_created_icons_themes():
             # 'zukan_restart_message' setting
-            ZUKAN_RESTART_MESSAGE = sublime.load_settings(
-                'Zukan Icon Theme.sublime-settings'
-            ).get('zukan_restart_message')
+            zukan_restart_message = load_settings(
+                ZUKAN_SETTINGS, 'zukan_restart_message'
+            )
 
-            if ZUKAN_RESTART_MESSAGE is True:
+            if zukan_restart_message is True:
                 dialog_message = (
                     'Are you sure you want to delete all themes in "{f}"?\n\n'
                     'You may have to restart ST, for all icons do not show.'.format(
                         f=ZUKAN_PKG_ICONS_PATH
                     )
                 )
-            if ZUKAN_RESTART_MESSAGE is False:
+            if zukan_restart_message is False:
                 dialog_message = (
                     'Are you sure you want to delete all themes in "{f}"?'.format(
                         f=ZUKAN_PKG_ICONS_PATH
@@ -329,11 +331,9 @@ class InstallTheme(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_name: str):
         # 'zukan_restart_message' setting
-        ZUKAN_RESTART_MESSAGE = sublime.load_settings(
-            'Zukan Icon Theme.sublime-settings'
-        ).get('zukan_restart_message')
+        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
-        if ZUKAN_RESTART_MESSAGE is True:
+        if zukan_restart_message is True:
             dialog_message = (
                 'You may have to restart ST, if all icons do not load in '
                 'current theme.'
@@ -383,11 +383,9 @@ class InstallThemes(sublime_plugin.ApplicationCommand):
 
     def run(self):
         # 'zukan_restart_message' setting
-        ZUKAN_RESTART_MESSAGE = sublime.load_settings(
-            'Zukan Icon Theme.sublime-settings'
-        ).get('zukan_restart_message')
+        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
-        if ZUKAN_RESTART_MESSAGE is True:
+        if zukan_restart_message is True:
             dialog_message = (
                 'You may have to restart ST, if all icons do not load in current '
                 'theme.'

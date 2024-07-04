@@ -8,11 +8,12 @@ import string
 from collections.abc import Set
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import print_message
-from src.build.utils.build_dir_paths import (
-    # ICONS_TEST_PATH,
-    # ICONS_TEST_NOT_EXIST_PATH,
-    ICONS_SVG_PATH,
-)
+
+# from src.build.utils.build_dir_paths import (
+#     ICONS_TEST_PATH,
+#     ICONS_TEST_NOT_EXIST_PATH,
+#     ICONS_SVG_PATH,
+# )
 from src.build.utils.svg_common_ids import AFDESIGNER_COMMON_IDS_NAMES
 # from src.build.utils.svg_unused_list import UNUSED_LIST
 

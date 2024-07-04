@@ -10,4 +10,10 @@ ZUKAN_SETTINGS_OPTIONS = [
     'zukan_restart_message',
     'rebuild_on_upgrade',
     'auto_install_theme',
+    'ignored_theme',
+]
+
+USER_SETTINGS_OPTIONS = [
+    'ignored_packages',
+    'theme',
 ]

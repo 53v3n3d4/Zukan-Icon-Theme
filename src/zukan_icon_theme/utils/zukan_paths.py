@@ -1,5 +1,5 @@
 import os
-import sublime
+# import sublime
 
 from .file_extensions import (
     PICKLE_EXTENSION,

@@ -3,6 +3,7 @@ import glob
 import logging
 import os
 
+from ..helpers.get_settings import load_settings
 from ..helpers.read_write_data import dump_json_data
 from ..helpers.search_themes import (
     search_resources_sublime_themes,
@@ -10,6 +11,9 @@ from ..helpers.search_themes import (
 )
 from ..utils.file_extensions import (
     SUBLIME_THEME_EXTENSION,
+)
+from ..utils.file_settings import (
+    ZUKAN_SETTINGS,
 )
 from ..utils.theme_templates import (
     TEMPLATE_JSON,
@@ -27,31 +31,41 @@ class ZukanTheme:
     Create, list and remove sublime-themes files in Zukan Icon Theme/icons folder
     """
 
-    def create_icon_theme(theme_name: str):
+    def create_icon_theme(theme_st_path: str):
         """
         Create sublime-theme file with icon_file_type scope. Copy a json template
         to Zukan Icon Theme/icons folder with the theme name.
 
-        Example: Treble Adaptive.sublime-theme
+        Example: Packages/Theme - Treble/Treble Adaptive.sublime-theme
 
         Parameters:
-        theme_name (str) -- installed theme name.
+        theme_st_path (str) -- installed theme name.
         """
         try:
             list_all_themes = search_resources_sublime_themes()
-            # Check if installed theme file exist.
-            if any(theme_name in t for t in list_all_themes):
-                # print(theme_name)
+            file_name = os.path.basename(theme_st_path)
+            ignored_theme = load_settings(ZUKAN_SETTINGS, 'ignored_theme')
+            if not isinstance(ignored_theme, list):
+                logger.warning('ignored theme setting is not a list')
+            # Check if installed theme file exist and not in 'ignored_theme'
+            # settings.
+            if (
+                any(theme_st_path in t for t in list_all_themes)
+                and file_name not in ignored_theme
+            ):
+                # print(theme_st_path)
                 theme_filepath = os.path.join(
-                    ZUKAN_PKG_ICONS_PATH, os.path.basename(theme_name)
+                    ZUKAN_PKG_ICONS_PATH, os.path.basename(theme_st_path)
                 )
-                if theme_with_opacity(theme_name) is True:
+                if theme_with_opacity(theme_st_path) is True:
                     file_content = TEMPLATE_JSON
-                if theme_with_opacity(theme_name) is False:
+                if theme_with_opacity(theme_st_path) is False:
                     file_content = TEMPLATE_JSON_WITH_OPACITY
                 dump_json_data(file_content, theme_filepath)
                 logger.info('creating icon theme %s', os.path.basename(theme_filepath))
-                return theme_name
+                return theme_st_path
+            elif file_name in ignored_theme:
+                logger.info('ignored theme %s', file_name)
             else:
                 raise FileNotFoundError(
                     logger.error(
@@ -61,11 +75,17 @@ class ZukanTheme:
                 )
         except FileNotFoundError:
             logger.error(
-                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), theme_name
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                theme_st_path,
             )
         except OSError:
             logger.error(
-                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), theme_name
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                theme_st_path,
             )
 
     def create_icons_themes():

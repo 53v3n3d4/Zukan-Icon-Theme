@@ -1,5 +1,6 @@
 import logging
 import os
+import sublime
 import threading
 
 from .install import InstallEvent
@@ -8,6 +9,10 @@ from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..helpers.get_settings import load_settings
 from ..helpers.read_write_data import dump_json_data
+from ..helpers.search_themes import (
+    filter_resources_themes,
+    search_resources_sublime_themes,
+)
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
@@ -15,11 +20,13 @@ from ..utils.file_extensions import (
 )
 from ..utils.file_settings import (
     USER_SETTINGS,
+    USER_SETTINGS_OPTIONS,
     ZUKAN_SETTINGS,
     ZUKAN_SETTINGS_OPTIONS,
     ZUKAN_VERSION,
 )
 from ..utils.zukan_paths import (
+    ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_PKG_SUBLIME_PATH,
@@ -46,11 +53,17 @@ class SettingsEvent:
         logger.debug('Preferences.sublime-settings changed')
         theme_name = load_settings(USER_SETTINGS, 'theme')
         auto_install_theme = load_settings(ZUKAN_SETTINGS, 'auto_install_theme')
+        ignored_theme = load_settings(ZUKAN_SETTINGS, 'ignored_theme')
+        icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
+        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+
+        if not isinstance(ignored_theme, list):
+            logger.warning('ignored theme setting is not a list')
 
         if (
             theme_name not in ZukanTheme.list_created_icons_themes()
             and auto_install_theme is False
-        ):
+        ) or theme_name in ignored_theme:
             # Delete preferences to avoid error unable to decode 'icon_file_type'
             # Example of extensions that this errors show: HAML, LICENSE, README, Makefile
             if any(
@@ -67,11 +80,39 @@ class SettingsEvent:
         # 'auto_install_theme' setting
         # Commands 'Delete Syntax', 'Delete Syntaxes', 'Install Syntax' and
         # 'Rebuild Syntaxes' is triggered here and build themes.
-        if auto_install_theme is True:
-            # ZukanTheme.create_icon_theme(theme_name)
-            ZukanTheme.create_icons_themes()
+        # if auto_install_theme is True:
+        #     ZukanTheme.create_icons_themes()
 
-        if theme_name in ZukanTheme.list_created_icons_themes():
+        # 'auto_install_theme' and 'ignored_theme' setting.
+        #
+        # 'auto_install_theme' setting
+        # Commands 'Delete Syntax', 'Delete Syntaxes', 'Install Syntax' and
+        # 'Rebuild Syntaxes' is triggered here and build themes.
+        #
+        # Creating icon theme if does not exist.
+        if (
+            theme_name is not ignored_theme or auto_install_theme is True
+        ) and not os.path.exists(icon_theme_file):
+            theme_st_path = sublime.find_resources(theme_name)
+            # Excluding themes in Packages sub directories.
+            filter_list = filter_resources_themes(theme_st_path)
+            list_all_themes = search_resources_sublime_themes()
+            # Check if installed theme file exist.
+            for t in filter_list:
+                if t in list_all_themes and os.path.basename(t) not in ignored_theme:
+                    if zukan_restart_message is True:
+                        dialog_message = (
+                            'You may have to restart ST, if all icons do not load in '
+                            'current theme.'
+                        )
+                        sublime.message_dialog(dialog_message)
+                    print(t)
+                    ZukanTheme.create_icon_theme(t)
+
+        if (
+            theme_name in ZukanTheme.list_created_icons_themes()
+            and theme_name not in ignored_theme
+        ):
             if not any(
                 preferences.endswith(TMPREFERENCES_EXTENSION)
                 for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
@@ -86,6 +127,15 @@ class SettingsEvent:
                 ts.start()
                 ThreadProgress(ts, 'Building zukan files', 'Build done')
 
+        # Deleting ignored theme in case it already exists before ignoring.
+        if theme_name in ignored_theme and os.path.exists(icon_theme_file):
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'You may have to restart ST, for all icons do not show.'
+                )
+                sublime.message_dialog(dialog_message)
+            ZukanTheme.delete_icon_theme(theme_name)
+
     def get_user_zukan_preferences():
         """
         Print to console, current Zukan settings options.
@@ -93,10 +143,16 @@ class SettingsEvent:
         log_level = load_settings(ZUKAN_SETTINGS, 'log_level')
 
         if log_level == 'DEBUG':
-            print('==== Zukan Icon Theme settings ====')
+            print('\n==== Zukan Icon Theme settings ====')
 
             for s in ZUKAN_SETTINGS_OPTIONS:
                 setting_option = load_settings(ZUKAN_SETTINGS, s)
+                print('{s}: {v}'.format(s=s, v=setting_option))
+
+            print('\n==== User ST settings ==============')
+
+            for s in USER_SETTINGS_OPTIONS:
+                setting_option = load_settings(USER_SETTINGS, s)
                 print('{s}: {v}'.format(s=s, v=setting_option))
 
             print('------------------------------------')
