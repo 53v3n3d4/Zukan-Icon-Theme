@@ -4,7 +4,7 @@
 - Change icon support rectangle round corner.
 
 ### Icons, syntaxes and preferences
-- Add icon-theme: Checkly, Puppeteer, OpenWrt, Redwood
+- Add icon-theme: Checkly, GCC, LLVM, Puppeteer, OpenWrt, Redwood
 - Change icon: C#, Diff, YAML
 
 ### Plugin

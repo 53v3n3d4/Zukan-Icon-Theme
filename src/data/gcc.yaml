@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: GCC
+preferences:
+  scope: source.shell.gcc
+  settings:
+    icon: gcc
+syntax:
+  - name: Shell Script (GCC)
+    scope: source.shell.gcc
+    hidden: true
+    file_extensions:
+      - config-lang.in
+    contexts:
+      main:
+        - include: scope:source.shell
+          apply_prototype: true

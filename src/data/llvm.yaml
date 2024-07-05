@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: LLVM
+preferences:
+  scope: source.yaml.llvm
+  settings:
+    icon: llvm
+syntax:
+  - name: YAML (LLVM)
+    scope: source.yaml.llvm
+    hidden: true
+    file_extensions:
+      -  _clang-format
+      - .clang-format
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
