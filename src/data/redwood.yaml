@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Redwood
+preferences:
+  scope: source.toml.redwood
+  settings:
+    icon: redwood
+syntax:
+  - name: TOML (Redwood)
+    scope: source.toml.redwood
+    hidden: true
+    file_extensions:
+      - redwood.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

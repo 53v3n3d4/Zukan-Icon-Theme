@@ -3,9 +3,12 @@
 ## [0.2.2] - 2024
 - Change icon support rectangle round corner.
 
-### Icons, icons-syntaxes and preferences
-- Add icon-theme: Puppeteer, OpenWrt
+### Icons, syntaxes and preferences
+- Add icon-theme: Checkly, Puppeteer, OpenWrt, Redwood
 - Change icon: C#, Diff, YAML
+
+### Plugin
+- Add ignored_theme setting
 
 ## [0.2.1] - 2024-06-30
 - Fix old version in sublime-settings
@@ -17,7 +20,7 @@
 - Add python setup: poetry, pytest, ruff
 - Rename folder preferences -> icons_preferences
 
-### Icons, icons-syntaxes and preferences
+### Icons, syntaxes and preferences
 - Add icon-theme: ActionScript, Ada, Ansible, AppleScript, AppVeyor, archive, AsciiDoc, ASP, Astro, Avro, Azure, Babashka, Batch File, Bazel, Behat, BibTeX, Biome, Bitbucket, Cabal, Caddyserver, Cairo, Cap'n Proto, Cargo, Cassandra, Cert, Cirrus, Clojure, ClojureDart, ClojureScript, Codacy, commitlint, Composer, Conan, Conda, Crowdin, Crystal, Cucumber, CUDA, Cypress, D, Datadog, Deno, Dependabot, Dart, Diff, Dioxus, Django, Docusaurus, Drone, DUB, EditorConfig, Eleventy, Erlang.mk, esbuild, F#, Figma, Firebase, Fish, Flask, Flow, Flutter, Font, Fortran, GitBook, git-cliff, GitHub, GitLab, Gitpod, Gleam, glTF, GolangCI-Lint, Gradle, Graphviz (DOT), Groovy, Gulp, Haml, Handlebars, Haskell, Heft, Hex, Hugo, isort, Istanbul, Jasmine, Jenkins, Jinja, Julia, JUnit, Jupyter, Knip, Kong, LaTeX, Lavarel, Lerna, Liquid, Lisp, MATLAB, Maven, mdBook, Mergify, Mermaid, Meson, Mill, MkDocs, Mocha, Modern Web, mypy, MySQL, NAnt, Nest, Nim, Nitro, Nix, NSIS, NuGet, NumPy, Nunjucks, Nushell, Nuxt, Nx, OCaml, PDM, Perl, PHP CS Fixer, PHPStan, PHPUnit, Pine, Pipenv, Playwright, Plist, PLSQL, PostCSS, PostgreSQL, pre-commit, Prisma, Pug, Pylint, Pyre, Pyright, Qt, Quokka, R, Read the Docs, Rebar3, Redis, Regular Expression, Renovate, reStructuredText, Rspec, RuboCop, Rush, RVM, sbt, Scala, Scala Steward, Scalafix, Scalameta, Sentry, Serverless, Smarty, Snapcraft, Snyk, Solidity, SQLite, Stylelint, SVGO, Swagger, Symfony, SystemVerilog Tailwind CSS, Tauri, Tcl, TeX, Textile, Terraform, tmux, Toit, tox, Twig, Typst, uv, Vercel, Vyper, Wallaby, Yaws, Yugabyte, Zig
 - Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
 - Change icon: Audio, Kotlin, makefile, Node js, Rspack

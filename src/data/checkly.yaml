@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Checkly
+preferences:
+  scope: source.js.checkly, source.ts.checkly
+  settings:
+    icon: checkly
+syntax:
+  - name: JavaScript (Checkly)
+    scope: source.js.checkly
+    hidden: true
+    file_extensions:
+      - checkly.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Checkly)
+    scope: source.ts.checkly
+    hidden: true
+    file_extensions:
+      - checkly.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true
