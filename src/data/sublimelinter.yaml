@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: SublimeLinter
+preferences:
+  scope: source.json.sublimelinter
+  settings:
+    icon: sublimelinter
+syntax:
+  - name: JSON (SublimeLinter)
+    scope: source.json.sublimelinter
+    hidden: true
+    file_extensions:
+      - SublimeLinter.sublime-settings
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+
+# Package SublimeLinter

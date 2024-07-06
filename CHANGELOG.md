@@ -4,8 +4,9 @@
 - Change icon support rectangle round corner.
 
 ### Icons, syntaxes and preferences
-- Add icon-theme: Checkly, GCC, LLVM, Puppeteer, OpenWrt, Redwood
+- Add icon-theme: Checkly, GCC, LLVM, Puppeteer, OpenWrt, Redwood, Sublime LSP, SublimeLinter
 - Change icon: C#, Diff, YAML
+- Rename sublime-syntax file name: Bazel, Makefile
 
 ### Plugin
 - Add ignored_theme setting

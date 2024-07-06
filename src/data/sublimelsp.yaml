@@ -1,0 +1,62 @@
+%YAML 1.2
+---
+name: Sublime LSP
+preferences:
+  scope: source.json.sublimelsp
+  settings:
+    icon: sublimelsp
+syntax:
+  - name: JSON (Sublime LSP)
+    scope: source.json.sublimelsp
+    hidden: true
+    file_extensions:
+      - LSP.sublime-settings
+      - LSP-angular.sublime-settings
+      - LSP-bash.sublime-settings
+      - LSP-Bicep.sublime-settings
+      - LSP-clangd.sublime-settings
+      - LSP-OmniSharp.sublime-settings
+      - LSP-css.sublime-settings
+      - LSP-Dart.sublime-settings
+      - LSP-dockerfile.sublime-settings
+      - LSP-elixir.sublime-settings
+      - LSP-elm.sublime-settings
+      - LSP-gopls.sublime-settings
+      - LSP-graphql.sublime-settings
+      - LSP-html.sublime-settings
+      - LSP-jdtls.sublime-settings
+      - LSP-biome.sublime-settings
+      - LSP-deno.sublime-settings
+      - LSP-eslint.sublime-settings
+      - LSP-flow.sublime-settings
+      - LSP-typescript.sublime-settings
+      - LSP-json.sublime-settings
+      - LSP-julia.sublime-settings
+      - LSP-TextLab.sublime-settings
+      - LSP-ltex-ls.sublime-settings
+      - LSP-leo.sublime-settings
+      - LSP-lua.sublime-settings
+      - LSP-promql.sublime-settings
+      - LSP-intelephense.sublime-settings
+      - LSP-PowerShellEditorServices.sublime-settings
+      - LSP-pyright.sublime-settings
+      - LSP-pylsp.sublime-settings
+      - LSP-ruff.sublime-settings
+      - LSP-rust-analyzer.sublime-settings
+      - LSP-metals.sublime-settings
+      - LSP-stylelint.sublime-settings
+      - LSP-svelte.sublime-settings
+      - LSP-SourceKit.sublime-settings
+      - LSP-tagml.sublime-settings
+      - LSP-tailwindcss.sublime-settings
+      - LSP-terraform.sublime-settings
+      - LSP-vue.sublime-settings
+      - LSP-volar.sublime-settings
+      - LSP-lemminx.sublime-settings
+      - LSP-yaml.sublime-settings
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+
+# Package LSP

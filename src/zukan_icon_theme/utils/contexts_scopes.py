@@ -26,7 +26,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.ruby', 'startsWith': 'Ruby ('},
     {'scope': 'source.scala', 'startsWith': 'Scala ('},
     {'scope': 'source.sdl', 'startsWith': 'SDlang ('},
-    {'scope': 'source.shell', 'startsWith': 'Shell ('},
+    {'scope': 'source.shell', 'startsWith': 'Shell Script ('},
     {'scope': 'source.toml', 'startsWith': 'TOML ('},
     {'scope': 'source.ts', 'startsWith': 'TypeScript ('},
     {'scope': 'source.tsx', 'startsWith': 'TSX ('},
@@ -47,8 +47,8 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.ini', 'startsWith': 'EditorConfig'},
     {'scope': 'source.js', 'startsWith': 'UnitTest (JavaScript)'},
     {'scope': 'source.jsx', 'startsWith': 'UnitTest (JSX)'},
-    {'scope': 'source.tsx', 'startsWith': 'UnitTest (TSX)'},
     {'scope': 'source.ts', 'startsWith': 'UnitTest (TypeScript)'},
+    {'scope': 'source.tsx', 'startsWith': 'UnitTest (TSX)'},
     {'scope': 'text.html.basic', 'startsWith': 'XML (SVG)'},
     {'scope': 'text.tex.latex', 'startsWith': 'Literate Haskell'},
 ]

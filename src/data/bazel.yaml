@@ -16,7 +16,7 @@ syntax:
       - bzl
     contexts:
       main: []
-  - name: Shell (Bazel)
+  - name: Shell Script (Bazel)
     scope: source.shell.bazel
     hidden: true
     file_extensions:

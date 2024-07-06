@@ -1,12 +1,12 @@
 %YAML 1.2
 ---
-name: makefile
+name: Makefile
 preferences:
   scope: source.makefile
   settings:
     icon: makefile
 syntax:
-  - name: makefile
+  - name: Makefile
     scope: source.makefile
     hidden: true
     file_extensions:
