@@ -49,7 +49,8 @@ def compare_scopes() -> list:
             for s in x['syntax']:
                 for y in user_syntaxes:
                     if s['scope'] == y.scope:
-                        list_scopes_to_remove.append(x)
+                        # print(s['scope'])
+                        list_scopes_to_remove.append(s)
     return list_scopes_to_remove
 
 
