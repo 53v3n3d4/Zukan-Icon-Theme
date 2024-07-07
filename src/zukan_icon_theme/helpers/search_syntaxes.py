@@ -2,7 +2,8 @@ import sublime
 
 from .read_write_data import read_pickle_data
 from ..utils.zukan_paths import (
-    ZUKAN_SYNTAXES_DATA_FILE,
+    ZUKAN_ICONS_DATA_FILE,
+    # ZUKAN_SYNTAXES_DATA_FILE,
 )
 from ruamel.yaml import YAML
 
@@ -14,21 +15,22 @@ class UserSyntax:
         self.scope = scope
         self.hidden = hidden
 
-    def visible_syntaxes_only() -> set:
-        """
-        Create a list of user ST installed syntaxes, visible only.
 
-        Returns:
-        syntaxes_list_visible (set) -- list of user ST installed syntaxes, excluded
-        hidden syntaxes.
-        """
-        syntaxes_list_visible = set()
-        all_syntaxes = sublime.list_syntaxes()
-        for s in all_syntaxes:
-            if s.hidden is False:
-                # print(s.name, s.path)
-                syntaxes_list_visible.add(s)
-        return syntaxes_list_visible
+def visible_syntaxes_only() -> set:
+    """
+    Create a list of user ST installed syntaxes, visible only.
+
+    Returns:
+    syntaxes_list_visible (set) -- list of user ST installed syntaxes, excluded
+    hidden syntaxes.
+    """
+    syntaxes_list_visible = set()
+    all_syntaxes = sublime.list_syntaxes()
+    for s in all_syntaxes:
+        if s.hidden is False:
+            # print(s.name, s.path)
+            syntaxes_list_visible.add(s)
+    return syntaxes_list_visible
 
 
 def compare_scopes() -> list:
@@ -40,12 +42,14 @@ def compare_scopes() -> list:
     installed syntaxes and zukan icon syntaxes.
     """
     list_scopes_to_remove = []
-    zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
-    user_syntaxes = UserSyntax.visible_syntaxes_only()
+    zukan_icons_syntaxes = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+    user_syntaxes = visible_syntaxes_only()
     for x in zukan_icons_syntaxes:
-        for y in user_syntaxes:
-            if x['scope'] == y.scope:
-                list_scopes_to_remove.append(x)
+        if x.get('syntax') is not None:
+            for s in x['syntax']:
+                for y in user_syntaxes:
+                    if s['scope'] == y.scope:
+                        list_scopes_to_remove.append(x)
     return list_scopes_to_remove
 
 
