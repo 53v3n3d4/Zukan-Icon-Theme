@@ -1,7 +1,7 @@
 import logging
 import sublime
 
-from .get_settings import load_settings
+from .get_settings import get_settings
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
@@ -95,7 +95,7 @@ def get_setting_log_level():
     initialize using 'set_timeout_async'.
     """
 
-    log_level = load_settings(ZUKAN_SETTINGS, 'log_level')
+    log_level = get_settings(ZUKAN_SETTINGS, 'log_level')
 
     if log_level == 'DEBUG':
         log_level = logging.DEBUG

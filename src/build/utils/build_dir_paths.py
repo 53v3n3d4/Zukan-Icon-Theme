@@ -29,6 +29,8 @@ ASSETS_PATH = filepath('../../../assets')
 
 DATA_PATH = filepath('../../data')
 
+ICONS_DATA_PATH = filepath('../../../icons_data')
+
 ICONS_PNG_PATH = filepath('../../../icons')
 
 ICONS_SVG_PATH = filepath('../../icons')
@@ -44,6 +46,8 @@ ICONS_PREFERENCES_PATH = filepath('../../../icons_preferences')
 CONCAT_SVGS_FILE = filepath('../../../assets/file-icons-concat.svg')
 
 CONCAT_SVGS_FILE_SAMPLE = filepath('../../../assets/file-icons-concat-sample.svg')
+
+ZUKAN_ICONS_DATA_FILE = filepath('../../../icons_data/zukan_icons_data.pkl')
 
 ZUKAN_PREFERENCES_DATA_FILE = filepath(
     '../../../icons_preferences/zukan_preferences_data.pkl'

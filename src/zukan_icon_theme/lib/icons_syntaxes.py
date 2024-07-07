@@ -4,23 +4,29 @@ import logging
 import os
 import sublime
 
+from ..helpers.get_settings import get_settings
 from ..helpers.read_write_data import (
     dump_yaml_data,
     edit_contexts_main,
     read_pickle_data,
     read_yaml_data,
 )
-from ..helpers.search_syntaxes import compare_scopes
+from ..helpers.search_syntaxes import compare_scopes, thread_find_resource
 from ..utils.contexts_scopes import (
     CONTEXTS_MAIN,
     CONTEXTS_SCOPES,
 )
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
+    SVG_EXTENSION,
+)
+from ..utils.file_settings import (
+    ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
-    ZUKAN_SYNTAXES_DATA_FILE,
+    ZUKAN_ICONS_DATA_FILE,
+    # ZUKAN_SYNTAXES_DATA_FILE,
 )
 from collections import OrderedDict
 
@@ -60,17 +66,48 @@ class ZukanSyntax:
         syntax_name (str) -- syntax name, file name and extension.
         """
         try:
-            zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
-            for s in zukan_icons_syntaxes:
-                if s not in compare_scopes() and s['name'] == syntax_name:
-                    filename = s['name'] + SUBLIME_SYNTAX_EXTENSION
-                    syntax_filepath = os.path.join(
-                        ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+            if not isinstance(ignored_icon, list):
+                logger.warning(
+                    'ignored_icon option malformed, need to be a string list'
+                )
+            for s in zukan_icons:
+                if (
+                    any('syntax' in d for d in s)
+                    and s.get('syntax') is not None
+                    and not (
+                        s['name'] in ignored_icon
+                        or s['preferences']['settings']['icon'] in ignored_icon
+                        or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
+                        in ignored_icon
+                        # or (s.get('tag') is not None and s['tag'] in ignored_icon)
                     )
-                    # print(syntax_filepath)
-                    dump_yaml_data(s, syntax_filepath)
-            logger.info('%s created.', filename)
-            return zukan_icons_syntaxes
+                ):
+                    for k in s['syntax']:
+                        if k not in compare_scopes() and k['name'] == syntax_name:
+                            filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
+                            syntax_filepath = os.path.join(
+                                ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+                            )
+                            # print(syntax_filepath)
+                            dump_yaml_data(k, syntax_filepath)
+                            logger.info('%s created.', filename)
+                elif (
+                    any('syntax' in d for d in s)
+                    and s.get('syntax') is not None
+                    and (
+                        s['name'] in ignored_icon
+                        or s['preferences']['settings']['icon'] in ignored_icon
+                        or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
+                        in ignored_icon
+                        # or (s.get('tag') is not None and s['tag'] in ignored_icon)
+                    )
+                ):
+                    for k in s['syntax']:
+                        if k['name'] == syntax_name:
+                            logger.info('ignored icon %s', s['name'])
+            return zukan_icons
         except FileNotFoundError:
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
@@ -85,17 +122,43 @@ class ZukanSyntax:
         Create icons sublime-syntaxes files.
         """
         try:
-            zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
-            for s in zukan_icons_syntaxes:
-                if s not in compare_scopes():
-                    filename = s['name'] + SUBLIME_SYNTAX_EXTENSION
-                    syntax_filepath = os.path.join(
-                        ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+            if not isinstance(ignored_icon, list):
+                logger.warning(
+                    'ignored_icon option malformed, need to be a string list'
+                )
+            for s in zukan_icons:
+                if (
+                    any('syntax' in d for d in s)
+                    and s.get('syntax') is not None
+                    and not (
+                        s['name'] in ignored_icon
+                        or s['preferences']['settings']['icon'] in ignored_icon
+                        or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
+                        in ignored_icon
+                        # or (s['tag'] in ignored_icon)
+                        # or (s.get('tag') is not None and s['tag'] in ignored_icon)
                     )
-                    # print(syntax_filepath)
-                    dump_yaml_data(s, syntax_filepath)
+                ):
+                    for k in s['syntax']:
+                        if k not in compare_scopes():
+                            filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
+                            syntax_filepath = os.path.join(
+                                ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+                            )
+                            # print(syntax_filepath)
+                            dump_yaml_data(k, syntax_filepath)
+                elif (
+                    s['name'] in ignored_icon
+                    or s['preferences']['settings']['icon'] in ignored_icon
+                    or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
+                    in ignored_icon
+                    # or (s.get('tag') is not None and s['tag'] in ignored_icon)
+                ):
+                    logger.info('ignored icon %s', s['name'])
             logger.info('sublime-syntaxes created.')
-            return zukan_icons_syntaxes
+            return zukan_icons
         except FileNotFoundError:
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
@@ -165,43 +228,44 @@ class ZukanSyntax:
         Parameters:
         syntax_name (str) -- icon syntax file name.
         """
-        logger.info('editing icon context scope if syntax not installed.')
         syntax_file = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name)
-        file_content = read_yaml_data(syntax_file)
-        ordered_dict = OrderedDict(file_content)
-        # print(ordered_dict['contexts']['main'])
-        for od in ordered_dict['contexts']['main']:
-            # Only with contexts main include
-            if od['include']:
-                # print(od['include'])
-                scope = od['include'].replace('scope:', '')
-                # print(scope)
-                if (
-                    sublime.find_syntax_by_scope(scope)
-                    and scope is not None
-                    and int(sublime.version()) > 4075
-                ):
-                    return ordered_dict
-                if (
-                    sublime.find_syntax_by_scope(scope)
-                    and scope is not None
-                    and int(sublime.version()) < 4075
-                ):
-                    # Could not find other references, got this contexts main format,
-                    # for ST versions lower than 4075, from A File Icon package.
-                    include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
-                    include_scope = 'scope:{s}'.format(s=scope)
-                    CONTEXTS_MAIN['contexts']['main'] = [
-                        {'include': include_scope_prop},
-                        {'include': include_scope},
-                    ]
-                if scope is None:
+        if os.path.exists(syntax_file):
+            logger.info('editing icon context scope if syntax not installed.')
+            file_content = read_yaml_data(syntax_file)
+            ordered_dict = OrderedDict(file_content)
+            # print(ordered_dict['contexts']['main'])
+            for od in ordered_dict['contexts']['main']:
+                # Only with contexts main include
+                if od['include']:
+                    # print(od['include'])
+                    scope = od['include'].replace('scope:', '')
+                    # print(scope)
+                    if (
+                        sublime.find_syntax_by_scope(scope)
+                        and scope is not None
+                        and int(sublime.version()) > 4075
+                    ):
+                        return ordered_dict
+                    if (
+                        sublime.find_syntax_by_scope(scope)
+                        and scope is not None
+                        and int(sublime.version()) < 4075
+                    ):
+                        # Could not find other references, got this contexts main format,
+                        # for ST versions lower than 4075, from A File Icon package.
+                        include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
+                        include_scope = 'scope:{s}'.format(s=scope)
+                        CONTEXTS_MAIN['contexts']['main'] = [
+                            {'include': include_scope_prop},
+                            {'include': include_scope},
+                        ]
+                    if scope is None:
+                        # print(ordered_dict)
+                        CONTEXTS_MAIN['contexts']['main'] = []
+                    # print(CONTEXTS_MAIN)
+                    ordered_dict.update(CONTEXTS_MAIN)
                     # print(ordered_dict)
-                    CONTEXTS_MAIN['contexts']['main'] = []
-                # print(CONTEXTS_MAIN)
-                ordered_dict.update(CONTEXTS_MAIN)
-                # print(ordered_dict)
-                dump_yaml_data(ordered_dict, syntax_file)
+                    dump_yaml_data(ordered_dict, syntax_file)
 
     def edit_contexts_scopes():
         """

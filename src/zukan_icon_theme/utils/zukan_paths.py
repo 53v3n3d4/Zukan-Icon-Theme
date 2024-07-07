@@ -76,6 +76,19 @@ ZUKAN_INSTALLED_PKG_PATH = os.path.join(
     INSTALLED_PACKAGES_PATH, PACKAGE_NAME + SUBLIME_PACKAGE_EXTENSION
 )
 
+# ZUKAN_ICONS_DATA_FILE = os.path.join(
+#     sublime.packages_path(),
+#     PACKAGE_NAME,
+#     'icons_data',
+#     'zukan_icons_data' + PICKLE_EXTENSION,
+# )
+ZUKAN_ICONS_DATA_FILE = os.path.join(
+    PACKAGES_PATH,
+    PACKAGE_NAME,
+    'icons_data',
+    'zukan_icons_data' + PICKLE_EXTENSION,
+)
+
 # ZUKAN_PREFERENCES_DATA_FILE = os.path.join(
 #     sublime.packages_path(),
 #     PACKAGE_NAME,

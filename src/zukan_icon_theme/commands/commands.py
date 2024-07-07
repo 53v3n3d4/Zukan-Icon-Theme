@@ -8,7 +8,7 @@ from ..events.settings import SettingsEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
-from ..helpers.get_settings import load_settings
+from ..helpers.get_settings import get_settings
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
@@ -149,7 +149,7 @@ class DeleteTheme(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_name: str):
         # 'zukan_restart_message' setting
-        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
         if zukan_restart_message is True:
             dialog_message = (
@@ -201,7 +201,7 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
     def run(self):
         if ZukanTheme.list_created_icons_themes():
             # 'zukan_restart_message' setting
-            zukan_restart_message = load_settings(
+            zukan_restart_message = get_settings(
                 ZUKAN_SETTINGS, 'zukan_restart_message'
             )
 
@@ -331,7 +331,7 @@ class InstallTheme(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_name: str):
         # 'zukan_restart_message' setting
-        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
         if zukan_restart_message is True:
             dialog_message = (
@@ -383,7 +383,7 @@ class InstallThemes(sublime_plugin.ApplicationCommand):
 
     def run(self):
         # 'zukan_restart_message' setting
-        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
         if zukan_restart_message is True:
             dialog_message = (

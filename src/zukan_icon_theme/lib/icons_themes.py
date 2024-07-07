@@ -3,7 +3,7 @@ import glob
 import logging
 import os
 
-from ..helpers.get_settings import load_settings
+from ..helpers.get_settings import get_settings
 from ..helpers.read_write_data import dump_json_data
 from ..helpers.search_themes import (
     search_resources_sublime_themes,
@@ -44,9 +44,11 @@ class ZukanTheme:
         try:
             list_all_themes = search_resources_sublime_themes()
             file_name = os.path.basename(theme_st_path)
-            ignored_theme = load_settings(ZUKAN_SETTINGS, 'ignored_theme')
+            ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
             if not isinstance(ignored_theme, list):
-                logger.warning('ignored theme setting is not a list')
+                logger.warning(
+                    'ignored_theme option malformed, need to be a string list'
+                )
             # Check if installed theme file exist and not in 'ignored_theme'
             # settings.
             if (

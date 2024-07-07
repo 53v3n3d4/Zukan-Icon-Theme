@@ -43,7 +43,13 @@ class ThreadProgress:
     thread is complete. Default is None.
     """
 
-    def __init__(self, thread, message, success_message, dialog_message=None):
+    def __init__(
+        self,
+        thread: str,
+        message: str,
+        success_message: str,
+        dialog_message: str = None,
+    ):
         self.thread = thread
         self.message = message
         self.success_message = success_message

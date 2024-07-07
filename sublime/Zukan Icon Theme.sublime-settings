@@ -37,6 +37,17 @@
     // Default is false.
     "auto_install_theme": false,
 
+    // Ignore icon option will exclude icon from building.
+    //
+    // A list of icons names can be seen in
+    // https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md
+    //
+    // It can be icon name or icon SVG name. E.g., to ignore
+    // Node.js icon use: "Node.js", "nodejs" or "nodejs.svg"
+    //
+    // Example: ["nodejs"]
+    "ignored_icon": [],
+
     // Ignore theme option will exclude the theme name from
     // creating an icon theme. Thus not show icons in ignored
     // theme.

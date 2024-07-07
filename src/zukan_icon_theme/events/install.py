@@ -5,7 +5,7 @@ from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..lib.move_folders import MoveFolder
-from ..helpers.get_settings import load_settings
+from ..helpers.get_settings import get_settings
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
@@ -49,14 +49,14 @@ class InstallEvent:
         """
         # Check 'auto_install_theme' avoid duplicate create themes when True.
         # Because deleting theme already triggers event to create themes.
-        auto_install_theme = load_settings(ZUKAN_SETTINGS, 'auto_install_theme')
+        auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
         if auto_install_theme is False:
             ZukanTheme.create_icons_themes()
 
         ZukanPreference.build_icons_preferences()
         ZukanSyntax.build_icons_syntaxes()
 
-        version = load_settings(ZUKAN_SETTINGS, 'version')
+        version = get_settings(ZUKAN_SETTINGS, 'version')
         logger.info('Zukan icons v%s has been built.', version)
 
     def install_upgrade():
@@ -71,8 +71,8 @@ class InstallEvent:
         """
         Using Thread to build upgraded files, to avoid ST freezing.
         """
-        version = load_settings(ZUKAN_SETTINGS, 'version')
-        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        version = get_settings(ZUKAN_SETTINGS, 'version')
+        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
         if zukan_restart_message is True:
             dialog_message = (
@@ -98,8 +98,8 @@ class InstallEvent:
         # 'refresh_folder_list' do not help force reload. But deleting or duplicating a
         # folder with at least 5 files, it will realod file icons.
         # If change themes, the icons is working with no problem.
-        version = load_settings(ZUKAN_SETTINGS, 'version')
-        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        version = get_settings(ZUKAN_SETTINGS, 'version')
+        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
         if zukan_restart_message is True:
             dialog_message = (

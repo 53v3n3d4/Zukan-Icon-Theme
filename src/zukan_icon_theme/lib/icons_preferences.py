@@ -4,16 +4,22 @@ import logging
 import os
 
 from ..helpers.clean_data import clean_plist_tag
+from ..helpers.get_settings import get_settings
 from ..helpers.read_write_data import (
     dump_plist_data,
     read_pickle_data,
 )
 from ..utils.file_extensions import (
+    SVG_EXTENSION,
     TMPREFERENCES_EXTENSION,
+)
+from ..utils.file_settings import (
+    ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
-    ZUKAN_PREFERENCES_DATA_FILE,
+    ZUKAN_ICONS_DATA_FILE,
+    # ZUKAN_PREFERENCES_DATA_FILE,
 )
 
 logger = logging.getLogger(__name__)
@@ -38,16 +44,45 @@ class ZukanPreference:
         Create icon tmPreferences file.
         """
         try:
-            zukan_icons_preferences = read_pickle_data(ZUKAN_PREFERENCES_DATA_FILE)
-            for p in zukan_icons_preferences:
-                if p['settings']['icon'] == preference_name:
-                    filename = p['settings']['icon'] + TMPREFERENCES_EXTENSION
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+            if not isinstance(ignored_icon, list):
+                logger.warning(
+                    'ignored_icon option malformed, need to be a string list'
+                )
+            for p in zukan_icons:
+                if (
+                    p['preferences']['settings']['icon'] == preference_name
+                    and p['preferences'].get('scope') is not None
+                    and not (
+                        p['name'] in ignored_icon
+                        or p['preferences']['settings']['icon'] in ignored_icon
+                        or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
+                        in ignored_icon
+                        # or (p.get('tag') is not None and p['tag'] in ignored_icon)
+                    )
+                ):
+                    filename = (
+                        p['preferences']['settings']['icon'] + TMPREFERENCES_EXTENSION
+                    )
                     preferences_filepath = os.path.join(
                         ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
                     )
-                    dump_plist_data(p, preferences_filepath)
-            logger.info('%s created.', filename)
-            return zukan_icons_preferences
+                    dump_plist_data(p['preferences'], preferences_filepath)
+                    logger.info('%s created.', filename)
+                elif (
+                    p['preferences']['settings']['icon'] == preference_name
+                    and p['preferences'].get('scope') is not None
+                    and (
+                        p['name'] in ignored_icon
+                        or p['preferences']['settings']['icon'] in ignored_icon
+                        or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
+                        in ignored_icon
+                        # or (p.get('tag') is not None and p['tag'] in ignored_icon)
+                    )
+                ):
+                    logger.info('ignored icon %s', p['name'])
+            return zukan_icons
         except FileNotFoundError:
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
@@ -62,15 +97,40 @@ class ZukanPreference:
         Create icons tmPreferences files.
         """
         try:
-            zukan_icons_preferences = read_pickle_data(ZUKAN_PREFERENCES_DATA_FILE)
-            for p in zukan_icons_preferences:
-                filename = p['settings']['icon'] + TMPREFERENCES_EXTENSION
-                preferences_filepath = os.path.join(
-                    ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+            if not isinstance(ignored_icon, list):
+                logger.warning(
+                    'ignored_icon option malformed, need to be a string list'
                 )
-                dump_plist_data(p, preferences_filepath)
+            for p in zukan_icons:
+                if (
+                    p['preferences'].get('scope') is not None
+                    and not (
+                        p['name'] in ignored_icon
+                        or p['preferences']['settings']['icon'] in ignored_icon
+                        or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
+                        in ignored_icon
+                        # or (p.get('tag') is not None and p['tag'] in ignored_icon)
+                    )
+                ):
+                    filename = (
+                        p['preferences']['settings']['icon'] + TMPREFERENCES_EXTENSION
+                    )
+                    preferences_filepath = os.path.join(
+                        ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
+                    )
+                    dump_plist_data(p['preferences'], preferences_filepath)
+                elif (
+                    p['name'] in ignored_icon
+                    or p['preferences']['settings']['icon'] in ignored_icon
+                    or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
+                    in ignored_icon
+                    # or (p.get('tag') is not None and p['tag'] in ignored_icon)
+                ):
+                    logger.info('ignored icon %s', p['name'])
             logger.info('tmPreferences created.')
-            return zukan_icons_preferences
+            return zukan_icons
         except FileNotFoundError:
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
@@ -145,7 +205,8 @@ class ZukanPreference:
         preference_file = os.path.join(
             ZUKAN_PKG_ICONS_PREFERENCES_PATH, preference_name
         )
-        clean_plist_tag(preference_file)
+        if os.path.exists(preference_file):
+            clean_plist_tag(preference_file)
 
     def delete_plist_tags():
         """

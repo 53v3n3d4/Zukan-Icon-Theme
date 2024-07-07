@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.3.0] - 2024
+
+### Icons, syntaxes and preferences
+- Change syntax: Sublime LSP, Terraform
+
+### Build
+- Add zukan_icons
+
+### Plugin
+- Add ignore_icon setting
+
 ## [0.2.2] - 2024-07-07
 - Change icon support rectangle round corner.
 

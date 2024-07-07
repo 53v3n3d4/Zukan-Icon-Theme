@@ -7,7 +7,7 @@ from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
-from ..helpers.get_settings import load_settings
+from ..helpers.get_settings import get_settings
 from ..helpers.read_write_data import dump_json_data
 from ..helpers.search_themes import (
     filter_resources_themes,
@@ -48,24 +48,26 @@ class SettingsEvent:
         This function will check if theme changed then create or delete syntaxes
         and preferences for a icon theme.
 
-        It also create themes if setting 'auto_install_theme' is set to True.
+        It creates themes if setting 'auto_install_theme' is set to True. And
+        do not create theme if theme name in 'ignored_theme' setting.
         """
         logger.debug('Preferences.sublime-settings changed')
-        theme_name = load_settings(USER_SETTINGS, 'theme')
-        auto_install_theme = load_settings(ZUKAN_SETTINGS, 'auto_install_theme')
-        ignored_theme = load_settings(ZUKAN_SETTINGS, 'ignored_theme')
+        theme_name = get_settings(USER_SETTINGS, 'theme')
+        auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
+        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
         icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
-        zukan_restart_message = load_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
         if not isinstance(ignored_theme, list):
-            logger.warning('ignored theme setting is not a list')
+            logger.warning('ignored_theme option malformed, need to be a string list')
 
         if (
             theme_name not in ZukanTheme.list_created_icons_themes()
             and auto_install_theme is False
         ) or theme_name in ignored_theme:
             # Delete preferences to avoid error unable to decode 'icon_file_type'
-            # Example of extensions that this errors show: HAML, LICENSE, README, Makefile
+            # Example of extensions that this errors show: HAML, LICENSE, README,
+            # Makefile
             if any(
                 syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
                 for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
@@ -87,7 +89,7 @@ class SettingsEvent:
         #
         # 'auto_install_theme' setting
         # Commands 'Delete Syntax', 'Delete Syntaxes', 'Install Syntax' and
-        # 'Rebuild Syntaxes' is triggered here and build themes.
+        # 'Rebuild Syntaxes' are triggered here and build themes.
         #
         # Creating icon theme if does not exist.
         if (
@@ -106,7 +108,6 @@ class SettingsEvent:
                             'current theme.'
                         )
                         sublime.message_dialog(dialog_message)
-                    print(t)
                     ZukanTheme.create_icon_theme(t)
 
         if (
@@ -140,19 +141,19 @@ class SettingsEvent:
         """
         Print to console, current Zukan settings options.
         """
-        log_level = load_settings(ZUKAN_SETTINGS, 'log_level')
+        log_level = get_settings(ZUKAN_SETTINGS, 'log_level')
 
         if log_level == 'DEBUG':
             print('\n==== Zukan Icon Theme settings ====')
 
             for s in ZUKAN_SETTINGS_OPTIONS:
-                setting_option = load_settings(ZUKAN_SETTINGS, s)
+                setting_option = get_settings(ZUKAN_SETTINGS, s)
                 print('{s}: {v}'.format(s=s, v=setting_option))
 
             print('\n==== User ST settings ==============')
 
             for s in USER_SETTINGS_OPTIONS:
-                setting_option = load_settings(USER_SETTINGS, s)
+                setting_option = get_settings(USER_SETTINGS, s)
                 print('{s}: {v}'.format(s=s, v=setting_option))
 
             print('------------------------------------')
@@ -163,14 +164,14 @@ class SettingsEvent:
 
         If option is True, will rebuild preferences and syntaxes files.
 
-        It compare with 'version' value from 'zukan-version.sublime-settings'.
+        It compares with 'version' value from 'zukan-version.sublime-settings'.
         """
         logger.debug('If package upgraded, begin rebuild...')
-        pkg_version = load_settings(ZUKAN_SETTINGS, 'version')
-        auto_upgraded = load_settings(ZUKAN_SETTINGS, 'rebuild_on_upgrade')
+        pkg_version = get_settings(ZUKAN_SETTINGS, 'version')
+        auto_upgraded = get_settings(ZUKAN_SETTINGS, 'rebuild_on_upgrade')
 
         if os.path.exists(ZUKAN_VERSION_FILE) and auto_upgraded is True:
-            installed_pkg_version = load_settings(ZUKAN_VERSION, 'version')
+            installed_pkg_version = get_settings(ZUKAN_VERSION, 'version')
 
             # Transform string to tuple to compare.
             tuple_installed_pkg_version = tuple(
@@ -212,28 +213,28 @@ class SettingsEvent:
         """
         Clear 'add_on_change' 'Preferences.sublime-settings'.
         """
-        user_preferences = load_settings(USER_SETTINGS)
+        user_preferences = get_settings(USER_SETTINGS)
         user_preferences.clear_on_change('Preferences')
 
     def user_preferences_changed():
         """
         Listen to 'Preferences.sublime-settings'.
         """
-        user_preferences = load_settings(USER_SETTINGS)
+        user_preferences = get_settings(USER_SETTINGS)
         user_preferences.add_on_change('Preferences', SettingsEvent.get_user_theme)
 
     def zukan_preferences_clear():
         """
         Clear 'add_on_change' 'Zukan Icon Theme.sublime-settings'.
         """
-        zukan_preferences = load_settings(ZUKAN_SETTINGS)
+        zukan_preferences = get_settings(ZUKAN_SETTINGS)
         zukan_preferences.clear_on_change('Zukan Icon Theme')
 
     def zukan_preferences_changed():
         """
         Listen to 'Zukan Icon Theme.sublime-settings'.
         """
-        zukan_preferences = load_settings(ZUKAN_SETTINGS)
+        zukan_preferences = get_settings(ZUKAN_SETTINGS)
         zukan_preferences.add_on_change(
             'Zukan Icon Theme', SettingsEvent.zukan_options_settings
         )

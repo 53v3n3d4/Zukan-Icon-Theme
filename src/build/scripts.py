@@ -19,14 +19,17 @@ from src.build.utils.build_dir_paths import (
     CONCAT_SVGS_FILE_SAMPLE,
     DATA_PATH,
     ICON_THEME_TEST_PATH,
+    ICONS_DATA_PATH,
     ICONS_PNG_PATH,
     ICONS_SVG_PATH,
     ICONS_SYNTAXES_PATH,
     ICONS_PREFERENCES_PATH,
+    ZUKAN_ICONS_DATA_FILE,
     ZUKAN_PREFERENCES_DATA_FILE,
     ZUKAN_SYNTAXES_DATA_FILE,
 )
 from src.build.utils.svg_unused_list import UNUSED_LIST
+from src.build.zukan_icons import ZukanIcon
 from src.build.zukan_preferences import ZukanPreference
 from src.build.zukan_syntaxes import ZukanSyntax
 
@@ -179,44 +182,28 @@ def main():
         help=f'{ Color.YELLOW }Path to icons SVGs folder.{ Color.END }',
     )
     parser_icontheme.add_argument(
+        '-id',
+        '--icondata',
+        default=ICONS_DATA_PATH,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to destiny for icons data file.{ Color.END }',
+    )
+    parser_icontheme.add_argument(
+        '-if',
+        '--iconfile',
+        default=ZUKAN_ICONS_DATA_FILE,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to icons data file.{ Color.END }',
+    )
+    parser_icontheme.add_argument(
         '-p',
         '--png',
         default=ICONS_PNG_PATH,
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-s',
-        '--syntax',
-        default=ICONS_SYNTAXES_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-sf',
-        '--syntaxfile',
-        default=ZUKAN_SYNTAXES_DATA_FILE,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to zukan syntaxes file.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-t',
-        '--tmpreference',
-        default=ICONS_PREFERENCES_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for tmPreferences files.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-tf',
-        '--tmpreferencefile',
-        default=ZUKAN_PREFERENCES_DATA_FILE,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to zukan preferences file.{ Color.END }',
     )
 
     # Create the parser for the "png" sub-command
@@ -368,6 +355,42 @@ def main():
         help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
     )
 
+    # Create the parser for the "zukan-icon" sub-command
+    parser_zukan_icon = subparsers.add_parser(
+        'zukan-icon',
+        help=f'{ Color.YELLOW }Create zukan icons data file.{ Color.END }',
+    )
+    parser_zukan_icon.add_argument(
+        '-r',
+        '--read',
+        action='store_true',
+        required=False,
+        help=f'{ Color.YELLOW }Print zukan icons data file.{ Color.END }',
+    )
+    parser_zukan_icon.add_argument(
+        '-id',
+        '--icondata',
+        default=ICONS_DATA_PATH,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to destiny for icons data file.{ Color.END }',
+    )
+    parser_zukan_icon.add_argument(
+        '-if',
+        '--iconfile',
+        default=ZUKAN_ICONS_DATA_FILE,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to icons data file.{ Color.END }',
+    )
+    parser_zukan_icon.add_argument(
+        '-w',
+        '--write',
+        action='store_true',
+        required=False,
+        help=f'{ Color.YELLOW }Dump zukan icons data file.{ Color.END }',
+    )
+
     # Create the parser for the "zukan-preference" sub-command
     parser_zukan_preference = subparsers.add_parser(
         'zukan-preference',
@@ -476,7 +499,7 @@ def main():
                 args.maxheight,
             )
         elif not args.sample:
-            print_build_message('🛠️  Concatenating sample SVGs: ', CONCAT_SVGS_FILE)
+            print_build_message('🛠️  Concatenating all SVGs: ', CONCAT_SVGS_FILE)
             if args.concatfile is None:
                 args.concatfile = CONCAT_SVGS_FILE
             ConcatSVG.write_concat_svgs(
@@ -494,57 +517,36 @@ def main():
     elif parser == 'icon-theme':
         if args.all and not (args.file or args.data):
             print(
-                f'{ Color.BLUE }[⚙] Starting building zukan syntaxes data file, all '
-                f'icons PNGs and tmPreferences.{ Color.END }'
+                f'{ Color.BLUE }[⚙] Starting building zukan icons data file and '
+                f'all icons PNGs{ Color.END }'
             )
             print_build_message(
-                '🛠️  Creating zukan syntaxes data file: ',
-                ZUKAN_SYNTAXES_DATA_FILE,
+                '🛠️  Creating zukan icons data: ',
+                ZUKAN_ICONS_DATA_FILE,
             )
-            ZukanSyntax.write_syntax_data(DATA_PATH, args.syntax, args.syntaxfile)
+            ZukanIcon.write_icon_data(DATA_PATH, args.icondata, args.iconfile)
             print_build_message('🛠️  Generating all icons PNGs: ', ICONS_PNG_PATH)
             IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png)
-            print_build_message(
-                '🛠️  Creating zukan preferences data file: ',
-                ZUKAN_PREFERENCES_DATA_FILE,
-            )
-            ZukanPreference.write_preference_data(
-                DATA_PATH, args.tmpreference, args.tmpreferencefile
-            )
         elif args.file and not (args.all or args.data):
             print_build_message(
-                '🛠️  Creating zukan preferences data file: ',
-                ZUKAN_PREFERENCES_DATA_FILE,
+                '🛠️  Creating zukan icons data: ',
+                ZUKAN_ICONS_DATA_FILE,
             )
-            ZukanPreference.write_preference_data(
-                DATA_PATH, args.tmpreference, args.tmpreferencefile
-            )
-            print_build_message(
-                '🛠️  Creating zukan syntaxes data file: ',
-                ZUKAN_SYNTAXES_DATA_FILE,
-            )
-            ZukanSyntax.write_syntax_data(DATA_PATH, args.syntax, args.syntaxfile)
+            ZukanIcon.write_icon_data(DATA_PATH, args.icondata, args.iconfile)
             print_build_message('🛠️  Generating icon PNGs: ', args.png)
             IconPNG.svg_to_png(args.file, args.icon, args.png)
         elif args.data and not (args.all or args.file):
             print(
-                f'{ Color.BLUE }[⚙] Starting building zukan syntax data file, all '
-                f'icons PNGs and tmPreferences.{ Color.END }'
+                f'{ Color.BLUE }[⚙] Starting building zukan icons data file and '
+                f'all icons PNGs{ Color.END }'
             )
             print_build_message(
-                '🛠️  Creating zukan syntaxes data file: ',
-                ZUKAN_SYNTAXES_DATA_FILE,
+                '🛠️  Creating zukan icons data: ',
+                ZUKAN_ICONS_DATA_FILE,
             )
-            ZukanSyntax.write_syntax_data(DATA_PATH, args.syntax, args.syntaxfile)
+            ZukanIcon.write_icon_data(DATA_PATH, args.icondata, args.iconfile)
             print_build_message('🛠️  Generating all icons PNGs: ', args.png)
             IconPNG.svg_to_png_all(args.data, args.icon, args.png)
-            print_build_message(
-                '🛠️  Creating zukan preferences data file: ',
-                ZUKAN_PREFERENCES_DATA_FILE,
-            )
-            ZukanPreference.write_preference_data(
-                DATA_PATH, args.tmpreference, args.tmpreferencefile
-            )
         else:
             _error_message()
     # PNGs
@@ -608,6 +610,22 @@ def main():
         elif args.data and not (args.all or args.file):
             print_build_message('🛠️  Creating all icons tests files: ', args.testspath)
             TestIconTheme.create_icons_files(args.data, args.testspath)
+        else:
+            _error_message()
+    # Zukan icons
+    elif parser == 'zukan-icon':
+        if args.write and not args.read:
+            print_build_message(
+                '🛠️  Writing zukan icons data: ',
+                ZUKAN_ICONS_DATA_FILE,
+            )
+            ZukanIcon.write_icon_data(DATA_PATH, args.icondata, args.iconfile)
+        elif args.read and not args.write:
+            print_build_message(
+                '🛠️  Printing zukan icons data: ',
+                ZUKAN_ICONS_DATA_FILE,
+            )
+            read_pickle_data(args.iconfile)
         else:
             _error_message()
     # Zukan preference

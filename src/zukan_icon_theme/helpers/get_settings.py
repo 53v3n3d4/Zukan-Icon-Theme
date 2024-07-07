@@ -1,7 +1,7 @@
 import sublime
 
 
-def load_settings(file_settings: str, option: str = None):
+def get_settings(file_settings: str, option: str = None):
     """
     Load sublime-settings, and get options.
 

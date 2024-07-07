@@ -24,7 +24,7 @@ class TestGetSettingLogLevel(TestCase):
         mock.logger.get_setting_log_level()
         mock.logger.get_setting_log_level.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.load_settings')
+    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.get_settings')
     def test_getting_log_level(self, log_level_mock):
         for p1, p2 in params_list:
             with self.subTest(params_list):
