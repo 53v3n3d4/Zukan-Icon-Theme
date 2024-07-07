@@ -11,20 +11,7 @@
     // Turn to false, if do not want to display this diablog.
     "zukan_restart_message": true,
 
-    // This setting control if user want to auto upgrade
-    // preferences and syntaxes files.
-    //
-    // ST auto upgrade packages plugins. This package choose to
-    // build syntaxes and preferences based on user installed 
-    // syntaxes and themes, to avoid errors about duplication
-    // or not founded syntaxes.
-    //
-    // Only data files and icons PNGs are auto updated by ST.
-    //
-    // If true, will auto rebuild icons syntaxes and preferences.
-    "rebuild_on_upgrade": true,
-
-    // This option will auto install themes in the following
+    // This option will auto install theme in the following
     // cases:
     // - ST function 'add_on_change' is triggered by 'Preferences'
     // - ST start
@@ -35,7 +22,7 @@
     // - 'Zukan Icon Theme: Delete Themes'
     // - 'Zukan Icon Theme: Delete Syntaxes', when deleting all
     // syntaxes, ST seems to activate 'add_on_change' on 
-    // 'Preferences'. And will be followed by syntaxes and themes
+    // 'Preferences'. And will be followed by syntaxes and theme
     // installs.
     // - 'Zukan Icon Theme: Install Theme'
     // - 'Zukan Icon Theme: Install Themes'
@@ -45,7 +32,7 @@
     //
     // Command 'Zukan Icon Theme: Delete Syntaxes' works, but
     // since ST activate 'add_on_change', will be followed by
-    // themes install.
+    // theme install.
     //
     // Default is false.
     "auto_install_theme": false,
@@ -62,10 +49,23 @@
     // Example: ["Treble Dark.sublime-theme"]
     "ignored_theme": [],
 
+    // This setting control if user want to auto upgrade
+    // preferences and syntaxes files.
+    //
+    // ST auto upgrade packages plugins. This package choose to
+    // build syntaxes and preferences based on user installed 
+    // syntaxes and themes, to avoid errors about duplication
+    // or not founded syntaxes.
+    //
+    // Only data files and icons PNGs are auto updated by ST.
+    //
+    // If true, will auto rebuild icons syntaxes and preferences.
+    "rebuild_on_upgrade": true,
+
     // Do not change version. Neither use this option.
     // It is used to upgrade package if 'rebuild_on_upgrade'
     // is true
-    "version": "0.2.1",
+    "version": "0.2.2",
 
     // https://docs.python.org/3/library/logging.html
     // It currently only accept Python library logging default

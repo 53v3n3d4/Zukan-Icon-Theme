@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.2.2] - 2024
+## [0.2.2] - 2024-07-07
 - Change icon support rectangle round corner.
 
 ### Icons, syntaxes and preferences
