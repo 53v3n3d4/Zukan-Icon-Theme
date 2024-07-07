@@ -54,6 +54,8 @@ syntax:
       - LSP-volar.sublime-settings
       - LSP-lemminx.sublime-settings
       - LSP-yaml.sublime-settings
+      - LSP-copilot.sublime-settings
+      - LSP-basedpyright.sublime-settings
     contexts:
       main:
         - include: scope:source.json

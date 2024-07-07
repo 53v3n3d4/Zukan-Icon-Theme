@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 name: Text
+tag: primary
 preferences:
   scope: text.plain
   settings:

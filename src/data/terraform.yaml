@@ -23,6 +23,7 @@ syntax:
     contexts:
       main:
         - include: scope:source.json
+          apply_prototype: true
   - name: Terraform
     scope: source.terraform
     hidden: true

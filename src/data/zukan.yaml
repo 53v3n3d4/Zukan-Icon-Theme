@@ -10,6 +10,7 @@ syntax:
     scope: binary.zukan
     hidden: true
     file_extensions:
+      - zukan_icons_data.pkl
       - zukan_preferences_data.pkl
       - zukan_syntaxes_data.pkl
       - Zukan-Icon-Theme.sublime-package
