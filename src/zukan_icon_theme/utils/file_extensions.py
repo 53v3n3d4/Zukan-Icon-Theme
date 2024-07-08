@@ -1,4 +1,5 @@
 PICKLE_EXTENSION = '.pkl'
+PNG_EXTENSION = '.png'
 SUBLIME_PACKAGE_EXTENSION = '.sublime-package'
 SUBLIME_SETTINGS_EXTENSION = '.sublime-settings'
 SUBLIME_SYNTAX_EXTENSION = '.sublime-syntax'

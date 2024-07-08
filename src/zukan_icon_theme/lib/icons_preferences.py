@@ -4,6 +4,7 @@ import logging
 import os
 
 from ..helpers.clean_data import clean_plist_tag
+from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.get_settings import get_settings
 from ..helpers.read_write_data import (
     dump_plist_data,
@@ -30,6 +31,16 @@ class ZukanPreference:
     Create and remove tmPreferences in preferences folder.
     """
 
+    def build_icon_preference(file_name: str, preference_name: str):
+        """
+        Batch create preferences and delete plist tags, to use with Thread together
+        in install events.
+        """
+        ZukanPreference.create_icon_preference(file_name)
+        # Remove plist tag <!DOCTYPE plist>
+        ZukanPreference.delete_plist_tag(preference_name)
+        copy_primary_icons()
+
     def build_icons_preferences():
         """
         Batch create preferences and delete plist tags, to use with Thread together
@@ -38,6 +49,7 @@ class ZukanPreference:
         ZukanPreference.create_icons_preferences()
         # Remove plist tag <!DOCTYPE plist>
         ZukanPreference.delete_plist_tags()
+        copy_primary_icons()
 
     def create_icon_preference(preference_name: str):
         """
@@ -59,7 +71,7 @@ class ZukanPreference:
                         or p['preferences']['settings']['icon'] in ignored_icon
                         or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
                         in ignored_icon
-                        # or (p.get('tag') is not None and p['tag'] in ignored_icon)
+                        or (p.get('tag') is not None and p['tag'] in ignored_icon)
                     )
                 ):
                     filename = (
@@ -78,7 +90,7 @@ class ZukanPreference:
                         or p['preferences']['settings']['icon'] in ignored_icon
                         or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
                         in ignored_icon
-                        # or (p.get('tag') is not None and p['tag'] in ignored_icon)
+                        or (p.get('tag') is not None and p['tag'] in ignored_icon)
                     )
                 ):
                     logger.info('ignored icon %s', p['name'])
@@ -104,15 +116,12 @@ class ZukanPreference:
                     'ignored_icon option malformed, need to be a string list'
                 )
             for p in zukan_icons:
-                if (
-                    p['preferences'].get('scope') is not None
-                    and not (
-                        p['name'] in ignored_icon
-                        or p['preferences']['settings']['icon'] in ignored_icon
-                        or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
-                        in ignored_icon
-                        # or (p.get('tag') is not None and p['tag'] in ignored_icon)
-                    )
+                if p['preferences'].get('scope') is not None and not (
+                    p['name'] in ignored_icon
+                    or p['preferences']['settings']['icon'] in ignored_icon
+                    or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
+                    in ignored_icon
+                    or (p.get('tag') is not None and p['tag'] in ignored_icon)
                 ):
                     filename = (
                         p['preferences']['settings']['icon'] + TMPREFERENCES_EXTENSION
@@ -126,7 +135,7 @@ class ZukanPreference:
                     or p['preferences']['settings']['icon'] in ignored_icon
                     or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
                     in ignored_icon
-                    # or (p.get('tag') is not None and p['tag'] in ignored_icon)
+                    or (p.get('tag') is not None and p['tag'] in ignored_icon)
                 ):
                     logger.info('ignored icon %s', p['name'])
             logger.info('tmPreferences created.')

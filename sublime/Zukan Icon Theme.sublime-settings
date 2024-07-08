@@ -45,7 +45,16 @@
     // It can be icon name or icon SVG name. E.g., to ignore
     // Node.js icon use: "Node.js", "nodejs" or "nodejs.svg"
     //
-    // Example: ["nodejs"]
+    // A 'primary' tag is supported and will ignore ST theme
+    // essentials icons. Icons with tag 'primary':
+    // - file_type_binary
+    // - file_type_default
+    // - file_type_image
+    // - file_type_markup
+    // - file_type_source
+    // - text
+    //
+    // Example: ["nodejs",  "primary"]
     "ignored_icon": [],
 
     // Ignore theme option will exclude the theme name from

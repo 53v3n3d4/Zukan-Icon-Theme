@@ -14,16 +14,16 @@ from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
+    TMPREFERENCES_EXTENSION,
 )
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
+    ZUKAN_ICONS_DATA_FILE,
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
-    ZUKAN_PREFERENCES_DATA_FILE,
-    ZUKAN_SYNTAXES_DATA_FILE,
 )
 
 logger = logging.getLogger(__name__)
@@ -236,9 +236,7 @@ class InstallPreference(sublime_plugin.TextCommand):
 
     def run(self, edit, preference_name: str):
         file_name, file_extension = os.path.splitext(preference_name)
-        ZukanPreference.create_icon_preference(file_name)
-        # Remove plist tag <!DOCTYPE plist>
-        ZukanPreference.delete_plist_tag(preference_name)
+        ZukanPreference.build_icon_preference(file_name, preference_name)
 
     def input(self, args: dict):
         return InstallPreferenceInputHandler()
@@ -258,11 +256,12 @@ class InstallPreferenceInputHandler(sublime_plugin.ListInputHandler):
 
     def list_items(self) -> list:
         list_preferences_not_installed = []
-        zukan_icons_preferences = read_pickle_data(ZUKAN_PREFERENCES_DATA_FILE)
-        for p in zukan_icons_preferences:
-            list_preferences_not_installed.append(
-                p['settings']['icon'] + '.tmPreferences'
-            )
+        zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+        for p in zukan_icons:
+            if p['preferences'].get('scope') is not None:
+                list_preferences_not_installed.append(
+                    p['preferences']['settings']['icon'] + TMPREFERENCES_EXTENSION
+                )
         list_preferences_not_installed = list(
             set(list_preferences_not_installed).difference(
                 ZukanPreference.list_created_icons_preferences()
@@ -307,10 +306,14 @@ class InstallSyntaxInputHandler(sublime_plugin.ListInputHandler):
 
     def list_items(self) -> list:
         list_syntaxes_not_installed = []
-        zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
-        for s in zukan_icons_syntaxes:
-            if s not in compare_scopes():
-                list_syntaxes_not_installed.append(s['name'] + SUBLIME_SYNTAX_EXTENSION)
+        zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+        for s in zukan_icons:
+            if s.get('syntax') is not None:
+                for k in s['syntax']:
+                    if k not in compare_scopes():
+                        list_syntaxes_not_installed.append(
+                            k['name'] + SUBLIME_SYNTAX_EXTENSION
+                        )
         list_syntaxes_not_installed = list(
             set(list_syntaxes_not_installed).difference(
                 ZukanSyntax.list_created_icons_syntaxes()
@@ -425,9 +428,7 @@ class RebuildPreferences(sublime_plugin.ApplicationCommand):
         try:
             ZukanPreference.delete_icons_preferences()
         finally:
-            ZukanPreference.create_icons_preferences()
-            # Remove plist tag <!DOCTYPE plist>
-            ZukanPreference.delete_plist_tags()
+            ZukanPreference.build_icons_preferences()
 
 
 class RebuildSyntaxes(sublime_plugin.ApplicationCommand):

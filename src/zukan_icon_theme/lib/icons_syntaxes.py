@@ -4,6 +4,7 @@ import logging
 import os
 import sublime
 
+from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.get_settings import get_settings
 from ..helpers.read_write_data import (
     dump_yaml_data,
@@ -11,7 +12,7 @@ from ..helpers.read_write_data import (
     read_pickle_data,
     read_yaml_data,
 )
-from ..helpers.search_syntaxes import compare_scopes, thread_find_resource
+from ..helpers.search_syntaxes import compare_scopes
 from ..utils.contexts_scopes import (
     CONTEXTS_MAIN,
     CONTEXTS_SCOPES,
@@ -49,6 +50,7 @@ class ZukanSyntax:
         """
         ZukanSyntax.create_icon_syntax(file_name)
         ZukanSyntax.edit_context_scope(syntax_name)
+        copy_primary_icons()
 
     def build_icons_syntaxes():
         """
@@ -57,6 +59,7 @@ class ZukanSyntax:
         """
         ZukanSyntax.create_icons_syntaxes()
         ZukanSyntax.edit_contexts_scopes()
+        copy_primary_icons()
 
     def create_icon_syntax(syntax_name: str):
         """
@@ -81,7 +84,7 @@ class ZukanSyntax:
                         or s['preferences']['settings']['icon'] in ignored_icon
                         or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
                         in ignored_icon
-                        # or (s.get('tag') is not None and s['tag'] in ignored_icon)
+                        or (s.get('tag') is not None and s['tag'] in ignored_icon)
                     )
                 ):
                     for k in s['syntax']:
@@ -101,7 +104,7 @@ class ZukanSyntax:
                         or s['preferences']['settings']['icon'] in ignored_icon
                         or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
                         in ignored_icon
-                        # or (s.get('tag') is not None and s['tag'] in ignored_icon)
+                        or (s.get('tag') is not None and s['tag'] in ignored_icon)
                     )
                 ):
                     for k in s['syntax']:
@@ -137,8 +140,7 @@ class ZukanSyntax:
                         or s['preferences']['settings']['icon'] in ignored_icon
                         or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
                         in ignored_icon
-                        # or (s['tag'] in ignored_icon)
-                        # or (s.get('tag') is not None and s['tag'] in ignored_icon)
+                        or (s.get('tag') is not None and s['tag'] in ignored_icon)
                     )
                 ):
                     for k in s['syntax']:
@@ -154,7 +156,7 @@ class ZukanSyntax:
                     or s['preferences']['settings']['icon'] in ignored_icon
                     or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
                     in ignored_icon
-                    # or (s.get('tag') is not None and s['tag'] in ignored_icon)
+                    or (s.get('tag') is not None and s['tag'] in ignored_icon)
                 ):
                     logger.info('ignored icon %s', s['name'])
             logger.info('sublime-syntaxes created.')

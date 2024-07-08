@@ -44,6 +44,9 @@ INSTALLED_PACKAGES_PATH = filepath('../../../../../Installed Packages')
 # ZUKAN_PKG_ICONS_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'icons')
 ZUKAN_PKG_ICONS_PATH = os.path.join(PACKAGES_PATH, PACKAGE_NAME, 'icons')
 
+# ZUKAN_PKG_ICONS_DATA_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'icons_data')
+ZUKAN_PKG_ICONS_DATA_PATH = os.path.join(PACKAGES_PATH, PACKAGE_NAME, 'icons_data')
+
 # ZUKAN_PKG_ICONS_PREFERENCES_PATH = os.path.join(
 #     sublime.packages_path(), PACKAGE_NAME, 'icons_preferences'
 # )
