@@ -3,13 +3,15 @@
 ## [0.3.0] - 2024
 
 ### Icons, syntaxes and preferences
-- Change syntax: Sublime LSP, Terraform
+- Change syntax: AppleScript, Sublime LSP, Terraform
+- Delete tag: Text
 
 ### Build
 - Add zukan_icons
 
 ### Plugin
 - Add ignore_icon setting
+- Fix error creating current theme when delete_created_themes
 
 ## [0.2.2] - 2024-07-07
 - Change icon support rectangle round corner.
