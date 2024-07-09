@@ -11,6 +11,7 @@ ZUKAN_SETTINGS_OPTIONS = [
     'rebuild_on_upgrade',
     'auto_install_theme',
     'ignored_theme',
+    'ignored_icon',
 ]
 
 USER_SETTINGS_OPTIONS = [

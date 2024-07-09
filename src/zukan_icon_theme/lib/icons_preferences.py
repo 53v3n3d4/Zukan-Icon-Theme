@@ -33,8 +33,8 @@ class ZukanPreference:
 
     def build_icon_preference(file_name: str, preference_name: str):
         """
-        Batch create preferences and delete plist tags, to use with Thread together
-        in install events.
+        Batch create preference, delete plist tag and copy primary icons, to
+        use with Thread together in install events.
         """
         ZukanPreference.create_icon_preference(file_name)
         # Remove plist tag <!DOCTYPE plist>
@@ -43,9 +43,11 @@ class ZukanPreference:
 
     def build_icons_preferences():
         """
-        Batch create preferences and delete plist tags, to use with Thread together
-        in install events.
+        Batch create preferences, delete plist tags and copy primary icons, to
+        use with Thread together in install events.
         """
+        if not os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH):
+            os.makedirs(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
         ZukanPreference.create_icons_preferences()
         # Remove plist tag <!DOCTYPE plist>
         ZukanPreference.delete_plist_tags()

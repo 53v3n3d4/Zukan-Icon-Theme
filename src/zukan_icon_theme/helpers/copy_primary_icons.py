@@ -25,6 +25,8 @@ def copy_primary_icons():
     'primary' icons need to delete PNGs to work in 'ignore_icon' setting. They do
     not need preference file to show.
     """
+    # Not checking if 'ignored_icon' is a list because it is used after create
+    # syntaxes or preferences. It is being check there.
     ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
     for i in PRIMARY_ICONS:
         for s in ICONS_SUFFIX:

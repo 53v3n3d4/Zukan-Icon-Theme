@@ -53,36 +53,32 @@ logger = logging.getLogger(__name__)
 def plugin_loaded():
     # Check user theme, if has or not icon theme created. Then delete or create
     # files if needed.
-    if os.path.exists(ZUKAN_PKG_ICONS_PATH) and (
-        any(
-            preference.endswith(TMPREFERENCES_EXTENSION)
-            for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-        )
-        or any(
-            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
-            for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        )
-        or any(
-            theme.endswith(SUBLIME_THEME_EXTENSION)
-            for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
+    if (
+        os.path.exists(ZUKAN_PKG_ICONS_PATH)
+        and os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+        and os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+        and (
+            any(
+                preference.endswith(TMPREFERENCES_EXTENSION)
+                for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+            )
+            or any(
+                syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
+                for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+            )
+            or any(
+                theme.endswith(SUBLIME_THEME_EXTENSION)
+                for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
+            )
         )
     ):
         SettingsEvent.get_user_theme()
 
-    # New install from repo clone. No icon themes, preferences or syntaxes.
+    # New install from repo clone, or when preferences or syntaxes folder do
+    # not exist.
     if os.path.exists(ZUKAN_PKG_ICONS_PATH) and (
-        not any(
-            preference.endswith(TMPREFERENCES_EXTENSION)
-            for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-        )
-        and not any(
-            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
-            for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        )
-        and not any(
-            theme.endswith(SUBLIME_THEME_EXTENSION)
-            for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
-        )
+        not os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+        or not os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
     ):
         InstallEvent.new_install_manually()
 

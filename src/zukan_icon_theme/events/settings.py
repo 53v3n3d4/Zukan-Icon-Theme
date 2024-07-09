@@ -81,20 +81,10 @@ class SettingsEvent:
 
         # 'auto_install_theme' setting
         # Commands 'Delete Syntax', 'Delete Syntaxes', 'Install Syntax' and
-        # 'Rebuild Syntaxes' is triggered here and build themes.
-        # if auto_install_theme is True:
-        #     ZukanTheme.create_icons_themes()
-
-        # 'auto_install_theme' and 'ignored_theme' setting.
-        #
-        # 'auto_install_theme' setting
-        # Commands 'Delete Syntax', 'Delete Syntaxes', 'Install Syntax' and
         # 'Rebuild Syntaxes' are triggered here and build themes.
         #
         # Creating icon theme if does not exist.
-        if (
-            theme_name is not ignored_theme or auto_install_theme is True
-        ) and not os.path.exists(icon_theme_file):
+        if auto_install_theme is True and not os.path.exists(icon_theme_file):
             theme_st_path = sublime.find_resources(theme_name)
             # Excluding themes in Packages sub directories.
             filter_list = filter_resources_themes(theme_st_path)
@@ -183,7 +173,7 @@ class SettingsEvent:
             # print((0, 1, 73) > (0, 1, 72))
             # print((0, 1, 72) == (0, 1, 72))
             if tuple_pkg_version == tuple_installed_pkg_version:
-                logger.debug('no need to update.')
+                logger.debug('no need to update')
 
             if tuple_pkg_version > tuple_installed_pkg_version:
                 logger.info('updating package...')

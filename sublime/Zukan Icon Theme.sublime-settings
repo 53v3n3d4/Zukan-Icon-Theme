@@ -11,6 +11,25 @@
     // Turn to false, if do not want to display this diablog.
     "zukan_restart_message": true,
 
+    // Ignore icon option will exclude icon from building.
+    //
+    // A list of icons names can be seen in
+    // https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md
+    //
+    // It can be icon name or icon SVG name. E.g., to ignore
+    // Node.js icon use: "Node.js", "nodejs" or "nodejs.svg"
+    //
+    // A 'primary' tag is supported and will ignore ST theme
+    // essentials icons. Icons with tag 'primary':
+    // - file_type_binary
+    // - file_type_default
+    // - file_type_image
+    // - file_type_markup
+    // - file_type_source
+    //
+    // Example: ["nodejs",  "primary"]
+    "ignored_icon": [],
+
     // This option will auto install theme in the following
     // cases:
     // - ST function 'add_on_change' is triggered by 'Preferences'
@@ -36,26 +55,6 @@
     //
     // Default is false.
     "auto_install_theme": false,
-
-    // Ignore icon option will exclude icon from building.
-    //
-    // A list of icons names can be seen in
-    // https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md
-    //
-    // It can be icon name or icon SVG name. E.g., to ignore
-    // Node.js icon use: "Node.js", "nodejs" or "nodejs.svg"
-    //
-    // A 'primary' tag is supported and will ignore ST theme
-    // essentials icons. Icons with tag 'primary':
-    // - file_type_binary
-    // - file_type_default
-    // - file_type_image
-    // - file_type_markup
-    // - file_type_source
-    // - text
-    //
-    // Example: ["nodejs",  "primary"]
-    "ignored_icon": [],
 
     // Ignore theme option will exclude the theme name from
     // creating an icon theme. Thus not show icons in ignored

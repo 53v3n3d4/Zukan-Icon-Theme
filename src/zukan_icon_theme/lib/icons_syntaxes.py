@@ -41,8 +41,8 @@ class ZukanSyntax:
 
     def build_icon_syntax(file_name: str, syntax_name: str):
         """
-        Batch create syntax and edit context scope, to use with Thread together
-        in install events.
+        Batch create syntax, edit context scope, and copy primary icons,
+        to use with Thread together in install events.
 
         Parameters:
         file_name (str) -- syntax file name, without extension.
@@ -54,9 +54,11 @@ class ZukanSyntax:
 
     def build_icons_syntaxes():
         """
-        Batch create syntaxes and edit contexts scopes, to use with Thread together
-        in install events.
+        Batch create syntaxes, edit contexts scopes and copy primary icons,
+        to use with Thread together in install events.
         """
+        if not os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH):
+            os.makedirs(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
         ZukanSyntax.create_icons_syntaxes()
         ZukanSyntax.edit_contexts_scopes()
         copy_primary_icons()
