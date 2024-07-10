@@ -20,8 +20,9 @@ The recommended way to install is through [PackageControl.io](https://packagecon
 - Menu `Tools > Command Palette > Package Control: Install Package`  
 - Type `Zukan`, search for `Zukan Icon Theme`  
 - Click to install it  
+- Restart ST if installation do not prompt start, or all icons do not show in current theme.  
 
-To install manually,  
+To install manually:  
 - Download the [latest release](https://github.com/53v3n3d4/Zukan-Icon-Theme/releases) or clone this repo.  
 - Menu `Sublime Text > Preferences > Browse packages...` to open destination folder  
 - Then unzip `zukan-icon-theme zip file` inside `Packages` folder. Or clone the repo inside `Packages`folder.  
