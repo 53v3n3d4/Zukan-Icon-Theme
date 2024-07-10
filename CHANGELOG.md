@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.3.0] - 2024
+## [0.3.0] - 2024-07-09
 
 ### Icons, syntaxes and preferences
 - Change syntax: AppleScript, Sublime LSP, Terraform
@@ -11,7 +11,7 @@
 
 ### Plugin
 - Add ignore_icon setting
-- Fix error creating current theme when delete_created_themes
+- Fix error creating current theme when delete_icon_themes
 
 ## [0.2.2] - 2024-07-07
 - Change icon support rectangle round corner.
