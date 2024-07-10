@@ -1,16 +1,12 @@
-## Change pre v0.2.0
-
-**Rename Repo to 'Zukan Icon Theme'**  
-
-This is important for Main.sublime-menu works and tests.  
-
-> Mac/Linux `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git Zukan\ Icon\ Theme`
-> Windows `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git "Zukan Icon Theme"`
-
+<p align="center">
+    <a href="" title="Sublime Version">
+        <img src="https://img.shields.io/badge/Build_for_Sublime_text-4169-orange?style=flat&logo=sublime-text"/>
+    </a>
+</p>
 
 ## Zukan Icon Theme
 
-Icon theme for Sublime Text editor.  
+Icon theme for Sublime Text 4 editor.  
 
 <img src="assets/file-icons-concat-sample.svg" width="728" height="460" alt="file icon">
 
@@ -20,7 +16,10 @@ Icon theme for Sublime Text editor.
 
 ## Install
 
-The only way to install this icons now is manually.  
+The recommended way to install is through [PackageControl.io](https://packagecontrol.io/packages/Zukan%20Icon%20Theme).  
+- Menu `Tools > Command Palette > Package Control: Install Package`  
+- Type `Zukan`, search for `Zukan Icon Theme`  
+- Click to install it  
 
 To install manually,  
 - Download the [latest release](https://github.com/53v3n3d4/Zukan-Icon-Theme/releases) or clone this repo.  
@@ -33,7 +32,7 @@ To install manually,
 
 > You may see a console message, regarding `ruamel-yaml` dependecy, when first install this package. ST may install it and inform that a restart is needed.  
 
-> `ruamel-yaml` is used to create icons sublime-syntaxes files in `icon-syntaxes` folder.  
+> [`ruamel-yaml`](https://packagecontrol.github.io) is used to create icons sublime-syntaxes files in `icon-syntaxes` folder.  
 
 If new install, cloning this repo, the default is to create all icons files and make them show on all themes installed.  
 
@@ -47,13 +46,17 @@ If you prefer to create or delete a theme manually, see [theme.md](https://githu
 
 ## Uninstall
 
+To remove package using Package Control.  
+- Menu `Tools > Command Palette > Package Control: Remove Package`  
+- Click on `Zukan Icon Theme`  
+
 To uninstall manually, go to your Sublime Text folder.  
 - Menu `Sublime Text > Preferences > Browse packages...`  
 - Then delete `Zukan-Icon-Theme` inside `Packages` folder  
 
 > Dependecies  
 
-> ST4 uninstall orphans dependencies. So dependency `ruamel-yaml` should be deleted when you uninstall/remove package, if not used by other packages.  
+> ST4 uninstall orphans dependencies. So dependency [`ruamel-yaml`](https://packagecontrol.github.io) should be deleted when you uninstall/remove package, if not used by other packages.  
 
 ## Upgrade
 
@@ -72,7 +75,6 @@ You can disable it, go to menu `Sublime Text > Settings > Package Settings > Zuk
 ## Icons that do not work
 
 - Favicon. ST use  `file_type_image` icon for binary files. `favicon.svg` works.  
-- GitLab. ST use `yaml` icon for `gitlab-ci.yml`. `.gitlab-ci.yml` works.  
 - Photoshop. ST use `file_type_image` icon  
 - XML. ST use `file_type_markup` icon  
 
@@ -91,7 +93,6 @@ If icons not prompt show correct, restart ST may be the solution. See [troublesh
 - `file-type-icons` is old project name  
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
-- For Sublime Text 4  
 
 ## File icon packages :alien:
 
