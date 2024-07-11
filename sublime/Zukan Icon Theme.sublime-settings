@@ -30,6 +30,31 @@
     // Example: ["nodejs",  "primary"]
     "ignored_icon": [],
 
+    // This option is to change icon. There are few icons
+    // that has another option. You can see them in link
+    // above.
+    //
+    // If icon in 'ignored_icon', change icon will not
+    // occur.
+    //
+    // A key and value is required, and insert it inside
+    // curly brackets.
+    //
+    // Key is icon name and value is icon SVG name.
+    //
+    // Examples: {
+    //    "Angular": "angular-1",
+    //    "Composer": "composer-1",
+    //    "C#": "csharp-1",
+    //    "Go": "go-1",
+    //    "LLVM": "llvm-1",
+    //    "Node.js": "nodejs-1",
+    //    "PHP": "php-1",
+    //    "Ruff": "ruff-1",
+    //    "Rust": "rust-1"
+    // }
+    "change_icon": {},
+
     // This option will auto install theme in the following
     // cases:
     // - ST function 'add_on_change' is triggered by 'Preferences'

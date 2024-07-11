@@ -79,49 +79,21 @@ class IconPNG:
                 )
                 return data
             elif icon_data.endswith('.yaml'):
-                svgfile = (
-                    f'{ data["preferences"]["settings"]["icon"] }' f'{ SVG_EXTENSION }'
+                IconPNG.generate_png(
+                    data['preferences']['settings']['icon'],
+                    icon_data,
+                    dir_origin,
+                    dir_destiny,
                 )
-                # Do not allow PNG file name with certain special chars.
-                if special_chars(svgfile):
-                    print_special_char(
-                        os.path.basename(icon_data),
-                        data['preferences']['settings']['icon'],
-                    )
-                # print(svgfile)
-                svgfile_path = os.path.join(dir_origin, svgfile)
-                # print(svgfile_path)
-                pngfile_base = data['preferences']['settings']['icon']
-                # print(pngfile_base)
-                if not os.path.exists(dir_destiny):
-                    os.makedirs(dir_destiny)
-                pngfile_path_base = os.path.join(dir_destiny, pngfile_base)
-                if svgfile.endswith('.svg') and os.path.exists(svgfile_path):
-                    for attribute in png_details:
-                        svg2png(
-                            url=svgfile_path,
-                            write_to=f'{ pngfile_path_base }{ attribute["suffix"] }'
-                            f'{ PNG_EXTENSION }',
-                            output_width=attribute['width'],
-                            output_height=attribute['height'],
+                # Icons options
+                if any('icons' in d for d in data) and data['icons'] is not None:
+                    for i in data['icons']:
+                        IconPNG.generate_png(
+                            i,
+                            icon_data,
+                            dir_origin,
+                            dir_destiny,
                         )
-                        print_created_message(
-                            os.path.basename(icon_data),
-                            pngfile_base,
-                            'done.',
-                            filename=f' [{ svgfile }]',
-                            suffix=f'{ attribute["suffix"] }',
-                            extension=f'{ PNG_EXTENSION }',
-                        )
-                else:
-                    raise FileNotFoundError(
-                        print_message(
-                            svgfile,
-                            'file or directory do not exist.',
-                            color=f'{ Color.RED }',
-                            color_end=f'{ Color.END }',
-                        )
-                    )
                 return data
             else:
                 return icon_data
@@ -165,6 +137,50 @@ class IconPNG:
                 os.strerror(errno.EACCES),
                 dir_icon_data,
             )
+
+    def generate_png(icon_name: str, icon_data: str, dir_origin: str, dir_destiny: str):
+        svgfile = f'{ icon_name }' f'{ SVG_EXTENSION }'
+        # Do not allow PNG file name with certain special chars.
+        if special_chars(svgfile):
+            print_special_char(
+                os.path.basename(icon_data),
+                icon_name,
+            )
+        # print(svgfile)
+        svgfile_path = os.path.join(dir_origin, svgfile)
+        # print(svgfile_path)
+        pngfile_base = icon_name
+        # print(pngfile_base)
+        if not os.path.exists(dir_destiny):
+            os.makedirs(dir_destiny)
+        pngfile_path_base = os.path.join(dir_destiny, pngfile_base)
+        if svgfile.endswith('.svg') and os.path.exists(svgfile_path):
+            for attribute in png_details:
+                svg2png(
+                    url=svgfile_path,
+                    write_to=f'{ pngfile_path_base }{ attribute["suffix"] }'
+                    f'{ PNG_EXTENSION }',
+                    output_width=attribute['width'],
+                    output_height=attribute['height'],
+                )
+                print_created_message(
+                    os.path.basename(icon_data),
+                    pngfile_base,
+                    'done.',
+                    filename=f' [{ svgfile }]',
+                    suffix=f'{ attribute["suffix"] }',
+                    extension=f'{ PNG_EXTENSION }',
+                )
+        else:
+            raise FileNotFoundError(
+                print_message(
+                    svgfile,
+                    'file or directory do not exist.',
+                    color=f'{ Color.RED }',
+                    color_end=f'{ Color.END }',
+                )
+            )
+        # return data
 
 
 # IconPNG.svg_to_png(file_test, ICONS_TEST_NOT_EXIST_PATH, ICONS_PNG_TEST_PATH)

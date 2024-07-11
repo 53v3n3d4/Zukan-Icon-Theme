@@ -96,10 +96,10 @@ def find_attributes_hidden_file(
     theme_has_attributes (list) -- list if theme and its hidden themes have
     attributes hover and selected.
     """
-    hidden_theme_name = sublime.find_resources(theme_content['extends'])
+    hidden_theme_list = sublime.find_resources(theme_content['extends'])
     # Exclude Zukan created themes, important for Rebuild Files command.
     hidden_theme_name = [
-        h for h in hidden_theme_name if not h.startswith(PKG_ZUKAN_ICON_THEME_FOLDER)
+        h for h in hidden_theme_list if not h.startswith(PKG_ZUKAN_ICON_THEME_FOLDER)
     ]
     for t in hidden_theme_name:
         hidden_theme_content = sublime.decode_value(sublime.load_resource(t))
@@ -114,7 +114,7 @@ def find_attributes_hidden_file(
 
 def theme_with_opacity(theme_name: str) -> bool:
     """
-    Create a themes list that use icon_file_type, with attributes 'hover' and
+    Search if theme or hidden theme use icon_file_type, with attributes 'hover' and
     'selected'.
 
     Example:

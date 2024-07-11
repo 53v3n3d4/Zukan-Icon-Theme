@@ -166,9 +166,9 @@ class CleanSVG:
 
         for s in AFDESIGNER_COMMON_IDS_NAMES:
             if s in clean_file:
-                # The max i found in SVG is rvm.svg, where i = 85.
-                # Looking until 99.
-                for i in range(100):
+                # The max i found in SVG is llvm-1, i = 297
+                # rvm.svg has i = 85.
+                for i in range(300):
                     name_id = f'{ s }{ i }'
                     # print(name_id)
                     if name_id in clean_file:

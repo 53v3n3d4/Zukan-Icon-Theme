@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.3.1] - 2024
+
+### Icons, syntaxes and preferences
+- Add icon-theme: Fantomas, FSharpLint, Paket
+- Add icon option: Angular, C#, Composer, Go, LLVM, Node.js, PHP, Ruff, Rust
+
+### Plugin
+- Add change_icon setting
+
 ## [0.3.0] - 2024-07-09
 
 ### Icons, syntaxes and preferences

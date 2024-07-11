@@ -12,6 +12,7 @@ ZUKAN_SETTINGS_OPTIONS = [
     'auto_install_theme',
     'ignored_theme',
     'ignored_icon',
+    'change_icon',
 ]
 
 USER_SETTINGS_OPTIONS = [

@@ -204,9 +204,19 @@ class ConcatSVG:
 
         return sticker
 
+    def add_to_list_svgs(
+        icon_name: str, sticker_name: str, dir_origin: str, list_svgs: Set
+    ):
+        svgfile = f'{ icon_name }{ SVG_EXTENSION }'
+        svgfile_path = os.path.join(dir_origin, svgfile)
+
+        if os.path.exists(svgfile_path):
+            icon_svg = (sticker_name, svgfile_path, svgfile)
+            list_svgs.add(icon_svg)
+
     def sorted_icons_list(dir_icon_data: str, dir_origin: str) -> Set:
         """
-        Read icon data files, and create a list with name and svg path.
+        Read icon data files, and create a list with name, svg path and svgfile.
 
         Paramenters:
         dir_icon_data (str) -- path to directory with data files.
@@ -234,15 +244,22 @@ class ConcatSVG:
                         color_end=f'{ Color.END }',
                     )
                 elif icon_data.endswith('.yaml'):
-                    svgfile = (
-                        f'{ data["preferences"]["settings"]["icon"] }'
-                        f'{ SVG_EXTENSION }'
+                    ConcatSVG.add_to_list_svgs(
+                        data['preferences']['settings']['icon'],
+                        data['name'],
+                        dir_origin,
+                        list_svgs,
                     )
-                    svgfile_path = os.path.join(dir_origin, svgfile)
 
-                    if os.path.exists(svgfile_path):
-                        icon_svg = (data['name'], svgfile_path, svgfile)
-                        list_svgs.add(icon_svg)
+                    # Icons options
+                    if any('icons' in d for d in data) and data['icons'] is not None:
+                        for i in data['icons']:
+                            ConcatSVG.add_to_list_svgs(
+                                i,
+                                data['name'],
+                                dir_origin,
+                                list_svgs,
+                            )
 
             sorted_list = sorted(list_svgs, key=lambda d: d[0].upper())
             logger.debug('%r', sorted_list)

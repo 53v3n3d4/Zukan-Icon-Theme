@@ -11,6 +11,7 @@ from ..helpers.read_write_data import (
     read_pickle_data,
 )
 from ..utils.file_extensions import (
+    PNG_EXTENSION,
     SVG_EXTENSION,
     TMPREFERENCES_EXTENSION,
 )
@@ -18,6 +19,7 @@ from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
+    ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_ICONS_DATA_FILE,
     # ZUKAN_PREFERENCES_DATA_FILE,
@@ -64,6 +66,10 @@ class ZukanPreference:
                 logger.warning(
                     'ignored_icon option malformed, need to be a string list'
                 )
+            change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
+            if not isinstance(change_icon, dict):
+                logger.warning('change_icon option malformed, need to be a dict')
+
             for p in zukan_icons:
                 if (
                     p['preferences']['settings']['icon'] == preference_name
@@ -79,6 +85,20 @@ class ZukanPreference:
                     filename = (
                         p['preferences']['settings']['icon'] + TMPREFERENCES_EXTENSION
                     )
+
+                    # 'change_icon' setting
+                    if change_icon:
+                        for k, v in change_icon.items():
+                            if p['name'] == k:
+                                p['preferences']['settings']['icon'] = v
+                                # Check if PNG exist
+                                if not os.path.exists(
+                                    os.path.join(
+                                        ZUKAN_PKG_ICONS_PATH, v + PNG_EXTENSION
+                                    )
+                                ):
+                                    logger.warning('%s not found', v)
+
                     preferences_filepath = os.path.join(
                         ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
                     )
@@ -117,6 +137,10 @@ class ZukanPreference:
                 logger.warning(
                     'ignored_icon option malformed, need to be a string list'
                 )
+            change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
+            if not isinstance(change_icon, dict):
+                logger.warning('change_icon option malformed, need to be a dict')
+
             for p in zukan_icons:
                 if p['preferences'].get('scope') is not None and not (
                     p['name'] in ignored_icon
@@ -128,6 +152,20 @@ class ZukanPreference:
                     filename = (
                         p['preferences']['settings']['icon'] + TMPREFERENCES_EXTENSION
                     )
+
+                    # 'change_icon' setting
+                    if change_icon:
+                        for k, v in change_icon.items():
+                            if p['name'] == k:
+                                p['preferences']['settings']['icon'] = v
+                                # Check if PNG exist
+                                if not os.path.exists(
+                                    os.path.join(
+                                        ZUKAN_PKG_ICONS_PATH, v + PNG_EXTENSION
+                                    )
+                                ):
+                                    logger.warning('%s not found', v)
+
                     preferences_filepath = os.path.join(
                         ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
                     )
