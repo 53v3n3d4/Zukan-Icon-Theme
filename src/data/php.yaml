@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: PHP
+icons:
+  - php-1
 preferences:
   scope: embedding.php, source.css.php, source.js.php
   settings:

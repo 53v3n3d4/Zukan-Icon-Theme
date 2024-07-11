@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: LLVM
+icons:
+  - llvm-1
 preferences:
   scope: source.yaml.llvm
   settings:

@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: C#
+icons:
+  - csharp-1
 preferences:
   scope: source.cs
   settings:

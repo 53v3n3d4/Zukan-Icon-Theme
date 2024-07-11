@@ -1,18 +1,16 @@
 %YAML 1.2
 ---
-name: Angular
-icons:
-  - angular-1
+name: fsprojects
 preferences:
-  scope: source.json.angularjs
+  scope: source.json.fsharpLint
   settings:
-    icon: angular
+    icon: fsprojects
 syntax:
-  - name: JSON (Angular)
-    scope: source.json.angularjs
+  - name: JSON (FSharpLint)
+    scope: source.json.fsharpLint
     hidden: true
     file_extensions:
-      - angular.json
+      - fsharplint.json
     contexts:
       main:
       - include: scope:source.json

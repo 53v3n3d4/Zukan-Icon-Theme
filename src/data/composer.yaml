@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: Composer
+icons:
+  - composer-1
 preferences:
   scope: source.json.composer
   settings:

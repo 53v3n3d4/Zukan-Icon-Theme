@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: Rust
+icons:
+  - rust-1
 preferences:
   scope: source.rust
   settings:

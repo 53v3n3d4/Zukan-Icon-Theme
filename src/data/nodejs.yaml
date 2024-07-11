@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: Node.js
+icons: 
+  - nodejs-1
 preferences:
   scope: source.shell.nodejs
   settings:

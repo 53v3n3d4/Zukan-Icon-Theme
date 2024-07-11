@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: Ruff
+icons:
+  - ruff-1
 preferences:
   scope: source.toml.ruff
   settings:

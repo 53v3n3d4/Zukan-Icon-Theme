@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Fantomas
+preferences:
+  scope: text.git.ignore.fantomas
+  settings:
+    icon: fantomas
+syntax:
+  - name: Git (Fantomas)
+    scope: text.git.ignore.fantomas
+    hidden: true
+    file_extensions:
+      - .fantomasignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
