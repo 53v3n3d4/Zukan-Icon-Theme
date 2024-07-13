@@ -2,7 +2,7 @@
 ---
 name: AppleScript
 preferences:
-  scope: source.applescript, source.applescript.binary
+  scope: source.applescript, source.applescript.binary, source.js.jxa
   settings:
     icon: applescript
 syntax:
@@ -21,14 +21,14 @@ syntax:
       - scpt
     contexts:
       main: []
-  # - name: JavaScript for Automation (JXA)
-  #   file_extensions:
-  #     - jxa
-  #     - jxainc
-  #     - js
-  #   scope: source.js.jxa
-  #   contexts:
-  #     main: []
+  - name: JavaScript for Automation (JXA)
+    scope: source.js.jxa
+    file_extensions:
+      - jxa
+      - jxainc
+      - js
+    contexts:
+      main: []
 
 # ST Package
 

@@ -16,7 +16,7 @@ syntax:
         - include: scope:source.css.php
           apply_prototype: true
   - name: HTML (Lavarel)
-    scope: text.html.blade
+    scope: text.html.artisan
     hidden: true
     file_extensions:
       - artisan

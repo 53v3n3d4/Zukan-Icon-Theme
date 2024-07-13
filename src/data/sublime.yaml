@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: Sublime Text
+icons:
+  - sublime-1
 preferences:
   scope: source.json.sublime, source.yaml.sublime.syntax, text.xml.sublime.snippet
   settings:

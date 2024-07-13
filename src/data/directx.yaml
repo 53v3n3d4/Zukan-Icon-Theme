@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: DirectX
+preferences:
+  scope: source.hlsl
+  settings:
+    icon: directx
+syntax:
+  - name: High Level SL
+    scope: source.hlsl
+    hidden: true
+    file_extensions:
+      - hlsl
+    contexts:
+      main: []
+
+# Package Shader Syntax (GLSL HLSL Cg)

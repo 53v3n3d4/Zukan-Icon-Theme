@@ -10,7 +10,7 @@ syntax:
     scope: source.fsharp
     hidden: true
     file_extensions:
-      - fs # using OpenGL icon
+      - fs
       - fsi
       - fsx
     contexts:

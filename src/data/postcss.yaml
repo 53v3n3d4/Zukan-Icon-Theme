@@ -76,15 +76,15 @@ syntax:
       main:
         - include: scope:source.yaml
           apply_prototype: true
-  # - name: CSS (SugarSS)
-  #   scope: source.sss
-  #   hidden: true
-  #   file_extensions:
-  #     - sss
-  #   contexts:
-  #     main:
-  #       - include: scope:source.css
-  #         apply_prototype: true
+  - name: CSS (SSS)
+    scope: source.sss
+    hidden: true
+    file_extensions:
+      - sss
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
 
 # Package Syntax Highlighting for PostCSS: source.css.postcss.sugarss, source.postcss
 # Package Syntax Highlighting for SSS SugarSS: source.sss

@@ -2,7 +2,7 @@
 ---
 name: Dart
 preferences:
-  scope: source.dart, source.pubspec
+  scope: source.dart, source.pubspec, text.git.ignore.dart
   settings:
     icon: dart
 syntax:
@@ -13,6 +13,15 @@ syntax:
       - dart
     contexts:
       main: []
+  - name: Git (Dart)
+    scope: text.git.ignore.dart
+    hidden: true
+    file_extensions:
+      - .pubignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
   - name: YAML (Dart)
     scope: source.pubspec
     hidden: true

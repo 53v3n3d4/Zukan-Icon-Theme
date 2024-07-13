@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: opam
+preferences:
+  scope: source.opam
+  settings:
+    icon: opam
+syntax:
+  - name: opam
+    scope: source.opam
+    hidden: true
+    file_extensions:
+      - opam
+    contexts:
+      main: []

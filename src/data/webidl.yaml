@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Web IDL
+preferences:
+  scope: source.webidl
+  settings:
+    icon: webidl
+syntax:
+  - name: Web IDL
+    scope: source.webidl
+    hidden: true
+    file_extensions:
+      - idl
+      - webidl
+    contexts:
+      main: []
+
+# Package IDL-Syntax
+
+# Package WebIDL

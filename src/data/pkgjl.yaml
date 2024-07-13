@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Pkg.jl
+preferences:
+  scope: source.toml.pkgjl
+  settings:
+    icon: pkgjl
+syntax:
+  - name: TOML (Pkg jl)
+    scope: source.toml.pkgjl
+    hidden: true
+    file_extensions:
+      - Manifest.toml
+      - Project.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

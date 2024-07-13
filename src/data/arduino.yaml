@@ -14,14 +14,14 @@ syntax:
     - pde
     contexts:
       main: []
-  # - name: Arduino (Deviot)
-  #   scope: source.iot
-  #   hidden: true
-  #   file_extensions:
-  #   - ino
-  #   - pde
-  #   contexts:
-  #     main: []
+  - name: Arduino (Deviot)
+    scope: source.iot
+    hidden: true
+    file_extensions:
+    - ino
+    - pde
+    contexts:
+      main: []
 
 # Package arduino-cli
 

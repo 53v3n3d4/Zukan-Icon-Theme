@@ -2,7 +2,7 @@
 ---
 name: CUDA
 preferences:
-  scope: source.cuda-c++
+  scope: source.cg, source.cuda-c++
   settings:
     icon: cuda
 syntax:
@@ -12,11 +12,21 @@ syntax:
     file_extensions:
       - cu
       - cuh
+      - h
     contexts:
       main:
         - include: scope:source.c++
           apply_prototype: true
+  - name: Cg
+    scope: source.cg
+    hidden: true
+    file_extensions:
+      - cg
+    contexts:
+      main: []
 
 # Package CUDA C++
-
 # Package CUDA Snippets
+# Both use same file extensions and scopes.
+
+# Package Shader Syntax (GLSL HLSL Cg)

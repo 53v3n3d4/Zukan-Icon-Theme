@@ -10,7 +10,7 @@ syntax:
     scope: text.django
     hidden: true
     file_extensions:
-      # - css
+      - css
       - css.djt
       - dj.css
       - djcss
@@ -22,7 +22,7 @@ syntax:
     scope: text.django
     hidden: true
     file_extensions:
-      # - html
+      - html
       - djt
       - dj.html
       - djhtml
@@ -37,7 +37,7 @@ syntax:
     file_extensions:
       - dj.xml
       - djxml
-      # - xml
+      - xml
       - xml.djt
     contexts:
       main:

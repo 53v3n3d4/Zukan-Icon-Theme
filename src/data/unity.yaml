@@ -14,14 +14,14 @@ syntax:
       - shader
     contexts:
       main: []
-  # - name: Unity3D Shader
-  #   scope: source.unity_shader
-  #   hidden: true
-  #   file_extensions:
-  #     - cginc
-  #     - shader
-  #   contexts:
-  #     main: []
+  - name: Unity3D Shader
+    scope: source.unity_shader
+    hidden: true
+    file_extensions:
+      - cginc
+      - shader
+    contexts:
+      main: []
 
 # Package Unity Shader
 # Package Unity3D Shader Highlighter and Snippets source.unity_shader

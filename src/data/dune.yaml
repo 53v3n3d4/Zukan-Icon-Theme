@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Dune
+preferences:
+  scope: source.dune
+  settings:
+    icon: dune
+syntax:
+  - name: Dune
+    scope: source.dune
+    hidden: true
+    file_extensions:
+      - dune
+      - dune-project
+      - dune-workspace.dev
+    contexts:
+      main: []
+
+# Lexical conventions, S-Expressions like.

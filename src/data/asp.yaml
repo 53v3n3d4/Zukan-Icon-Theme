@@ -21,10 +21,10 @@ syntax:
       - acm
       - acr
       - bas
-      # - cls  # TeX has same extension
+      - cls  # TeX has same extension
       - frm
       - vba
-      # - vbs
+      - vbs
       - vbe
       - wsc
       - wsf

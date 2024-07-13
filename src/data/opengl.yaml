@@ -37,5 +37,5 @@ syntax:
       main: []
 
 # Package OpenGL Shading Language (GLSL)
-
-# Read this one Package Shader Syntax (GLSL HLSL Cg)
+# Package Shader Syntax (GLSL HLSL Cg)
+# Both use source.glsl, diff OpenGL Shading Language has more extensions.

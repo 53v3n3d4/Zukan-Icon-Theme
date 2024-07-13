@@ -10,8 +10,8 @@ syntax:
     scope: source.bazel
     hidden: true
     file_extensions:
-      # - BUILD
-      # - WORKSPACE
+      - BUILD
+      - WORKSPACE
       - bazel
       - bzl
     contexts:
@@ -30,10 +30,10 @@ syntax:
     scope: source.starlark
     hidden: true
     file_extensions:
-      # - BUILD
-      # - WORKSPACE
-      # - bazel
-      # - bzl
+      - BUILD
+      - WORKSPACE
+      - bazel
+      - bzl
       - sky
       - star
     contexts:

@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: OCamlPRO
+preferences:
+  scope: source.ini.ocpindent, source.shell.ocpmanager
+  settings:
+    icon: ocamlpro
+syntax:
+  - name: INI (ocp-indent)
+    scope: source.ini.ocpindent
+    hidden: true
+    file_extensions:
+      - .ocp-indent
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: Shell Script (ocp-manager)
+    scope: source.shell.ocpmanager
+    hidden: true
+    file_extensions:
+      - .ocp-switch
+    contexts:
+      main:
+        - include: scope:source.shell
+          apply_prototype: true

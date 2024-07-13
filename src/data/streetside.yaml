@@ -1,0 +1,43 @@
+%YAML 1.2
+---
+name: Street Side Software
+preferences:
+  scope: source.js.cspell, source.json.cspell, source.yaml.cspell
+  settings:
+    icon: streetside
+syntax:
+  - name: JavaScript (CSpell)
+    scope: source.js.cspell
+    hidden: true
+    file_extensions:
+      - cspell.config.js
+      - cspell.config.cjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (CSpell)
+    scope: source.json.cspell
+    hidden: true
+    file_extensions:
+      - .cspell.json
+      - .cSpell.json
+      - cspell.json
+      - cSpell.json
+      - cspell.config.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: YAML (CSpell)
+    scope: source.yaml.cspell
+    hidden: true
+    file_extensions:
+      - cspell.yaml
+      - cspell.yml
+      - cspell.config.yaml
+      - cspell.config.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
