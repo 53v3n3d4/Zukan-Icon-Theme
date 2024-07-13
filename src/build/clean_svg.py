@@ -181,7 +181,7 @@ class CleanSVG:
                         # Regex 'name_id' followed by ')' or '"'
                         clean_file = re.sub(
                             rf'({ name_id })(ˆ?+["|)])',
-                            rf'{ new_name_id}\2',
+                            rf'{ new_name_id }\2',
                             clean_file,
                         )
                         print_message(

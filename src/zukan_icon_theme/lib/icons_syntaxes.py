@@ -5,6 +5,7 @@ import os
 import sublime
 
 from ..helpers.copy_primary_icons import copy_primary_icons
+from ..helpers.edit_file_extension import edit_file_extension
 from ..helpers.get_settings import get_settings
 from ..helpers.read_write_data import (
     dump_yaml_data,
@@ -92,12 +93,20 @@ class ZukanSyntax:
                     for k in s['syntax']:
                         if k not in compare_scopes() and k['name'] == syntax_name:
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
-                            syntax_filepath = os.path.join(
-                                ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+
+                            # 'change_scope_file_extension' setting
+                            k['file_extensions'] = edit_file_extension(
+                                k['file_extensions'], k['scope']
                             )
-                            # print(syntax_filepath)
-                            dump_yaml_data(k, syntax_filepath)
-                            logger.info('%s created.', filename)
+
+                            # file_extensions list can be empty
+                            if k['file_extensions']:
+                                syntax_filepath = os.path.join(
+                                    ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+                                )
+                                # print(syntax_filepath)
+                                dump_yaml_data(k, syntax_filepath)
+                                logger.info('%s created.', filename)
                 elif (
                     any('syntax' in d for d in s)
                     and s.get('syntax') is not None
@@ -148,11 +157,19 @@ class ZukanSyntax:
                     for k in s['syntax']:
                         if k not in compare_scopes():
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
-                            syntax_filepath = os.path.join(
-                                ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+
+                            # 'change_scope_file_extension' setting
+                            k['file_extensions'] = edit_file_extension(
+                                k['file_extensions'], k['scope']
                             )
-                            # print(syntax_filepath)
-                            dump_yaml_data(k, syntax_filepath)
+
+                            # file_extensions list can be empty
+                            if k['file_extensions']:
+                                syntax_filepath = os.path.join(
+                                    ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
+                                )
+                                # print(syntax_filepath)
+                                dump_yaml_data(k, syntax_filepath)
                 elif (
                     s['name'] in ignored_icon
                     or s['preferences']['settings']['icon'] in ignored_icon

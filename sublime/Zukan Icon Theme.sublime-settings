@@ -51,28 +51,75 @@
     //    "Node.js": "nodejs-1",
     //    "PHP": "php-1",
     //    "Ruff": "ruff-1",
-    //    "Rust": "rust-1"
+    //    "Rust": "rust-1",
+    //    "Sublime Text": "sublime-1"
     // }
     "change_icon": {},
 
+    // This option try solve duplication conflicts, when
+    // icon syntax exist. Usually when one language syntax
+    // is installed and the other is not.
+
+    // It can help, if icon is pointing to a not desired
+    // file extension, when:
+    // - languages or libraries use same file extension
+    // - packages use different scopes for same file
+    // extension.
+    //
+    // It only remove file extension in existing icons
+    // syntaxes, excluding the one inserted.
+    //
+    // In cases, where icons syntaxes do not exist, when
+    // language syntaxes are installed. Using ST 'View >
+    // Syntax > Open all with current extension as...'
+    // could fix see the desired icon.
+    // E.g., Clojure and ClojureScript, cljc extension is
+    // in both, no icons syntaxes since they are ST 
+    // package. ClojureScript syntax will prevail since ST
+    // reads it last.
+    //
+    // Required parameters are: scope and file extension.
+    // Note: file extension needs to be inside square
+    // brackets.
+    //
+    // Examples: [
+    //    { "scope": "source.js.jxa", "file_extensions": ["js"] },
+    //    { "scope": "source.iot", "file_extensions": ["ino", "pde"] },
+    //    { "scope": "source.vbs", "file_extensions": ["cls", "vbs"] },
+    //    { "scope": "source.bazel", "file_extensions": ["BUILD", "WORKSPACE"] },
+    //    { "scope": "source.starlark", "file_extensions": ["BUILD", "WORKSPACE", "bazel", "bzl"] },
+    //    { "scope": "feature.behat", "file_extensions": ["feature"] },
+    //    { "scope": "source.clojure", "file_extensions": ["cljc"] },
+    //    { "scope": "source.cmakeeditor", "file_extensions": ["CMakeLists.txt"] },
+    //    { "scope": "source.cuda-c++", "file_extensions": ["h"] },
+    //    { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
+    //    { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
+    //    { "scope": "source.fsharp", "file_extensions": ["fs"] },
+    //    { "scope": "source.sss", "file_extensions": ["sss"] },
+    //    { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
+    //    { "scope": "source.toml", "file_extensions": ["book.toml"] },
+    // ]
+    "change_icon_file_extension": [],
+
     // This option will auto install theme in the following
     // cases:
-    // - ST function 'add_on_change' is triggered by 'Preferences'
+    // - ST function 'add_on_change' is triggered by
+    // 'Preferences'
     // - ST start
     //
-    // If true, commands below will have no effect since themes
-    // will be created after deleted:
+    // If true, commands below will have no effect since
+    // themes will be created after deleted:
     // - 'Zukan Icon Theme: Delete Theme'
     // - 'Zukan Icon Theme: Delete Themes'
-    // - 'Zukan Icon Theme: Delete Syntaxes', when deleting all
-    // syntaxes, ST seems to activate 'add_on_change' on 
-    // 'Preferences'. And will be followed by syntaxes and theme
-    // installs.
+    // - 'Zukan Icon Theme: Delete Syntaxes', when deleting
+    // all syntaxes, ST seems to activate 'add_on_change' on
+    // 'Preferences'. And will be followed by syntaxes and
+    // theme installs.
     // - 'Zukan Icon Theme: Install Theme'
     // - 'Zukan Icon Theme: Install Themes'
     //
-    // Other commands continue to work, for example delete and
-    // create preferences.
+    // Other commands continue to work, for example delete
+    // and create preferences.
     //
     // Command 'Zukan Icon Theme: Delete Syntaxes' works, but
     // since ST activate 'add_on_change', will be followed by
@@ -96,14 +143,15 @@
     // This setting control if user want to auto upgrade
     // preferences and syntaxes files.
     //
-    // ST auto upgrade packages plugins. This package choose to
-    // build syntaxes and preferences based on user installed 
-    // syntaxes and themes, to avoid errors about duplication
-    // or not founded syntaxes.
+    // ST auto upgrade packages plugins. This package choose
+    // to build syntaxes and preferences based on user
+    // installed syntaxes and themes, to avoid errors about
+    // duplication or not founded syntaxes.
     //
     // Only data files and icons PNGs are auto updated by ST.
     //
-    // If true, will auto rebuild icons syntaxes and preferences.
+    // If true, will auto rebuild icons syntaxes and
+    // preferences.
     "rebuild_on_upgrade": true,
 
     // Do not change version. Neither use this option.
@@ -120,6 +168,7 @@
     // - ERROR
     // - CRITICAL
     //
-    // Default is INFO. A ST restart is needed when change value.
+    // Default is INFO. A ST restart is needed when change
+    // value.
     "log_level": "INFO"
 }

@@ -74,7 +74,7 @@ def plugin_loaded():
     ):
         SettingsEvent.get_user_theme()
 
-    # New install from repo clone, or when preferences or syntaxes folder do
+    # New install from repo clone, or when preferences or syntaxes folders do
     # not exist.
     if os.path.exists(ZUKAN_PKG_ICONS_PATH) and (
         not os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)

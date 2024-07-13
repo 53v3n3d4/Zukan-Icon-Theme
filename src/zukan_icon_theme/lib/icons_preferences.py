@@ -97,7 +97,7 @@ class ZukanPreference:
                                         ZUKAN_PKG_ICONS_PATH, v + PNG_EXTENSION
                                     )
                                 ):
-                                    logger.warning('%s not found', v)
+                                    logger.warning('%s%s not found', v, PNG_EXTENSION)
 
                     preferences_filepath = os.path.join(
                         ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
@@ -164,7 +164,7 @@ class ZukanPreference:
                                         ZUKAN_PKG_ICONS_PATH, v + PNG_EXTENSION
                                     )
                                 ):
-                                    logger.warning('%s not found', v)
+                                    logger.warning('%s%s not found', v, PNG_EXTENSION)
 
                     preferences_filepath = os.path.join(
                         ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename

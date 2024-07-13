@@ -3,11 +3,13 @@
 ## [0.3.1] - 2024
 
 ### Icons, syntaxes and preferences
-- Add icon-theme: Fantomas, FSharpLint, Paket
-- Add icon option: Angular, C#, Composer, Go, LLVM, Node.js, PHP, Ruff, Rust
+- Add icon-theme: CSpell, DirectX, Dune, Fantomas, FSharpLint, OCamlPRO, opam, Paket, Pkg.jl, Web IDL
+- Add icon option: Angular, C#, Composer, Go, LLVM, Node.js, PHP, Ruff, Rust, Sublime Text
+- Change sublime-syntax: CUDA, Dart, Flutter, Lavarel, Smarty
 
 ### Plugin
 - Add change_icon setting
+- Add change_icon_file_extension setting
 
 ## [0.3.0] - 2024-07-09
 
@@ -19,7 +21,7 @@
 - Add zukan_icons
 
 ### Plugin
-- Add ignore_icon setting
+- Add ignored_icon setting
 - Fix error creating current theme when delete_icon_themes
 
 ## [0.2.2] - 2024-07-07
