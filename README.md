@@ -33,7 +33,7 @@ To install manually:
 
 > You may see a console message, regarding `ruamel-yaml` dependecy, when first install this package. ST may install it and inform that a restart is needed.  
 
-> [`ruamel-yaml`](https://packagecontrol.github.io) is used to create icons sublime-syntaxes files in `icon-syntaxes` folder.  
+> [`ruamel-yaml`](https://packagecontrol.github.io) is used to create icons sublime-syntaxes files in `icons-syntaxes` folder.  
 
 If new install, cloning this repo, the default is to create all icons files and make them show on all themes installed.  
 
@@ -53,7 +53,7 @@ To remove package using Package Control.
 
 To uninstall manually, go to your Sublime Text folder.  
 - Menu `Sublime Text > Preferences > Browse packages...`  
-- Then delete `Zukan-Icon-Theme` inside `Packages` folder  
+- Then delete `Zukan Icon Theme` inside `Packages` folder  
 
 > Dependecies  
 

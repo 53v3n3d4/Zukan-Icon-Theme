@@ -106,7 +106,7 @@ Go to `Tools > Command Palette...` select `UnitTesting: Test Package` type `Zuka
 
 ## Build
 
-Scripts used to generate icons files: PNGs preferences and syntaxes data files.  
+Scripts used to generate icons files: PNGs and icon data file.  
 
 See [build.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/build.md).  
 
