@@ -23,7 +23,7 @@ It seems to affect only the current theme. If change to another installed theme,
 ```
 Restart fix. 
 
-Or, if installed via clone repo, duplicante a folder with 5 files or more, 
+Or, if installed via clone repo, duplicate a folder with 5 files or more, 
 seems to force reload.
 ```
 
@@ -37,7 +37,7 @@ They will be no error in console. If deleted only one theme, others themes seems
 ```
 Restart fix. 
 
-Or, if installed via clone repo, duplicante a folder with 5 files or more, 
+Or, if installed via clone repo, duplicate a folder with 5 files or more, 
 seems to force reload.
 ```
 
@@ -51,7 +51,7 @@ This also may happen, when a specific theme that do not have icon theme, is foll
 ```
 Restart fix. 
 
-Or, if installed via clone repo, duplicante a folder with 5 files or more, 
+Or, if installed via clone repo, duplicate a folder with 5 files or more, 
 seems to force reload.
 ```
 

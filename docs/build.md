@@ -1,4 +1,4 @@
-Build scripts used to create icons PNGs, sublime-syntaxes and tmPreferences.  
+Build scripts used to create icons PNG and icons data file.  
 
 ```sh
 # Environment activated
@@ -29,52 +29,35 @@ $ poetry run build icon-theme -f src/data/afdesign.yaml
 $ poetry run build icon-theme --all
 ```
 
-## Create zukan syntaxes file
-Create a data file, with all icon syntaxes, to be used by plugin.  
+## Create zukan icon data file
+Create a data file, with all icons data, to be used by plugin.  
 
-File will be created in `icons_syntaxes` folder.  
-
-Using argparse commands  
-```sh
-# Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --write
-# Print file
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --read
-```
-
-Using poetry scripts  
-```sh
-$ poetry run build zukan-syntax --write
-# Print file
-$ poetry run build zukan-syntax --read
-```
-
-## Create zukan preferences file
-Create a data file, with all icon preferences, to be used by plugin.  
-
-File will be created in `preferences` folder.  
+File will be created in `icons` folder.  
 
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --write
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-icon --help
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-icon --write
 # Print file
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --read
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-icon --read
 ```
 
 Using poetry scripts  
 ```sh
-$ poetry run build zukan-preference --write
+$ poetry run build zukan-icon --write
 # Print file
-$ poetry run build zukan-preference --read
+$ poetry run build zukan-icon --read
 ```
 
 ## Clean SVG
-Clean unused tags and attributes in SVG.  
+Clean unused tags, ids and attributes in SVG.  
 
 Affinity designer program, used to export SVGs, produce them with unsed tags that needs to be deleted. Error can raise depending on lib used.  
+
+Also, exported SVGs use common ids names indexed that conflict when concat SVGs. These names are renamed when clean is used.  
+
+Common id names: `_clip`, `_Effect`, `_Linear` and `_Gradient`.  
 
 Using argparse commands  
 ```sh
@@ -176,6 +159,48 @@ Using poetry scripts
 $ poetry run build preference -f src/data/afdesign.yaml
 # Create all tnPreferences files
 $ poetry run build preference --all
+```
+
+## Create zukan syntaxes file
+Create a data file, with all icon syntaxes, to be used by plugin.  
+
+File will be created in `icons_syntaxes` folder.  
+
+Using argparse commands  
+```sh
+# Environment activated
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --help
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --write
+# Print file
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --read
+```
+
+Using poetry scripts  
+```sh
+$ poetry run build zukan-syntax --write
+# Print file
+$ poetry run build zukan-syntax --read
+```
+
+## Create zukan preferences file
+Create a data file, with all icon preferences, to be used by plugin.  
+
+File will be created in `preferences` folder.  
+
+Using argparse commands  
+```sh
+# Environment activated
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --help
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --write
+# Print file
+🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --read
+```
+
+Using poetry scripts  
+```sh
+$ poetry run build zukan-preference --write
+# Print file
+$ poetry run build zukan-preference --read
 ```
 
 ## Create test files extensions
