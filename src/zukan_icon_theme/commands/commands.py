@@ -5,13 +5,14 @@ import sublime_plugin
 
 from ..events.install import InstallEvent
 from ..events.settings import SettingsEvent
-from ..lib.icons_preferences import ZukanPreference
-from ..lib.icons_syntaxes import ZukanSyntax
-from ..lib.icons_themes import ZukanTheme
-from ..helpers.get_settings import get_settings
+from ..helpers.edit_file_extension import edit_file_extension
+from ..helpers.load_save_settings import get_settings
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.search_themes import search_resources_sublime_themes
+from ..lib.icons_preferences import ZukanPreference
+from ..lib.icons_syntaxes import ZukanSyntax
+from ..lib.icons_themes import ZukanTheme
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
     TMPREFERENCES_EXTENSION,
@@ -118,24 +119,6 @@ class DeleteSyntaxInputHandler(sublime_plugin.ListInputHandler):
             return sorted(
                 ZukanSyntax.list_created_icons_syntaxes(), key=lambda x: x.upper()
             )
-        else:
-            raise TypeError(
-                logger.info('it does not exist any created syntax, list is empty')
-            )
-
-
-class DeleteSyntaxes(sublime_plugin.ApplicationCommand):
-    """
-    Sublime command to delete all syntaxes in 'icons_syntaxes' folder.
-    """
-
-    def run(self):
-        if ZukanSyntax.list_created_icons_syntaxes():
-            message = "Are you sure you want to delete all syntaxes in '{f}'?".format(
-                f=ZUKAN_PKG_ICONS_SYNTAXES_PATH
-            )
-            if sublime.ok_cancel_dialog(message) is True:
-                ZukanSyntax.delete_icons_syntaxes()
         else:
             raise TypeError(
                 logger.info('it does not exist any created syntax, list is empty')
@@ -311,9 +294,15 @@ class InstallSyntaxInputHandler(sublime_plugin.ListInputHandler):
             if s.get('syntax') is not None:
                 for k in s['syntax']:
                     if k not in compare_scopes():
-                        list_syntaxes_not_installed.append(
-                            k['name'] + SUBLIME_SYNTAX_EXTENSION
+                        # 'change_scope_file_extension' setting
+                        k['file_extensions'] = edit_file_extension(
+                            k['file_extensions'], k['scope']
                         )
+                        # file_extensions list can be empty
+                        if k['file_extensions']:
+                            list_syntaxes_not_installed.append(
+                                k['name'] + SUBLIME_SYNTAX_EXTENSION
+                            )
         list_syntaxes_not_installed = list(
             set(list_syntaxes_not_installed).difference(
                 ZukanSyntax.list_created_icons_syntaxes()
@@ -332,7 +321,7 @@ class InstallTheme(sublime_plugin.TextCommand):
     Sublime command to create theme from a list of installed themes.
     """
 
-    def run(self, edit, theme_name: str):
+    def run(self, edit, theme_st_path: str):
         # 'zukan_restart_message' setting
         zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
@@ -343,7 +332,7 @@ class InstallTheme(sublime_plugin.TextCommand):
             )
             sublime.message_dialog(dialog_message)
 
-        ZukanTheme.create_icon_theme(theme_name)
+        ZukanTheme.create_icon_theme(theme_st_path)
         # Check if selected theme was installed
         SettingsEvent.get_user_theme()
 
@@ -353,12 +342,12 @@ class InstallTheme(sublime_plugin.TextCommand):
 
 class InstallThemeInputHandler(sublime_plugin.ListInputHandler):
     """
-    List of installed themes, excluding created themes, and return theme_name
+    List of installed themes, excluding created themes, and return theme_st_path
     to InstallTheme.
     """
 
     def name(self) -> str:
-        return 'theme_name'
+        return 'theme_st_path'
 
     def placeholder(self) -> str:
         return 'List of installed themes'

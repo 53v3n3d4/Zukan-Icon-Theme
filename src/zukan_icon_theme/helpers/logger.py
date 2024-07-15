@@ -1,7 +1,7 @@
 import logging
 import sublime
 
-from .get_settings import get_settings
+from .load_save_settings import get_settings
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )

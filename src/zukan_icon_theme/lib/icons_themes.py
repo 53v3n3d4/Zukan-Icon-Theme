@@ -3,7 +3,7 @@ import glob
 import logging
 import os
 
-from ..helpers.get_settings import get_settings
+from ..helpers.load_save_settings import get_settings
 from ..helpers.read_write_data import dump_json_data
 from ..helpers.search_themes import (
     search_resources_sublime_themes,

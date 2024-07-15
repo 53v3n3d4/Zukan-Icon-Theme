@@ -3,7 +3,7 @@
 # If leave two same file extensions in differents scopes, ST will use
 # the last one in alphabet order.
 # Example: fs file extension used by F# and OpenGL. OpenGL will prevail.
-SCOPE_FILE_EXTENSION = [
+SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.arduino', 'file_extensions': ['ino', 'pde']},  # arduino.yaml
     {'scope': 'source.asp', 'file_extensions': ['vbs']},  # asp.yaml
     {'scope': 'source.bazel', 'file_extensions': ['bazel', 'bzl']},  # bazel.yaml

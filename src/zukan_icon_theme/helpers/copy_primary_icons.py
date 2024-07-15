@@ -1,7 +1,7 @@
 import os
 import shutil
 
-from ..helpers.get_settings import get_settings
+from ..helpers.load_save_settings import get_settings
 from ..utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,

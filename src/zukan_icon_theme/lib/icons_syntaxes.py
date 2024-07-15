@@ -5,8 +5,9 @@ import os
 import sublime
 
 from ..helpers.copy_primary_icons import copy_primary_icons
+from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.edit_file_extension import edit_file_extension
-from ..helpers.get_settings import get_settings
+from ..helpers.load_save_settings import get_settings
 from ..helpers.read_write_data import (
     dump_yaml_data,
     edit_contexts_main,
@@ -78,16 +79,34 @@ class ZukanSyntax:
                 logger.warning(
                     'ignored_icon option malformed, need to be a string list'
                 )
-            for s in zukan_icons:
+
+            # 'create_custom_icon' setting
+            custom_list = [s for s in create_custom_icon() if 'syntax' in s]
+            new_list = zukan_icons + custom_list
+
+            for s in new_list:
                 if (
                     any('syntax' in d for d in s)
                     and s.get('syntax') is not None
+                    # 'ignored_icon' setting
                     and not (
                         s['name'] in ignored_icon
-                        or s['preferences']['settings']['icon'] in ignored_icon
-                        or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
-                        in ignored_icon
-                        or (s.get('tag') is not None and s['tag'] in ignored_icon)
+                        or (
+                            # Icon can not exist in 'create_custom_icon' setting
+                            # when only creating syntax
+                            'preferences' in s
+                            and (
+                                s['preferences']['settings']['icon'] in ignored_icon
+                                or (
+                                    s['preferences']['settings']['icon'] + SVG_EXTENSION
+                                )
+                                in ignored_icon
+                                or (
+                                    s.get('tag') is not None
+                                    and s['tag'] in ignored_icon
+                                )
+                            )
+                        )
                     )
                 ):
                     for k in s['syntax']:
@@ -142,16 +161,34 @@ class ZukanSyntax:
                 logger.warning(
                     'ignored_icon option malformed, need to be a string list'
                 )
-            for s in zukan_icons:
+
+            # 'create_custom_icon' setting
+            custom_list = [s for s in create_custom_icon() if 'syntax' in s]
+            new_list = zukan_icons + custom_list
+
+            for s in new_list:
                 if (
                     any('syntax' in d for d in s)
                     and s.get('syntax') is not None
+                    # 'ignored_icon' setting
                     and not (
                         s['name'] in ignored_icon
-                        or s['preferences']['settings']['icon'] in ignored_icon
-                        or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
-                        in ignored_icon
-                        or (s.get('tag') is not None and s['tag'] in ignored_icon)
+                        or (
+                            # Icon can not exist in 'create_custom_icon' setting
+                            # when only creating syntax
+                            'preferences' in s
+                            and (
+                                s['preferences']['settings']['icon'] in ignored_icon
+                                or (
+                                    s['preferences']['settings']['icon'] + SVG_EXTENSION
+                                )
+                                in ignored_icon
+                                or (
+                                    s.get('tag') is not None
+                                    and s['tag'] in ignored_icon
+                                )
+                            )
+                        )
                     )
                 ):
                     for k in s['syntax']:

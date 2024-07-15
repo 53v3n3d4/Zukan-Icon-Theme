@@ -5,7 +5,8 @@ import os
 
 from ..helpers.clean_data import clean_plist_tag
 from ..helpers.copy_primary_icons import copy_primary_icons
-from ..helpers.get_settings import get_settings
+from ..helpers.create_custom_icon import create_custom_icon
+from ..helpers.load_save_settings import get_settings
 from ..helpers.read_write_data import (
     dump_plist_data,
     read_pickle_data,
@@ -70,7 +71,11 @@ class ZukanPreference:
             if not isinstance(change_icon, dict):
                 logger.warning('change_icon option malformed, need to be a dict')
 
-            for p in zukan_icons:
+            # 'create_custom_icon' setting
+            custom_list = [p for p in create_custom_icon() if 'preferences' in p]
+            new_list = zukan_icons + custom_list
+
+            for p in new_list:
                 if (
                     p['preferences']['settings']['icon'] == preference_name
                     and p['preferences'].get('scope') is not None
@@ -141,7 +146,11 @@ class ZukanPreference:
             if not isinstance(change_icon, dict):
                 logger.warning('change_icon option malformed, need to be a dict')
 
-            for p in zukan_icons:
+            # 'create_custom_icon' setting
+            custom_list = [p for p in create_custom_icon() if 'preferences' in p]
+            new_list = zukan_icons + custom_list
+
+            for p in new_list:
                 if p['preferences'].get('scope') is not None and not (
                     p['name'] in ignored_icon
                     or p['preferences']['settings']['icon'] in ignored_icon

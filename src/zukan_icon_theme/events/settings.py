@@ -7,7 +7,7 @@ from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
-from ..helpers.get_settings import get_settings
+from ..helpers.load_save_settings import get_settings
 from ..helpers.read_write_data import dump_json_data
 from ..helpers.search_themes import (
     filter_resources_themes,

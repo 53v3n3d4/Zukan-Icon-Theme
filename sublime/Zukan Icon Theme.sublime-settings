@@ -56,12 +56,8 @@
     // }
     "change_icon": {},
 
-    // This option try solve duplication conflicts, when
-    // icon syntax exist. Usually when one language syntax
-    // is installed and the other is not.
-
-    // It can help, if icon is pointing to a not desired
-    // file extension, when:
+    // This option can help, if icon is pointing to a not
+    // desired file extension, when:
     // - languages or libraries use same file extension
     // - packages use different scopes for same file
     // extension.
@@ -78,7 +74,7 @@
     // package. ClojureScript syntax will prevail since ST
     // reads it last.
     //
-    // Required parameters are: scope and file extension.
+    // Required parameters are: scope and file extensions.
     // Note: file extension needs to be inside square
     // brackets.
     //
@@ -101,6 +97,55 @@
     // ]
     "change_icon_file_extension": [],
 
+    // Create custom icon option can be used to insert an
+    // icon or a file extension that do not exist. The PNGs
+    // files, if not present, will have to be inserted
+    // manually in Zukan 'icons' folder.
+    //
+    // 3 options, 'name' is required:
+    // 1- To create an icon for a scope without file extension,
+    // fill icon and scope keys.
+    //
+    // 2- To insert a file_extension for a existing icon, ommit
+    // icon key.
+    //
+    // 3- To create a new icon with file_extension, keys icon,
+    // syntax_name, scope and file_extensions are necessary.
+    //
+    // Contexts_scope serves to use a base highlighting, e.g.
+    // JSON insert source.json
+    //
+    // Example: [
+    //    {
+    //        "name": "ATest",
+    //        "icon": "atest",
+    //        "scope": "source.toml.atest"
+    //    },
+    //    {
+    //        "name": "ATest-1",
+    //        "syntax_name": "JSON (ATest-1)",
+    //        "scope": "source.json.atest1",
+    //        "file_extensions": ["atest1.config.json"],
+    //        "contexts_scope": "source.json"
+    //    },
+    //    {
+    //        "name": "ATest-2",
+    //        "icon": "atest2",
+    //        "syntax_name": "ATest-2",
+    //        "scope": "source.atest2",
+    //        "file_extensions": ["xyz"]
+    //    },
+    //    {
+    //        "name": "ATest-3",
+    //        "icon": "atest3",
+    //        "syntax_name": "ATest-3",
+    //        "scope": "source.atest3",
+    //        "file_extensions": ["abc", "def"],
+    //        "contexts_scope": "source.atest2"
+    //    }
+    // ]
+    "create_custom_icon": [],
+
     // This option will auto install theme in the following
     // cases:
     // - ST function 'add_on_change' is triggered by
@@ -111,17 +156,13 @@
     // themes will be created after deleted:
     // - 'Zukan Icon Theme: Delete Theme'
     // - 'Zukan Icon Theme: Delete Themes'
-    // - 'Zukan Icon Theme: Delete Syntaxes', when deleting
-    // all syntaxes, ST seems to activate 'add_on_change' on
-    // 'Preferences'. And will be followed by syntaxes and
-    // theme installs.
     // - 'Zukan Icon Theme: Install Theme'
     // - 'Zukan Icon Theme: Install Themes'
     //
     // Other commands continue to work, for example delete
     // and create preferences.
     //
-    // Command 'Zukan Icon Theme: Delete Syntaxes' works, but
+    // Command 'Zukan Icon Theme: Delete Syntax' works, but
     // since ST activate 'add_on_change', will be followed by
     // theme install.
     //

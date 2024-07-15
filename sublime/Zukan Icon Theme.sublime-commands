@@ -1,8 +1,9 @@
 [
+    // Commands
     { "caption": "Zukan Icon Theme: Delete Preference", "command": "delete_preference"},
     { "caption": "Zukan Icon Theme: Delete Preferences", "command": "delete_preferences"},
     { "caption": "Zukan Icon Theme: Delete Syntax", "command": "delete_syntax"},
-    { "caption": "Zukan Icon Theme: Delete Syntaxes", "command": "delete_syntaxes"},
+    // { "caption": "Zukan Icon Theme: Delete Syntaxes", "command": "delete_syntaxes"},
     { "caption": "Zukan Icon Theme: Delete Theme", "command": "delete_theme"},
     { "caption": "Zukan Icon Theme: Delete Themes", "command": "delete_themes"},
     { "caption": "Zukan Icon Theme: Install Preference", "command": "install_preference"},
@@ -11,4 +12,9 @@
     { "caption": "Zukan Icon Theme: Install Themes", "command": "install_themes"},
     { "caption": "Zukan Icon Theme: Rebuild Preferences", "command": "rebuild_preferences"},
     { "caption": "Zukan Icon Theme: Rebuild Syntaxes", "command": "rebuild_syntaxes"},
+    // Commands settings
+    { "caption": "Zukan Icon Theme: Disable Icon", "command": "disable_icon"},
+    { "caption": "Zukan Icon Theme: Disable Theme", "command": "disable_theme"},
+    { "caption": "Zukan Icon Theme: Enable Icon", "command": "enable_icon"},
+    { "caption": "Zukan Icon Theme: Enable Theme", "command": "enable_theme"},
 ]

@@ -10,6 +10,9 @@
 ### Plugin
 - Add change_icon setting
 - Add change_icon_file_extension setting
+- Remove command delete_syntaxes
+- Add commands_settings
+- Add create_custom_icon setting
 
 ## [0.3.0] - 2024-07-09
 

@@ -296,8 +296,7 @@ class ConcatSVG:
         Returns:
         icons_per_list (int) - max number of icons per file.
         """
-        rows = max_height // row_height
-        icons_per_list = rows * icons_per_row
+        icons_per_list = (max_height // row_height) * icons_per_row
         return icons_per_list
 
     def write_concat_svgs(
@@ -355,10 +354,7 @@ class ConcatSVG:
             concat_svg_width = column_width * icons_per_row
             concat_svg_height = round(len(chunk) / icons_per_row) * row_height
             print(
-                'SVG file size is: '
-                + str(concat_svg_width)
-                + 'x'
-                + str(concat_svg_height)
+                f'SVG file size is: { str(concat_svg_width) }x{ str(concat_svg_height) }'
             )
 
             # Main 'svg' element, root.

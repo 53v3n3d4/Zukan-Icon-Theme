@@ -1,8 +1,8 @@
 import logging
 
-from ..helpers.get_settings import get_settings
-from ..utils.scope_file_extension import (
-    SCOPE_FILE_EXTENSION,
+from ..helpers.load_save_settings import get_settings
+from ..utils.scopes_file_extensions import (
+    SCOPES_FILE_EXTENSIONS,
 )
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
@@ -14,10 +14,10 @@ logger = logging.getLogger(__name__)
 def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list:
     """
     Different packages can use same file extension. It could result in icon point
-    to a not desired file extension. This function remove file extension if scope
-    is different from a list.
+    to a not desired file extension. This function remove file extension, in
+    existing icon syntax, if scope is different from a list.
 
-    The list comes from 2 different origins. One is default: SCOPE_FILE_EXTENSION.
+    The list comes from 2 different origins. One is default: SCOPES_FILE_EXTENSIONS.
     And the other is from user 'change_icon_file_extension' setting.
 
     Parameters:
@@ -26,7 +26,7 @@ def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list
 
     Retunrs:
     syntax_file_extensions (list) -- list of file extensions based on two lists:
-    SCOPE_FILE_EXTENSION and 'change_icon_file_extension' setting.
+    SCOPES_FILE_EXTENSIONS and 'change_icon_file_extension' setting.
     """
     change_icon_file_extension = get_settings(
         ZUKAN_SETTINGS, 'change_icon_file_extension'
@@ -40,7 +40,7 @@ def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list
     default_extensions = set()
     user_extensions = set()
 
-    for f in SCOPE_FILE_EXTENSION:
+    for f in SCOPES_FILE_EXTENSIONS:
         # change_icon_file_extension is empty
         if not change_icon_file_extension:
             file_extensions_list.append(
@@ -53,7 +53,7 @@ def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list
                     {'scope': e['scope'], 'file_extensions': e['file_extensions']}
                 )
                 # print(e['scope'])
-            # Need to append the one that are not present in list default
+            # Need to append the ones that are not present in list default
             # book.toml in 'change_icon_file_extension' example
             for i in e['file_extensions']:
                 user_extensions.add(i)
@@ -84,6 +84,7 @@ def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list
     for d in file_extensions_list_not_duplicated:
         for e in d['file_extensions']:
             if syntax_scope != d['scope']:
+                # Remove file extension
                 syntax_file_extensions = [
                     f for f in syntax_file_extensions if not f == e
                 ]
