@@ -36,11 +36,20 @@ class DeletePreference(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, preference_name: str):
-        message = "Are you sure you want to delete '{p}'?".format(
-            p=os.path.join(ZUKAN_PKG_ICONS_PREFERENCES_PATH, preference_name)
-        )
-        if sublime.ok_cancel_dialog(message) is True:
-            ZukanPreference.delete_icons_preference(preference_name)
+        if not preference_name == 'All':
+            message = "Are you sure you want to delete '{p}'?".format(
+                p=os.path.join(ZUKAN_PKG_ICONS_PREFERENCES_PATH, preference_name)
+            )
+            if sublime.ok_cancel_dialog(message) is True:
+                ZukanPreference.delete_icons_preference(preference_name)
+        if preference_name == 'All':
+            message = (
+                "Are you sure you want to delete all preferences in '{f}'?".format(
+                    f=ZUKAN_PKG_ICONS_PREFERENCES_PATH
+                )
+            )
+            if sublime.ok_cancel_dialog(message) is True:
+                ZukanPreference.delete_icons_preferences()
 
     def input(self, args: dict):
         return DeletePreferenceInputHandler()
@@ -59,27 +68,12 @@ class DeletePreferenceInputHandler(sublime_plugin.ListInputHandler):
 
     def list_items(self) -> list:
         if ZukanPreference.list_created_icons_preferences():
-            return sorted(ZukanPreference.list_created_icons_preferences())
-        else:
-            raise TypeError(
-                logger.info('it does not exist any created preference, list is empty')
+            all_option = ['All']
+            installed_preferences_list = sorted(
+                ZukanPreference.list_created_icons_preferences()
             )
-
-
-class DeletePreferences(sublime_plugin.ApplicationCommand):
-    """
-    Sublime command to delete all preferences in 'preferences' folder.
-    """
-
-    def run(self):
-        if ZukanPreference.list_created_icons_preferences():
-            message = (
-                "Are you sure you want to delete all preferences in '{f}'?".format(
-                    f=ZUKAN_PKG_ICONS_PREFERENCES_PATH
-                )
-            )
-            if sublime.ok_cancel_dialog(message) is True:
-                ZukanPreference.delete_icons_preferences()
+            new_list = all_option + installed_preferences_list
+            return new_list
         else:
             raise TypeError(
                 logger.info('it does not exist any created preference, list is empty')
@@ -131,58 +125,28 @@ class DeleteTheme(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, theme_name: str):
-        # 'zukan_restart_message' setting
-        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        if not theme_name == 'All':
+            # 'zukan_restart_message' setting
+            zukan_restart_message = get_settings(
+                ZUKAN_SETTINGS, 'zukan_restart_message'
+            )
 
-        if zukan_restart_message is True:
-            dialog_message = (
-                'Are you sure you want to delete "{t}"?\n\n'
-                'You may have to restart ST, for all icons do not show.'.format(
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'Are you sure you want to delete "{t}"?\n\n'
+                    'You may have to restart ST, for all icons do not show.'.format(
+                        t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
+                    )
+                )
+            if zukan_restart_message is False:
+                dialog_message = 'Are you sure you want to delete "{t}"?'.format(
                     t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
                 )
-            )
-        if zukan_restart_message is False:
-            dialog_message = 'Are you sure you want to delete "{t}"?'.format(
-                t=os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
-            )
 
-        if sublime.ok_cancel_dialog(dialog_message) is True:
-            ZukanTheme.delete_icon_theme(theme_name)
-            # Check if selected theme was deleted
-            SettingsEvent.get_user_theme()
+            if sublime.ok_cancel_dialog(dialog_message) is True:
+                ZukanTheme.delete_icon_theme(theme_name)
 
-    def input(self, args: dict):
-        # print(args)
-        return DeleteThemeInputHandler()
-
-
-class DeleteThemeInputHandler(sublime_plugin.ListInputHandler):
-    """
-    List of created themes and return theme_name to DeleteTheme.
-    """
-
-    def name(self) -> str:
-        return 'theme_name'
-
-    def placeholder(self) -> str:
-        return 'List of created themes'
-
-    def list_items(self) -> list:
-        if ZukanTheme.list_created_icons_themes():
-            return sorted(ZukanTheme.list_created_icons_themes())
-        else:
-            raise TypeError(
-                logger.info('it does not exist any created theme, list is empty')
-            )
-
-
-class DeleteThemes(sublime_plugin.ApplicationCommand):
-    """
-    Sublime command to delete all themes in 'icons' folder.
-    """
-
-    def run(self):
-        if ZukanTheme.list_created_icons_themes():
+        if theme_name == 'All':
             # 'zukan_restart_message' setting
             zukan_restart_message = get_settings(
                 ZUKAN_SETTINGS, 'zukan_restart_message'
@@ -204,8 +168,32 @@ class DeleteThemes(sublime_plugin.ApplicationCommand):
 
             if sublime.ok_cancel_dialog(dialog_message) is True:
                 ZukanTheme.delete_icons_themes()
-                # Check if selected theme was deleted
-                SettingsEvent.get_user_theme()
+
+        # Check if selected theme was deleted
+        SettingsEvent.get_user_theme()
+
+    def input(self, args: dict):
+        # print(args)
+        return DeleteThemeInputHandler()
+
+
+class DeleteThemeInputHandler(sublime_plugin.ListInputHandler):
+    """
+    List of created themes and return theme_name to DeleteTheme.
+    """
+
+    def name(self) -> str:
+        return 'theme_name'
+
+    def placeholder(self) -> str:
+        return 'List of created themes'
+
+    def list_items(self) -> list:
+        if ZukanTheme.list_created_icons_themes():
+            all_option = ['All']
+            installed_themes_list = sorted(ZukanTheme.list_created_icons_themes())
+            new_list = all_option + installed_themes_list
+            return new_list
         else:
             raise TypeError(
                 logger.info('it does not exist any created theme, list is empty')
@@ -322,17 +310,36 @@ class InstallTheme(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, theme_st_path: str):
-        # 'zukan_restart_message' setting
-        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
-
-        if zukan_restart_message is True:
-            dialog_message = (
-                'You may have to restart ST, if all icons do not load in '
-                'current theme.'
+        if not theme_st_path == 'All':
+            # 'zukan_restart_message' setting
+            zukan_restart_message = get_settings(
+                ZUKAN_SETTINGS, 'zukan_restart_message'
             )
-            sublime.message_dialog(dialog_message)
 
-        ZukanTheme.create_icon_theme(theme_st_path)
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'You may have to restart ST, if all icons do not load in '
+                    'current theme.'
+                )
+                sublime.message_dialog(dialog_message)
+
+            ZukanTheme.create_icon_theme(theme_st_path)
+
+        if theme_st_path == 'All':
+            # 'zukan_restart_message' setting
+            zukan_restart_message = get_settings(
+                ZUKAN_SETTINGS, 'zukan_restart_message'
+            )
+
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'You may have to restart ST, if all icons do not load in current '
+                    'theme.'
+                )
+                sublime.message_dialog(dialog_message)
+
+            ZukanTheme.create_icons_themes()
+
         # Check if selected theme was installed
         SettingsEvent.get_user_theme()
 
@@ -359,34 +366,16 @@ class InstallThemeInputHandler(sublime_plugin.ListInputHandler):
             if file_name not in ZukanTheme.list_created_icons_themes():
                 list_themes_not_installed.append(name)
         if list_themes_not_installed:
-            return sorted(list_themes_not_installed)
+            all_option = ['All']
+            themes_list = sorted(list_themes_not_installed)
+            new_list = all_option + themes_list
+            return new_list
+            # return sorted(list_themes_not_installed)
+
         else:
             raise TypeError(
                 logger.info('all themes are already created, list is empty.')
             )
-
-
-class InstallThemes(sublime_plugin.ApplicationCommand):
-    """
-    Sublime command to create all themes from a list of installed themes.
-
-    It will save over already existing file.
-    """
-
-    def run(self):
-        # 'zukan_restart_message' setting
-        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
-
-        if zukan_restart_message is True:
-            dialog_message = (
-                'You may have to restart ST, if all icons do not load in current '
-                'theme.'
-            )
-            sublime.message_dialog(dialog_message)
-
-        ZukanTheme.create_icons_themes()
-        # Check if selected theme was installed
-        SettingsEvent.get_user_theme()
 
 
 class RebuildFiles(sublime_plugin.ApplicationCommand):

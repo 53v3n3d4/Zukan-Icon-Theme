@@ -10,7 +10,7 @@
 ### Plugin
 - Add change_icon setting
 - Add change_icon_file_extension setting
-- Remove command delete_syntaxes
+- Remove command delete_preferences, delete_syntaxes, delete_themes, install_themes
 - Add commands_settings
 - Add create_custom_icon setting
 

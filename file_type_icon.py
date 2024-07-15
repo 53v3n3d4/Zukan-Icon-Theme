@@ -15,14 +15,11 @@ del prefix
 
 from .src.zukan_icon_theme.commands.commands import (  # noqa: E402
     DeletePreference,  # noqa: F401
-    DeletePreferences,  # noqa: F401
     DeleteSyntax,  # noqa: F401
     DeleteTheme,  # noqa: F401
-    DeleteThemes,  # noqa: F401
     InstallPreference,  # noqa: F401
     InstallSyntax,  # noqa: F401
     InstallTheme,  # noqa: F401
-    InstallThemes,  # noqa: F401
     RebuildFiles,  # noqa: F401
     RebuildPreferences,  # noqa: F401
     RebuildSyntaxes,  # noqa: F401

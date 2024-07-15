@@ -15,14 +15,14 @@ def get_settings(file_settings: str, option: str = None):
         return sublime.load_settings(file_settings)
 
 
-def set_save_settings(file_settings: str, option: str, value: list):
+def set_save_settings(file_settings: str, option: str, option_value: list):
     """
     Modify and save settings options.
 
     Parameters:
     file_settings (str) -- sublime-settings file.
     option (str) -- set option key.
-    value (list) --  option vslue.
+    option_value (list) --  option vslue.
     """
-    sublime.load_settings(file_settings).set(option, value)
+    sublime.load_settings(file_settings).set(option, option_value)
     sublime.save_settings(file_settings)

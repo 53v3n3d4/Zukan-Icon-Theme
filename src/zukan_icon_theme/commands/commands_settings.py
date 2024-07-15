@@ -1,24 +1,17 @@
+import errno
 import logging
 import os
-import sublime
 import sublime_plugin
 
-from ..events.install import InstallEvent
-from ..events.settings import SettingsEvent
+from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.load_save_settings import get_settings, set_save_settings
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_themes import search_resources_sublime_themes
-from ..lib.icons_preferences import ZukanPreference
-from ..lib.icons_syntaxes import ZukanSyntax
-from ..lib.icons_themes import ZukanTheme
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
     ZUKAN_ICONS_DATA_FILE,
-    ZUKAN_PKG_ICONS_PATH,
-    ZUKAN_PKG_ICONS_PREFERENCES_PATH,
-    ZUKAN_PKG_ICONS_SYNTAXES_PATH,
 )
 
 logger = logging.getLogger(__name__)
@@ -65,7 +58,11 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
                 )
             ignored_icon_list = []
 
-            for i in zukan_icons:
+            # 'create_custom_icon' setting
+            custom_list = [s for s in create_custom_icon() if 'syntax' in s]
+            new_list = zukan_icons + custom_list
+
+            for i in new_list:
                 if i.get('name') is not None and i.get('name') not in ignored_icon:
                     ignored_icon_list.append(i['name'])
             if ignored_icon_list:
