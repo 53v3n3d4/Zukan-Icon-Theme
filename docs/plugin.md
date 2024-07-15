@@ -39,54 +39,58 @@ Aside icons PNGs, tmPreferences and sublime-theme file, there are cases where th
 
 There is a list of icons that are not working in [`README.md`](https://github.com/53v3n3d4/Zukan-Icon-Theme?tab=readme-ov-file#icons-that-works-depending-on-folder-position).  
 
+## Commands settings
+
+They can be accessed through `Tools > Command Palette...`. Type `zukan` to see the commands available.  
+
+### Disable Icon
+
+It inserts an icon in `ignored_icon` setting. Ignored icons are excluded during build.  
+
+### Disable Theme
+
+It inserts a theme in `ignored_theme` setting. Ignored themes are excluded during build.  
+
+### Enable Icon
+
+It removes an icon from `ignored_icon` setting.  
+
+### Enable Theme
+
+It removes a theme from `ignored_theme` setting.  
+
 ## Commands
 
 They can be accessed through `Tools > Command Palette...`. Type `zukan` to see the commands available.  
 
 ### Delete Preference
 
-It delete a tmPreference file from a list of created preferences.  
-
-### Delete Preferences
-
-It delete all created tmPreferences files in `preferences` folder.  
+It deletes a tmPreference file from a list of created preferences.  
 
 ### Delete Syntax
 
-It delete a sublime-syntax file from a list of created syntaxes.  
-
-### Delete Syntaxes
-
-It delete all created sublime-syntax files in `icons_syntaxes` folder.  
+It deletes a sublime-syntax file from a list of created syntaxes.  
 
 ### Delete Theme
 
-It delete a sublime-theme file from a list of created themes.  
-
-### Delete Themes
-
-It delete all created sublime-theme files in `icons` folder.  
+It deletes a sublime-theme file from a list of created themes.  
 
 ### Install Preference
 
-It install a tmPreferences file from zukan preferences list, excluding already installed in plugin.  
+It installs a tmPreferences file from zukan preferences list, excluding already installed in plugin.  
 
 ### Install Syntax
 
-It install a sublime-syntax file from zukan icons syntaxes list, excluding already installed in plugin or ST.  
+It installs a sublime-syntax file from zukan icons syntaxes list, excluding already installed in plugin or ST.  
 
 ### Install Theme
 
-It install a sublime-theme file from a list of user installed themes, excluding already installed in plugin.  
-
-### Install Themes
-
-It install all sublime-theme files from a list of user installed themes.  
+It installs a sublime-theme file from a list of user installed themes, excluding already installed in plugin.  
 
 ### Rebuild Preferences
 
-It remove all previous tmPreferences files in `preferences`, before install all zukan icons preferences.  
+It removes all previous tmPreferences files in `preferences`, before install all zukan icons preferences.  
 
 ### Rebuild Syntaxes
 
-It remove all previous sublime-syntax files in `icons_syntaxes`, before install all zukan icons syntaxes, excluding user installed syntaxes.  
+It removes all previous sublime-syntax files in `icons_syntaxes`, before install all zukan icons syntaxes, excluding user installed syntaxes.  
