@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: EdgeDB
+preferences:
+  scope: source.edgeql
+  settings:
+    icon: edgedb
+syntax:
+  - name: EdgeDB
+    scope: source.edgeql
+    hidden: true
+    file_extensions:
+      - edgeql
+      - esdl
+    contexts:
+      main: []
+
+# Package EdgeDB

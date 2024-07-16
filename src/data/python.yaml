@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: Python
+icons: 
+  - python-1
 preferences:
   scope: source.python, source.shell.python
   settings:
