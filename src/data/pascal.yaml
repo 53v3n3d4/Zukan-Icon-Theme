@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Pascal
+preferences:
+  scope: source.pascal
+  settings:
+    icon: pascal
+syntax:
+  - name: Pascal
+    scope: source.pascal
+    hidden: true
+    file_extensions:
+      - dpr
+      - p
+      - pas
+    contexts:
+      main: []
+
+# ST Package
