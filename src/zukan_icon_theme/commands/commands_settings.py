@@ -73,7 +73,9 @@ class ChangeFileExtension(sublime_plugin.TextCommand):
                     )
                     and change_file_extension_scope != d['scope']
                 ):
-                    logger.debug('%s scope exists in change_icon_file_extension')
+                    logger.debug(
+                        '%s scope does not exist in change_icon_file_extension'
+                    )
 
                     new_scopes_list.append(inserted_scope_file_extension)
                     # print(new_scopes_list)
@@ -354,11 +356,17 @@ class EnableIcon(sublime_plugin.TextCommand):
         ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
 
         if ignored_icon:
-            # Remove icon_name
-            ignored_icon = [i for i in ignored_icon if not i == icon_name]
-            sort_list = sorted(ignored_icon)
-            set_save_settings(ZUKAN_SETTINGS, 'ignored_icon', sort_list)
-            logger.info('%s icon enabled', icon_name)
+            if not icon_name == 'All':
+                # Remove icon_name
+                ignored_icon = [i for i in ignored_icon if not i == icon_name]
+                new_list = sorted(ignored_icon)
+                logger.info('enabling %s icon', icon_name)
+
+            if icon_name == 'All':
+                new_list = []
+                logger.info('enabling all icons')
+
+            set_save_settings(ZUKAN_SETTINGS, 'ignored_icon', new_list)
 
             # Rebuild syntax and preference
 
@@ -383,7 +391,9 @@ class EnableIconInputHandler(sublime_plugin.ListInputHandler):
             logger.warning('ignored_icon option malformed, need to be a string list')
 
         if ignored_icon:
-            return sorted(ignored_icon)
+            all_option = ['All']
+            new_list = all_option + sorted(ignored_icon)
+            return new_list
         else:
             raise TypeError(logger.info('no icons ignored, list is empty.'))
 
@@ -397,11 +407,17 @@ class EnableTheme(sublime_plugin.TextCommand):
         ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
 
         if ignored_theme:
-            # Remove theme_name
-            ignored_theme = [t for t in ignored_theme if not t == theme_name]
-            sort_list = sorted(ignored_theme)
-            set_save_settings(ZUKAN_SETTINGS, 'ignored_theme', sort_list)
-            logger.info('%s enabled', theme_name)
+            if not theme_name == 'All':
+                # Remove theme_name
+                ignored_theme = [t for t in ignored_theme if not t == theme_name]
+                new_list = sorted(ignored_theme)
+                logger.info('enabling %s', theme_name)
+
+            if theme_name == 'All':
+                new_list = []
+                logger.info('enabling all themes')
+
+            set_save_settings(ZUKAN_SETTINGS, 'ignored_theme', new_list)
 
     def input(self, args: dict):
         return EnableThemeInputHandler()
@@ -424,7 +440,9 @@ class EnableThemeInputHandler(sublime_plugin.ListInputHandler):
             logger.warning('ignored_theme option malformed, need to be a string list')
 
         if ignored_theme:
-            return sorted(ignored_theme)
+            all_option = ['All']
+            new_list = all_option + sorted(ignored_theme)
+            return new_list
         else:
             raise TypeError(logger.info('no themes ignored, list is empty.'))
 
@@ -439,14 +457,22 @@ class ResetFileExtension(sublime_plugin.TextCommand):
             ZUKAN_SETTINGS, 'change_icon_file_extension'
         )
 
-        change_icon_file_extension_updated = [
-            i for i in change_icon_file_extension if not (i['scope'] == scope_name)
-        ]
-        set_save_settings(
-            ZUKAN_SETTINGS,
-            'change_icon_file_extension',
-            change_icon_file_extension_updated,
-        )
+        if change_icon_file_extension:
+            if not scope_name == 'All':
+                change_icon_file_extension_updated = [
+                    i for i in change_icon_file_extension if not (i['scope'] == scope_name)
+                ]
+                logger.info('reseting file extensions for %s', scope_name)
+
+            if scope_name == 'All':
+                change_icon_file_extension_updated = []
+                logger.info('reseting file extensions for all scopes')
+
+            set_save_settings(
+                ZUKAN_SETTINGS,
+                'change_icon_file_extension',
+                change_icon_file_extension_updated,
+            )
 
     def input(self, args: dict):
         return ResetFileExtensionInputHandler()
@@ -471,17 +497,18 @@ class ResetFileExtensionInputHandler(sublime_plugin.ListInputHandler):
             logger.warning(
                 'change_icon_file_extension option malformed, need to be a list'
             )
-        change_icon_file_extension_list = []
 
         if change_icon_file_extension:
-            for d in change_icon_file_extension:
-                change_icon_file_extension_list.append(d['scope'])
-
-            return sorted(change_icon_file_extension_list)
+            all_option = ['All']
+            change_icon_file_extension_list = [
+                d.get('scope') for d in change_icon_file_extension if 'scope' in d
+            ]
+            new_list = all_option + sorted(change_icon_file_extension_list)
+            return new_list
 
         else:
             raise TypeError(
-                logger.info('no scope file extenions to reset, list is empty.')
+                logger.info('no file extenions for any scope to reset, list is empty.')
             )
 
 
@@ -493,8 +520,16 @@ class ResetIcon(sublime_plugin.TextCommand):
     def run(self, edit, icon_name: str):
         change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
 
-        if icon_name in change_icon.keys():
-            icon_dict_updated = {k: v for k, v in change_icon.items() if k != icon_name}
+        if change_icon:
+            if not icon_name == 'All':
+                if icon_name in change_icon.keys():
+                    icon_dict_updated = {k: v for k, v in change_icon.items() if k != icon_name}
+                    logger.info('reseting icon %s', icon_name)
+
+            if icon_name == 'All':
+                icon_dict_updated = {}
+                logger.info('reseting all icons')
+
             set_save_settings(ZUKAN_SETTINGS, 'change_icon', icon_dict_updated)
 
     def input(self, args: dict):
@@ -518,8 +553,10 @@ class ResetIconInputHandler(sublime_plugin.ListInputHandler):
             logger.warning('change_icon option malformed, need to be a dict')
 
         if change_icon:
+            all_option = ['All']
             change_icon_list = [k for k in change_icon]
-            return sorted(change_icon_list)
+            new_list = all_option + sorted(change_icon_list)
+            return new_list
 
         else:
             raise TypeError(logger.info('no icons to reset, list is empty.'))
