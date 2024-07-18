@@ -5,6 +5,7 @@ import sublime_plugin
 
 from ..events.install import InstallEvent
 from ..events.settings import SettingsEvent
+from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.edit_file_extension import edit_file_extension
 from ..helpers.load_save_settings import get_settings
 from ..helpers.read_write_data import read_pickle_data
@@ -86,11 +87,19 @@ class DeleteSyntax(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, syntax_name: str):
-        message = "Are you sure you want to delete '{s}'?".format(
-            s=os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name)
-        )
-        if sublime.ok_cancel_dialog(message) is True:
-            ZukanSyntax.delete_icon_syntax(syntax_name)
+        if not syntax_name == 'All':
+            message = "Are you sure you want to delete '{s}'?".format(
+                s=os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name)
+            )
+            if sublime.ok_cancel_dialog(message) is True:
+                ZukanSyntax.delete_icon_syntax(syntax_name)
+
+        if syntax_name == 'All':
+            message = "Are you sure you want to delete all syntaxes in '{f}'?".format(
+                f=ZUKAN_PKG_ICONS_SYNTAXES_PATH
+            )
+            if sublime.ok_cancel_dialog(message) is True:
+                ZukanSyntax.delete_icons_syntaxes()
 
     def input(self, args: dict):
         # print(args)
@@ -110,9 +119,12 @@ class DeleteSyntaxInputHandler(sublime_plugin.ListInputHandler):
 
     def list_items(self) -> list:
         if ZukanSyntax.list_created_icons_syntaxes():
-            return sorted(
+            all_option = ['All']
+            syntaxes_list = sorted(
                 ZukanSyntax.list_created_icons_syntaxes(), key=lambda x: x.upper()
             )
+            new_list = all_option + syntaxes_list
+            return new_list
         else:
             raise TypeError(
                 logger.info('it does not exist any created syntax, list is empty')
@@ -207,7 +219,33 @@ class InstallPreference(sublime_plugin.TextCommand):
 
     def run(self, edit, preference_name: str):
         file_name, file_extension = os.path.splitext(preference_name)
-        ZukanPreference.build_icon_preference(file_name, preference_name)
+
+        if not preference_name == 'All':
+            # 'ignored_icon' setting
+            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+            # 'create_custom_icon' setting
+            custom_list = [p for p in create_custom_icon() if 'preferences' in p]
+            new_list = zukan_icons + custom_list
+
+            for p in new_list:
+                if (
+                    p['preferences']['settings']['icon'] == file_name
+                    and p['name'] in ignored_icon
+                ):
+                    dialog_message = (
+                        '{i} icon is disabled. Need to enable first.'.format(
+                            i=p['name']
+                        )
+                    )
+                    sublime.message_dialog(dialog_message)
+
+            ZukanPreference.build_icon_preference(file_name, preference_name)
+
+        if preference_name == 'All':
+            ZukanPreference.build_icons_preferences()
 
     def input(self, args: dict):
         return InstallPreferenceInputHandler()
@@ -228,7 +266,12 @@ class InstallPreferenceInputHandler(sublime_plugin.ListInputHandler):
     def list_items(self) -> list:
         list_preferences_not_installed = []
         zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-        for p in zukan_icons:
+
+        # 'create_custom_icon' setting
+        custom_list = [p for p in create_custom_icon() if 'preferences' in p]
+        new_list = zukan_icons + custom_list
+
+        for p in new_list:
             if p['preferences'].get('scope') is not None:
                 list_preferences_not_installed.append(
                     p['preferences']['settings']['icon'] + TMPREFERENCES_EXTENSION
@@ -239,7 +282,10 @@ class InstallPreferenceInputHandler(sublime_plugin.ListInputHandler):
             )
         )
         if list_preferences_not_installed:
-            return sorted(list_preferences_not_installed)
+            all_option = ['All']
+            preferences_list = sorted(list_preferences_not_installed)
+            new_list = all_option + preferences_list
+            return new_list
         else:
             raise TypeError(
                 logger.info('all preferences are already created, list is empty.')
@@ -257,7 +303,31 @@ class InstallSyntax(sublime_plugin.TextCommand):
         # Edit icon syntax contexts main if syntax not installed or ST3.
         # ZukanSyntax.edit_context_scope(syntax_name)
 
-        InstallEvent.install_syntax(file_name, syntax_name)
+        if not syntax_name == 'All':
+            # 'ignored_icon' setting
+            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+            # 'create_custom_icon' setting
+            custom_list = [s for s in create_custom_icon() if 'syntax' in s]
+            new_list = zukan_icons + custom_list
+
+            for d in new_list:
+                if 'syntax' in d:
+                    for s in d['syntax']:
+                        if s['name'] == file_name and d['name'] in ignored_icon:
+                            dialog_message = (
+                                '{i} icon is disabled. Need to enable first.'.format(
+                                    i=d['name']
+                                )
+                            )
+                            sublime.message_dialog(dialog_message)
+
+            InstallEvent.install_syntax(file_name, syntax_name)
+
+        if syntax_name == 'All':
+            InstallEvent.install_syntaxes()
 
     def input(self, args: dict):
         return InstallSyntaxInputHandler()
@@ -278,7 +348,12 @@ class InstallSyntaxInputHandler(sublime_plugin.ListInputHandler):
     def list_items(self) -> list:
         list_syntaxes_not_installed = []
         zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-        for s in zukan_icons:
+
+        # 'create_custom_icon' setting
+        custom_list = [s for s in create_custom_icon() if 'syntax' in s]
+        new_list = zukan_icons + custom_list
+
+        for s in new_list:
             if s.get('syntax') is not None:
                 for k in s['syntax']:
                     if k not in compare_scopes():
@@ -297,7 +372,10 @@ class InstallSyntaxInputHandler(sublime_plugin.ListInputHandler):
             )
         )
         if list_syntaxes_not_installed:
-            return sorted(list_syntaxes_not_installed, key=lambda x: x.upper())
+            all_option = ['All']
+            syntaxes_list = sorted(list_syntaxes_not_installed, key=lambda x: x.upper())
+            new_list = all_option + syntaxes_list
+            return new_list
         else:
             raise TypeError(
                 logger.info('all syntaxes are already created, list is empty.')
@@ -311,12 +389,22 @@ class InstallTheme(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_st_path: str):
         if not theme_st_path == 'All':
+            # 'ignored_theme' setting
+            ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
+            theme_name = os.path.basename(theme_st_path)
+
+            if theme_name in ignored_theme:
+                dialog_message = '{t} is disabled. Need to enable first.'.format(
+                    t=theme_name
+                )
+                sublime.message_dialog(dialog_message)
+
             # 'zukan_restart_message' setting
             zukan_restart_message = get_settings(
                 ZUKAN_SETTINGS, 'zukan_restart_message'
             )
 
-            if zukan_restart_message is True:
+            if zukan_restart_message is True and theme_name not in ignored_theme:
                 dialog_message = (
                     'You may have to restart ST, if all icons do not load in '
                     'current theme.'
@@ -394,29 +482,3 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
             ZukanSyntax.delete_icons_syntaxes()
         finally:
             InstallEvent.new_install_manually()
-
-
-class RebuildPreferences(sublime_plugin.ApplicationCommand):
-    """
-    Sublime command to rebuild tmPreferences. First, try to remove all previous
-    files.
-    """
-
-    def run(self):
-        try:
-            ZukanPreference.delete_icons_preferences()
-        finally:
-            ZukanPreference.build_icons_preferences()
-
-
-class RebuildSyntaxes(sublime_plugin.ApplicationCommand):
-    """
-    Sublime command to rebuild sublime-syntaxes. First, try to remove all previous
-    files.
-    """
-
-    def run(self):
-        try:
-            ZukanSyntax.delete_icons_syntaxes()
-        finally:
-            InstallEvent.install_syntaxes()

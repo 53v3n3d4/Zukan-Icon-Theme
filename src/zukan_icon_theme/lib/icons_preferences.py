@@ -23,7 +23,6 @@ from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_ICONS_DATA_FILE,
-    # ZUKAN_PREFERENCES_DATA_FILE,
 )
 
 logger = logging.getLogger(__name__)

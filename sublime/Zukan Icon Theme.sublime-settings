@@ -43,16 +43,17 @@
     // Key is icon name and value is icon SVG name.
     //
     // Examples: {
-    //    "Angular": "angular-1",
-    //    "Composer": "composer-1",
-    //    "C#": "csharp-1",
-    //    "Go": "go-1",
-    //    "LLVM": "llvm-1",
-    //    "Node.js": "nodejs-1",
-    //    "PHP": "php-1",
-    //    "Ruff": "ruff-1",
-    //    "Rust": "rust-1",
-    //    "Sublime Text": "sublime-1"
+    //        "Angular": "angular-1",
+    //        "Composer": "composer-1",
+    //        "C#": "csharp-1",
+    //        "Go": "go-1",
+    //        "LLVM": "llvm-1",
+    //        "Node.js": "nodejs-1",
+    //        "PHP": "php-1",
+    //        "Python": "python-1",
+    //        "Ruff": "ruff-1",
+    //        "Rust": "rust-1",
+    //        "Sublime Text": "sublime-1"
     // }
     "change_icon": {},
 
@@ -90,6 +91,7 @@
     //    { "scope": "source.cuda-c++", "file_extensions": ["h"] },
     //    { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
     //    { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
+    //    { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
     //    { "scope": "source.fsharp", "file_extensions": ["fs"] },
     //    { "scope": "source.sss", "file_extensions": ["sss"] },
     //    { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
@@ -115,7 +117,7 @@
     // Contexts_scope serves to use a base highlighting, e.g.
     // JSON insert source.json
     //
-    // Example: [
+    // Examples: [
     //    {
     //        "name": "ATest",
     //        "icon": "atest",

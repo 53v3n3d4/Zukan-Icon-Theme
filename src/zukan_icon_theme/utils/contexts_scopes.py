@@ -21,6 +21,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.json', 'startsWith': 'JSON ('},
     {'scope': 'source.jsx', 'startsWith': 'JSX ('},
     {'scope': 'source.Kotlin', 'startsWith': 'Kotlin ('},
+    {'scope': 'source.lua', 'startsWith': 'Lua ('},
     {'scope': 'source.makefile', 'startsWith': 'Makefile ('},
     {'scope': 'source.python', 'startsWith': 'Python ('},
     {'scope': 'source.ruby', 'startsWith': 'Ruby ('},

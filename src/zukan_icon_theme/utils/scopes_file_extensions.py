@@ -18,12 +18,16 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.c++', 'file_extensions': ['h']},  # cuda.yaml
     {'scope': 'source.css', 'file_extensions': ['css']},  # django.yaml
     {'scope': 'source.css.postcss.sugarss', 'file_extensions': ['sss']},  # postcss.yaml
+    {
+        'scope': 'source.fortran',
+        'file_extensions': ['f90', 'F90', 'f95', 'F95', 'f03', 'F03', 'f08', 'F08'],
+    },  # fortran.yaml
+    {'scope': 'source.glsl', 'file_extensions': ['fs']},  # fsharp.yaml
     {'scope': 'source.js', 'file_extensions': ['js']},  # applescript.ymal
     {
         'scope': 'source.pubspec',
         'file_extensions': ['pubspec.lock', 'pubspec.yaml'],
     },  # flutter.ymal
-    {'scope': 'source.glsl', 'file_extensions': ['fs']},  # fsharp.yaml
     {'scope': 'source.shader', 'file_extensions': ['cginc', 'shader']},  # unity.yaml
     {'scope': 'source.tex', 'file_extensions': ['cls']},  # tex.yaml
     {'scope': 'text.gherkin.feature', 'file_extensions': ['feature']},  # behat.yaml
@@ -44,6 +48,7 @@ SCOPES_FILE_EXTENSIONS = [
 # have an icon syntax. Since they are ST packages. And C++ prevail.
 # - Dart: pubspec is present in Dart and Flutter projects.
 # - Django: package Django Syntax uses css, html and xml.
+# - Fortran: package Fortran and Modern-Fortran use same file-extensions.
 # - F#: fs extension is used by OpenGL.
 # - PostCSS: Syntax Highlighting for PostCSS and Syntax Highlighting for SSS SugarSS use sss.
 # - Unity: Package Unity Shader and Unity3D Shader Highlighter and Snippets same extensions.

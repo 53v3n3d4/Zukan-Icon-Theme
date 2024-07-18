@@ -92,30 +92,15 @@ ZUKAN_ICONS_DATA_FILE = os.path.join(
     'zukan_icons_data' + PICKLE_EXTENSION,
 )
 
-# ZUKAN_PREFERENCES_DATA_FILE = os.path.join(
+# ZUKAN_USER_SUBLIME_SETTINGS = os.path.join(
 #     sublime.packages_path(),
-#     PACKAGE_NAME,
-#     'icons_preferences',
-#     'zukan_preferences_data' + PICKLE_EXTENSION,
+#     'User',
+#     'Zukan Icon Theme' + SUBLIME_SETTINGS_EXTENSION,
 # )
-ZUKAN_PREFERENCES_DATA_FILE = os.path.join(
+ZUKAN_USER_SUBLIME_SETTINGS = os.path.join(
     PACKAGES_PATH,
-    PACKAGE_NAME,
-    'icons_preferences',
-    'zukan_preferences_data' + PICKLE_EXTENSION,
-)
-
-# ZUKAN_SYNTAXES_DATA_FILE = os.path.join(
-#     sublime.packages_path(),
-#     PACKAGE_NAME,
-#     'icons_syntaxes',
-#     'zukan_syntaxes_data' + PICKLE_EXTENSION,
-# )
-ZUKAN_SYNTAXES_DATA_FILE = os.path.join(
-    PACKAGES_PATH,
-    PACKAGE_NAME,
-    'icons_syntaxes',
-    'zukan_syntaxes_data' + PICKLE_EXTENSION,
+    'User',
+    'Zukan Icon Theme' + SUBLIME_SETTINGS_EXTENSION,
 )
 
 # ZUKAN_VERSION_FILE = os.path.join(
