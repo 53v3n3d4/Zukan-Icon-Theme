@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: DirectX
+icons:
+  - directx-1
 preferences:
   scope: source.hlsl
   settings:

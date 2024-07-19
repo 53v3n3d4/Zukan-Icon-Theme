@@ -4,8 +4,8 @@
 
 ### Icons, syntaxes and preferences
 - Add icon-theme: CSpell, DirectX, Dune, EdgeDB, Fantomas, FSharpLint, OCamlPRO, opam, Paket, Pascal, Pkg.jl, Web IDL, XMake
-- Add icon option: Angular, C#, Composer, Go, LLVM, Node.js, PHP, Python, Ruff, Rust, Sublime Text
-- Change icon: Video
+- Add icon option: Angular, C#, Composer, Go, DirectX, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, Sublime Text
+- Change icon: Image, Video
 - Change sublime-syntax: CUDA, Dart, Flutter, Lavarel, Smarty
 
 ### Plugin

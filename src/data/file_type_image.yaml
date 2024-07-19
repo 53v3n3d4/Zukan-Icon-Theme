@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: Image
+icons:
+  - file_type_image-1
 tag: primary
 preferences:
   scope: binary.image
