@@ -77,15 +77,23 @@ class InstallEvent:
         if zukan_restart_message is True:
             dialog_message = (
                 'Zukan icons has been upgraded to v{v}.\n\n'
+                'Changelog in Sublime Text > Settings > Package Settings menu.\n\n'
                 'You may have to restart ST, if all icons do not load correct in '
                 'current theme.'.format(v=version)
             )
         if zukan_restart_message is False:
-            dialog_message = None
+            dialog_message = (
+                'Zukan icons has been upgraded to v{v}.\n\n'
+                'Changelog in Sublime Text > Settings > Package Settings menu.'
+                '\n\n'.format(v=version)
+            )
 
         t = threading.Thread(target=InstallEvent.install_upgrade)
         t.start()
         ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
+
+        logger.info('upgrading Zukan icons to v%s.', version)
+        logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
 
     def new_install_manually():
         """

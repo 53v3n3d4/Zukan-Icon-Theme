@@ -15,6 +15,9 @@ from ..utils.file_extensions import (
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
+from ..utils.primary_icons import (
+    PRIMARY_ICONS,
+)
 from ..utils.zukan_paths import (
     ZUKAN_ICONS_DATA_FILE,
     ZUKAN_PKG_ICONS_PATH,
@@ -64,7 +67,7 @@ class ChangeFileExtension(sublime_plugin.TextCommand):
                     ).difference(d['file_extensions'])
                 )
 
-                # Scope do not exist in change_icon_file_extension
+                # Scope does not exist in change_icon_file_extension
                 # Duplicating new scopes.
                 if (
                     not any(
@@ -80,8 +83,8 @@ class ChangeFileExtension(sublime_plugin.TextCommand):
                     new_scopes_list.append(inserted_scope_file_extension)
                     # print(new_scopes_list)
 
-                # Scope exist in change_icon_file_extension
-                # Add if file extension do not exist
+                # Scope exists in change_icon_file_extension
+                # Add if file extension does not exist
                 if (
                     any(
                         d['scope'] == change_file_extension_scope
@@ -175,8 +178,13 @@ class ChangeIcon(sublime_plugin.TextCommand):
             set_save_settings(ZUKAN_SETTINGS, 'change_icon', change_icon)
 
             # Check if PNG exist
-            if not os.path.exists(
-                os.path.join(ZUKAN_PKG_ICONS_PATH, change_icon_file + PNG_EXTENSION)
+            primary_file_list = [file_name for name, file_name, *_ in PRIMARY_ICONS]
+            # print(primary_file_list)
+            if (
+                not os.path.exists(
+                    os.path.join(ZUKAN_PKG_ICONS_PATH, change_icon_file + PNG_EXTENSION)
+                )
+                and change_icon_file not in primary_file_list
             ):
                 dialog_message = (
                     '{i} icon PNGs not found.\n\n'
@@ -246,7 +254,11 @@ class DisableIcon(sublime_plugin.TextCommand):
             ignored_icon.append(icon_name)
             sort_list = sorted(ignored_icon)
             set_save_settings(ZUKAN_SETTINGS, 'ignored_icon', sort_list)
-            logger.info('%s icon ignored', icon_name)
+
+            if not icon_name == 'primary':
+                logger.info('%s icon ignored', icon_name)
+            if icon_name == 'primary':
+                logger.info('icons with %s tag ignored', icon_name)
 
             # Rebuild syntax and preference
 
@@ -283,7 +295,14 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
                 if i.get('name') is not None and i.get('name') not in ignored_icon:
                     ignored_icon_list.append(i['name'])
             if ignored_icon_list:
-                return sorted(ignored_icon_list)
+                primary_tag = ['primary']
+                # icon_list_with_tag = primary_tag + sorted(
+                #     ignored_icon_list, key=lambda x: x.upper()
+                # )
+                # return icon_list_with_tag
+                icon_list_with_tag = primary_tag + ignored_icon_list
+                return sorted(icon_list_with_tag, key=lambda x: x.upper())
+
             else:
                 raise TypeError(
                     logger.info('all icons are already disabled, list is empty.')
@@ -392,7 +411,7 @@ class EnableIconInputHandler(sublime_plugin.ListInputHandler):
 
         if ignored_icon:
             all_option = ['All']
-            new_list = all_option + sorted(ignored_icon)
+            new_list = all_option + sorted(ignored_icon, key=lambda x: x.upper())
             return new_list
         else:
             raise TypeError(logger.info('no icons ignored, list is empty.'))
@@ -460,7 +479,9 @@ class ResetFileExtension(sublime_plugin.TextCommand):
         if change_icon_file_extension:
             if not scope_name == 'All':
                 change_icon_file_extension_updated = [
-                    i for i in change_icon_file_extension if not (i['scope'] == scope_name)
+                    i
+                    for i in change_icon_file_extension
+                    if not (i['scope'] == scope_name)
                 ]
                 logger.info('reseting file extensions for %s', scope_name)
 
@@ -503,7 +524,9 @@ class ResetFileExtensionInputHandler(sublime_plugin.ListInputHandler):
             change_icon_file_extension_list = [
                 d.get('scope') for d in change_icon_file_extension if 'scope' in d
             ]
-            new_list = all_option + sorted(change_icon_file_extension_list)
+            new_list = all_option + sorted(
+                change_icon_file_extension_list, key=lambda x: x.upper()
+            )
             return new_list
 
         else:
@@ -523,7 +546,9 @@ class ResetIcon(sublime_plugin.TextCommand):
         if change_icon:
             if not icon_name == 'All':
                 if icon_name in change_icon.keys():
-                    icon_dict_updated = {k: v for k, v in change_icon.items() if k != icon_name}
+                    icon_dict_updated = {
+                        k: v for k, v in change_icon.items() if k != icon_name
+                    }
                     logger.info('reseting icon %s', icon_name)
 
             if icon_name == 'All':
@@ -555,7 +580,7 @@ class ResetIconInputHandler(sublime_plugin.ListInputHandler):
         if change_icon:
             all_option = ['All']
             change_icon_list = [k for k in change_icon]
-            new_list = all_option + sorted(change_icon_list)
+            new_list = all_option + sorted(change_icon_list, key=lambda x: x.upper())
             return new_list
 
         else:

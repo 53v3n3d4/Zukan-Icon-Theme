@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 def clean_comments_settings(zukan_sublime_settings: str):
     """
-    Clean comments that is left when using ST TextCommands deleting dicts or list of dicts.
+    Clean comments that is left when using ST TextCommands deleting dicts.
     """
     try:
         if zukan_sublime_settings:

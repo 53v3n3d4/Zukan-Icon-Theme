@@ -19,6 +19,9 @@ from ..utils.file_extensions import (
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
+from ..utils.primary_icons import (
+    PRIMARY_ICONS,
+)
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
@@ -95,6 +98,19 @@ class ZukanPreference:
                         for k, v in change_icon.items():
                             if p['name'] == k:
                                 p['preferences']['settings']['icon'] = v
+
+                                # Copy primary icons, rename if icon option because
+                                # primary icons do not work with any other names
+                                for primary in PRIMARY_ICONS:
+                                    if len(primary) >= 3 and p['name'] == primary[0]:
+                                        p['preferences']['settings']['icon'] = primary[
+                                            2
+                                        ]
+                                        logger.info(
+                                            'renaming primary icon option necessary, %s',
+                                            primary[1],
+                                        )
+
                                 # Check if PNG exist
                                 if not os.path.exists(
                                     os.path.join(
@@ -166,6 +182,19 @@ class ZukanPreference:
                         for k, v in change_icon.items():
                             if p['name'] == k:
                                 p['preferences']['settings']['icon'] = v
+
+                                # Copy primary icons, rename if icon option because
+                                # primary icons do not work with any other names
+                                for primary in PRIMARY_ICONS:
+                                    if len(primary) >= 3 and p['name'] == primary[0]:
+                                        p['preferences']['settings']['icon'] = primary[
+                                            2
+                                        ]
+                                        logger.info(
+                                            'renaming primary icon option necessary, %s',
+                                            primary[1],
+                                        )
+
                                 # Check if PNG exist
                                 if not os.path.exists(
                                     os.path.join(
