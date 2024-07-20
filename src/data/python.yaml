@@ -4,7 +4,7 @@ name: Python
 icons: 
   - python-1
 preferences:
-  scope: source.python, source.shell.python
+  scope: source.python, source.shell.python, source.toml.python
   settings:
     icon: python
 syntax:
@@ -41,4 +41,13 @@ syntax:
     contexts:
       main:
         - include: scope:source.shell
+          apply_prototype: true
+  - name: TOML (Python)
+    scope: source.toml.python
+    hidden: true
+    file_extensions:
+      - pyproject.toml
+    contexts:
+      main:
+        - include: scope:source.toml
           apply_prototype: true

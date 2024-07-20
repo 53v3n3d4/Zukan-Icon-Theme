@@ -3,10 +3,10 @@
 ## [0.3.1] - 2024
 
 ### Icons, syntaxes and preferences
-- Add icon-theme: CSpell, DirectX, Dune, EdgeDB, Fantomas, FSharpLint, OCamlPRO, opam, Paket, Pascal, Pkg.jl, Web IDL, XMake
+- Add icon-theme: CSpell, DirectX, Dune, EdgeDB, Fantomas, FSharpLint, OCamlPRO, opam, Paket, Pascal, Pip, Pkg.jl, Web IDL, XMake
 - Add icon option: Angular, C#, Composer, Go, DirectX, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, Sublime Text
 - Change icon: Image, Video
-- Change sublime-syntax: CUDA, Dart, Flutter, Lavarel, Smarty
+- Change sublime-syntax: CUDA, Dart, Flutter, Lavarel, PDM, Poetry, Python, Smarty, tox, uv
 
 ### Plugin
 - Add change_icon setting

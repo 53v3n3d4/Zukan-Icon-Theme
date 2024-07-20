@@ -11,6 +11,7 @@ syntax:
     hidden: true
     file_extensions:
       - poetry.lock
+      - pyproject.toml
     contexts:
       main:
         - include: scope:source.toml

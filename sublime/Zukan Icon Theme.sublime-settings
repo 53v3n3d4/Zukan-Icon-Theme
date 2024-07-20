@@ -97,7 +97,15 @@
     //    { "scope": "source.fsharp", "file_extensions": ["fs"] },
     //    { "scope": "source.sss", "file_extensions": ["sss"] },
     //    { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
+    //    { "scope": "source.toml", "file_extensions": ["config.toml"] },
     //    { "scope": "source.toml", "file_extensions": ["book.toml"] },
+    //    { "scope": "source.toml", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "source.toml.pdm", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "source.toml.pip", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "source.toml.poetry", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "source.toml.tox", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "text.plain", "file_extensions": ["requirements.txt"] },
+    //    { "scope": "text.plain.uv", "file_extensions": ["requirements.txt"] },
     // ]
     "change_icon_file_extension": [],
 

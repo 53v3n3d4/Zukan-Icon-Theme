@@ -30,9 +30,11 @@ SCOPES_FILE_EXTENSIONS = [
     },  # flutter.ymal
     {'scope': 'source.shader', 'file_extensions': ['cginc', 'shader']},  # unity.yaml
     {'scope': 'source.tex', 'file_extensions': ['cls']},  # tex.yaml
+    {'scope': 'source.toml.python', 'file_extensions': ['pyproject.toml']},  # tex.yaml
     {'scope': 'text.gherkin.feature', 'file_extensions': ['feature']},  # behat.yaml
     {'scope': 'text.html.basic', 'file_extensions': ['html']},  # django.yaml
     {'scope': 'text.plain', 'file_extensions': ['BUILD', 'WORKSPACE']},  # bazel.yaml
+    {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # pip and uv.yaml
     {'scope': 'text.xml', 'file_extensions': ['xml']},  # django.yaml
 ]
 
@@ -52,3 +54,11 @@ SCOPES_FILE_EXTENSIONS = [
 # - F#: fs extension is used by OpenGL.
 # - PostCSS: Syntax Highlighting for PostCSS and Syntax Highlighting for SSS SugarSS use sss.
 # - Unity: Package Unity Shader and Unity3D Shader Highlighter and Snippets same extensions.
+
+# Config files
+# pyproject.toml: python, poetry, pip, tox, pdm
+# requirements.txt: pip, uv
+# setup.cfg: tox
+# config.toml: pdm
+# Manifest.tom: pkgjl
+# Project.toml: pkgjl

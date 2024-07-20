@@ -1,0 +1,35 @@
+%YAML 1.2
+---
+name: Pip
+preferences:
+  scope: source.ini.pip, source.toml.pip, text.plain.pip
+  settings:
+    icon: pip
+syntax:
+  - name: INI (Pip)
+    scope: source.ini.pip
+    hidden: true
+    file_extensions:
+      - pip.conf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: Plain Text (Pip)
+    scope: text.plain.pip
+    hidden: true
+    file_extensions:
+      - requirements.txt
+    contexts:
+      main: []
+  - name: TOML (Pip)
+    scope: source.toml.pip
+    hidden: true
+    file_extensions:
+      - pyproject.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
+
+# requirements.txt maybe with ini or idl for highlighting numbers. Comments in IDL is different.

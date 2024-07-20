@@ -2,10 +2,17 @@
 ---
 name: uv
 preferences:
-  scope: source.toml.uv
+  scope: source.toml.uv, text.plain.uv
   settings:
     icon: uv
 syntax:
+  - name: Plain Text (uv)
+    scope: text.plain.uv
+    hidden: true
+    file_extensions:
+      - requirements.txt
+    contexts:
+      main: []
   - name: TOML (uv)
     scope: source.toml.uv
     hidden: true

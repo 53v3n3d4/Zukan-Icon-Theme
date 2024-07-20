@@ -2,7 +2,7 @@
 ---
 name: tox
 preferences:
-  scope: source.ini.tox
+  scope: source.ini.tox, source.toml.tox
   settings:
     icon: tox
 syntax:
@@ -11,7 +11,17 @@ syntax:
     hidden: true
     file_extensions:
       - tox.ini
+      - setup.cfg
     contexts:
       main:
         - include: scope:source.ini
+          apply_prototype: true
+  - name: TOML (tox)
+    scope: source.toml.tox
+    hidden: true
+    file_extensions:
+      - pyproject.toml
+    contexts:
+      main:
+        - include: scope:source.toml
           apply_prototype: true

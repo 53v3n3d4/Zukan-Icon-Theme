@@ -10,9 +10,13 @@ syntax:
     scope: source.toml.pdm
     hidden: true
     file_extensions:
+      - config.toml
       - pdm.lock
       - pdm.toml
+      - pyproject.toml
     contexts:
       main:
         - include: scope:source.toml
           apply_prototype: true
+
+# .pdm-python
