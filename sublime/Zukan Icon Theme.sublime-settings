@@ -158,10 +158,25 @@
     // ]
     "create_custom_icon": [],
 
+    // This option will auto rebuild icon in the following
+    // case:
+    // - ST function 'add_on_change' is triggered by
+    // 'Zukan Icon Theme.sublime-settings'
+    //
+    // It builds icons files, if one of the following
+    // settings change:
+    // - 'ignored_icon'
+    // - 'change_icon'
+    // - 'change_icon_file_extension'
+    //
+    // Default is true. Turn off auto rebuild setting to
+    // false.
+    "auto_rebuild_icon": true,
+
     // This option will auto install theme in the following
     // cases:
     // - ST function 'add_on_change' is triggered by
-    // 'Preferences'
+    // 'Preferences.sublime-settings'
     // - ST start
     //
     // If true, commands below will have no effect since

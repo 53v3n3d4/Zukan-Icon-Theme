@@ -1,7 +1,7 @@
-# Initial list to try solve conflicts of same file extensions used by
-# differents languages, libraries or packages.
-# If leave two same file extensions in differents scopes, ST will use
-# the last one in alphabet order.
+# Initial list to try solve conflicts of same file extensions used by differents
+# languages, libraries or packages.
+# If leave two same file extensions in differents scopes, ST will use the last
+# one in alphabet order.
 # Example: fs file extension used by F# and OpenGL. OpenGL will prevail.
 SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.arduino', 'file_extensions': ['ino', 'pde']},  # arduino.yaml
@@ -34,7 +34,7 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'text.gherkin.feature', 'file_extensions': ['feature']},  # behat.yaml
     {'scope': 'text.html.basic', 'file_extensions': ['html']},  # django.yaml
     {'scope': 'text.plain', 'file_extensions': ['BUILD', 'WORKSPACE']},  # bazel.yaml
-    {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # pip and uv.yaml
+    {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # uv.yaml
     {'scope': 'text.xml', 'file_extensions': ['xml']},  # django.yaml
 ]
 

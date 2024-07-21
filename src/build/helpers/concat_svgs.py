@@ -36,7 +36,7 @@ class ConcatSVG:
     selected.
 
     When writing the concat file, it does not re calculate positions after putting all
-    icons, rects and texts together into new position. It only insert SVG inside SVG.
+    icons, rects and texts together into new position. It only inserts SVG inside SVG.
 
     A few links with info about transforming and flattening:
     - https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/transform-origin

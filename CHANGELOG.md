@@ -5,7 +5,7 @@
 ### Icons, syntaxes and preferences
 - Add icon-theme: CSpell, DirectX, Dune, EdgeDB, Fantomas, FSharpLint, OCamlPRO, opam, Paket, Pascal, Pip, Pkg.jl, Web IDL, XMake
 - Add icon option: Angular, C#, Composer, Go, DirectX, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, Sublime Text
-- Change icon: Image, Video
+- Change icon: FlatBuffers, Image, Video
 - Change sublime-syntax: CUDA, Dart, Flutter, Lavarel, PDM, Poetry, Python, Smarty, tox, uv
 
 ### Plugin
@@ -14,6 +14,7 @@
 - Remove command delete_preferences, delete_syntaxes, delete_themes, install_themes, rebuild_preferences, rebuild_syntaxes
 - Add commands_settings
 - Add create_custom_icon setting
+- Add auto_rebuild_icon setting
 
 ## [0.3.0] - 2024-07-09
 

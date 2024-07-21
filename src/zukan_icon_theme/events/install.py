@@ -38,14 +38,17 @@ class InstallEvent:
         """
         Using Thread to install syntax to avoid freezing ST to build syntaxes.
         """
+        # Deleting syntax for 'change_icon_file_extension'
+        ZukanSyntax.delete_icons_syntaxes()
+
         ts = threading.Thread(target=ZukanSyntax.build_icons_syntaxes)
         ts.start()
         ThreadProgress(ts, 'Building zukan syntaxes', 'Build done')
 
     def install_batch():
         """
-        Batch build preferences and syntaxes, to use with Thread together in
-        new install manually.
+        Batch build themes, preferences and syntaxes, to use with Thread together
+        in new install manually.
         """
         # Check 'auto_install_theme' avoid duplicate create themes when True.
         # Because deleting theme already triggers event to create themes.
@@ -59,11 +62,14 @@ class InstallEvent:
         version = get_settings(ZUKAN_SETTINGS, 'version')
         logger.info('Zukan icons v%s has been built.', version)
 
-    def install_upgrade():
+    def install_syntaxes_preferences():
         """
         Batch build preferences and syntaxes, to use with Thread together in
-        install upgrade thread.
+        install_upgrade_thread and rebuild_icon_files_thread.
         """
+        # Deleting syntax for 'change_icon_file_extension'
+        ZukanSyntax.delete_icons_syntaxes()
+
         ZukanPreference.build_icons_preferences()
         ZukanSyntax.build_icons_syntaxes()
 
@@ -88,12 +94,21 @@ class InstallEvent:
                 '\n\n'.format(v=version)
             )
 
-        t = threading.Thread(target=InstallEvent.install_upgrade)
+        t = threading.Thread(target=InstallEvent.install_syntaxes_preferences)
         t.start()
         ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
 
         logger.info('upgrading Zukan icons to v%s.', version)
         logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
+
+    def rebuild_icon_files_thread():
+        """
+        Using Thread to build syntax and preferences files, to avoid ST freezing.
+        """
+
+        t = threading.Thread(target=InstallEvent.install_syntaxes_preferences)
+        t.start()
+        ThreadProgress(t, 'Building zukan files', 'Build done')
 
     def new_install_manually():
         """

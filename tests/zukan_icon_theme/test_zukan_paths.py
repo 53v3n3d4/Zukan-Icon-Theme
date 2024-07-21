@@ -54,17 +54,10 @@ params_list = [
         + file_extensions.SUBLIME_PACKAGE_EXTENSION,
     ),
     (
-        zukan_paths.ZUKAN_PREFERENCES_DATA_FILE,
+        zukan_paths.ZUKAN_ICONS_DATA_FILE,
         ST_PACKAGES_PATH
         + PACKAGE_NAME
-        + '/icons_preferences/zukan_preferences_data'
-        + file_extensions.PICKLE_EXTENSION,
-    ),
-    (
-        zukan_paths.ZUKAN_SYNTAXES_DATA_FILE,
-        ST_PACKAGES_PATH
-        + PACKAGE_NAME
-        + '/icons_syntaxes/zukan_syntaxes_data'
+        + '/icons_data/zukan_icons_data'
         + file_extensions.PICKLE_EXTENSION,
     ),
     (
@@ -73,6 +66,13 @@ params_list = [
         + PACKAGE_NAME
         + '/sublime/zukan-version'
         + file_extensions.SUBLIME_SETTINGS_EXTENSION,
+    ),
+    (
+        zukan_paths.ZUKAN_CURRENT_SETTINGS_FILE,
+        ST_PACKAGES_PATH
+        + PACKAGE_NAME
+        + '/sublime/zukan_current_settings'
+        + file_extensions.PICKLE_EXTENSION,
     ),
 ]
 

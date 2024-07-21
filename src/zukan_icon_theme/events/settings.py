@@ -8,7 +8,7 @@ from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..helpers.load_save_settings import get_settings
-from ..helpers.read_write_data import dump_json_data
+from ..helpers.read_write_data import dump_pickle_data, dump_json_data, read_pickle_data
 from ..helpers.search_themes import (
     filter_resources_themes,
     search_resources_sublime_themes,
@@ -26,6 +26,7 @@ from ..utils.file_settings import (
     ZUKAN_VERSION,
 )
 from ..utils.zukan_paths import (
+    ZUKAN_CURRENT_SETTINGS_FILE,
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
@@ -148,6 +149,78 @@ class SettingsEvent:
 
             print('------------------------------------')
 
+    def save_current_settings():
+        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
+            # Delete previous pickle file
+            os.remove(ZUKAN_CURRENT_SETTINGS_FILE)
+
+        current_settings = {}
+
+        for s in ZUKAN_SETTINGS_OPTIONS:
+            setting_option = get_settings(ZUKAN_SETTINGS, s)
+            current_settings.update({s: setting_option})
+        dump_pickle_data(current_settings, ZUKAN_CURRENT_SETTINGS_FILE)
+
+    def rebuild_icons_files():
+        """
+        Rebuild icons files, when icons settings change in Zukan preferences.
+        """
+        logger.debug('if icons settings changed, begin rebuild...')
+        auto_rebuild_icon = get_settings(ZUKAN_SETTINGS, 'auto_rebuild_icon')
+
+        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and auto_rebuild_icon is True:
+            data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
+            print(data)
+            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+            change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
+            change_icon_file_extension = get_settings(
+                ZUKAN_SETTINGS, 'change_icon_file_extension'
+            )
+
+            for d in data:
+                # Currently, rebuilding all files because, in cases of manually
+                # inserting or deleteling multiple entries direct in sublime-settings
+                # file.
+
+                # Check if ignored_icon changed
+                if sorted(d['ignored_icon']) != sorted(ignored_icon):
+                    logger.info('"ignored_icon" changed, rebuilding files...')
+                    InstallEvent.rebuild_icon_files_thread()
+
+                    SettingsEvent.save_current_settings()
+
+                # Check if change_icon changed
+                if sorted(d['change_icon']) != sorted(change_icon):
+                    logger.info('"change_icon" changed, rebuilding files...')
+                    ZukanPreference.build_icons_preferences()
+
+                    SettingsEvent.save_current_settings()
+
+                # Check if change_icon_file_extension changed
+                if any(
+                    x != y
+                    for x, y in zip(
+                        d['change_icon_file_extension'], change_icon_file_extension
+                    )
+                ) or len(d['change_icon_file_extension']) != len(
+                    change_icon_file_extension
+                ):
+                    logger.info(
+                        '"change_icon_file_extension" changed, rebuilding files...'
+                    )
+                    InstallEvent.install_syntaxes()
+
+                    SettingsEvent.save_current_settings()
+
+        if auto_rebuild_icon is False:
+            logger.debug('auto_rebuild_icon setting is False.')
+
+        if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
+            os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
+
+        if not os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
+            SettingsEvent.save_current_settings()
+
     def upgrade_zukan_files():
         """
         Event for setting 'version' in 'Zukan Icon Theme.sublime-settings'.
@@ -156,7 +229,7 @@ class SettingsEvent:
 
         It compares with 'version' value from 'zukan-version.sublime-settings'.
         """
-        logger.debug('If package upgraded, begin rebuild...')
+        logger.debug('ff package upgraded, begin rebuild...')
         pkg_version = get_settings(ZUKAN_SETTINGS, 'version')
         auto_upgraded = get_settings(ZUKAN_SETTINGS, 'rebuild_on_upgrade')
 
@@ -198,6 +271,12 @@ class SettingsEvent:
         """
         # auto_upgraded setting
         SettingsEvent.upgrade_zukan_files()
+
+        # auto_rebuild_icon setting
+        # If not load in file_type_icons,log messages duplicated when changed
+        # through commands_settings.
+        # It does not happen when manually changed in sublime-settings file.
+        SettingsEvent.rebuild_icons_files()
 
     def user_preferences_clear():
         """

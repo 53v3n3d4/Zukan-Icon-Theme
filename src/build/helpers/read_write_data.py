@@ -123,7 +123,7 @@ def read_pickle_data(pickle_file: str) -> dict:
     """
     Pickle reader.
 
-    Read sublime-syntaxes data.
+    Read zukan icons data.
 
     Paramenters:
     pickle_file (str) -- path to pickle file
@@ -159,7 +159,7 @@ def read_pickle_data(pickle_file: str) -> dict:
 
 def dump_pickle_data(pickle_data: dict, pickle_file: str):
     """
-    Write pickle file (sublime-syntaxes).
+    Write pickle file (zukan icons data).
 
     Parameters:
     pickle_data (dict) -- contents of pickle file.

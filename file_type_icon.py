@@ -107,6 +107,9 @@ def plugin_loaded():
     # Print to console current Zukan settings if 'log_level' DEBUG
     SettingsEvent.get_user_zukan_preferences()
 
+    # Build icon files if changed in Zukan settings
+    SettingsEvent.rebuild_icons_files()
+
 
 def plugin_unloaded():
     MoveFolder.remove_created_folder(ZUKAN_PKG_PATH)

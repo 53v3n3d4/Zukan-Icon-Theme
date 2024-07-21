@@ -11,7 +11,7 @@ logger = logging.getLogger(__name__)
 
 def filter_resources_themes(themes_list: list) -> list:
     """
-    Filter sublime-themes on root. Use sublime package.
+    Filter sublime-themes on root.
 
     Example: Packages/Zukan Icon Theme/icons/Treble Adaptive.sublime-theme
     is excluded.
@@ -34,7 +34,7 @@ def filter_resources_themes(themes_list: list) -> list:
 
 def search_resources_sublime_themes() -> list:
     """
-    Search for sublime-themes then filter results. Use sublime package.
+    Search for sublime-themes then filter results.
 
     Retunrs:
     (list) -- Filtered list of sublime-themes.

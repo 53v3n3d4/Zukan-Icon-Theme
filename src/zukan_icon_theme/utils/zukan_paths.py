@@ -101,6 +101,13 @@ ZUKAN_ICONS_DATA_FILE = os.path.join(
     'zukan_icons_data' + PICKLE_EXTENSION,
 )
 
+# ZUKAN_CURRENT_SETTINGS_FILE = os.path.join(
+#     sublime.packages_path(), PACKAGE_NAME, 'sublime', 'zukan_current_settings' + PICKLE_EXTENSION
+# )
+ZUKAN_CURRENT_SETTINGS_FILE = os.path.join(
+    PACKAGES_PATH, PACKAGE_NAME, 'sublime', 'zukan_current_settings' + PICKLE_EXTENSION
+)
+
 # ZUKAN_USER_SUBLIME_SETTINGS = os.path.join(
 #     sublime.packages_path(),
 #     'User',

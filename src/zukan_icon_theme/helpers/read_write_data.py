@@ -18,6 +18,28 @@ from ruamel.yaml import YAML
 logger = logging.getLogger(__name__)
 
 
+def dump_pickle_data(pickle_data: dict, pickle_file: str):
+    """
+    Write pickle file (zukan-current-version).
+
+    Parameters:
+    pickle_data (dict) -- contents of pickle file.
+    pickle_file (str) -- path to where pickle file will be saved.
+    """
+    try:
+        with open(pickle_file, 'ab+') as f:
+            # Python 3.3, fail if use protocol 4 or 5
+            pickle.dump(pickle_data, f, protocol=3)
+    except FileNotFoundError:
+        logger.error(
+            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), pickle_file
+        )
+    except OSError:
+        logger.error(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), pickle_file
+        )
+
+
 def read_pickle_data(pickle_file: str) -> dict:
     """
     Pickle reader.
