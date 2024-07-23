@@ -2,6 +2,7 @@ import logging
 import os
 
 from ..helpers.load_save_settings import get_settings
+from ..helpers.search_zukan_data import list_data_names
 from ..utils.file_extensions import (
     PNG_EXTENSION,
 )
@@ -33,7 +34,7 @@ def data(d: dict):
 
     # Syntax only
     # No icon argument -> no preferences, only create syntax
-    if 'icon' not in d:
+    if 'icon' not in d and 'syntax_name' in d:
         if 'contexts_scope' not in d:
             return OrderedDict(
                 {
@@ -163,11 +164,16 @@ def create_custom_icon() -> list:
                 os.path.join(ZUKAN_PKG_ICONS_PATH, c['icon'] + PNG_EXTENSION)
             ):
                 logger.warning('%s%s not found', c['icon'], PNG_EXTENSION)
-            if 'name' in c:
+            if 'name' in c and c['name'] not in list_data_names():
                 od = data(c)
                 list_od.append(od)
             if 'name' not in c:
                 logger.warning('%s do not have key "name", it is required', c)
+            if 'name' in c and c['name'] in list_data_names():
+                logger.warning(
+                    '%s key "name" already exists, it should be unique. Excluding from build.',
+                    c['name'],
+                )
 
     logger.debug('create_custom_icon od list %s', list_od)
     return list_od

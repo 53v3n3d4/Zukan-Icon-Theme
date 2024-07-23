@@ -272,6 +272,16 @@ class ZukanSyntax:
                 )
             ):
                 os.remove(s)
+            # '.sublime-syntax' not getting deleted. It can exist if 'create_custom_icon'
+            # insert empty in 'syntax_name'.
+            if os.path.exists(
+                os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, SUBLIME_SYNTAX_EXTENSION)
+            ):
+                os.remove(
+                    os.path.join(
+                        ZUKAN_PKG_ICONS_SYNTAXES_PATH, SUBLIME_SYNTAX_EXTENSION
+                    )
+                )
             logger.info('sublime-syntaxes deleted.')
         except FileNotFoundError:
             logger.error(

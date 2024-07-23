@@ -354,7 +354,7 @@ class CreateCustomIcon(sublime_plugin.TextCommand):
                             != custom_icon_data['contexts_scope']
                         ):
                             d['contexts_scope'] = custom_icon_data['contexts_scope']
-                        # Handling file_extensions update list if not exist.
+                        # Handling file_extensions update if not exist in list.
                         if (
                             list_create_custom_icon_extensions
                             and 'file_extensions' in d
@@ -442,7 +442,7 @@ class CreateCustomIcon(sublime_plugin.TextCommand):
                 logger.debug('create_custom_icon is empty')
                 create_custom_icon.append(custom_icon_data)
 
-            # Delete empty keys.
+            # Remove empty keys.
             complete_list_filtered = remove_empty_dict(create_custom_icon)
             # print(complete_list_filtered)
 

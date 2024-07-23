@@ -9,7 +9,7 @@ from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..helpers.clean_settings import clean_comments_settings
 from ..helpers.load_save_settings import get_settings
-from ..helpers.read_write_data import dump_pickle_data, dump_json_data, read_pickle_data
+from ..helpers.read_write_data import dump_pickle_data, read_pickle_data
 from ..helpers.search_themes import (
     filter_resources_themes,
     search_resources_sublime_themes,

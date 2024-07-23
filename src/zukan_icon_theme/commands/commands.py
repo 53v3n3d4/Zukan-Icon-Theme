@@ -477,8 +477,12 @@ class RebuildFiles(sublime_plugin.ApplicationCommand):
         sublime-theme and sublime-syntax files.
         """
         try:
-            ZukanPreference.delete_icons_preferences()
+            # Syntax getting deleted in 'build_icons_preferences' which
+            # is used by 'new_install_manually'
+            # ZukanPreference.delete_icons_preferences()
             ZukanTheme.delete_icons_themes()
-            ZukanSyntax.delete_icons_syntaxes()
+            # Syntax getting deleted in 'build_icons_syntaxes' which
+            # is used by 'new_install_manually'
+            # ZukanSyntax.delete_icons_syntaxes()
         finally:
             InstallEvent.new_install_manually()

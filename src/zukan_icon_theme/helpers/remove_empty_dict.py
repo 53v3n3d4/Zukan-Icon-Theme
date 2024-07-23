@@ -1,6 +1,9 @@
 def remove_empty_dict(d):
     """
-    Remove empty keys. 
+    Copied from
+    https://stackoverflow.com/questions/12118695/efficient-way-to-remove-keys-with-empty-strings-from-a-dict/24893252#24893252
+
+    Remove empty keys.
 
     Used in 'commands_settings > CreateCustomIcon', inputs can be empty.
     """
