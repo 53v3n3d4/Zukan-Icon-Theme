@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.3.1] - 2024
+## [0.3.1] - 2024-07-23
 
 ### Icons, syntaxes and preferences
 - Add icon-theme: CSpell, DirectX, Dune, EdgeDB, Fantomas, FSharpLint, OCamlPRO, opam, Paket, Pascal, Pip, Pkg.jl, Web IDL, XMake
