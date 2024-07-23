@@ -1,9 +1,19 @@
 %YAML 1.2
 ---
-name: Nant
+name: NAnt
 preferences:
-  scope: source.nant-build
+  scope: source.nant-build, text.xml.nant
   settings:
     icon: nant
+syntax:
+  - name: XML (NAnt)
+    scope: text.xml.nant
+    hidden: true
+    file_extensions:
+      - NAnt.exe.config
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true
 
-# ST Package
+# ST Package: Build.sublime-syntax.
