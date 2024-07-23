@@ -111,7 +111,7 @@ package. ClojureScript syntax will prevail since ST reads it last.
 
 Required parameters are: scope and file extensions.  
 
-Example: `Zukan Icon Theme: Change File Extension` `source.iot` `ino, pde`
+Example: `Zukan Icon Theme: Change File Extension` type `source.iot` hit Enter, type `ino, pde` hit Enter.  
 
 > Multiple file extensions can be inserted separated by commas.
 
@@ -153,18 +153,21 @@ Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `sc
 
 Required parameter is name.  
 
-Example Option 1: `Zukan Icon Theme: Create Custom Icon` type `ATest` enter, type `atest` enter, `` enter, type `source.toml.atest` enter,  `` enter,  `` enter.  
+Example Option 1: `Zukan Icon Theme: Create Custom Icon` type `ATest` hit Enter, type `atest` hit Enter, `(leave empty)` hit Enter, type `source.toml.atest` hit Enter,  `(leave empty)` hit Enter,  `(leave empty)` hit Enter.  
 
-Example Option 2: `Zukan Icon Theme: Create Custom Icon` type `ATest-1` enter, `` enter, type `JSON (ATest-1)` enter, type `source.json.atest1` enter, type `atest1.config.json` enter, type `source.json` enter.  
+Example Option 2: `Zukan Icon Theme: Create Custom Icon` type `ATest-1` hit Enter, `(leave empty)` hit Enter, type `JSON (ATest-1)` hit Enter, type `source.json.atest1` hit Enter, type `atest1.config.json` hit Enter, type `source.json` hit Enter.  
 
-Example Option 3: `Zukan Icon Theme: Create Custom Icon` type `ATest-3` enter, type `atest3` enter, type `ATest-3` enter, type `source.atest3` enter, type `abc, def` enter, type `source.atest2` enter.  
+Example Option 3: `Zukan Icon Theme: Create Custom Icon` type `ATest-3` hit Enter, type `atest3` hit Enter, type `ATest-3` hit Enter, type `source.atest3` hit Enter, type `abc, def` hit Enter, type `source.atest2` hit Enter.  
+
+> If inserted more than one scopes. And syntax_name present, the first scope will be used in icon syntax.  
+> Key name should be unique, if exists in Zukan icons data or in `create_custom_icon`, will be excluded from building.
 
 ```json
     "create_custom_icon": [
        {
            "name": "ATest",
            "icon": "atest",
-           "scope": "source.toml.atest"
+           "scope": "source.toml.atest, source.toml.atest"
        },
        {
            "name": "ATest-1",

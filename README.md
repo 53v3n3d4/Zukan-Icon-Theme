@@ -8,6 +8,8 @@
 
 Icon theme for Sublime Text 4 editor.  
 
+**Docs** [Build](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/build.md) ・ [File icon](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md) ・ [Plugin](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/plugin.md) ・ [Theme](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/theme.md) ・ [Troubleshooting](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/troubleshooting.md)
+
 <img src="assets/file-icons-concat-sample.svg" width="728" height="460" alt="file icon">
 
 > File icons in v0.2.0
