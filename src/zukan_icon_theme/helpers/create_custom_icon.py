@@ -2,6 +2,7 @@ import logging
 import os
 
 from ..helpers.load_save_settings import get_settings
+from ..helpers.remove_empty_dict import remove_empty_dict
 from ..helpers.search_zukan_data import list_data_names
 from ..utils.file_extensions import (
     PNG_EXTENSION,
@@ -165,7 +166,7 @@ def create_custom_icon() -> list:
             ):
                 logger.warning('%s%s not found', c['icon'], PNG_EXTENSION)
             if 'name' in c and c['name'] not in list_data_names():
-                od = data(c)
+                od = data(remove_empty_dict(c))
                 list_od.append(od)
             if 'name' not in c:
                 logger.warning('%s do not have key "name", it is required', c)
