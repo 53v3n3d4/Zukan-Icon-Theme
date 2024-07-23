@@ -14,6 +14,7 @@ ZUKAN_SETTINGS_OPTIONS = [
     'ignored_icon',
     'change_icon',
     'change_icon_file_extension',
+    'create_custom_icon',
     'auto_rebuild_icon',
 ]
 

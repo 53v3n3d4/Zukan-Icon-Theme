@@ -8,6 +8,7 @@ from ..helpers.clean_settings import clean_comments_settings
 from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.load_save_settings import get_settings, set_save_settings
 from ..helpers.read_write_data import read_pickle_data
+from ..helpers.remove_empty_dict import remove_empty_dict
 from ..helpers.search_themes import search_resources_sublime_themes
 from ..utils.file_extensions import (
     PNG_EXTENSION,
@@ -43,92 +44,111 @@ class ChangeFileExtension(sublime_plugin.TextCommand):
                 'change_icon_file_extension option malformed, need to be a list'
             )
 
-        inserted_scope_file_extension = {
-            'scope': change_file_extension_scope,
-            'file_extensions': [
+        # Required name and icon input
+        if not change_file_extension_scope or not change_file_extension_exts:
+            dialog_message = 'Scope and file extension inputs are required'
+            sublime.error_message(dialog_message)
+
+        if change_file_extension_scope and change_file_extension_exts:
+            # Convert change_file_extension_exts to list
+            list_change_file_extension_exts = [
                 s.strip() for s in change_file_extension_exts.split(',')
-            ],
-        }
-        # Could not work OrderedDict, still insert unordered.
-        # inserted_scope_file_extension = OrderedDict(
-        #     [
-        #         ('scope', change_file_extension_scope),
-        #         ('file_extensions', change_file_extension_exts.split(','),
-        #     ]
-        # )
-        new_scopes_list = []
+            ]
+            inserted_scope_file_extension = {
+                'scope': change_file_extension_scope,
+                'file_extensions': list_change_file_extension_exts,
+            }
+            # Could not work OrderedDict, still insert unordered.
+            # inserted_scope_file_extension = OrderedDict(
+            #     [
+            #         ('scope', change_file_extension_scope),
+            #         ('file_extensions', change_file_extension_exts.split(','),
+            #     ]
+            # )
+            new_scopes_list = []
 
-        if change_icon_file_extension:
-            for d in change_icon_file_extension:
-                # print(change_icon_file_extension)
-                list_extesnions_difference = list(
-                    set(
-                        [s.strip() for s in change_file_extension_exts.split(',')]
-                    ).difference(d['file_extensions'])
-                )
-
-                # Scope does not exist in change_icon_file_extension
-                # Duplicating new scopes.
-                if (
-                    not any(
-                        d['scope'] == change_file_extension_scope
-                        for d in change_icon_file_extension
-                    )
-                    and change_file_extension_scope != d['scope']
-                ):
-                    logger.debug(
-                        '%s scope does not exist in change_icon_file_extension'
+            if change_icon_file_extension:
+                for d in change_icon_file_extension:
+                    # print(change_icon_file_extension)
+                    list_extesnions_difference = list(
+                        set(list_change_file_extension_exts).difference(
+                            d['file_extensions']
+                        )
                     )
 
-                    new_scopes_list.append(inserted_scope_file_extension)
-                    # print(new_scopes_list)
-
-                # Scope exists in change_icon_file_extension
-                # Add if file extension does not exist
-                if (
-                    any(
-                        d['scope'] == change_file_extension_scope
-                        for d in change_icon_file_extension
-                    )
-                    and change_file_extension_scope == d['scope']
-                ):
-                    if list_extesnions_difference:
+                    # Scope does not exist in change_icon_file_extension
+                    if (
+                        not any(
+                            d['scope'] == change_file_extension_scope
+                            for d in change_icon_file_extension
+                        )
+                        and change_file_extension_scope != d['scope']
+                    ):
                         logger.debug(
-                            '%s scope exists and adding file extensions %s',
+                            '%s scope does not exist in change_icon_file_extension',
                             change_file_extension_scope,
-                            list_extesnions_difference,
                         )
 
-                        d['file_extensions'] = (
-                            d['file_extensions'] + list_extesnions_difference
-                        )
-                        # print(d['file_extensions'])
+                        new_scopes_list.append(inserted_scope_file_extension)
+                        # print(new_scopes_list)
 
-                    if not list_extesnions_difference:
-                        dialog_message = (
-                            '"{s}" and "{f}" already in setting '
-                            '"change_icon_file_extension"'.format(
-                                s=change_file_extension_scope,
-                                f=change_file_extension_exts,
+                    # Scope exists in change_icon_file_extension
+                    # Add if file extension does not exist
+                    if (
+                        any(
+                            d['scope'] == change_file_extension_scope
+                            for d in change_icon_file_extension
+                        )
+                        and change_file_extension_scope == d['scope']
+                    ):
+                        if list_extesnions_difference:
+                            logger.debug(
+                                '%s scope exists and adding file extensions %s',
+                                change_file_extension_scope,
+                                list_extesnions_difference,
                             )
-                        )
-                        sublime.message_dialog(dialog_message)
 
-        # change_icon_file_extension empty
-        if not change_icon_file_extension:
-            logger.debug('change_icon_file_extension is empty')
-            change_icon_file_extension.append(inserted_scope_file_extension)
+                            d['file_extensions'] = (
+                                d['file_extensions'] + list_extesnions_difference
+                            )
+                            # print(d['file_extensions'])
 
-        # Cleaning duplicated from new_scopes_list
-        file_extensions_list_not_duplicated = [
-            f for i, f in enumerate(new_scopes_list) if new_scopes_list.index(f) == i
-        ]
+                        if not list_extesnions_difference:
+                            dialog_message = (
+                                '"{s}" and "{f}" already in setting '
+                                '"change_icon_file_extension"'.format(
+                                    s=change_file_extension_scope,
+                                    f=change_file_extension_exts,
+                                )
+                            )
+                            sublime.error_message(dialog_message)
 
-        set_save_settings(
-            ZUKAN_SETTINGS,
-            'change_icon_file_extension',
-            change_icon_file_extension + file_extensions_list_not_duplicated,
-        )
+                    # File extension exist
+                    if change_file_extension_scope != d['scope'] and not set(
+                        list_change_file_extension_exts
+                    ).isdisjoint(set(d['file_extensions'])):
+                        dialog_message = 'File extension present in different scope'
+                        sublime.error_message(dialog_message)
+
+                        return None
+
+            # change_icon_file_extension empty
+            if not change_icon_file_extension:
+                logger.debug('change_icon_file_extension is empty')
+                change_icon_file_extension.append(inserted_scope_file_extension)
+
+            # Cleaning duplicated
+            file_extensions_list_not_duplicated = [
+                f
+                for i, f in enumerate(new_scopes_list)
+                if new_scopes_list.index(f) == i
+            ]
+
+            set_save_settings(
+                ZUKAN_SETTINGS,
+                'change_icon_file_extension',
+                change_icon_file_extension + file_extensions_list_not_duplicated,
+            )
 
     def input(self, args):
         if not args.get('change_file_extension_scope'):
@@ -139,9 +159,13 @@ class ChangeFileExtension(sublime_plugin.TextCommand):
 
 
 class ChangeFileExtensionScopeInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return change_file_extension_scope to ChangeFileExtension.
+    """
+
     def placeholder(self):
         sublime.status_message('Scope name to be used')
-        return 'Type scope. Example: source.js'
+        return 'Type scope. E.g. source.js'
 
     def next_input(self, args):
         if 'change_file_extension_exts' not in args:
@@ -149,9 +173,13 @@ class ChangeFileExtensionScopeInputHandler(sublime_plugin.TextInputHandler):
 
 
 class ChangeFileExtensionExtsInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return change_file_extension_exts to ChangeFileExtension.
+    """
+
     def placeholder(self):
         sublime.status_message('Icon syntaxes files in "icons_syntaxes" folder')
-        return 'Type file extensions, separated by commma. Example: js, cjs, mjs'
+        return 'Type file extensions, separated by commma. E.g. js, cjs, mjs'
 
     def confirm(self, text):
         self.text = text
@@ -173,34 +201,42 @@ class ChangeIcon(sublime_plugin.TextCommand):
 
         inserted_change_icon = {change_icon_name: change_icon_file}
 
-        if (change_icon_name, change_icon_file) not in change_icon.items():
-            change_icon.update(inserted_change_icon)
-            set_save_settings(ZUKAN_SETTINGS, 'change_icon', change_icon)
+        # Required name and icon input
+        if not change_icon_name or not change_icon_file:
+            dialog_message = 'Name and icon name inputs are required'
+            sublime.error_message(dialog_message)
 
-            # Check if PNG exist
-            primary_file_list = [file_name for name, file_name, *_ in PRIMARY_ICONS]
-            # print(primary_file_list)
-            if (
-                not os.path.exists(
-                    os.path.join(ZUKAN_PKG_ICONS_PATH, change_icon_file + PNG_EXTENSION)
-                )
-                and change_icon_file not in primary_file_list
-            ):
-                dialog_message = (
-                    '{i} icon PNGs not found.\n\n'
-                    'Insert PNGs in 3 sizes ( 18x16, 36x32, 54x48 ) in {p}'.format(
-                        i=change_icon_name, p=ZUKAN_PKG_ICONS_PATH
+        if change_icon_name and change_icon_file:
+            if (change_icon_name, change_icon_file) not in change_icon.items():
+                change_icon.update(inserted_change_icon)
+                set_save_settings(ZUKAN_SETTINGS, 'change_icon', change_icon)
+
+                # Check if PNG exist
+                primary_file_list = [file_name for name, file_name, *_ in PRIMARY_ICONS]
+                # print(primary_file_list)
+                if (
+                    not os.path.exists(
+                        os.path.join(
+                            ZUKAN_PKG_ICONS_PATH, change_icon_file + PNG_EXTENSION
+                        )
                     )
+                    # Primary icons list excluded because 'file_type_image-1' does not
+                    # exist in 'icons' folder. It is been renamed to 'file_type_image'
+                    and change_icon_file not in primary_file_list
+                ):
+                    dialog_message = (
+                        '{i} icon PNGs not found.\n\n'
+                        'Insert PNGs in 3 sizes ( 18x16, 36x32, 54x48 ) in {p}'.format(
+                            i=change_icon_name, p=ZUKAN_PKG_ICONS_PATH
+                        )
+                    )
+                    sublime.error_message(dialog_message)
+
+            elif (change_icon_name, change_icon_file) in change_icon.items():
+                dialog_message = '{n} icon already in setting "change_icon"'.format(
+                    n=change_icon_name
                 )
-                sublime.message_dialog(dialog_message)
-
-            # Check if icon exist
-
-        elif (change_icon_name, change_icon_file) in change_icon.items():
-            dialog_message = '{n} icon already in setting "change_icon"'.format(
-                n=change_icon_name
-            )
-            sublime.message_dialog(dialog_message)
+                sublime.error_message(dialog_message)
 
     def input(self, args):
         if not args.get('change_icon_name'):
@@ -211,9 +247,13 @@ class ChangeIcon(sublime_plugin.TextCommand):
 
 
 class ChangeIconNameInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return change_icon_name to ChangeIcon.
+    """
+
     def placeholder(self):
         sublime.status_message('Zukan repo has a list of icons name, file-icon.md')
-        return 'Type icon name. Example: Node.js'
+        return 'Type icon name. E.g. Node.js'
 
     def next_input(self, args):
         if 'change_icon_file' not in args:
@@ -221,9 +261,13 @@ class ChangeIconNameInputHandler(sublime_plugin.TextInputHandler):
 
 
 class ChangeIconFileInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return change_icon_file to ChangeIcon.
+    """
+
     def placeholder(self):
         sublime.status_message('Configuration in Zukan Icon Theme > Settings')
-        return 'Type icon file name, without extension. Example: nodejs-1'
+        return 'Type icon file name, without extension. E.g. nodejs-1'
 
     def confirm(self, text):
         self.text = text
@@ -240,6 +284,337 @@ class CleanComments(sublime_plugin.TextCommand):
 
     def run(self, edit):
         clean_comments_settings(ZUKAN_USER_SUBLIME_SETTINGS)
+
+
+class CreateCustomIcon(sublime_plugin.TextCommand):
+    """
+    Sublime command to create custom icon.
+    """
+
+    def run(
+        self,
+        edit,
+        create_custom_icon_name: str,
+        create_custom_icon_file: str,
+        create_custom_icon_syntax: str,
+        create_custom_icon_scope: str,
+        create_custom_icon_extensions: str,
+        create_custom_icon_contexts: str,
+    ):
+        create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
+        if not isinstance(create_custom_icon, list):
+            logger.warning('create_custom_icon option malformed, need to be a list')
+
+        # Convert create_custom_icon_extensions to list
+        list_create_custom_icon_extensions = [
+            s.strip() for s in create_custom_icon_extensions.split(',')
+        ]
+        custom_icon_data = {
+            'name': create_custom_icon_name,
+            'icon': create_custom_icon_file,
+            'syntax_name': create_custom_icon_syntax,
+            'scope': create_custom_icon_scope,
+            'file_extensions': list_create_custom_icon_extensions,
+            'contexts_scope': create_custom_icon_contexts,
+        }
+
+        # Required name input
+        if not create_custom_icon_name:
+            dialog_message = 'Name input is required'
+            sublime.error_message(dialog_message)
+
+        if create_custom_icon_name:
+            if create_custom_icon:
+                for d in create_custom_icon:
+                    # print(d)
+
+                    # Name in create_custom_icon, update.
+                    if d['name'] == custom_icon_data['name']:
+                        print(d)
+                        # Update previous values with custom_icon_data values.
+                        if (
+                            create_custom_icon_file
+                            and d['icon'] != custom_icon_data['icon']
+                        ):
+                            d['icon'] = custom_icon_data['icon']
+                            # print(d['icon'])
+                        if (
+                            create_custom_icon_syntax
+                            and d['syntax_name'] != custom_icon_data['syntax_name']
+                        ):
+                            d['syntax_name'] = custom_icon_data['syntax_name']
+                        if (
+                            create_custom_icon_scope
+                            and d['scope'] != custom_icon_data['scope']
+                        ):
+                            d['scope'] = custom_icon_data['scope']
+                        if (
+                            create_custom_icon_contexts
+                            and d['contexts_scope']
+                            != custom_icon_data['contexts_scope']
+                        ):
+                            d['contexts_scope'] = custom_icon_data['contexts_scope']
+                        # Handling file_extensions update list if not exist.
+                        if (
+                            list_create_custom_icon_extensions
+                            and 'file_extensions' in d
+                        ):
+                            list_extesnions_difference = list(
+                                set(list_create_custom_icon_extensions).difference(
+                                    d['file_extensions']
+                                )
+                            )
+                            logger.debug(
+                                'ading file extensions %s',
+                                list_extesnions_difference,
+                            )
+
+                            d['file_extensions'] = (
+                                d['file_extensions'] + list_extesnions_difference
+                            )
+                            # print(d['file_extensions'])
+
+                    # Name not in create_custom_icon.
+                    if d['name'] != custom_icon_data['name']:
+                        # Scope does not exist in create_custom_icon
+                        if (
+                            not any(
+                                d['name'] == create_custom_icon_name
+                                for d in create_custom_icon
+                            )
+                            and create_custom_icon_name != d['name']
+                        ):
+                            logger.debug(
+                                '%s does not exist in create_custom_icon',
+                                create_custom_icon_name,
+                            )
+
+                            create_custom_icon.append(custom_icon_data)
+
+                        # If syntax_name exist.
+                        if (
+                            'syntax_name' in d
+                            and create_custom_icon_syntax == d['syntax_name']
+                        ):
+                            dialog_message = (
+                                'Syntax name alredy exist in "create_custom_icon"\n\n'
+                                'Syntax name should be unique.'
+                            )
+                            sublime.error_message(dialog_message)
+
+                            return None
+
+                        # If scope different and same file extension.
+                        if (
+                            'file_extensions' in d
+                            and create_custom_icon_scope != d['scope']
+                            and not set(list_create_custom_icon_extensions).isdisjoint(
+                                set(d['file_extensions'])
+                            )
+                        ):
+                            dialog_message = 'File extension present in different scope'
+                            sublime.error_message(dialog_message)
+
+                            return None
+
+            # Check if PNG exist
+            primary_file_list = [file_name for name, file_name, *_ in PRIMARY_ICONS]
+            if (
+                not os.path.exists(
+                    os.path.join(
+                        ZUKAN_PKG_ICONS_PATH, create_custom_icon_file + PNG_EXTENSION
+                    )
+                )
+                # Primary icons list excluded because 'file_type_image-1' does not
+                # exist in 'icons' folder. It is been renamed to 'file_type_image'
+                and create_custom_icon_file not in primary_file_list
+            ):
+                dialog_message = (
+                    '{i} icon PNGs not found.\n\n'
+                    'Insert PNGs in 3 sizes ( 18x16, 36x32, 54x48 ) in {p}'.format(
+                        i=create_custom_icon_name, p=ZUKAN_PKG_ICONS_PATH
+                    )
+                )
+                sublime.error_message(dialog_message)
+
+            # create_custom_icon empty
+            if not create_custom_icon:
+                logger.debug('create_custom_icon is empty')
+                create_custom_icon.append(custom_icon_data)
+
+            # Delete empty keys.
+            complete_list_filtered = remove_empty_dict(create_custom_icon)
+            # print(complete_list_filtered)
+
+            set_save_settings(
+                ZUKAN_SETTINGS,
+                'create_custom_icon',
+                complete_list_filtered,
+            )
+
+    def input(self, args):
+        if not args.get('create_custom_icon_name'):
+            return CreateCustomIconNameInputHandler()
+
+        if not args.get('create_custom_icon_file'):
+            return CreateCustomIconFileInputHandler()
+
+        if not args.get('create_custom_icon_syntax'):
+            return CreateCustomIconSyntaxInputHandler()
+
+        if not args.get('create_custom_icon_scope'):
+            return CreateCustomIconFileInputHandler()
+
+        if not args.get('create_custom_icon_extensions'):
+            return CreateCustomIconNameInputHandler()
+
+        if not args.get('create_custom_icon_contexts'):
+            return CreateCustomIconFileInputHandler()
+
+
+class CreateCustomIconNameInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return create_custom_icon_name to CreateCustomIcon.
+    """
+
+    def placeholder(self):
+        sublime.status_message('Name is required field.')
+        return 'Type a Name. E.g. Pip'
+
+    def next_input(self, args):
+        if 'create_custom_icon_file' not in args:
+            return CreateCustomIconFileInputHandler()
+
+
+class CreateCustomIconFileInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return create_custom_icon_file to CreateCustomIcon.
+    """
+
+    def placeholder(self):
+        sublime.status_message('Hit enter if field not needed')
+        return 'Type icon file name, without extension. E.g. pip'
+
+    def next_input(self, args):
+        if 'create_custom_icon_syntax' not in args:
+            return CreateCustomIconSyntaxInputHandler()
+
+
+class CreateCustomIconSyntaxInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return create_custom_icon_syntax to CreateCustomIcon.
+    """
+
+    def placeholder(self):
+        sublime.status_message('Type syntax name. E.g. INI (Pip)')
+        return 'Type syntax name. E.g. INI (Pip)'
+
+    def next_input(self, args):
+        if 'create_custom_icon_scope' not in args:
+            return CreateCustomIconScopeInputHandler()
+
+
+class CreateCustomIconScopeInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return create_custom_icon_scope to CreateCustomIcon.
+    """
+
+    def placeholder(self):
+        sublime.status_message('Type scope. E.g. source.ini.pip')
+        return 'Type scope. E.g. source.ini.pip'
+
+    def next_input(self, args):
+        if 'create_custom_icon_extensions' not in args:
+            return CreateCustomIconExtensionsInputHandler()
+
+
+class CreateCustomIconExtensionsInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return create_custom_icon_extensions to CreateCustomIcon.
+    """
+
+    def placeholder(self):
+        sublime.status_message(
+            'Type file extensions, separated by commas. E.g. pip.conf'
+        )
+        return 'Type file extensions, separated by commas. E.g. pip.conf'
+
+    def next_input(self, args):
+        if 'create_custom_icon_contexts' not in args:
+            return CreateCustomIconContextsInputHandler()
+
+
+class CreateCustomIconContextsInputHandler(sublime_plugin.TextInputHandler):
+    """
+    Return create_custom_icon_contexts to CreateCustomIcon.
+    """
+
+    def placeholder(self):
+        sublime.status_message('Type contexts main. E.g. source.ini')
+        return 'Type contexts main. E.g. source.ini'
+
+    def confirm(self, text):
+        self.text = text
+
+    def next_input(self, args):
+        if self.text == 'back':
+            return sublime_plugin.BackInputHandler()
+
+
+class DeleteCustomIcon(sublime_plugin.TextCommand):
+    """
+    Sublime command to delete customized icon.
+    """
+
+    def run(self, edit, name: str):
+        create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
+
+        if not name == 'All':
+            create_custom_icon_updated = [
+                i for i in create_custom_icon if not (i['name'] == name)
+            ]
+            logger.info('deleting %s customized icon', name)
+
+        if name == 'All':
+            create_custom_icon_updated = []
+            logger.info('deleting all customized icon')
+
+        set_save_settings(
+            ZUKAN_SETTINGS, 'create_custom_icon', create_custom_icon_updated
+        )
+
+    def input(self, args: dict):
+        return DeleteCustomIconInputHandler()
+
+
+class DeleteCustomIconInputHandler(sublime_plugin.ListInputHandler):
+    """
+    List of customized icons, and return name to DeleteCustomIcon.
+    """
+
+    def name(self) -> str:
+        return 'name'
+
+    def placeholder(self) -> str:
+        return 'List of customized icons'
+
+    def list_items(self) -> list:
+        create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
+        if not isinstance(create_custom_icon, list):
+            logger.warning('create_custom_icon option malformed, need to be a list')
+
+        if create_custom_icon:
+            all_option = ['All']
+            customized_icons_list = [
+                d.get('name') for d in create_custom_icon if 'name' in d
+            ]
+            new_list = all_option + sorted(
+                customized_icons_list, key=lambda x: x.upper()
+            )
+            return new_list
+
+        else:
+            raise TypeError(logger.info('customized icon not found, list is empty.'))
 
 
 class DisableIcon(sublime_plugin.TextCommand):

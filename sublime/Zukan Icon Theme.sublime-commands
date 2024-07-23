@@ -13,6 +13,8 @@
         "command": "change_file_extension"
     },
     { "caption": "Zukan Icon Theme: Clean Comments", "command": "clean_comments"},
+    { "caption": "Zukan Icon Theme: Create Custom Icon", "command": "create_custom_icon"},
+    { "caption": "Zukan Icon Theme: Delete Custom Icon", "command": "delete_custom_icon"},
     { "caption": "Zukan Icon Theme: Disable Icon", "command": "disable_icon"},
     { "caption": "Zukan Icon Theme: Disable Theme", "command": "disable_theme"},
     { "caption": "Zukan Icon Theme: Enable Icon", "command": "enable_icon"},

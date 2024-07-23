@@ -38,9 +38,6 @@ class InstallEvent:
         """
         Using Thread to install syntax to avoid freezing ST to build syntaxes.
         """
-        # Deleting syntax for 'change_icon_file_extension'
-        ZukanSyntax.delete_icons_syntaxes()
-
         ts = threading.Thread(target=ZukanSyntax.build_icons_syntaxes)
         ts.start()
         ThreadProgress(ts, 'Building zukan syntaxes', 'Build done')
@@ -67,9 +64,6 @@ class InstallEvent:
         Batch build preferences and syntaxes, to use with Thread together in
         install_upgrade_thread and rebuild_icon_files_thread.
         """
-        # Deleting syntax for 'change_icon_file_extension'
-        ZukanSyntax.delete_icons_syntaxes()
-
         ZukanPreference.build_icons_preferences()
         ZukanSyntax.build_icons_syntaxes()
 

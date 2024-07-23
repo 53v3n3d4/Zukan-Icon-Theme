@@ -26,6 +26,8 @@ from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
     ChangeFileExtension,  # noqa: F401
     ChangeIcon,  # noqa: F401
     CleanComments,  # noqa: F401
+    CreateCustomIcon,  # noqa: F401
+    DeleteCustomIcon,  # noqa: F401
     DisableIcon,  # noqa: F401
     DisableTheme,  # noqa: F401
     EnableIcon,  # noqa: F401
@@ -107,7 +109,7 @@ def plugin_loaded():
     # Print to console current Zukan settings if 'log_level' DEBUG
     SettingsEvent.get_user_zukan_preferences()
 
-    # Build icon files if changed in Zukan settings
+    # Build icons files if changed in Zukan settings
     SettingsEvent.rebuild_icons_files()
 
 

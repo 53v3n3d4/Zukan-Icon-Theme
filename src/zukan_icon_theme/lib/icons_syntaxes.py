@@ -61,6 +61,12 @@ class ZukanSyntax:
         """
         if not os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH):
             os.makedirs(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+        # Deleting syntax for 'change_icon_file_extension' and 'create_custom_icon'
+        if any(
+            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
+            for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+        ):
+            ZukanSyntax.delete_icons_syntaxes()
         ZukanSyntax.create_icons_syntaxes()
         ZukanSyntax.edit_contexts_scopes()
         copy_primary_icons()

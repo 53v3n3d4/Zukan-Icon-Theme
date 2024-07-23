@@ -17,9 +17,11 @@ logger = logging.getLogger(__name__)
 
 
 def data(d: dict):
+    # Syntax scope if multiple scopes, separated by commas.
+    syntax_scope = d['scope'].split(',', 1)[0]
     # Preference only
     # No 'syntax_name' and 'file_extensions'
-    if ('synttax_name' and 'file_extensions') not in d:
+    if 'syntax_name' not in d and 'file_extensions' not in d:
         return OrderedDict(
             {
                 'name': d['name'],
@@ -40,7 +42,7 @@ def data(d: dict):
                         OrderedDict(
                             {
                                 'name': d['syntax_name'],
-                                'scope': d['scope'],
+                                'scope': syntax_scope,
                                 'hidden': True,
                                 'file_extensions': d['file_extensions'],
                                 'contexts': OrderedDict({'main': []}),
@@ -58,7 +60,7 @@ def data(d: dict):
                         OrderedDict(
                             {
                                 'name': d['syntax_name'],
-                                'scope': d['scope'],
+                                'scope': syntax_scope,
                                 'hidden': True,
                                 'file_extensions': d['file_extensions'],
                                 'contexts': OrderedDict(
@@ -82,7 +84,10 @@ def data(d: dict):
     # Preference and Syntax
     if (
         d.get('icon') is not None
-        and ('icon' and 'syntax_name' and 'scope' and 'file_extensions') in d
+        and 'icon' in d
+        and 'syntax_name' in d
+        and 'scope' in d
+        and 'file_extensions' in d
     ):
         if 'contexts_scope' not in d:
             return OrderedDict(
@@ -98,7 +103,7 @@ def data(d: dict):
                         OrderedDict(
                             {
                                 'name': d['syntax_name'],
-                                'scope': d['scope'],
+                                'scope': syntax_scope,
                                 'hidden': True,
                                 'file_extensions': d['file_extensions'],
                                 'contexts': OrderedDict({'main': []}),
@@ -122,7 +127,7 @@ def data(d: dict):
                         OrderedDict(
                             {
                                 'name': d['syntax_name'],
-                                'scope': d['scope'],
+                                'scope': syntax_scope,
                                 'hidden': True,
                                 'file_extensions': d['file_extensions'],
                                 'contexts': OrderedDict(

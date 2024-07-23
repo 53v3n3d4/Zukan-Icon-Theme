@@ -45,6 +45,7 @@
     // Examples: {
     //        "Angular": "angular-1",
     //        "Composer": "composer-1",
+    //        "Composer": "composer-2",
     //        "C#": "csharp-1",
     //        "DirectX": "directx-1",
     //        "Go": "go-1",
@@ -131,7 +132,7 @@
     //    {
     //        "name": "ATest",
     //        "icon": "atest",
-    //        "scope": "source.toml.atest"
+    //        "scope": "source.toml.atest, source.js.atest"
     //    },
     //    {
     //        "name": "ATest-1",
@@ -168,9 +169,10 @@
     // - 'ignored_icon'
     // - 'change_icon'
     // - 'change_icon_file_extension'
+    // - 'create_custom_icon'
     //
-    // Default is true. Turn off auto rebuild setting to
-    // false.
+    // Default is true. Change to false, to turn off auto
+    // rebuild setting,
     "auto_rebuild_icon": true,
 
     // This option will auto install theme in the following

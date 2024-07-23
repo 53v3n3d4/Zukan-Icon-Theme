@@ -8,7 +8,8 @@ logger = logging.getLogger(__name__)
 
 def clean_comments_settings(zukan_sublime_settings: str):
     """
-    Clean comments that is left when using ST TextCommands deleting dicts.
+    Clean comments that is left when using ST TextCommands deleting dicts and list
+    of dicts.
     """
     try:
         if zukan_sublime_settings:
@@ -19,6 +20,7 @@ def clean_comments_settings(zukan_sublime_settings: str):
                 clean_file = clean_file.replace('\t\t\n', '')
             with open(zukan_sublime_settings, 'w') as f:
                 f.write(clean_file)
+            # print('clean settings')
     except FileNotFoundError:
         logger.error(
             '[Errno %d] %s: %r',
