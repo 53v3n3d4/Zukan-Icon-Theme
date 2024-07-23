@@ -33,9 +33,9 @@ To install manually:
 
 > You may see a console message, regarding `ruamel-yaml` dependecy, when first install this package. ST may install it and inform that a restart is needed.  
 
-> [`ruamel-yaml`](https://packagecontrol.github.io) is used to create icons sublime-syntaxes files in `icons-syntaxes` folder.  
+> [`ruamel-yaml`](https://packagecontrol.github.io) is being used to create icons sublime-syntaxes files in `icons-syntaxes` folder.  
 
-If new install, cloning this repo, the default is to create all icons files and make them show on all themes installed.  
+If new install, the default is to create all icons files and make them show on all themes installed.  
 
 ### Theme
 
@@ -61,7 +61,7 @@ To uninstall manually, go to your Sublime Text folder.
 
 ## Upgrade
 
-Package Control, by default, auto upgrade packages plugins. So this package will get icons PNGs and data files auto upgraded. Icons preferences and syntaxes are built based on user syntaxes and themes installed.  
+Package Control, by default, auto upgrade packages plugins. So this package will get icons PNGs and data file auto upgraded. Icons preferences and syntaxes are built based on user syntaxes and themes installed.  
 
 We are auto upgrading icons preferences and syntaxes by default.  
 
@@ -82,7 +82,6 @@ You can disable it, go to menu `Sublime Text > Settings > Package Settings > Zuk
 ## ST Package syntaxes that are using generic icon
 
 - DTD use `file_type_markup`  
-- Pascal use `file_type_source`  
 - XSL use `file_type_markup`  
 
 ## Troubleshooting

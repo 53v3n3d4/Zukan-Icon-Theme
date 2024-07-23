@@ -75,3 +75,22 @@ The solution is to use Zukan icons to complete with icons that do not exist.
 Overiding other packages icons in these situations is not possible currently, 
 as explained above.
 ```
+
+### Error loading syntax file (Markdown, YAML, JSON) when building files
+
+When building syntax, icons syntaxes files are deleted first. So if there are files (Markdown, YAML, JSON) opened, ST will show dialogs errors messages.  
+
+Others types do not seem to throw dialogs errors.   
+
+Syntax build happens in cases of:  
+- Installation
+- Upgrade
+- Change file extension
+- Create custom icon
+- Delete or install icon syntax
+
+**Solution**
+```
+One way for this do not happen is to close these types of files before rebuilding
+icons syntaxes files.
+```
