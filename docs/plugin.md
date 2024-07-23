@@ -52,6 +52,7 @@ It changes icon used, few icons has more than one option. E.g. Angular, C#, Comp
 See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md).  
 
 > ST theme essentials icons only works with exact ST file name.  
+
 > ST essentials icons: 'file_type_binary', 'file_type_default', 'file_type_image', 'file_type_markup' and 'file_type_source'.  
 
 Example: `Zukan Icon Theme: Change Icon` type `Angular` hit Enter, type `angular-1` hit Enter
@@ -106,6 +107,7 @@ It only remove file extension in existing icons syntaxes, excluding the one inse
 
 > In cases, where icons syntaxes do not exist, when language syntaxes are installed. Using ST 'View >
 Syntax > Open all with current extension as...' could fix see the desired icon.  
+
 > E.g., Clojure and ClojureScript, cljc extension is in both, no icons syntaxes since they are ST 
 package. ClojureScript syntax will prevail since ST reads it last.
 
@@ -153,13 +155,38 @@ Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `sc
 
 Required parameter is name.  
 
-Example Option 1: `Zukan Icon Theme: Create Custom Icon` type `ATest` hit Enter, type `atest` hit Enter, `(leave empty)` hit Enter, type `source.toml.atest` hit Enter,  `(leave empty)` hit Enter,  `(leave empty)` hit Enter.  
+#### Example Option 1
 
-Example Option 2: `Zukan Icon Theme: Create Custom Icon` type `ATest-1` hit Enter, `(leave empty)` hit Enter, type `JSON (ATest-1)` hit Enter, type `source.json.atest1` hit Enter, type `atest1.config.json` hit Enter, type `source.json` hit Enter.  
+- `Zukan Icon Theme: Create Custom Icon`
+- type `ATest` hit Enter
+- type `atest` hit Enter
+- `(leave empty)` hit Enter
+- type `source.toml.atest` hit Enter
+- `(leave empty)` hit Enter
+- `(leave empty)` hit Enter  
 
-Example Option 3: `Zukan Icon Theme: Create Custom Icon` type `ATest-3` hit Enter, type `atest3` hit Enter, type `ATest-3` hit Enter, type `source.atest3` hit Enter, type `abc, def` hit Enter, type `source.atest2` hit Enter.  
+#### Example Option 2
+
+- `Zukan Icon Theme: Create Custom Icon`
+- type `ATest-1` hit Enter
+- `(leave empty)` hit Enter
+- type `JSON (ATest-1)` hit Enter
+- type `source.json.atest1` hit Enter
+- type `atest1.config.json` hit Enter
+- type `source.json` hit Enter  
+
+#### Example Option 3
+
+- `Zukan Icon Theme: Create Custom Icon`
+- type `ATest-3` hit Enter
+- type `atest3` hit Enter
+- type `ATest-3` hit Enter
+- type `source.atest3` hit Enter
+- type `abc, def` hit Enter
+- type `source.atest2` hit Enter  
 
 > If inserted more than one scopes. And syntax_name present, the first scope will be used in icon syntax.  
+
 > Key name should be unique, if exists in Zukan icons data or in `create_custom_icon`, will be excluded from building.
 
 ```json
