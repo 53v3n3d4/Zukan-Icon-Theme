@@ -13,9 +13,9 @@ logger = logging.getLogger(__name__)
 
 def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list:
     """
-    Different packages can use same file extension. It could result in icon point
-    to a not desired file extension. This function remove file extension, in
-    existing icon syntax, if scope is different from a list.
+    Different packages can use same file extension. It could result in an icon
+    pointing to a not desired file extension. This function remove file extension,
+    in existing icon syntax, if scope is different from a list.
 
     The list comes from 2 different origins. One is default: SCOPES_FILE_EXTENSIONS.
     And the other is from user 'change_icon_file_extension' setting.

@@ -43,20 +43,20 @@
     // Key is icon name and value is icon SVG name.
     //
     // Examples: {
-    //        "Angular": "angular-1",
-    //        "Composer": "composer-1",
-    //        "Composer": "composer-2",
-    //        "C#": "csharp-1",
-    //        "DirectX": "directx-1",
-    //        "Go": "go-1",
-    //        "Image": "file_type_image-1",
-    //        "LLVM": "llvm-1",
-    //        "Node.js": "nodejs-1",
-    //        "PHP": "php-1",
-    //        "Python": "python-1",
-    //        "Ruff": "ruff-1",
-    //        "Rust": "rust-1",
-    //        "Sublime Text": "sublime-1"
+    //     "Angular": "angular-1",
+    //     "Composer": "composer-1",
+    //     "Composer": "composer-2",
+    //     "C#": "csharp-1",
+    //     "DirectX": "directx-1",
+    //     "Go": "go-1",
+    //     "Image": "file_type_image-1",
+    //     "LLVM": "llvm-1",
+    //     "Node.js": "nodejs-1",
+    //     "PHP": "php-1",
+    //     "Python": "python-1",
+    //     "Ruff": "ruff-1",
+    //     "Rust": "rust-1",
+    //     "Sublime Text": "sublime-1"
     // }
     "change_icon": {},
 
@@ -111,7 +111,7 @@
     "change_icon_file_extension": [],
 
     // Create custom icon option can be used to insert an
-    // icon or a file extension that do not exist. The PNGs
+    // icon or a file extension that does not exist. The PNGs
     // files, if not present, will have to be inserted
     // manually in Zukan 'icons' folder.
     //
@@ -184,12 +184,10 @@
     // If true, commands below will have no effect since
     // themes will be created after deleted:
     // - 'Zukan Icon Theme: Delete Theme'
-    // - 'Zukan Icon Theme: Delete Themes'
     // - 'Zukan Icon Theme: Install Theme'
-    // - 'Zukan Icon Theme: Install Themes'
     //
     // Other commands continue to work, for example delete
-    // and create preferences.
+    // and install preference.
     //
     // Command 'Zukan Icon Theme: Delete Syntax' works, but
     // since ST activate 'add_on_change', will be followed by
@@ -211,17 +209,19 @@
     "ignored_theme": [],
 
     // This setting control if user want to auto upgrade
-    // preferences and syntaxes files.
+    // icons preferences and syntaxes files.
     //
     // ST auto upgrade packages plugins. This package choose
-    // to build syntaxes and preferences based on user
+    // to build icons syntaxes and preferences based on user
     // installed syntaxes and themes, to avoid errors about
     // duplication or not founded syntaxes.
     //
-    // Only data files and icons PNGs are auto updated by ST.
+    // Only data file and icons PNGs are auto updated by ST.
     //
     // If true, will auto rebuild icons syntaxes and
     // preferences.
+    //
+    // Default is true.
     "rebuild_on_upgrade": true,
 
     // Do not change version. Neither use this option.

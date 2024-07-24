@@ -20,6 +20,7 @@ from src.build.utils.build_dir_paths import (
     DATA_PATH,
     ICON_THEME_TEST_PATH,
     ICONS_DATA_PATH,
+    ICONS_DATA_PRIMARY_ICONS_PATH,
     ICONS_PNG_PATH,
     ICONS_SVG_PATH,
     ICONS_SYNTAXES_PATH,
@@ -205,6 +206,14 @@ def main():
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
     )
+    parser_icontheme.add_argument(
+        '-pp',
+        '--pngprimary',
+        default=ICONS_DATA_PRIMARY_ICONS_PATH,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to destiny for primary icons PNGs.{ Color.END }',
+    )
 
     # Create the parser for the "png" sub-command
     parser_png = subparsers.add_parser(
@@ -247,6 +256,14 @@ def main():
         type=str,
         required=False,
         help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
+    )
+    parser_png.add_argument(
+        '-pp',
+        '--pngprimary',
+        default=ICONS_DATA_PRIMARY_ICONS_PATH,
+        type=str,
+        required=False,
+        help=f'{ Color.YELLOW }Path to destiny for primary icons PNGs.{ Color.END }',
     )
 
     # Create the parser for the "preference" sub-command
@@ -526,7 +543,7 @@ def main():
             )
             ZukanIcon.write_icon_data(DATA_PATH, args.icondata, args.iconfile)
             print_build_message('🛠️  Generating all icons PNGs: ', ICONS_PNG_PATH)
-            IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png)
+            IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png, args.pngprimary)
         elif args.file and not (args.all or args.data):
             print_build_message(
                 '🛠️  Creating zukan icons data: ',
@@ -534,7 +551,7 @@ def main():
             )
             ZukanIcon.write_icon_data(DATA_PATH, args.icondata, args.iconfile)
             print_build_message('🛠️  Generating icon PNGs: ', args.png)
-            IconPNG.svg_to_png(args.file, args.icon, args.png)
+            IconPNG.svg_to_png(args.file, args.icon, args.png, args.pngprimary)
         elif args.data and not (args.all or args.file):
             print(
                 f'{ Color.BLUE }[⚙] Starting building zukan icons data file and '
@@ -546,20 +563,20 @@ def main():
             )
             ZukanIcon.write_icon_data(DATA_PATH, args.icondata, args.iconfile)
             print_build_message('🛠️  Generating all icons PNGs: ', args.png)
-            IconPNG.svg_to_png_all(args.data, args.icon, args.png)
+            IconPNG.svg_to_png_all(args.data, args.icon, args.png, args.pngprimary)
         else:
             _error_message()
     # PNGs
     elif parser == 'png':
         if args.all and not (args.file or args.data):
             print_build_message('🛠️  Generating all icons PNGs:', ICONS_PNG_PATH)
-            IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png)
+            IconPNG.svg_to_png_all(DATA_PATH, args.icon, args.png, args.pngprimary)
         elif args.file and not (args.all or args.data):
             print_build_message('🛠️  Generating icon PNGs: ', args.png)
-            IconPNG.svg_to_png(args.file, args.icon, args.png)
+            IconPNG.svg_to_png(args.file, args.icon, args.png, args.pngprimary)
         elif args.data and not (args.all or args.file):
             print_build_message('🛠️  Generating all icons PNGs: ', args.png)
-            IconPNG.svg_to_png_all(args.data, args.icon, args.png)
+            IconPNG.svg_to_png_all(args.data, args.icon, args.png, args.pngprimary)
         else:
             _error_message()
     # tmPreferences

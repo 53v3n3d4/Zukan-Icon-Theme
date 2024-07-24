@@ -30,7 +30,8 @@ SCOPES_FILE_EXTENSIONS = [
     },  # flutter.ymal
     {'scope': 'source.shader', 'file_extensions': ['cginc', 'shader']},  # unity.yaml
     {'scope': 'source.tex', 'file_extensions': ['cls']},  # tex.yaml
-    {'scope': 'source.toml.python', 'file_extensions': ['pyproject.toml']},  # tex.yaml
+    # poetry, pip, tox, pdm
+    {'scope': 'source.toml.python', 'file_extensions': ['pyproject.toml']},
     {'scope': 'text.gherkin.feature', 'file_extensions': ['feature']},  # behat.yaml
     {'scope': 'text.html.basic', 'file_extensions': ['html']},  # django.yaml
     {'scope': 'text.plain', 'file_extensions': ['BUILD', 'WORKSPACE']},  # bazel.yaml

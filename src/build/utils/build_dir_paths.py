@@ -31,6 +31,8 @@ DATA_PATH = filepath('../../data')
 
 ICONS_DATA_PATH = filepath('../../../icons_data')
 
+ICONS_DATA_PRIMARY_ICONS_PATH = filepath('../../../icons_data/primary_icons')
+
 ICONS_PNG_PATH = filepath('../../../icons')
 
 ICONS_SVG_PATH = filepath('../../icons')

@@ -4,9 +4,10 @@ from ..utils.zukan_paths import (
 )
 
 
-def list_data_names():
+def list_data_names() -> list:
     """
-    list of data names.
+    Returns:
+    list_data_names (list) -- list of data names.
     """
     zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
     list_data_names = [d['name'] for d in zukan_icons]

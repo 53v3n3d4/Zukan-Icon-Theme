@@ -297,16 +297,15 @@ class SettingsEvent:
 
         # Setting file `zukan-version` depreceated in favor of `zukan_current_settings`
         # Need to upgrade from v0.3.0 to v0.3.1, where there is no
-        # zukan_current_settings with 0.3.0.
-        # Versions below 0.3.0, auto upgrade will begins in next release.
+        # zukan_current_settings below v0.3.0.
         if os.path.exists(ZUKAN_VERSION_FILE) and auto_upgraded is True:
             version_json_file = get_settings(ZUKAN_VERSION, 'version')
             tuple_version_json_file = tuple(map(int, version_json_file.split('.')))
 
             tuple_version_pkg = tuple(map(int, pkg_version.split('.')))
 
-            if tuple_version_json_file == (0, 3, 0) and tuple_version_pkg == (0, 3, 1):
-                logger.info('removing depreceated file "zukan-version".')
+            if tuple_version_json_file <= (0, 3, 0) and tuple_version_pkg == (0, 3, 1):
+                logger.info('removing depreceated file "zukan-version"')
                 os.remove(ZUKAN_VERSION_FILE)
 
                 logger.info('updating package...')

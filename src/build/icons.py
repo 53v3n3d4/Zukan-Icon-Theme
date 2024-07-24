@@ -17,9 +17,16 @@ from src.build.helpers.special_chars import special_chars
 #     ICONS_PNG_TEST_PATH,
 #     ICONS_TEST_PATH,
 #     ICONS_TEST_NOT_EXIST_PATH,
+#     ICONS_DATA_PRIMARY_ICONS_PATH,
 # )
-from src.build.utils.file_extensions import PNG_EXTENSION, SVG_EXTENSION
+from src.build.utils.file_extensions import (
+    PNG_EXTENSION,
+    SVG_EXTENSION,
+)
 from src.build.utils.png_details import png_details
+from src.build.utils.primary_icons import (
+    PRIMARY_ICONS,
+)
 
 # ICONS_TEST_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../donotexist')
 
@@ -41,7 +48,9 @@ class IconPNG:
     It will create or save if file exist.
     """
 
-    def svg_to_png(icon_data: str, dir_origin: str, dir_destiny: str):
+    def svg_to_png(
+        icon_data: str, dir_origin: str, dir_destiny: str, dir_destiny_primary: str
+    ):
         """
         Generate PNG file from SVG.
 
@@ -61,6 +70,7 @@ class IconPNG:
         icon_data(str) -- path to data file.
         dir_origin (str) -- path to SVG file.
         dir_destiny (str) -- path destination of PNG file.
+        dir_destiny_primary (str) -- path destination of primary icon PNG file.
         """
         try:
             data = read_yaml_data(icon_data)
@@ -85,14 +95,39 @@ class IconPNG:
                     dir_origin,
                     dir_destiny,
                 )
+                # Primary icons
+                if data['name'] in PRIMARY_ICONS:
+                    IconPNG.generate_png(
+                        data['preferences']['settings']['icon'],
+                        icon_data,
+                        dir_origin,
+                        dir_destiny_primary,
+                    )
                 # Icons options
-                if any('icons' in d for d in data) and data['icons'] is not None:
+                if (
+                    any('icons' in d for d in data)
+                    and data['icons'] is not None
+                    and data['name'] not in PRIMARY_ICONS
+                ):
                     for i in data['icons']:
                         IconPNG.generate_png(
                             i,
                             icon_data,
                             dir_origin,
                             dir_destiny,
+                        )
+                # Primary icons options should save to 'icons_data/primary_icons'
+                if (
+                    any('icons' in d for d in data)
+                    and data['icons'] is not None
+                    and data['name'] in PRIMARY_ICONS
+                ):
+                    for i in data['icons']:
+                        IconPNG.generate_png(
+                            i,
+                            icon_data,
+                            dir_origin,
+                            dir_destiny_primary,
                         )
                 return data
             else:
@@ -106,7 +141,9 @@ class IconPNG:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), icon_data
             )
 
-    def svg_to_png_all(dir_icon_data: str, dir_origin: str, dir_destiny: str):
+    def svg_to_png_all(
+        dir_icon_data: str, dir_origin: str, dir_destiny: str, dir_destiny_primary: str
+    ):
         """
         Generate all icons PNGs files from data files.
 
@@ -114,6 +151,7 @@ class IconPNG:
         dir_icon_data(str) -- path to directory with data files.
         dir_origin (str) -- path to svgs files directory.
         dir_destiny (str) -- path destination of PNGs files.
+        dir_destiny_primary (str) -- path destination of primary icon PNG file.
         """
         try:
             files_in_dir = os.listdir(dir_icon_data)
@@ -121,7 +159,9 @@ class IconPNG:
             for file_data in files_in_dir:
                 icon_data_path = os.path.join(dir_icon_data, file_data)
                 # print(icon_data_path)
-                IconPNG.svg_to_png(icon_data_path, dir_origin, dir_destiny)
+                IconPNG.svg_to_png(
+                    icon_data_path, dir_origin, dir_destiny, dir_destiny_primary
+                )
             return files_in_dir
         except FileNotFoundError:
             logger.error(
