@@ -6,7 +6,7 @@ We need this folder, to create, edit or delete, icons sublime-themes, icons tmPr
 
 ## Install
 
-You may need to `Package Control: Satisfy Libraries` to install dependencies.  
+If clone repo, you may need to `Package Control: Satisfy Libraries` to install dependencies.  
 
 More info about 3rd party dependencies, see [SO link](https://stackoverflow.com/questions/61196270/how-to-properly-use-3rd-party-dependencies-with-sublime-text-plugins).  
 
@@ -47,7 +47,7 @@ It is the same, if go to menu `Sublime Text > Settings > Package Settings > Zuka
 
 ### Change Icon
 
-It changes icon used, few icons has more than one option. E.g. Angular, C#, Composer, DirectX, Go, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, Sublime Text.  
+It changes icon being used, a few icons has more than one option. E.g. Angular, C#, Composer, DirectX, Go, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, Sublime Text.  
 
 See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md).  
 
@@ -65,7 +65,7 @@ Example: `Zukan Icon Theme: Change Icon` type `Angular` hit Enter, type `angular
         "C#": "csharp-1",
         "DirectX": "directx-1",
         "Go": "go-1",
-        // Image option works because plugin rename it when build file.
+        // Image option works because plugin renames it when build file.
         "Image": "file_type_image-1",
         "LLVM": "llvm-1",
         "Node.js": "nodejs-1",
@@ -142,16 +142,24 @@ Example: `Zukan Icon Theme: Change File Extension` type `source.iot` hit Enter, 
 
 It can insert an custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zuka 'icons' folder.  
 
+PNGs icon file name should follow ST policy:
+
+| icon suffix | size |
+|-------------|------|
+| <icon>.png | 18x16 |
+| <icon>@2x.png | 36x32 |
+| <icon>@3x.png | 54x48 |
+
 Currently, 3 options possible and a key 'name' is required:  
 1. To create an icon for a scope without file extension, fill icon and scope keys  
 2. To insert a file_extension for a existing icon, ommit icon key  
 3. To create a new icon with file_extension, keys icon, syntax_name, scope and file_extensions are necessary  
 
-> See ST docs for more info about syntax and scopes (http://www.sublimetext.com/docs/index.html)[http://www.sublimetext.com/docs/index.html].  
+> See ST docs for more info about syntax and scopes [http://www.sublimetext.com/docs/index.html](http://www.sublimetext.com/docs/index.html).  
 
 Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `scope` `file_extensions` `contexts_scope`.  
 
-> Hit enter to leavy key empty. 
+> Hit enter to leave key empty.  
 
 Required parameter is name.  
 
