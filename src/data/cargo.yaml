@@ -2,10 +2,19 @@
 ---
 name: Cargo
 preferences:
-  scope: source.toml.cargo
+  scope: source.ini.cargo, source.toml.cargo
   settings:
     icon: cargo
 syntax:
+  - name: INI (Cargo)
+    scope: source.ini.cargo
+    hidden: true
+    file_extensions:
+      - CACHEDIR.TAG
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
   - name: TOML (Cargo)
     scope: source.toml.cargo
     hidden: true

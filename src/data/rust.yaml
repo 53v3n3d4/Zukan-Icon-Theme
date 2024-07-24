@@ -4,10 +4,19 @@ name: Rust
 icons:
   - rust-1
 preferences:
-  scope: source.rust
+  scope: source.json.rust, source.rust
   settings:
     icon: rust
 syntax:
+  - name: JSON (Rust)
+    scope: source.json.rust
+    hidden: true
+    file_extensions:
+      - .rustc_info.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
   - name: Rust
     scope: source.rust
     hidden: true
