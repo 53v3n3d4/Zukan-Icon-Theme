@@ -99,7 +99,7 @@ If icon is changed for another option. Reset Icon can reset, removing it from `c
 
 ### Change File Extension
 
-This setting try solve issue, if icon is pointing to a not desired file extension, when:  
+This setting tries to solve issues, if icon is pointing to a not desired file extension, when:  
 - languages or libraries use same file extension  
 - packages use different scope  
 
@@ -134,7 +134,15 @@ Example: `Zukan Icon Theme: Change File Extension` type `source.iot` hit Enter, 
         { "scope": "source.fsharp", "file_extensions": ["fs"] },
         { "scope": "source.sss", "file_extensions": ["sss"] },
         { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
+        { "scope": "source.toml", "file_extensions": ["config.toml"] },
         { "scope": "source.toml", "file_extensions": ["book.toml"] },
+        { "scope": "source.toml", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.toml.pdm", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.toml.pip", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.toml.poetry", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.toml.tox", "file_extensions": ["pyproject.toml"] },
+        { "scope": "text.plain", "file_extensions": ["requirements.txt"] },
+        { "scope": "text.plain.uv", "file_extensions": ["requirements.txt"] },
     ],
 ```
 
@@ -146,9 +154,9 @@ PNGs icon file name should follow ST policy:
 
 | icon suffix | size |
 |-------------|------|
-| <icon>.png | 18x16 |
-| <icon>@2x.png | 36x32 |
-| <icon>@3x.png | 54x48 |
+| (icon).png | 18x16 |
+| (icon)@2x.png | 36x32 |
+| (icon)@3x.png | 54x48 |
 
 Currently, 3 options possible and a key 'name' is required:  
 1. To create an icon for a scope without file extension, fill icon and scope keys  
@@ -161,7 +169,7 @@ Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `sc
 
 > Hit enter to leave key empty.  
 
-Required parameter is name.  
+> Required parameter is name.  
 
 #### Example Option 1
 
