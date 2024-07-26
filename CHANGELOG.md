@@ -11,6 +11,7 @@
 
 ### Plugin 🕹️
 - Fix auto upgrade below 0.2.2 to ^0.3.1
+- Add annotation to 'reset_icon' and 'reset_file_extension' lists
 
 ## [0.3.1] - 2024-07-23
 

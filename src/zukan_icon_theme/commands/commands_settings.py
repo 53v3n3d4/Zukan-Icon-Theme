@@ -896,12 +896,28 @@ class ResetFileExtensionInputHandler(sublime_plugin.ListInputHandler):
 
         if change_icon_file_extension:
             all_option = ['All']
+
+            # change_icon_file_extension_list = [
+            #     d.get('scope') for d in change_icon_file_extension if 'scope' in d
+            # ]
+
+            # new_list = all_option + sorted(
+            #     change_icon_file_extension_list, key=lambda x: x.upper()
+            # )
+
             change_icon_file_extension_list = [
-                d.get('scope') for d in change_icon_file_extension if 'scope' in d
+                # 'sublime.ListInputItem' since ST 4095
+                sublime.ListInputItem(
+                    text=d.get('scope'),
+                    value=d.get('scope'),
+                    annotation=(', '.join(map(str, d.get('file_extensions')))),
+                )
+                for d in sorted(change_icon_file_extension, key=lambda k: k['scope'])
+                if 'scope' in d
             ]
-            new_list = all_option + sorted(
-                change_icon_file_extension_list, key=lambda x: x.upper()
-            )
+
+            new_list = all_option + change_icon_file_extension_list
+
             return new_list
 
         else:
@@ -954,8 +970,15 @@ class ResetIconInputHandler(sublime_plugin.ListInputHandler):
 
         if change_icon:
             all_option = ['All']
-            change_icon_list = [k for k in change_icon]
-            new_list = all_option + sorted(change_icon_list, key=lambda x: x.upper())
+            # change_icon_list = [k for k in change_icon]
+            # new_list = all_option + sorted(change_icon_list, key=lambda x: x.upper())
+
+            new_list = all_option + [
+                # 'sublime.ListInputItem' since ST 4095
+                sublime.ListInputItem(text=i[0], value=i[0], annotation=i[1])
+                for i in change_icon.items()
+            ]
+
             return new_list
 
         else:
