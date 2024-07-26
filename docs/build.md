@@ -161,48 +161,6 @@ $ poetry run build preference -f src/data/afdesign.yaml
 $ poetry run build preference --all
 ```
 
-## Create zukan syntaxes file
-Create a data file, with all icon syntaxes, to be used by plugin.  
-
-File will be created in `icons_syntaxes` folder.  
-
-Using argparse commands  
-```sh
-# Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --write
-# Print file
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-syntax --read
-```
-
-Using poetry scripts  
-```sh
-$ poetry run build zukan-syntax --write
-# Print file
-$ poetry run build zukan-syntax --read
-```
-
-## Create zukan preferences file
-Create a data file, with all icon preferences, to be used by plugin.  
-
-File will be created in `preferences` folder.  
-
-Using argparse commands  
-```sh
-# Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --write
-# Print file
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-preference --read
-```
-
-Using poetry scripts  
-```sh
-$ poetry run build zukan-preference --write
-# Print file
-$ poetry run build zukan-preference --read
-```
-
 ## Create test files extensions
 Create icons themes files extensions.  
 

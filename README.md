@@ -69,12 +69,6 @@ We are auto upgrading icons preferences and syntaxes by default.
 
 You can disable it, go to menu `Sublime Text > Settings > Package Settings > Zukan Icon Theme > Settings` and change `rebuild_on_upgrade` to `false`.  
 
-## Icons that works depending on folder position
-
-- Poetry  
-- SVG  
-- sublime-theme, sublime-color-scheme, sublime-settings... mostly sublime (Exceptions like `hidden-theme` works not depending on this condition)  
-
 ## Icons that do not work
 
 - Favicon. ST use  `file_type_image` icon for binary files. `favicon.svg` works.  
@@ -95,6 +89,12 @@ If icons not prompt show correct, restart ST may be the solution. See [troublesh
 - `file-type-icons` is old project name  
 - If rename `file-type-icons` to `v-file-type-icons`, and make the last folder in `Packages` directory, sublime icons will work  
 - If rename `file-type-icons` to `z-file-type-icons`, and make the last folder in `Packages` directory, is not enough for svg icon to work. It was needed `zz-file-type-icons` to make svg icon work  
+
+## Icons that works depending on folder position
+
+- Poetry  
+- SVG  
+- sublime-theme, sublime-color-scheme, sublime-settings... mostly sublime (Exceptions like `hidden-theme` works not depending on this condition)  
 
 ## File icon packages :alien:
 

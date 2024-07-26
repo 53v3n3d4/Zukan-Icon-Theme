@@ -158,7 +158,7 @@ It can insert an custom icon or a file extension that do not exist. The PNGs fil
 
 PNGs icon file name should follow ST policy:
 
-| icon suffix | size |
+| icon suffix | size (px) |
 |-------------|------|
 | (icon).png | 18x16 |
 | (icon)@2x.png | 36x32 |
