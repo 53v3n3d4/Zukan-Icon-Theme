@@ -330,7 +330,7 @@ class CreateCustomIcon(sublime_plugin.TextCommand):
 
                     # Name in create_custom_icon, update.
                     if d['name'] == custom_icon_data['name']:
-                        print(d)
+                        # print(d)
                         # Update previous values with custom_icon_data values.
                         if (
                             create_custom_icon_file

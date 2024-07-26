@@ -26,13 +26,11 @@ from src.build.utils.build_dir_paths import (
     ICONS_SYNTAXES_PATH,
     ICONS_PREFERENCES_PATH,
     ZUKAN_ICONS_DATA_FILE,
-    ZUKAN_PREFERENCES_DATA_FILE,
-    ZUKAN_SYNTAXES_DATA_FILE,
 )
-from src.build.utils.svg_unused_list import UNUSED_LIST
+from src.build.utils.svg_unused_list import (
+    UNUSED_LIST,
+)
 from src.build.zukan_icons import ZukanIcon
-from src.build.zukan_preferences import ZukanPreference
-from src.build.zukan_syntaxes import ZukanSyntax
 
 logger = logging.getLogger(__name__)
 
@@ -408,78 +406,6 @@ def main():
         help=f'{ Color.YELLOW }Dump zukan icons data file.{ Color.END }',
     )
 
-    # Create the parser for the "zukan-preference" sub-command
-    parser_zukan_preference = subparsers.add_parser(
-        'zukan-preference',
-        help=f'{ Color.YELLOW }Create zukan preferences data file.{ Color.END }',
-    )
-    parser_zukan_preference.add_argument(
-        '-r',
-        '--read',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Print zukan preferences data file.{ Color.END }',
-    )
-    parser_zukan_preference.add_argument(
-        '-t',
-        '--tmpreference',
-        default=ICONS_PREFERENCES_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for preferences data file.{ Color.END }',
-    )
-    parser_zukan_preference.add_argument(
-        '-tf',
-        '--tmpreferencefile',
-        default=ZUKAN_PREFERENCES_DATA_FILE,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to preferences data file.{ Color.END }',
-    )
-    parser_zukan_preference.add_argument(
-        '-w',
-        '--write',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Dump zukan preferences data file.{ Color.END }',
-    )
-
-    # Create the parser for the "zukan-syntax" sub-command
-    parser_zukan_syntax = subparsers.add_parser(
-        'zukan-syntax',
-        help=f'{ Color.YELLOW }Create zukan syntaxes data file.{ Color.END }',
-    )
-    parser_zukan_syntax.add_argument(
-        '-r',
-        '--read',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Print zukan syntaxes data file.{ Color.END }',
-    )
-    parser_zukan_syntax.add_argument(
-        '-s',
-        '--syntax',
-        default=ICONS_SYNTAXES_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for syntaxes data file.{ Color.END }',
-    )
-    parser_zukan_syntax.add_argument(
-        '-sf',
-        '--syntaxfile',
-        default=ZUKAN_SYNTAXES_DATA_FILE,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to syntaxes data file.{ Color.END }',
-    )
-    parser_zukan_syntax.add_argument(
-        '-w',
-        '--write',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Dump zukan syntaxes data file.{ Color.END }',
-    )
-
     # Namespaces
     args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
     # Subparser - subcommands
@@ -645,43 +571,11 @@ def main():
             read_pickle_data(args.iconfile)
         else:
             _error_message()
-    # Zukan preference
-    elif parser == 'zukan-preference':
-        if args.write and not args.read:
-            print_build_message(
-                '🛠️  Writing zukan preferences data: ',
-                ZUKAN_PREFERENCES_DATA_FILE,
-            )
-            ZukanPreference.write_preference_data(
-                DATA_PATH, args.tmpreference, args.tmpreferencefile
-            )
-        elif args.read and not args.write:
-            print_build_message(
-                '🛠️  Printing zukan preferences data: ',
-                ZUKAN_PREFERENCES_DATA_FILE,
-            )
-            read_pickle_data(args.tmpreferencefile)
-        else:
-            _error_message()
-    # Zukan syntax
-    elif parser == 'zukan-syntax':
-        if args.write and not args.read:
-            print_build_message(
-                '🛠️  Writing zukan syntaxes data: ',
-                ZUKAN_SYNTAXES_DATA_FILE,
-            )
-            ZukanSyntax.write_syntax_data(DATA_PATH, args.syntax, args.syntaxfile)
-        elif args.read and not args.write:
-            print_build_message(
-                '🛠️  Printing zukan syntaxes data: ',
-                ZUKAN_SYNTAXES_DATA_FILE,
-            )
-            read_pickle_data(args.syntaxfile)
-        else:
-            _error_message()
 
-    else:
-        _error_message()
+    # If uncomment, this showing error message at the end of clean command.
+    # It does not seem to get here when build with no argument.
+    # else:
+    #     _error_message()
 
 
 def _error_message():

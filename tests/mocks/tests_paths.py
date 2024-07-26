@@ -4,7 +4,7 @@ DIR_DATA_NOT_FOUND = 'tests/build/mocks_not_found/'
 
 DIR_DESTINY = 'tests/mocks'
 
-DIR_DESTINY_PRIMERY_ICONS = 'tests/mocks'
+DIR_DESTINY_PRIMARY_ICONS = 'tests/mocks'
 
 DIR_ORIGIN = 'tests/mocks'
 

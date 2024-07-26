@@ -27,7 +27,7 @@
     // - file_type_markup
     // - file_type_source
     //
-    // Example: ["nodejs",  "primary"]
+    // Example: ["nodejs", "primary"]
     "ignored_icon": [],
 
     // This option is to change icon. There are few icons
@@ -66,7 +66,7 @@
     // - packages use different scopes for same file
     // extension.
     //
-    // It only remove file extension in existing icons
+    // It only removes file extensions in existing icons
     // syntaxes, excluding the one inserted.
     //
     // In cases, where icons syntaxes do not exist, when

@@ -51,11 +51,11 @@ CONCAT_SVGS_FILE_SAMPLE = filepath('../../../assets/file-icons-concat-sample.svg
 
 ZUKAN_ICONS_DATA_FILE = filepath('../../../icons_data/zukan_icons_data.pkl')
 
-ZUKAN_PREFERENCES_DATA_FILE = filepath(
-    '../../../icons_preferences/zukan_preferences_data.pkl'
-)
+# ZUKAN_PREFERENCES_DATA_FILE = filepath(
+#     '../../../icons_preferences/zukan_preferences_data.pkl'
+# )
 
-ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data.pkl')
+# ZUKAN_SYNTAXES_DATA_FILE = filepath('../../../icons_syntaxes/zukan_syntaxes_data.pkl')
 
 # Testing paths
 

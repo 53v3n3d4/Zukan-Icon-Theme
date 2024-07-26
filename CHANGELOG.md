@@ -1,15 +1,27 @@
 # Changelog
 
+## [0.3.2] - 2024
+
+### Icons, syntaxes and preferences 👽
+- Add sublime-syntax: Cargo, JS, Rust
+
+### Build 🛠️
+- Fix save primary icons PNGs in folder 'primary_icons'
+- Remove zukan_syntaxes and zukan_preferences
+
+### Plugin 🕹️
+- Fix auto upgrade below 0.2.2 to ^0.3.1
+
 ## [0.3.1] - 2024-07-23
 
-### Icons, syntaxes and preferences
+### Icons, syntaxes and preferences 👽
 - Add icon-theme: CSpell, DirectX, Dune, EdgeDB, Fantomas, FSharpLint, OCamlPRO, opam, Paket, Pascal, Pip, Pkg.jl, Web IDL, XMake
 - Add icon option: Angular, C#, Composer, Go, DirectX, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, Sublime Text
 - Add sublime-syntax: NAnt
 - Change icon: FlatBuffers, Image, Video
 - Change sublime-syntax: CUDA, Dart, Flutter, Lavarel, PDM, Poetry, Python, Smarty, tox, uv
 
-### Plugin
+### Plugin 🕹️
 - Add change_icon setting
 - Add change_icon_file_extension setting
 - Remove command delete_preferences, delete_syntaxes, delete_themes, install_themes, rebuild_preferences, rebuild_syntaxes
@@ -20,26 +32,26 @@
 
 ## [0.3.0] - 2024-07-09
 
-### Icons, syntaxes and preferences
+### Icons, syntaxes and preferences 👽
 - Change syntax: AppleScript, Sublime LSP, Terraform
 - Delete tag: Text
 
-### Build
+### Build 🛠️
 - Add zukan_icons
 
-### Plugin
+### Plugin 🕹️
 - Add ignored_icon setting
 - Fix error creating current theme when delete_icon_themes
 
 ## [0.2.2] - 2024-07-07
 - Change icon support rectangle round corner.
 
-### Icons, syntaxes and preferences
+### Icons, syntaxes and preferences 👽
 - Add icon-theme: Checkly, GCC, LLVM, Puppeteer, OpenWrt, Redwood, Sublime LSP, SublimeLinter
 - Change icon: C#, Diff, YAML
 - Rename sublime-syntax file name: Bazel, Makefile
 
-### Plugin
+### Plugin 🕹️
 - Add ignored_theme setting
 
 ## [0.2.1] - 2024-06-30
@@ -52,7 +64,7 @@
 - Add python setup: poetry, pytest, ruff
 - Rename folder preferences -> icons_preferences
 
-### Icons, syntaxes and preferences
+### Icons, syntaxes and preferences 👽
 - Add icon-theme: ActionScript, Ada, Ansible, AppleScript, AppVeyor, archive, AsciiDoc, ASP, Astro, Avro, Azure, Babashka, Batch File, Bazel, Behat, BibTeX, Biome, Bitbucket, Cabal, Caddyserver, Cairo, Cap'n Proto, Cargo, Cassandra, Cert, Cirrus, Clojure, ClojureDart, ClojureScript, Codacy, commitlint, Composer, Conan, Conda, Crowdin, Crystal, Cucumber, CUDA, Cypress, D, Datadog, Deno, Dependabot, Dart, Diff, Dioxus, Django, Docusaurus, Drone, DUB, EditorConfig, Eleventy, Erlang.mk, esbuild, F#, Figma, Firebase, Fish, Flask, Flow, Flutter, Font, Fortran, GitBook, git-cliff, GitHub, GitLab, Gitpod, Gleam, glTF, GolangCI-Lint, Gradle, Graphviz (DOT), Groovy, Gulp, Haml, Handlebars, Haskell, Heft, Hex, Hugo, isort, Istanbul, Jasmine, Jenkins, Jinja, Julia, JUnit, Jupyter, Knip, Kong, LaTeX, Lavarel, Lerna, Liquid, Lisp, MATLAB, Maven, mdBook, Mergify, Mermaid, Meson, Mill, MkDocs, Mocha, Modern Web, mypy, MySQL, NAnt, Nest, Nim, Nitro, Nix, NSIS, NuGet, NumPy, Nunjucks, Nushell, Nuxt, Nx, OCaml, PDM, Perl, PHP CS Fixer, PHPStan, PHPUnit, Pine, Pipenv, Playwright, Plist, PLSQL, PostCSS, PostgreSQL, pre-commit, Prisma, Pug, Pylint, Pyre, Pyright, Qt, Quokka, R, Read the Docs, Rebar3, Redis, Regular Expression, Renovate, reStructuredText, Rspec, RuboCop, Rush, RVM, sbt, Scala, Scala Steward, Scalafix, Scalameta, Sentry, Serverless, Smarty, Snapcraft, Snyk, Solidity, SQLite, Stylelint, SVGO, Swagger, Symfony, SystemVerilog Tailwind CSS, Tauri, Tcl, TeX, Textile, Terraform, tmux, Toit, tox, Twig, Typst, uv, Vercel, Vyper, Wallaby, Yaws, Yugabyte, Zig
 - Add sublime-syntax: C++, C, Citation, CMake, C#, CSS, CSV, Elixir, Erlang, file type iimage, Git, Go, HTML, Java, Jest, JS, JSX, Lua, makefile, Markdown, PHP, Prettier, Protobuf, Python, Rails, reStructuredText, Ruby, Rust, Shell, SQL, Swift, TOML, TS, TSX, WebAssembly, Webpack, YAML
 - Change icon: Audio, Kotlin, makefile, Node js, Rspack
@@ -61,7 +73,7 @@
 - Rename icons: Elixir, Fusion, TS, Unity, WebAssembly
 - Rename sublime-syntax file name: Arduino, Code of Conduct, Docker, GraphQL, Kotlin, Less js, Next js, NGINX, Node js, OpenGL, pnpm, pytest, Protobuf, README, Sass, SCSS, Svelte, Test JSX, Test TSX, Unity, Vue, WebAssembly, WebGPU
 
-### Build
+### Build 🛠️
 - Add data files
 - Add clean_svg
 - Add icons
@@ -74,7 +86,7 @@
 - Add zukan_preferences
 - Add concat_svgs
 
-### Plugin
+### Plugin 🕹️
 - Add icons_themes
 - Add move_folders
 - Add icons_sytanxes
