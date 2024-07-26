@@ -55,7 +55,10 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
 
 > ST essentials icons: 'file_type_binary', 'file_type_default', 'file_type_image', 'file_type_markup' and 'file_type_source'.  
 
-Example: `Zukan Icon Theme: Change Icon` type `Angular` hit Enter, type `angular-1` hit Enter
+#### Example
+- `Zukan Icon Theme: Change Icon`  
+- type `Angular` hit Enter  
+- type `angular-1` hit Enter  
 
 ```json
     "change_icon": {
@@ -113,7 +116,10 @@ package. ClojureScript syntax will prevail since ST reads it last.
 
 Required parameters are: scope and file extensions.  
 
-Example: `Zukan Icon Theme: Change File Extension` type `source.iot` hit Enter, type `ino, pde` hit Enter.  
+#### Example
+- `Zukan Icon Theme: Change File Extension`  
+- type `source.iot` hit Enter  
+- type `ino, pde` hit Enter  
 
 > Multiple file extensions can be inserted separated by commas.
 
@@ -177,7 +183,7 @@ Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `sc
 - type `ATest` hit Enter
 - type `atest` hit Enter
 - `(leave empty)` hit Enter
-- type `source.toml.atest` hit Enter
+- type `source.toml.atest, source.json.atest` hit Enter
 - `(leave empty)` hit Enter
 - `(leave empty)` hit Enter  
 
@@ -210,7 +216,7 @@ Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `sc
        {
            "name": "ATest",
            "icon": "atest",
-           "scope": "source.toml.atest, source.toml.atest"
+           "scope": "source.toml.atest, source.json.atest"
        },
        {
            "name": "ATest-1",
