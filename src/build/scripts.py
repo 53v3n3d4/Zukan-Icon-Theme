@@ -14,397 +14,65 @@ from src.build.helpers.print_message import print_build_message, print_message
 from src.build.helpers.read_write_data import read_pickle_data
 from src.build.icons import IconPNG
 from src.build.utils.build_dir_paths import (
-    # ASSETS_PATH,
     CONCAT_SVGS_FILE,
     CONCAT_SVGS_FILE_SAMPLE,
     DATA_PATH,
     ICON_THEME_TEST_PATH,
-    ICONS_DATA_PATH,
-    ICONS_DATA_PRIMARY_ICONS_PATH,
     ICONS_PNG_PATH,
     ICONS_SVG_PATH,
     ICONS_SYNTAXES_PATH,
     ICONS_PREFERENCES_PATH,
     ZUKAN_ICONS_DATA_FILE,
 )
-from src.build.utils.svg_unused_list import (
-    UNUSED_LIST,
+from src.build.utils.scripts_args import (
+    COMMANDS,
 )
 from src.build.zukan_icons import ZukanIcon
 
 logger = logging.getLogger(__name__)
 
 
-def main():
+def create_parser(commands_args: dict):
+    """
+    Create parser for each command.
+    """
     # from https://gist.github.com/jirihnidek/3f5d36636198e852280f619847d22d9e
     # Create the top-level parser
     parser = argparse.ArgumentParser(prog=f'{ Color.CYAN }Build script{ Color.END }')
-    # parser.add_argument('-d', '--debug', action='store_true', help='debug flag')
+    # parser.add_argument('-d', '--debug', action=argparse.BooleanOptionalAction, help='debug flag')
 
     # Create sub-parser
     subparsers = parser.add_subparsers(dest='subparser_name', help='sub-command help')
 
-    # Create the parser for the "clean" sub-command
-    parser_clean = subparsers.add_parser(
-        'clean',
-        help=f'{ Color.YELLOW }Clean unused SVGs tags and attributes.{ Color.END }',
-    )
-    parser_clean.add_argument(
-        '-a',
-        '--all',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Clean all SVGs from src/icons folder.{ Color.END }',
-    )
-    parser_clean.add_argument(
-        '-d',
-        '--directory',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to SVGs folder.{ Color.END }',
-    )
-    parser_clean.add_argument(
-        '-f',
-        '--file',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to SVG file.{ Color.END }',
-    )
-    parser_clean.add_argument(
-        '-l',
-        '--list',
-        default=UNUSED_LIST,
-        required=False,
-        help=f'{ Color.YELLOW }List(str) of unused tags to be removed.{ Color.END }',
-    )
+    for cmd, opts in commands_args.items():
+        subparser = subparsers.add_parser(cmd, help=opts['help'])
+        for arg in opts['args']:
+            if len(opts) > 6:
+                subparser.add_argument(
+                    arg[0],
+                    arg[1],
+                    action=arg[2],
+                    default=arg[3],
+                    help=arg[4],
+                    required=arg[5],
+                    type=arg[6],
+                )
+            if len(opts) < 6:
+                subparser.add_argument(
+                    arg[0],
+                    arg[1],
+                    action=arg[2],
+                    default=arg[3],
+                    help=arg[4],
+                    required=arg[5],
+                )
 
-    # Create the parser for the "concat" sub-command
-    parser_concat = subparsers.add_parser(
-        'concat',
-        help=f'{ Color.YELLOW }Concat icons SVGs.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-a',
-        '--all',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Concat SVG file with all icons.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-cf',
-        '--concatfile',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to concat SVG file.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-d',
-        '--data',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to folder data.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-i',
-        '--icon',
-        default=ICONS_SVG_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icons SVGs folder.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-ipr',
-        '--iconsperrow',
-        type=int,
-        default=5,
-        required=False,
-        help=f'{ Color.YELLOW }Boolean value. Icons per row in concat SVG.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-mh',
-        '--maxheight',
-        type=int,
-        default=2000,
-        required=False,
-        help=f'{ Color.YELLOW }Boolean value. Max height of concat SVG file.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-sa',
-        '--sample',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Concat SVG file from random selection.{ Color.END }',
-    )
-    parser_concat.add_argument(
-        '-sano',
-        '--samplenumbers',
-        type=int,
-        default=30,
-        required=False,
-        help=f'{ Color.YELLOW }Boolean value. Number of icons in random sample.{ Color.END }',
-    )
+    # print(parser)
+    return parser
 
-    # Create the parser for the "icon-theme" sub-command
-    parser_icontheme = subparsers.add_parser(
-        'icon-theme',
-        help=f'{ Color.YELLOW }Create icons PNGs, zukan preferences and syntaxes '
-        f'files.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-a',
-        '--all',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Create all PNGs, zukan preferences and syntaxes files.'
-        f'{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-d',
-        '--data',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to folder data.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-f',
-        '--file',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icon data file.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-i',
-        '--icon',
-        default=ICONS_SVG_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icons SVGs folder.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-id',
-        '--icondata',
-        default=ICONS_DATA_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for icons data file.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-if',
-        '--iconfile',
-        default=ZUKAN_ICONS_DATA_FILE,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icons data file.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-p',
-        '--png',
-        default=ICONS_PNG_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
-    )
-    parser_icontheme.add_argument(
-        '-pp',
-        '--pngprimary',
-        default=ICONS_DATA_PRIMARY_ICONS_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for primary icons PNGs.{ Color.END }',
-    )
 
-    # Create the parser for the "png" sub-command
-    parser_png = subparsers.add_parser(
-        'png',
-        help=f'{ Color.YELLOW }Generate icon PNGs.{ Color.END }',
-    )
-    parser_png.add_argument(
-        '-a',
-        '--all',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Generate all PNGs in icons/ folder.{ Color.END }',
-    )
-    parser_png.add_argument(
-        '-d',
-        '--data',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to folder data.{ Color.END }',
-    )
-    parser_png.add_argument(
-        '-f',
-        '--file',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icon data file.{ Color.END }',
-    )
-    parser_png.add_argument(
-        '-i',
-        '--icon',
-        default=ICONS_SVG_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icons SVGs folder.{ Color.END }',
-    )
-    parser_png.add_argument(
-        '-p',
-        '--png',
-        default=ICONS_PNG_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for PNGs.{ Color.END }',
-    )
-    parser_png.add_argument(
-        '-pp',
-        '--pngprimary',
-        default=ICONS_DATA_PRIMARY_ICONS_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for primary icons PNGs.{ Color.END }',
-    )
-
-    # Create the parser for the "preference" sub-command
-    parser_preference = subparsers.add_parser(
-        'preference',
-        help=f'{ Color.YELLOW }Create icons tmPreferences.{ Color.END }',
-    )
-    parser_preference.add_argument(
-        '-a',
-        '--all',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Create all tmPreferences in preferences/ folder.{ Color.END }',
-    )
-    parser_preference.add_argument(
-        '-d',
-        '--data',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to folder data.{ Color.END }',
-    )
-    parser_preference.add_argument(
-        '-f',
-        '--file',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icon data file.{ Color.END }',
-    )
-    parser_preference.add_argument(
-        '-t',
-        '--tmpreference',
-        default=ICONS_PREFERENCES_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for tmPreferences files.{ Color.END }',
-    )
-
-    # Create the parser for the "syntax" sub-command
-    parser_syntax = subparsers.add_parser(
-        'syntax',
-        help=f'{ Color.YELLOW }Create icons sublime-syntaxes.{ Color.END }',
-    )
-    parser_syntax.add_argument(
-        '-a',
-        '--all',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Create all sublime-syntaxes in aliases/ folder.{ Color.END }',
-    )
-    parser_syntax.add_argument(
-        '-d',
-        '--data',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to folder data.{ Color.END }',
-    )
-    parser_syntax.add_argument(
-        '-f',
-        '--file',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icon data file.{ Color.END }',
-    )
-    parser_syntax.add_argument(
-        '-s',
-        '--syntax',
-        default=ICONS_SYNTAXES_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
-    )
-
-    # Create the parser for the "test-icon-theme" sub-command
-    parser_test_icon_theme = subparsers.add_parser(
-        'test-icon-theme',
-        help=f'{ Color.YELLOW }Create icons theme test files.{ Color.END }',
-    )
-    parser_test_icon_theme.add_argument(
-        '-a',
-        '--all',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Create all icons test files in tests_icon_theme/ '
-        f'folder.{ Color.END }',
-    )
-    parser_test_icon_theme.add_argument(
-        '-d',
-        '--data',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to folder data.{ Color.END }',
-    )
-    parser_test_icon_theme.add_argument(
-        '-f',
-        '--file',
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icon data file.{ Color.END }',
-    )
-    parser_test_icon_theme.add_argument(
-        '-tp',
-        '--testspath',
-        default=ICON_THEME_TEST_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for sublime-syntaxes files.{ Color.END }',
-    )
-
-    # Create the parser for the "zukan-icon" sub-command
-    parser_zukan_icon = subparsers.add_parser(
-        'zukan-icon',
-        help=f'{ Color.YELLOW }Create zukan icons data file.{ Color.END }',
-    )
-    parser_zukan_icon.add_argument(
-        '-r',
-        '--read',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Print zukan icons data file.{ Color.END }',
-    )
-    parser_zukan_icon.add_argument(
-        '-id',
-        '--icondata',
-        default=ICONS_DATA_PATH,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to destiny for icons data file.{ Color.END }',
-    )
-    parser_zukan_icon.add_argument(
-        '-if',
-        '--iconfile',
-        default=ZUKAN_ICONS_DATA_FILE,
-        type=str,
-        required=False,
-        help=f'{ Color.YELLOW }Path to icons data file.{ Color.END }',
-    )
-    parser_zukan_icon.add_argument(
-        '-w',
-        '--write',
-        action='store_true',
-        required=False,
-        help=f'{ Color.YELLOW }Dump zukan icons data file.{ Color.END }',
-    )
+def main():
+    parser = create_parser(COMMANDS)
 
     # Namespaces
     args = parser.parse_args(args=None if sys.argv[1:] else ['--help'])
@@ -437,9 +105,9 @@ def main():
                 args.icon,
                 args.concatfile,
                 args.sample,
-                args.samplenumbers,
-                args.iconsperrow,
-                args.maxheight,
+                int(args.samplenumbers),
+                int(args.iconsperrow),
+                int(args.maxheight),
             )
         elif not args.sample:
             print_build_message('🛠️  Concatenating all SVGs: ', CONCAT_SVGS_FILE)
@@ -450,9 +118,9 @@ def main():
                 args.icon,
                 args.concatfile,
                 args.sample,
-                args.samplenumbers,
-                args.iconsperrow,
-                args.maxheight,
+                int(args.samplenumbers),
+                int(args.iconsperrow),
+                int(args.maxheight),
             )
         else:
             _error_message()

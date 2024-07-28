@@ -10,6 +10,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.c++', 'startsWith': 'C++ ('},
     {'scope': 'source.css', 'startsWith': 'CSS ('},
     {'scope': 'source.css.php', 'startsWith': 'CSS ('},
+    {'scope': 'source.dockerfile', 'startsWith': 'Dockerfile ('},
     {'scope': 'source.elixir', 'startsWith': 'Elixir ('},
     {'scope': 'source.env', 'startsWith': 'DotENV ('},
     {'scope': 'source.groovy', 'startsWith': 'Groovy ('},

@@ -23,6 +23,7 @@ SCOPES_FILE_EXTENSIONS = [
         'file_extensions': ['f90', 'F90', 'f95', 'F95', 'f03', 'F03', 'f08', 'F08'],
     },  # fortran.yaml
     {'scope': 'source.glsl', 'file_extensions': ['fs']},  # fsharp.yaml
+    {'scope': 'source.ini.python', 'file_extensions': ['setup.cfg']},
     {'scope': 'source.js', 'file_extensions': ['js']},  # applescript.ymal
     {
         'scope': 'source.pubspec',
@@ -57,9 +58,11 @@ SCOPES_FILE_EXTENSIONS = [
 # - Unity: Package Unity Shader and Unity3D Shader Highlighter and Snippets same extensions.
 
 # Config files
-# pyproject.toml: python, poetry, pip, tox, pdm
+# pyproject.toml: python, pdm, pip, poetry, setuptools, tox
 # requirements.txt: pip, uv
-# setup.cfg: tox
+# setup.cfg: python, setuptools, tox
 # config.toml: pdm
 # Manifest.tom: pkgjl
 # Project.toml: pkgjl
+# config.yml: circleci
+# ci.yml: github
