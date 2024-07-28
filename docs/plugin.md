@@ -252,7 +252,6 @@ We use scopes from `Package YamlPipelines` in GitHub and GitHub Dependabot icons
 To change to Yaml syntax:
 - Using command palette, disable icon GitHub or GitHub Dependabot. Or, manually, insert in `ignored_icon`
 - Next, create a custom icon
-
 - `Zukan Icon Theme: Create Custom Icon`
 - type `GitHub 2` hit Enter
 - type `github` hit Enter
