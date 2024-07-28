@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: CircleCI
+preferences:
+  scope: source.yaml.circleci
+  settings:
+    icon: circleci
+syntax:
+  - name: YAML (CircleCI)
+    scope: source.yaml.circleci
+    hidden: true
+    file_extensions:
+      - config.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

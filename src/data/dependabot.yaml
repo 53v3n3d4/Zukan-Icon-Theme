@@ -2,16 +2,16 @@
 ---
 name: GitHub Dependabot
 preferences:
-  scope: source.yaml.dependabot
+  scope: source.yaml.pipeline.github-actions.dependabot
   settings:
     icon: dependabot
 syntax:
   - name: YAML (GitHub Dependabot)
-    scope: source.yaml.dependabot
+    scope: source.yaml.pipeline.github-actions.dependabot
     hidden: true
     file_extensions:
       - dependabot.yml
     contexts:
       main:
-        - include: scope:source.yaml
+        - include: scope:source.yaml.pipeline.github-actions
           apply_prototype: true

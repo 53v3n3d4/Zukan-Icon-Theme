@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Setuptools
+preferences:
+  scope: source.ini.setuptools, source.toml.setuptools
+  settings:
+    icon: setuptools
+syntax:
+  - name: INI (Setuptools)
+    scope: source.ini.setuptools
+    hidden: true
+    file_extensions:
+      - setup.cfg
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: TOML (Setuptools)
+    scope: source.toml.setuptools
+    hidden: true
+    file_extensions:
+      - pyproject.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

@@ -3,7 +3,9 @@
 ## [0.3.2] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add sublime-syntax: Cargo, JS, Rust
+- Add icon-theme: CircleCI, Podman, Setuptools
+- Add sublime-syntax: Cargo, GitHub, JS, Python, Rust
+- Change sublime-syntax: GitHub Dependabot
 
 ### Build 🛠️
 - Fix save primary icons PNGs in folder 'primary_icons'

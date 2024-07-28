@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Podman
+preferences:
+  scope: source.dockerfile.podman
+  settings:
+    icon: podman
+syntax:
+  - name: Dockerfile (Containerfile)
+    scope: source.dockerfile.podman
+    hidden: true
+    file_extensions:
+      - Containerfile
+    contexts:
+      main:
+        - include: scope:source.dockerfile
+          apply_prototype: true
+
+# Containerfile use same syntax of Dockerfile
+# Package Dockerfile Syntax Highlighting

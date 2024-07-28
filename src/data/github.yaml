@@ -2,18 +2,19 @@
 ---
 name: GitHub
 preferences:
-  scope: source.yaml.pipeline.github-actions
+  scope: source.yaml.pipeline.github-actions, source.yaml.pipeline.github-actions.workflow
   settings:
     icon: github
-# syntax:
-#   - name: YAML (Dependabot)
-#     scope: source.yaml.github
-#     hidden: true
-#     file_extensions:
-#       - dependabot.yaml
-#     contexts:
-#       main:
-#         - include: scope:source.yaml
-#           apply_prototype: true
+syntax:
+  - name: YAML (GitHub Actions)
+    scope: source.yaml.pipeline.github-actions.workflow
+    hidden: true
+    file_extensions:
+      - ci.yml
+    contexts:
+      main:
+        - include: scope:source.yaml.pipeline.github-actions
+          apply_prototype: true
 
-# Package YamlPipelines
+# Package YamlPipelines: do not have syntax.
+# Syntax YAML (GitHub Actions) added by plugin
