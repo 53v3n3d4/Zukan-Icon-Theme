@@ -147,6 +147,8 @@ Required parameters are: scope and file extensions.
         { "scope": "source.toml.pip", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.poetry", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.tox", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.yaml", "file_extensions": ["ci.yml"] },
+        { "scope": "source.yaml", "file_extensions": ["config.yml"] },
         { "scope": "text.plain", "file_extensions": ["requirements.txt"] },
         { "scope": "text.plain.uv", "file_extensions": ["requirements.txt"] },
     ],
@@ -241,6 +243,35 @@ Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `sc
            "contexts_scope": "source.atest2"
        }
     ],
+```
+
+#### GitHub example
+
+We use scopes from `Package YamlPipelines` in GitHub and GitHub Dependabot icons.  
+
+To change to Yaml syntax:
+- Using command palette, disable icon GitHub or GitHub Dependabot. Or, manually, insert in `ignored_icon`
+- Next, create a custom icon
+
+- `Zukan Icon Theme: Create Custom Icon`
+- type `GitHub 2` hit Enter
+- type `github` hit Enter
+- type `YAML (GitHub 2)` hit Enter
+- type `source.yaml.github` hit Enter
+- type `ci.yml` hit Enter
+- type `source.yaml` hit Enter  
+
+```json
+    "create_custom_icon": [
+       {
+           "name": "GitHub 2",
+           "icon": "github",
+           "syntax_name": "YAML (GitHub 2)",
+           "scope": "source.yaml.github",
+           "file_extensions": ["ci.yml"],
+           "contexts_scope": "source.yaml"
+       }
+    ]
 ```
 
 ### Delete Custom Icon
