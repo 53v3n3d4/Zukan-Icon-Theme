@@ -11,21 +11,21 @@ $ poetry run build -h
 ```
 
 ## Create icon theme
-Create PNGs, zukan preferences and syntaxes files for icons.  
+Create PNGs and icons data file.  
 
 Using argparse commands  
 ```sh
 # Environment activated
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --help
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
-# Create PNGs, syntaxes and preferences files
+# Create PNGs and icons data file
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --all
 ```
 
 Using poetry scripts  
 ```sh
 $ poetry run build icon-theme -f src/data/afdesign.yaml
-# Create PNGs, syntaxes and preferences files
+# Create PNGs and icons data file
 $ poetry run build icon-theme --all
 ```
 
@@ -91,7 +91,7 @@ Using argparse commands
 
 Using poetry scripts  
 ```sh
-$ poetry run build concat -isa -isano 30
+$ poetry run build concat -sa -sano 30
 # Concat SVG file.
 $ poetry run build concat --all --iconsperrow 6
 ```

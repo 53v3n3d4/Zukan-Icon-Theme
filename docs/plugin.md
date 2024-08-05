@@ -106,7 +106,7 @@ This setting tries to solve issues, if icon is pointing to a not desired file ex
 - languages or libraries use same file extension  
 - packages use different scope  
 
-It only remove file extension in existing icons syntaxes, excluding the one inserted.
+It only removes file extension in existing icons syntaxes, excluding the one inserted.
 
 > In cases, where icons syntaxes do not exist, when language syntaxes are installed. Using ST 'View >
 Syntax > Open all with current extension as...' could fix see the desired icon.  
@@ -125,30 +125,38 @@ Required parameters are: scope and file extensions.
 
 ```json
     "change_icon_file_extension": [
-        { "scope": "source.js.jxa", "file_extensions": ["js"] },
-        { "scope": "source.iot", "file_extensions": ["ino", "pde"] },
-        { "scope": "source.vbs", "file_extensions": ["cls", "vbs"] },
-        { "scope": "source.bazel", "file_extensions": ["BUILD", "WORKSPACE"] },
-        { "scope": "source.starlark", "file_extensions": ["BUILD", "WORKSPACE", "bazel", "bzl"] },
         { "scope": "feature.behat", "file_extensions": ["feature"] },
+        { "scope": "source.bazel", "file_extensions": ["BUILD", "WORKSPACE"] },
         { "scope": "source.clojure", "file_extensions": ["cljc"] },
         { "scope": "source.cmakeeditor", "file_extensions": ["CMakeLists.txt"] },
         { "scope": "source.cuda-c++", "file_extensions": ["h"] },
-        { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
-        { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
-        { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
+        { "scope": "source.env.fastapi", "file_extensions": [".env"] },
         { "scope": "source.fsharp", "file_extensions": ["fs"] },
+        { "scope": "source.ini", "file_extensions": ["setup.cfg"] },
+        { "scope": "source.ini.setuptools", "file_extensions": ["setup.cfg"] },
+        { "scope": "source.ini.tox", "file_extensions": ["setup.cfg"] },
+        { "scope": "source.iot", "file_extensions": ["ino", "pde"] },
+        { "scope": "source.js.jxa", "file_extensions": ["js"] },
+        { "scope": "source.json", "file_extensions": ["dependencies.json"] },
+        { "scope": "source.json", "file_extensions": ["unittesting.json"] },
+        { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
+        { "scope": "source.python", "file_extensions": ["config.py"] },
         { "scope": "source.sss", "file_extensions": ["sss"] },
-        { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
-        { "scope": "source.toml", "file_extensions": ["config.toml"] },
+        { "scope": "source.starlark", "file_extensions": ["BUILD", "WORKSPACE", "bazel", "bzl"] },
         { "scope": "source.toml", "file_extensions": ["book.toml"] },
+        { "scope": "source.toml", "file_extensions": ["config.toml"] },
         { "scope": "source.toml", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.pdm", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.pip", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.poetry", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.toml.setuptools", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.tox", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.vbs", "file_extensions": ["cls", "vbs"] },
+        { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
         { "scope": "source.yaml", "file_extensions": ["ci.yml"] },
         { "scope": "source.yaml", "file_extensions": ["config.yml"] },
+        { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
+        { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
         { "scope": "text.plain", "file_extensions": ["requirements.txt"] },
         { "scope": "text.plain.uv", "file_extensions": ["requirements.txt"] },
     ],
@@ -156,7 +164,7 @@ Required parameters are: scope and file extensions.
 
 ### Create Custom Icon
 
-It can insert an custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zuka 'icons' folder.  
+It can insert a custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zuka 'icons' folder.  
 
 PNGs icon file name should follow ST policy:
 
@@ -167,9 +175,9 @@ PNGs icon file name should follow ST policy:
 | (icon)@3x.png | 54x48 |
 
 Currently, 3 options possible and a key 'name' is required:  
-1. To create an icon for a scope without file extension, fill icon and scope keys  
-2. To insert a file_extension for a existing icon, ommit icon key  
-3. To create a new icon with file_extension, keys icon, syntax_name, scope and file_extensions are necessary  
+1. Create an icon for a scope without file extension, fill icon and scope keys  
+2. Insert a file_extension for a existing icon, ommit icon key  
+3. Create a new icon with file_extension, keys icon, syntax_name, scope and file_extensions are necessary  
 
 > See ST docs for more info about syntax and scopes [http://www.sublimetext.com/docs/index.html](http://www.sublimetext.com/docs/index.html).  
 
@@ -209,7 +217,7 @@ Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `sc
 - type `abc, def` hit Enter
 - type `source.atest2` hit Enter  
 
-> If inserted more than one scopes. And syntax_name present, the first scope will be used in icon syntax.  
+> If inserted more than one scope. And syntax_name present, the first scope will be used in icon syntax.  
 
 > Key name should be unique, if exists in Zukan icons data or in `create_custom_icon`, will be excluded from building.
 
