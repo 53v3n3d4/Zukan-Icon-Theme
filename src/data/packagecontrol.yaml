@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Package Control
+preferences:
+  scope: source.json.packagecontrol
+  settings:
+    icon: packagecontrol
+syntax:
+  - name: JSON (Package Control)
+    scope: source.json.packagecontrol
+    hidden: true
+    file_extensions:
+      - dependencies.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true

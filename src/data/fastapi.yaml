@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: FastAPI
+preferences:
+  scope: source.env.fastapi, source.python.fastapi
+  settings:
+    icon: fastapi
+syntax:
+  - name: DotENV (FastAPI)
+    scope: source.env.fastapi
+    hidden: true
+    file_extensions:
+      - .env
+    contexts:
+      main:
+        - include: scope:source.env
+          apply_prototype: true
+  - name: Python (FastAPI)
+    scope: source.python.fastapi
+    hidden: true
+    file_extensions:
+      - config.py
+    contexts:
+      main:
+        - include: scope:source.python
+          apply_prototype: true

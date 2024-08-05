@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: SQLAlchemy
+preferences:
+  scope: source.ini.alembic
+  settings:
+    icon: sqlalchemy
+syntax:
+  - name: INI (Alembic)
+    scope: source.ini.alembic
+    hidden: true
+    file_extensions:
+      - alembic.ini
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true

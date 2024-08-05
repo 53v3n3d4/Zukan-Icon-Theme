@@ -18,6 +18,7 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.c++', 'file_extensions': ['h']},  # cuda.yaml
     {'scope': 'source.css', 'file_extensions': ['css']},  # django.yaml
     {'scope': 'source.css.postcss.sugarss', 'file_extensions': ['sss']},  # postcss.yaml
+    {'scope': 'source.env', 'file_extensions': ['.env']},  # fastapi.yaml
     {
         'scope': 'source.fortran',
         'file_extensions': ['f90', 'F90', 'f95', 'F95', 'f03', 'F03', 'f08', 'F08'],
@@ -29,6 +30,7 @@ SCOPES_FILE_EXTENSIONS = [
         'scope': 'source.pubspec',
         'file_extensions': ['pubspec.lock', 'pubspec.yaml'],
     },  # flutter.ymal
+    {'scope': 'source.python.fastapi', 'file_extensions': ['config.py']},
     {'scope': 'source.shader', 'file_extensions': ['cginc', 'shader']},  # unity.yaml
     {'scope': 'source.tex', 'file_extensions': ['cls']},  # tex.yaml
     # poetry, pip, tox, pdm
@@ -62,7 +64,11 @@ SCOPES_FILE_EXTENSIONS = [
 # requirements.txt: pip, uv
 # setup.cfg: python, setuptools, tox
 # config.toml: pdm
+# config.py: fastapi
+# .env: fastapi
 # Manifest.tom: pkgjl
 # Project.toml: pkgjl
 # config.yml: circleci
 # ci.yml: github
+# dependencies.json: packagecontrol
+# unittestings.json: sublime

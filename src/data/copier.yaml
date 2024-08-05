@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Copier
+preferences:
+  scope: source.yaml.copier
+  settings:
+    icon: copier
+syntax:
+  - name: YAML (Copier)
+    scope: source.yaml.copier
+    hidden: true
+    file_extensions:
+      - copier.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

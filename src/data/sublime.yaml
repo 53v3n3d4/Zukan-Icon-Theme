@@ -14,7 +14,6 @@ syntax:
     file_extensions:
       - .no-sublime-package
       - .sublime-project
-      - sublime_session
       - hidden-color-scheme
       - hidden-theme
       - sublime-build
@@ -29,6 +28,8 @@ syntax:
       - sublime-settings
       - sublime-theme
       - sublime-workspace
+      - sublime_session
+      - unittesting.json
     contexts:
       main:
         - include: scope:source.json

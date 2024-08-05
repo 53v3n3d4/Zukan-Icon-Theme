@@ -37,7 +37,7 @@
     // If icon in 'ignored_icon', change icon will not
     // occur.
     //
-    // A key and value is required, and insert it inside
+    // A key and value are required, and insert it inside
     // curly brackets.
     //
     // Key is icon name and value is icon SVG name.
@@ -83,34 +83,38 @@
     // brackets.
     //
     // Examples: [
-    //    { "scope": "source.js.jxa", "file_extensions": ["js"] },
-    //    { "scope": "source.iot", "file_extensions": ["ino", "pde"] },
-    //    { "scope": "source.vbs", "file_extensions": ["cls", "vbs"] },
-    //    { "scope": "source.bazel", "file_extensions": ["BUILD", "WORKSPACE"] },
-    //    { "scope": "source.starlark", "file_extensions": ["BUILD", "WORKSPACE", "bazel", "bzl"] },
     //    { "scope": "feature.behat", "file_extensions": ["feature"] },
+    //    { "scope": "source.bazel", "file_extensions": ["BUILD", "WORKSPACE"] },
     //    { "scope": "source.clojure", "file_extensions": ["cljc"] },
     //    { "scope": "source.cmakeeditor", "file_extensions": ["CMakeLists.txt"] },
     //    { "scope": "source.cuda-c++", "file_extensions": ["h"] },
-    //    { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
-    //    { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
-    //    { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
+    //    { "scope": "source.env.fastapi", "file_extensions": [".env"] },
     //    { "scope": "source.fsharp", "file_extensions": ["fs"] },
-    //    { "scope": "source.sss", "file_extensions": ["sss"] },
-    //    { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
     //    { "scope": "source.ini", "file_extensions": ["setup.cfg"] },
     //    { "scope": "source.ini.setuptools", "file_extensions": ["setup.cfg"] },
     //    { "scope": "source.ini.tox", "file_extensions": ["setup.cfg"] },
-    //    { "scope": "source.toml", "file_extensions": ["config.toml"] },
+    //    { "scope": "source.iot", "file_extensions": ["ino", "pde"] },
+    //    { "scope": "source.js.jxa", "file_extensions": ["js"] },
+    //    { "scope": "source.json", "file_extensions": ["dependencies.json"] },
+    //    { "scope": "source.json", "file_extensions": ["unittesting.json"] },
+    //    { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
+    //    { "scope": "source.python", "file_extensions": ["config.py"] },
+    //    { "scope": "source.sss", "file_extensions": ["sss"] },
+    //    { "scope": "source.starlark", "file_extensions": ["BUILD", "WORKSPACE", "bazel", "bzl"] },
     //    { "scope": "source.toml", "file_extensions": ["book.toml"] },
+    //    { "scope": "source.toml", "file_extensions": ["config.toml"] },
     //    { "scope": "source.toml", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.pdm", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.pip", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.poetry", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.setuptools", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.tox", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
+    //    { "scope": "source.vbs", "file_extensions": ["cls", "vbs"] },
     //    { "scope": "source.yaml", "file_extensions": ["ci.yml"] },
     //    { "scope": "source.yaml", "file_extensions": ["config.yml"] },
+    //    { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
+    //    { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
     //    { "scope": "text.plain", "file_extensions": ["requirements.txt"] },
     //    { "scope": "text.plain.uv", "file_extensions": ["requirements.txt"] },
     // ]
@@ -122,13 +126,13 @@
     // manually in Zukan 'icons' folder.
     //
     // 3 options, 'name' is required:
-    // 1- To create an icon for a scope without file extension,
+    // 1- Create an icon for a scope without file extension,
     // fill icon and scope keys.
     //
-    // 2- To insert a file_extension for a existing icon, ommit
+    // 2- Insert a file_extension for a existing icon, ommit
     // icon key.
     //
-    // 3- To create a new icon with file_extension, keys icon,
+    // 3- Create a new icon with file_extension, keys icon,
     // syntax_name, scope and file_extensions are necessary.
     //
     // Contexts_scope serves to use a base highlighting, e.g.
@@ -181,6 +185,18 @@
     // rebuild setting,
     "auto_rebuild_icon": true,
 
+    // Ignore theme option will exclude the theme name from
+    // creating an icon theme. Thus not show icons in ignored
+    // theme.
+    //
+    // You may need to restart ST for all icons show or not
+    // after changing list.
+    //
+    // Insert theme name inside square brackets.
+    //
+    // Example: ["Treble Dark.sublime-theme"]
+    "ignored_theme": [],
+
     // This option will auto install theme in the following
     // cases:
     // - ST function 'add_on_change' is triggered by
@@ -201,18 +217,6 @@
     //
     // Default is false.
     "auto_install_theme": false,
-
-    // Ignore theme option will exclude the theme name from
-    // creating an icon theme. Thus not show icons in ignored
-    // theme.
-    //
-    // You may need to restart ST for all icons show or not
-    // after changing list.
-    //
-    // Insert theme name inside square brackets.
-    //
-    // Example: ["Treble Dark.sublime-theme"]
-    "ignored_theme": [],
 
     // This setting control if user want to auto upgrade
     // icons preferences and syntaxes files.
