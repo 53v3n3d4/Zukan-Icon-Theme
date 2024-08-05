@@ -35,6 +35,12 @@ logger = logging.getLogger(__name__)
 def create_parser(commands_args: dict):
     """
     Create parser for each command.
+
+    Parameters:
+    commands_args (dict) -- sub-parser dict.
+
+    Returns:
+    parser -- return an ArgumentParser object.
     """
     # from https://gist.github.com/jirihnidek/3f5d36636198e852280f619847d22d9e
     # Create the top-level parser

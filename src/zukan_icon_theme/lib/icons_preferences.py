@@ -205,7 +205,9 @@ class ZukanPreference:
                                 # Check if PNG exist
                                 if not os.path.exists(
                                     os.path.join(
-                                        ZUKAN_PKG_ICONS_PATH, v + PNG_EXTENSION
+                                        ZUKAN_PKG_ICONS_PATH,
+                                        p['preferences']['settings']['icon']
+                                        + PNG_EXTENSION,
                                     )
                                 ):
                                     logger.warning('%s%s not found', v, PNG_EXTENSION)

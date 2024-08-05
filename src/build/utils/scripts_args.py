@@ -101,7 +101,7 @@ COMMANDS = {
             (
                 '-ipr',
                 '--iconsperrow',
-                None,
+                'store',
                 5,
                 f'{Color.YELLOW}Icons per row in concat SVG.{Color.END}',
                 False,
@@ -277,7 +277,7 @@ COMMANDS = {
                 '--all',
                 argparse.BooleanOptionalAction,
                 False,
-                f'{Color.YELLOW}Create all tmPreferences in preferences folder.{Color.END}',
+                f'{Color.YELLOW}Create all tmPreferences in icons_preferences folder.{Color.END}',
                 False,
             ),
             (
@@ -317,7 +317,7 @@ COMMANDS = {
                 '--all',
                 argparse.BooleanOptionalAction,
                 False,
-                f'{Color.YELLOW}Create all sublime-syntaxes in aliases folder.{Color.END}',
+                f'{Color.YELLOW}Create all sublime-syntaxes in icons_syntaxes folder.{Color.END}',
                 False,
             ),
             (

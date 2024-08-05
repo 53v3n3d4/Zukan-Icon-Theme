@@ -3,9 +3,9 @@
 ## [0.3.2] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: CircleCI, Podman, Setuptools
+- Add icon-theme: CircleCI, Copier, FastAPI, Package Control, Podman, Setuptools, SQLAlchemy
 - Add sublime-syntax: Cargo, GitHub, JS, Python, Rust
-- Change sublime-syntax: GitHub Dependabot
+- Change sublime-syntax: GitHub Dependabot, Sublime Text
 
 ### Build 🛠️
 - Fix save primary icons PNGs in folder 'primary_icons'
@@ -14,6 +14,7 @@
 ### Plugin 🕹️
 - Fix auto upgrade below 0.2.2 to ^0.3.1
 - Add annotation to 'reset_icon' and 'reset_file_extension' lists
+- Fix warning PNGs not found for file_type_image-1
 
 ## [0.3.1] - 2024-07-23
 

@@ -304,7 +304,7 @@ class SettingsEvent:
 
             tuple_version_pkg = tuple(map(int, pkg_version.split('.')))
 
-            if tuple_version_json_file <= (0, 3, 0) and tuple_version_pkg == (0, 3, 1):
+            if tuple_version_json_file <= (0, 3, 0) and tuple_version_pkg >= (0, 3, 1):
                 logger.info('removing depreceated file "zukan-version"')
                 os.remove(ZUKAN_VERSION_FILE)
 
