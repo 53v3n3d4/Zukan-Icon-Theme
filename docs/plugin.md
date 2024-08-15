@@ -84,6 +84,13 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
 
 It inserts an icon in `ignored_icon` setting. Ignored icons are excluded during build.  
 
+A 'primary' tag is supported and will ignore ST theme essentials icons. Icons with tag 'primary':
+- file_type_binary
+- file_type_default
+- file_type_image
+- file_type_markup
+- file_type_source
+
 ### Disable Theme
 
 It inserts a theme in `ignored_theme` setting. Ignored themes are excluded during build.  
@@ -130,6 +137,8 @@ Required parameters are: scope and file extensions.
         { "scope": "source.clojure", "file_extensions": ["cljc"] },
         { "scope": "source.cmakeeditor", "file_extensions": ["CMakeLists.txt"] },
         { "scope": "source.cuda-c++", "file_extensions": ["h"] },
+        { "scope": "source.elixir", "file_extensions": ["dev.exs", "prod.exs", "prod.secret.exs", "test.exs"] },
+        { "scope": "source.elixir.phoenix", "file_extensions": ["config.exs"] },
         { "scope": "source.env.fastapi", "file_extensions": [".env"] },
         { "scope": "source.fsharp", "file_extensions": ["fs"] },
         { "scope": "source.ini", "file_extensions": ["setup.cfg"] },
@@ -164,7 +173,7 @@ Required parameters are: scope and file extensions.
 
 ### Create Custom Icon
 
-It can insert a custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zuka 'icons' folder.  
+It can insert a custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zukan 'icons' folder.  
 
 PNGs icon file name should follow ST policy:
 

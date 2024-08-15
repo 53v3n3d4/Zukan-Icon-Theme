@@ -86,11 +86,11 @@ Using argparse commands
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py concat -a
 # Concat SVG file.
 🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py concat --all
-# After migrating all data files, this will data files instead of svg files.
 ```
 
 Using poetry scripts  
 ```sh
+# Concat SVG sample file, with 30 random file icons.
 $ poetry run build concat -sa -sano 30
 # Concat SVG file.
 $ poetry run build concat --all --iconsperrow 6
