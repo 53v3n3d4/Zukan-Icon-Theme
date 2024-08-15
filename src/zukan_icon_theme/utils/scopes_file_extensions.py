@@ -18,6 +18,7 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.c++', 'file_extensions': ['h']},  # cuda.yaml
     {'scope': 'source.css', 'file_extensions': ['css']},  # django.yaml
     {'scope': 'source.css.postcss.sugarss', 'file_extensions': ['sss']},  # postcss.yaml
+    {'scope': 'source.elixir', 'file_extensions': ['config.exs']},  # phoenix.yaml
     {'scope': 'source.env', 'file_extensions': ['.env']},  # fastapi.yaml
     {
         'scope': 'source.fortran',
@@ -72,3 +73,4 @@ SCOPES_FILE_EXTENSIONS = [
 # ci.yml: github
 # dependencies.json: packagecontrol
 # unittestings.json: sublime
+# config.exs: phoenix

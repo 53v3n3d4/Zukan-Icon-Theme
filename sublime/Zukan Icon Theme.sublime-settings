@@ -88,6 +88,8 @@
     //    { "scope": "source.clojure", "file_extensions": ["cljc"] },
     //    { "scope": "source.cmakeeditor", "file_extensions": ["CMakeLists.txt"] },
     //    { "scope": "source.cuda-c++", "file_extensions": ["h"] },
+    //    { "scope": "source.elixir", "file_extensions": ["dev.exs", "prod.exs", "prod.secret.exs", "test.exs"] },
+    //    { "scope": "source.elixir.phoenix", "file_extensions": ["config.exs"] },
     //    { "scope": "source.env.fastapi", "file_extensions": [".env"] },
     //    { "scope": "source.fsharp", "file_extensions": ["fs"] },
     //    { "scope": "source.ini", "file_extensions": ["setup.cfg"] },

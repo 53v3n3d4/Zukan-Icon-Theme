@@ -1,0 +1,21 @@
+%YAML 1.2
+---
+name: Phoenix Framework
+preferences:
+  scope: source.elixir.phoenix
+  settings:
+    icon: phoenix
+syntax:
+  - name: Elixir (Phoenix Framework)
+    scope: source.elixir.phoenix
+    hidden: true
+    file_extensions:
+      - config.exs
+      - dev.exs
+      - prod.exs
+      - prod.secret.exs
+      - test.exs
+    contexts:
+      main:
+      - include: scope:source.elixir
+        apply_prototype: true

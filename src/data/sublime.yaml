@@ -4,7 +4,7 @@ name: Sublime Text
 icons:
   - sublime-1
 preferences:
-  scope: source.json.sublime, source.yaml.sublime.syntax, text.xml.sublime.snippet
+  scope: source.json.sublime, source.json.sublime.unittesting, source.yaml.sublime.syntax, text.xml.sublime.snippet
   settings:
     icon: sublime
 syntax:
@@ -29,6 +29,14 @@ syntax:
       - sublime-theme
       - sublime-workspace
       - sublime_session
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: JSON (Unittesting)
+    scope: source.json.sublime.unittesting
+    hidden: true
+    file_extensions:
       - unittesting.json
     contexts:
       main:

@@ -3,9 +3,9 @@
 ## [0.3.2] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: CircleCI, Copier, FastAPI, Package Control, Podman, Setuptools, SQLAlchemy
+- Add icon-theme: CircleCI, Copier, FastAPI, Package Control, Phoenix Framework, Podman, Setuptools, SQLAlchemy
 - Add sublime-syntax: Cargo, GitHub, JS, Python, Rust
-- Change sublime-syntax: GitHub Dependabot, Sublime Text
+- Change sublime-syntax: GitHub Dependabot, SQLite, Sublime Text
 
 ### Build 🛠️
 - Fix save primary icons PNGs in folder 'primary_icons'
