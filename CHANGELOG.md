@@ -5,6 +5,7 @@
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: CircleCI, Copier, FastAPI, Package Control, Phoenix Framework, Podman, Setuptools, SQLAlchemy
 - Add sublime-syntax: Cargo, GitHub, JS, Python, Rust
+- Change icon: Audio, GitHub Dependabot
 - Change sublime-syntax: GitHub Dependabot, SQLite, Sublime Text
 
 ### Build 🛠️
