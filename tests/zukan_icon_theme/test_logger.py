@@ -1,6 +1,7 @@
 import importlib
 import logging
 
+from bisect import bisect
 from unittest import TestCase
 from unittest.mock import Mock, patch
 
@@ -50,3 +51,67 @@ class TestLoggerMessages(TestCase):
                     'CRITICAL:test_logger:critical message',
                 ],
             )
+
+
+class TestLevelFormatter(TestCase):
+    def setUp(self):
+        # Set up the formats to be used in testing
+        self.formats = {
+            logging.INFO: '%(levelname)s | Zukan Icon Theme %(name)s %(message)s',
+            logging.WARNING: '%(asctime)s | %(levelname)s | Zukan Icon Theme '
+            '%(name)s %(lineno)s %(message)s',
+        }
+        self.formatter = logger.LevelFormatter(self.formats)
+
+    def test_format_info_level(self):
+        record = logging.LogRecord(
+            name='test',
+            level=logging.INFO,
+            msg='info message',
+            # Attributes above necessary
+            pathname='test_path',
+            lineno=10,
+            args=None,
+            exc_info=None,
+        )
+        output = self.formatter.format(record)
+        expected = 'INFO | Zukan Icon Theme test info message'
+        self.assertEqual(output, expected)
+
+    def test_format_warning_level(self):
+        record = logging.LogRecord(
+            name='test',
+            # Not working if use funcName attribute
+            funcName='test_func',
+            level=logging.WARNING,
+            # Not working if use process attribute
+            process=111,
+            msg='warning message',
+            # Attributes above necessary
+            pathname='test_path',
+            lineno=10,
+            args=None,
+            exc_info=None,
+        )
+        output = self.formatter.format(record)
+        self.assertTrue(
+            output.endswith('WARNING | Zukan Icon Theme test 10 warning message')
+        )
+
+    def test_invalid_level_in_formats(self):
+        with self.assertRaises(ValueError):
+            logger.LevelFormatter({999: 'Invalid level format'})
+
+    def test_bisect_index(self):
+        record = logging.LogRecord(
+            name='test',
+            level=logging.INFO,
+            msg='info message',
+            # Attributes above necessary
+            pathname='test_path',
+            lineno=10,
+            args=None,
+            exc_info=None,
+        )
+        idx = bisect(self.formatter.formats, (record.levelno,))
+        self.assertEqual(idx, 0)  # INFO should be at index 0

@@ -5,7 +5,7 @@ TEST_PICKLE_AUDIO_FILE = 'tests/mocks/audio.pkl'
 
 TEST_PICKLE_FILE = 'tests/foo/bar.pkl'
 
-TEST_PICKLE_ZUKAN_FILE = 'tests/mocks/zukan_syntaxes_data.pkl'
+TEST_PICKLE_ZUKAN_FILE = 'tests/mocks/zukan_icons_data.pkl'
 
 TEST_PICKLE_NESTED_ORDERED_DICT = [
     OrderedDict(
