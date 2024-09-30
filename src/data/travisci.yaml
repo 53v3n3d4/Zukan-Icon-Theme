@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Travis CI
+preferences:
+  scope: source.yaml.travisci
+  settings:
+    icon: travisci
+syntax:
+  - name: YAML (Travis CI)
+    scope: source.yaml.travisci
+    hidden: true
+    file_extensions:
+      - .travis.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
