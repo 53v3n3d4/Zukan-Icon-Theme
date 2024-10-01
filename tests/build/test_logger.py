@@ -4,7 +4,6 @@ import pytest
 from bisect import bisect
 from src.build.helpers.color import Color
 from src.build.helpers.logger import LevelFormatter
-from unittest.mock import Mock, patch, MagicMock
 
 
 logger_message = logging.getLogger(__name__)
