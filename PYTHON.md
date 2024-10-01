@@ -10,7 +10,7 @@ Link https://www.sublimetext.com/docs/porting_guide.html#python-3-3
 ```
 Package
 ├── src
-|   ├── build # generate icons PNGs, syntaxes and preferences files
+|   ├── build # generate icons PNGs and icons data file
 |   ├── data
 |   ├── icons
 │   └── zukan_icon_theme # plugin install files
@@ -86,6 +86,8 @@ To disable coverage (pytest-cov)
 # See https://docs.pytest.org/en/8.0.x/reference/customize.html
 addopts = -ra -q
 ```
+
+> `test_scripts icon-theme command` delay tests. If need, comment it in `tests/mocks/constants_scripts.py`.  
 
 ### Plugin tests
 
