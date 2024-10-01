@@ -1,9 +1,12 @@
 import collections.abc
 import os
 import pytest
+import re
+
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.clean_svg import CleanSVG, _replace_line
+# from src.build.utils.svg_common_ids import AFDESIGNER_COMMON_IDS_NAMES
 from tests.mocks.constants_svg import (
     SVG_ALL_UNUSED,
     SVG_ALMOST_CLEAN,
@@ -12,6 +15,94 @@ from tests.mocks.constants_svg import (
     UNUSED_LIST,
 )
 from unittest.mock import patch
+
+
+class TestEditSVGID:
+    @pytest.fixture
+    def sample_svg_file(self, tmpdir):
+        svg_content = """<svg xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <g id="_clip1">...</g>
+                <g id="_Effect2">...</g>
+                <g id="_Linear3">...</g>
+                # <g id="_Gradient4">...</g>
+            </defs>
+            <rect width="100" height="100" fill="red"/>
+        </svg>"""
+        svg_file = tmpdir.join('test.svg')
+        with open(str(svg_file), 'w') as f:
+            f.write(svg_content)
+        return str(svg_file)
+
+    def test_edit_svg_id_renames_ids(self, sample_svg_file):
+        with open(sample_svg_file, 'r') as f:
+            original_content = f.read()
+
+        cleaned_content = CleanSVG.edit_svg_id(original_content, 'test.svg')
+
+        # Ensure that old IDs are no longer present
+        assert '_clip1' not in cleaned_content
+        assert '_Effect2' not in cleaned_content
+        assert '_Linear3' not in cleaned_content
+        # assert "_Gradient4" not in cleaned_content
+
+        # Check that new IDs have been added
+        assert re.search(r'_clip-\w{7}', cleaned_content)  # Checking for a new clip ID
+        assert re.search(
+            r'_Effect-\w{7}', cleaned_content
+        )  # Checking for a new effect ID
+        assert re.search(
+            r'_Linear-\w{7}', cleaned_content
+        )  # Checking for a new linear ID
+        # assert re.search(r'_Gradient-\w{7}', cleaned_content)  # Checking for a new gradient ID
+
+    def test_edit_svg_id_no_ids(self, sample_svg_file):
+        svg_content = """<svg xmlns="http://www.w3.org/2000/svg">
+            <rect width="100" height="100" fill="red"/>
+        </svg>"""
+        cleaned_content = CleanSVG.edit_svg_id(svg_content, 'test.svg')
+        assert cleaned_content == svg_content  # No changes should be made
+
+
+class TestCleanSample:
+    @pytest.fixture
+    def sample_svg_file(self, tmpdir):
+        svg_content = """<svg xmlns="http://www.w3.org/2000/svg">
+            <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+            <defs>
+                <g id="clip1">...</g>
+                <g id="linear1">...</g>
+            </defs>
+            <rect width="100" height="100" fill="red"/>
+        </svg>"""
+        svg_file = tmpdir.join('test.svg')
+        with open(str(svg_file), 'w') as f:
+            f.write(svg_content)
+        return str(svg_file)
+
+    def test_clean_svg_removes_unused_tags(self, sample_svg_file):
+        CleanSVG.clean_svg(sample_svg_file, UNUSED_LIST)
+        with open(sample_svg_file, 'r') as f:
+            cleaned_content = f.read()
+        assert (
+            '<?xml version="1.0" encoding="UTF-8" standalone="no"?>'
+            not in cleaned_content
+        )
+        assert (
+            '<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">'
+            not in cleaned_content
+        )
+        assert 'xmlns:serif="http://www.serif.com/"' not in cleaned_content
+
+    def test_clean_svg_handles_non_svg_files(self, tmpdir):
+        non_svg_file = tmpdir.join('test.txt')
+        with open(str(non_svg_file), 'w') as f:
+            f.write('Just a text file')
+
+        CleanSVG.clean_svg(str(non_svg_file), UNUSED_LIST)
+        with open(str(non_svg_file), 'r') as f:
+            content = f.read()
+        assert content == 'Just a text file'  # Should remain unchanged
 
 
 class TestClean:
