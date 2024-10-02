@@ -129,14 +129,29 @@ COMMANDS_ARGS_PATH_P5 = [
     # Comment 2 tuples below to speed tests
     (
         'src.build.zukan_icons.ZukanIcon.write_icon_data',
-        ['icon-theme', '--all','--icondata', ICONS_DATA_PATH, '--iconfile', TEST_PICKLE_ZUKAN_FILE],
+        [
+            'icon-theme',
+            '--all',
+            '--icondata',
+            ICONS_DATA_PATH,
+            '--iconfile',
+            TEST_PICKLE_ZUKAN_FILE,
+        ],
         DATA_PATH,
         ICONS_DATA_PATH,
         TEST_PICKLE_ZUKAN_FILE,
     ),
     (
         'src.build.zukan_icons.ZukanIcon.write_icon_data',
-        ['icon-theme', '--data', DATA_PATH, '--icondata', ICONS_DATA_PATH, '--iconfile', TEST_PICKLE_ZUKAN_FILE],
+        [
+            'icon-theme',
+            '--data',
+            DATA_PATH,
+            '--icondata',
+            ICONS_DATA_PATH,
+            '--iconfile',
+            TEST_PICKLE_ZUKAN_FILE,
+        ],
         DATA_PATH,
         ICONS_DATA_PATH,
         TEST_PICKLE_ZUKAN_FILE,
