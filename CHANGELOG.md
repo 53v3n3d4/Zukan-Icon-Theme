@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.3.2] - 2024
+## [0.3.2] - 2024-10-02
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: CircleCI, Copier, FastAPI, Package Control, Phoenix Framework, Podman, Setuptools, SQLAlchemy, Travis CI
