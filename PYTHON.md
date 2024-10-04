@@ -89,6 +89,16 @@ addopts = -ra -q
 
 > `test_scripts icon-theme command` delay tests. If need, comment it in `tests/mocks/constants_scripts.py`.  
 
+#### Note
+
+If error below show, it is because of a `DS_Store` file that was created in `tests/mocks` folder. To see `DS_Store`, change ST settings `file_exclude_patterns`.  
+
+```sh
+FAILED tests/build/test_create_icon_theme.py::TestCreateIconTheme::test_create_test_icon_theme[tests/mocks-tests/mocks-expected0] - AssertionError: assert ['test_no_ico...S_Store', ...] == ['test_no_ico...emes.py', ...]
+FAILED tests/build/test_icons_preferences.py::TestPreferences::test_preferences_all[tests/mocks-tests/mocks-expected0] - AssertionError: assert ['test_no_ico...S_Store', ...] == ['test_no_ico...emes.py', ...]
+FAILED tests/build/test_zukan_icons.py::TestZukanIcon::test_write_icon_data[tests/mocks-tests/mocks-tests/mocks/zukan_icons_data.pkl-expected0] - AssertionError: assert ['test_no_ico...S_Store', ...] == ['test_no_ico...emes.py', ...]
+```
+
 ### Plugin tests
 
 Using ST package `UnitTesting`.  
