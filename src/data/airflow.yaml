@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Airflow
+preferences:
+  scope: source.ini.airflow
+  settings:
+    icon: airflow
+syntax:
+  - name: INI (Airflow)
+    scope: source.ini.airflow
+    hidden: true
+    file_extensions:
+      - airflow.cfg
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
