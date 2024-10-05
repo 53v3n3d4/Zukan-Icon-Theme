@@ -105,6 +105,7 @@ class ConcatSVG:
         svg_tag (str) -- 'svg' element tag.
         sticker_name (str) -- icon name is the key name in data file. Not the
         icon SVG file name.
+        svgfile_name (str) -- SVG file name.
 
         Returns:
         sticker_text - return an ElementTree instance.
@@ -184,6 +185,7 @@ class ConcatSVG:
         x (str) -- 'svg' attribute y. A string(int)
         sticker_name (str) -- icon name is the key name in data file. Not the
         icon SVG file name.
+        svgfile_name (str) -- SVG file name.
 
         Returns:
         sticker - return an ElementTree instance.
@@ -251,7 +253,7 @@ class ConcatSVG:
                         list_svgs,
                     )
 
-                    # Icons options
+                    # Icons options. I.e. nodejs-1
                     if any('icons' in d for d in data) and data['icons'] is not None:
                         for i in data['icons']:
                             ConcatSVG.add_to_list_svgs(

@@ -6,6 +6,9 @@
 - Add icon-theme: Airflow
 - Change icon: Renovate
 
+### Build 🛠️
+- Update clean_svg with new common id 'Path_'
+
 ## [0.3.2] - 2024-10-02
 
 ### Icons, syntaxes and preferences 👽

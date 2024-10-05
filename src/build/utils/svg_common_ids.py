@@ -5,4 +5,5 @@ AFDESIGNER_COMMON_IDS_NAMES = [
     '_Effect',
     '_Linear',
     '_Radial',
+    'Path_',
 ]

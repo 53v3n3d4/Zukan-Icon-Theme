@@ -175,13 +175,17 @@ class CleanSVG:
                         # print(name_id)
                         s_uuid = ''.join(random.choices(alphabet, k=7))
                         new_name_id = f'{ s }-{ s_uuid }'
-                        # print(new_name_id)
+                        # Rename 'Path_' to 'Path'
+                        if new_name_id.startswith('Path_'):
+                            changed_name_id = new_name_id.replace('Path_', 'Path')
+                        if not new_name_id.startswith('Path_'):
+                            changed_name_id = new_name_id
                         # Change name id number with shortuuid.
                         # Check if, e.g., '_Linear1' is not '_Linear11'.
                         # Regex 'name_id' followed by ')' or '"'
                         clean_file = re.sub(
                             rf'({ name_id })(ˆ?+["|)])',
-                            rf'{ new_name_id }\2',
+                            rf'{ changed_name_id }\2',
                             clean_file,
                         )
                         print_message(
