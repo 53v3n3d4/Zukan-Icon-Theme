@@ -5,6 +5,7 @@
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Airflow
 - Change icon: Renovate
+- Change sublime-syntax: Cert
 
 ### Build 🛠️
 - Update clean_svg with new common id 'Path_'

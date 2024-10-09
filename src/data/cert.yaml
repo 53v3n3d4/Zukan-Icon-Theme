@@ -15,6 +15,7 @@ syntax:
       - cer
       - cert
       - der
+      - key
       - pfx
       - pem
     contexts:
