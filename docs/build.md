@@ -57,7 +57,7 @@ Affinity designer program, used to export SVGs, produce them with unsed tags tha
 
 Also, exported SVGs use common ids names indexed that conflict when concat SVGs. These names are renamed when clean is used.  
 
-Common id names: `_clip`, `_Effect`, `_Linear` and `_Gradient`.  
+Common id names: `_clip`, `_Effect`, `_Linear`, `_Gradient` and `Path_`.  
 
 Using argparse commands  
 ```sh

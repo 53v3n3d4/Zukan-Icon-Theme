@@ -1,6 +1,6 @@
 # Plugin
 
-If installed using Package Control, plugin create a 'Zukan Icon Theme' folder in 'Packages'.  
+If installed using Package Control, plugin create a `Zukan Icon Theme` folder in `Packages`.  
 
 We need this folder, to create, edit or delete, icons sublime-themes, icons tmPreferences and icons sublime-syntax files. And `Installed Packages` uses a zip file.  
 
@@ -105,7 +105,7 @@ It removes a theme from `ignored_theme` setting.
 
 ### Reset Icon
 
-If icon is changed for another option. Reset Icon can reset, removing it from `change_icon` setting.  
+If icon has been changed for another option. This command will reset to default icon, removing the changed icon from `change_icon` setting.  
 
 ### Change File Extension
 
@@ -173,7 +173,7 @@ Required parameters are: scope and file extensions.
 
 ### Create Custom Icon
 
-It can insert a custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zukan 'icons' folder.  
+It can insert a custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zukan `icons` folder.  
 
 PNGs icon file name should follow ST policy:
 
@@ -183,7 +183,7 @@ PNGs icon file name should follow ST policy:
 | (icon)@2x.png | 36x32 |
 | (icon)@3x.png | 54x48 |
 
-Currently, 3 options possible and a key 'name' is required:  
+Currently, 3 options possible and a key `name` is required:  
 1. Create an icon for a scope without file extension, fill icon and scope keys  
 2. Insert a file_extension for a existing icon, ommit icon key  
 3. Create a new icon with file_extension, keys icon, syntax_name, scope and file_extensions are necessary  
