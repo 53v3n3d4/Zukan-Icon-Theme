@@ -6,6 +6,7 @@ import re
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.clean_svg import CleanSVG, _replace_line
+
 # from src.build.utils.svg_common_ids import AFDESIGNER_COMMON_IDS_NAMES
 from tests.mocks.constants_svg import (
     SVG_ALL_UNUSED,

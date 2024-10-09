@@ -103,7 +103,7 @@ class IconPNG:
                         dir_origin,
                         dir_destiny_primary,
                     )
-                # Icons options
+                # Icons options. I.e. nodejs-1
                 if (
                     any('icons' in d for d in data)
                     and data['icons'] is not None

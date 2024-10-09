@@ -44,7 +44,7 @@ class CleanSVG:
     Affinity Designer use common ids names indexed that conflict when concat SVGs.
     These names are renamed when clean is used.
 
-    Common id names: _clip, _Effect, _Linear and _Gradient.
+    Common id names: _clip, _Effect, _Linear, _Gradient and Path_.
     """
 
     def clean_svg(svgfile: str, replace_list: Set):
@@ -156,11 +156,12 @@ class CleanSVG:
         New name id needs to be unique to avoid change SVG everytime clean is done,
         otherwise will generate unnecessary commits.
 
-        Common id names: _clip, _Effect, _Linear and _Gradient.
+        Common id names: _clip, _Effect, _Linear, _Gradient and Path_.
 
         Affinity Designer enumerates them starting with 1 and up, one index for all.
 
-        Example: '_clip83', '_Effect84', '_Linear85', '_Linear86', '_Gradient87'
+        Example: '_clip83', '_Effect84', '_Linear85', '_Linear86', '_Gradient87',
+        'Path_88'.
         """
         alphabet = string.ascii_lowercase + string.digits
 

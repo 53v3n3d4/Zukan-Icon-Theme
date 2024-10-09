@@ -9,6 +9,7 @@ from tests.mocks.constants_pickle import (
 from tests.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
+    DS_STORE_MOCKS_PATH,
     TEST_DATA_DIR_EXCEPT_ZUKAN_FILE,
 )
 from unittest.mock import patch
@@ -27,6 +28,10 @@ class TestZukanIcon:
         ],
     )
     def test_write_icon_data(self, a, b, c, expected):
+        # Delete '.DS_Store' file that get created when running tests
+        if '.DS_Store' in os.listdir(DIR_DESTINY):
+            os.remove(DS_STORE_MOCKS_PATH)
+
         result = ZukanIcon.write_icon_data(a, b, c)
         assert result == TEST_DATA_DIR_EXCEPT_ZUKAN_FILE
 

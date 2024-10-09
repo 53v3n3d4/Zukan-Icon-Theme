@@ -17,6 +17,7 @@ from tests.mocks.constants_yaml import (
 from tests.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
+    DS_STORE_MOCKS_PATH,
     TEST_DATA_DIR,
 )
 from unittest.mock import patch, mock_open
@@ -25,6 +26,10 @@ from unittest.mock import patch, mock_open
 class TestPreferences:
     @pytest.mark.parametrize('a, b, expected', [(DIR_DATA, DIR_DESTINY, TEST_DATA_DIR)])
     def test_preferences_all(self, a, b, expected):
+        # Delete '.DS_Store' file that get created when running tests
+        if '.DS_Store' in os.listdir(DIR_DESTINY):
+            os.remove(DS_STORE_MOCKS_PATH)
+
         result = Preference.preferences_all(a, b)
         assert result == TEST_DATA_DIR
 

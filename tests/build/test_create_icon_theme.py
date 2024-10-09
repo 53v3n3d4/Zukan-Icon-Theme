@@ -6,6 +6,7 @@ from src.build.helpers.create_test_icon_theme import TestIconTheme
 from tests.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
+    DS_STORE_MOCKS_PATH,
     TEST_DATA_DIR,
 )
 from unittest.mock import patch
@@ -14,6 +15,10 @@ from unittest.mock import patch
 class TestCreateIconTheme:
     @pytest.mark.parametrize('a, b, expected', [(DIR_DATA, DIR_DESTINY, TEST_DATA_DIR)])
     def test_create_test_icon_theme(self, a, b, expected):
+        # Delete '.DS_Store' file that get created when running tests
+        if '.DS_Store' in os.listdir(DIR_DESTINY):
+            os.remove(DS_STORE_MOCKS_PATH)
+
         result = TestIconTheme.create_icons_files(a, b)
         assert result == TEST_DATA_DIR
 

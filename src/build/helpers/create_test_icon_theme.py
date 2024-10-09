@@ -20,7 +20,7 @@ class TestIconTheme:
 
     def create_icon_file(icon_data: str, dir_destiny: str):
         """
-        Create test file extension for a icon theme.
+        Create test file extension for an icon theme.
 
         Parameters:
         icon_data (str) -- path to data file.
