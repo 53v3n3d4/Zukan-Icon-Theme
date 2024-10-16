@@ -56,6 +56,7 @@
     //     "Python": "python-1",
     //     "Ruff": "ruff-1",
     //     "Rust": "rust-1",
+    //     "SolidJS": "solidstart",
     //     "Sublime Text": "sublime-1"
     // }
     "change_icon": {},
@@ -98,6 +99,7 @@
     //    { "scope": "source.iot", "file_extensions": ["ino", "pde"] },
     //    { "scope": "source.js.jxa", "file_extensions": ["js"] },
     //    { "scope": "source.json", "file_extensions": ["dependencies.json"] },
+    //    { "scope": "source.json", "file_extensions": ["messages.json"] },
     //    { "scope": "source.json", "file_extensions": ["unittesting.json"] },
     //    { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
     //    { "scope": "source.python", "file_extensions": ["config.py"] },
@@ -111,14 +113,19 @@
     //    { "scope": "source.toml.poetry", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.setuptools", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.tox", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "source.ts.angular", "file_extensions": ["app.config.ts"] },
+    //    { "scope": "source.ts.nuxt", "file_extensions": ["app.config.ts"] },
+    //    { "scope": "source.ts.solidjs", "file_extensions": ["app.config.ts"] },
     //    { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
     //    { "scope": "source.vbs", "file_extensions": ["cls", "vbs"] },
     //    { "scope": "source.yaml", "file_extensions": ["ci.yml"] },
     //    { "scope": "source.yaml", "file_extensions": ["config.yml"] },
     //    { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
     //    { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
+    //    { "scope": "text.html.js", "file_extensions": ["ejs"] },
     //    { "scope": "text.plain", "file_extensions": ["requirements.txt"] },
     //    { "scope": "text.plain.uv", "file_extensions": ["requirements.txt"] },
+    //    { "scope": "text.plain.wwpdb", "file_extensions": ["pdb"] },
     // ]
     "change_icon_file_extension": [],
 
@@ -242,7 +249,7 @@
     "version": "0.3.2",
 
     // https://docs.python.org/3/library/logging.html
-    // It currently only accept Python library logging default
+    // It currently only accepts Python library logging default
     // codes:
     // - DEBUG
     // - INFO

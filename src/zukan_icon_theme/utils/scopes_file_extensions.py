@@ -34,11 +34,15 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.python.fastapi', 'file_extensions': ['config.py']},
     {'scope': 'source.shader', 'file_extensions': ['cginc', 'shader']},  # unity.yaml
     {'scope': 'source.tex', 'file_extensions': ['cls']},  # tex.yaml
-    # poetry, pip, tox, pdm
     {'scope': 'source.toml.python', 'file_extensions': ['pyproject.toml']},
+    # poetry, pip, tox, pdm
+    {'scope': 'source.ts', 'file_extensions': ['app.config.ts']},
+    # angular.yaml, nuxt.yaml, solidjs.yaml
+    {'scope': 'text.ejs.percentsign', 'file_extensions': ['ejs']},  # ejs.yaml
     {'scope': 'text.gherkin.feature', 'file_extensions': ['feature']},  # behat.yaml
     {'scope': 'text.html.basic', 'file_extensions': ['html']},  # django.yaml
     {'scope': 'text.plain', 'file_extensions': ['BUILD', 'WORKSPACE']},  # bazel.yaml
+    {'scope': 'text.plain.debug', 'file_extensions': ['pdb']},  # wwpdb.yaml
     {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # uv.yaml
     {'scope': 'text.xml', 'file_extensions': ['xml']},  # django.yaml
 ]
@@ -61,16 +65,18 @@ SCOPES_FILE_EXTENSIONS = [
 # - Unity: Package Unity Shader and Unity3D Shader Highlighter and Snippets same extensions.
 
 # Config files
+# .env: fastapi
+# app.config.ts: ts, angular, nuxt, solid
+# ci.yml: github
+# config.exs: phoenix
+# config.py: fastapi
+# config.toml: pdm
+# config.yml: circleci
+# dependencies.json: packagecontrol
+# Manifest.tom: pkgjl
+# messages.json: sublime
+# Project.toml: pkgjl
 # pyproject.toml: python, pdm, pip, poetry, setuptools, tox
 # requirements.txt: pip, uv
 # setup.cfg: python, setuptools, tox
-# config.toml: pdm
-# config.py: fastapi
-# .env: fastapi
-# Manifest.tom: pkgjl
-# Project.toml: pkgjl
-# config.yml: circleci
-# ci.yml: github
-# dependencies.json: packagecontrol
 # unittestings.json: sublime
-# config.exs: phoenix
