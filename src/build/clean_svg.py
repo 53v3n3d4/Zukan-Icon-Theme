@@ -102,7 +102,7 @@ class CleanSVG:
                             color_end=f'{ Color.END }',
                         )
                     # Clean Affinity Designer common id names.
-                    # They conflict between icons, messing gradient, clips and effects
+                    # They conflict between icons, messing gradient, i.e. clips and effects
                     # colors when concat them together.
                     clean_file = CleanSVG.edit_svg_id(clean_file, basename_svgfile)
                 with open(svgfile, 'w') as f:

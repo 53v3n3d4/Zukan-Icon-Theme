@@ -26,7 +26,7 @@ class ZukanIcon:
         """
         Create zukan with icons data.
 
-        The file will be saved in folder icons.
+        The file will be saved in folder icons_data.
 
         Parameters:
         dir_icon_data (str) -- path to directory with data files.

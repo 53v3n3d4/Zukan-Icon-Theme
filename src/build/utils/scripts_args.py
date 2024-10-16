@@ -136,7 +136,7 @@ COMMANDS = {
         ],
     },
     'icon-theme': {
-        'help': f'{Color.YELLOW}Create icons PNGs, zukan preferences and syntaxes files.{Color.END}',
+        'help': f'{Color.YELLOW}Create icons PNGs and zukan icons data file.{Color.END}',
         'args': [
             (
                 '-a',

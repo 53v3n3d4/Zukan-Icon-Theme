@@ -137,7 +137,7 @@ class InstallEvent:
         to avoid ST freezing.
 
         Try move folders if installed trough Package Control. Folders contain icons
-        PNGs, preferences and syntaxes data files.
+        PNGs and zukan icons data files.
 
         Then install icons themes, preferences and syntaxes.
         """
