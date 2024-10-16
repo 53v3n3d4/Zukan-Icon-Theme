@@ -2,7 +2,7 @@
 ---
 name: JavaScript
 preferences:
-  scope: source.js, source.js.map
+  scope: source.js, source.js.map, source.json.js
   settings:
     icon: js
 syntax:
@@ -26,6 +26,15 @@ syntax:
     contexts:
       main:
         - include: scope:source.js
+          apply_prototype: true
+  - name: JSON (JavaScript)
+    scope: source.json.js
+    hidden: true
+    file_extensions:
+      - jsconfig.json
+    contexts:
+      main:
+        - include: scope:source.json
           apply_prototype: true
 
 # ST Package

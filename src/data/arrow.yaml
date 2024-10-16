@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Arrow
+preferences:
+  scope: binary.arrow
+  settings:
+    icon: arrow
+syntax:
+  - name: Binary (Arrow)
+    scope: binary.arrow
+    hidden: true
+    file_extensions:
+      - feather
+    contexts:
+      main: []

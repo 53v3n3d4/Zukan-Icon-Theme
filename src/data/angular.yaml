@@ -4,7 +4,7 @@ name: Angular
 icons:
   - angular-1
 preferences:
-  scope: source.json.angularjs
+  scope: source.json.angularjs, source.ts.angularjs
   settings:
     icon: angular
 syntax:
@@ -17,3 +17,13 @@ syntax:
       main:
       - include: scope:source.json
         apply_prototype: true
+  - name: TypeScript (Angular)
+    scope: source.ts.angularjs
+    hidden: true
+    file_extensions:
+      - app.config.ts
+      - app.routes.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

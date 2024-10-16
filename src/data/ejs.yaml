@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+name: EJS
+preferences:
+  scope: text.ejs.percentsign, text.html.js
+  settings:
+    icon: ejs
+syntax:
+  - name: HTML (EJS)
+    scope: text.html.js
+    hidden: true
+    file_extensions:
+      - ejs
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+  - name: Text (EJS2)
+    scope: text.ejs.percentsign
+    hidden: true
+    file_extensions:
+      - ejs
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
+
+# Package EJS
+# Package EJS2

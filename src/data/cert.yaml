@@ -1,12 +1,12 @@
 %YAML 1.2
 ---
-name: Certificate Authority
+name: Cert. Authentication
 preferences:
   scope: text.certificate
   settings:
     icon: cert
 syntax:
-  - name: Text (Certificate Authority)
+  - name: Text (Certificate Authentication)
     scope: text.certificate
     hidden: true
     file_extensions:
@@ -18,5 +18,6 @@ syntax:
       - key
       - pfx
       - pem
+      - pub
     contexts:
       main: []

@@ -16,6 +16,7 @@ syntax:
       - .sublime-project
       - hidden-color-scheme
       - hidden-theme
+      - messages.json
       - sublime-build
       - sublime-color-scheme
       - sublime-commands

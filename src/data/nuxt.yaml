@@ -38,6 +38,7 @@ syntax:
     scope: source.ts.nuxt
     hidden: true
     file_extensions:
+      - app.config.ts
       - nuxt.config.ts
     contexts:
       main:

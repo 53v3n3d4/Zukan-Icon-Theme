@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Lunaria
+preferences:
+  scope: source.json.lunaria
+  settings:
+    icon: lunaria
+syntax:
+  - name: JSON (Lunaria)
+    scope: source.json.lunaria
+    hidden: true
+    file_extensions:
+      - lunaria.config.json
+    contexts:
+      main:
+      - include: scope:source.json
+        apply_prototype: true

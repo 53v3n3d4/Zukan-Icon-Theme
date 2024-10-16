@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Parquet
+preferences:
+  scope: binary.parquet
+  settings:
+    icon: parquet
+syntax:
+  - name: Binary (Parquet)
+    scope: binary.parquet
+    hidden: true
+    file_extensions:
+      - parquet
+    contexts:
+      main: []
+
+# Package Parquet

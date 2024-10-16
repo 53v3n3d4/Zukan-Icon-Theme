@@ -3,9 +3,11 @@
 ## [0.3.3] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: Airflow
-- Change icon: Renovate
-- Change sublime-syntax: Cert
+- Add icon-theme: Airflow, Arrow, Debug, EJS, Lunaria, Open Policy Agent, Parquet, Protein Data Bank, SolidJS
+- Add sublime-syntax: Angular, JS, Python
+- Change icon: Deno, Renovate
+- Change sublime-syntax: Cert, Nuxt, Sublime Text
+- Rename sublime-syntax file name: Cert
 
 ### Build 🛠️
 - Update clean_svg with new common id 'Path_'

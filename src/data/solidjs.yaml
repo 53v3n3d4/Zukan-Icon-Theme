@@ -1,0 +1,29 @@
+%YAML 1.2
+---
+name: SolidJS
+icons: 
+  - solidstart
+preferences:
+  scope: source.ts.solidjs, source.tsx.solidjs
+  settings:
+    icon: solidjs
+syntax:
+  - name: TSX (SolidJS)
+    scope: source.tsx.solidjs
+    hidden: true
+    file_extensions:
+      - entry-client.tsx
+      - entry-server.tsx
+    contexts:
+      main:
+        - include: scope:source.tsx
+          apply_prototype: true
+  - name: TypeScript (SolidJS)
+    scope: source.ts.solidjs
+    hidden: true
+    file_extensions:
+      - app.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
+          apply_prototype: true

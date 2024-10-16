@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Debug
+preferences:
+  scope: text.plain.debug
+  settings:
+    icon: debug
+syntax:
+  - name: Plain Text (Debug)
+    scope: text.plain.debug
+    hidden: true
+    file_extensions:
+      - dwo
+      - dwp
+      - pdb
+    contexts:
+      main: []
+
+# By default, ST does not show pdb files. Need to change ST Preferences settings
+# 'file_exclude_patterns'.

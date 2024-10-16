@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Protein Data Bank
+preferences:
+  scope: text.plain.wwpdb
+  settings:
+    icon: wwpdb
+syntax:
+  - name: Plain Text (Protein Data Bank)
+    scope: text.plain.wwpdb
+    hidden: true
+    file_extensions:
+      - brk
+      - ent
+      - pdb
+    contexts:
+      main: []
+
+# By default, ST does not show pdb files. Need to change ST Preferences settings
+# 'file_exclude_patterns'.

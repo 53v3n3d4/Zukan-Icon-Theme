@@ -1,0 +1,37 @@
+%YAML 1.2
+---
+name: Open Policy Agent
+preferences:
+  scope: source.json.opa, source.rego, source.yaml.opa
+  settings:
+    icon: opa
+syntax:
+  - name: JSON (Open Policy Agent)
+    scope: source.json.opa
+    hidden: true
+    file_extensions:
+      - opa-conf.json
+      - opa-config.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: Rego
+    scope: source.rego
+    hidden: true
+    file_extensions:
+      - rego
+    contexts:
+      main: []
+  - name: YAML (Open Policy Agent)
+    scope: source.yaml.opa
+    hidden: true
+    file_extensions:
+      - opa-conf.yaml
+      - opa-config.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
+
+# Syntax Rego: https://www.openpolicyagent.org/docs/latest/editor-and-ide-support/
