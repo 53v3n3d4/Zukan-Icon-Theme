@@ -44,6 +44,7 @@
     //
     // Examples: {
     //     "Angular": "angular-1",
+    //     "Cert. Authentication": "cert-1",
     //     "Composer": "composer-1",
     //     "Composer": "composer-2",
     //     "C#": "csharp-1",

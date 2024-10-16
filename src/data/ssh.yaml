@@ -1,0 +1,31 @@
+%YAML 1.2
+---
+name: SSH
+preferences:
+  scope: source.ssh_config, source.sshd_config, text.known_hosts
+  settings:
+    icon: ssh
+syntax:
+  - name: Known Hosts
+    scope: text.known_hosts
+    hidden: true
+    file_extensions:
+      - known_hosts
+    contexts:
+      main: []
+  - name: SSH Config
+    scope: source.ssh_config
+    hidden: true
+    file_extensions:
+      - ssh_config
+    contexts:
+      main: []
+  - name: SSHD Config
+    scope: source.sshd_config
+    hidden: true
+    file_extensions:
+      - sshd_config
+    contexts:
+      main: []
+
+# Package SSH

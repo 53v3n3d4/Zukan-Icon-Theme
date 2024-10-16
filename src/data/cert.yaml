@@ -1,8 +1,10 @@
 %YAML 1.2
 ---
 name: Cert. Authentication
+icons:
+  - cert-1
 preferences:
-  scope: text.certificate
+  scope: text.authorized_keys, text.certificate
   settings:
     icon: cert
 syntax:
@@ -18,6 +20,15 @@ syntax:
       - key
       - pfx
       - pem
+    contexts:
+      main: []
+  - name: Authorized Keys
+    scope: text.authorized_keys
+    hidden: true
+    file_extensions:
+      - authorized_keys
       - pub
     contexts:
       main: []
+
+# Package SSH Config syntax Authorized Keys
