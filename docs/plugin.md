@@ -47,7 +47,7 @@ It is the same, if go to menu `Sublime Text > Settings > Package Settings > Zuka
 
 ### Change Icon
 
-It changes icon being used, a few icons has more than one option. E.g. Angular, C#, Composer, DirectX, Go, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, Sublime Text.  
+It changes icon being used, a few icons has more than one option. E.g. Angular, C#, Composer, DirectX, Go, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, SolidJS, Sublime Text.  
 
 See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md).  
 
@@ -76,6 +76,7 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
         "Python": "python-1",
         "Ruff": "ruff-1",
         "Rust": "rust-1",
+        "SolidJS": "solidstart",
         "Sublime Text": "sublime-1"
     },
 ```
@@ -147,6 +148,7 @@ Required parameters are: scope and file extensions.
         { "scope": "source.iot", "file_extensions": ["ino", "pde"] },
         { "scope": "source.js.jxa", "file_extensions": ["js"] },
         { "scope": "source.json", "file_extensions": ["dependencies.json"] },
+        { "scope": "source.json", "file_extensions": ["messages.json"] },
         { "scope": "source.json", "file_extensions": ["unittesting.json"] },
         { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
         { "scope": "source.python", "file_extensions": ["config.py"] },
@@ -160,14 +162,19 @@ Required parameters are: scope and file extensions.
         { "scope": "source.toml.poetry", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.setuptools", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.tox", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.ts.angular", "file_extensions": ["app.config.ts"] },
+        { "scope": "source.ts.nuxt", "file_extensions": ["app.config.ts"] },
+        { "scope": "source.ts.solidjs", "file_extensions": ["app.config.ts"] },
         { "scope": "source.vbs", "file_extensions": ["cls", "vbs"] },
         { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
         { "scope": "source.yaml", "file_extensions": ["ci.yml"] },
         { "scope": "source.yaml", "file_extensions": ["config.yml"] },
         { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
         { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
+        { "scope": "text.html.js", "file_extensions": ["ejs"] },
         { "scope": "text.plain", "file_extensions": ["requirements.txt"] },
         { "scope": "text.plain.uv", "file_extensions": ["requirements.txt"] },
+        { "scope": "text.plain.wwpdb", "file_extensions": ["pdb"] },
     ],
 ```
 

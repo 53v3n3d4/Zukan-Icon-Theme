@@ -32,7 +32,7 @@ $ poetry run build icon-theme --all
 ## Create zukan icon data file
 Create a data file, with all icons data, to be used by plugin.  
 
-File will be created in `icons` folder.  
+File will be created in `icons_data` folder.  
 
 Using argparse commands  
 ```sh
@@ -99,7 +99,7 @@ $ poetry run build concat --all --iconsperrow 6
 ## Generate PNGs
 Generate PNGs file from SVGs.  
 
-Create PNG icons in 3 sizes, Size and suffix details comes from png_details.py.  
+Create PNG icons in 3 sizes. Size and suffix details comes from png_details.py.  
 
 | name | sizes |
 |-----------|------|
