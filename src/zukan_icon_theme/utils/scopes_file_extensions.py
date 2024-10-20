@@ -18,6 +18,8 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.c++', 'file_extensions': ['h']},  # cuda.yaml
     {'scope': 'source.css', 'file_extensions': ['css']},  # django.yaml
     {'scope': 'source.css.postcss.sugarss', 'file_extensions': ['sss']},  # postcss.yaml
+    {'scope': 'source.clojure', 'file_extensions': ['edn']},  # clojure.yaml
+    {'scope': 'source.clojure.clojurescript', 'file_extensions': ['cljc']},  # clojurescript.yaml
     {'scope': 'source.elixir', 'file_extensions': ['config.exs']},  # phoenix.yaml
     {'scope': 'source.env', 'file_extensions': ['.env']},  # fastapi.yaml
     {
@@ -72,9 +74,12 @@ SCOPES_FILE_EXTENSIONS = [
 # config.py: fastapi
 # config.toml: pdm
 # config.yml: circleci
+# config.yaml: openfga
 # dependencies.json: packagecontrol
 # Manifest.tom: pkgjl
 # messages.json: sublime
+# model.conf: casbin
+# policy.csv: casbin
 # Project.toml: pkgjl
 # pyproject.toml: python, pdm, pip, poetry, setuptools, tox
 # requirements.txt: pip, uv

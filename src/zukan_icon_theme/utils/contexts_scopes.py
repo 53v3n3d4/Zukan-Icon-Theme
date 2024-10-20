@@ -35,6 +35,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.webidl', 'startsWith': 'IDL ('},
     {'scope': 'source.yaml', 'startsWith': 'YAML ('},
     {'scope': 'text.bibtex', 'startsWith': 'BibTeX ('},
+    {'scope': 'text.csv', 'startsWith': 'CSV ('},
     {'scope': 'text.git.ignore', 'startsWith': 'Git ('},
     {'scope': 'text.html.basic', 'startsWith': 'HTML ('},
     {'scope': 'text.html.markdown', 'startsWith': 'Markdown ('},

@@ -24,3 +24,5 @@ syntax:
       main:
         - include: scope:source.js
           apply_prototype: true
+
+# Package Svelte

@@ -2,7 +2,7 @@
 ---
 name: Clojure
 preferences:
-  scope: source.clojure
+  scope: source.clojure, source.edn
   settings:
     icon: clojure
 syntax:
@@ -15,7 +15,16 @@ syntax:
       - edn
     contexts:
       main: []
+  - name: EDN (Tutkain)
+    scope: source.edn
+    hidden: true
+    file_extensions:
+      - edn
+    contexts:
+      main: []
 
 # ST Package
 # cljc is on source.clojure and source.clojure.clojurescript. But icon clojurescript
 # is applied by ST.
+
+# Package Tutkain: source.edn. It also has source.clojure.

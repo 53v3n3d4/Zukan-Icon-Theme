@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Casbin
+preferences:
+  scope: source.ini.casbin, text.csv.casbin
+  settings:
+    icon: casbin
+syntax:
+  - name: INI (Casbin)
+    scope: source.ini.casbin
+    hidden: true
+    file_extensions:
+      - model.conf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true
+  - name: CSV (Casbin)
+    scope: text.csv.casbin
+    hidden: true
+    file_extensions:
+      - policy.csv
+    contexts:
+      main:
+        - include: scope:text.csv
+          apply_prototype: true
