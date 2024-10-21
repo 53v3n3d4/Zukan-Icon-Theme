@@ -55,7 +55,6 @@ Or, if installed via clone repo, duplicate a folder with 5 files or more,
 seems to force reload.
 ```
 
-
 ### Theme or another icon package is overriding Zukan icons
 
 If a theme has its own tmPreferences and sublime-syntax files, Zukan icons will usually complete with icons that do not exist.  

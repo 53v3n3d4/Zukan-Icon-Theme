@@ -47,7 +47,7 @@ It is the same, if go to menu `Sublime Text > Settings > Package Settings > Zuka
 
 ### Change Icon
 
-It changes icon being used, a few icons has more than one option. E.g. Angular, C#, Composer, DirectX, Go, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, SolidJS, Sublime Text.  
+It changes icon being used, a few icons has more than one option. E.g. Angular, C#, Cert, Composer, DirectX, Go, Image, LLVM, Node.js, PHP, Python, Ruff, Rust, SolidJS, Sublime Text.  
 
 See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md).  
 
@@ -63,6 +63,7 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
 ```json
     "change_icon": {
         "Angular": "angular-1",
+        "Cert. Authentication": "cert-1",
         "Composer": "composer-1",
         "Composer": "composer-2",
         "C#": "csharp-1",
@@ -136,8 +137,10 @@ Required parameters are: scope and file extensions.
         { "scope": "feature.behat", "file_extensions": ["feature"] },
         { "scope": "source.bazel", "file_extensions": ["BUILD", "WORKSPACE"] },
         { "scope": "source.clojure", "file_extensions": ["cljc"] },
+        { "scope": "source.clojure.clojure-common", "file_extensions": ["cljc"] },
         { "scope": "source.cmakeeditor", "file_extensions": ["CMakeLists.txt"] },
         { "scope": "source.cuda-c++", "file_extensions": ["h"] },
+        { "scope": "source.edn", "file_extensions": ["edn"] },
         { "scope": "source.elixir", "file_extensions": ["dev.exs", "prod.exs", "prod.secret.exs", "test.exs"] },
         { "scope": "source.elixir.phoenix", "file_extensions": ["config.exs"] },
         { "scope": "source.env.fastapi", "file_extensions": [".env"] },
@@ -152,10 +155,12 @@ Required parameters are: scope and file extensions.
         { "scope": "source.json", "file_extensions": ["unittesting.json"] },
         { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
         { "scope": "source.python", "file_extensions": ["config.py"] },
+        { "scope": "source.rspec", "file_extensions": ["rb"] },
         { "scope": "source.sss", "file_extensions": ["sss"] },
         { "scope": "source.starlark", "file_extensions": ["BUILD", "WORKSPACE", "bazel", "bzl"] },
         { "scope": "source.toml", "file_extensions": ["book.toml"] },
-        { "scope": "source.toml", "file_extensions": ["config.toml"] },
+        { "scope": "source.toml.pdm", "file_extensions": ["config.toml"] },
+        { "scope": "source.toml.tidb", "file_extensions": ["config.toml"] },
         { "scope": "source.toml", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.pdm", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.pip", "file_extensions": ["pyproject.toml"] },
@@ -169,6 +174,7 @@ Required parameters are: scope and file extensions.
         { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
         { "scope": "source.yaml", "file_extensions": ["ci.yml"] },
         { "scope": "source.yaml", "file_extensions": ["config.yml"] },
+        { "scope": "source.yaml", "file_extensions": ["config.yaml"] },
         { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
         { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
         { "scope": "text.html.js", "file_extensions": ["ejs"] },
