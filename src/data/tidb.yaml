@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: TiDB
+preferences:
+  scope: source.toml.tidb
+  settings:
+    icon: tidb
+syntax:
+  - name: TOML (TiDB)
+    scope: source.toml.tidb
+    hidden: true
+    file_extensions:
+      - config.toml
+      # - error_code.toml
+      - tiflash.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Templ
+preferences:
+  scope: source.go.templ
+  settings:
+    icon: templ
+syntax:
+  - name: Templ
+    scope: source.go.templ
+    hidden: true
+    file_extensions:
+      - templ
+    contexts:
+      main:
+      - include: scope:source.go
+        apply_prototype: true
+
+# Package Templ (go)

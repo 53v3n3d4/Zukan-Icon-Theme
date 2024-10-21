@@ -2,17 +2,10 @@
 ---
 name: ClojureScript
 preferences:
-  scope: source.clojure.clojurescript, source.clojure.clojure-common
+  scope: source.clojure.clojurescript
   settings:
     icon: clojurescript
 syntax:
-  - name: Clojure Common (Tutkain)
-    scope: source.clojure.clojure-common
-    hidden: true
-    file_extensions:
-      - cljc
-    contexts:
-      main: []
   - name: ClojureScript
     scope: source.clojure.clojurescript
     hidden: true
@@ -28,4 +21,4 @@ syntax:
 # cljc is on source.clojure and source.clojure.clojurescript. But icon clojurescript
 # is applied by ST.
 
-# Package Tutkain: source.clojure.clojure-common. It also has source.clojure.clojurescript.
+# Package Tutkain: it also has source.clojure.clojurescript.

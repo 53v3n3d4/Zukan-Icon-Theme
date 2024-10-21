@@ -3,9 +3,9 @@
 ## [0.3.3] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: Airflow, Arrow, Casbin, Debug, EJS, Lunaria, Open Policy Agent, OpenFGA, Parquet, Protein Data Bank, SolidJS, SSH
+- Add icon-theme: Airflow, Arrow, Casbin, Debug, EJS, Lunaria, Open Policy Agent, OpenFGA, Parquet, Protein Data Bank, Templ, TiDB, SolidJS, SSH
 - Add icon option: Cert
-- Add sublime-syntax: Angular, Cert, Clojure, ClojureScript, JS, Python
+- Add sublime-syntax: Angular, Cert, Clojure, JS, Python
 - Change icon: Deno, Renovate
 - Change sublime-syntax: Nuxt, Sublime Text
 - Rename sublime-syntax file name: Cert

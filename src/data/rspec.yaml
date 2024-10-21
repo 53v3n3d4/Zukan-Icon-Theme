@@ -2,7 +2,7 @@
 ---
 name: RSpec
 preferences:
-  scope: source.ruby.rspecfile
+  scope: source.ruby.rspec, source.ruby.rspecfile
   settings:
     icon: rspec
 syntax:
@@ -16,5 +16,12 @@ syntax:
       main:
         - include: scope:source.ruby
           apply_prototype: true
+  - name: RSpec
+    scope: source.ruby.rspec
+    hidden: true
+    file_extensions:
+      - rb
+    contexts:
+      main: []
 
 # Package RSpec uses source.ruby.rspec

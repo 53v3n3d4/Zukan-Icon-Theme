@@ -34,8 +34,10 @@ SCOPES_FILE_EXTENSIONS = [
         'file_extensions': ['pubspec.lock', 'pubspec.yaml'],
     },  # flutter.ymal
     {'scope': 'source.python.fastapi', 'file_extensions': ['config.py']},
+    {'scope': 'source.ruby', 'file_extensions': ['rb']},  # rspec.yaml
     {'scope': 'source.shader', 'file_extensions': ['cginc', 'shader']},  # unity.yaml
     {'scope': 'source.tex', 'file_extensions': ['cls']},  # tex.yaml
+    {'scope': 'source.toml', 'file_extensions': ['config.toml']},
     {'scope': 'source.toml.python', 'file_extensions': ['pyproject.toml']},
     # poetry, pip, tox, pdm
     {'scope': 'source.ts', 'file_extensions': ['app.config.ts']},
@@ -72,7 +74,7 @@ SCOPES_FILE_EXTENSIONS = [
 # ci.yml: github
 # config.exs: phoenix
 # config.py: fastapi
-# config.toml: pdm
+# config.toml: pdm, tidb
 # config.yml: circleci
 # config.yaml: openfga
 # dependencies.json: packagecontrol
