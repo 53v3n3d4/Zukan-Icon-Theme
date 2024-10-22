@@ -1,13 +1,14 @@
-# Ignored directories that will not be add on releases.
+# Ignored directories that will not be added on releases.
 assets/       export-ignore
 docs/         export-ignore
 examples/     export-ignore
+scripts/      export-ignore
 src/build/    export-ignore
 src/data/     export-ignore
 src/icons/    export-ignore
 tests/        export-ignore
 
-# Ignored files that will not be add on releases.
+# Ignored files that will not be added on releases.
 .coveragerc         export-ignore
 pytest.ini          export-ignore
 ruff.toml           export-ignore
