@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.3.3] - 2024
+## [0.3.3] - 2024-10-22
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Airflow, Arrow, Casbin, Debug, EJS, Lunaria, Open Policy Agent, OpenFGA, Parquet, Protein Data Bank, Templ, TiDB, SolidJS, SSH

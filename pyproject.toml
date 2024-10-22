@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "Zukan Icon Theme"
-version = "0.3.2"
+version = "0.3.3"
 description = "Icon theme for Sublime Text"
 license = "MIT"
 authors = ["Seven Eda <53v3n3d4@gmail.com>"]
