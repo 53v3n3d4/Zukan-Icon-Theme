@@ -2,7 +2,7 @@
 ---
 name: Tailwind CSS
 preferences:
-  scope: source.js.tailwindcss
+  scope: source.js.tailwindcss, source.ts.tailwindcss
   settings:
     icon: tailwindcss
 syntax:
@@ -14,4 +14,13 @@ syntax:
     contexts:
       main:
         - include: scope:source.js
+          apply_prototype: true
+  - name: TypeScript (Tailwind CSS)
+    scope: source.ts.tailwindcss
+    hidden: true
+    file_extensions:
+      - tailwind.config.ts
+    contexts:
+      main:
+        - include: scope:source.ts
           apply_prototype: true
