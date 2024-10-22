@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.3.4] - 2024-10-22
+- Fix update version in settings
+
 ## [0.3.3] - 2024-10-22
 
 ### Icons, syntaxes and preferences 👽
