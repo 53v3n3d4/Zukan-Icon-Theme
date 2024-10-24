@@ -1,6 +1,8 @@
 # Changelog
 
 ## [0.3.5] - 2024
+
+### Icons, syntaxes and preferences 👽
 - Add sublime-syntax: Rebar3, TailwindCSS
 
 ## [0.3.4] - 2024-10-22

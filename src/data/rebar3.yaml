@@ -2,10 +2,17 @@
 ---
 name: Rebar3
 preferences:
-  scope: source.ini.rebar3, text.plain.rebar3
+  scope: binary.rebar3, source.ini.rebar3, text.plain.rebar3
   settings:
     icon: rebar3
 syntax:
+  - name: Binary (Rebar3)
+    scope: binary.rebar3
+    hidden: true
+    file_extensions:
+     - rebar3
+    contexts:
+      main: []
   - name: INI (Rebar3)
     scope: source.ini.rebar3
     hidden: true

@@ -18,7 +18,7 @@ NORMAL=$(tput sgr0)
 RED=$(tput setaf 203) #1
 YELLOW=$(tput setaf 228) #3
 
-# Code adapt from 
+# Code adapted from 
 # https://www.unix.com/shell-programming-and-scripting/
 # 186383-how-compare-version-values-shell-script.html
 # @(#) user4	Compare version numbers of form a.b.c.
@@ -26,7 +26,10 @@ YELLOW=$(tput setaf 228) #3
 # https://www.unix.com/unix-dummies-questions-answers/
 # 93739-comparing-version-numbers.html#post302269675
 
-pe() { for _i;do printf "%s" "$_i";done; printf "\n"; }
+pe() {
+  for _i; do printf "%s" "$_i"; done
+  printf "\n"
+}
 
 # compare version numbers
 # usage: vercmp <versionnr1> <versionnr2>
@@ -49,9 +52,9 @@ vercmp()
 
   ret=$(( (a1-a2)*1000000+(b1-b2)*1000+c1-c2 ))
 
-  if [ $ret -lt 0 ] ; then
+  if [ $ret -lt 0 ]; then
     v=-1
-  elif [ $ret -eq 0 ] ; then
+  elif [ $ret -eq 0 ]; then
     v=0
   else
     v=1
@@ -70,11 +73,10 @@ pe
 v=$( vercmp $version_in_settings $version_in_pyproject )
 v1=$( vercmp $version_in_pyproject $version_in_changelog )
 
-if [[ $v -eq 0 && $v1 -eq 0 ]]
-then
-pe "${CYAN}Versions are equal${NORMAL}"
+if [[ $v -eq 0 && $v1 -eq 0 ]]; then
+  pe "${CYAN}Versions are equal${NORMAL}"
 else
-pe "${RED}Versions are not equal${NORMAL}"
+  pe "${RED}Versions are not equal${NORMAL}"
 fi
 pe
 
