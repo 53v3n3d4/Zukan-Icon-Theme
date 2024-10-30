@@ -2,10 +2,17 @@
 ---
 name: Erlang
 preferences:
-  scope: source.erlang
+  scope: binary.erlang, source.erlang
   settings:
     icon: erlang
 syntax:
+  - name: Binary (Erlang)
+    scope: binary.erlang
+    hidden: true
+    file_extensions:
+     - beam
+    contexts:
+      main: []
   - name: Erlang
     scope: source.erlang
     hidden: true

@@ -3,7 +3,10 @@
 ## [0.3.5] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add sublime-syntax: Rebar3, TailwindCSS
+- Add icon-theme: Fly.io
+- Add sublime-syntax: Erlang, Rebar3, Sass, TailwindCSS
+- Change icon: Docker, EJS
+- Remove icon-theme: SCSS
 
 ## [0.3.4] - 2024-10-22
 - Fix update version in settings

@@ -2,7 +2,7 @@
 ---
 name: Sass
 preferences:
-  scope: source.sass
+  scope: source.sass, source.scss
   settings:
     icon: sass
 syntax:
@@ -13,5 +13,14 @@ syntax:
       - sass
     contexts:
       main: []
+  - name: SCSS
+    scope: source.scss
+    hidden: true
+    file_extensions:
+      - scss
+    contexts:
+      main:
+        - include: scope:source.css
+          apply_prototype: true
 
 # Package Sass

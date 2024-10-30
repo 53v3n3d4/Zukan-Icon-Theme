@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Fly.io
+preferences:
+  scope: source.toml.flyio
+  settings:
+    icon: flyio
+syntax:
+  - name: TOML (Fly io)
+    scope: source.toml.flyio
+    hidden: true
+    file_extensions:
+      - fly.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
