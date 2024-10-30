@@ -8,21 +8,7 @@ import string
 from collections.abc import Set
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import print_message
-
-# from src.build.utils.build_dir_paths import (
-#     ICONS_TEST_PATH,
-#     ICONS_TEST_NOT_EXIST_PATH,
-#     ICONS_SVG_PATH,
-# )
 from src.build.utils.svg_common_ids import AFDESIGNER_COMMON_IDS_NAMES
-# from src.build.utils.svg_unused_list import UNUSED_LIST
-
-# file_test = os.path.join(ICONS_SVG_PATH, 'rvm.svg')
-# file_test = os.path.join(ICONS_SVG_PATH, 'cassandra.svg')
-
-# file_test = os.path.join(ICONS_TEST_PATH, 'file_type_sql.svg')
-# file_test = os.path.join(ICONS_TEST_PATH, 'file_type_sql_npt_found.svg')
-# file_test = os.path.join(TEST_PATH, 'file_type_afdesign.svg')
 
 logger = logging.getLogger(__name__)
 
@@ -226,11 +212,3 @@ def _replace_line(file_info: str, line: str) -> str:
     str -- text with line removed if found.
     """
     return file_info.replace(line, '')
-
-
-# CleanSVG.clean_svg(file_test, UNUSED_LIST)
-# print(file_test)
-
-# CleanSVG.clean_all_svgs(ICONS_TEST_NOT_EXIST_PATH, UNUSED_LIST)
-# CleanSVG.clean_all_svgs(ICONS_TEST_PATH, UNUSED_LIST)
-# print(all_svgs)

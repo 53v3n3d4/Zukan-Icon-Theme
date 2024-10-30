@@ -11,14 +11,6 @@ from src.build.helpers.print_message import (
 )
 from src.build.helpers.read_write_data import read_yaml_data
 from src.build.helpers.special_chars import special_chars
-
-# from src.build.utils.build_dir_paths import (
-#     DATA_PATH,
-#     ICONS_PNG_TEST_PATH,
-#     ICONS_TEST_PATH,
-#     ICONS_TEST_NOT_EXIST_PATH,
-#     ICONS_DATA_PRIMARY_ICONS_PATH,
-# )
 from src.build.utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,
@@ -27,16 +19,6 @@ from src.build.utils.png_details import png_details
 from src.build.utils.primary_icons import (
     PRIMARY_ICONS,
 )
-
-# ICONS_TEST_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), '../donotexist')
-
-# file_test = os.path.join(DATA_PATH, 'test_no_icon_file.yaml')
-# file_test = os.path.join(ICONS_TEST_PATH, 'file_type_afdesign.svg')
-# file_test = os.path.join(DATA_PATH, 'c++.yaml')
-# file_test = os.path.join(DATA_PATH, 'afdesign.yaml')
-# file_test = os.path.join(DATA_PATH, 'test_js.yaml')
-# file_test = os.path.join(DATA_PATH, 'c#.yaml')
-# file_test = os.path.join(DATA_PATH, 'afdesign_not_exist.yaml')
 
 logger = logging.getLogger(__name__)
 
@@ -221,9 +203,3 @@ class IconPNG:
                 )
             )
         # return data
-
-
-# IconPNG.svg_to_png(file_test, ICONS_TEST_NOT_EXIST_PATH, ICONS_PNG_TEST_PATH)
-# IconPNG.svg_to_png(file_test, ICONS_TEST_PATH, ICONS_PNG_TEST_PATH)
-# IconPNG.svg_to_png_all(DATA_PATH, ICONS_TEST_NOT_EXIST_PATH, ICONS_PNG_TEST_PATH)
-# IconPNG.svg_to_png_all(DATA_PATH, ICONS_TEST_PATH, ICONS_PNG_TEST_PATH)

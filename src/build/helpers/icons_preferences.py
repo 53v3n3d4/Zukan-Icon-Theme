@@ -10,20 +10,7 @@ from src.build.helpers.print_message import (
     print_remove_tag,
 )
 from src.build.helpers.read_write_data import dump_plist_data, read_yaml_data
-
-# from src.build.utils.build_dir_paths import (
-#     DATA_PATH,
-#     ICONS_TEST_NOT_EXIST_PATH,
-#     PREFERENCES_TEST_PATH,
-# )
 from src.build.utils.file_extensions import TMPREFERENCES_EXTENSION
-# from src.build.utils.plist_unused_line import UNUSED_LINE
-
-# file_test = os.path.join(DATA_PATH, 'test_empty_file.yaml')
-# file_test = os.path.join(DATA_PATH, 'afpub.yaml')
-# file_test = os.path.join(DATA_PATH, 'test_no_icon_file.yaml')
-# file_test = os.path.join(DATA_PATH, 'afpub_not_exist.yaml')
-# file_test = os.path.join(DATA_PATH, 'afpub_not_yaml.toml')
 
 logger = logging.getLogger(__name__)
 
@@ -130,7 +117,3 @@ class Preference:
                 os.strerror(errno.EACCES),
                 dir_icon_data,
             )
-
-
-# Preference.preferences(file_test, PREFERENCES_TEST_PATH)
-# Preference.preferences_all(DATA_PATH, PREFERENCES_TEST_PATH)

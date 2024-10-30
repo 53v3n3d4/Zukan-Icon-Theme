@@ -5,14 +5,7 @@ import os
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import dump_yaml_data, read_yaml_data
-
-# from src.build.utils.build_dir_paths import DATA_PATH, ICONS_SYNTAXES_TEST_PATH
 from src.build.utils.file_extensions import SUBLIME_SYNTAX_EXTENSION
-
-# file_test = os.path.join(DATA_PATH, 'test_empty_file.yaml')
-# file_test = os.path.join(DATA_PATH, 'afpub.yaml')
-# file_test = os.path.join(DATA_PATH, 'css.yaml') # does not have syntax
-# file_test = os.path.join(DATA_PATH, 'afpub_not_exist.yaml')
 
 logger = logging.getLogger(__name__)
 
@@ -102,7 +95,3 @@ class IconSyntax:
                 os.strerror(errno.EACCES),
                 dir_icon_data,
             )
-
-
-# IconSyntax.icon_syntax(file_test, ICONS_SYNTAXES_TEST_PATH)
-# IconSyntax.icons_syntaxes(DATA_PATH, ICONS_SYNTAXES_TEST_PATH)
