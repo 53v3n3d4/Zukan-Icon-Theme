@@ -26,7 +26,7 @@ Plugin use two templates. One with, and another without, attributes for hover an
 
 ## Preferefences
 
-Icon preferences files register the scopes and PNG for each icon. This is also important, for this package, to allow not show icons in a specific theme and future icons customizations.  
+Icon preferences files register the scopes and PNG for each icon. This is also important, for this package, to allow not show icons in a specific theme and icons customizations.  
 
 ## Syntaxes
 
