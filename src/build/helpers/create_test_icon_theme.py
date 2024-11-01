@@ -5,10 +5,6 @@ import os
 from src.build.helpers.color import Color
 from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import read_yaml_data
-# from src.build.utils.build_dir_paths import DATA_PATH, ICON_THEME_TEST_PATH
-
-# file_test = os.path.join(DATA_PATH, 'afpub.yaml')
-# file_test = os.path.join(DATA_PATH, 'nodejs.yaml')
 
 logger = logging.getLogger(__name__)
 
@@ -97,7 +93,3 @@ class TestIconTheme:
                 os.strerror(errno.EACCES),
                 dir_icon_data,
             )
-
-
-# TestIconTheme.create_icon_file(file_test, ICON_THEME_TEST_PATH)
-# TestIconTheme.create_icons_files(DATA_PATH, ICON_THEME_TEST_PATH)

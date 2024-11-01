@@ -38,8 +38,9 @@ PKG_ZUKAN_ICON_THEME_FOLDER = os.path.join('Packages', PACKAGE_NAME)
 
 # Zukan dir paths
 
-PACKAGES_PATH = filepath('../../../../../Packages')
+LIB_RUAMEL_YAML_PATH = filepath('../../../../../Lib/python38/ruamel')
 INSTALLED_PACKAGES_PATH = filepath('../../../../../Installed Packages')
+PACKAGES_PATH = filepath('../../../../../Packages')
 
 # ZUKAN_PKG_ICONS_PATH = os.path.join(sublime.packages_path(), PACKAGE_NAME, 'icons')
 ZUKAN_PKG_ICONS_PATH = os.path.join(PACKAGES_PATH, PACKAGE_NAME, 'icons')

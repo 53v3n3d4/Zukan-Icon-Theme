@@ -9,6 +9,7 @@ from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..helpers.clean_settings import clean_comments_settings
 from ..helpers.load_save_settings import get_settings
+from ..helpers.package_size import file_size, get_size
 from ..helpers.read_write_data import dump_pickle_data, read_pickle_data
 from ..helpers.search_themes import (
     filter_resources_themes,
@@ -27,10 +28,13 @@ from ..utils.file_settings import (
     ZUKAN_VERSION,
 )
 from ..utils.zukan_paths import (
+    LIB_RUAMEL_YAML_PATH,
     ZUKAN_CURRENT_SETTINGS_FILE,
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
+    ZUKAN_INSTALLED_PKG_PATH,
+    ZUKAN_PKG_PATH,
     ZUKAN_PKG_SUBLIME_PATH,
     ZUKAN_USER_SUBLIME_SETTINGS,
     ZUKAN_VERSION_FILE,
@@ -138,6 +142,14 @@ class SettingsEvent:
 
         if log_level == 'DEBUG':
             print('\n==== Zukan Icon Theme settings ====')
+
+            installation_size = file_size(
+                get_size([ZUKAN_PKG_PATH, ZUKAN_INSTALLED_PKG_PATH])
+            )
+            print('Install size: {i}'.format(i=installation_size))
+
+            ruamel_size = file_size(get_size([LIB_RUAMEL_YAML_PATH]))
+            print('Ruamel size: {r}'.format(r=ruamel_size))
 
             for s in ZUKAN_SETTINGS_OPTIONS:
                 setting_option = get_settings(ZUKAN_SETTINGS, s)

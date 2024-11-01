@@ -19,7 +19,10 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.css', 'file_extensions': ['css']},  # django.yaml
     {'scope': 'source.css.postcss.sugarss', 'file_extensions': ['sss']},  # postcss.yaml
     {'scope': 'source.clojure', 'file_extensions': ['edn']},  # clojure.yaml
-    {'scope': 'source.clojure.clojurescript', 'file_extensions': ['cljc']},  # clojurescript.yaml
+    {
+        'scope': 'source.clojure.clojurescript',
+        'file_extensions': ['cljc'],
+    },  # clojurescript.yaml
     {'scope': 'source.elixir', 'file_extensions': ['config.exs']},  # phoenix.yaml
     {'scope': 'source.env', 'file_extensions': ['.env']},  # fastapi.yaml
     {
@@ -83,7 +86,7 @@ SCOPES_FILE_EXTENSIONS = [
 # model.conf: casbin
 # policy.csv: casbin
 # Project.toml: pkgjl
-# pyproject.toml: python, pdm, pip, poetry, setuptools, tox
+# pyproject.toml: python, hatch, pdm, pip, poetry, setuptools, tox
 # requirements.txt: pip, uv
 # setup.cfg: python, setuptools, tox
 # unittestings.json: sublime
