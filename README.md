@@ -35,7 +35,7 @@ To install manually:
 
 > You may see a console message, regarding `ruamel-yaml` dependecy, when first install this package. ST may install it and inform that a restart is needed.  
 
-> [`ruamel-yaml`](https://packagecontrol.github.io) is being used to create icons sublime-syntaxes files in `icons-syntaxes` folder.  
+> [`ruamel-yaml`](https://pypi.org/project/ruamel.yaml/) is being used to create icons sublime-syntaxes files in `icons-syntaxes` folder.  
 
 If new install, the default is to create all icons files and make them show on all themes installed.  
 
