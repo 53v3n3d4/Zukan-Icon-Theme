@@ -3,10 +3,14 @@
 ## [0.3.5] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: Fly.io
-- Add sublime-syntax: Erlang, Rebar3, Sass, TailwindCSS
+- Add icon-theme: Fly.io, Hatch
+- Add sublime-syntax: Angular, Erlang, Rebar3, Sass, TailwindCSS
 - Change icon: Docker, EJS
+- Change sublime-syntax: Conda
 - Remove icon-theme: SCSS
+
+### Plugin 🕹️
+- Add install size to get_user_zukan_preferences (Debug)
 
 ## [0.3.4] - 2024-10-22
 - Fix update version in settings

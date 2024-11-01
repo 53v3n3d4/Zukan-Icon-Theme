@@ -113,6 +113,7 @@
     //    { "scope": "source.toml.pdm", "file_extensions": ["config.toml"] },
     //    { "scope": "source.toml.tidb", "file_extensions": ["config.toml"] },
     //    { "scope": "source.toml", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "source.toml.hatch", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.pdm", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.pip", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.poetry", "file_extensions": ["pyproject.toml"] },

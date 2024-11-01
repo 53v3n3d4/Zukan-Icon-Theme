@@ -4,7 +4,7 @@ name: Angular
 icons:
   - angular-1
 preferences:
-  scope: source.json.angularjs, source.ts.angularjs
+  scope: source.json.angularjs, source.ts.angularjs, text.html.ngx
   settings:
     icon: angular
 syntax:
@@ -17,6 +17,15 @@ syntax:
       main:
       - include: scope:source.json
         apply_prototype: true
+  - name: Ngx HTML
+    scope: text.html.ngx
+    hidden: true
+    file_extensions:
+      - component.html
+    contexts:
+      main:
+        - include: scope:text.html.basic
+          apply_prototype: true
   - name: TypeScript (Angular)
     scope: source.ts.angularjs
     hidden: true
@@ -27,3 +36,5 @@ syntax:
       main:
         - include: scope:source.ts
           apply_prototype: true
+
+# Package Ngx HTML

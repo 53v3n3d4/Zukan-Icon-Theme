@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Hatch
+preferences:
+  scope: source.toml.hatch
+  settings:
+    icon: hatch
+syntax:
+  - name: TOML (Hatch)
+    scope: source.toml.hatch
+    hidden: true
+    file_extensions:
+      - hatch.toml
+      - pyproject.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
