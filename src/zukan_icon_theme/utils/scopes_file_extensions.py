@@ -7,22 +7,18 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'source.arduino', 'file_extensions': ['ino', 'pde']},  # arduino.yaml
     {'scope': 'source.asp', 'file_extensions': ['vbs']},  # asp.yaml
     {'scope': 'source.bazel', 'file_extensions': ['bazel', 'bzl']},  # bazel.yaml
+    {'scope': 'source.c++', 'file_extensions': ['h']},  # cuda.yaml
+    {'scope': 'source.css', 'file_extensions': ['css']},  # django.yaml
+    {'scope': 'source.css.postcss.sugarss', 'file_extensions': ['sss']},  # postcss.yaml
     {
         'scope': 'source.clojure.clojurescript',
         'file_extensions': ['cljc'],
     },  # clojure.yaml
+    {'scope': 'source.clojure', 'file_extensions': ['edn']},  # clojure.yaml
     {
         'scope': 'source.cmake',
         'file_extensions': ['CMakeLists.txt'],
     },  # cmake.yaml
-    {'scope': 'source.c++', 'file_extensions': ['h']},  # cuda.yaml
-    {'scope': 'source.css', 'file_extensions': ['css']},  # django.yaml
-    {'scope': 'source.css.postcss.sugarss', 'file_extensions': ['sss']},  # postcss.yaml
-    {'scope': 'source.clojure', 'file_extensions': ['edn']},  # clojure.yaml
-    {
-        'scope': 'source.clojure.clojurescript',
-        'file_extensions': ['cljc'],
-    },  # clojurescript.yaml
     {'scope': 'source.elixir', 'file_extensions': ['config.exs']},  # phoenix.yaml
     {'scope': 'source.env', 'file_extensions': ['.env']},  # fastapi.yaml
     {
@@ -45,6 +41,7 @@ SCOPES_FILE_EXTENSIONS = [
     # poetry, pip, tox, pdm
     {'scope': 'source.ts', 'file_extensions': ['app.config.ts']},
     # angular.yaml, nuxt.yaml, solidjs.yaml
+    {'scope': 'source.yaml', 'file_extensions': ['config.yaml']},
     {'scope': 'text.ejs.percentsign', 'file_extensions': ['ejs']},  # ejs.yaml
     {'scope': 'text.gherkin.feature', 'file_extensions': ['feature']},  # behat.yaml
     {'scope': 'text.html.basic', 'file_extensions': ['html']},  # django.yaml
@@ -78,8 +75,9 @@ SCOPES_FILE_EXTENSIONS = [
 # config.exs: phoenix
 # config.py: fastapi
 # config.toml: pdm, tidb
+# config.xml: clickhouse
 # config.yml: circleci
-# config.yaml: openfga
+# config.yaml: clickhouse, openfga
 # dependencies.json: packagecontrol
 # Manifest.tom: pkgjl
 # messages.json: sublime

@@ -1,12 +1,13 @@
 # Changelog
 
 ## [0.3.5] - 2024
+- Add tag `database`
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: Fly.io, Hatch
+- Add icon-theme: ClickHouse, Fly.io, Hatch
 - Add sublime-syntax: Angular, Erlang, Rebar3, Sass, TailwindCSS
 - Change icon: Docker, EJS
-- Change sublime-syntax: Conda
+- Change sublime-syntax: Cassandra, Conda, EdgeDB, MySQL, PLSQL, PostgreSQL, Redis, SQL, SQLAlchemy, SQLite, TiDB, Yugabyte
 - Remove icon-theme: SCSS
 
 ### Plugin 🕹️

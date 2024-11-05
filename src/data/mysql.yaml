@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 name: MySQL
+tag: database
 preferences:
   scope: source.ini.mysql, text.plain.mysql
   settings:

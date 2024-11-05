@@ -670,12 +670,8 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
                 if i.get('name') is not None and i.get('name') not in ignored_icon:
                     ignored_icon_list.append(i['name'])
             if ignored_icon_list:
-                primary_tag = ['primary']
-                # icon_list_with_tag = primary_tag + sorted(
-                #     ignored_icon_list, key=lambda x: x.upper()
-                # )
-                # return icon_list_with_tag
-                icon_list_with_tag = primary_tag + ignored_icon_list
+                icon_tag = ["database", "primary"]
+                icon_list_with_tag = icon_tag + ignored_icon_list
                 return sorted(icon_list_with_tag, key=lambda x: x.upper())
 
             else:

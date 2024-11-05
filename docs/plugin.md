@@ -93,6 +93,8 @@ A 'primary' tag is supported and will ignore ST theme essentials icons. Icons wi
 - file_type_markup
 - file_type_source
 
+Tags supported: 'database' and 'primary'.
+
 ### Disable Theme
 
 It inserts a theme in `ignored_theme` setting. Ignored themes are excluded during build.  
@@ -175,8 +177,9 @@ Required parameters are: scope and file extensions.
         { "scope": "source.unity_shader", "file_extensions": ["cginc", "shader"] },
         { "scope": "source.yaml", "file_extensions": ["ci.yml"] },
         { "scope": "source.yaml", "file_extensions": ["config.yml"] },
-        { "scope": "source.yaml", "file_extensions": ["config.yaml"] },
         { "scope": "source.yaml.flutter", "file_extensions": ["pubspec.lock", "pubspec.yaml"] },
+        { "scope": "source.yaml.clickhouse", "file_extensions": ["config.yaml"] },
+        { "scope": "source.yaml.openfga", "file_extensions": ["config.yaml"] },
         { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
         { "scope": "text.html.js", "file_extensions": ["ejs"] },
         { "scope": "text.plain", "file_extensions": ["requirements.txt"] },

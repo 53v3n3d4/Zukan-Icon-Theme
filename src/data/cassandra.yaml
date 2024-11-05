@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 name: Cassandra
+tag: database
 preferences:
   scope: source.cql, source.ini.cassandra, source.yaml.cassandra
   settings:

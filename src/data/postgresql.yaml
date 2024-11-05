@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 name: PostgreSQL
+tag: database
 preferences:
   scope: source.ini.pgsql, source.pgsql
   settings:

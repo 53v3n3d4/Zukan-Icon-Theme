@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 name: SQLAlchemy
+tag: database
 preferences:
   scope: source.ini.alembic
   settings:

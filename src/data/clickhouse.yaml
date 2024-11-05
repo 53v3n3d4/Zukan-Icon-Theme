@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: ClickHouse
+tag: database
+preferences:
+  scope: source.yaml.clickhouse, text.xml.clickhouse
+  settings:
+    icon: clickhouse
+syntax:
+  - name: XML (ClickHouse)
+    scope: text.xml.clickhouse
+    hidden: true
+    file_extensions:
+      - config.xml
+    contexts:
+      main:
+        - include: scope:text.xml
+          apply_prototype: true
+  - name: YAML (ClickHouse)
+    scope: source.yaml.clickhouse
+    hidden: true
+    file_extensions:
+      - config.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

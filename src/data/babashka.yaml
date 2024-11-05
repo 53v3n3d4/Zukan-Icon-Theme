@@ -15,5 +15,14 @@ syntax:
       main:
         - include: scope:source.clojure
           apply_prototype: true
+  # - name: Clojure (Sublimed)
+  #   scope: source.clojure
+  #   hidden: true
+  #   file_extensions:
+  #     - bb
+  #   contexts:
+  #     main: []
 
 # Package Tutkain
+# Package Clojure Sublimed use source.clojure and seems ST Package clojure
+# syntax read over Clojure sublimed.

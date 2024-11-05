@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 name: PLSQL
+tag: database
 preferences:
   scope: source.plsql.oracle
   settings:

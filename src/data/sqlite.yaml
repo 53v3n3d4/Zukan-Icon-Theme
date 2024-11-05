@@ -1,6 +1,7 @@
 %YAML 1.2
 ---
 name: SQLite
+tag: database
 preferences:
   scope: source.sqlite
   settings:
