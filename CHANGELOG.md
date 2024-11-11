@@ -1,17 +1,17 @@
 # Changelog
 
 ## [0.3.5] - 2024
-- Add tag `database`
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: ClickHouse, Fly.io, Hatch
 - Add sublime-syntax: Angular, Erlang, Rebar3, Sass, TailwindCSS
-- Change icon: Docker, EJS
+- Change icon: Docker, EJS, Less
 - Change sublime-syntax: Cassandra, Conda, EdgeDB, MySQL, PLSQL, PostgreSQL, Redis, SQL, SQLAlchemy, SQLite, TiDB, Yugabyte
 - Remove icon-theme: SCSS
 
 ### Plugin 🕹️
 - Add install size to get_user_zukan_preferences (Debug)
+- Add tag `database`
 
 ## [0.3.4] - 2024-10-22
 - Fix update version in settings
