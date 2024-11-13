@@ -3,7 +3,7 @@
 ## [0.3.5] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: ClickHouse, Fly.io, Hatch
+- Add icon-theme: ClickHouse, Fly.io, Hatch, MDsveX
 - Add sublime-syntax: Angular, Erlang, Rebar3, Sass, TailwindCSS
 - Change icon: Docker, EJS, Less
 - Change sublime-syntax: Cassandra, Conda, EdgeDB, MySQL, PLSQL, PostgreSQL, Redis, SQL, SQLAlchemy, SQLite, TiDB, Yugabyte

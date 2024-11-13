@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: MDsveX
+preferences:
+  scope: source.js.mdsvex, text.html.markdown.mdsvex
+  settings:
+    icon: mdsvex
+syntax:
+  - name: Markdown (MDsveX)
+    scope: text.html.markdown.mdsvex
+    hidden: true
+    file_extensions:
+      - md
+      - svx
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true
+  - name: JavaScript (MDsveX)
+    scope: source.js.mdsvex
+    hidden: true
+    file_extensions:
+      - mdsvex.config.js
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true
