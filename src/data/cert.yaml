@@ -2,11 +2,13 @@
 ---
 name: Cert. Authentication
 icons:
-  - cert-1
+  - cert-light
+  - cert-1-dark
+  - cert-1-light
 preferences:
   scope: text.authorized_keys, text.certificate
   settings:
-    icon: cert
+    icon: cert-dark
 syntax:
   - name: Text (Certificate Authentication)
     scope: text.certificate

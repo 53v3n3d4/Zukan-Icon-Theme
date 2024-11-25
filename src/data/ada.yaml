@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Ada
+icons:
+  - ada-light
 preferences:
   scope: source.ada
   settings:
-    icon: ada
+    icon: ada-dark
 syntax:
   - name: Ada
     scope: source.ada
@@ -14,5 +16,14 @@ syntax:
       - ads
     contexts:
       main: []
+  - name: Ada (GNAT Project)
+    scope: source.ada
+    hidden: true
+    file_extensions:
+      - gpr
+    contexts:
+      main:
+        - include: scope:source.ada
+          apply_prototype: true
 
 # Package Ada

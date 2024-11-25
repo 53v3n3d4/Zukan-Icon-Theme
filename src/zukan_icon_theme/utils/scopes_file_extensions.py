@@ -45,6 +45,7 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'text.ejs.percentsign', 'file_extensions': ['ejs']},  # ejs.yaml
     {'scope': 'text.gherkin.feature', 'file_extensions': ['feature']},  # behat.yaml
     {'scope': 'text.html.basic', 'file_extensions': ['html']},  # django.yaml
+    {'scope': 'text.html.markdown', 'file_extensions': ['md']},  # mdsvex.yaml
     {'scope': 'text.plain', 'file_extensions': ['BUILD', 'WORKSPACE']},  # bazel.yaml
     {'scope': 'text.plain.debug', 'file_extensions': ['pdb']},  # wwpdb.yaml
     {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # uv.yaml

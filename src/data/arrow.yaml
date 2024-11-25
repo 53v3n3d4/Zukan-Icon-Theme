@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Arrow
+icons:
+  - arrow-light
 preferences:
   scope: binary.arrow
   settings:
-    icon: arrow
+    icon: arrow-dark
 syntax:
   - name: Binary (Arrow)
     scope: binary.arrow

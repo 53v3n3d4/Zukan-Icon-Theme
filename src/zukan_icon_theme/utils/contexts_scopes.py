@@ -7,6 +7,7 @@ CONTEXTS_MAIN = {'contexts': {'main': []}}
 CONTEXTS_SCOPES = [
     {'scope': 'embedding.php', 'startsWith': 'PHP ('},
     {'scope': 'embedding.php', 'startsWith': 'HTML ('},
+    {'scope': 'source.ada', 'startsWith': 'Ada ('},
     {'scope': 'source.c++', 'startsWith': 'C++ ('},
     {'scope': 'source.css', 'startsWith': 'CSS ('},
     {'scope': 'source.css.php', 'startsWith': 'CSS ('},
@@ -48,10 +49,12 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.css', 'startsWith': 'Less'},
     {'scope': 'source.css', 'startsWith': 'SCSS'},
     {'scope': 'source.ini', 'startsWith': 'EditorConfig'},
+    {'scope': 'source.js', 'startsWith': 'Bicep'},
     {'scope': 'source.js', 'startsWith': 'UnitTest (JavaScript)'},
     {'scope': 'source.jsx', 'startsWith': 'UnitTest (JSX)'},
     {'scope': 'source.ts', 'startsWith': 'UnitTest (TypeScript)'},
     {'scope': 'source.tsx', 'startsWith': 'UnitTest (TSX)'},
+    {'scope': 'text.html.basic', 'startsWith': 'Vue Component'},
     {'scope': 'text.html.basic', 'startsWith': 'XML (SVG)'},
     {'scope': 'text.tex.latex', 'startsWith': 'Literate Haskell'},
 ]

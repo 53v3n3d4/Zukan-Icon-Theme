@@ -2,15 +2,23 @@
 ---
 name: OpenFGA
 preferences:
-  scope: source.yaml.openfga
+  scope: source.yaml.openfga, source.openfga
   settings:
     icon: openfga
 syntax:
+  - name: OpenFGA
+    scope: source.openfga
+    hidden: true
+    file_extensions:
+      - fga
+    contexts:
+      main: []
   - name: YAML (OpenFGA)
     scope: source.yaml.openfga
     hidden: true
     file_extensions:
       - config.yaml
+      - store.fga.yaml
     contexts:
       main:
         - include: scope:source.yaml

@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: AppleScript
+icons:
+  - applescript-light
 preferences:
   scope: source.applescript, source.applescript.binary, source.js.jxa
   settings:
-    icon: applescript
+    icon: applescript-dark
 syntax:
   - name: AppleScript
     scope: source.applescript

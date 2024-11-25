@@ -1,17 +1,20 @@
 # Changelog
 
-## [0.3.5] - 2024
+## [0.4.0] - 2024
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: ClickHouse, Fly.io, Hatch, MDsveX
-- Add sublime-syntax: Angular, Erlang, Rebar3, Sass, TailwindCSS
+- Add icon-theme: Alire, Bicep, Cedar, ClickHouse, Fly.io, Hatch, MDsveX
+- Add sublime-syntax: Ada, Angular, Erlang, OpenFGA, Rebar3, Sass, TailwindCSS
+- Add icon dark and light: Ada, Alire, AppleScript, Archive, Arrow, Audio, Cert, Cert-1
 - Change icon: Docker, EJS, Less
-- Change sublime-syntax: Cassandra, Conda, EdgeDB, MySQL, PLSQL, PostgreSQL, Redis, SQL, SQLAlchemy, SQLite, TiDB, Yugabyte
+- Change sublime-syntax: Cassandra, Conda, EdgeDB, MySQL, PLSQL, PostgreSQL, Redis, SQL, SQLAlchemy, SQLite, TiDB, Vue, Yugabyte
+- Rename sublime-syntax: Vue
 - Remove icon-theme: SCSS
 
 ### Plugin 🕹️
 - Add install size to get_user_zukan_preferences (Debug)
 - Add tag `database`
+- Add prefer_icon setting
 
 ## [0.3.4] - 2024-10-22
 - Fix update version in settings

@@ -6,11 +6,13 @@ preferences:
   settings:
     icon: vue
 syntax:
-  - name: HTML (Vue)
+  - name: Vue Component
     scope: text.html.vue
     hidden: true
     file_extensions:
       - vue
+      - we
+      - wpy
     contexts:
       main:
         - include: scope:text.html.basic

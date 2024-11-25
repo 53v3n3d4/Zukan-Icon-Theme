@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Bicep
+preferences:
+  scope: source.bicep
+  settings:
+    icon: bicep
+syntax:
+  - name: Bicep
+    scope: source.bicep
+    hidden: true
+    file_extensions:
+      - bicep
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true

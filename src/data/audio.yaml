@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Audio
+icons:
+  - audio-light
 preferences:
   scope: binary.audio
   settings:
-    icon: audio
+    icon: audio-dark
 syntax:
   - name: Binary (Audio)
     scope: binary.audio

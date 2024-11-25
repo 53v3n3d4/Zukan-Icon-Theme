@@ -1,0 +1,16 @@
+%YAML 1.2
+---
+name: Cedar
+preferences:
+  scope: source.cedar
+  settings:
+    icon: cedar
+syntax:
+  - name: Cedar
+    scope: source.cedar
+    hidden: true
+    file_extensions:
+      - cedar
+      - cedarschema
+    contexts:
+      main: []
