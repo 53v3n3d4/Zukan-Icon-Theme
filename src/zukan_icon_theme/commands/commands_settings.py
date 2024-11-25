@@ -4,6 +4,7 @@ import os
 import sublime
 import sublime_plugin
 
+from ..lib.icons_themes import ZukanTheme
 from ..helpers.clean_settings import clean_comments_settings
 from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.load_save_settings import get_settings, set_save_settings
@@ -150,7 +151,7 @@ class ChangeFileExtension(sublime_plugin.TextCommand):
                 change_icon_file_extension + file_extensions_list_not_duplicated,
             )
 
-    def input(self, args):
+    def input(self, args: dict):
         if not args.get('change_file_extension_scope'):
             return ChangeFileExtensionScopeInputHandler()
 
@@ -238,7 +239,7 @@ class ChangeIcon(sublime_plugin.TextCommand):
                 )
                 sublime.error_message(dialog_message)
 
-    def input(self, args):
+    def input(self, args: dict):
         if not args.get('change_icon_name'):
             return ChangeIconNameInputHandler()
 
@@ -452,7 +453,7 @@ class CreateCustomIcon(sublime_plugin.TextCommand):
                 complete_list_filtered,
             )
 
-    def input(self, args):
+    def input(self, args: dict):
         if not args.get('create_custom_icon_name'):
             return CreateCustomIconNameInputHandler()
 
@@ -670,7 +671,7 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
                 if i.get('name') is not None and i.get('name') not in ignored_icon:
                     ignored_icon_list.append(i['name'])
             if ignored_icon_list:
-                icon_tag = ["database", "primary"]
+                icon_tag = ['database', 'primary']
                 icon_list_with_tag = icon_tag + ignored_icon_list
                 return sorted(icon_list_with_tag, key=lambda x: x.upper())
 
@@ -837,6 +838,65 @@ class EnableThemeInputHandler(sublime_plugin.ListInputHandler):
             raise TypeError(logger.info('no themes ignored, list is empty.'))
 
 
+class RemovePreferIcon(sublime_plugin.TextCommand):
+    """
+    Sublime command to remove prefer icon.
+    """
+
+    def run(self, edit, select_prefer_icon_theme: str):
+        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+
+        if prefer_icon:
+            if not select_prefer_icon_theme == 'All':
+                if select_prefer_icon_theme in prefer_icon.keys():
+                    icon_dict_updated = {
+                        k: v
+                        for k, v in prefer_icon.items()
+                        if k != select_prefer_icon_theme
+                    }
+                    logger.info('reseting icon %s', select_prefer_icon_theme)
+
+            if select_prefer_icon_theme == 'All':
+                icon_dict_updated = {}
+                logger.info('removing all prefer icons')
+
+            set_save_settings(ZUKAN_SETTINGS, 'prefer_icon', icon_dict_updated)
+
+    def input(self, args: dict):
+        return RemovePreferIconInputHandler()
+
+
+class RemovePreferIconInputHandler(sublime_plugin.ListInputHandler):
+    """
+    List of prefered icons, and return select_prefer_icon_theme to RemovePreferIcon.
+    """
+
+    def name(self) -> str:
+        return 'select_prefer_icon_theme'
+
+    def placeholder(self) -> str:
+        return 'List of prefered icons'
+
+    def list_items(self) -> list:
+        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+        if not isinstance(prefer_icon, dict):
+            logger.warning('prefer_icon option malformed, need to be a dict')
+
+        if prefer_icon:
+            all_option = ['All']
+
+            new_list = all_option + [
+                # 'sublime.ListInputItem' since ST 4095
+                sublime.ListInputItem(text=i[0], value=i[0], annotation=i[1])
+                for i in prefer_icon.items()
+            ]
+
+            return new_list
+
+        else:
+            raise TypeError(logger.info('no prefer icons to remove, list is empty.'))
+
+
 class ResetFileExtension(sublime_plugin.TextCommand):
     """
     Sublime command to reset icon file extension.
@@ -979,3 +1039,71 @@ class ResetIconInputHandler(sublime_plugin.ListInputHandler):
 
         else:
             raise TypeError(logger.info('no icons to reset, list is empty.'))
+
+
+class SelectPreferIcon(sublime_plugin.TextCommand):
+    """
+    Sublime command to prefer icon.
+    """
+
+    def run(self, edit, select_prefer_icon_theme: str, select_prefer_icon_version: str):
+        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+
+        if not isinstance(prefer_icon, dict):
+            logger.warning('prefer_icon option malformed, need to be a dict')
+
+        selected_prefer_icon = {select_prefer_icon_theme: select_prefer_icon_version}
+
+        if select_prefer_icon_theme and select_prefer_icon_version:
+            prefer_icon.update(selected_prefer_icon)
+            set_save_settings(ZUKAN_SETTINGS, 'prefer_icon', prefer_icon)
+
+    def input(self, args: dict):
+        if not args.get('select_prefer_icon_theme'):
+            return SelectPreferIconThemeInputHandler()
+
+        if not args.get('select_prefer_icon_version'):
+            return SelectPreferIconVersionInputHandler()
+
+
+class SelectPreferIconThemeInputHandler(sublime_plugin.ListInputHandler):
+    """
+    Return select_prefer_icon_theme to SelectPreferIcon.
+    """
+
+    def name(self) -> str:
+        return 'select_prefer_icon_theme'
+
+    def placeholder(self) -> str:
+        sublime.status_message('Select theme to prefer icon.')
+        return 'List of created themes'
+
+    def list_items(self) -> list:
+        if ZukanTheme.list_created_icons_themes():
+            installed_themes_list = sorted(ZukanTheme.list_created_icons_themes())
+            return installed_themes_list
+        else:
+            raise TypeError(
+                logger.info('it does not exist any created theme, list is empty')
+            )
+
+    def next_input(self, args):
+        if 'select_prefer_icon_theme' not in args:
+            return SelectPreferIconVersionInputHandler()
+
+
+class SelectPreferIconVersionInputHandler(sublime_plugin.ListInputHandler):
+    """
+    Return select_prefer_icon_version to SelectPreferIcon.
+    """
+
+    def name(self) -> str:
+        return 'select_prefer_icon_version'
+
+    def placeholder(self) -> str:
+        sublime.status_message('Select prefer icon version.')
+        return 'Options: dark and light'
+
+    def list_items(self) -> list:
+        version_opts = ['dark', 'light']
+        return version_opts

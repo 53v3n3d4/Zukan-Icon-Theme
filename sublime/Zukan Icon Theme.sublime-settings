@@ -11,6 +11,21 @@
     // Turn to false, if do not want to display this diablog.
     "zukan_restart_message": true,
 
+    // Only a few icons have a dark and light icon.
+    //
+    // Options: 'dark' and 'light'. Select a dark icon if 
+    // theme has a light background color. And a light 
+    // icon if theme has a dark background color.
+    //
+    // This option overrides 'change_icon'. The 'prefer_icon' 
+    // run after 'change_icon'.
+    //
+    // Example: {
+    //     "Treble Dark.sublime-theme": "light", 
+    //     "Treble Light.sublime-theme": "dark"
+    // }
+    "prefer_icon": {},
+
     // Ignore icon option will exclude icon from building.
     //
     // A list of icons names can be seen in

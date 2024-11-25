@@ -163,6 +163,18 @@ class SettingsEvent:
 
             print('------------------------------------')
 
+    def read_current_settings() -> dict:
+        """
+        Read current settings from zukan options list.
+        """
+        current_settings = {}
+
+        for s in ZUKAN_SETTINGS_OPTIONS:
+            setting_option = get_settings(ZUKAN_SETTINGS, s)
+            current_settings.update({s: setting_option})
+
+        return current_settings
+
     def save_current_settings():
         """
         Save current settings in pkl file to compare when Zukan settings options
@@ -172,11 +184,7 @@ class SettingsEvent:
             # Delete previous pickle file
             os.remove(ZUKAN_CURRENT_SETTINGS_FILE)
 
-        current_settings = {}
-
-        for s in ZUKAN_SETTINGS_OPTIONS:
-            setting_option = get_settings(ZUKAN_SETTINGS, s)
-            current_settings.update({s: setting_option})
+        current_settings = SettingsEvent.read_current_settings()
         dump_pickle_data(current_settings, ZUKAN_CURRENT_SETTINGS_FILE)
 
     def rebuild_icons_files():
@@ -188,17 +196,27 @@ class SettingsEvent:
 
         if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and auto_rebuild_icon is True:
             data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
-            # print(data)
+
             ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
             change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
             change_icon_file_extension = get_settings(
                 ZUKAN_SETTINGS, 'change_icon_file_extension'
             )
             create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
+            prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+            current_settings = SettingsEvent.read_current_settings()
 
             for d in data:
                 # Currently, rebuilding all files, because of manually editing
                 # sublime-settings, it is possible to have multiple entries.
+
+                # When new option settings added, need to include in zukan fike
+                # before compare. Or it will raise key error.
+                for k, v in current_settings.items():
+                    if k not in d:
+                        d.update({k: v})
+
+                    SettingsEvent.save_current_settings()
 
                 # Check if ignored_icon changed
                 if sorted(d['ignored_icon']) != sorted(ignored_icon):
@@ -253,6 +271,17 @@ class SettingsEvent:
                     # using 'delete_custom_icon'. Same as 'reset_icon', but
                     # 'delete_custom_icon' leaves identation messed, and mix commented
                     # entries between othes entries.
+                    clean_comments_settings(ZUKAN_USER_SUBLIME_SETTINGS)
+
+                # Check if prefer_icon changed
+                if sorted(d['prefer_icon']) != sorted(prefer_icon) or any(
+                    [prefer_icon.get(k) != v for k, v in d['prefer_icon'].items()]
+                ):
+                    logger.info('"prefer_icon" changed, rebuilding files...')
+                    ZukanPreference.build_icons_preferences()
+
+                    SettingsEvent.save_current_settings()
+
                     clean_comments_settings(ZUKAN_USER_SUBLIME_SETTINGS)
 
         if auto_rebuild_icon is False:

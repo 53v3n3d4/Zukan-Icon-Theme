@@ -1,7 +1,8 @@
 import os
 import sys
 
-# From A File Icon https://github.com/SublimeText/AFileIcon/blob/master/plugin.py
+# Copied from A File Icon
+# https://github.com/SublimeText/AFileIcon/blob/master/plugin.py
 # Clear module cache to force reloading all modules of this package.
 prefix = __package__ + '.'  # don't clear the base package
 for module_name in [
@@ -32,8 +33,10 @@ from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
     DisableTheme,  # noqa: F401
     EnableIcon,  # noqa: F401
     EnableTheme,  # noqa: F401
+    RemovePreferIcon,  # noqa: F401
     ResetFileExtension,  # noqa: F401
     ResetIcon,  # noqa: F401
+    SelectPreferIcon,  # noqa: F401
 )
 from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
 from .src.zukan_icon_theme.events.settings import SettingsEvent  # noqa: E402

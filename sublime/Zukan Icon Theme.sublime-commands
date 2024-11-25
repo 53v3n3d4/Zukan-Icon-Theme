@@ -19,9 +19,11 @@
     { "caption": "Zukan Icon Theme: Disable Theme", "command": "disable_theme"},
     { "caption": "Zukan Icon Theme: Enable Icon", "command": "enable_icon"},
     { "caption": "Zukan Icon Theme: Enable Theme", "command": "enable_theme"},
+    { "caption": "Zukan Icon Theme: Remove Prefer Icon", "command": "remove_prefer_icon"},
     { "caption": "Zukan Icon Theme: Reset Icon", "command": "reset_icon"},
     {
         "caption": "Zukan Icon Theme: Reset File Extension",
         "command": "reset_file_extension"
-    }
+    },
+    { "caption": "Zukan Icon Theme: Select Prefer Icon", "command": "select_prefer_icon"}
 ]
