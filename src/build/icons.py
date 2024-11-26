@@ -11,6 +11,9 @@ from src.build.helpers.print_message import (
 )
 from src.build.helpers.read_write_data import read_yaml_data
 from src.build.helpers.special_chars import special_chars
+from src.build.utils.build_dir_paths import (
+    ICONS_PNG_PATH,
+)
 from src.build.utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,
@@ -70,21 +73,26 @@ class IconPNG:
                     color_end=f'{ Color.END }',
                 )
                 return data
+
             elif icon_data.endswith('.yaml'):
                 IconPNG.generate_png(
+                    data['name'],
                     data['preferences']['settings']['icon'],
                     icon_data,
                     dir_origin,
                     dir_destiny,
                 )
+
                 # Primary icons
                 if data['name'] in PRIMARY_ICONS:
                     IconPNG.generate_png(
+                        data['name'],
                         data['preferences']['settings']['icon'],
                         icon_data,
                         dir_origin,
                         dir_destiny_primary,
                     )
+
                 # Icons options. I.e. nodejs-1
                 if (
                     any('icons' in d for d in data)
@@ -93,11 +101,13 @@ class IconPNG:
                 ):
                     for i in data['icons']:
                         IconPNG.generate_png(
+                            data['name'],
                             i,
                             icon_data,
                             dir_origin,
                             dir_destiny,
                         )
+
                 # Primary icons options should save to 'icons_data/primary_icons'
                 if (
                     any('icons' in d for d in data)
@@ -106,6 +116,7 @@ class IconPNG:
                 ):
                     for i in data['icons']:
                         IconPNG.generate_png(
+                            data['name'],
                             i,
                             icon_data,
                             dir_origin,
@@ -160,19 +171,41 @@ class IconPNG:
                 dir_icon_data,
             )
 
-    def generate_png(icon_name: str, icon_data: str, dir_origin: str, dir_destiny: str):
+    def generate_png(
+        name: str, icon_name: str, icon_data: str, dir_origin: str, dir_destiny: str
+    ):
+        """
+        Generate PNGs.
+
+        Parameters:
+        name(str) -- data name.
+        icon_name(str) -- icon name.
+        icon_data(str) -- path to data file.
+        dir_origin (str) -- path to svgs files directory.
+        dir_destiny (str) -- path destination of PNGs files.
+        """
         svgfile = f'{ icon_name }' f'{ SVG_EXTENSION }'
+
         # Do not allow PNG file name with certain special chars.
         if special_chars(svgfile):
             print_special_char(
                 os.path.basename(icon_data),
                 icon_name,
             )
-        # print(svgfile)
+
         svgfile_path = os.path.join(dir_origin, svgfile)
-        # print(svgfile_path)
+
+        # Rename Primary icons in 'icons' folder
+        if (
+            name in PRIMARY_ICONS
+            and dir_destiny == ICONS_PNG_PATH
+            and (icon_name.endswith('-dark') or icon_name.endswith('-light'))
+        ):
+            icon_name = icon_name.replace('-dark', '')
+            icon_name = icon_name.replace('-light', '')
+
         pngfile_base = icon_name
-        # print(pngfile_base)
+
         if not os.path.exists(dir_destiny):
             os.makedirs(dir_destiny)
         pngfile_path_base = os.path.join(dir_destiny, pngfile_base)
