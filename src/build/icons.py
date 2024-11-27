@@ -196,13 +196,11 @@ class IconPNG:
         svgfile_path = os.path.join(dir_origin, svgfile)
 
         # Rename Primary icons in 'icons' folder
-        if (
-            name in PRIMARY_ICONS
-            and dir_destiny == ICONS_PNG_PATH
-            and (icon_name.endswith('-dark') or icon_name.endswith('-light'))
-        ):
-            icon_name = icon_name.replace('-dark', '')
-            icon_name = icon_name.replace('-light', '')
+        if name in PRIMARY_ICONS and dir_destiny == ICONS_PNG_PATH:
+            if icon_name.endswith('-dark'):
+                icon_name = icon_name[:-5]
+            if icon_name.endswith('-light'):
+                icon_name = icon_name[:-6]
 
         pngfile_base = icon_name
 

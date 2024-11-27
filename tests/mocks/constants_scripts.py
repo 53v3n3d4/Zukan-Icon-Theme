@@ -274,7 +274,7 @@ COMMANDS_ARGS_PATH_P6 = [
     ),
 ]
 
-COMMANDS_ARGS_PATH_P9 = [
+COMMANDS_ARGS_PATH_P10 = [
     # Command concat
     (
         'src.build.helpers.concat_svgs.ConcatSVG.write_concat_svgs',
@@ -293,6 +293,8 @@ COMMANDS_ARGS_PATH_P9 = [
             TEST_SVG_FILE,
             '--maxheight',
             str(1000),
+            '--prefericon',
+            'dark',
         ],
         DATA_PATH,
         ICONS_SVG_PATH,
@@ -301,6 +303,7 @@ COMMANDS_ARGS_PATH_P9 = [
         40,
         8,
         1000,
+        'dark',
     ),
     (
         'src.build.helpers.concat_svgs.ConcatSVG.write_concat_svgs',
@@ -317,6 +320,8 @@ COMMANDS_ARGS_PATH_P9 = [
             TEST_SVG_FILE,
             '--maxheight',
             str(2000),
+            '--prefericon',
+            'all',
         ],
         DATA_PATH,
         ICONS_SVG_PATH,
@@ -325,5 +330,6 @@ COMMANDS_ARGS_PATH_P9 = [
         30,
         8,
         2000,
+        'all',
     ),
 ]

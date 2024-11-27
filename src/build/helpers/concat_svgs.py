@@ -16,6 +16,9 @@ from src.build.utils.file_extensions import (
 from src.build.utils.svg_element_attributes import (
     SVG_ELEMENTS_ATTRIBUTES_LIST,
 )
+from src.build.utils.prefer_icons import (
+    PREFER_ICONS,
+)
 from xml.etree import ElementTree
 
 
@@ -103,8 +106,8 @@ class ConcatSVG:
 
         Paramenters:
         svg_tag (str) -- 'svg' element tag.
-        sticker_name (str) -- icon name is the key name in data file. Not the
-        icon SVG file name.
+        sticker_name (str) -- key name in data file. Not the icon SVG
+        file name.
         svgfile_name (str) -- SVG file name.
 
         Returns:
@@ -208,7 +211,20 @@ class ConcatSVG:
 
     def add_to_list_svgs(
         icon_name: str, sticker_name: str, dir_origin: str, list_svgs: Set
-    ):
+    ) -> Set:
+        """
+        Add to SVGs list.
+
+        Paramenters:
+        icon_name (str) -- icon name.
+        sticker_name (str) -- key name in data file. Not the icon SVG
+        file name.
+        dir_origin (str) -- path to SVG file.
+        list_svgs (Set) -- list with icon name and icon svg file path.
+
+        Returns:
+        sorted_list (Set) - list with icon name and icon svg file path.
+        """
         svgfile = f'{ icon_name }{ SVG_EXTENSION }'
         svgfile_path = os.path.join(dir_origin, svgfile)
 
@@ -216,7 +232,43 @@ class ConcatSVG:
             icon_svg = (sticker_name, svgfile_path, svgfile)
             list_svgs.add(icon_svg)
 
-    def sorted_icons_list(dir_icon_data: str, dir_origin: str) -> Set:
+    def select_prefer_icon(
+        icon_name: str,
+        sticker_name: str,
+        dir_origin: str,
+        list_svgs: Set,
+        prefer_icon: str,
+    ):
+        # Prefer icon - options dark
+        if prefer_icon == 'dark' and not icon_name.endswith('-light'):
+            ConcatSVG.add_to_list_svgs(
+                icon_name,
+                sticker_name,
+                dir_origin,
+                list_svgs,
+            )
+
+        # Prefer icon - options light
+        if prefer_icon == 'light' and not icon_name.endswith('-dark'):
+            ConcatSVG.add_to_list_svgs(
+                icon_name,
+                sticker_name,
+                dir_origin,
+                list_svgs,
+            )
+
+        # Prefer icon - options all
+        if prefer_icon not in PREFER_ICONS or prefer_icon == 'all':
+            ConcatSVG.add_to_list_svgs(
+                icon_name,
+                sticker_name,
+                dir_origin,
+                list_svgs,
+            )
+
+    def sorted_icons_list(
+        dir_icon_data: str, dir_origin: str, prefer_icon: str = 'Dark'
+    ) -> Set:
         """
         Read icon data files, and create a list with name, svg path and svgfile.
 
@@ -246,21 +298,23 @@ class ConcatSVG:
                         color_end=f'{ Color.END }',
                     )
                 elif icon_data.endswith('.yaml'):
-                    ConcatSVG.add_to_list_svgs(
+                    ConcatSVG.select_prefer_icon(
                         data['preferences']['settings']['icon'],
                         data['name'],
                         dir_origin,
                         list_svgs,
+                        prefer_icon,
                     )
 
                     # Icons options. I.e. nodejs-1
                     if any('icons' in d for d in data) and data['icons'] is not None:
                         for i in data['icons']:
-                            ConcatSVG.add_to_list_svgs(
+                            ConcatSVG.select_prefer_icon(
                                 i,
                                 data['name'],
                                 dir_origin,
                                 list_svgs,
+                                prefer_icon,
                             )
 
             sorted_list = sorted(list_svgs, key=lambda d: d[0].upper())
@@ -309,6 +363,7 @@ class ConcatSVG:
         sample_no: int = 30,
         icons_per_row: int = 5,
         max_height: int | None = 2000,
+        prefer_icon: str = 'dark',
     ):
         """
         Write concat SVG file, all icons or a sample of icons.
@@ -335,11 +390,15 @@ class ConcatSVG:
 
         if is_sample is False:
             print('Write concat SVGs mode all icons')
-            icons_list = ConcatSVG.sorted_icons_list(dir_icon_data, dir_origin)
+            icons_list = ConcatSVG.sorted_icons_list(
+                dir_icon_data, dir_origin, prefer_icon
+            )
 
         if is_sample is True:
             print('Write concat SVGs mode sample icons')
-            icons_list_full = ConcatSVG.sorted_icons_list(dir_icon_data, dir_origin)
+            icons_list_full = ConcatSVG.sorted_icons_list(
+                dir_icon_data, dir_origin, prefer_icon
+            )
             icons_list = random.sample(icons_list_full, sample_no)
 
         # Will be added to concat file name, if more than one file saved.

@@ -114,6 +114,7 @@ def main():
                 int(args.samplenumbers),
                 int(args.iconsperrow),
                 int(args.maxheight),
+                args.prefericon,
             )
         elif not args.sample:
             print_build_message('🛠️  Concatenating all SVGs: ', CONCAT_SVGS_FILE)
@@ -127,6 +128,7 @@ def main():
                 int(args.samplenumbers),
                 int(args.iconsperrow),
                 int(args.maxheight),
+                args.prefericon,
             )
         else:
             _error_message()

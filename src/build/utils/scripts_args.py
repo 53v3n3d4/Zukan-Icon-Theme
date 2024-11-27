@@ -108,6 +108,15 @@ COMMANDS = {
                 int,
             ),
             (
+                '-pf',
+                '--prefericon',
+                'store',
+                'dark',
+                f'{Color.YELLOW}Prefer icon options: dark, light or all.{Color.END}',
+                False,
+                str,
+            ),
+            (
                 '-mh',
                 '--maxheight',
                 'store',
