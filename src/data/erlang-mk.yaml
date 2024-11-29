@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Erlang.mk
+icons:
+  - erlang-mk-light
 preferences:
   scope: source.makefile.erlang.mk
   settings:
-    icon: erlang-mk
+    icon: erlang-mk-dark
 syntax:
   - name: Makefile (Erlang mk)
     scope: source.makefile.erlang.mk

@@ -1,9 +1,11 @@
 %YAML 1.2
 ---
 name: Text
+icons:
+  - text-light
 preferences:
   scope: text.plain
   settings:
-    icon: text
+    icon: text-dark
 
 # Do not found syntax. Plain Text.tmLanguage.

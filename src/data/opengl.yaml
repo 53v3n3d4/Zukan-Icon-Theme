@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: OpenGL
+icons:
+  - opengl-light
 preferences:
   scope: source.glsl
   settings:
-    icon: opengl
+    icon: opengl-dark
 syntax:
   - name: OpenGL
     scope: source.glsl

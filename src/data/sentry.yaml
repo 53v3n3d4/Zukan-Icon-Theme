@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Sentry
+icons:
+  - sentry-light
 preferences:
   scope: source.ini.sentry, source.python.sentry
   settings:
-    icon: sentry
+    icon: sentry-dark
 syntax:
   - name: INI (Sentry)
     scope: source.ini.sentry

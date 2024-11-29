@@ -1,7 +1,9 @@
 %YAML 1.2
 ---
 name: Default
+icons:
+  - file_type_default-light
 tag: primary
 preferences:
   settings:
-    icon: file_type_default
+    icon: file_type_default-dark

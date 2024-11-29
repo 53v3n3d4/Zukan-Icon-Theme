@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Debug
+icons:
+  - debug-light
 preferences:
   scope: text.plain.debug
   settings:
-    icon: debug
+    icon: debug-dark
 syntax:
   - name: Plain Text (Debug)
     scope: text.plain.debug

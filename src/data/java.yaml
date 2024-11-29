@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Java
+icons:
+  - java-light
 preferences:
   scope: source.java, source.java-props, text.html.jsp
   settings:
-    icon: java
+    icon: java-dark
 syntax:
   - name: HTML (JSP)
     scope: text.html.jsp

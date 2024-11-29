@@ -2,10 +2,12 @@
 %YAML 1.2
 ---
 name: README
+icons:
+  - readme-light
 preferences:
   scope: text.html.markdown.readme, text.plain.readme
   settings:
-    icon: readme
+    icon: readme-dark
 syntax:
   - name: Markdown (README)
     scope: text.html.markdown.readme

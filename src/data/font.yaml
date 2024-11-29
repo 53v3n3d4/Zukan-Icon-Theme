@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Font
+icons:
+  - font-light
 preferences:
   scope: binary.font
   settings:
-    icon: font
+    icon: font-dark
 syntax:
   - name: Binary (Font)
     scope: binary.font

@@ -1,7 +1,9 @@
 %YAML 1.2
 ---
 name: Source
+icons:
+  - file_type_source-light
 tag: primary
 preferences:
   settings:
-    icon: file_type_source
+    icon: file_type_source-dark

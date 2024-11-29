@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Settings
+icons:
+  - settings-light
 preferences:
   scope: source.env, source.ini, source.reg, text.plain.settings
   settings:
-    icon: settings
+    icon: settings-dark
 syntax:
   - name: DotENV
     scope: source.env

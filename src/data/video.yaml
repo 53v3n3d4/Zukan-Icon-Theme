@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Video
+icons:
+  - video-light
 preferences:
   scope: binary.video
   settings:
-    icon: video
+    icon: video-dark
 syntax:
   - name: Binary (Video)
     scope: binary.video

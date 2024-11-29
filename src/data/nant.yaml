@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: NAnt
+icons:
+  - nant-light
 preferences:
   scope: source.nant-build, text.xml.nant
   settings:
-    icon: nant
+    icon: nant-dark
 syntax:
   - name: XML (NAnt)
     scope: text.xml.nant

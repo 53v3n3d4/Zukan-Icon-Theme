@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: reStructuredText
+icons:
+  - restructuredtext-light
 preferences:
   scope: text.restructuredtext
   settings:
-    icon: restructuredtext
+    icon: restructuredtext-dark
 syntax:
   - name: reStructuredText
     scope: text.restructuredtext

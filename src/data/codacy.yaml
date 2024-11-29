@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Codacy
+icons:
+  - codacy-light
 preferences:
   scope: source.yaml.codacy
   settings:
-    icon: codacy
+    icon: codacy-dark
 syntax:
   - name: YAML (Codacy)
     scope: source.yaml.codacy

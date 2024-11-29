@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: SSH
+icons:
+  - ssh-light
 preferences:
   scope: source.ssh_config, source.sshd_config, text.known_hosts
   settings:
-    icon: ssh
+    icon: ssh-dark
 syntax:
   - name: Known Hosts
     scope: text.known_hosts

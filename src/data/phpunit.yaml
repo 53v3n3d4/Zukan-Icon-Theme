@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: PHPUnit
+icons:
+  - phpunit-light
 preferences:
   scope: text.xml.phpunit
   settings:
-    icon: phpunit
+    icon: phpunit-dark
 syntax:
   - name: XML (PHPUnit)
     scope: text.xml.phpunit

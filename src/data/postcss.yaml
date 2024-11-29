@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: PostCSS
+icons:
+  - postcss-light
 preferences:
   scope: source.css.postcss.sugarss, source.js.postcss, source.json.postcss, source.postcss, source.sss, source.ts.postcss, source.yaml.postcss, text.plain.postcss
   settings:
-    icon: postcss
+    icon: postcss-dark
 syntax:
   - name: CSS (SugarSS)
     scope: source.css.postcss.sugarss

@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Jinja
+icons:
+  - jinja-light
 preferences:
   scope: source.css.jinja, source.json.jinja, source.js.jinja, source.yaml.jinja, text.html.jinja, text.jinja, text.html.markdown.jinja, text.xml.jinja
   settings:
-    icon: jinja
+    icon: jinja-dark
 syntax:
   - name: CSS (Jinja)
     scope: source.css.jinja

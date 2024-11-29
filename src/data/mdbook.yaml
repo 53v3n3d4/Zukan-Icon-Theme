@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: mdBook
+icons:
+  - mdbook-light
 preferences:
   scope: source.toml.mdbook
   settings:
-    icon: mdbook
+    icon: mdbook-dark
 syntax:
   - name: TOML (mdBook)
     scope: source.toml.mdbook

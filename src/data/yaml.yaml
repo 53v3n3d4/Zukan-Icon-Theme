@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: YAML
+icons:
+  - yaml-light
 preferences:
   scope: source.yaml
   settings:
-    icon: yaml
+    icon: yaml-dark
 syntax:
   - name: YAML
     scope: source.yaml

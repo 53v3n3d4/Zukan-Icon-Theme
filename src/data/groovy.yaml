@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Groovy
+icons:
+  - groovy-light
 preferences:
   scope: source.groovy
   settings:
-    icon: groovy
+    icon: groovy-dark
 syntax:
   - name: Groovy
     scope: source.groovy

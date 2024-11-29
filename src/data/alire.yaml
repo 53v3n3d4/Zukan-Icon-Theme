@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Alire
+icons:
+  - alire-light
 preferences:
   scope: source.toml.alire
   settings:
-    icon: alire
+    icon: alire-dark
 syntax:
   - name: TOML (Alire)
     scope: source.toml.alire

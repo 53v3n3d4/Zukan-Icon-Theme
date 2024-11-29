@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Crystal
+icons:
+  - crystal-light
 preferences:
   scope: source.crystal
   settings:
-    icon: crystal
+    icon: crystal-dark
 syntax:
   - name: Crystal
     scope: source.crystal

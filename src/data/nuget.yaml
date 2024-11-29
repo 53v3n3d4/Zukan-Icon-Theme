@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: NuGet
+icons:
+  - nuget-light
 preferences:
   scope: binary.archive.nuget, text.xml.nuget
   settings:
-    icon: nuget
+    icon: nuget-dark
 syntax:
   - name: Binary (NuGet)
     scope: binary.archive.nuget

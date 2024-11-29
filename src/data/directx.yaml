@@ -2,7 +2,8 @@
 ---
 name: DirectX
 icons:
-  - directx-1
+  - directx-1-dark
+  - directx-1-light
 preferences:
   scope: source.hlsl
   settings:

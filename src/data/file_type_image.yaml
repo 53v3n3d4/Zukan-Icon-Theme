@@ -2,12 +2,13 @@
 ---
 name: Image
 icons:
+  - file_type_image-light
   - file_type_image-1
 tag: primary
 preferences:
   scope: binary.image
   settings:
-    icon: file_type_image
+    icon: file_type_image-dark
 syntax:
   - name: Binary (Image)
     scope: binary.image

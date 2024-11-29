@@ -2,11 +2,13 @@
 ---
 name: Rust
 icons:
+  - rust-light
   - rust-1
+  - rust-2
 preferences:
   scope: source.json.rust, source.rust
   settings:
-    icon: rust
+    icon: rust-dark
 syntax:
   - name: JSON (Rust)
     scope: source.json.rust

@@ -1,8 +1,10 @@
 %YAML 1.2
 ---
 name: Binary
+icons:
+  - file_type_binary-light
 tag: primary
 preferences:
   scope: binary.plain
   settings:
-    icon: file_type_binary
+    icon: file_type_binary-dark

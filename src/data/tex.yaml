@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: TeX
+icons:
+  - tex-light
 preferences:
   scope: text.tex
   settings:
-    icon: tex
+    icon: tex-dark
 syntax:
   - name: TeX
     scope: text.tex

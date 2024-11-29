@@ -1,11 +1,13 @@
 %YAML 1.2
 ---
 name: ClickHouse
+icons:
+  - clickhouse-light
 tag: database
 preferences:
   scope: source.yaml.clickhouse, text.xml.clickhouse
   settings:
-    icon: clickhouse
+    icon: clickhouse-dark
 syntax:
   - name: XML (ClickHouse)
     scope: text.xml.clickhouse

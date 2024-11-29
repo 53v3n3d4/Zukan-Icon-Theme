@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Toit
+icons:
+  - toit-light
 preferences:
   scope: source.toit
   settings:
-    icon: toit
+    icon: toit-dark
 syntax:
   - name: Toit
     scope: source.toit

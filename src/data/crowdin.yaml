@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Crowdin
+icons:
+  - crowdin-light
 preferences:
   scope: source.yaml.crowdin
   settings:
-    icon: crowdin
+    icon: crowdin-dark
 syntax:
   - name: YAML (Crowdin)
     scope: source.yaml.crowdin

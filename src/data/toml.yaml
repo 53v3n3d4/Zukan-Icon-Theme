@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: TOML
+icons:
+  - toml-light
 preferences:
   scope: source.toml
   settings:
-    icon: toml
+    icon: toml-dark
 syntax:
   - name: TOML
     scope: source.toml

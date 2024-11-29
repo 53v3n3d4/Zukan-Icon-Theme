@@ -1,11 +1,13 @@
 %YAML 1.2
 ---
 name: SQLAlchemy
+icons:
+  - sqlalchemy-light
 tag: database
 preferences:
   scope: source.ini.alembic
   settings:
-    icon: sqlalchemy
+    icon: sqlalchemy-dark
 syntax:
   - name: INI (Alembic)
     scope: source.ini.alembic

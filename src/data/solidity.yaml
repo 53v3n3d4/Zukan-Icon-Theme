@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Solidity
+icons:
+  - solidity-light
 preferences:
   scope: source.solidity, source.yul
   settings:
-    icon: solidity
+    icon: solidity-dark
 syntax:
   - name: Solidity
     scope: source.solidity

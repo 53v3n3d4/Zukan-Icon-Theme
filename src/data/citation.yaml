@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Citation
+icons:
+  - citation-light
 preferences:
   scope: text.bibtex.citation, text.html.markdown.citation, text.plain.citation, source.yaml.citation
   settings:
-    icon: citation
+    icon: citation-dark
 syntax:
   - name: BibTeX (Citation)
     scope: text.bibtex.citation

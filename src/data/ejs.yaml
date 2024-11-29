@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: EJS
+icons:
+  - ejs-light
 preferences:
   scope: text.ejs.percentsign, text.html.js
   settings:
-    icon: ejs
+    icon: ejs-dark
 syntax:
   - name: HTML (EJS)
     scope: text.html.js

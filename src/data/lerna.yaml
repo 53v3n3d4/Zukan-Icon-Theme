@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Lerna
+icons:
+  - lerna-light
 preferences:
   scope: source.json.lerna
   settings:
-    icon: lerna
+    icon: lerna-dark
 syntax:
   - name: JSON (Lerna)
     scope: source.json.lerna

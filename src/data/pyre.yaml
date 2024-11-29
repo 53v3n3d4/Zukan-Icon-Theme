@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Pyre
+icons:
+  - pyre-light
 preferences:
   scope: source.json.pyre, source.json.pysa, source.python.pysa
   settings:
-    icon: pyre
+    icon: pyre-dark
 syntax:
   - name: JSON (Pyre)
     scope: source.json.pyre

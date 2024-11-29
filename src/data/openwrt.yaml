@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: OpenWrt
+icons:
+  - openwrt-light
 preferences:
   scope: source.uci
   settings:
-    icon: openwrt
+    icon: openwrt-dark
 syntax:
   - name: OpenWrt
     scope: source.uci

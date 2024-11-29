@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Nx
+icons:
+  - nx-light
 preferences:
   scope: source.json.nx, text.git.ignore.nx
   settings:
-    icon: nx
+    icon: nx-dark
 syntax:
   - name: Git (Nx)
     scope: text.git.ignore.nx

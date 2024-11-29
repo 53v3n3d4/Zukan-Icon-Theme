@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Perl
+icons:
+  - perl-light
 preferences:
   scope: source.perl
   settings:
-    icon: perl
+    icon: perl-dark
 syntax:
   - name: Perl
     scope: source.perl

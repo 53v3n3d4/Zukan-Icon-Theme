@@ -1,11 +1,13 @@
 %YAML 1.2
 ---
 name: MySQL
+icons:
+  - mysql-light
 tag: database
 preferences:
   scope: source.ini.mysql, text.plain.mysql
   settings:
-    icon: mysql
+    icon: mysql-dark
 syntax:
   - name: INI (MySQL)
     scope: source.ini.mysql

@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: License
+icons:
+  - license-light
 preferences:
   scope: text.html.markdown.license, text.plain.license
   settings:
-    icon: license
+    icon: license-dark
 syntax:
   - name: Markdown (License)
     scope: text.html.markdown.license

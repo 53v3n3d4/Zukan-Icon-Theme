@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: Maven
+icons:
+  - maven-light
 preferences:
   scope: text.xml.maven
   settings:
-    icon: maven
+    icon: maven-dark
 syntax:
   - name: XML (Maven)
     scope: text.xml.maven
