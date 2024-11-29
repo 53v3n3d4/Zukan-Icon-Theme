@@ -11,7 +11,10 @@
     // Turn to false, if do not want to display this diablog.
     "zukan_restart_message": true,
 
-    // Only a few icons have a dark and light icon.
+    // This option can select a dark or light version of
+    // an icon for a theme.
+    //
+    // Not all icons have a dark and light icon.
     //
     // Options: 'dark' and 'light'. Select a dark icon if 
     // theme has a light background color. And a light 
@@ -19,6 +22,12 @@
     //
     // This option overrides 'change_icon'. The 'prefer_icon' 
     // run after 'change_icon'.
+    //
+    // Limitation: currently plugin do not read zukan
+    // preferences when theme changes. E.g. a Dark theme with
+    // light will need to activate with changes to re apply.
+    // One can be change to dark and comeback to light.
+    // Or use 'Remove Prefer Icon' and add it again.
     //
     // Example: {
     //     "Treble Dark.sublime-theme": "light", 
@@ -214,6 +223,7 @@
     // - 'change_icon'
     // - 'change_icon_file_extension'
     // - 'create_custom_icon'
+    // - 'prefer_icon'
     //
     // Default is true. Change to false, to turn off auto
     // rebuild setting,

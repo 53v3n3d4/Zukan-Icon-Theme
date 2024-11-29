@@ -213,8 +213,13 @@ class ChangeIcon(sublime_plugin.TextCommand):
                 set_save_settings(ZUKAN_SETTINGS, 'change_icon', change_icon)
 
                 # Check if PNG exist
-                primary_file_list = [file_name for name, file_name, *_ in PRIMARY_ICONS]
-                # print(primary_file_list)
+                primary_file_list = []
+
+                for i in PRIMARY_ICONS:
+                    for j in i[2]:
+                        primary_file_list.append(j)
+                # primary_file_list = [real_name for name, file_name, real_name in PRIMARY_ICONS]
+
                 if (
                     not os.path.exists(
                         os.path.join(
