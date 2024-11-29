@@ -1100,8 +1100,8 @@ class SelectPreferIconThemeInputHandler(sublime_plugin.ListInputHandler):
 
             installed_themes_list = [
                 # 'sublime.ListInputItem' since ST 4095
-                sublime.ListInputItem(text=i[0], value=i[0], annotation=i[1])
-                for i in created_themes_with_prefer_icon.items()
+                sublime.ListInputItem(text=k[0], value=k[0], annotation=k[1])
+                for k in sorted(created_themes_with_prefer_icon.items())
             ]
 
             return installed_themes_list

@@ -23,12 +23,6 @@
     // This option overrides 'change_icon'. The 'prefer_icon' 
     // run after 'change_icon'.
     //
-    // Limitation: currently plugin do not read zukan
-    // preferences when theme changes. E.g. a Dark theme with
-    // light will need to activate with changes to re apply.
-    // One can be change to dark and comeback to light.
-    // Or use 'Remove Prefer Icon' and add it again.
-    //
     // Example: {
     //     "Treble Dark.sublime-theme": "light", 
     //     "Treble Light.sublime-theme": "dark"

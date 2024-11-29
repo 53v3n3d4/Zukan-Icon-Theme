@@ -158,7 +158,7 @@ class ZukanPreference:
                                     p['preferences']['settings']['icon'] = (
                                         prefer_icon_version
                                     )
-                                    logger.info(
+                                    logger.debug(
                                         'prefer icon %s',
                                         p['preferences']['settings']['icon'],
                                     )
@@ -197,7 +197,7 @@ class ZukanPreference:
                                 and p['preferences']['settings']['icon'] == i
                             ):
                                 p['preferences']['settings']['icon'] = primary[1]
-                                logger.info(
+                                logger.debug(
                                     'renaming primary icon option necessary, %s',
                                     i,
                                 )
@@ -318,7 +318,7 @@ class ZukanPreference:
                                     p['preferences']['settings']['icon'] = (
                                         prefer_icon_version
                                     )
-                                    logger.info(
+                                    logger.debug(
                                         'prefer icon %s',
                                         p['preferences']['settings']['icon'],
                                     )
@@ -357,7 +357,7 @@ class ZukanPreference:
                                 and p['preferences']['settings']['icon'] == i
                             ):
                                 p['preferences']['settings']['icon'] = primary[1]
-                                logger.info(
+                                logger.debug(
                                     'renaming primary icon option necessary, %s',
                                     i,
                                 )

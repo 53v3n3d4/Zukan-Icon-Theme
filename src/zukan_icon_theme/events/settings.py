@@ -63,6 +63,7 @@ class SettingsEvent:
         auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
         ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
         icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
+        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
         zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
         if not isinstance(ignored_theme, list):
@@ -111,10 +112,12 @@ class SettingsEvent:
             theme_name in ZukanTheme.list_created_icons_themes()
             and theme_name not in ignored_theme
         ):
+            # Build preferences if icons_preferences empty or if theme
+            # in 'prefer_icon' option
             if not any(
                 preferences.endswith(TMPREFERENCES_EXTENSION)
                 for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-            ):
+            ) or theme_name in prefer_icon:
                 threading.Thread(target=ZukanPreference.build_icons_preferences).start()
 
             if not any(

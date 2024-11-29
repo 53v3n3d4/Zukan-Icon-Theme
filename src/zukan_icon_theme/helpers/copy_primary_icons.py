@@ -55,7 +55,7 @@ def copy_primary_icons():
                     if (p[0], i) in change_icon.items() and os.path.exists(
                         os.path.join(ZUKAN_PKG_ICONS_PATH, p[1] + s + PNG_EXTENSION)
                     ):
-                        logger.info(
+                        logger.debug(
                             '%s in change_icon, removing renamed %s%s',
                             p[0],
                             p[1],
@@ -67,7 +67,7 @@ def copy_primary_icons():
                     elif p[0] not in change_icon.keys() and os.path.exists(
                         os.path.join(ZUKAN_PKG_ICONS_PATH, p[1] + s + PNG_EXTENSION)
                     ):
-                        logger.info(
+                        logger.debug(
                             '%s not in change_icon, removing %s%s', p[0], p[1], s
                         )
                         os.remove(
@@ -82,7 +82,7 @@ def copy_primary_icons():
                     # Not checking if path exists, because if change icon path will exist
                     # and will not replace icon unless delete icon first.
                     if (p[0], i) in change_icon.items():
-                        logger.info(
+                        logger.debug(
                             '%s in change_icon, renaming PNGs to %s%s',
                             p[0],
                             p[1],
@@ -103,7 +103,7 @@ def copy_primary_icons():
                         if theme_name in prefer_icon and i.rsplit('-', 1)[
                             1
                         ] == prefer_icon.get(theme_name):
-                            logger.info(
+                            logger.debug(
                                 '%s not in change_icon, copying prefer icon %s%s',
                                 p[0],
                                 i,
@@ -120,7 +120,7 @@ def copy_primary_icons():
                             )
 
                         elif theme_name not in prefer_icon:
-                            logger.info(
+                            logger.debug(
                                 '%s not in change_icon, copying default %s%s',
                                 p[0],
                                 i,
