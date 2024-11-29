@@ -1084,8 +1084,26 @@ class SelectPreferIconThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of created themes'
 
     def list_items(self) -> list:
+        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+
+        if not isinstance(prefer_icon, dict):
+            logger.warning('prefer_icon option malformed, need to be a dict')
+
         if ZukanTheme.list_created_icons_themes():
-            installed_themes_list = sorted(ZukanTheme.list_created_icons_themes())
+            # Create a dict with prefer icon value, empty string.
+            # Then update with prefer icon to show 'dark' or 'light'
+            empty_str = ''
+            created_themes_with_prefer_icon = dict.fromkeys(
+                ZukanTheme.list_created_icons_themes(), empty_str
+            )
+            created_themes_with_prefer_icon.update(prefer_icon)
+
+            installed_themes_list = [
+                # 'sublime.ListInputItem' since ST 4095
+                sublime.ListInputItem(text=i[0], value=i[0], annotation=i[1])
+                for i in created_themes_with_prefer_icon.items()
+            ]
+
             return installed_themes_list
         else:
             raise TypeError(
