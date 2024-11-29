@@ -57,8 +57,8 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
 
 #### Example
 - `Zukan Icon Theme: Change Icon`  
-- type `Angular` hit Enter  
-- type `angular-1` hit Enter  
+- type `Angular` hit <kbd>Enter</kbd>  
+- type `angular-1` hit <kbd>Enter</kbd>  
 
 ```json
     "change_icon": {
@@ -129,8 +129,8 @@ Required parameters are: scope and file extensions.
 
 #### Example
 - `Zukan Icon Theme: Change File Extension`  
-- type `source.iot` hit Enter  
-- type `ino, pde` hit Enter  
+- type `source.iot` hit <kbd>Enter</kbd>  
+- type `ino, pde` hit <kbd>Enter</kbd>  
 
 > Multiple file extensions can be inserted separated by commas.
 
@@ -182,6 +182,7 @@ Required parameters are: scope and file extensions.
         { "scope": "source.yaml.openfga", "file_extensions": ["config.yaml"] },
         { "scope": "text.django", "file_extensions": ["css", "html", "xml"] },
         { "scope": "text.html.js", "file_extensions": ["ejs"] },
+        { "scope": "text.html.markdown.mdsvex", "file_extensions": ["md"] },
         { "scope": "text.plain", "file_extensions": ["requirements.txt"] },
         { "scope": "text.plain.uv", "file_extensions": ["requirements.txt"] },
         { "scope": "text.plain.wwpdb", "file_extensions": ["pdb"] },
@@ -216,32 +217,32 @@ Sequence: `Zukan Icon Theme: Create Custom Icon` `name` `icon` `syntax_name` `sc
 #### Example Option 1
 
 - `Zukan Icon Theme: Create Custom Icon`
-- type `ATest` hit Enter
-- type `atest` hit Enter
-- `(leave empty)` hit Enter
-- type `source.toml.atest, source.json.atest` hit Enter
-- `(leave empty)` hit Enter
-- `(leave empty)` hit Enter  
+- type `ATest` hit <kbd>Enter</kbd>
+- type `atest` hit <kbd>Enter</kbd>
+- `(leave empty)` hit <kbd>Enter</kbd>
+- type `source.toml.atest, source.json.atest` hit <kbd>Enter</kbd>
+- `(leave empty)` hit <kbd>Enter</kbd>
+- `(leave empty)` hit <kbd>Enter</kbd>  
 
 #### Example Option 2
 
 - `Zukan Icon Theme: Create Custom Icon`
-- type `ATest-1` hit Enter
-- `(leave empty)` hit Enter
-- type `JSON (ATest-1)` hit Enter
-- type `source.json.atest1` hit Enter
-- type `atest1.config.json` hit Enter
-- type `source.json` hit Enter  
+- type `ATest-1` hit <kbd>Enter</kbd>
+- `(leave empty)` hit <kbd>Enter</kbd>
+- type `JSON (ATest-1)` hit <kbd>Enter</kbd>
+- type `source.json.atest1` hit <kbd>Enter</kbd>
+- type `atest1.config.json` hit <kbd>Enter</kbd>
+- type `source.json` hit <kbd>Enter</kbd>  
 
 #### Example Option 3
 
 - `Zukan Icon Theme: Create Custom Icon`
-- type `ATest-3` hit Enter
-- type `atest3` hit Enter
-- type `ATest-3` hit Enter
-- type `source.atest3` hit Enter
-- type `abc, def` hit Enter
-- type `source.atest2` hit Enter  
+- type `ATest-3` hit <kbd>Enter</kbd>
+- type `atest3` hit <kbd>Enter</kbd>
+- type `ATest-3` hit <kbd>Enter</kbd>
+- type `source.atest3` hit <kbd>Enter</kbd>
+- type `abc, def` hit <kbd>Enter</kbd>
+- type `source.atest2` hit <kbd>Enter</kbd>  
 
 > If inserted more than one scope. And syntax_name present, the first scope will be used in icon syntax.  
 
@@ -287,12 +288,12 @@ To change to Yaml syntax:
 - Using command palette, disable icon GitHub or GitHub Dependabot. Or, manually, insert in `ignored_icon`
 - Next, create a custom icon
 - `Zukan Icon Theme: Create Custom Icon`
-- type `GitHub 2` hit Enter
-- type `github` hit Enter
-- type `YAML (GitHub 2)` hit Enter
-- type `source.yaml.github` hit Enter
-- type `ci.yml` hit Enter
-- type `source.yaml` hit Enter  
+- type `GitHub 2` hit <kbd>Enter</kbd>
+- type `github` hit <kbd>Enter</kbd>
+- type `YAML (GitHub 2)` hit <kbd>Enter</kbd>
+- type `source.yaml.github` hit <kbd>Enter</kbd>
+- type `ci.yml` hit <kbd>Enter</kbd>
+- type `source.yaml` hit <kbd>Enter</kbd>  
 
 ```json
     "create_custom_icon": [
@@ -311,9 +312,25 @@ To change to Yaml syntax:
 
 It deletes an icon from a list of customized icons, in `created_custom_icon` setting.  
 
+### Remove Prefer Icon
+
+It remove a prefered icon in `prefer_icon` setting.  
+
+
 ### Reset File Extension
 
 It remove an icon file extension from a list of scopes,  in `change_icon_file_extension` setting.  
+
+### Select Prefer Icon
+
+It can select a dark or light icon for a theme,  in `prefer_icon` setting.  
+
+> Not all icons have a dark and light icon.  
+
+> This option overrides 'change_icon'. The 'prefer_icon' run after 'change_icon'.  
+
+> Limitation: currently plugin do not read zukan preferences when theme changes.  
+> E.g. a Dark theme with light will need to activate with changes to re apply. One can be change to dark and comeback to light. Or use `Remove Prefer Icon` and add it again.  
 
 ## Commands
 

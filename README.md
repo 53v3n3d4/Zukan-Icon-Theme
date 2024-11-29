@@ -12,7 +12,7 @@ Icon theme for Sublime Text 4 editor.
 
 <img src="assets/file-icons-concat-sample.svg" width="728" height="460" alt="file icon">
 
-> File icons in v0.3.5  
+> File icons in v0.4.0  
 
 > All file icons, see [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md)  
 
@@ -59,7 +59,7 @@ To uninstall manually, go to your Sublime Text folder.
 
 > Dependecies  
 
-> ST4 uninstall orphans dependencies. So dependency [`ruamel-yaml`](https://packagecontrol.github.io) should be deleted when you uninstall/remove package, if not used by other packages.  
+> ST4 uninstall orphans dependencies. So dependency [`ruamel-yaml`](https://pypi.org/project/ruamel.yaml/) should be deleted when you uninstall/remove package, if not used by other packages.  
 
 ## Upgrade
 
