@@ -1125,7 +1125,7 @@ class SelectPreferIconVersionInputHandler(sublime_plugin.ListInputHandler):
 
     def placeholder(self) -> str:
         sublime.status_message('Select prefer icon version.')
-        return 'Options: dark and light'
+        return 'Icon options: dark and light'
 
     def list_items(self) -> list:
         version_opts = ['dark', 'light']
