@@ -4,7 +4,7 @@ name: Sublime Text
 icons:
   - sublime-1
 preferences:
-  scope: source.json.sublime, source.json.sublime.unittesting, source.yaml.sublime.syntax, text.xml.sublime.snippet
+  scope: source.json.sublime, source.json.sublime.unittesting, source.yaml.sublime.syntax, text.plist.sublime, text.xml.sublime.snippet
   settings:
     icon: sublime
 syntax:
@@ -42,6 +42,15 @@ syntax:
     contexts:
       main:
         - include: scope:source.json
+          apply_prototype: true
+  - name: Plist (Sublime)
+    scope: text.plist.sublime
+    hidden: true
+    file_extensions:
+      - Comments.tmPreferences
+    contexts:
+      main:
+        - include: scope:text.plist
           apply_prototype: true
   - name: XML (Sublime)
     scope: text.xml.sublime.snippet
