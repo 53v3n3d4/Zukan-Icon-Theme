@@ -114,11 +114,16 @@ class SettingsEvent:
         ):
             # Build preferences if icons_preferences empty or if theme
             # in 'prefer_icon' option
-            if not any(
-                preferences.endswith(TMPREFERENCES_EXTENSION)
-                for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-            ) or theme_name in prefer_icon:
-                threading.Thread(target=ZukanPreference.build_icons_preferences).start()
+            if (
+                not any(
+                    preferences.endswith(TMPREFERENCES_EXTENSION)
+                    for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+                )
+                or theme_name in prefer_icon
+            ):
+                threading.Thread(
+                    target=ZukanPreference.build_icons_preferences
+                ).start()
 
             if not any(
                 syntax.endswith(SUBLIME_SYNTAX_EXTENSION)

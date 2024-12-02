@@ -58,11 +58,11 @@ class ZukanPreference:
             os.makedirs(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
         # Deleting orphans files for 'create_custom_icon' if preferences do not exist
         # and not in 'create_custom_icon' anymore.
-        if any(
-            preference.endswith(TMPREFERENCES_EXTENSION)
-            for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-        ):
-            ZukanPreference.delete_icons_preferences()
+        # if any(
+        #     preference.endswith(TMPREFERENCES_EXTENSION)
+        #     for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+        # ):
+        #     ZukanPreference.delete_icons_preferences()
         ZukanPreference.create_icons_preferences()
         # Remove plist tag <!DOCTYPE plist>
         ZukanPreference.delete_plist_tags()
