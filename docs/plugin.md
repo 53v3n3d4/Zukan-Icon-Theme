@@ -63,7 +63,7 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
 ```json
     "change_icon": {
         "Angular": "angular-1",
-        "Cert. Authentication": "cert-1",
+        "Cert. Authentication": "cert-1-dark",
         "Composer": "composer-1",
         "Composer": "composer-2",
         "C#": "csharp-1",
@@ -77,6 +77,7 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
         "Python": "python-1",
         "Ruff": "ruff-1",
         "Rust": "rust-1",
+        "Rust": "rust-2",
         "SolidJS": "solidstart",
         "Sublime Text": "sublime-1"
     },
@@ -328,9 +329,6 @@ It can select a dark or light icon for a theme,  in `prefer_icon` setting.
 > Not all icons have a dark and light icon.  
 
 > This option overrides 'change_icon'. The 'prefer_icon' run after 'change_icon'.  
-
-> Limitation: currently plugin do not read zukan preferences when theme changes.  
-> E.g. a Dark theme with light will need to activate with changes to re apply. One can be change to dark and comeback to light. Or use `Remove Prefer Icon` and add it again.  
 
 ## Commands
 
