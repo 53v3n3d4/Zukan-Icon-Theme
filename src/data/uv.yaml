@@ -17,6 +17,7 @@ syntax:
     scope: source.toml.uv
     hidden: true
     file_extensions:
+      - uv.lock
       - uv.toml
     contexts:
       main:
