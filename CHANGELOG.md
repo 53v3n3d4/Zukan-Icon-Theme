@@ -4,6 +4,7 @@
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Alire, Bicep, Cedar, ClickHouse, Fly.io, Hatch, MDsveX
+- Text to delete, help treble screenshots
 - Add sublime-syntax: Ada, Angular, Erlang, OpenFGA, Rebar3, Sass, TailwindCSS
 - Add icon option: Rust
 - Add icon dark and light: Ada, Alire, AppleScript, Archive, Arrow, Audio, Batchfile, BibTeX, Binary, CAD, Cert, Cert-1, CircleCI, Cirrus, Citation, ClickHouse, Codacy, Code of Conduct, Crowdin, Crystal, Cypress, Debug, Default, Diff, DirectX, DUB, EJS, Erlang.mk, Favicon, Font,GitBook, Groovy, Image, Java, Jinja, Julia, Lerna, License, Log, Makefile, Markdown, Markup, Maven, mdBook, MkDocs, Mocha, MySQL, Nant, NuGet, Nx, OpenGL, OpenWRT, Parquet, Perl, PHPUnit, Pipenv, Plist, PostCSS, Pyre, README, Regular Expression, reStructuredText, Rust, Sentry, Settings, Shell, Solidity, Source, SQLAlchemy, SSH, Stylelint, Tex, Text, Toit, TOML, Video, Yaml
