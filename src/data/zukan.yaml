@@ -10,6 +10,7 @@ syntax:
     scope: binary.zukan
     hidden: true
     file_extensions:
+      - user_ui_settings.pkl
       - zukan_current_settings.pkl
       - zukan_icons_data.pkl
       - zukan_preferences_data.pkl
