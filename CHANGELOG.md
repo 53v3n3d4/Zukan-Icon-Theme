@@ -4,12 +4,11 @@
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Alire, Bicep, Cedar, ClickHouse, Fly.io, Hatch, MDsveX
-- tesxt conflict git
 - Add sublime-syntax: Ada, Angular, Erlang, OpenFGA, Rebar3, Sass, Sublime, TailwindCSS
 - Add icon option: Rust
 - Add icon dark and light: Ada, Alire, AppleScript, Archive, Arrow, Audio, Batchfile, BibTeX, Binary, CAD, Cert, Cert-1, CircleCI, Cirrus, Citation, ClickHouse, Codacy, Code of Conduct, Crowdin, Crystal, Cypress, Debug, Default, Diff, DirectX, DUB, EJS, Erlang.mk, Favicon, Font,GitBook, Groovy, Image, Java, Jinja, Julia, Lerna, License, Log, Makefile, Markdown, Markup, Maven, mdBook, MkDocs, Mocha, MySQL, Nant, NuGet, Nx, OpenGL, OpenWRT, Parquet, Perl, PHPUnit, Pipenv, Plist, PostCSS, Pyre, README, Regular Expression, reStructuredText, Rust, Sentry, Settings, Shell, Solidity, Source, SQLAlchemy, SSH, Stylelint, Tex, Text, Toit, TOML, Video, Yaml
 - Change icon: Docker, EJS, Less, Log, MDX
-- Change sublime-syntax: Cassandra, Conda, EdgeDB, MySQL, PLSQL, PostgreSQL, Redis, SQL, SQLAlchemy, SQLite, Sublime, TiDB, uv, Vue, Yugabyte
+- Change sublime-syntax: Cassandra, Conda, EdgeDB, MySQL, PLSQL, PostgreSQL, Redis, SQL, SQLAlchemy, SQLite, Sublime, TiDB, uv, Vue, Yugabyte, Zukan
 - Rename sublime-syntax: Vue
 - Remove icon-theme: SCSS
 
@@ -21,6 +20,9 @@
 - Add install size to get_user_zukan_preferences (Debug)
 - Add tag `database`
 - Add prefer_icon setting
+- Change get_user_theme
+- Remove `add_on_change` and `clear_on_change` for User Preferences
+- Add SchemeThemeListener event listener
 
 ## [0.3.4] - 2024-10-22
 - Fix update version in settings
