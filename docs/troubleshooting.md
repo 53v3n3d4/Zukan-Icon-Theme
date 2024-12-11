@@ -93,20 +93,3 @@ Syntax build happens in cases of:
 One way for this do not happen is to close these types of files before rebuilding
 icons syntaxes files.
 ```
-
-### Error unable to read a tmPreferences when moving on list UI: Select Theme or Color Scheme
-
-Two zukan settings, 'ignored_thme' and 'prefer_icon', use ST 'add_on_change' function. When moving on list UI: Select Theme or Color Scheme, if move fast across list, reading and deleting tmPreferences got conflicted and ST raises errors that are unable to read.  
-
-Plugin delete tmPreferences when ignoring a theme, so moving too fast between theme that use icons and others that ignore zukan icons. It will raise error.  
-
-Although the tmPreferences files gets created and icons are loaded.  
-
-Also when using 'prefer_icon' and moving across themes that have prefer icon, it will delete and create tmPreferences for the icon version, dark or light.  
-
-**Solution**
-```
-Currently is not moving too fast on list UI: Select Theme or Color Scheme. Or use mouse to select the theme or color scheme.
-
-In console, log shows when tmPreferences get deleted and created.
-``` 

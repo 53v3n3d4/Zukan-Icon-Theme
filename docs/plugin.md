@@ -108,6 +108,8 @@ It removes an icon from `ignored_icon` setting.
 
 It removes a theme from `ignored_theme` setting.  
 
+> To show file icons, need to create an icon theme. Use command InstallTheme.
+
 ### Reset Icon
 
 If icon has been changed for another option. This command will reset to default icon, removing the changed icon from `change_icon` setting.  
