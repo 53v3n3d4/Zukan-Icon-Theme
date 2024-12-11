@@ -43,8 +43,37 @@ def search_resources_sublime_themes() -> list:
     return filter_resources_themes(themes_list)
 
 
+def package_theme_exists(theme_name: str) -> bool:
+    """
+    Check if a Package Theme is installed
+
+    Paramenters:
+    theme_name (str) -- theme name.
+
+    Returns:
+    (bool) -- True or False for Package Theme
+    """
+    theme_st_path = sublime.find_resources(theme_name)
+    # Excluding themes in Packages sub directories.
+    filter_list = filter_resources_themes(theme_st_path)
+    list_all_themes = search_resources_sublime_themes()
+
+    # Check if installed theme file exist.
+    for t in filter_list:
+        if t in list_all_themes:
+            return True
+        if t not in list_all_themes:
+            return False
+
+
 def find_attributes(
-    theme: str, theme_content: dict, theme_has_attributes: list
+    theme: str,
+    theme_content: dict,
+    class_name: str,
+    target_key: str,
+    target_list: list,
+    target_values: list = None,
+    class_parent: str = None,
 ) -> list:
     """
     Search in sublime-theme files if they use icon_file_type. And, if
@@ -60,32 +89,43 @@ def find_attributes(
     Paramenters:
     theme (str) -- path theme name.
     theme_content (dict) -- parsed json file, sublime-theme.
-    theme_has_attributes (list) -- list if theme and its hidden themes have
-    attributes hover and selected.
+    target_list (list) -- list if theme and its hidden themes have
+    attributes or value.
     """
     if 'rules' in theme_content:
-        icon_file_type_list = [
-            k for k in theme_content['rules'] if k['class'] == 'icon_file_type'
+        class_name_list = [
+            k for k in theme_content['rules'] if k['class'] == class_name
         ]
         # print(theme)
-        # print(icon_file_type_list)
+        # print(class_name_list)
     elif 'rules' not in theme_content:
-        icon_file_type_list = [
-            k for k in theme_content if k['class'] == 'icon_file_type'
-        ]
+        class_name_list = [k for k in theme_content if k['class'] == class_name]
         # print('no rules: ' + theme)
-    for i in icon_file_type_list:
-        if i.get('parents') is not None:
-            for p in i.get('parents'):
-                if p['class'] == 'tree_row' and all(
-                    a in p['attributes'] for a in ['hover', 'selected']
-                ):
-                    logger.debug('%s has attributes', theme)
-                    theme_has_attributes.append(True)
+    for i in class_name_list:
+        # Theme opacity
+        if class_parent:
+            if i.get(class_parent) is not None:
+                for p in i.get(class_parent):
+                    if p['class'] == target_key and all(
+                        a in p['attributes'] for a in target_values
+                    ):
+                        logger.debug('%s has attributes', theme)
+                        target_list.append(True)
+
+        # Find sidebar background
+        if not class_parent:
+            logger.debug('%s sidebar layer0.tint is ', theme)
+            target_list.append(i.get(target_key))
 
 
 def find_attributes_hidden_file(
-    theme: str, theme_content: dict, theme_has_attributes: list
+    theme: str,
+    theme_content: dict,
+    class_name: str,
+    target_key: str,
+    target_list: list,
+    target_values: list = None,
+    class_parent: str = None,
 ) -> list:
     """
     Recursively search for attributes, in hidden-theme files.
@@ -93,8 +133,8 @@ def find_attributes_hidden_file(
     Paramenters:
     theme (str) -- path theme name.
     theme_content (dict) -- parsed json file, hidden-theme.
-    theme_has_attributes (list) -- list if theme and its hidden themes have
-    attributes hover and selected.
+    target_list (list) -- list if theme and its hidden themes have
+    attributes or value.
     """
     hidden_theme_list = sublime.find_resources(theme_content['extends'])
     # Exclude Zukan created themes, important for Rebuild Files command.
@@ -104,11 +144,25 @@ def find_attributes_hidden_file(
     for t in hidden_theme_name:
         hidden_theme_content = sublime.decode_value(sublime.load_resource(t))
         logger.debug('extends %s', t)
-        find_attributes(theme, hidden_theme_content, theme_has_attributes)
-        logger.debug('%s theme_has_attributes is %s', t, theme_has_attributes)
+        find_attributes(
+            theme,
+            hidden_theme_content,
+            class_name,
+            target_key,
+            target_list,
+            target_values,
+            class_parent,
+        )
+        logger.debug('%s target_list is %s', t, target_list)
         if 'extends' in hidden_theme_content:
             find_attributes_hidden_file(
-                theme, hidden_theme_content, theme_has_attributes
+                theme,
+                hidden_theme_content,
+                class_name,
+                target_key,
+                target_list,
+                target_values,
+                class_parent,
             )
 
 
@@ -130,13 +184,34 @@ def theme_with_opacity(theme_name: str) -> bool:
     Returns:
     (bool) -- True or False for theme or its hidden-theme(s) has attributes.
     """
-    theme_has_attributes = []
+    class_name = 'icon_file_type'
+    class_parent = 'parents'
+    target_key = 'tree_row'
+    target_values = ['hover', 'selected']
+    target_list = []
     theme_content = sublime.decode_value(sublime.load_resource(theme_name))
-    find_attributes(theme_name, theme_content, theme_has_attributes)
-    if 'extends' in theme_content:
-        find_attributes_hidden_file(theme_name, theme_content, theme_has_attributes)
 
-    if True in theme_has_attributes:
+    find_attributes(
+        theme_name,
+        theme_content,
+        class_name,
+        target_key,
+        target_list,
+        target_values,
+        class_parent,
+    )
+    if 'extends' in theme_content:
+        find_attributes_hidden_file(
+            theme_name,
+            theme_content,
+            class_name,
+            target_key,
+            target_list,
+            target_values,
+            class_parent,
+        )
+
+    if True in target_list:
         return True
     else:
         return False

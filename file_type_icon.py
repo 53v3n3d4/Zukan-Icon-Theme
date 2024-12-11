@@ -39,14 +39,12 @@ from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
     SelectPreferIcon,  # noqa: F401
 )
 from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
+from .src.zukan_icon_theme.events.listeners import (  # noqa: E402
+    SchemeThemeListener,  # noqa: F401
+)
 from .src.zukan_icon_theme.events.settings import SettingsEvent  # noqa: E402
 from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
 from .src.zukan_icon_theme.lib.move_folders import MoveFolder  # noqa: E402
-from .src.zukan_icon_theme.utils.file_extensions import (  # noqa: E402
-    SUBLIME_SYNTAX_EXTENSION,
-    SUBLIME_THEME_EXTENSION,
-    TMPREFERENCES_EXTENSION,
-)
 from .src.zukan_icon_theme.utils.zukan_paths import (  # noqa: E402
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
@@ -61,29 +59,6 @@ logger = logging.getLogger(__name__)
 
 
 def plugin_loaded():
-    # Check user theme, if has or not icon theme created. Then delete or create
-    # files if needed.
-    if (
-        os.path.exists(ZUKAN_PKG_ICONS_PATH)
-        and os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-        and os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        and (
-            any(
-                preference.endswith(TMPREFERENCES_EXTENSION)
-                for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-            )
-            or any(
-                syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
-                for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-            )
-            or any(
-                theme.endswith(SUBLIME_THEME_EXTENSION)
-                for theme in os.listdir(ZUKAN_PKG_ICONS_PATH)
-            )
-        )
-    ):
-        SettingsEvent.get_user_theme()
-
     # New install from repo clone, or when preferences or syntaxes folders do
     # not exist.
     if os.path.exists(ZUKAN_PKG_ICONS_PATH) and (
@@ -103,9 +78,6 @@ def plugin_loaded():
     # Package auto upgraded setting.
     SettingsEvent.upgrade_zukan_files()
 
-    # Check if user preferences changed.
-    SettingsEvent.user_preferences_changed()
-
     # Check if zukan preferences changed.
     SettingsEvent.zukan_preferences_changed()
 
@@ -120,5 +92,4 @@ def plugin_unloaded():
     MoveFolder.remove_created_folder(ZUKAN_PKG_PATH)
 
     # Clear 'add_on_change'
-    SettingsEvent.user_preferences_clear()
     SettingsEvent.zukan_preferences_clear()

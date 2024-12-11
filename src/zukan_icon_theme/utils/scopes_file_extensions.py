@@ -50,6 +50,10 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'text.plain.debug', 'file_extensions': ['pdb']},  # wwpdb.yaml
     {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # uv.yaml
     {'scope': 'text.xml', 'file_extensions': ['xml']},  # django.yaml
+    {
+        'scope': 'text.xml.sublime.snippet',
+        'file_extensions': ['Comments.tmPreferences'],
+    },  # sublime.yaml
 ]
 
 # Occurred cases
@@ -67,6 +71,7 @@ SCOPES_FILE_EXTENSIONS = [
 # - Fortran: package Fortran and Modern-Fortran use same file-extensions.
 # - F#: fs extension is used by OpenGL.
 # - PostCSS: Syntax Highlighting for PostCSS and Syntax Highlighting for SSS SugarSS use sss.
+# - Sublime: Package Plist highlight tmPreferences, also ST XML
 # - Unity: Package Unity Shader and Unity3D Shader Highlighter and Snippets same extensions.
 
 # Config files
