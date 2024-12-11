@@ -3,8 +3,8 @@ import os
 import sublime
 import sublime_plugin
 
+# from ..events.listeners import ThemeListener
 from ..events.install import InstallEvent
-from ..events.settings import SettingsEvent
 from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.edit_file_extension import edit_file_extension
 from ..helpers.load_save_settings import get_settings
@@ -181,8 +181,9 @@ class DeleteTheme(sublime_plugin.TextCommand):
             if sublime.ok_cancel_dialog(dialog_message) is True:
                 ZukanTheme.delete_icons_themes()
 
+        # Comment because change 'add_on_change' to event listener
         # Check if selected theme was deleted
-        SettingsEvent.get_user_theme()
+        # ThemeListener.get_user_theme()
 
     def input(self, args: dict):
         # print(args)
@@ -242,6 +243,14 @@ class InstallPreference(sublime_plugin.TextCommand):
                     )
                     sublime.message_dialog(dialog_message)
 
+                # Default icon
+                # Need to add '-dark' or 'light' that was removed to mount list
+                if p['preferences']['settings']['icon'][:-5] == file_name:
+                    file_name = p['preferences']['settings']['icon']
+
+                if p['preferences']['settings']['icon'][:-6] == file_name:
+                    file_name = p['preferences']['settings']['icon']
+
             ZukanPreference.build_icon_preference(file_name, preference_name)
 
         if preference_name == 'All':
@@ -273,8 +282,15 @@ class InstallPreferenceInputHandler(sublime_plugin.ListInputHandler):
 
         for p in new_list:
             if p['preferences'].get('scope') is not None:
+                # Default icon
+                icon_name = p['preferences']['settings']['icon']
+                if icon_name.endswith('-dark'):
+                    icon_name = icon_name[:-5]
+                if icon_name.endswith('-light'):
+                    icon_name = icon_name[:-6]
+
                 list_preferences_not_installed.append(
-                    p['preferences']['settings']['icon'] + TMPREFERENCES_EXTENSION
+                    icon_name + TMPREFERENCES_EXTENSION
                 )
         list_preferences_not_installed = list(
             set(list_preferences_not_installed).difference(
@@ -428,8 +444,9 @@ class InstallTheme(sublime_plugin.TextCommand):
 
             ZukanTheme.create_icons_themes()
 
+        # Comment because change 'add_on_change' to event listener
         # Check if selected theme was installed
-        SettingsEvent.get_user_theme()
+        # ThemeListener.get_user_theme()
 
     def input(self, args: dict):
         return InstallThemeInputHandler()

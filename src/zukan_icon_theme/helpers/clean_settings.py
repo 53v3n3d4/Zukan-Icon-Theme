@@ -18,6 +18,7 @@ def clean_comments_settings(zukan_sublime_settings: str):
                 # clean_file = re.sub(r'(\t\t)\/[^)]*\/', '', clean_file)
                 clean_file = re.sub(r'/\*(?:\*(?!/)|[^*])*\*/', '', clean_file)
                 clean_file = clean_file.replace('\t\t\n', '')
+                clean_file = os.linesep.join([s for s in clean_file.splitlines() if s])
             with open(zukan_sublime_settings, 'w') as f:
                 f.write(clean_file)
             # print('clean settings')

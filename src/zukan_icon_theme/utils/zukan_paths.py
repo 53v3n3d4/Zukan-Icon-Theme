@@ -82,6 +82,13 @@ ZUKAN_PKG_SUBLIME_PATH = os.path.join(PACKAGES_PATH, PACKAGE_NAME, 'sublime')
 
 # Zukan file paths
 
+# USER_CURRENT_UI_FILE = os.path.join(
+#     sublime.packages_path(), PACKAGE_NAME, 'sublime', 'user_ui_settings' + PICKLE_EXTENSION
+# )
+USER_CURRENT_UI_FILE = os.path.join(
+    PACKAGES_PATH, PACKAGE_NAME, 'sublime', 'user_ui_settings' + PICKLE_EXTENSION
+)
+
 # ZUKAN_INSTALLED_PKG_PATH = os.path.join(
 #     sublime.installed_packages_path(), PACKAGE_NAME + SUBLIME_PACKAGE_EXTENSION
 # )

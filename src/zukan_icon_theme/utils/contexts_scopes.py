@@ -41,6 +41,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'text.html.basic', 'startsWith': 'HTML ('},
     {'scope': 'text.html.markdown', 'startsWith': 'Markdown ('},
     # {'scope': 'text.plain', 'startsWith': 'Plain Text ('},
+    {'scope': 'text.plist', 'startsWith': 'Plist ('},
     {'scope': 'text.xml', 'startsWith': 'XML ('},
     # Specific file
     {'scope': 'source.clojure', 'startsWith': 'Babashka'},
