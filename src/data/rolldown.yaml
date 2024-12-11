@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Rolldown
+preferences:
+  scope: source.js.rolldown
+  settings:
+    icon: rolldown
+syntax:
+  - name: JavaScript (Rolldown)
+    scope: source.js.rolldown
+    hidden: true
+    file_extensions:
+      - rolldown.config.js
+      - rolldown.config.cjs
+      - rolldown.config.mjs
+    contexts:
+      main:
+        - include: scope:source.js
+          apply_prototype: true

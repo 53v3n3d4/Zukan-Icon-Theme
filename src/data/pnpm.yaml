@@ -10,6 +10,7 @@ syntax:
     scope: source.js.pnpm
     hidden: true
     file_extensions:
+      - .pnpmfile.cjs
       - pnpmfile.cjs
     contexts:
       main:

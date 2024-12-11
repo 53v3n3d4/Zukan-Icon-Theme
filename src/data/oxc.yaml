@@ -1,0 +1,26 @@
+%YAML 1.2
+---
+name: Oxc
+preferences:
+  scope: source.json.oxc, text.git.ignore.oxc
+  settings:
+    icon: oxc
+syntax:
+  - name: Git (Oxc)
+    scope: text.git.ignore.oxc
+    hidden: true
+    file_extensions:
+      - .oxlintignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
+  - name: JSON (Oxc)
+    scope: source.json.oxc
+    hidden: true
+    file_extensions:
+      - .oxlintrc.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
