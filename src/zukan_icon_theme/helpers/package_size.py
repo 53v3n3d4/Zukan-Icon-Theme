@@ -53,6 +53,8 @@ def file_size(size: int, suffix='B'):
     """
     for unit in ('', 'K', 'M', 'G', 'T', 'P', 'E', 'Z'):
         if abs(size) < 1024.0:
-            return f'{size:3.1f}{unit}{suffix}'
+            return '{s:3.1f}{u}{x}'.format(s=size, u=unit, x=suffix)
+            # return f'{size:3.1f}{unit}{suffix}'
         size /= 1024.0
-    return f'{size:.1f}Yi{suffix}'
+    return '{s:.1f}Yi{x}'.format(s=size, x=suffix)
+    # return f'{size:.1f}Yi{suffix}'

@@ -38,9 +38,6 @@ from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
     ResetIconCommand,  # noqa: F401
     SelectPreferIconCommand,  # noqa: F401
 )
-from .src.zukan_icon_theme.commands.scheme_color import (  # noqa: E402
-    SchemeBackgroundColorCommand,  # noqa: F401
-)
 from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
 from .src.zukan_icon_theme.events.listeners import (  # noqa: E402
     SchemeThemeListener,  # noqa: F401
