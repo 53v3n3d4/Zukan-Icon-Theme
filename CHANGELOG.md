@@ -23,6 +23,7 @@
 - Change get_user_theme
 - Remove `add_on_change` and `clear_on_change` for User Preferences
 - Add SchemeThemeListener event listener
+- Rename commands and command_settings, add 'Command' word
 
 ## [0.3.4] - 2024-10-22
 - Fix update version in settings

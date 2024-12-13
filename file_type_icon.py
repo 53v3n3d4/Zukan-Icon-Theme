@@ -15,28 +15,31 @@ del prefix
 
 
 from .src.zukan_icon_theme.commands.commands import (  # noqa: E402
-    DeletePreference,  # noqa: F401
-    DeleteSyntax,  # noqa: F401
-    DeleteTheme,  # noqa: F401
-    InstallPreference,  # noqa: F401
-    InstallSyntax,  # noqa: F401
-    InstallTheme,  # noqa: F401
-    RebuildFiles,  # noqa: F401
+    DeletePreferenceCommand,  # noqa: F401
+    DeleteSyntaxCommand,  # noqa: F401
+    DeleteThemeCommand,  # noqa: F401
+    InstallPreferenceCommand,  # noqa: F401
+    InstallSyntaxCommand,  # noqa: F401
+    InstallThemeCommand,  # noqa: F401
+    RebuildFilesCommand,  # noqa: F401
 )
 from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
-    ChangeFileExtension,  # noqa: F401
-    ChangeIcon,  # noqa: F401
-    CleanComments,  # noqa: F401
-    CreateCustomIcon,  # noqa: F401
-    DeleteCustomIcon,  # noqa: F401
-    DisableIcon,  # noqa: F401
-    DisableTheme,  # noqa: F401
-    EnableIcon,  # noqa: F401
-    EnableTheme,  # noqa: F401
-    RemovePreferIcon,  # noqa: F401
-    ResetFileExtension,  # noqa: F401
-    ResetIcon,  # noqa: F401
-    SelectPreferIcon,  # noqa: F401
+    ChangeFileExtensionCommand,  # noqa: F401
+    ChangeIconCommand,  # noqa: F401
+    CleanCommentsCommand,  # noqa: F401
+    CreateCustomIconCommand,  # noqa: F401
+    DeleteCustomIconCommand,  # noqa: F401
+    DisableIconCommand,  # noqa: F401
+    DisableThemeCommand,  # noqa: F401
+    EnableIconCommand,  # noqa: F401
+    EnableThemeCommand,  # noqa: F401
+    RemovePreferIconCommand,  # noqa: F401
+    ResetFileExtensionCommand,  # noqa: F401
+    ResetIconCommand,  # noqa: F401
+    SelectPreferIconCommand,  # noqa: F401
+)
+from .src.zukan_icon_theme.commands.scheme_color import (  # noqa: E402
+    SchemeBackgroundColorCommand,  # noqa: F401
 )
 from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
 from .src.zukan_icon_theme.events.listeners import (  # noqa: E402

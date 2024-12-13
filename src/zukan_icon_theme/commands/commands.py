@@ -31,7 +31,7 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-class DeletePreference(sublime_plugin.TextCommand):
+class DeletePreferenceCommand(sublime_plugin.TextCommand):
     """
     Sublime command to delete preference from a list of created preferences.
     """
@@ -81,7 +81,7 @@ class DeletePreferenceInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class DeleteSyntax(sublime_plugin.TextCommand):
+class DeleteSyntaxCommand(sublime_plugin.TextCommand):
     """
     Sublime command to delete syntax from a list of created syntaxes.
     """
@@ -131,7 +131,7 @@ class DeleteSyntaxInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class DeleteTheme(sublime_plugin.TextCommand):
+class DeleteThemeCommand(sublime_plugin.TextCommand):
     """
     Sublime command to delete theme from a list of created themes.
     """
@@ -213,7 +213,7 @@ class DeleteThemeInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class InstallPreference(sublime_plugin.TextCommand):
+class InstallPreferenceCommand(sublime_plugin.TextCommand):
     """
     Sublime command to create preference from zukan preferences list.
     """
@@ -308,7 +308,7 @@ class InstallPreferenceInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class InstallSyntax(sublime_plugin.TextCommand):
+class InstallSyntaxCommand(sublime_plugin.TextCommand):
     """
     Sublime command to create syntax from zukan syntaxes list.
     """
@@ -398,7 +398,7 @@ class InstallSyntaxInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class InstallTheme(sublime_plugin.TextCommand):
+class InstallThemeCommand(sublime_plugin.TextCommand):
     """
     Sublime command to create theme from a list of installed themes.
     """
@@ -483,7 +483,7 @@ class InstallThemeInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class RebuildFiles(sublime_plugin.ApplicationCommand):
+class RebuildFilesCommand(sublime_plugin.ApplicationCommand):
     """
     Sublime command to rebuild sublime-themes and sublime-syntaxes.
     """

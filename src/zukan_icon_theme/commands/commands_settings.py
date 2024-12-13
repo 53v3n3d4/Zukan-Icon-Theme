@@ -29,7 +29,7 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-class ChangeFileExtension(sublime_plugin.TextCommand):
+class ChangeFileExtensionCommand(sublime_plugin.TextCommand):
     """
     Sublime command to change icon file extension.
     """
@@ -190,7 +190,7 @@ class ChangeFileExtensionExtsInputHandler(sublime_plugin.TextInputHandler):
             return sublime_plugin.BackInputHandler()
 
 
-class ChangeIcon(sublime_plugin.TextCommand):
+class ChangeIconCommand(sublime_plugin.TextCommand):
     """
     Sublime command to change icon.
     """
@@ -283,7 +283,7 @@ class ChangeIconFileInputHandler(sublime_plugin.TextInputHandler):
             return sublime_plugin.BackInputHandler()
 
 
-class CleanComments(sublime_plugin.TextCommand):
+class CleanCommentsCommand(sublime_plugin.TextCommand):
     """
     Sublime command to clean commanets in Zukan Icon Theme.sublime-settings.
     """
@@ -292,7 +292,7 @@ class CleanComments(sublime_plugin.TextCommand):
         clean_comments_settings(ZUKAN_USER_SUBLIME_SETTINGS)
 
 
-class CreateCustomIcon(sublime_plugin.TextCommand):
+class CreateCustomIconCommand(sublime_plugin.TextCommand):
     """
     Sublime command to create custom icon.
     """
@@ -567,7 +567,7 @@ class CreateCustomIconContextsInputHandler(sublime_plugin.TextInputHandler):
             return sublime_plugin.BackInputHandler()
 
 
-class DeleteCustomIcon(sublime_plugin.TextCommand):
+class DeleteCustomIconCommand(sublime_plugin.TextCommand):
     """
     Sublime command to delete customized icon.
     """
@@ -623,7 +623,7 @@ class DeleteCustomIconInputHandler(sublime_plugin.ListInputHandler):
             raise TypeError(logger.info('customized icon not found, list is empty.'))
 
 
-class DisableIcon(sublime_plugin.TextCommand):
+class DisableIconCommand(sublime_plugin.TextCommand):
     """
     Sublime command to disable icon from a list of Zukan icons.
     """
@@ -694,7 +694,7 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class DisableTheme(sublime_plugin.TextCommand):
+class DisableThemeCommand(sublime_plugin.TextCommand):
     """
     Sublime command to disable theme from a list of installed themes.
     """
@@ -743,7 +743,7 @@ class DisableThemeInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class EnableIcon(sublime_plugin.TextCommand):
+class EnableIconCommand(sublime_plugin.TextCommand):
     """
     Sublime command to enable icon from a list of ignored icons.
     """
@@ -794,7 +794,7 @@ class EnableIconInputHandler(sublime_plugin.ListInputHandler):
             raise TypeError(logger.info('no icons ignored, list is empty.'))
 
 
-class EnableTheme(sublime_plugin.TextCommand):
+class EnableThemeCommand(sublime_plugin.TextCommand):
     """
     Sublime command to enable theme from a list of ignored themes.
     """
@@ -843,7 +843,7 @@ class EnableThemeInputHandler(sublime_plugin.ListInputHandler):
             raise TypeError(logger.info('no themes ignored, list is empty.'))
 
 
-class RemovePreferIcon(sublime_plugin.TextCommand):
+class RemovePreferIconCommand(sublime_plugin.TextCommand):
     """
     Sublime command to remove prefer icon.
     """
@@ -902,7 +902,7 @@ class RemovePreferIconInputHandler(sublime_plugin.ListInputHandler):
             raise TypeError(logger.info('no prefer icons to remove, list is empty.'))
 
 
-class ResetFileExtension(sublime_plugin.TextCommand):
+class ResetFileExtensionCommand(sublime_plugin.TextCommand):
     """
     Sublime command to reset icon file extension.
     """
@@ -987,7 +987,7 @@ class ResetFileExtensionInputHandler(sublime_plugin.ListInputHandler):
             )
 
 
-class ResetIcon(sublime_plugin.TextCommand):
+class ResetIconCommand(sublime_plugin.TextCommand):
     """
     Sublime command to reset icon.
     """
@@ -1046,7 +1046,7 @@ class ResetIconInputHandler(sublime_plugin.ListInputHandler):
             raise TypeError(logger.info('no icons to reset, list is empty.'))
 
 
-class SelectPreferIcon(sublime_plugin.TextCommand):
+class SelectPreferIconCommand(sublime_plugin.TextCommand):
     """
     Sublime command to prefer icon.
     """
