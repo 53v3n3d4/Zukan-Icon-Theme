@@ -88,12 +88,17 @@ class InstallEvent:
                 '\n\n'.format(v=version)
             )
 
-        t = threading.Thread(target=InstallEvent.install_syntaxes_preferences)
-        t.start()
-        ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
+        try:
+            # Copy icons_data and icons folder
+            MoveFolder.move_folders()
 
-        logger.info('upgrading Zukan icons to v%s.', version)
-        logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
+        finally:
+            t = threading.Thread(target=InstallEvent.install_syntaxes_preferences)
+            t.start()
+            ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
+
+            logger.info('upgrading Zukan icons to v%s.', version)
+            logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
 
     def rebuild_icon_files_thread():
         """
