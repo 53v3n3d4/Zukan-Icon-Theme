@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.1] - 2024
+## [0.4.1] - 2024-12-15
 
 ### Plugin 🕹️
 - Undo extract_remove_folder -> extract_folder, 'ignored_packaged' delete zukan folder in Packages.
