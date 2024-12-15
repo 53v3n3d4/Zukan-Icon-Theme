@@ -9,7 +9,8 @@ from bisect import bisect
 
 
 # Code from link below.
-# https://stackoverflow.com/questions/14844970/modifying-logging-message-format-based-on-message-logging-level-in-python3
+# https://stackoverflow.com/questions/14844970/
+# modifying-logging-message-format-based-on-message-logging-level-in-python3
 class LevelFormatter(logging.Formatter):
     """
     Different formatters for each level.

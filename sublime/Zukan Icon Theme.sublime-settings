@@ -11,17 +11,51 @@
     // Turn to false, if do not want to display this diablog.
     "zukan_restart_message": true,
 
+    // Plugin tries to auto indentify sidebar background
+    // color. With that select icon, dark or light.
+    //
+    // There are several cases, currently, that plugin can 
+    // select a not ideal icon, when theme uses:
+    // - Sublime color mod function
+    // - Color has an alpha channel. I.e., shorthand Hex with
+    // alpha, RGBA or HSLA
+    // - HWB
+    // - Shorthand Hex
+    // - accent
+    // - foreground
+    // - Multiple entries for class sidebar_container and 
+    // layer0.tint. Plugin get the first.
+    // - Legacy Color Syntax
+    //
+    // Plugin, currently, can label a sidebar background, when
+    // theme uses:
+    // - Hex colors
+    // - HSL colors, S and L in percentages with or without
+    // percentage symbol
+    // - Hexa and HSLA colors, alpha channel is discarted
+    // - ST colors listed on sublime docs
+    // - backgorund
+    //
+    // Turn to false to not auto prefer icon. Default is
+    // true.
+    //
+    "auto_prefer_icon": true,
+
     // This option can select a dark or light version of
     // an icon for a theme.
     //
     // Not all icons have a dark and light icon.
     //
-    // Options: 'dark' and 'light'. Select a dark icon if 
-    // theme has a light background color. And a light 
-    // icon if theme has a dark background color.
+    // Options:
+    // - dark
+    // - light
+    //
+    // Select a dark icon if theme has a light background
+    // color. And light icon if theme has a dark 
+    // background color.
     //
     // This option overrides 'change_icon'. The 'prefer_icon' 
-    // run after 'change_icon'.
+    // runs after 'change_icon'.
     //
     // Example: {
     //     "Treble Dark.sublime-theme": "light", 
@@ -64,11 +98,11 @@
     //
     // Examples: {
     //     "Angular": "angular-1",
-    //     "Cert. Authentication": "cert-1",
+    //     "Cert. Authentication": "cert-1-dark",
     //     "Composer": "composer-1",
     //     "Composer": "composer-2",
     //     "C#": "csharp-1",
-    //     "DirectX": "directx-1",
+    //     "DirectX": "directx-1-dark",
     //     "Go": "go-1",
     //     "Image": "file_type_image-1",
     //     "LLVM": "llvm-1",
@@ -77,6 +111,7 @@
     //     "Python": "python-1",
     //     "Ruff": "ruff-1",
     //     "Rust": "rust-1",
+    //     "Rust": "rust-2",
     //     "SolidJS": "solidstart",
     //     "Sublime Text": "sublime-1"
     // }
@@ -236,22 +271,9 @@
     "ignored_theme": [],
 
     // This option will auto install theme in the following
-    // cases:
-    // - ST function 'add_on_change' is triggered by
-    // 'Preferences.sublime-settings'
-    // - ST start
-    //
-    // If true, commands below will have no effect since
-    // themes will be created after deleted:
-    // - 'Zukan Icon Theme: Delete Theme'
-    // - 'Zukan Icon Theme: Install Theme'
-    //
-    // Other commands continue to work, for example delete
-    // and install preference.
-    //
-    // Command 'Zukan Icon Theme: Delete Syntax' works, but
-    // since ST activate 'add_on_change', will be followed by
-    // theme install.
+    // case:
+    // - When a select theme do not show icons because
+    // there is not an icon theme file.
     //
     // Default is false.
     "auto_install_theme": false,

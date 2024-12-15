@@ -74,25 +74,25 @@ class InstallEvent:
         version = get_settings(ZUKAN_SETTINGS, 'version')
         zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
-        if zukan_restart_message is True:
-            dialog_message = (
-                'Zukan icons has been upgraded to v{v}.\n\n'
-                'Changelog in Sublime Text > Settings > Package Settings menu.\n\n'
-                'You may have to restart ST, if all icons do not load correct in '
-                'current theme.'.format(v=version)
-            )
-        if zukan_restart_message is False:
-            dialog_message = (
-                'Zukan icons has been upgraded to v{v}.\n\n'
-                'Changelog in Sublime Text > Settings > Package Settings menu.'
-                '\n\n'.format(v=version)
-            )
-
         try:
-            # Copy icons_data and icons folder
+            # Copy new icons_data and icons folder
             MoveFolder.move_folders()
 
         finally:
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'Zukan icons has been upgraded to v{v}.\n\n'
+                    'Changelog in Sublime Text > Settings > Package Settings menu.\n\n'
+                    'You may have to restart ST, if all icons do not load correct in '
+                    'current theme.'.format(v=version)
+                )
+            if zukan_restart_message is False:
+                dialog_message = (
+                    'Zukan icons has been upgraded to v{v}.\n\n'
+                    'Changelog in Sublime Text > Settings > Package Settings menu.'
+                    '\n\n'.format(v=version)
+                )
+
             t = threading.Thread(target=InstallEvent.install_syntaxes_preferences)
             t.start()
             ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)

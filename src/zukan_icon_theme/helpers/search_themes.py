@@ -2,8 +2,19 @@ import logging
 import re
 import sublime
 
+from ..helpers.icon_dark_light import (
+    convert_to_rgb,
+    extract_numbers_from_hsl,
+    icon_dark_light,
+    st_colors_to_hex,
+)
+from ..helpers.read_write_data import read_pickle_data
+from ..utils.st_color_palette import (
+    ST_COLOR_PALETTE,
+)
 from ..utils.zukan_paths import (
     PKG_ZUKAN_ICON_THEME_FOLDER,
+    USER_CURRENT_UI_FILE,
 )
 
 logger = logging.getLogger(__name__)
@@ -66,6 +77,129 @@ def package_theme_exists(theme_name: str) -> bool:
             return False
 
 
+def find_variable(
+    var_value: str, theme_content: str, target_list: list, theme: str
+) -> list:
+    """
+    Recursively find variable value. Filter for HSL, RGB, Hex, background and
+    ST colors to return dark/light, depending on color HSP.
+
+    Paramenters:
+    var_value (str) -- variable name.
+    theme_content (dict) -- parsed json file, sublime-theme.
+    target_list (list) -- list if theme and its hidden themes have
+    attributes or value.
+    theme (str) -- path theme name.
+
+    Returns:
+    target_list (list) -- 'dark' or 'light' depending on color HSP.
+    """
+    regex_hsl = (
+        r'hsla?\((\d{1,3}),\s*(\d+)(?:%)?\s*,\s*(\d+)(?:%)?\s*(?:,'
+        '\s*([01]?\d(\.\d+)?|1(\.0+)?))?\)'
+    )
+    regex_rgb = (
+        r'rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})(?:,'
+        '\s*([01]?\d(\.\d+)?|1(\.0+)?))?\)'
+    )
+    regex_hex = r'#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{8})'
+
+    # icon_dark_light need to check
+    # Default and Dark Default gives HSP = 124.12283073381384.
+    # HSP 127,5 is the formula limit to select dark or light.
+    # It choose icon light for both themes.
+    #
+    # Ensuring here until fix icon_dark_light
+    if theme == 'Packages/Theme - Default/Default.sublime-theme':
+        dark_light = 'dark'
+
+        target_list.append(dark_light)
+
+    # HSL and HSLA
+    elif re.match(regex_hsl, var_value):
+        result = re.findall(regex_hsl, var_value)
+        # print(isinstance(result, str))
+        # print(result[0])
+
+        if result:
+            for r in result:
+                hue, sat, lum, alpha = r[0], r[1], r[2], r[3]
+
+                hsl_color = 'hsl({h}, {s}%, {l}%)'.format(h=hue, s=sat, l=lum)
+
+                if alpha:
+                    hsl_color = 'hsla({h}, {s}%, {l}%, {a})'.format(
+                        h=hue, s=sat, l=lum, a=alpha
+                    )
+
+        dark_light = icon_dark_light(convert_to_rgb(hsl_color))
+
+        target_list.append(dark_light)
+
+    # RGB and RGBA
+    elif re.match(regex_rgb, var_value):
+        result = re.findall(regex_rgb, var_value)
+
+        if result:
+            for r in result:
+                red, green, blue, alpha = r[0], r[1], r[2], r[3]
+
+                rgb_color = 'rgb({r}, {g}, {b})'.format(r=red, g=green, b=blue)
+
+                if alpha:
+                    rgb_color = 'rgba({r}, {g}, {b}, {a})'.format(
+                        r=red, g=green, b=blue, a=alpha
+                    )
+
+        dark_light = icon_dark_light(convert_to_rgb(rgb_color))
+
+        target_list.append(dark_light)
+
+    # Hex and Hexa
+    elif re.match(regex_hex, var_value):
+        hex_color = re.findall(regex_hex, var_value)
+        # print(hex_color[0])
+
+        dark_light = icon_dark_light(convert_to_rgb(hex_color[0]))
+
+        target_list.append(dark_light)
+
+    # Background
+    elif 'var(--background)' in var_value:
+        # Get color scheme background and append
+        data = read_pickle_data(USER_CURRENT_UI_FILE)
+        bgcolor = [d.get('background') for d in data]
+
+        dark_light = icon_dark_light(convert_to_rgb(bgcolor[0]))
+
+        target_list.append(dark_light)
+
+    # ST color palette
+    # E.g. aliceblue
+    elif any(var_value in d for d in ST_COLOR_PALETTE):
+        st_color = var_value
+
+        dark_light = icon_dark_light(convert_to_rgb(st_colors_to_hex(st_color)))
+
+        target_list.append(dark_light)
+
+    elif 'var' in var_value:
+        logger.debug('searching in variables.')
+
+        if 'variables' in theme_content:
+            for k, v in theme_content['variables'].items():
+                var_name = re.findall(r'var\(([^)]+)\)', var_value)
+
+                if k == var_name[0]:
+                    logger.debug('recursive find variables.')
+                    # print(v)
+
+                    find_variable(v, theme_content, target_list, theme)
+
+    else:
+        logger.debug('failed to find sidebar background.')
+
+
 def find_attributes(
     theme: str,
     theme_content: dict,
@@ -113,9 +247,12 @@ def find_attributes(
                         target_list.append(True)
 
         # Find sidebar background
-        if not class_parent:
+        if not class_parent and i.get(target_key):
             logger.debug('%s sidebar layer0.tint is ', theme)
-            target_list.append(i.get(target_key))
+            # print(theme)
+            # print(i.get(target_key))
+
+            find_variable(i.get(target_key), theme_content, target_list, theme)
 
 
 def find_attributes_hidden_file(
@@ -215,3 +352,41 @@ def theme_with_opacity(theme_name: str) -> bool:
         return True
     else:
         return False
+
+
+def find_sidebar_background(theme_name: str) -> list:
+    """
+    Find sidebar background color and return 'dark' or 'light', depending on
+    color HSP.
+
+    It search in sublime theme files for class 'sidebar_container' and key
+    'layer0.tint'.
+
+    Parameters:
+    theme_name (str) -- theme name.
+
+    Returns:
+    target_list (list) -- 'dark' or 'light' depending on color HSP.
+    """
+    class_name = 'sidebar_container'
+    target_key = 'layer0.tint'
+    target_list = []
+    theme_content = sublime.decode_value(sublime.load_resource(theme_name))
+    find_attributes(
+        theme_name,
+        theme_content,
+        class_name,
+        target_key,
+        target_list,
+    )
+    if 'extends' in theme_content:
+        find_attributes_hidden_file(
+            theme_name,
+            theme_content,
+            class_name,
+            target_key,
+            target_list,
+        )
+
+    # print(target_list)
+    return target_list

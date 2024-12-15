@@ -26,6 +26,8 @@
 - Rename commands and command_settings, add 'Command' word
 - Change extract_folder -> extract_remove_folder
 - Fix not copying icons and icons_data when upgrading sublime-package
+- Add icon_dark_light
+- Add auto_prefer_icon setting
 
 ## [0.3.4] - 2024-10-22
 - Fix update version in settings

@@ -79,6 +79,4 @@ def extract_remove_folder(
 
     except Exception:
         shutil.rmtree(tempdir)
-        logger.exception(
-            'error occurred while extracting the sublime-package file.'
-        )
+        logger.exception('error occurred while extracting the sublime-package file.')

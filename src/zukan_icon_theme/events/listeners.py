@@ -32,8 +32,19 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-def save_current_ui_settings(current_theme: str, current_color_scheme: str):
+def save_current_ui_settings(
+    color_scheme_background: str, current_theme: str, current_color_scheme: str
+):
+    """
+    Save current user UI theme and color-scheme.
+
+    Parameters:
+    color_scheme_background (str) - color scheme background.
+    current_theme (str) -- user theme in Preferences.
+    current_color_scheme (str) -- user color-scheme in Preferences.
+    """
     current_ui_settings = {}
+    current_ui_settings.update({'background': color_scheme_background})
     current_ui_settings.update({'theme': current_theme})
     current_ui_settings.update({'color_scheme': current_color_scheme})
 
@@ -48,11 +59,6 @@ def remove_orphan_icon_theme():
     """
     Remove orphan icon theme file.
     """
-
-    # Compare a list of installed themes to a list of
-    # created icon themes.
-    # Remove icon themes files that are not present
-    # in installed themes
     list_all_themes = search_resources_sublime_themes()
     list_icon_themes = ZukanTheme.list_created_icons_themes()
 
@@ -72,27 +78,26 @@ def remove_orphan_icon_theme():
 class ThemeListener:
     def get_user_theme():
         """
-        Using sublime function 'add_on_change' to know when 'Preferences' settings
-        is activated.
+        This function will act, when theme or zukan settings change, then
+        create or delete syntaxes and preferences for a icon theme.
 
-        This also activate when syntax is created or deleted, Seems when ST write to
-        console 'generating syntax summary' trigger 'Preferences'.
+        It auto creates themes if setting 'auto_install_theme' is set to True.
+        And do not create theme if theme name in 'ignored_theme' setting.
 
-        This function will check if theme changed then create or delete syntaxes
-        and preferences for a icon theme.
-
-        It creates themes if setting 'auto_install_theme' is set to True. And
-        do not create theme if theme name in 'ignored_theme' setting.
+        It also used to select an icon version, dark or light, for a theme.
         """
         logger.debug('Preferences.sublime-settings changed')
 
-        theme_name = get_settings(USER_SETTINGS, 'theme')
         auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
-        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
-        icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
-        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
-        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
+        color_scheme_name = get_settings(USER_SETTINGS, 'color_scheme')
         data = read_pickle_data(USER_CURRENT_UI_FILE)
+        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
+        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+        theme_name = get_settings(USER_SETTINGS, 'theme')
+        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+
+        icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
 
         if not isinstance(ignored_theme, list):
             logger.warning('ignored_theme option malformed, need to be a string list')
@@ -116,21 +121,22 @@ class ThemeListener:
                 ZukanPreference.delete_icons_preferences()
 
         # 'auto_install_theme' setting
-        # Commands 'Delete Syntax', 'Delete Syntaxes', 'Install Syntax' and
-        # 'Rebuild Syntaxes' are triggered here and build themes.
-        #
         # Creating icon theme if does not exist.
-        if auto_install_theme is True and not os.path.exists(icon_theme_file):
-            if package_theme_exists(theme_name) and theme_name not in ignored_theme:
-                theme_path = sublime.find_resources(theme_name)
-                ZukanTheme.create_icon_theme(theme_path[0])
+        if (
+            auto_install_theme is True
+            and not os.path.exists(icon_theme_file)
+            and package_theme_exists(theme_name)
+            and theme_name not in ignored_theme
+        ):
+            theme_path = sublime.find_resources(theme_name)
+            ZukanTheme.create_icon_theme(theme_path[0])
 
-                if zukan_restart_message is True:
-                    dialog_message = (
-                        'You may have to restart ST, if all icons do not load in '
-                        'current theme.'
-                    )
-                    sublime.message_dialog(dialog_message)
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'You may have to restart ST, if all icons do not load in '
+                    'current theme.'
+                )
+                sublime.message_dialog(dialog_message)
 
         # Delete orphan icon theme files
         remove_orphan_icon_theme()
@@ -141,12 +147,24 @@ class ThemeListener:
         ):
             # Build preferences if icons_preferences empty or if theme
             # in 'prefer_icon' option
-            if not any(
-                preferences.endswith(TMPREFERENCES_EXTENSION)
-                for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-            ) or (
-                theme_name in prefer_icon
-                and not any(d['theme'] == theme_name for d in data)
+            if (
+                not any(
+                    preferences.endswith(TMPREFERENCES_EXTENSION)
+                    for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+                )
+                or (
+                    theme_name in prefer_icon
+                    and not any(d['theme'] == theme_name for d in data)
+                )
+                or (
+                    # 'auto_prefer_icon' setting
+                    auto_prefer_icon is True
+                    and theme_name not in prefer_icon
+                    and (
+                        not any(d['theme'] == theme_name for d in data)
+                        or not any(d['color_scheme'] == color_scheme_name for d in data)
+                    )
+                )
             ):
                 threading.Thread(target=ZukanPreference.build_icons_preferences).start()
 
@@ -177,11 +195,11 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
     """
 
     def on_activated_async(self):
-        # Use async: error, click to select UI Select UI Color Scheme / Theme does not
+        # Use async: click to select UI Select UI Color Scheme / Theme does not
         # activate. Use 'enter' to select works. Seems happen with other functions.
         # With async seems not occurr.
 
-        # color_scheme_background = self.view.style()['background']
+        color_scheme_background = self.view.style()['background']
         current_color_scheme = self.view.settings().get('color_scheme')
         current_theme = self.view.settings().get('theme')
 
@@ -191,13 +209,16 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
 
         # create setting file with current ui if does not exist
         if not os.path.exists(USER_CURRENT_UI_FILE):
-            save_current_ui_settings(current_theme, current_color_scheme)
+            save_current_ui_settings(
+                color_scheme_background, current_theme, current_color_scheme
+            )
 
         if os.path.exists(USER_CURRENT_UI_FILE):
             data = read_pickle_data(USER_CURRENT_UI_FILE)
 
             if (
                 not any(d['theme'] == current_theme for d in data)
+                or not any(d['color_scheme'] == current_color_scheme for d in data)
                 or current_theme not in ZukanTheme.list_created_icons_themes()
                 or current_theme in ignored_theme
                 or (auto_install_theme is True and not os.path.exists(icon_theme_file))
@@ -228,4 +249,6 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 logger.debug('SchemeTheme ViewListener on_activated_async')
 
                 # update current ui
-                save_current_ui_settings(current_theme, current_color_scheme)
+                save_current_ui_settings(
+                    color_scheme_background, current_theme, current_color_scheme
+                )
