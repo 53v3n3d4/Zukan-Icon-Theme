@@ -3,7 +3,7 @@ import logging
 import os
 import shutil
 
-from ..helpers.read_extract_zip import extract_remove_folder
+from ..helpers.read_extract_zip import extract_folder
 from ..utils.zukan_paths import (
     ZUKAN_INSTALLED_PKG_PATH,
     ZUKAN_PKG_ICONS_PATH,
@@ -35,7 +35,7 @@ class MoveFolder:
                 logger.debug('Zukan exist in Installed folder.')
                 if not os.path.exists(ZUKAN_PKG_PATH):
                     os.makedirs(ZUKAN_PKG_PATH)
-                extract_remove_folder(name, ZUKAN_PKG_PATH)
+                extract_folder(name, ZUKAN_PKG_PATH)
                 logger.info('%s folder moved to Packages.', name)
                 return name
             else:
