@@ -21,8 +21,7 @@
     // alpha, RGBA or HSLA
     // - HWB
     // - Shorthand Hex
-    // - accent
-    // - foreground
+    // - Derived colors: accent, foreground
     // - Multiple entries for class sidebar_container and 
     // layer0.tint. Plugin get the first.
     // - Legacy Color Syntax
@@ -38,7 +37,6 @@
     //
     // Turn to false to not auto prefer icon. Default is
     // true.
-    //
     "auto_prefer_icon": true,
 
     // This option can select a dark or light version of

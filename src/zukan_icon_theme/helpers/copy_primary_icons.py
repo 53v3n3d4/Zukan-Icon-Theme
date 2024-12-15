@@ -1,8 +1,10 @@
 import logging
 import os
 import shutil
+import sublime
 
 from ..helpers.load_save_settings import get_settings
+from ..helpers.search_themes import find_sidebar_background
 from ..utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,
@@ -36,12 +38,17 @@ def copy_primary_icons():
     """
     # Not checking if 'ignored_icon' is a list or 'change_icon' a dict, because they
     # are used after create syntaxes or preferences. Those are being check there.
-    ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+    auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
     change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
+    ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
     prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
 
     # Get current user theme
     theme_name = get_settings(USER_SETTINGS, 'theme')
+
+    # Color scheme background
+    theme_st_path = sublime.find_resources(theme_name)
+    bgcolor = find_sidebar_background(theme_st_path[0])
 
     for p in PRIMARY_ICONS:
         for s in ICONS_SUFFIX:
@@ -100,9 +107,13 @@ def copy_primary_icons():
 
                     elif p[0] not in change_icon.keys():
                         # Icon light or dark
-                        if theme_name in prefer_icon and i.rsplit('-', 1)[
-                            1
-                        ] == prefer_icon.get(theme_name):
+                        if (
+                            theme_name in prefer_icon
+                            and i.rsplit('-', 1)[1] == prefer_icon.get(theme_name)
+                        ) or (
+                            theme_name not in prefer_icon
+                            and i.rsplit('-', 1)[1] == bgcolor[0]
+                        ):
                             logger.debug(
                                 '%s not in change_icon, copying prefer icon %s%s',
                                 p[0],
@@ -119,7 +130,7 @@ def copy_primary_icons():
                                 ),
                             )
 
-                        elif theme_name not in prefer_icon:
+                        elif theme_name not in prefer_icon and not auto_prefer_icon:
                             logger.debug(
                                 '%s not in change_icon, copying default %s%s',
                                 p[0],

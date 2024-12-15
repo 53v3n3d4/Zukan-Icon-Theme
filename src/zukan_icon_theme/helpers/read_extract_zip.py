@@ -6,7 +6,7 @@ import tempfile
 from ..utils.zukan_paths import (
     ZUKAN_INSTALLED_PKG_PATH,
 )
-from zipfile import ZipFile, ZipInfo
+from zipfile import ZipFile
 
 logger = logging.getLogger(__name__)
 

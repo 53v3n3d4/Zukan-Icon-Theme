@@ -4,7 +4,6 @@ import sublime
 
 from ..helpers.icon_dark_light import (
     convert_to_rgb,
-    extract_numbers_from_hsl,
     icon_dark_light,
     st_colors_to_hex,
 )
