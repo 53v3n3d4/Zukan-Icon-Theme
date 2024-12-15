@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 name: SystemVerilog
+icons:
+  - systemverilog-light
 preferences:
   scope: source.systemverilog
   settings:
-    icon: systemverilog
+    icon: systemverilog-dark
 syntax:
   - name: SystemVerilog
     scope: source.systemverilog
