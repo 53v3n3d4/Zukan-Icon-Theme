@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.0] - 2024
+## [0.4.0] - 2024-12-15
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Alire, Bicep, Cedar, ClickHouse, Fly.io, Hatch, MDsveX, Oxc, Rolldown
