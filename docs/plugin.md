@@ -67,7 +67,7 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
         "Composer": "composer-1",
         "Composer": "composer-2",
         "C#": "csharp-1",
-        "DirectX": "directx-1",
+        "DirectX": "directx-1-dark",
         "Go": "go-1",
         // Image option works because plugin renames it when build file.
         "Image": "file_type_image-1",
@@ -196,7 +196,7 @@ Required parameters are: scope and file extensions.
 
 It can insert a custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zukan `icons` folder.  
 
-PNGs icon file name should follow ST policy:
+PNGs icon file name should follow ST suffix policy:
 
 | icon suffix | size (px) |
 |-------------|------|
@@ -330,7 +330,7 @@ It can select a dark or light icon for a theme,  in `prefer_icon` setting.
 
 > Not all icons have a dark and light icon.  
 
-> This option overrides 'change_icon'. The 'prefer_icon' run after 'change_icon'.  
+> This option overrides `change_icon`. Because `prefer_icon` runs after `change_icon`.  
 
 ## Commands
 
