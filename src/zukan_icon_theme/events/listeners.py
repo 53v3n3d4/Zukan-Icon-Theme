@@ -217,6 +217,10 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
             data = read_pickle_data(USER_CURRENT_UI_FILE)
 
             if (
+                os.path.exists(ZUKAN_PKG_ICONS_PATH)
+                and os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+                and os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+            ) and (
                 not any(d['theme'] == current_theme for d in data)
                 or not any(d['color_scheme'] == current_color_scheme for d in data)
                 or current_theme not in ZukanTheme.list_created_icons_themes()

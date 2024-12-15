@@ -98,7 +98,7 @@ class ZukanPreference:
             # Get current user theme
             theme_name = get_settings(USER_SETTINGS, 'theme')
 
-            # Color scheme background
+            # 'auto_prefer_icon' setting
             theme_st_path = sublime.find_resources(theme_name)
             bgcolor = find_sidebar_background(theme_st_path[0])
 
@@ -312,7 +312,7 @@ class ZukanPreference:
             # Get current user theme
             theme_name = get_settings(USER_SETTINGS, 'theme')
 
-            # Color scheme background
+            # 'auto_prefer_icon' setting
             theme_st_path = sublime.find_resources(theme_name)
             bgcolor = find_sidebar_background(theme_st_path[0])
 

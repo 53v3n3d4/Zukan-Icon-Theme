@@ -29,11 +29,13 @@
     // Plugin, currently, can label a sidebar background, when
     // theme uses:
     // - Hex colors
+    // - RGB colors
     // - HSL colors, S and L in percentages with or without
     // percentage symbol
-    // - Hexa and HSLA colors, alpha channel is discarted
+    // - Hexa, RGBA and HSLA colors, alpha channel is 
+    // discarted
     // - ST colors listed on sublime docs
-    // - backgorund
+    // - background
     //
     // Turn to false to not auto prefer icon. Default is
     // true.

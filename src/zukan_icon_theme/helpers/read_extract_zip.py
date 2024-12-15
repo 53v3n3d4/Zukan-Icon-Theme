@@ -40,6 +40,7 @@ def extract_folder(
             )
 
 
+# When put in 'ignored_package' seems to remove zukan folder in Packages.
 def extract_remove_folder(
     name: str, dir_destiny: str, zip_file_path: str = ZUKAN_INSTALLED_PKG_PATH
 ):

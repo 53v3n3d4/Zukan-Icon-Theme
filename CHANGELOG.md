@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1] - 2024
+
+### Plugin 🕹️
+- Undo extract_remove_folder -> extract_folder, 'ignored_packaged' delete zukan folder in Packages.
+- Fix error new install sublime-package not entering new_install_pkg_control
+
 ## [0.4.0] - 2024-12-15
 
 ### Icons, syntaxes and preferences 👽

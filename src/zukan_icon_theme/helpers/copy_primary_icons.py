@@ -46,7 +46,7 @@ def copy_primary_icons():
     # Get current user theme
     theme_name = get_settings(USER_SETTINGS, 'theme')
 
-    # Color scheme background
+    # 'auto_prefer_icon' setting
     theme_st_path = sublime.find_resources(theme_name)
     bgcolor = find_sidebar_background(theme_st_path[0])
 
@@ -113,6 +113,7 @@ def copy_primary_icons():
                         ) or (
                             theme_name not in prefer_icon
                             and i.rsplit('-', 1)[1] == bgcolor[0]
+                            and auto_prefer_icon
                         ):
                             logger.debug(
                                 '%s not in change_icon, copying prefer icon %s%s',
