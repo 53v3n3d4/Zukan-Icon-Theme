@@ -1,5 +1,3 @@
-# ICONS_SUFFIX = ['', '@2x', '@3x']
-
 PRIMARY_ICONS = [
     ('Binary', 'file_type_binary', ['file_type_binary-dark', 'file_type_binary-light']),
     (

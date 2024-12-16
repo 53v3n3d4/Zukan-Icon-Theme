@@ -13,9 +13,9 @@ logger = logging.getLogger(__name__)
 
 def delete_unused_icons(folder: str):
     """
-    Delete orphans icons that has dark and light versions.
+    Delete unused icons that has dark and light versions.
 
-    Scan over 'icons' and 'primary_icons' folder and delete orphan icons
+    Scan over 'icons' and 'primary_icons' folder and delete unused icons
     and delete icons that has a dark or light version, previous icons
     not used.
 
@@ -44,22 +44,22 @@ def delete_unused_icons(folder: str):
             i = i[:-4]
             icon_no_version.append(i)
 
-    remove_orphan = [
+    remove_unused = [
         i for i in icon_no_version if i in icon_has_dark and i in icon_has_light
     ]
 
-    if remove_orphan:
-        logger.debug('removing oprhan PNGs.')
+    if remove_unused:
+        logger.debug('removing unused PNGs.')
 
         # Add suffix and extension
-        for i in remove_orphan:
+        for i in remove_unused:
             for s in ICONS_SUFFIX:
                 icon_path = os.path.join(folder, i + s + PNG_EXTENSION)
 
                 if os.path.exists(icon_path):
                     os.remove(icon_path)
-                    logger.debug('orphan icon %s%s%s deleted.', i, s, PNG_EXTENSION)
+                    logger.debug('unused icon %s%s%s deleted.', i, s, PNG_EXTENSION)
                     # print('{}{}{} removed'.format(i, s, PNG_EXTENSION))
 
-    if not remove_orphan:
-        logger.debug('folder has no orphan icon to remove.')
+    if not remove_unused:
+        logger.debug('folder has no unused icon to remove.')

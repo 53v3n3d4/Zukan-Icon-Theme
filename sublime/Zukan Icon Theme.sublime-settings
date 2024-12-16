@@ -11,7 +11,7 @@
     // Turn to false, if do not want to display this diablog.
     "zukan_restart_message": true,
 
-    // Plugin tries to auto indentify sidebar background
+    // Plugin tries to auto identify sidebar background
     // color. With that select icon, dark or light.
     //
     // There are several cases, currently, that plugin can 
@@ -21,9 +21,9 @@
     // alpha, RGBA or HSLA
     // - HWB
     // - Shorthand Hex
-    // - Derived colors: accent, foreground
+    // - Derived colors: accent and foreground
     // - Multiple entries for class sidebar_container and 
-    // layer0.tint. Plugin get the first.
+    // layer0.tint. Plugin use the first.
     // - Legacy Color Syntax
     //
     // Plugin, currently, can label a sidebar background, when
@@ -33,9 +33,9 @@
     // - HSL colors, S and L in percentages with or without
     // percentage symbol
     // - Hexa, RGBA and HSLA colors, alpha channel is 
-    // discarted
+    // discarded
     // - ST colors listed on sublime docs
-    // - background
+    // - Derived color background
     //
     // Turn to false to not auto prefer icon. Default is
     // true.

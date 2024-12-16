@@ -76,7 +76,7 @@ def package_theme_exists(theme_name: str) -> bool:
             return False
 
 
-def find_variable(
+def find_variables(
     var_value: str, theme_content: str, target_list: list, theme: str
 ) -> list:
     """
@@ -192,7 +192,7 @@ def find_variable(
                     logger.debug('recursive find variables.')
                     # print(v)
 
-                    find_variable(v, theme_content, target_list, theme)
+                    find_variables(v, theme_content, target_list, theme)
 
     else:
         logger.debug('failed to find sidebar background.')
@@ -250,7 +250,7 @@ def find_attributes(
             # print(theme)
             # print(i.get(target_key))
 
-            find_variable(i.get(target_key), theme_content, target_list, theme)
+            find_variables(i.get(target_key), theme_content, target_list, theme)
 
 
 def find_attributes_hidden_file(

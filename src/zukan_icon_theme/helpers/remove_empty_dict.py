@@ -1,7 +1,8 @@
 def remove_empty_dict(d):
     """
     Copied from
-    https://stackoverflow.com/questions/12118695/efficient-way-to-remove-keys-with-empty-strings-from-a-dict/24893252#24893252
+    https://stackoverflow.com/questions/12118695/
+    efficient-way-to-remove-keys-with-empty-strings-from-a-dict/24893252#24893252
 
     Remove empty keys.
 
