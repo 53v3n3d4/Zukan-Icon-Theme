@@ -5,10 +5,15 @@ from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..lib.move_folders import MoveFolder
+from ..helpers.delete_unused_icons import delete_unused_icons
 from ..helpers.load_save_settings import get_settings
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
+)
+from ..utils.zukan_paths import (
+    ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
+    ZUKAN_PKG_ICONS_PATH,
 )
 
 logger = logging.getLogger(__name__)
@@ -92,6 +97,10 @@ class InstallEvent:
                     'Changelog in Sublime Text > Settings > Package Settings menu.'
                     '\n\n'.format(v=version)
                 )
+
+            # Delete unused icons
+            delete_unused_icons(ZUKAN_PKG_ICONS_PATH)
+            delete_unused_icons(ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH)
 
             t = threading.Thread(target=InstallEvent.install_syntaxes_preferences)
             t.start()

@@ -1,7 +1,10 @@
 # Changelog
 
 ## [0.4.2] - 2025
+
+### Plugin 🕹️
 - Fix package_size not working for files
+- Add delete_unused_icons.py
 
 ## [0.4.1] - 2024-12-15
 

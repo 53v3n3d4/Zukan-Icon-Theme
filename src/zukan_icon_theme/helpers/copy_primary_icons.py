@@ -13,8 +13,10 @@ from ..utils.file_settings import (
     USER_SETTINGS,
     ZUKAN_SETTINGS,
 )
-from ..utils.primary_icons import (
+from ..utils.icons_suffix import (
     ICONS_SUFFIX,
+)
+from ..utils.primary_icons import (
     PRIMARY_ICONS,
     TAG_PRIMARY,
 )

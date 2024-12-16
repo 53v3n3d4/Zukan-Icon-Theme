@@ -103,12 +103,11 @@ def find_variable(
     )
     regex_hex = r'#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{8})'
 
-    # icon_dark_light need to check
-    # Default and Dark Default gives HSP = 124.12283073381384.
+    # Default and Default Dark both gives HSP = 124.12283073381384.
+    # So it chooses icon light for both themes.
     # HSP 127,5 is the formula limit to select dark or light.
-    # It choose icon light for both themes.
     #
-    # Ensuring here until fix icon_dark_light
+    # Ensuring here until find a better solution
     if theme == 'Packages/Theme - Default/Default.sublime-theme':
         dark_light = 'dark'
 

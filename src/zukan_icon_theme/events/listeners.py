@@ -55,9 +55,11 @@ def save_current_ui_settings(
     dump_pickle_data(current_ui_settings, USER_CURRENT_UI_FILE)
 
 
-def remove_orphan_icon_theme():
+def delete_unused_icon_theme():
     """
-    Remove orphan icon theme file.
+    Delete unused icon theme file.
+
+    When uninstall a theme package, it leaves an icon-theme file.
     """
     list_all_themes = search_resources_sublime_themes()
     list_icon_themes = ZukanTheme.list_created_icons_themes()
@@ -138,8 +140,8 @@ class ThemeListener:
                 )
                 sublime.message_dialog(dialog_message)
 
-        # Delete orphan icon theme files
-        remove_orphan_icon_theme()
+        # Delete unused icon theme files
+        delete_unused_icon_theme()
 
         if (
             theme_name in ZukanTheme.list_created_icons_themes()

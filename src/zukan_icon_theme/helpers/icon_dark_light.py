@@ -22,7 +22,7 @@ def convert_to_rgb(bgcolor: str) -> list:
     bgcolor (str) -- Hex, HSL or RGB color.
 
     Returns:
-    (list) - list with RGB numbers.
+    (list) -- list with RGB numbers.
     """
     # Hex/ Hexa
     # Limitation, currently not taking in consideration Alpha channel.
@@ -82,7 +82,7 @@ def convert_to_rgb(bgcolor: str) -> list:
         return rgb
 
     else:
-        logger.info('could not convert color to rgb.')
+        logger.info('could not convert color to RGB.')
 
 
 def st_colors_to_hex(var_name):
@@ -107,7 +107,7 @@ def extract_numbers_from_hsl(color_hsl: str) -> tuple:
     color_hsl (str) -- HSL or HSLA color.
 
     Returns:
-    (tuple) - HSL or HSLA numbers.
+    (tuple) -- HSL or HSLA numbers.
     """
     # Regex for HSL and HSLA
     pattern = (
@@ -177,7 +177,7 @@ def icon_dark_light(rgb_color: list) -> str:
     rgb_color (list) -- list with RGB numbers.
 
     Returns:
-    (str) - return 'dark' or 'light' for a RGB color.
+    (str) -- return 'dark' or 'light' for a RGB color.
     """
     [r, g, b] = rgb_color
     hsp = math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
