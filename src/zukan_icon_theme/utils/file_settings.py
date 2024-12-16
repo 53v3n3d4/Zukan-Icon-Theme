@@ -10,6 +10,7 @@ ZUKAN_SETTINGS_OPTIONS = [
     'zukan_restart_message',
     'rebuild_on_upgrade',
     'auto_install_theme',
+    'auto_prefer_icon',
     'prefer_icon',
     'ignored_theme',
     'ignored_icon',

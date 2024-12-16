@@ -1,5 +1,8 @@
 # Changelog
 
+## [0.4.2] - 2025
+- Fix package_size not working for files
+
 ## [0.4.1] - 2024-12-15
 
 ### Plugin 🕹️
