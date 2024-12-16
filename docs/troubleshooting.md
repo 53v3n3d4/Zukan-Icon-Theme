@@ -93,3 +93,32 @@ Syntax build happens in cases of:
 One way for this do not happen is to close these types of files before rebuilding
 icons syntaxes files.
 ```
+
+### Error exception when disable zukan package and enable with `theme` setting `auto`
+
+This error occurr when zukan package is in `ignored_package` and enabling it with `theme` setting `auto`.
+
+```
+Exception in thread Thread-6:
+Traceback (most recent call last):
+  File "/Users/xxxx/Library/Application Support/Sublime Text/Installed Packages/Zukan Icon Theme.sublime-package/src/zukan_icon_theme/lib/icons_preferences.py", line 69, in build_icons_preferences
+  File "/Users/xxxx/Library/Application Support/Sublime Text/Installed Packages/Zukan Icon Theme.sublime-package/src/zukan_icon_theme/lib/icons_preferences.py", line 317, in create_icons_preferences
+IndexError: list index out of range
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "./python3.8/threading.py", line 932, in _bootstrap_inner
+  File "./python3.8/threading.py", line 870, in run
+  File "/Users/xxxx/Library/Application Support/Sublime Text/Installed Packages/Zukan Icon Theme.sublime-package/src/zukan_icon_theme/events/install.py", line 56, in install_batch
+  File "/Users/xxxx/Library/Application Support/Sublime Text/Installed Packages/Zukan Icon Theme.sublime-package/src/zukan_icon_theme/lib/icons_preferences.py", line 72, in build_icons_preferences
+  File "/Users/xxxx/Library/Application Support/Sublime Text/Installed Packages/Zukan Icon Theme.sublime-package/src/zukan_icon_theme/lib/icons_preferences.py", line 581, in delete_plist_tags
+UnboundLocalError: local variable 'p' referenced before assignment
+```
+
+**Solution**
+```
+Select a theme before enabling zukan, the build seems to happen with no errors.
+
+If already enabled with 'auto'. Change to a theme and restart ST. This will build files.
+```
