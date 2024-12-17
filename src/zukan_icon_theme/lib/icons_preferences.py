@@ -13,6 +13,7 @@ from ..helpers.read_write_data import (
     read_pickle_data,
 )
 from ..helpers.search_themes import find_sidebar_background
+from ..helpers.system_theme import system_theme
 from ..utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,
@@ -96,11 +97,29 @@ class ZukanPreference:
                 logger.warning('prefer_icon option malformed, need to be a dict')
 
             # Get current user theme
+            dark_theme_name = get_settings(USER_SETTINGS, 'dark_theme')
+            light_theme_name = get_settings(USER_SETTINGS, 'light_theme')
             theme_name = get_settings(USER_SETTINGS, 'theme')
+
+            # Get system theme
+            if theme_name == 'auto' and not system_theme():
+                theme_name = light_theme_name
+
+            if theme_name == 'auto' and system_theme():
+                theme_name = dark_theme_name
 
             # 'auto_prefer_icon' setting
             theme_st_path = sublime.find_resources(theme_name)
-            bgcolor = find_sidebar_background(theme_st_path[0])
+
+            # Exception error, theme 'auto' did not find theme
+            # It raises after enabling zukan from 'ignored_package' with
+            # zip file, sublime-package
+            #
+            # Using 'dark' default since user_ui_settings not exist
+            bgcolor = None
+
+            if theme_st_path:
+                bgcolor = find_sidebar_background(theme_st_path[0])
 
             # 'create_custom_icon' setting
             custom_list = [p for p in create_custom_icon() if 'preferences' in p]
@@ -310,11 +329,29 @@ class ZukanPreference:
                 logger.warning('prefer_icon option malformed, need to be a dict')
 
             # Get current user theme
+            dark_theme_name = get_settings(USER_SETTINGS, 'dark_theme')
+            light_theme_name = get_settings(USER_SETTINGS, 'light_theme')
             theme_name = get_settings(USER_SETTINGS, 'theme')
+
+            # Get system theme
+            if theme_name == 'auto' and not system_theme():
+                theme_name = light_theme_name
+
+            if theme_name == 'auto' and system_theme():
+                theme_name = dark_theme_name
 
             # 'auto_prefer_icon' setting
             theme_st_path = sublime.find_resources(theme_name)
-            bgcolor = find_sidebar_background(theme_st_path[0])
+
+            # Exception error, theme 'auto' did not find theme
+            # It raises after enabling zukan from 'ignored_package' with
+            # zip file, sublime-package
+            #
+            # Using 'dark' default since user_ui_settings not exist
+            bgcolor = None
+
+            if theme_st_path:
+                bgcolor = find_sidebar_background(theme_st_path[0])
 
             # 'create_custom_icon' setting
             custom_list = [p for p in create_custom_icon() if 'preferences' in p]

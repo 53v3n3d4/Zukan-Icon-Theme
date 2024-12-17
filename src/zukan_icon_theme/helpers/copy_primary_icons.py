@@ -5,6 +5,7 @@ import sublime
 
 from ..helpers.load_save_settings import get_settings
 from ..helpers.search_themes import find_sidebar_background
+from ..helpers.system_theme import system_theme
 from ..utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,
@@ -46,11 +47,29 @@ def copy_primary_icons():
     prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
 
     # Get current user theme
+    dark_theme_name = get_settings(USER_SETTINGS, 'dark_theme')
+    light_theme_name = get_settings(USER_SETTINGS, 'light_theme')
     theme_name = get_settings(USER_SETTINGS, 'theme')
+
+    # Get system theme
+    if theme_name == 'auto' and not system_theme():
+        theme_name = light_theme_name
+
+    if theme_name == 'auto' and system_theme():
+        theme_name = dark_theme_name
 
     # 'auto_prefer_icon' setting
     theme_st_path = sublime.find_resources(theme_name)
-    bgcolor = find_sidebar_background(theme_st_path[0])
+
+    # Exception error, theme 'auto' did not find theme
+    # It raises after enabling zukan from 'ignored_package' with
+    # zip file, sublime-package
+    #
+    # Using 'dark' default since user_ui_settings not exist
+    bgcolor = None
+
+    if theme_st_path:
+        bgcolor = find_sidebar_background(theme_st_path[0])
 
     for p in PRIMARY_ICONS:
         for s in ICONS_SUFFIX:
@@ -134,7 +153,9 @@ def copy_primary_icons():
                                 ),
                             )
 
-                        elif theme_name not in prefer_icon and not auto_prefer_icon:
+                        elif (
+                            theme_name not in prefer_icon and not auto_prefer_icon
+                        ) or not bgcolor:
                             logger.debug(
                                 '%s not in change_icon, copying default %s%s',
                                 p[0],

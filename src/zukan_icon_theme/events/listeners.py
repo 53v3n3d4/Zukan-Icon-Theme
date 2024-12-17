@@ -13,6 +13,7 @@ from ..helpers.search_themes import (
     package_theme_exists,
     search_resources_sublime_themes,
 )
+from ..helpers.system_theme import system_theme
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
@@ -23,17 +24,22 @@ from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
-    USER_CURRENT_UI_FILE,
+    USER_UI_SETTINGS_FILE,
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
+    ZUKAN_PKG_SUBLIME_PATH,
 )
 
 logger = logging.getLogger(__name__)
 
 
 def save_current_ui_settings(
-    color_scheme_background: str, current_theme: str, current_color_scheme: str
+    color_scheme_background: str,
+    current_color_scheme: str,
+    current_dark_theme: str,
+    current_light_theme: str,
+    current_theme: str,
 ):
     """
     Save current user UI theme and color-scheme.
@@ -45,14 +51,16 @@ def save_current_ui_settings(
     """
     current_ui_settings = {}
     current_ui_settings.update({'background': color_scheme_background})
-    current_ui_settings.update({'theme': current_theme})
     current_ui_settings.update({'color_scheme': current_color_scheme})
+    current_ui_settings.update({'dark_theme': current_dark_theme})
+    current_ui_settings.update({'light_theme': current_light_theme})
+    current_ui_settings.update({'theme': current_theme})
 
-    if os.path.exists(USER_CURRENT_UI_FILE):
+    if os.path.exists(USER_UI_SETTINGS_FILE):
         # Delete previous pickle file
-        os.remove(USER_CURRENT_UI_FILE)
+        os.remove(USER_UI_SETTINGS_FILE)
 
-    dump_pickle_data(current_ui_settings, USER_CURRENT_UI_FILE)
+    dump_pickle_data(current_ui_settings, USER_UI_SETTINGS_FILE)
 
 
 def delete_unused_icon_theme():
@@ -93,11 +101,21 @@ class ThemeListener:
         auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
         auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
         color_scheme_name = get_settings(USER_SETTINGS, 'color_scheme')
-        data = read_pickle_data(USER_CURRENT_UI_FILE)
         ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
         prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
-        theme_name = get_settings(USER_SETTINGS, 'theme')
+        user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
         zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+
+        dark_theme_name = get_settings(USER_SETTINGS, 'dark_theme')
+        light_theme_name = get_settings(USER_SETTINGS, 'light_theme')
+        theme_name = get_settings(USER_SETTINGS, 'theme')
+
+        # Get system theme
+        if theme_name == 'auto' and not system_theme():
+            theme_name = light_theme_name
+
+        if theme_name == 'auto' and system_theme():
+            theme_name = dark_theme_name
 
         icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
 
@@ -156,15 +174,18 @@ class ThemeListener:
                 )
                 or (
                     theme_name in prefer_icon
-                    and not any(d['theme'] == theme_name for d in data)
+                    and not any(d['theme'] == theme_name for d in user_ui_settings)
                 )
                 or (
                     # 'auto_prefer_icon' setting
                     auto_prefer_icon is True
                     and theme_name not in prefer_icon
                     and (
-                        not any(d['theme'] == theme_name for d in data)
-                        or not any(d['color_scheme'] == color_scheme_name for d in data)
+                        not any(d['theme'] == theme_name for d in user_ui_settings)
+                        or not any(
+                            d['color_scheme'] == color_scheme_name
+                            for d in user_ui_settings
+                        )
                     )
                 )
             ):
@@ -203,36 +224,62 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
 
         color_scheme_background = self.view.style()['background']
         current_color_scheme = self.view.settings().get('color_scheme')
+        current_dark_theme = self.view.settings().get('light_theme')
+        current_light_theme = self.view.settings().get('light_theme')
         current_theme = self.view.settings().get('theme')
 
+        # Get system theme
+        theme_name = current_theme
+
+        if theme_name == 'auto' and not system_theme():
+            theme_name = current_light_theme
+
+        if theme_name == 'auto' and system_theme():
+            theme_name = current_dark_theme
+
         auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
-        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
         icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, current_theme)
+        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
 
         # create setting file with current ui if does not exist
-        if not os.path.exists(USER_CURRENT_UI_FILE):
+        if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
+            os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
+
+        if not os.path.exists(USER_UI_SETTINGS_FILE):
             save_current_ui_settings(
-                color_scheme_background, current_theme, current_color_scheme
+                color_scheme_background,
+                current_color_scheme,
+                current_dark_theme,
+                current_light_theme,
+                current_theme,
             )
 
-        if os.path.exists(USER_CURRENT_UI_FILE):
-            data = read_pickle_data(USER_CURRENT_UI_FILE)
+        if os.path.exists(USER_UI_SETTINGS_FILE):
+            user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
 
             if (
                 os.path.exists(ZUKAN_PKG_ICONS_PATH)
                 and os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
                 and os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
             ) and (
-                not any(d['theme'] == current_theme for d in data)
-                or not any(d['color_scheme'] == current_color_scheme for d in data)
-                or current_theme not in ZukanTheme.list_created_icons_themes()
-                or current_theme in ignored_theme
+                not any(d['theme'] == current_theme for d in user_ui_settings)
+                or not any(
+                    d['dark_theme'] == current_dark_theme for d in user_ui_settings
+                )
+                or not any(
+                    d['light_theme'] == current_light_theme for d in user_ui_settings
+                )
+                or not any(
+                    d['color_scheme'] == current_color_scheme for d in user_ui_settings
+                )
+                or theme_name not in ZukanTheme.list_created_icons_themes()
+                or theme_name in ignored_theme
                 or (auto_install_theme is True and not os.path.exists(icon_theme_file))
                 # Check user theme, if has to delete or create zukan files.
                 or (
                     (
-                        current_theme in ZukanTheme.list_created_icons_themes()
-                        and current_theme not in ignored_theme
+                        theme_name in ZukanTheme.list_created_icons_themes()
+                        and theme_name not in ignored_theme
                         and os.path.exists(ZUKAN_PKG_ICONS_PATH)
                         and os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
                         and os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
@@ -256,5 +303,9 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
 
                 # update current ui
                 save_current_ui_settings(
-                    color_scheme_background, current_theme, current_color_scheme
+                    color_scheme_background,
+                    current_color_scheme,
+                    current_dark_theme,
+                    current_light_theme,
+                    current_theme,
                 )

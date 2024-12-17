@@ -13,7 +13,7 @@ from ..utils.st_color_palette import (
 )
 from ..utils.zukan_paths import (
     PKG_ZUKAN_ICON_THEME_FOLDER,
-    USER_CURRENT_UI_FILE,
+    USER_UI_SETTINGS_FILE,
 )
 
 logger = logging.getLogger(__name__)
@@ -166,8 +166,8 @@ def find_variables(
     # Background
     elif 'var(--background)' in var_value:
         # Get color scheme background and append
-        data = read_pickle_data(USER_CURRENT_UI_FILE)
-        bgcolor = [d.get('background') for d in data]
+        user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
+        bgcolor = [d.get('background') for d in user_ui_settings]
 
         dark_light = icon_dark_light(convert_to_rgb(bgcolor[0]))
 
