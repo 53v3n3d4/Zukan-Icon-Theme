@@ -44,9 +44,8 @@ def convert_to_rgb(bgcolor: str) -> list:
         # print(hsl)
 
         hue, sat, lum, *alpha = hsl
-        # if hue < 0 or hue > 360 or sat < 0 or sat > 1 or lum < 0 or lum > 1:
-        #     logger.info('hsl not valid.')
-        #     exit
+        if hue < 0 or hue > 360 or sat < 0 or sat > 100 or lum < 0 or lum > 100:
+            logger.debug('HSL range values not valid.')
 
         # Using wikipedia formula
         # https://en.wikipedia.org/wiki/HSL_and_HSV#To_RGB

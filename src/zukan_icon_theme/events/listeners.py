@@ -70,10 +70,10 @@ def delete_unused_icon_theme():
         n = os.path.basename(t)
         list_themes.append(n)
 
-    list_orphan_icon_themes = list(set(list_icon_themes) - set(list_themes))
+    list_unused_icon_themes = list(set(list_icon_themes) - set(list_themes))
 
-    for o in list_orphan_icon_themes:
-        logger.info('removing orphan zukan icon theme, %s', o)
+    for o in list_unused_icon_themes:
+        logger.info('removing unused zukan icon theme, %s', o)
         ZukanTheme.delete_icon_theme(o)
 
 

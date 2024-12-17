@@ -113,7 +113,8 @@ def copy_primary_icons():
                             theme_name in prefer_icon
                             and i.rsplit('-', 1)[1] == prefer_icon.get(theme_name)
                         ) or (
-                            theme_name not in prefer_icon
+                            bgcolor
+                            and theme_name not in prefer_icon
                             and i.rsplit('-', 1)[1] == bgcolor[0]
                             and auto_prefer_icon
                         ):

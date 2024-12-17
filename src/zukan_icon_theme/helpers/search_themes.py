@@ -94,8 +94,9 @@ def find_variables(
     target_list (list) -- 'dark' or 'light' depending on color HSP.
     """
     regex_hsl = (
-        r'hsla?\((\d{1,3}),\s*(\d+)(?:%)?\s*,\s*(\d+)(?:%)?\s*(?:,'
-        '\s*([01]?\d(\.\d+)?|1(\.0+)?))?\)'
+        # r'hsla?\((\d{1,3}),\s*(\d+)(?:%)?\s*,\s*(\d+)(?:%)?\s*(?:,'
+        # '\s*([01]?\d(\.\d+)?|1(\.0+)?))?\)'
+        r'hsla?\((\d+),\s*(-?\d*\.?\d+)%?,\s*(-?\d*\.?\d+)%?(?:,\s*(\d+(\.\d+)?))?\)'
     )
     regex_rgb = (
         r'rgba?\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})(?:,'

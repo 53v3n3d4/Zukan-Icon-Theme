@@ -223,7 +223,7 @@ class ConcatSVG:
         list_svgs (Set) -- list with icon name and icon svg file path.
 
         Returns:
-        sorted_list (Set) - list with icon name and icon svg file path.
+        (Set) - list with icon name and icon svg file path.
         """
         svgfile = f'{ icon_name }{ SVG_EXTENSION }'
         svgfile_path = os.path.join(dir_origin, svgfile)
@@ -238,7 +238,22 @@ class ConcatSVG:
         dir_origin: str,
         list_svgs: Set,
         prefer_icon: str,
-    ):
+    ) -> Set:
+        """
+        Select icons versions. Options are: 'dark', 'light' or
+        'all'.
+
+        Paramenters:
+        icon_name (str) -- icon name.
+        sticker_name (str) -- key name in data file. Not the icon SVG
+        file name.
+        dir_origin (str) -- path to SVG file.
+        list_svgs (Set) -- list with icon name and icon svg file path.
+        prefer_icon (str) -- choose 'dark', 'light' or 'all'. Default is 'dark'.
+
+        Returns:
+        (Set) - list with icon name and icon svg file path.
+        """
         # Prefer icon - options dark
         if prefer_icon == 'dark' and not icon_name.endswith('-light'):
             ConcatSVG.add_to_list_svgs(
@@ -275,6 +290,7 @@ class ConcatSVG:
         Paramenters:
         dir_icon_data (str) -- path to directory with data files.
         dir_origin (str) -- path to SVG file.
+        prefer_icon (str) -- choose 'dark', 'light' or 'all'. Default is 'dark'.
 
         Returns:
         sorted_list (Set) - list with icon name and icon svg file path.
@@ -383,6 +399,7 @@ class ConcatSVG:
         is 30.
         icons_per_row (Optional[int]) -- number of icons per row. Default is 5.
         max_height (Optional[int]) -- max concat SVG height. Default is 2000.
+        prefer_icon (str) -- choose 'dark', 'light' or 'all'. Default is 'dark'.
         """
         # sticker_size = (77, 79)
         row_height = 92
