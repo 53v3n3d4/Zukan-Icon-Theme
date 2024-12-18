@@ -1,13 +1,51 @@
+import json
 import platform
 import subprocess
 
 
-# Linux
+# ST Linux distros
 # apt — Ubuntu, Debian
 # pacman — Arch
 # yum — CentOS
 # dnf — Fedora
 # zypper — openSUSE
+#
+# Tested Ubuntu 22.04
+def linux_theme() -> bool:
+    """
+    Code from
+    https://github.com/smac89/autodark-sublime-plugin/blob/main/helpers.py
+
+    Returns:
+    (bool) -- True for 'dark' theme.
+    """
+    dark_light_dict = {1: 'dark', 2: 'light'}
+
+    p = subprocess.check_output(
+        [
+            '/usr/bin/busctl',
+            '--user',
+            '--json=short',
+            'call',
+            'org.freedesktop.portal.Desktop',
+            '/org/freedesktop/portal/desktop',
+            'org.freedesktop.portal.Settings',
+            'ReadOne',
+            'ss',
+            'org.freedesktop.appearance',
+            'color-scheme',
+        ],
+        universal_newlines=True,
+        stderr=subprocess.STDOUT,
+    )
+
+    result = json.loads(p)
+    data = result.get('data', [])
+
+    system_scheme = data[0].get('data', None)
+    color_scheme = dark_light_dict.get(system_scheme)
+
+    return color_scheme == 'dark'
 
 
 def macos_theme() -> bool:
@@ -52,7 +90,7 @@ def system_theme() -> bool:
     (bool) -- True for 'dark' theme.
     """
     if platform.system() == 'Linux':
-        return True
+        return linux_theme()
 
     if platform.system() == 'Darwin':
         return macos_theme()

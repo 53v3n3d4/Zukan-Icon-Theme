@@ -6,7 +6,7 @@
 - Fix package_size not working for files
 - Add delete_unused_icons
 - Fix error when Preferences 'theme' is set to 'auto'
-- Add system_theme, macOS and Windows
+- Add system_theme: Linux, macOS and Windows
 
 ## [0.4.1] - 2024-12-15
 
