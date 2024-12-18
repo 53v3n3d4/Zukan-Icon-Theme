@@ -1,6 +1,7 @@
 import platform
 import subprocess
 
+
 # Linux
 # apt — Ubuntu, Debian
 # pacman — Arch
@@ -8,13 +9,14 @@ import subprocess
 # dnf — Fedora
 # zypper — openSUSE
 
-# Windows
 
-
-def macos_theme():
+def macos_theme() -> bool:
     """
     Code from
     https://stackoverflow.com/questions/65294987/detect-os-dark-mode-in-python
+
+    Returns:
+    (bool) -- True for 'dark' theme.
     """
     cmd = 'defaults read -g AppleInterfaceStyle'
     p = subprocess.Popen(
@@ -23,20 +25,37 @@ def macos_theme():
     return bool(p.communicate()[0])
 
 
+def windows_theme() -> bool:
+    """
+    Code from
+    https://stackoverflow.com/questions/65294987/detect-os-dark-mode-in-python
+
+    Returns:
+    (bool) -- True for 'dark' theme.
+    """
+    import winreg
+
+    registry = winreg.ConnectRegistry(None, winreg.HKEY_CURRENT_USER)
+    reg_keypath = r'SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize'
+
+    reg_key = winreg.OpenKey(registry, reg_keypath)
+
+    for i in range(1024):
+        value_name, value, _ = winreg.EnumValue(reg_key, i)
+        if value_name == 'AppsUseLightTheme':
+            return value == 0
+
+
 def system_theme() -> bool:
-    # Linux
+    """
+    Returns:
+    (bool) -- True for 'dark' theme.
+    """
     if platform.system() == 'Linux':
-        print('Linux')
-        # Returning only for testing
         return True
 
-    # macOS
     if platform.system() == 'Darwin':
-        if macos_theme():
-            return True
+        return macos_theme()
 
-    # Windows
     if platform.system() == 'Windows':
-        print('Windows')
-        # Returning only for testing
-        return True
+        return windows_theme()
