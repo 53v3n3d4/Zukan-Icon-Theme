@@ -9,7 +9,11 @@ from ..helpers.load_save_settings import (
     save_current_settings,
     read_current_settings,
 )
-from ..helpers.package_size import file_size, get_size
+from ..helpers.package_size import (
+    bytes_to_readable_size,
+    get_folder_size,
+    get_file_size,
+)
 from ..helpers.read_write_data import read_pickle_data
 from ..utils.file_settings import (
     USER_SETTINGS,
@@ -41,12 +45,13 @@ class SettingsEvent:
         if log_level == 'DEBUG':
             print('\n==== Zukan Icon Theme settings ====')
 
-            installation_size = file_size(
-                get_size([ZUKAN_PKG_PATH, ZUKAN_INSTALLED_PKG_PATH])
-            )
-            print('Install size: {i}'.format(i=installation_size))
+            folder_size = bytes_to_readable_size(get_folder_size(ZUKAN_PKG_PATH))
+            print('Zukan folder size: {f}'.format(f=folder_size))
 
-            ruamel_size = file_size(get_size([LIB_RUAMEL_YAML_PATH]))
+            zip_size = bytes_to_readable_size(get_file_size(ZUKAN_INSTALLED_PKG_PATH))
+            print('sublime-package size: {z}'.format(z=zip_size))
+
+            ruamel_size = bytes_to_readable_size(get_folder_size(LIB_RUAMEL_YAML_PATH))
             print('Ruamel size: {r}'.format(r=ruamel_size))
 
             for s in ZUKAN_SETTINGS_OPTIONS:

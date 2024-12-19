@@ -185,11 +185,6 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         if theme_name == 'auto' and system_theme():
             theme_name = current_dark_theme
 
-        # Do not save sidebar_bgcolor to save_current_ui_settings this time
-        # Error in find_variables user_ui_settings does not exist
-        theme_st_path = sublime.find_resources(theme_name)
-        sidebar_bgcolor = get_sidebar_bgcolor(theme_st_path)
-
         # create setting file with current ui if does not exist
         if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
             os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
@@ -202,6 +197,11 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 current_light_theme,
                 current_theme,
             )
+
+        # Do not save sidebar_bgcolor to save_current_ui_settings this time
+        # Error in find_variables user_ui_settings does not exist
+        theme_st_path = sublime.find_resources(theme_name)
+        sidebar_bgcolor = get_sidebar_bgcolor(theme_st_path)
 
         if os.path.exists(USER_UI_SETTINGS_FILE):
             user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)

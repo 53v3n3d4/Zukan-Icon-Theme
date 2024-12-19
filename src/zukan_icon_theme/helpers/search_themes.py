@@ -229,11 +229,10 @@ def find_attributes(
         class_name_list = [
             k for k in theme_content['rules'] if k['class'] == class_name
         ]
-        # print(theme)
-        # print(class_name_list)
+
     elif 'rules' not in theme_content:
         class_name_list = [k for k in theme_content if k['class'] == class_name]
-        # print('no rules: ' + theme)
+
     for i in class_name_list:
         # Theme opacity
         if class_parent:
@@ -247,9 +246,7 @@ def find_attributes(
 
         # Find sidebar background
         if not class_parent and i.get(target_key):
-            logger.debug('%s sidebar layer0.tint is ', theme)
-            # print(theme)
-            # print(i.get(target_key))
+            logger.debug('%s sidebar layer0.tint is %s', theme, i.get(target_key))
 
             find_variables(i.get(target_key), theme_content, target_list, theme)
 

@@ -97,6 +97,7 @@ def get_theme_settings() -> tuple:
 
     return auto_install_theme, ignored_theme
 
+
 def get_icon_settings() -> tuple:
     """
     Get icon settings.

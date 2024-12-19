@@ -72,19 +72,30 @@ class ZukanPreference:
             copy_primary_icons()
 
     def handle_icon_preferences(
-        p,
-        theme_name,
-        change_icon,
-        prefer_icon,
-        auto_prefer_icon,
-        bgcolor,
-        ignored_icon,
-        icon_name,
-        filename,
+        p: dict,
+        theme_name: str,
+        ignored_icon: list,
+        change_icon: dict,
+        prefer_icon: dict,
+        auto_prefer_icon: bool,
+        bgcolor: list,
+        icon_name: str,
+        filename: str,
     ):
         """
         Handle the zukan settings to choose icon option, version or ignore an icon.
 
+        Parameters:
+        p (dict) -- dict with icon data.
+        theme_name (str) -- theme name.
+        ignored_icon (list) -- list of ignored_icon setting.
+        change_icon (dict) --  dict with change_icon setting.
+        prefer_icon (dict) --  dict with prefer_icon setting.
+        auto_prefer_icon (bool) -- True or False for auto_prefer_icon setting.
+        bgcolor (list) -- sidebar background color list.
+        icon_name (str) -- icon name or icon option name.
+        filename (str) -- icon name or icon option name with tmPreferences file
+        extension, excluding '-dark' or '-light' from name.
         """
         # 'change_icon' setting
         if change_icon:
@@ -226,6 +237,16 @@ class ZukanPreference:
         """
         Prepare icon preference file, from icons data and setting 'create_custom_icon'.
         And handle the zukan settings to choose icon option, version or ignore an icon.
+
+        Parameters:
+        preference_name (str) -- icon or icon option.
+        zukan_icons (list)-- icons data.
+        theme_name (str) -- theme name.
+        ignored_icon (list) -- list of ignored_icon setting.
+        change_icon (dict) --  dict with change_icon setting.
+        prefer_icon (dict) --  dict with prefer_icon setting.
+        auto_prefer_icon (bool) -- True or False for auto_prefer_icon setting.
+        bgcolor (list) -- sidebar background color list.
         """
         # 'create_custom_icon' setting
         custom_list = [p for p in create_custom_icon() if 'preferences' in p]
@@ -260,11 +281,11 @@ class ZukanPreference:
                 ZukanPreference.handle_icon_preferences(
                     p,
                     theme_name,
+                    ignored_icon,
                     change_icon,
                     prefer_icon,
                     auto_prefer_icon,
                     bgcolor,
-                    ignored_icon,
                     icon_name,
                     filename,
                 )
@@ -285,6 +306,9 @@ class ZukanPreference:
     def create_icon_preference(preference_name: str):
         """
         Create icon tmPreferences file.
+
+        Parameters:
+        preference_name (str) -- icon or icon option.
         """
         try:
             auto_prefer_icon, change_icon, ignored_icon, prefer_icon = (
@@ -343,6 +367,15 @@ class ZukanPreference:
         """
         Prepare icons preferences list, from icons data and setting 'create_custom_icon'.
         And handle the zukan settings to choose icon option, version or ignore an icon.
+
+        Parameters:
+        zukan_icons (list)-- icons data.
+        theme_name (str) -- theme name.
+        ignored_icon (list) -- list of ignored_icon setting.
+        change_icon (dict) --  dict with change_icon setting.
+        prefer_icon (dict) --  dict with prefer_icon setting.
+        auto_prefer_icon (bool) -- True or False for auto_prefer_icon setting.
+        bgcolor (list) -- sidebar background color list.
         """
         # 'create_custom_icon' setting
         custom_list = [p for p in create_custom_icon() if 'preferences' in p]
@@ -371,11 +404,11 @@ class ZukanPreference:
                 ZukanPreference.handle_icon_preferences(
                     p,
                     theme_name,
+                    ignored_icon,
                     change_icon,
                     prefer_icon,
                     auto_prefer_icon,
                     bgcolor,
-                    ignored_icon,
                     icon_name,
                     filename,
                 )

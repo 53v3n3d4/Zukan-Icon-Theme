@@ -5,65 +5,75 @@ import os
 logger = logging.getLogger(__name__)
 
 
-def get_size(file_folder: list) -> int:
+def get_file_size(file_path: str) -> int:
+    """
+    Calculate the size of a file.
+
+    Returns:
+    total_size (int) -- total size in bytes of a file.
+    """
+    total_size = 0
+
+    if os.path.isfile(file_path):
+        try:
+            stat = os.lstat(file_path)
+            total_size += stat.st_size
+        except OSError:
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                file_path,
+            )
+
+    return total_size
+
+
+def get_folder_size(folder_path: str) -> int:
     """
     Adapt from
     https://stackoverflow.com/questions/1392413/
     calculating-a-directorys-size-using-python
 
-    Calculate the total size of files and folders.
+    Calculate the size of a folder.
 
     Parameters:
-    file_folder (list) -- List of file or folder paths.
+    folder_path (str) -- path to folder.
 
     Returns:
-    total_size (int) -- Total size in bytes of all files and folders.
+    total_size (int) -- total size in bytes of a folder.
     """
     total_size = 0
     seen = {}
 
-    for f in file_folder:
-        if f:
-            if os.path.isfile(f):
-                try:
-                    stat = os.lstat(f)
-                    total_size += stat.st_size
-                except OSError:
-                    logger.error(
-                        '[Errno %d] %s: %r',
-                        errno.EACCES,
-                        os.strerror(errno.EACCES),
-                        f,
-                    )
-                    continue
+    for dir_path, dir_name, file_name in os.walk(folder_path):  # noqa B007
+        # print(dir_name)
+        for f in file_name:
+            file_path = os.path.join(dir_path, f)
+            try:
+                stat = os.lstat(file_path)
+            except OSError:
+                logger.error(
+                    '[Errno %d] %s: %r',
+                    errno.EACCES,
+                    os.strerror(errno.EACCES),
+                    file_path,
+                )
+                continue
 
-            elif os.path.isdir(f):
-                for dir_path, dir_name, file_names in os.walk(f):  # noqa B007
-                    for file_name in file_names:
-                        file_path = os.path.join(dir_path, file_name)
-                        try:
-                            stat = os.lstat(file_path)
-                        except OSError:
-                            logger.error(
-                                '[Errno %d] %s: %r',
-                                errno.EACCES,
-                                os.strerror(errno.EACCES),
-                                file_path,
-                            )
-                            continue
+            try:
+                seen[stat.st_ino]
+            except KeyError:
+                seen[stat.st_ino] = True
+            else:
+                continue
 
-                        try:
-                            seen[stat.st_ino]
-                        except KeyError:
-                            seen[stat.st_ino] = True
-                        else:
-                            continue
+            total_size += stat.st_size
 
-                        total_size += stat.st_size
     return total_size
 
 
-def file_size(size: int, suffix='B'):
+def bytes_to_readable_size(size: int, suffix='B'):
     """
     Code from
     https://stackoverflow.com/questions/1094841/
