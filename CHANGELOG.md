@@ -1,9 +1,9 @@
 # Changelog
 
-## [0.4.2] - 2025
+## [0.4.2] - 2024-12-19
 
 ### Plugin 🕹️
-- Fix package_size not working for files
+- Fix package_size not working for file
 - Add delete_unused
 - Fix error when Preferences 'theme' is set to 'auto'
 - Add system_theme: Linux, macOS and Windows
