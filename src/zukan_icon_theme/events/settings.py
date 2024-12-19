@@ -4,9 +4,13 @@ import os
 from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..helpers.clean_settings import clean_comments_settings
-from ..helpers.load_save_settings import get_settings
+from ..helpers.load_save_settings import (
+    get_settings,
+    save_current_settings,
+    read_current_settings,
+)
 from ..helpers.package_size import file_size, get_size
-from ..helpers.read_write_data import dump_pickle_data, read_pickle_data
+from ..helpers.read_write_data import read_pickle_data
 from ..utils.file_settings import (
     USER_SETTINGS,
     USER_SETTINGS_OPTIONS,
@@ -57,30 +61,6 @@ class SettingsEvent:
 
             print('------------------------------------')
 
-    def read_current_settings() -> dict:
-        """
-        Read current settings from zukan options list.
-        """
-        current_settings = {}
-
-        for s in ZUKAN_SETTINGS_OPTIONS:
-            setting_option = get_settings(ZUKAN_SETTINGS, s)
-            current_settings.update({s: setting_option})
-
-        return current_settings
-
-    def save_current_settings():
-        """
-        Save current settings in pkl file to compare when Zukan settings options
-        get modified.
-        """
-        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
-            # Delete previous pickle file
-            os.remove(ZUKAN_CURRENT_SETTINGS_FILE)
-
-        current_settings = SettingsEvent.read_current_settings()
-        dump_pickle_data(current_settings, ZUKAN_CURRENT_SETTINGS_FILE)
-
     def rebuild_icons_files():
         """
         Rebuild icons files, when icons settings change in Zukan preferences.
@@ -98,7 +78,7 @@ class SettingsEvent:
             )
             create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
             prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
-            current_settings = SettingsEvent.read_current_settings()
+            current_settings = read_current_settings()
 
             for d in data:
                 # Currently, rebuilding all files, because of manually editing
@@ -110,14 +90,14 @@ class SettingsEvent:
                     if k not in d:
                         d.update({k: v})
 
-                    SettingsEvent.save_current_settings()
+                    save_current_settings()
 
                 # Check if ignored_icon changed
                 if sorted(d['ignored_icon']) != sorted(ignored_icon):
                     logger.info('"ignored_icon" changed, rebuilding files...')
                     InstallEvent.rebuild_icon_files_thread()
 
-                    SettingsEvent.save_current_settings()
+                    save_current_settings()
 
                 # Check if change_icon changed
                 if sorted(d['change_icon']) != sorted(change_icon) or any(
@@ -126,7 +106,7 @@ class SettingsEvent:
                     logger.info('"change_icon" changed, rebuilding files...')
                     ZukanPreference.build_icons_preferences()
 
-                    SettingsEvent.save_current_settings()
+                    save_current_settings()
 
                     # Command 'reset_icon' leaves entries commented in dict.
                     # It is working but still leaving the last reset one, because
@@ -150,7 +130,7 @@ class SettingsEvent:
                     )
                     InstallEvent.install_syntaxes()
 
-                    SettingsEvent.save_current_settings()
+                    save_current_settings()
 
                 # Check if create_custom_icon changed
                 if any(
@@ -159,7 +139,7 @@ class SettingsEvent:
                     logger.info('"create_custom_icon" changed, rebuilding files...')
                     InstallEvent.rebuild_icon_files_thread()
 
-                    SettingsEvent.save_current_settings()
+                    save_current_settings()
 
                     # 'create_custom_icon' also leaves commented entries when deleted
                     # using 'delete_custom_icon'. Same as 'reset_icon', but
@@ -174,7 +154,7 @@ class SettingsEvent:
                     logger.info('"prefer_icon" changed, rebuilding files...')
                     ZukanPreference.build_icons_preferences()
 
-                    SettingsEvent.save_current_settings()
+                    save_current_settings()
 
                     clean_comments_settings(ZUKAN_USER_SUBLIME_SETTINGS)
 
@@ -185,7 +165,7 @@ class SettingsEvent:
             os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
 
         if not os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
-            SettingsEvent.save_current_settings()
+            save_current_settings()
 
     def upgrade_zukan_files():
         """
@@ -200,12 +180,10 @@ class SettingsEvent:
         auto_upgraded = get_settings(ZUKAN_SETTINGS, 'rebuild_on_upgrade')
 
         if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and auto_upgraded is True:
-            # installed_pkg_version = get_settings(ZUKAN_VERSION, 'version')
             data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
             installed_pkg_version = ''.join(
                 [d['version'] for d in data if 'version' in d]
             )
-            # print(installed_pkg_version)
 
             # Transform string to tuple to compare.
             tuple_installed_pkg_version = tuple(
@@ -223,9 +201,7 @@ class SettingsEvent:
                 logger.info('updating package...')
                 InstallEvent.install_upgrade_thread()
 
-                # content = {'version': pkg_version}
-                # dump_json_data(content, ZUKAN_VERSION_FILE)
-                SettingsEvent.save_current_settings()
+                save_current_settings()
 
         if auto_upgraded is False:
             logger.debug('auto_upgraded setting is False.')
@@ -250,7 +226,7 @@ class SettingsEvent:
             os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
 
         if not os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
-            SettingsEvent.save_current_settings()
+            save_current_settings()
 
     def zukan_options_settings():
         """

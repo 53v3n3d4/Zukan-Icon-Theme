@@ -7,21 +7,19 @@ import sublime
 from ..helpers.clean_data import clean_plist_tag
 from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.create_custom_icon import create_custom_icon
-from ..helpers.load_save_settings import get_settings
+from ..helpers.load_save_settings import (
+    get_icon_settings,
+    get_theme_name,
+)
 from ..helpers.read_write_data import (
     dump_plist_data,
     read_pickle_data,
 )
-from ..helpers.search_themes import find_sidebar_background
-from ..helpers.system_theme import system_theme
+from ..helpers.search_themes import get_sidebar_bgcolor
 from ..utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,
     TMPREFERENCES_EXTENSION,
-)
-from ..utils.file_settings import (
-    USER_SETTINGS,
-    ZUKAN_SETTINGS,
 )
 from ..utils.primary_icons import (
     PRIMARY_ICONS,
@@ -73,292 +71,171 @@ class ZukanPreference:
             ZukanPreference.delete_plist_tags()
             copy_primary_icons()
 
-    def create_icon_preference(preference_name: str):
+    def handle_icon_preferences(
+        p,
+        theme_name,
+        change_icon,
+        prefer_icon,
+        auto_prefer_icon,
+        bgcolor,
+        ignored_icon,
+        icon_name,
+        filename,
+    ):
         """
-        Create icon tmPreferences file.
+        Handle the zukan settings to choose icon option, version or ignore an icon.
+
         """
-        try:
-            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+        # 'change_icon' setting
+        if change_icon:
+            for k, v in change_icon.items():
+                if p['name'] == k:
+                    p['preferences']['settings']['icon'] = v
 
-            auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
+        # 'prefer_icon' setting
+        prefer_icon_version = ''
 
-            change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
-            if not isinstance(change_icon, dict):
-                logger.warning('change_icon option malformed, need to be a dict')
+        if prefer_icon:
+            for k, v in prefer_icon.items():
+                if theme_name == k:
+                    # Prefer light icon
+                    if v == 'light' and p['preferences']['settings']['icon'].endswith(
+                        '-dark'
+                    ):
+                        prefer_icon_version = p['preferences']['settings'][
+                            'icon'
+                        ].replace('-dark', '-light')
 
-            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-            if not isinstance(ignored_icon, list):
-                logger.warning(
-                    'ignored_icon option malformed, need to be a string list'
-                )
+                    # Prefer dark icon
+                    if v == 'dark' and p['preferences']['settings']['icon'].endswith(
+                        '-light'
+                    ):
+                        prefer_icon_version = p['preferences']['settings'][
+                            'icon'
+                        ].replace('-light', '-dark')
 
-            prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
-            if not isinstance(prefer_icon, dict):
-                logger.warning('prefer_icon option malformed, need to be a dict')
-
-            # Get current user theme
-            dark_theme_name = get_settings(USER_SETTINGS, 'dark_theme')
-            light_theme_name = get_settings(USER_SETTINGS, 'light_theme')
-            theme_name = get_settings(USER_SETTINGS, 'theme')
-
-            # Get system theme
-            if theme_name == 'auto' and not system_theme():
-                theme_name = light_theme_name
-
-            if theme_name == 'auto' and system_theme():
-                theme_name = dark_theme_name
-
-            # 'auto_prefer_icon' setting
-            theme_st_path = sublime.find_resources(theme_name)
-
-            # Exception error, theme 'auto' did not find theme
-            # It raises after enabling zukan from 'ignored_package' with
-            # zip file, sublime-package
-            #
-            # Using 'dark' default since user_ui_settings not exist
-            bgcolor = None
-
-            if theme_st_path:
-                bgcolor = find_sidebar_background(theme_st_path[0])
-
-            # 'create_custom_icon' setting
-            custom_list = [p for p in create_custom_icon() if 'preferences' in p]
-            new_list = zukan_icons + custom_list
-
-            for p in new_list:
-                if (
-                    p['preferences']['settings']['icon'] == preference_name
-                    and p['preferences'].get('scope') is not None
-                    and not (
-                        p['name'] in ignored_icon
-                        or p['preferences']['settings']['icon'] in ignored_icon
-                        or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
-                        in ignored_icon
-                        or (p.get('tag') is not None and p['tag'] in ignored_icon)
-                        # Icons options
-                        # Need to add SVG_EXTENSION to icons options
-                        or (
-                            'icons' in p
-                            and any(x for x in p['icons'] if x in ignored_icon)
+                    if os.path.exists(
+                        os.path.join(
+                            ZUKAN_PKG_ICONS_PATH,
+                            prefer_icon_version + PNG_EXTENSION,
                         )
-                    )
-                ):
-                    # Remove '-dark' and '-light' from tmPreferences name.
-                    icon_name = p['preferences']['settings']['icon']
-                    if icon_name.endswith('-dark'):
-                        icon_name = icon_name[:-5]
-                    if icon_name.endswith('-light'):
-                        icon_name = icon_name[:-6]
-
-                    filename = icon_name + TMPREFERENCES_EXTENSION
-
-                    # 'change_icon' setting
-                    if change_icon:
-                        for k, v in change_icon.items():
-                            if p['name'] == k:
-                                p['preferences']['settings']['icon'] = v
-
-                    prefer_icon_version = ''
-
-                    # 'prefer_icon' setting
-                    if prefer_icon:
-                        for k, v in prefer_icon.items():
-                            if theme_name == k:
-                                # Prefer light
-                                if v == 'light' and p['preferences']['settings'][
-                                    'icon'
-                                ].endswith('-dark'):
-                                    prefer_icon_version = p['preferences']['settings'][
-                                        'icon'
-                                    ].replace('-dark', '-light')
-
-                                # Prefer dark
-                                if v == 'dark' and p['preferences']['settings'][
-                                    'icon'
-                                ].endswith('-light'):
-                                    prefer_icon_version = p['preferences']['settings'][
-                                        'icon'
-                                    ].replace('-light', '-dark')
-
-                                if os.path.exists(
-                                    os.path.join(
-                                        ZUKAN_PKG_ICONS_PATH,
-                                        prefer_icon_version + PNG_EXTENSION,
-                                    )
-                                    or ('tag' in p and p['tag'] == TAG_PRIMARY)
-                                ):
-                                    p['preferences']['settings']['icon'] = (
-                                        prefer_icon_version
-                                    )
-                                    logger.debug(
-                                        'prefer icon %s',
-                                        p['preferences']['settings']['icon'],
-                                    )
-
-                    # 'auto_prefer_icon' setting
-                    if theme_name not in prefer_icon and auto_prefer_icon:
-                        # Default dark
-                        if not bgcolor:
-                            prefer_icon_version = p['preferences']['settings']['icon']
-
-                        if bgcolor:
-                            # Prefer light
-                            if bgcolor[0] == 'light' and p['preferences']['settings'][
-                                'icon'
-                            ].endswith('-dark'):
-                                prefer_icon_version = p['preferences']['settings'][
-                                    'icon'
-                                ].replace('-dark', '-light')
-
-                            # Prefer dark
-                            if bgcolor[0] == 'dark' and p['preferences']['settings'][
-                                'icon'
-                            ].endswith('-light'):
-                                prefer_icon_version = p['preferences']['settings'][
-                                    'icon'
-                                ].replace('-light', '-dark')
-
-                            if os.path.exists(
-                                os.path.join(
-                                    ZUKAN_PKG_ICONS_PATH,
-                                    prefer_icon_version + PNG_EXTENSION,
-                                )
-                            ) or os.path.exists(
-                                os.path.join(
-                                    ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
-                                    prefer_icon_version + PNG_EXTENSION,
-                                )
-                            ):
-                                p['preferences']['settings']['icon'] = (
-                                    prefer_icon_version
-                                )
-                                logger.debug(
-                                    'prefer icon %s',
-                                    p['preferences']['settings']['icon'],
-                                )
-
-                    # Check if PNG exist
-                    if (
-                        'tag' in p
-                        and p['tag'] != TAG_PRIMARY
-                        and not os.path.exists(
-                            os.path.join(
-                                ZUKAN_PKG_ICONS_PATH,
-                                p['preferences']['settings']['icon'] + PNG_EXTENSION,
-                            )
-                        )
-                    ) or (
-                        'tag' in p
-                        and p['tag'] == TAG_PRIMARY
-                        and not os.path.exists(
-                            os.path.join(
-                                ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
-                                p['preferences']['settings']['icon'] + PNG_EXTENSION,
-                            )
+                    ) or os.path.exists(
+                        os.path.join(
+                            ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
+                            prefer_icon_version + PNG_EXTENSION,
                         )
                     ):
-                        logger.warning(
-                            '%s%s not found',
+                        p['preferences']['settings']['icon'] = prefer_icon_version
+                        logger.debug(
+                            'prefer icon %s',
                             p['preferences']['settings']['icon'],
-                            PNG_EXTENSION,
                         )
 
-                    # Rename if icon is primary icons do not work with any other names
-                    for primary in PRIMARY_ICONS:
-                        for i in primary[2]:
-                            if (
-                                p['name'] == primary[0]
-                                and p['preferences']['settings']['icon'] == i
-                            ):
-                                p['preferences']['settings']['icon'] = primary[1]
-                                logger.debug(
-                                    'renaming primary icon option necessary, %s',
-                                    i,
-                                )
+        # 'auto_prefer_icon' setting
+        if theme_name not in prefer_icon and auto_prefer_icon:
+            # Default dark icon
+            if not bgcolor:
+                prefer_icon_version = p['preferences']['settings']['icon']
 
-                    preferences_filepath = os.path.join(
-                        ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
+            if bgcolor:
+                # Prefer light icon
+                if bgcolor[0] == 'dark' and p['preferences']['settings'][
+                    'icon'
+                ].endswith('-dark'):
+                    prefer_icon_version = p['preferences']['settings']['icon'].replace(
+                        '-dark', '-light'
                     )
-                    dump_plist_data(p['preferences'], preferences_filepath)
-                    logger.info('%s created.', filename)
-                elif (
-                    p['preferences']['settings']['icon'] == preference_name
-                    and p['preferences'].get('scope') is not None
-                    and (
-                        p['name'] in ignored_icon
-                        or p['preferences']['settings']['icon'] in ignored_icon
-                        or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
-                        in ignored_icon
-                        or (p.get('tag') is not None and p['tag'] in ignored_icon)
+
+                # Prefer dark icon
+                if bgcolor[0] == 'light' and p['preferences']['settings'][
+                    'icon'
+                ].endswith('-light'):
+                    prefer_icon_version = p['preferences']['settings']['icon'].replace(
+                        '-light', '-dark'
+                    )
+
+                if os.path.exists(
+                    os.path.join(
+                        ZUKAN_PKG_ICONS_PATH,
+                        prefer_icon_version + PNG_EXTENSION,
+                    )
+                ) or os.path.exists(
+                    os.path.join(
+                        ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
+                        prefer_icon_version + PNG_EXTENSION,
                     )
                 ):
-                    logger.info('ignored icon %s', p['name'])
+                    p['preferences']['settings']['icon'] = prefer_icon_version
+                    logger.debug(
+                        'prefer icon %s',
+                        p['preferences']['settings']['icon'],
+                    )
 
-            return zukan_icons
-
-        except FileNotFoundError:
-            logger.error(
-                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
-            )
-        except OSError:
-            logger.error(
-                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
-            )
-
-    def create_icons_preferences():
-        """
-        Create icons tmPreferences files.
-        """
-        try:
-            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-
-            auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
-
-            change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
-            if not isinstance(change_icon, dict):
-                logger.warning('change_icon option malformed, need to be a dict')
-
-            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-            if not isinstance(ignored_icon, list):
-                logger.warning(
-                    'ignored_icon option malformed, need to be a string list'
+        # Check if PNG exist
+        if (
+            'tag' in p
+            and p['tag'] != TAG_PRIMARY
+            and not os.path.exists(
+                os.path.join(
+                    ZUKAN_PKG_ICONS_PATH,
+                    p['preferences']['settings']['icon'] + PNG_EXTENSION,
                 )
+            )
+        ) or (
+            'tag' in p
+            and p['tag'] == TAG_PRIMARY
+            and not os.path.exists(
+                os.path.join(
+                    ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
+                    p['preferences']['settings']['icon'] + PNG_EXTENSION,
+                )
+            )
+        ):
+            logger.warning(
+                '%s%s not found',
+                p['preferences']['settings']['icon'],
+                PNG_EXTENSION,
+            )
 
-            prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
-            if not isinstance(prefer_icon, dict):
-                logger.warning('prefer_icon option malformed, need to be a dict')
+        # Rename if icon is primary icons do not work with any other names
+        for primary in PRIMARY_ICONS:
+            for i in primary[2]:
+                if (
+                    p['name'] == primary[0]
+                    and p['preferences']['settings']['icon'] == i
+                ):
+                    p['preferences']['settings']['icon'] = primary[1]
+                    logger.debug(
+                        'renaming primary icon option necessary, %s',
+                        i,
+                    )
 
-            # Get current user theme
-            dark_theme_name = get_settings(USER_SETTINGS, 'dark_theme')
-            light_theme_name = get_settings(USER_SETTINGS, 'light_theme')
-            theme_name = get_settings(USER_SETTINGS, 'theme')
+        preferences_filepath = os.path.join(ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename)
+        dump_plist_data(p['preferences'], preferences_filepath)
 
-            # Get system theme
-            if theme_name == 'auto' and not system_theme():
-                theme_name = light_theme_name
+    def prepare_icon_preference_file(
+        preference_name: str,
+        zukan_icons: list,
+        theme_name: str,
+        ignored_icon: list,
+        change_icon: dict,
+        prefer_icon: dict,
+        auto_prefer_icon: bool,
+        bgcolor: list,
+    ):
+        """
+        Prepare icon preference file, from icons data and setting 'create_custom_icon'.
+        And handle the zukan settings to choose icon option, version or ignore an icon.
+        """
+        # 'create_custom_icon' setting
+        custom_list = [p for p in create_custom_icon() if 'preferences' in p]
+        new_list = zukan_icons + custom_list
 
-            if theme_name == 'auto' and system_theme():
-                theme_name = dark_theme_name
-
-            # 'auto_prefer_icon' setting
-            theme_st_path = sublime.find_resources(theme_name)
-
-            # Exception error, theme 'auto' did not find theme
-            # It raises after enabling zukan from 'ignored_package' with
-            # zip file, sublime-package
-            #
-            # Using 'dark' default since user_ui_settings not exist
-            bgcolor = None
-
-            if theme_st_path:
-                bgcolor = find_sidebar_background(theme_st_path[0])
-
-            # 'create_custom_icon' setting
-            custom_list = [p for p in create_custom_icon() if 'preferences' in p]
-            new_list = zukan_icons + custom_list
-
-            for p in new_list:
-                if p['preferences'].get('scope') is not None and not (
+        for p in new_list:
+            if (
+                p['preferences']['settings']['icon'] == preference_name
+                and p['preferences'].get('scope') is not None
+                and not (
                     p['name'] in ignored_icon
                     or p['preferences']['settings']['icon'] in ignored_icon
                     or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
@@ -369,158 +246,172 @@ class ZukanPreference:
                     or (
                         'icons' in p and any(x for x in p['icons'] if x in ignored_icon)
                     )
-                ):
-                    # Remove '-dark' and '-light' from tmPreferences name.
-                    icon_name = p['preferences']['settings']['icon']
-                    if icon_name.endswith('-dark'):
-                        icon_name = icon_name[:-5]
-                    if icon_name.endswith('-light'):
-                        icon_name = icon_name[:-6]
+                )
+            ):
+                # Remove '-dark' and '-light' from tmPreferences name.
+                icon_name = p['preferences']['settings']['icon']
+                if icon_name.endswith('-dark'):
+                    icon_name = icon_name[:-5]
+                if icon_name.endswith('-light'):
+                    icon_name = icon_name[:-6]
 
-                    filename = icon_name + TMPREFERENCES_EXTENSION
+                filename = icon_name + TMPREFERENCES_EXTENSION
 
-                    # 'change_icon' setting
-                    if change_icon:
-                        for k, v in change_icon.items():
-                            if p['name'] == k:
-                                p['preferences']['settings']['icon'] = v
+                ZukanPreference.handle_icon_preferences(
+                    p,
+                    theme_name,
+                    change_icon,
+                    prefer_icon,
+                    auto_prefer_icon,
+                    bgcolor,
+                    ignored_icon,
+                    icon_name,
+                    filename,
+                )
 
-                    prefer_icon_version = ''
-
-                    # 'prefer_icon' setting
-                    if prefer_icon:
-                        for k, v in prefer_icon.items():
-                            if theme_name == k:
-                                # Prefer light
-                                if v == 'light' and p['preferences']['settings'][
-                                    'icon'
-                                ].endswith('-dark'):
-                                    prefer_icon_version = p['preferences']['settings'][
-                                        'icon'
-                                    ].replace('-dark', '-light')
-
-                                # Prefer dark
-                                if v == 'dark' and p['preferences']['settings'][
-                                    'icon'
-                                ].endswith('-light'):
-                                    prefer_icon_version = p['preferences']['settings'][
-                                        'icon'
-                                    ].replace('-light', '-dark')
-
-                                if os.path.exists(
-                                    os.path.join(
-                                        ZUKAN_PKG_ICONS_PATH,
-                                        prefer_icon_version + PNG_EXTENSION,
-                                    )
-                                ) or os.path.exists(
-                                    os.path.join(
-                                        ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
-                                        prefer_icon_version + PNG_EXTENSION,
-                                    )
-                                ):
-                                    p['preferences']['settings']['icon'] = (
-                                        prefer_icon_version
-                                    )
-                                    logger.debug(
-                                        'prefer icon %s',
-                                        p['preferences']['settings']['icon'],
-                                    )
-
-                    # 'auto_prefer_icon' setting
-                    if theme_name not in prefer_icon and auto_prefer_icon:
-                        # print(bgcolor)
-
-                        # Default dark
-                        if not bgcolor:
-                            prefer_icon_version = p['preferences']['settings']['icon']
-
-                        if bgcolor:
-                            # Prefer light
-                            if bgcolor[0] == 'light' and p['preferences']['settings'][
-                                'icon'
-                            ].endswith('-dark'):
-                                prefer_icon_version = p['preferences']['settings'][
-                                    'icon'
-                                ].replace('-dark', '-light')
-
-                            # Prefer dark
-                            if bgcolor[0] == 'dark' and p['preferences']['settings'][
-                                'icon'
-                            ].endswith('-light'):
-                                prefer_icon_version = p['preferences']['settings'][
-                                    'icon'
-                                ].replace('-light', '-dark')
-
-                            if os.path.exists(
-                                os.path.join(
-                                    ZUKAN_PKG_ICONS_PATH,
-                                    prefer_icon_version + PNG_EXTENSION,
-                                )
-                            ) or os.path.exists(
-                                os.path.join(
-                                    ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
-                                    prefer_icon_version + PNG_EXTENSION,
-                                )
-                            ):
-                                p['preferences']['settings']['icon'] = (
-                                    prefer_icon_version
-                                )
-                                logger.debug(
-                                    'prefer icon %s',
-                                    p['preferences']['settings']['icon'],
-                                )
-
-                    # Check if PNG exist
-                    if (
-                        'tag' in p
-                        and p['tag'] != TAG_PRIMARY
-                        and not os.path.exists(
-                            os.path.join(
-                                ZUKAN_PKG_ICONS_PATH,
-                                p['preferences']['settings']['icon'] + PNG_EXTENSION,
-                            )
-                        )
-                    ) or (
-                        'tag' in p
-                        and p['tag'] == TAG_PRIMARY
-                        and not os.path.exists(
-                            os.path.join(
-                                ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
-                                p['preferences']['settings']['icon'] + PNG_EXTENSION,
-                            )
-                        )
-                    ):
-                        logger.warning(
-                            '%s%s not found',
-                            p['preferences']['settings']['icon'],
-                            PNG_EXTENSION,
-                        )
-
-                    # Rename if icon is primary icons do not work with any other names
-                    for primary in PRIMARY_ICONS:
-                        for i in primary[2]:
-                            if (
-                                p['name'] == primary[0]
-                                and p['preferences']['settings']['icon'] == i
-                            ):
-                                p['preferences']['settings']['icon'] = primary[1]
-                                logger.debug(
-                                    'renaming primary icon option necessary, %s',
-                                    i,
-                                )
-
-                    preferences_filepath = os.path.join(
-                        ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename
-                    )
-                    dump_plist_data(p['preferences'], preferences_filepath)
-                elif (
+            elif (
+                p['preferences']['settings']['icon'] == preference_name
+                and p['preferences'].get('scope') is not None
+                and (
                     p['name'] in ignored_icon
                     or p['preferences']['settings']['icon'] in ignored_icon
                     or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
                     in ignored_icon
                     or (p.get('tag') is not None and p['tag'] in ignored_icon)
-                ):
-                    logger.info('ignored icon %s', p['name'])
+                )
+            ):
+                logger.info('ignored icon %s', p['name'])
+
+    def create_icon_preference(preference_name: str):
+        """
+        Create icon tmPreferences file.
+        """
+        try:
+            auto_prefer_icon, change_icon, ignored_icon, prefer_icon = (
+                get_icon_settings()
+            )
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+            theme_name = get_theme_name()
+            theme_st_path = sublime.find_resources(theme_name)
+            bgcolor = get_sidebar_bgcolor(theme_st_path)
+
+            ZukanPreference.prepare_icon_preference_file(
+                preference_name,
+                zukan_icons,
+                theme_name,
+                ignored_icon,
+                change_icon,
+                prefer_icon,
+                auto_prefer_icon,
+                bgcolor,
+            )
+
+            if preference_name.endswith('-dark'):
+                preference_name = preference_name[:-5]
+            if preference_name.endswith('-light'):
+                preference_name = preference_name[:-6]
+
+            logger.info('%s created.', preference_name)
+
+            return zukan_icons
+
+        except FileNotFoundError:
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                preference_name,
+            )
+        except OSError:
+            logger.error(
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                preference_name,
+            )
+
+    def prepare_icons_preferences_list(
+        zukan_icons: list,
+        theme_name: str,
+        ignored_icon: list,
+        change_icon: dict,
+        prefer_icon: dict,
+        auto_prefer_icon: bool,
+        bgcolor: list,
+    ):
+        """
+        Prepare icons preferences list, from icons data and setting 'create_custom_icon'.
+        And handle the zukan settings to choose icon option, version or ignore an icon.
+        """
+        # 'create_custom_icon' setting
+        custom_list = [p for p in create_custom_icon() if 'preferences' in p]
+        new_list = zukan_icons + custom_list
+
+        for p in new_list:
+            if p['preferences'].get('scope') is not None and not (
+                p['name'] in ignored_icon
+                or p['preferences']['settings']['icon'] in ignored_icon
+                or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
+                in ignored_icon
+                or (p.get('tag') is not None and p['tag'] in ignored_icon)
+                # Icons options
+                # Need to add SVG_EXTENSION to icons options
+                or ('icons' in p and any(x for x in p['icons'] if x in ignored_icon))
+            ):
+                # Remove '-dark' and '-light' from tmPreferences name.
+                icon_name = p['preferences']['settings']['icon']
+                if icon_name.endswith('-dark'):
+                    icon_name = icon_name[:-5]
+                if icon_name.endswith('-light'):
+                    icon_name = icon_name[:-6]
+
+                filename = icon_name + TMPREFERENCES_EXTENSION
+
+                ZukanPreference.handle_icon_preferences(
+                    p,
+                    theme_name,
+                    change_icon,
+                    prefer_icon,
+                    auto_prefer_icon,
+                    bgcolor,
+                    ignored_icon,
+                    icon_name,
+                    filename,
+                )
+
+            elif (
+                p['name'] in ignored_icon
+                or p['preferences']['settings']['icon'] in ignored_icon
+                or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
+                in ignored_icon
+                or (p.get('tag') is not None and p['tag'] in ignored_icon)
+            ):
+                logger.info('Ignored icon %s', p['name'])
+
+    def create_icons_preferences():
+        """
+        Create icons tmPreferences files.
+        """
+        try:
+            auto_prefer_icon, change_icon, ignored_icon, prefer_icon = (
+                get_icon_settings()
+            )
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+            theme_name = get_theme_name()
+            theme_st_path = sublime.find_resources(theme_name)
+            bgcolor = get_sidebar_bgcolor(theme_st_path)
+
+            ZukanPreference.prepare_icons_preferences_list(
+                zukan_icons,
+                theme_name,
+                ignored_icon,
+                change_icon,
+                prefer_icon,
+                auto_prefer_icon,
+                bgcolor,
+            )
 
             logger.info('tmPreferences created.')
 
@@ -528,11 +419,17 @@ class ZukanPreference:
 
         except FileNotFoundError:
             logger.error(
-                '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
+                '[Errno %d] %s: %r',
+                errno.ENOENT,
+                os.strerror(errno.ENOENT),
+                ZUKAN_ICONS_DATA_FILE,
             )
         except OSError:
             logger.error(
-                '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), filename
+                '[Errno %d] %s: %r',
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                ZUKAN_ICONS_DATA_FILE,
             )
 
     def delete_icons_preference(preference_name: str):

@@ -4,9 +4,10 @@
 
 ### Plugin 🕹️
 - Fix package_size not working for files
-- Add delete_unused_icons
+- Add delete_unused
 - Fix error when Preferences 'theme' is set to 'auto'
 - Add system_theme: Linux, macOS and Windows
+- Rename icon_dark_light -> theme_dark_light
 
 ## [0.4.1] - 2024-12-15
 

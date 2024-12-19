@@ -2,9 +2,9 @@ import logging
 import re
 import sublime
 
-from ..helpers.icon_dark_light import (
+from ..helpers.theme_dark_light import (
     convert_to_rgb,
-    icon_dark_light,
+    theme_dark_light,
     st_colors_to_hex,
 )
 from ..helpers.read_write_data import read_pickle_data
@@ -110,7 +110,7 @@ def find_variables(
     #
     # Ensuring here until find a better solution
     if theme == 'Packages/Theme - Default/Default.sublime-theme':
-        dark_light = 'dark'
+        dark_light = 'light'
 
         target_list.append(dark_light)
 
@@ -131,7 +131,7 @@ def find_variables(
                         h=hue, s=sat, l=lum, a=alpha
                     )
 
-        dark_light = icon_dark_light(convert_to_rgb(hsl_color))
+        dark_light = theme_dark_light(convert_to_rgb(hsl_color))
 
         target_list.append(dark_light)
 
@@ -150,7 +150,7 @@ def find_variables(
                         r=red, g=green, b=blue, a=alpha
                     )
 
-        dark_light = icon_dark_light(convert_to_rgb(rgb_color))
+        dark_light = theme_dark_light(convert_to_rgb(rgb_color))
 
         target_list.append(dark_light)
 
@@ -159,7 +159,7 @@ def find_variables(
         hex_color = re.findall(regex_hex, var_value)
         # print(hex_color[0])
 
-        dark_light = icon_dark_light(convert_to_rgb(hex_color[0]))
+        dark_light = theme_dark_light(convert_to_rgb(hex_color[0]))
 
         target_list.append(dark_light)
 
@@ -169,7 +169,7 @@ def find_variables(
         user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
         bgcolor = [d.get('background') for d in user_ui_settings]
 
-        dark_light = icon_dark_light(convert_to_rgb(bgcolor[0]))
+        dark_light = theme_dark_light(convert_to_rgb(bgcolor[0]))
 
         target_list.append(dark_light)
 
@@ -178,7 +178,7 @@ def find_variables(
     elif any(var_value in d for d in ST_COLOR_PALETTE):
         st_color = var_value
 
-        dark_light = icon_dark_light(convert_to_rgb(st_colors_to_hex(st_color)))
+        dark_light = theme_dark_light(convert_to_rgb(st_colors_to_hex(st_color)))
 
         target_list.append(dark_light)
 
@@ -302,7 +302,7 @@ def find_attributes_hidden_file(
             )
 
 
-def theme_with_opacity(theme_name: str) -> bool:
+def theme_with_opacity(theme_st_path: str) -> bool:
     """
     Search if theme or hidden theme use icon_file_type, with attributes 'hover' and
     'selected'.
@@ -315,7 +315,7 @@ def theme_with_opacity(theme_name: str) -> bool:
     }
 
     Parameters:
-    theme_name (str) -- theme name.
+    theme_st_path (str) -- path to theme.
 
     Returns:
     (bool) -- True or False for theme or its hidden-theme(s) has attributes.
@@ -325,10 +325,10 @@ def theme_with_opacity(theme_name: str) -> bool:
     target_key = 'tree_row'
     target_values = ['hover', 'selected']
     target_list = []
-    theme_content = sublime.decode_value(sublime.load_resource(theme_name))
+    theme_content = sublime.decode_value(sublime.load_resource(theme_st_path))
 
     find_attributes(
-        theme_name,
+        theme_st_path,
         theme_content,
         class_name,
         target_key,
@@ -338,7 +338,7 @@ def theme_with_opacity(theme_name: str) -> bool:
     )
     if 'extends' in theme_content:
         find_attributes_hidden_file(
-            theme_name,
+            theme_st_path,
             theme_content,
             class_name,
             target_key,
@@ -353,7 +353,7 @@ def theme_with_opacity(theme_name: str) -> bool:
         return False
 
 
-def find_sidebar_background(theme_name: str) -> list:
+def find_sidebar_background(theme_st_path: str) -> list:
     """
     Find sidebar background color and return 'dark' or 'light', depending on
     color HSP.
@@ -362,7 +362,7 @@ def find_sidebar_background(theme_name: str) -> list:
     'layer0.tint'.
 
     Parameters:
-    theme_name (str) -- theme name.
+    theme_st_path (str) -- path to theme.
 
     Returns:
     target_list (list) -- 'dark' or 'light' depending on color HSP.
@@ -370,9 +370,9 @@ def find_sidebar_background(theme_name: str) -> list:
     class_name = 'sidebar_container'
     target_key = 'layer0.tint'
     target_list = []
-    theme_content = sublime.decode_value(sublime.load_resource(theme_name))
+    theme_content = sublime.decode_value(sublime.load_resource(theme_st_path))
     find_attributes(
-        theme_name,
+        theme_st_path,
         theme_content,
         class_name,
         target_key,
@@ -380,7 +380,7 @@ def find_sidebar_background(theme_name: str) -> list:
     )
     if 'extends' in theme_content:
         find_attributes_hidden_file(
-            theme_name,
+            theme_st_path,
             theme_content,
             class_name,
             target_key,
@@ -389,3 +389,21 @@ def find_sidebar_background(theme_name: str) -> list:
 
     # print(target_list)
     return target_list
+
+
+def get_sidebar_bgcolor(theme_st_path: str) -> list:
+    """
+    Get sidebar background color.
+
+    Parameters:
+    theme_st_path (str) -- path to theme.
+
+    Returns:
+    (list) -- returns values 'dark' or 'light'
+    """
+    bgcolor = None
+
+    if theme_st_path:
+        bgcolor = find_sidebar_background(theme_st_path[0])
+
+    return bgcolor

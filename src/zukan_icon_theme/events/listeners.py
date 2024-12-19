@@ -7,11 +7,17 @@ import threading
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
-from ..helpers.load_save_settings import get_settings
-from ..helpers.read_write_data import dump_pickle_data, read_pickle_data
+from ..helpers.delete_unused import delete_unused_icon_theme
+from ..helpers.load_save_settings import (
+    get_settings,
+    get_theme_name,
+    get_theme_settings,
+    save_current_ui_settings,
+)
+from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_themes import (
+    get_sidebar_bgcolor,
     package_theme_exists,
-    search_resources_sublime_themes,
 )
 from ..helpers.system_theme import system_theme
 from ..helpers.thread_progress import ThreadProgress
@@ -34,57 +40,6 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-def save_current_ui_settings(
-    color_scheme_background: str,
-    current_color_scheme: str,
-    current_dark_theme: str,
-    current_light_theme: str,
-    current_theme: str,
-):
-    """
-    Save current user UI theme and color-scheme.
-
-    Parameters:
-    color_scheme_background (str) - color scheme background.
-    current_theme (str) -- user theme in Preferences.
-    current_color_scheme (str) -- user color-scheme in Preferences.
-    """
-    current_ui_settings = {}
-    current_ui_settings.update({'background': color_scheme_background})
-    current_ui_settings.update({'color_scheme': current_color_scheme})
-    current_ui_settings.update({'dark_theme': current_dark_theme})
-    current_ui_settings.update({'light_theme': current_light_theme})
-    current_ui_settings.update({'theme': current_theme})
-
-    if os.path.exists(USER_UI_SETTINGS_FILE):
-        # Delete previous pickle file
-        os.remove(USER_UI_SETTINGS_FILE)
-
-    dump_pickle_data(current_ui_settings, USER_UI_SETTINGS_FILE)
-
-
-def delete_unused_icon_theme():
-    """
-    Delete unused icon theme file.
-
-    When uninstall a theme package, it leaves an icon-theme file.
-    """
-    list_all_themes = search_resources_sublime_themes()
-    list_icon_themes = ZukanTheme.list_created_icons_themes()
-
-    list_themes = []
-
-    for t in list_all_themes:
-        n = os.path.basename(t)
-        list_themes.append(n)
-
-    list_unused_icon_themes = list(set(list_icon_themes) - set(list_themes))
-
-    for o in list_unused_icon_themes:
-        logger.info('removing unused zukan icon theme, %s', o)
-        ZukanTheme.delete_icon_theme(o)
-
-
 class ThemeListener:
     def get_user_theme():
         """
@@ -98,25 +53,15 @@ class ThemeListener:
         """
         logger.debug('Preferences.sublime-settings changed')
 
-        auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
+        auto_install_theme, ignored_theme = get_theme_settings()
+
         auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
         color_scheme_name = get_settings(USER_SETTINGS, 'color_scheme')
-        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
         prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
         user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
         zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
-        dark_theme_name = get_settings(USER_SETTINGS, 'dark_theme')
-        light_theme_name = get_settings(USER_SETTINGS, 'light_theme')
-        theme_name = get_settings(USER_SETTINGS, 'theme')
-
-        # Get system theme
-        if theme_name == 'auto' and not system_theme():
-            theme_name = light_theme_name
-
-        if theme_name == 'auto' and system_theme():
-            theme_name = dark_theme_name
-
+        theme_name = get_theme_name()
         icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
 
         if not isinstance(ignored_theme, list):
@@ -222,11 +167,14 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         # activate. Use 'enter' to select works. Seems happen with other functions.
         # With async seems not occurr.
 
+        auto_install_theme, ignored_theme = get_theme_settings()
+
         color_scheme_background = self.view.style()['background']
         current_color_scheme = self.view.settings().get('color_scheme')
-        current_dark_theme = self.view.settings().get('light_theme')
+        current_dark_theme = self.view.settings().get('dark_theme')
         current_light_theme = self.view.settings().get('light_theme')
         current_theme = self.view.settings().get('theme')
+        icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, current_theme)
 
         # Get system theme
         theme_name = current_theme
@@ -237,9 +185,10 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         if theme_name == 'auto' and system_theme():
             theme_name = current_dark_theme
 
-        auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
-        icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, current_theme)
-        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
+        # Do not save sidebar_bgcolor to save_current_ui_settings this time
+        # Error in find_variables user_ui_settings does not exist
+        theme_st_path = sublime.find_resources(theme_name)
+        sidebar_bgcolor = get_sidebar_bgcolor(theme_st_path)
 
         # create setting file with current ui if does not exist
         if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
@@ -297,6 +246,10 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                         )
                     )
                 )
+                # Change system theme, sidebar bakcaground changed.
+                or not any(
+                    d['sidebar_bgcolor'] == sidebar_bgcolor for d in user_ui_settings
+                )
             ):
                 ThemeListener.get_user_theme()
                 logger.debug('SchemeTheme ViewListener on_activated_async')
@@ -308,4 +261,5 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                     current_dark_theme,
                     current_light_theme,
                     current_theme,
+                    sidebar_bgcolor,
                 )

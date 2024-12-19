@@ -161,7 +161,7 @@ def extract_numbers_from_rgb(color_rgb: str) -> list:
         return None
 
 
-def icon_dark_light(rgb_color: list) -> str:
+def theme_dark_light(rgb_color: list) -> str:
     """
     Code from
     https://stackoverflow.com/questions/22603510/
@@ -176,7 +176,7 @@ def icon_dark_light(rgb_color: list) -> str:
     rgb_color (list) -- list with RGB numbers.
 
     Returns:
-    (str) -- return 'dark' or 'light' for a RGB color.
+    (str) -- return 'dark' or 'light' icon for a RGB color.
     """
     [r, g, b] = rgb_color
     hsp = math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b))
@@ -185,14 +185,17 @@ def icon_dark_light(rgb_color: list) -> str:
         logger.debug('HSP = %s, sidebar seems dark background. Using light icon.', hsp)
         # print(hsp)
         # dark background, use light icon
-        return 'light'
+        return 'dark'
 
     elif hsp > 127.5:
         logger.debug('HSP = %s, sidebar seems light background. Using dark icon.', hsp)
         # print(hsp)
         # light background, use dark icon
-        return 'dark'
+        return 'light'
 
-    # else:
-    #     # Default is dark
-    #     return 'dark'
+
+def get_icon_dark_light(bgcolor: str) -> str:
+    if bgcolor == 'dark':
+        return 'light'
+    else:
+        return 'dark'

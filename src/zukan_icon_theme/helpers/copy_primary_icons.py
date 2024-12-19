@@ -3,16 +3,15 @@ import os
 import shutil
 import sublime
 
-from ..helpers.load_save_settings import get_settings
-from ..helpers.search_themes import find_sidebar_background
-from ..helpers.system_theme import system_theme
+from ..helpers.load_save_settings import (
+    get_icon_settings,
+    get_theme_name,
+)
+from ..helpers.search_themes import get_sidebar_bgcolor
+from ..helpers.theme_dark_light import get_icon_dark_light
 from ..utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,
-)
-from ..utils.file_settings import (
-    USER_SETTINGS,
-    ZUKAN_SETTINGS,
 )
 from ..utils.icons_suffix import (
     ICONS_SUFFIX,
@@ -39,37 +38,12 @@ def copy_primary_icons():
 
     PNGs copies necessary if install using clone repo.
     """
-    # Not checking if 'ignored_icon' is a list or 'change_icon' a dict, because they
-    # are used after create syntaxes or preferences. Those are being check there.
-    auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
-    change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
-    ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-    prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+    auto_prefer_icon, change_icon, ignored_icon, prefer_icon = get_icon_settings()
 
-    # Get current user theme
-    dark_theme_name = get_settings(USER_SETTINGS, 'dark_theme')
-    light_theme_name = get_settings(USER_SETTINGS, 'light_theme')
-    theme_name = get_settings(USER_SETTINGS, 'theme')
-
-    # Get system theme
-    if theme_name == 'auto' and not system_theme():
-        theme_name = light_theme_name
-
-    if theme_name == 'auto' and system_theme():
-        theme_name = dark_theme_name
-
-    # 'auto_prefer_icon' setting
+    theme_name = get_theme_name()
     theme_st_path = sublime.find_resources(theme_name)
-
-    # Exception error, theme 'auto' did not find theme
-    # It raises after enabling zukan from 'ignored_package' with
-    # zip file, sublime-package
-    #
-    # Using 'dark' default since user_ui_settings not exist
-    bgcolor = None
-
-    if theme_st_path:
-        bgcolor = find_sidebar_background(theme_st_path[0])
+    bgcolor = get_sidebar_bgcolor(theme_st_path)
+    icon_dark_light = get_icon_dark_light(bgcolor[0])
 
     for p in PRIMARY_ICONS:
         for s in ICONS_SUFFIX:
@@ -107,7 +81,7 @@ def copy_primary_icons():
                     or i not in ignored_icon
                     or (i + SVG_EXTENSION) not in ignored_icon
                 ):
-                    # Not checking if path exists, because if change icon path will exist
+                    # Not checking if path exists, because change icon path will exist
                     # and will not replace icon unless delete icon first.
                     if (p[0], i) in change_icon.items():
                         logger.debug(
@@ -134,7 +108,7 @@ def copy_primary_icons():
                         ) or (
                             bgcolor
                             and theme_name not in prefer_icon
-                            and i.rsplit('-', 1)[1] == bgcolor[0]
+                            and i.rsplit('-', 1)[1] == icon_dark_light
                             and auto_prefer_icon
                         ):
                             logger.debug(

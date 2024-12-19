@@ -5,7 +5,7 @@ from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..lib.move_folders import MoveFolder
-from ..helpers.delete_unused_icons import delete_unused_icons
+from ..helpers.delete_unused import delete_unused_icons
 from ..helpers.load_save_settings import get_settings
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.file_settings import (
