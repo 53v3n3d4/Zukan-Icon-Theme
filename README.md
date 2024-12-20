@@ -4,6 +4,10 @@
     </a>
 </p>
 
+## OS
+
+I am limited to test in macOS. Seems in Windows raises error unable to read when build preferences files. Same for Linux, I could not test it.
+
 ## Zukan Icon Theme
 
 Icon theme for Sublime Text 4 editor.  
