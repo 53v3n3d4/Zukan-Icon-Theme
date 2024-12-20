@@ -199,3 +199,7 @@ def get_icon_dark_light(bgcolor: str) -> str:
         return 'light'
     else:
         return 'dark'
+
+
+def scheme_background_dark_light(hex_color: str) -> str:
+    return theme_dark_light(convert_to_rgb(hex_color))
