@@ -5,7 +5,10 @@ from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..helpers.clean_settings import clean_comments_settings
 from ..helpers.load_save_settings import (
+    get_change_icon_settings,
+    get_prefer_ignore_icon_settings,
     get_settings,
+    get_upgraded_version_settings,
     save_current_settings,
     read_current_settings,
 )
@@ -76,13 +79,12 @@ class SettingsEvent:
         if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and auto_rebuild_icon is True:
             data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
 
-            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-            change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
-            change_icon_file_extension = get_settings(
-                ZUKAN_SETTINGS, 'change_icon_file_extension'
+            auto_prefer_icon, prefer_icon, ignored_icon = (
+                get_prefer_ignore_icon_settings()
             )
+            change_icon, change_icon_file_extension = get_change_icon_settings()
+
             create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
-            prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
             current_settings = read_current_settings()
 
             for d in data:
@@ -181,8 +183,7 @@ class SettingsEvent:
         It compares with 'version' value from 'zukan_current_settings.pkl'.
         """
         logger.debug('if package upgraded, begin rebuild...')
-        pkg_version = get_settings(ZUKAN_SETTINGS, 'version')
-        auto_upgraded = get_settings(ZUKAN_SETTINGS, 'rebuild_on_upgrade')
+        pkg_version, auto_upgraded = get_upgraded_version_settings()
 
         if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and auto_upgraded is True:
             data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)

@@ -91,9 +91,10 @@ def st_colors_to_hex(var_name):
                 return v
 
         if i is not ST_COLOR_PALETTE:
-            # Returning a default dark color
+            # Returning a light background theme, to use a
+            # default dark icon
             logger.debug('ST Color not exist.')
-            return '#1A1A1A'
+            return '#FFFFFF'
 
 
 def extract_numbers_from_hsl(color_hsl: str) -> tuple:

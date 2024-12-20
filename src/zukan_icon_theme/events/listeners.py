@@ -9,6 +9,7 @@ from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..helpers.delete_unused import delete_unused_icon_theme
 from ..helpers.load_save_settings import (
+    get_prefer_ignore_icon_settings,
     get_settings,
     get_theme_name,
     get_theme_settings,
@@ -55,10 +56,9 @@ class ThemeListener:
         logger.debug('Preferences.sublime-settings changed')
 
         auto_install_theme, ignored_theme = get_theme_settings()
+        auto_prefer_icon, prefer_icon, _ = get_prefer_ignore_icon_settings()
 
-        auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
         color_scheme_name = get_settings(USER_SETTINGS, 'color_scheme')
-        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
         user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
         zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
@@ -217,7 +217,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
             ) and (
                 # Need fix: entering get_user_theme when sidebar dark/light do not changed,
                 # color-scheme dark/light changed, not adaptive, changing when move from
-                # color-scheme dark -> light. 
+                # color-scheme dark -> light.
                 # Background color-scheme issue because it is used in find_variables getting
                 # from file. In this case, color-scheme changing before updating file.
                 not any(
@@ -225,8 +225,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                     for d in user_ui_settings
                 )
                 or not any(
-                    scheme_background_dark_light(d['background'])
-                    == scheme_dark_light
+                    scheme_background_dark_light(d['background']) == scheme_dark_light
                     for d in user_ui_settings
                 )
                 or theme_name not in ZukanTheme.list_created_icons_themes()

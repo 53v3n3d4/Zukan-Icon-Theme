@@ -10,7 +10,9 @@ import subprocess
 # dnf — Fedora
 # zypper — openSUSE
 #
-# Tested Ubuntu 22.04
+# Tested code Ubuntu 22.04
+# ST Theme 'auto' has an open issue
+# https://github.com/sublimehq/sublime_text/issues/5194
 def linux_theme() -> bool:
     """
     Code from

@@ -98,26 +98,54 @@ def get_theme_settings() -> tuple:
     return auto_install_theme, ignored_theme
 
 
-def get_icon_settings() -> tuple:
+def get_change_icon_settings() -> tuple:
     """
-    Get icon settings.
+    Get change icon settings.
 
     Returns:
-    (tuple) -- tuple with zukan icon settings.
+    (tuple) -- tuple with change icon settings.
     """
-    auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
     change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
-    ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-    prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+    change_icon_file_extension = get_settings(
+        ZUKAN_SETTINGS, 'change_icon_file_extension'
+    )
 
     if not is_valid_dict(change_icon):
         change_icon = {}
+
+    return change_icon, change_icon_file_extension
+
+
+def get_prefer_ignore_icon_settings() -> tuple:
+    """
+    Get prefer and ignore icon settings.
+
+    Returns:
+    (tuple) -- tuple with prefer and ignore icon settings.
+    """
+    auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
+    prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+    ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+
     if not is_valid_list(ignored_icon):
         ignored_icon = []
     if not is_valid_dict(prefer_icon):
         prefer_icon = {}
 
-    return auto_prefer_icon, change_icon, ignored_icon, prefer_icon
+    return auto_prefer_icon, prefer_icon, ignored_icon
+
+
+def get_upgraded_version_settings() -> tuple:
+    """
+    Get upgrade and version plugin settings.
+
+    Returns:
+    (tuple) -- tuple with upgrade and version plugin settings.
+    """
+    pkg_version = get_settings(ZUKAN_SETTINGS, 'version')
+    auto_upgraded = get_settings(ZUKAN_SETTINGS, 'rebuild_on_upgrade')
+
+    return pkg_version, auto_upgraded
 
 
 def read_current_settings() -> dict:
@@ -152,7 +180,7 @@ def save_current_ui_settings(
     current_dark_theme: str,
     current_light_theme: str,
     current_theme: str,
-    sidebar_bgcolor: list = ['light'],
+    sidebar_bgcolor: list,
 ):
     """
     Save current user UI theme and color-scheme.
