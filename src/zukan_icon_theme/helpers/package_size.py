@@ -31,7 +31,7 @@ def get_file_size(file_path: str) -> int:
 
 def get_folder_size(folder_path: str) -> int:
     """
-    Adapt from
+    Code from
     https://stackoverflow.com/questions/1392413/
     calculating-a-directorys-size-using-python
 

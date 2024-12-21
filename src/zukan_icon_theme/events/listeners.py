@@ -224,9 +224,13 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                     d['sidebar_bgcolor'][0] == sidebar_bgcolor[0]
                     for d in user_ui_settings
                 )
-                or not any(
-                    scheme_background_dark_light(d['background']) == scheme_dark_light
-                    for d in user_ui_settings
+                or (
+                    not any(
+                        scheme_background_dark_light(d['background'])
+                        == scheme_dark_light
+                        for d in user_ui_settings
+                    )
+                    and sidebar_bgcolor[0] != scheme_dark_light
                 )
                 or theme_name not in ZukanTheme.list_created_icons_themes()
                 or theme_name in ignored_theme

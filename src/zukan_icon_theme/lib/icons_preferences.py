@@ -334,11 +334,11 @@ class ZukanPreference:
             )
 
             if preference_name.endswith('-dark'):
-                preference_name = preference_name[:-5]
+                fname = preference_name[:-5] + TMPREFERENCES_EXTENSION
             if preference_name.endswith('-light'):
-                preference_name = preference_name[:-6]
+                fname = preference_name[:-6] + TMPREFERENCES_EXTENSION
 
-            logger.info('%s created.', preference_name)
+            logger.info('%s created.', fname)
 
             return zukan_icons
 
@@ -347,14 +347,14 @@ class ZukanPreference:
                 '[Errno %d] %s: %r',
                 errno.ENOENT,
                 os.strerror(errno.ENOENT),
-                preference_name,
+                fname,
             )
         except OSError:
             logger.error(
                 '[Errno %d] %s: %r',
                 errno.EACCES,
                 os.strerror(errno.EACCES),
-                preference_name,
+                fname,
             )
 
     def prepare_icons_preferences_list(

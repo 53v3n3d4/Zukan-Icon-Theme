@@ -6,7 +6,6 @@ from ..utils.st_color_palette import (
     ST_COLOR_PALETTE,
 )
 
-
 logger = logging.getLogger(__name__)
 
 
@@ -89,12 +88,6 @@ def st_colors_to_hex(var_name):
         for k, v in i.items():
             if var_name == k:
                 return v
-
-        if i is not ST_COLOR_PALETTE:
-            # Returning a light background theme, to use a
-            # default dark icon
-            logger.debug('ST Color not exist.')
-            return '#FFFFFF'
 
 
 def extract_numbers_from_hsl(color_hsl: str) -> tuple:
