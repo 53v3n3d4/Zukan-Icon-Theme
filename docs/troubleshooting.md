@@ -119,3 +119,14 @@ INFO | Zukan Icon Theme icons_preferences.py tmPreferences created.
 ```
 Currently, restart ST will make logger function run without raising error.
 ```
+
+### Error unable to read preferences files
+
+When raise a lot of dialog messages for all preferences files.
+
+This error usually occurs when build files are called multiple times together, causing conflicts with files being deleted and created.
+
+**Solution**
+```
+Force quit ST or close all dialog messages.
+```
