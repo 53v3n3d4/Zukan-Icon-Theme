@@ -6,7 +6,21 @@
 
 ## OS
 
-I am limited to test in macOS. Seems in Windows raises error unable to read when build preferences files. Same for Linux, I could not test it.
+| OS         | PC Install | Rebuild Command | Upgrade | Auto prefer icon | Notes |
+|------------|------------|-----------------|---------|------------------|-------|
+| Linux Febora 41 |  &check; |  &check; | |  &check; | Auto prefer icon works, but could not make ST theme auto works in my setup yet.|
+| Linux Ubuntu 24.04 |  &check; |  &check; | |  &check; | |
+| macOS Sonoma 14.6.1 |  &check; |  &check; |  &check; |  &check; | |
+| Windows 10 Home |  &check; |  &check; | |  &check; | Error unable to read all preferences when saving settings. Tested a few times, it worked though. This error usually occurred when build files are called multiple times together.|
+
+> Linux and Windows testing on VM.
+
+
+macOS
+- Sonoma 14 - plugin works. Theme auto works.
+
+Windows
+- 10 Home - plugin works. But error unable to read all preferences seems to raise when save settings.
 
 ## Zukan Icon Theme
 
