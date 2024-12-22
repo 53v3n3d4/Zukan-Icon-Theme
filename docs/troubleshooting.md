@@ -117,5 +117,5 @@ INFO | Zukan Icon Theme icons_preferences.py tmPreferences created.
 
 **Solution**
 ```
-Currently, restart ST will make logger function without raising error.
+Currently, restart ST will make logger function run without raising error.
 ```

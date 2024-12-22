@@ -15,13 +15,6 @@
 
 > Linux and Windows testing on VM.
 
-
-macOS
-- Sonoma 14 - plugin works. Theme auto works.
-
-Windows
-- 10 Home - plugin works. But error unable to read all preferences seems to raise when save settings.
-
 ## Zukan Icon Theme
 
 Icon theme for Sublime Text 4 editor.  
