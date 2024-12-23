@@ -98,6 +98,21 @@ def get_theme_settings() -> tuple:
     return auto_install_theme, ignored_theme
 
 
+def get_ignored_theme_settings() -> tuple:
+    """
+    Get ignore theme settings.
+
+    Returns:
+    (tuple) -- tuple with ignore theme settings.
+    """
+    ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
+
+    if not is_valid_list(ignored_theme):
+        ignored_theme = []
+
+    return ignored_theme
+
+
 def get_change_icon_settings() -> tuple:
     """
     Get change icon settings.
@@ -116,23 +131,35 @@ def get_change_icon_settings() -> tuple:
     return change_icon, change_icon_file_extension
 
 
-def get_prefer_ignore_icon_settings() -> tuple:
+def get_prefer_icon_settings() -> tuple:
     """
-    Get prefer and ignore icon settings.
+    Get prefer icon settings.
 
     Returns:
-    (tuple) -- tuple with prefer and ignore icon settings.
+    (tuple) -- tuple with prefer icon settings.
     """
     auto_prefer_icon = get_settings(ZUKAN_SETTINGS, 'auto_prefer_icon')
     prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+
+    if not is_valid_dict(prefer_icon):
+        prefer_icon = {}
+
+    return auto_prefer_icon, prefer_icon
+
+
+def get_ignored_icon_settings() -> tuple:
+    """
+    Get ignore icon settings.
+
+    Returns:
+    (tuple) -- tuple with ignore icon settings.
+    """
     ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
 
     if not is_valid_list(ignored_icon):
         ignored_icon = []
-    if not is_valid_dict(prefer_icon):
-        prefer_icon = {}
 
-    return auto_prefer_icon, prefer_icon, ignored_icon
+    return ignored_icon
 
 
 def get_upgraded_version_settings() -> tuple:

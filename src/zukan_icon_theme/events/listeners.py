@@ -9,7 +9,7 @@ from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..helpers.delete_unused import delete_unused_icon_theme
 from ..helpers.load_save_settings import (
-    get_prefer_ignore_icon_settings,
+    get_prefer_icon_settings,
     get_settings,
     get_theme_name,
     get_theme_settings,
@@ -56,7 +56,7 @@ class ThemeListener:
         logger.debug('Preferences.sublime-settings changed')
 
         auto_install_theme, ignored_theme = get_theme_settings()
-        auto_prefer_icon, prefer_icon, _ = get_prefer_ignore_icon_settings()
+        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
 
         color_scheme_name = get_settings(USER_SETTINGS, 'color_scheme')
         user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
@@ -221,8 +221,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 # Background color-scheme issue because it is used in find_variables getting
                 # from file. In this case, color-scheme changing before updating file.
                 not any(
-                    d['sidebar_bgcolor'] == sidebar_bgcolor
-                    for d in user_ui_settings
+                    d['sidebar_bgcolor'] == sidebar_bgcolor for d in user_ui_settings
                 )
                 or not any(
                     scheme_background_dark_light(d['background']) == scheme_dark_light

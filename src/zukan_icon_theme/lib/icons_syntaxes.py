@@ -7,7 +7,7 @@ import sublime
 from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.edit_file_extension import edit_file_extension
-from ..helpers.load_save_settings import get_settings
+from ..helpers.load_save_settings import get_ignored_icon_settings
 from ..helpers.read_write_data import (
     dump_yaml_data,
     edit_contexts_main,
@@ -22,9 +22,6 @@ from ..utils.contexts_scopes import (
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
     SVG_EXTENSION,
-)
-from ..utils.file_settings import (
-    ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
@@ -80,11 +77,7 @@ class ZukanSyntax:
         """
         try:
             zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-            if not isinstance(ignored_icon, list):
-                logger.warning(
-                    'ignored_icon option malformed, need to be a string list'
-                )
+            ignored_icon = get_ignored_icon_settings()
 
             # 'create_custom_icon' setting
             custom_list = [s for s in create_custom_icon() if 'syntax' in s]
@@ -162,11 +155,7 @@ class ZukanSyntax:
         """
         try:
             zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-            if not isinstance(ignored_icon, list):
-                logger.warning(
-                    'ignored_icon option malformed, need to be a string list'
-                )
+            ignored_icon = get_ignored_icon_settings()
 
             # 'create_custom_icon' setting
             custom_list = [s for s in create_custom_icon() if 'syntax' in s]

@@ -5,7 +5,8 @@ import sublime
 
 from ..helpers.load_save_settings import (
     get_change_icon_settings,
-    get_prefer_ignore_icon_settings,
+    get_ignored_icon_settings,
+    get_prefer_icon_settings,
     get_theme_name,
 )
 from ..helpers.search_themes import get_sidebar_bgcolor
@@ -39,12 +40,9 @@ def copy_primary_icons():
 
     PNGs copies necessary if install using clone repo.
     """
-    (
-        auto_prefer_icon,
-        prefer_icon,
-        ignored_icon,
-    ) = get_prefer_ignore_icon_settings()
+    auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
     change_icon, _ = get_change_icon_settings()
+    ignored_icon = get_ignored_icon_settings()
 
     theme_name = get_theme_name()
     theme_st_path = sublime.find_resources(theme_name)

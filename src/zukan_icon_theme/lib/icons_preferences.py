@@ -9,7 +9,8 @@ from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.load_save_settings import (
     get_change_icon_settings,
-    get_prefer_ignore_icon_settings,
+    get_ignored_icon_settings,
+    get_prefer_icon_settings,
     get_theme_name,
 )
 from ..helpers.read_write_data import (
@@ -151,17 +152,17 @@ class ZukanPreference:
 
             if bgcolor:
                 # Prefer light icon
-                if bgcolor == 'dark' and p['preferences']['settings'][
-                    'icon'
-                ].endswith('-dark'):
+                if bgcolor == 'dark' and p['preferences']['settings']['icon'].endswith(
+                    '-dark'
+                ):
                     prefer_icon_version = p['preferences']['settings']['icon'].replace(
                         '-dark', '-light'
                     )
 
                 # Prefer dark icon
-                if bgcolor == 'light' and p['preferences']['settings'][
-                    'icon'
-                ].endswith('-light'):
+                if bgcolor == 'light' and p['preferences']['settings']['icon'].endswith(
+                    '-light'
+                ):
                     prefer_icon_version = p['preferences']['settings']['icon'].replace(
                         '-light', '-dark'
                     )
@@ -312,10 +313,9 @@ class ZukanPreference:
         preference_name (str) -- icon or icon option.
         """
         try:
-            auto_prefer_icon, prefer_icon, ignored_icon = (
-                get_prefer_ignore_icon_settings()
-            )
+            auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
             change_icon, _ = get_change_icon_settings()
+            ignored_icon = get_ignored_icon_settings()
             zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
             theme_name = get_theme_name()
@@ -429,10 +429,9 @@ class ZukanPreference:
         Create icons tmPreferences files.
         """
         try:
-            auto_prefer_icon, prefer_icon, ignored_icon = (
-                get_prefer_ignore_icon_settings()
-            )
+            auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
             change_icon, _ = get_change_icon_settings()
+            ignored_icon = get_ignored_icon_settings()
             zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
             theme_name = get_theme_name()
