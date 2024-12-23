@@ -1,14 +1,11 @@
 import logging
 import os
 
-from ..helpers.load_save_settings import get_settings
+from ..helpers.load_save_settings import get_create_custom_icon_settings
 from ..helpers.remove_empty_dict import remove_empty_dict
 from ..helpers.search_zukan_data import list_data_names
 from ..utils.file_extensions import (
     PNG_EXTENSION,
-)
-from ..utils.file_settings import (
-    ZUKAN_SETTINGS,
 )
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_PATH,
@@ -152,10 +149,7 @@ def data(d: dict):
 
 
 def create_custom_icon() -> list:
-    create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
-    if not isinstance(create_custom_icon, list):
-        logger.warning('create_custom_icon option malformed, need to be a string list')
-
+    create_custom_icon = get_create_custom_icon_settings()
     list_od = []
 
     if create_custom_icon:

@@ -95,22 +95,25 @@ def get_theme_settings() -> tuple:
     auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
     ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
 
-    return auto_install_theme, ignored_theme
-
-
-def get_ignored_theme_settings() -> tuple:
-    """
-    Get ignore theme settings.
-
-    Returns:
-    (tuple) -- tuple with ignore theme settings.
-    """
-    ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
-
     if not is_valid_list(ignored_theme):
         ignored_theme = []
 
-    return ignored_theme
+    return ignored_theme, auto_install_theme
+
+
+def get_create_custom_icon_settings() -> tuple:
+    """
+    Get create custom icon settings.
+
+    Returns:
+    (tuple) -- tuple with create custom icon settings.
+    """
+    create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
+
+    if not is_valid_list(create_custom_icon):
+        create_custom_icon = []
+
+    return create_custom_icon
 
 
 def get_change_icon_settings() -> tuple:

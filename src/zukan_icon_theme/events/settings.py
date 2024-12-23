@@ -5,6 +5,7 @@ from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..helpers.clean_settings import clean_comments_settings
 from ..helpers.load_save_settings import (
+    get_create_custom_icon_settings,
     get_change_icon_settings,
     get_ignored_icon_settings,
     get_prefer_icon_settings,
@@ -84,7 +85,7 @@ class SettingsEvent:
             change_icon, change_icon_file_extension = get_change_icon_settings()
             ignored_icon = get_ignored_icon_settings()
 
-            create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
+            create_custom_icon = get_create_custom_icon_settings()
             current_settings = read_current_settings()
 
             for d in data:

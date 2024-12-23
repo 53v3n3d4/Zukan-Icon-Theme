@@ -55,8 +55,8 @@ class ThemeListener:
         """
         logger.debug('Preferences.sublime-settings changed')
 
-        auto_install_theme, ignored_theme = get_theme_settings()
         auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
+        ignored_theme, auto_install_theme = get_theme_settings()
 
         color_scheme_name = get_settings(USER_SETTINGS, 'color_scheme')
         user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
@@ -168,7 +168,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         # activate. Use 'enter' to select works. Seems happen with other functions.
         # With async seems not occurr.
 
-        auto_install_theme, ignored_theme = get_theme_settings()
+        ignored_theme, auto_install_theme = get_theme_settings()
 
         color_scheme_background = self.view.style()['background']
         current_color_scheme = self.view.settings().get('color_scheme')
