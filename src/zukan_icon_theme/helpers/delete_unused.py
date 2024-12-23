@@ -41,9 +41,8 @@ def delete_unused_icons(folder: str):
     """
     Delete unused icons that has dark and light versions.
 
-    Scan over 'icons' and 'primary_icons' folder and delete unused icons
-    and delete icons that has a dark or light version, previous icons
-    not used.
+    Scan over 'icons' and 'primary_icons' folder and delete unused icons.
+    Icons that has a dark or light version, previous icons are not used.
 
     Example:
     - ada.png

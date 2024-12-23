@@ -388,7 +388,7 @@ def find_sidebar_background(theme_st_path: str) -> list:
     return target_list
 
 
-def get_sidebar_bgcolor(theme_st_path: str) -> list:
+def get_sidebar_bgcolor(theme_st_path: str) -> str:
     """
     Get sidebar background color.
 
@@ -396,11 +396,11 @@ def get_sidebar_bgcolor(theme_st_path: str) -> list:
     theme_st_path (str) -- path to theme.
 
     Returns:
-    (list) -- returns values 'dark' or 'light'
+    (str) -- returns value 'dark' or 'light'
     """
     bgcolor = None
 
     if theme_st_path:
-        bgcolor = find_sidebar_background(theme_st_path[0])
+        bgcolor = find_sidebar_background(theme_st_path)
 
-    return bgcolor
+    return bgcolor[0]

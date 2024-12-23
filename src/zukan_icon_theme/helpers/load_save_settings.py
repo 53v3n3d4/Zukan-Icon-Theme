@@ -180,7 +180,7 @@ def save_current_ui_settings(
     current_dark_theme: str,
     current_light_theme: str,
     current_theme: str,
-    sidebar_bgcolor: list,
+    sidebar_bgcolor: str = 'light',
 ):
     """
     Save current user UI theme and color-scheme.

@@ -202,7 +202,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         # Do not save sidebar_bgcolor to save_current_ui_settings this time
         # Error in find_variables user_ui_settings does not exist
         theme_st_path = sublime.find_resources(theme_name)
-        sidebar_bgcolor = get_sidebar_bgcolor(theme_st_path)
+        sidebar_bgcolor = get_sidebar_bgcolor(theme_st_path[0])
 
         if os.path.exists(USER_UI_SETTINGS_FILE):
             user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
@@ -221,17 +221,23 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 # Background color-scheme issue because it is used in find_variables getting
                 # from file. In this case, color-scheme changing before updating file.
                 not any(
-                    d['sidebar_bgcolor'][0] == sidebar_bgcolor[0]
+                    d['sidebar_bgcolor'] == sidebar_bgcolor
                     for d in user_ui_settings
                 )
-                or (
-                    not any(
-                        scheme_background_dark_light(d['background'])
-                        == scheme_dark_light
-                        for d in user_ui_settings
-                    )
-                    and sidebar_bgcolor[0] != scheme_dark_light
+                or not any(
+                    scheme_background_dark_light(d['background']) == scheme_dark_light
+                    for d in user_ui_settings
                 )
+                # Adpative Dark -> Light with dark scheme does not work
+                # Adaptive Light -> Dark with light scheme does not work
+                # or (
+                #     not any(
+                #         scheme_background_dark_light(d['background'])
+                #         == scheme_dark_light
+                #         for d in user_ui_settings
+                #     )
+                #     and sidebar_bgcolor[0] != scheme_dark_light
+                # )
                 or theme_name not in ZukanTheme.list_created_icons_themes()
                 or theme_name in ignored_theme
                 or (auto_install_theme is True and not os.path.exists(icon_theme_file))

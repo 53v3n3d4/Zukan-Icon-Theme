@@ -151,7 +151,7 @@ class ZukanPreference:
 
             if bgcolor:
                 # Prefer light icon
-                if bgcolor[0] == 'dark' and p['preferences']['settings'][
+                if bgcolor == 'dark' and p['preferences']['settings'][
                     'icon'
                 ].endswith('-dark'):
                     prefer_icon_version = p['preferences']['settings']['icon'].replace(
@@ -159,7 +159,7 @@ class ZukanPreference:
                     )
 
                 # Prefer dark icon
-                if bgcolor[0] == 'light' and p['preferences']['settings'][
+                if bgcolor == 'light' and p['preferences']['settings'][
                     'icon'
                 ].endswith('-light'):
                     prefer_icon_version = p['preferences']['settings']['icon'].replace(
@@ -320,7 +320,7 @@ class ZukanPreference:
 
             theme_name = get_theme_name()
             theme_st_path = sublime.find_resources(theme_name)
-            bgcolor = get_sidebar_bgcolor(theme_st_path)
+            bgcolor = get_sidebar_bgcolor(theme_st_path[0])
 
             ZukanPreference.prepare_icon_preference_file(
                 preference_name,
@@ -437,7 +437,7 @@ class ZukanPreference:
 
             theme_name = get_theme_name()
             theme_st_path = sublime.find_resources(theme_name)
-            bgcolor = get_sidebar_bgcolor(theme_st_path)
+            bgcolor = get_sidebar_bgcolor(theme_st_path[0])
 
             ZukanPreference.prepare_icons_preferences_list(
                 zukan_icons,

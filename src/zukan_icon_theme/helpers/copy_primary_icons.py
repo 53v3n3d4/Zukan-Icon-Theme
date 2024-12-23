@@ -48,8 +48,8 @@ def copy_primary_icons():
 
     theme_name = get_theme_name()
     theme_st_path = sublime.find_resources(theme_name)
-    bgcolor = get_sidebar_bgcolor(theme_st_path)
-    icon_dark_light = get_icon_dark_light(bgcolor[0])
+    bgcolor = get_sidebar_bgcolor(theme_st_path[0])
+    icon_dark_light = get_icon_dark_light(bgcolor)
 
     for p in PRIMARY_ICONS:
         for s in ICONS_SUFFIX:

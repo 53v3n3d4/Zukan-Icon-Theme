@@ -3,14 +3,6 @@ import platform
 import subprocess
 
 
-# ST Linux distros
-# apt — Ubuntu, Debian
-# pacman — Arch
-# yum — CentOS
-# dnf — Fedora
-# zypper — openSUSE
-#
-# Tested code Ubuntu 22.04
 # ST Theme 'auto' has an open issue
 # https://github.com/sublimehq/sublime_text/issues/5194
 def linux_theme() -> bool:
