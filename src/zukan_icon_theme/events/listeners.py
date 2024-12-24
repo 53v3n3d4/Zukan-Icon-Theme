@@ -166,7 +166,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
     def on_activated_async(self):
         # Use async: click to select UI Select UI Color Scheme / Theme does not
         # activate. Use 'enter' to select works. Seems happen with other functions.
-        # With async seems not occurr.
+        # With async seems not occur.
 
         ignored_theme, auto_install_theme = get_theme_settings()
 
@@ -201,8 +201,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
 
         # Do not save sidebar_bgcolor to save_current_ui_settings this time
         # Error in find_variables user_ui_settings does not exist
-        theme_st_path = sublime.find_resources(theme_name)
-        sidebar_bgcolor = get_sidebar_bgcolor(theme_st_path[0])
+        sidebar_bgcolor = get_sidebar_bgcolor(theme_name)
 
         if os.path.exists(USER_UI_SETTINGS_FILE):
             user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
@@ -215,28 +214,32 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 and os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
                 and os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
             ) and (
-                # Need fix: entering get_user_theme when sidebar dark/light do not changed,
-                # color-scheme dark/light changed, not adaptive, changing when move from
-                # color-scheme dark -> light.
-                # Background color-scheme issue because it is used in find_variables getting
-                # from file. In this case, color-scheme changing before updating file.
-                not any(
-                    d['sidebar_bgcolor'] == sidebar_bgcolor for d in user_ui_settings
+                (
+                    not any(
+                        scheme_background_dark_light(d['background'])
+                        == scheme_dark_light
+                        for d in user_ui_settings
+                    )
+                    and (
+                        sidebar_bgcolor == scheme_dark_light
+                        or sidebar_bgcolor != scheme_dark_light
+                    )
                 )
-                or not any(
-                    scheme_background_dark_light(d['background']) == scheme_dark_light
-                    for d in user_ui_settings
+                # Avoid Adaptive light -> Dark light does not change or vice versa.
+                or (
+                    sidebar_bgcolor != scheme_dark_light
+                    and not any(d['theme'] == current_theme for d in user_ui_settings)
                 )
-                # Adpative Dark -> Light with dark scheme does not work
-                # Adaptive Light -> Dark with light scheme does not work
-                # or (
-                #     not any(
-                #         scheme_background_dark_light(d['background'])
-                #         == scheme_dark_light
-                #         for d in user_ui_settings
-                #     )
-                #     and sidebar_bgcolor[0] != scheme_dark_light
-                # )
+                # Avoid change files when theme has same dark/light theme.
+                # It does not work for condition above, it is going to pass when
+                # sidebar background != scheme background.
+                or (
+                    not any(
+                        d['sidebar_bgcolor'] == sidebar_bgcolor
+                        for d in user_ui_settings
+                    )
+                    and not any(d['theme'] == current_theme for d in user_ui_settings)
+                )
                 or theme_name not in ZukanTheme.list_created_icons_themes()
                 or theme_name in ignored_theme
                 or (auto_install_theme is True and not os.path.exists(icon_theme_file))

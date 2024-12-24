@@ -22,8 +22,8 @@
     // - HWB
     // - Shorthand Hex
     // - Derived colors: accent and foreground
-    // - Multiple entries for class sidebar_container and 
-    // layer0.tint. Plugin use the first.
+    // - Multiple entries for class 'sidebar_container' and 
+    // 'layer0.tint'. Plugin use the first.
     // - Legacy Color Syntax
     //
     // Plugin, currently, can label a sidebar background, when

@@ -388,19 +388,20 @@ def find_sidebar_background(theme_st_path: str) -> list:
     return target_list
 
 
-def get_sidebar_bgcolor(theme_st_path: str) -> str:
+def get_sidebar_bgcolor(theme_name: str) -> str:
     """
     Get sidebar background color.
 
     Parameters:
-    theme_st_path (str) -- path to theme.
+    theme_name (str) -- theme name. E.g.: Default.sublime-theme
 
     Returns:
     (str) -- returns value 'dark' or 'light'
     """
     bgcolor = None
+    theme_st_path = sublime.find_resources(theme_name)
 
     if theme_st_path:
-        bgcolor = find_sidebar_background(theme_st_path)
+        bgcolor = find_sidebar_background(theme_st_path[0])
 
     return bgcolor[0]

@@ -1,7 +1,6 @@
 import logging
 import os
 import shutil
-import sublime
 
 from ..helpers.load_save_settings import (
     get_change_icon_settings,
@@ -45,8 +44,7 @@ def copy_primary_icons():
     ignored_icon = get_ignored_icon_settings()
 
     theme_name = get_theme_name()
-    theme_st_path = sublime.find_resources(theme_name)
-    bgcolor = get_sidebar_bgcolor(theme_st_path[0])
+    bgcolor = get_sidebar_bgcolor(theme_name)
     icon_dark_light = get_icon_dark_light(bgcolor)
 
     for p in PRIMARY_ICONS:

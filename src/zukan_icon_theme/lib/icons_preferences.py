@@ -2,7 +2,6 @@ import errno
 import glob
 import logging
 import os
-import sublime
 
 from ..helpers.clean_data import clean_plist_tag
 from ..helpers.copy_primary_icons import copy_primary_icons
@@ -319,8 +318,7 @@ class ZukanPreference:
             zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
             theme_name = get_theme_name()
-            theme_st_path = sublime.find_resources(theme_name)
-            bgcolor = get_sidebar_bgcolor(theme_st_path[0])
+            bgcolor = get_sidebar_bgcolor(theme_name)
 
             ZukanPreference.prepare_icon_preference_file(
                 preference_name,
@@ -435,8 +433,7 @@ class ZukanPreference:
             zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
             theme_name = get_theme_name()
-            theme_st_path = sublime.find_resources(theme_name)
-            bgcolor = get_sidebar_bgcolor(theme_st_path[0])
+            bgcolor = get_sidebar_bgcolor(theme_name)
 
             ZukanPreference.prepare_icons_preferences_list(
                 zukan_icons,
