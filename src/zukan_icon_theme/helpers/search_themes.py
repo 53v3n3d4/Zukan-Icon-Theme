@@ -104,7 +104,7 @@ def find_variables(
     )
     regex_hex = r'#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{8})'
 
-    # Default and Default Dark both gives HSP = 124.12283073381384.
+    # Both Default and Default Dark give HSP = 124.12283073381384.
     # So it chooses icon light for both themes.
     # HSP 127,5 is the formula limit to select dark or light.
     #

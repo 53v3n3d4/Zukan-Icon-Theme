@@ -5,7 +5,7 @@ import sublime
 import sublime_plugin
 
 from ..lib.icons_themes import ZukanTheme
-from ..helpers.clean_settings import clean_comments_settings
+from ..helpers.clean_data import clean_comments_settings
 from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.load_save_settings import get_settings, set_save_settings
 from ..helpers.read_write_data import read_pickle_data

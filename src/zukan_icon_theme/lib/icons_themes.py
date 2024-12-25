@@ -39,9 +39,9 @@ class ZukanTheme:
         theme_st_path (str) -- installed theme name.
         """
         try:
-            list_all_themes = search_resources_sublime_themes()
             file_name = os.path.basename(theme_st_path)
             ignored_theme, _ = get_theme_settings()
+            list_all_themes = search_resources_sublime_themes()
 
             # Check if installed theme file exist and not in 'ignored_theme'
             # settings.

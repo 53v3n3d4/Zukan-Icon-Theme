@@ -177,7 +177,6 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         current_theme = self.view.settings().get('theme')
         icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, current_theme)
 
-        # Get system theme
         theme_name = current_theme
 
         if theme_name == 'auto' and not system_theme():
@@ -186,7 +185,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         if theme_name == 'auto' and system_theme():
             theme_name = current_dark_theme
 
-        # create setting file with current ui if does not exist
+        # create setting file with current UI if does not exist
         if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
             os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
 
@@ -206,7 +205,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         if os.path.exists(USER_UI_SETTINGS_FILE):
             user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
 
-            # Get current sidebar when color scheme change
+            # Get current sidebar background dark/light when adaptive
             scheme_dark_light = scheme_background_dark_light(color_scheme_background)
 
             if (
@@ -225,12 +224,13 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                         or sidebar_bgcolor != scheme_dark_light
                     )
                 )
-                # Avoid Adaptive light -> Dark light does not change or vice versa.
+                # Avoid Adaptive light -> Dark light does not change icons or
+                # vice versa.
                 or (
                     sidebar_bgcolor != scheme_dark_light
                     and not any(d['theme'] == current_theme for d in user_ui_settings)
                 )
-                # Avoid change files when theme has same dark/light theme.
+                # Avoid change icons between themes with same dark/light background.
                 # It does not work for condition above, it is going to pass when
                 # sidebar background != scheme background.
                 or (
@@ -239,6 +239,14 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                         for d in user_ui_settings
                     )
                     and not any(d['theme'] == current_theme for d in user_ui_settings)
+                )
+                # Avoid theme 'auto' does not change icons.
+                or (
+                    current_theme == 'auto'
+                    and not any(
+                        d['sidebar_bgcolor'] == sidebar_bgcolor
+                        for d in user_ui_settings
+                    )
                 )
                 or theme_name not in ZukanTheme.list_created_icons_themes()
                 or theme_name in ignored_theme
@@ -256,7 +264,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 ThemeListener.get_user_theme()
                 logger.debug('SchemeTheme ViewListener on_activated_async')
 
-            # update current ui
+            # update current UI
             save_current_ui_settings(
                 color_scheme_background,
                 current_color_scheme,

@@ -3,7 +3,7 @@ import os
 
 from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
-from ..helpers.clean_settings import clean_comments_settings
+from ..helpers.clean_data import clean_comments_settings
 from ..helpers.load_save_settings import (
     get_create_custom_icon_settings,
     get_change_icon_settings,

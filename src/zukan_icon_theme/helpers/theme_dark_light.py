@@ -9,7 +9,6 @@ from ..utils.st_color_palette import (
 logger = logging.getLogger(__name__)
 
 
-# Convert color to RGB.
 def convert_to_rgb(bgcolor: str) -> list:
     """
     Convert color to RGB, and return a list with RGB numbers.
