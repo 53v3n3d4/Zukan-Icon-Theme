@@ -2,7 +2,7 @@ Build scripts used to create icons PNG and icons data file.
 
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py -h
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py -h
 # Poetry with env activated
 $ build -h
 
@@ -16,10 +16,10 @@ Create PNGs and icons data file.
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py icon-theme --help
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py icon-theme -f src/data/afdesign.yaml
 # Create PNGs and icons data file
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py icon-theme --all
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py icon-theme --all
 ```
 
 Using poetry scripts  
@@ -37,10 +37,10 @@ File will be created in `icons_data` folder.
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-icon --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-icon --write
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py zukan-icon --help
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py zukan-icon --write
 # Print file
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py zukan-icon --read
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py zukan-icon --read
 ```
 
 Using poetry scripts  
@@ -62,10 +62,10 @@ Common id names: `_clip`, `_Effect`, `_Linear`, `_Gradient` and `Path_`.
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean -f src/icons/afdesign.svg
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py clean --help
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py clean -f src/icons/afdesign.svg
 # Clean all SVGs
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py clean --all
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py clean --all
 # After migrating all data files, this will data files instead of svg files.
 ```
 
@@ -82,10 +82,10 @@ Concat SVG file. It generates the SVG used in README and [file-icon.md](https://
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py concat --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py concat -a
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py concat --help
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py concat -a
 # Concat SVG file.
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py concat --all
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py concat --all
 ```
 
 Using poetry scripts  
@@ -110,10 +110,10 @@ Create PNG icons in 3 sizes. Size and suffix details comes from png_details.py.
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png -f src/data/afdesign.yaml
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py png --help
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py png -f src/data/afdesign.yaml
 # Create all PNGs
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py png --all
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py png --all
 ```
 
 Using poetry scripts  
@@ -129,10 +129,10 @@ Create icons sublime-syntaxes.
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax -f src/data/afdesign.yaml
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py syntax --help
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py syntax -f src/data/afdesign.yaml
 # Create all sublime-syntax files
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py syntax --all
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py syntax --all
 ```
 
 Using poetry scripts  
@@ -148,10 +148,10 @@ Create icons tmPreferences.
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference -f src/data/afdesign.yaml
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py preference --help
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py preference -f src/data/afdesign.yaml
 # Create all tnPreferences files
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py preference --all
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py preference --all
 ```
 
 Using poetry scripts  
@@ -169,10 +169,10 @@ The test files will be created inside folder `tests_icon_theme`.
 Using argparse commands  
 ```sh
 # Environment activated
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme --help
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme -f src/data/afdesign.yaml
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py test-icon-theme --help
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py test-icon-theme -f src/data/afdesign.yaml
 # Create all test files extensions files
-🚥 in ../Zukan-Icon-Theme$ python src/build/scripts.py test-icon-theme --all
+🚥 in ../Zukan Icon Theme$ python src/build/scripts.py test-icon-theme --all
 ```
 
 Using poetry scripts  

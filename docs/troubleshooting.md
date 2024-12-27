@@ -1,3 +1,14 @@
+## OS
+
+| OS         | PC Install | Rebuild Command | Upgrade | Auto prefer icon | Notes |
+|------------|------------|-----------------|---------|------------------|-------|
+| Linux Febora 41 | ✔ | ✔ | ✔ | ✔ | Auto prefer icon works, but could not make ST theme auto works in my setup yet.|
+| Linux Ubuntu 24.04 | ✔ | ✔ | ✔ | ✔ | |
+| macOS Sonoma 14.6.1 | ✔ | ✔ | ✔ | ✔ | |
+| Windows 10 Home | ✔ | ✔ | ✔ | ✔ | Error unable to read all preferences when saving settings. I tested it a few times, and it worked. This error usually occurred when build files are called multiple times together.|
+
+> Linux and Windows testing on VM.
+
 ## Icons not showing correct
 
 Since icons collections are growing, there are cases where icons do not prompt show correct.  
@@ -9,7 +20,7 @@ For reference, when we say icon theme, icon syntax and icon preference. It is ab
 
 ## Cases
 
-As of now, the cases below usually have the same solution, restart ST.
+As of now, the some of cases below usually have the same solution, restart ST.
 
 We display an dialog message about restart in these cases.  
 
@@ -92,6 +103,21 @@ Syntax build happens in cases of:
 ```
 One way for this do not happen is to close these types of files before rebuilding
 icons syntaxes files.
+```
+
+### Change between theme or color-scheme and icons do not change dark/light
+
+Plugin tries not to build files when not necessary. E.g. when change between themes or
+color-schemes with dark background.
+
+If icons do not load in these situations.
+
+**Solution**
+```
+Usually a move from a dark to a light theme/color-scheme or vice-versa make build
+files.
+
+Or restart ST.
 ```
 
 ### Error TypeError logger when disable and enable plugin

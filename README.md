@@ -4,17 +4,6 @@
     </a>
 </p>
 
-## OS
-
-| OS         | PC Install | Rebuild Command | Upgrade | Auto prefer icon | Notes |
-|------------|------------|-----------------|---------|------------------|-------|
-| Linux Febora 41 |  ✔ |  ✔ | |  ✔ | Auto prefer icon works, but could not make ST theme auto works in my setup yet.|
-| Linux Ubuntu 24.04 |  ✔ |  ✔ | |  ✔ | |
-| macOS Sonoma 14.6.1 |  ✔ |  ✔ |  ✔ |  ✔ | |
-| Windows 10 Home |  ✔ |  ✔ | |  ✔ | Error unable to read all preferences when saving settings. I tested it a few times, and it worked. This error usually occurred when build files are called multiple times together.|
-
-> Linux and Windows testing on VM.
-
 ## Zukan Icon Theme
 
 Icon theme for Sublime Text 4 editor.  
@@ -70,7 +59,7 @@ To uninstall manually, go to your Sublime Text folder.
 
 > Dependecies  
 
-> ST4 uninstall orphans dependencies. So dependency [`ruamel-yaml`](https://pypi.org/project/ruamel.yaml/) should be deleted when you uninstall/remove package, if not used by other packages.  
+> ST4 uninstall unused dependencies. So dependency [`ruamel-yaml`](https://pypi.org/project/ruamel.yaml/) should be deleted when you uninstall/remove package, if not used by other packages.  
 
 ## Upgrade
 
