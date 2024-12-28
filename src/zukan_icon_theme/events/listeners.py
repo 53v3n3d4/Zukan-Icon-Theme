@@ -189,6 +189,8 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
             os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
 
+        # Do not save sidebar_bgcolor to save_current_ui_settings this time
+        # Error in find_variables user_ui_settings does not exist
         if not os.path.exists(USER_UI_SETTINGS_FILE):
             save_current_ui_settings(
                 color_scheme_background,
@@ -198,8 +200,6 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 current_theme,
             )
 
-        # Do not save sidebar_bgcolor to save_current_ui_settings this time
-        # Error in find_variables user_ui_settings does not exist
         sidebar_bgcolor = get_sidebar_bgcolor(theme_name)
 
         if os.path.exists(USER_UI_SETTINGS_FILE):
@@ -224,23 +224,30 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                         or sidebar_bgcolor != scheme_dark_light
                     )
                 )
-                # Avoid Adaptive light -> Dark light does not change icons or
-                # vice versa.
+                # Adaptive light -> Dark light does not change icons or vice versa.
                 or (
-                    sidebar_bgcolor != scheme_dark_light
+                    current_theme != 'auto'
+                    and sidebar_bgcolor != scheme_dark_light
                     and not any(d['theme'] == current_theme for d in user_ui_settings)
                 )
-                # Avoid change icons between themes with same dark/light background.
+                # Change icons between themes with same dark/light background.
                 # It does not work for condition above, it is going to pass when
                 # sidebar background != scheme background.
                 or (
-                    not any(
+                    current_theme != 'auto'
+                    and not any(
                         d['sidebar_bgcolor'] == sidebar_bgcolor
                         for d in user_ui_settings
                     )
                     and not any(d['theme'] == current_theme for d in user_ui_settings)
                 )
-                # Avoid theme 'auto' does not change icons.
+                # Theme 'auto' does not change icons.
+                # Fixme: sequence below does not work:
+                # Adaptive Light -> Adaptive Dark -> Adaptive Light -> Dark Light
+                #
+                # This sequence works:
+                #  Adaptive Light -> Adaptive Dark -> Adaptive Light -> Adaptive Light
+                # -> Dark Light
                 or (
                     current_theme == 'auto'
                     and not any(
