@@ -107,17 +107,17 @@ icons syntaxes files.
 
 ### Change between theme or color-scheme and icons do not change dark/light
 
-Plugin tries not to build files when not necessary. E.g. when change between themes or
-color-schemes with dark background.
+Plugin tries not to build files when not necessary. E.g. when change between themes with light sidebar background. Or, when adaptive themes, change color-schemes with dark background.
 
-If icons do not load in these situations.
+> If theme is set to 'auto', sequence below does not work:  
+> Adaptive Light -> Adaptive Dark -> Adaptive Light -> Dark Light  
+> This sequence works:  
+> Adaptive Light -> Adaptive Dark -> Adaptive Light -> Adaptive Light -> Dark Light  
 
 **Solution**
 ```
-Usually a move from a dark to a light theme/color-scheme or vice-versa make build
+A move from a dark to a light theme/color-scheme or vice-versa make build
 files.
-
-Or restart ST.
 ```
 
 ### Error TypeError logger when disable and enable plugin
