@@ -109,11 +109,6 @@ icons syntaxes files.
 
 Plugin tries not to build files when not necessary. E.g. when change between themes with light sidebar background. Or, when adaptive themes, change color-schemes with dark background.
 
-> If theme is set to 'auto', sequence below does not work:  
-> Adaptive Light -> Adaptive Dark -> Adaptive Light -> Dark Light  
-> This sequence works:  
-> Adaptive Light -> Adaptive Dark -> Adaptive Light -> Adaptive Light -> Dark Light  
-
 **Solution**
 ```
 A move from a dark to a light theme/color-scheme or vice-versa make build
