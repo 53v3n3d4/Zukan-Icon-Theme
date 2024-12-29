@@ -26,9 +26,14 @@ syntax:
     hidden: true
     file_extensions:
       - copying
+      - copying.txt
       - copyright
+      - copyright.txt
       - COPYRIGHT
+      - COPYRIGHT.txt
       - license
+      - license.txt
       - LICENSE
+      - LICENSE.txt
     contexts:
       main: []

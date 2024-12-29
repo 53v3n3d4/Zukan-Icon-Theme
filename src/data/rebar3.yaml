@@ -19,6 +19,7 @@ syntax:
     file_extensions:
       - rebar.config
       - rebar3.config
+      - rebar3.crashdump
     contexts:
       main:
         - include: scope:source.ini
