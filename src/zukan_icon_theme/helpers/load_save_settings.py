@@ -209,6 +209,7 @@ def save_current_ui_settings(
     current_color_scheme: str,
     current_dark_theme: str,
     current_light_theme: str,
+    current_system_theme: bool,
     current_theme: str,
     sidebar_bgcolor: str = 'light',
 ):
@@ -225,8 +226,9 @@ def save_current_ui_settings(
     current_ui_settings.update({'color_scheme': current_color_scheme})
     current_ui_settings.update({'dark_theme': current_dark_theme})
     current_ui_settings.update({'light_theme': current_light_theme})
-    current_ui_settings.update({'theme': current_theme})
     current_ui_settings.update({'sidebar_bgcolor': sidebar_bgcolor})
+    current_ui_settings.update({'system_theme': current_system_theme})
+    current_ui_settings.update({'theme': current_theme})
 
     if os.path.exists(USER_UI_SETTINGS_FILE):
         # Delete previous pickle file

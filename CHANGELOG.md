@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.3] - 2025
+
+### Icons, syntaxes and preferences 👽
+- Change icon: SystemVerilog
+- Change sublime-syntax: License, Rebar3
+
+### Plugin 🕹️
+- Change SchemeThemeListener, improve handle icon dark/light
+
 ## [0.4.2] - 2024-12-19
 
 ### Plugin 🕹️

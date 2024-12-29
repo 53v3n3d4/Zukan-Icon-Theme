@@ -174,6 +174,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         current_color_scheme = self.view.settings().get('color_scheme')
         current_dark_theme = self.view.settings().get('dark_theme')
         current_light_theme = self.view.settings().get('light_theme')
+        current_system_theme = system_theme()
         current_theme = self.view.settings().get('theme')
         icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, current_theme)
 
@@ -189,7 +190,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
         if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
             os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
 
-        # Do not save sidebar_bgcolor to save_current_ui_settings this time
+        # Do not include sidebar_bgcolor to save_current_ui_settings this time
         # Error in find_variables user_ui_settings does not exist
         if not os.path.exists(USER_UI_SETTINGS_FILE):
             save_current_ui_settings(
@@ -197,6 +198,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 current_color_scheme,
                 current_dark_theme,
                 current_light_theme,
+                current_system_theme,
                 current_theme,
             )
 
@@ -226,33 +228,35 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 )
                 # Adaptive light -> Dark light does not change icons or vice versa.
                 or (
-                    current_theme != 'auto'
-                    and sidebar_bgcolor != scheme_dark_light
+                    sidebar_bgcolor != scheme_dark_light
                     and not any(d['theme'] == current_theme for d in user_ui_settings)
                 )
                 # Change icons between themes with same dark/light background.
                 # It does not work for condition above, it is going to pass when
                 # sidebar background != scheme background.
                 or (
-                    current_theme != 'auto'
-                    and not any(
+                    not any(
                         d['sidebar_bgcolor'] == sidebar_bgcolor
                         for d in user_ui_settings
                     )
                     and not any(d['theme'] == current_theme for d in user_ui_settings)
                 )
                 # Theme 'auto' does not change icons.
-                # Fixme: sequence below does not work:
-                # Adaptive Light -> Adaptive Dark -> Adaptive Light -> Dark Light
-                #
-                # This sequence works:
-                #  Adaptive Light -> Adaptive Dark -> Adaptive Light -> Adaptive Light
-                # -> Dark Light
                 or (
                     current_theme == 'auto'
-                    and not any(
-                        d['sidebar_bgcolor'] == sidebar_bgcolor
-                        for d in user_ui_settings
+                    and (
+                        not any(
+                            d['dark_theme'] == current_dark_theme
+                            for d in user_ui_settings
+                        )
+                        or not any(
+                            d['light_theme'] == current_light_theme
+                            for d in user_ui_settings
+                        )
+                        or not any(
+                            d['system_theme'] == current_system_theme
+                            for d in user_ui_settings
+                        )
                     )
                 )
                 or theme_name not in ZukanTheme.list_created_icons_themes()
@@ -277,6 +281,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                 current_color_scheme,
                 current_dark_theme,
                 current_light_theme,
+                current_system_theme,
                 current_theme,
                 sidebar_bgcolor,
             )
