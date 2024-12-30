@@ -4,7 +4,7 @@ import sublime
 
 from ..helpers.theme_dark_light import (
     convert_to_rgb,
-    theme_dark_light,
+    rgb_dark_light,
     st_colors_to_hex,
 )
 from ..helpers.read_write_data import read_pickle_data
@@ -131,7 +131,7 @@ def find_variables(
                         h=hue, s=sat, l=lum, a=alpha
                     )
 
-        dark_light = theme_dark_light(convert_to_rgb(hsl_color))
+        dark_light = rgb_dark_light(convert_to_rgb(hsl_color))
 
         target_list.append(dark_light)
 
@@ -150,7 +150,7 @@ def find_variables(
                         r=red, g=green, b=blue, a=alpha
                     )
 
-        dark_light = theme_dark_light(convert_to_rgb(rgb_color))
+        dark_light = rgb_dark_light(convert_to_rgb(rgb_color))
 
         target_list.append(dark_light)
 
@@ -159,7 +159,7 @@ def find_variables(
         hex_color = re.findall(regex_hex, var_value)
         # print(hex_color[0])
 
-        dark_light = theme_dark_light(convert_to_rgb(hex_color[0]))
+        dark_light = rgb_dark_light(convert_to_rgb(hex_color[0]))
 
         target_list.append(dark_light)
 
@@ -169,7 +169,7 @@ def find_variables(
         user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
         bgcolor = [d.get('background') for d in user_ui_settings]
 
-        dark_light = theme_dark_light(convert_to_rgb(bgcolor[0]))
+        dark_light = rgb_dark_light(convert_to_rgb(bgcolor[0]))
 
         target_list.append(dark_light)
 
@@ -178,7 +178,7 @@ def find_variables(
     elif any(var_value in d for d in ST_COLOR_PALETTE):
         st_color = var_value
 
-        dark_light = theme_dark_light(convert_to_rgb(st_colors_to_hex(st_color)))
+        dark_light = rgb_dark_light(convert_to_rgb(st_colors_to_hex(st_color)))
 
         target_list.append(dark_light)
 

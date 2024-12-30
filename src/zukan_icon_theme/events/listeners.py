@@ -21,7 +21,7 @@ from ..helpers.search_themes import (
     package_theme_exists,
 )
 from ..helpers.system_theme import system_theme
-from ..helpers.theme_dark_light import scheme_background_dark_light
+from ..helpers.theme_dark_light import hex_dark_light
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
@@ -208,7 +208,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
             user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
 
             # Get current sidebar background dark/light when adaptive
-            scheme_dark_light = scheme_background_dark_light(color_scheme_background)
+            scheme_dark_light = hex_dark_light(color_scheme_background)
 
             if (
                 os.path.exists(ZUKAN_PKG_ICONS_PATH)
@@ -217,7 +217,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
             ) and (
                 (
                     not any(
-                        scheme_background_dark_light(d['background'])
+                        hex_dark_light(d['background'])
                         == scheme_dark_light
                         for d in user_ui_settings
                     )
@@ -231,7 +231,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                     sidebar_bgcolor != scheme_dark_light
                     and not any(d['theme'] == current_theme for d in user_ui_settings)
                 )
-                # Change icons between themes with same dark/light background.
+                # Avoid change icons between themes with same dark/light background.
                 # It does not work for condition above, it is going to pass when
                 # sidebar background != scheme background.
                 or (
