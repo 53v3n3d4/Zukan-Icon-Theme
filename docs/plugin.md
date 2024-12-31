@@ -194,7 +194,7 @@ Required parameters are: scope and file extensions.
 
 ### Create Custom Icon
 
-It can insert a custom icon or a file extension that do not exist. The PNGs files will have to be inserted manually in Zukan `icons` folder.  
+It can insert a custom icon or a file extension that does not exist. The PNGs files will have to be inserted manually in Zukan `icons` folder.  
 
 PNGs icon file name should follow ST suffix policy:
 
@@ -317,7 +317,7 @@ It deletes an icon from a list of customized icons, in `created_custom_icon` set
 
 ### Remove Prefer Icon
 
-It remove a prefered icon in `prefer_icon` setting.  
+It remove a preferred icon in `prefer_icon` setting.  
 
 
 ### Reset File Extension

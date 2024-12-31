@@ -130,7 +130,7 @@ Here is file [`logger.py`](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/mai
 Traceback (most recent call last):
   File "./python3.3/logging/__init__.py", line 939, in emit
   File "./python3.3/logging/__init__.py", line 810, in format
-  File "/Users/macbookpro/Library/Application Support/Sublime Text/Installed Packages/Zukan Icon Theme.sublime-package/src/zukan_icon_theme/helpers/logger.py", line 35, in format
+  File "/Users/xxxxx/Library/Application Support/Sublime Text/Installed Packages/Zukan Icon Theme.sublime-package/src/zukan_icon_theme/helpers/logger.py", line 35, in format
 TypeError: 'NoneType' object is not callable
 Logged from file icons_preferences.py, line 533
 INFO | Zukan Icon Theme icons_preferences.py tmPreferences created.

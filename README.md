@@ -12,7 +12,7 @@ Icon theme for Sublime Text 4 editor.
 
 <img src="assets/file-icons-concat-sample.svg" width="728" height="460" alt="file icon">
 
-> File icons in v0.4.2  
+> File icons in v0.4.3  
 
 > All file icons, see [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md)  
 
@@ -82,7 +82,7 @@ You can disable it, go to menu `Sublime Text > Settings > Package Settings > Zuk
 
 ## Troubleshooting
 
-If icons not prompt show correct, restart ST may be the solution. See [troubleshooting.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/troubleshooting.md)
+If icons does not prompt show correct, restart ST may be the solution. See [troubleshooting.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/troubleshooting.md)
 
 ## Notes
 - This package uses tmPreferences and sublime-syntax files, it is heavily based on how [`A File Icon`](https://github.com/SublimeText/AFileIcon) package make icons work  
