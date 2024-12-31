@@ -21,7 +21,7 @@ from ..helpers.search_themes import (
     package_theme_exists,
 )
 from ..helpers.system_theme import system_theme
-from ..helpers.theme_dark_light import hex_dark_light
+from ..helpers.color_dark_light import hex_dark_light
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,

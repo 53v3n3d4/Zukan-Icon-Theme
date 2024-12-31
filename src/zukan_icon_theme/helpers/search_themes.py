@@ -2,7 +2,7 @@ import logging
 import re
 import sublime
 
-from ..helpers.theme_dark_light import (
+from ..helpers.color_dark_light import (
     convert_to_rgb,
     rgb_dark_light,
     st_colors_to_hex,

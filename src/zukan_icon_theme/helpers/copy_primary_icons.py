@@ -9,7 +9,7 @@ from ..helpers.load_save_settings import (
     get_theme_name,
 )
 from ..helpers.search_themes import get_sidebar_bgcolor
-from ..helpers.theme_dark_light import get_icon_dark_light
+from ..helpers.color_dark_light import get_icon_dark_light
 from ..utils.file_extensions import (
     PNG_EXTENSION,
     SVG_EXTENSION,
