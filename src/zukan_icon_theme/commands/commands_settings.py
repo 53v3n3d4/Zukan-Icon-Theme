@@ -7,7 +7,11 @@ import sublime_plugin
 from ..lib.icons_themes import ZukanTheme
 from ..helpers.clean_data import clean_comments_settings
 from ..helpers.create_custom_icon import create_custom_icon
-from ..helpers.load_save_settings import get_settings, set_save_settings
+from ..helpers.load_save_settings import (
+    get_settings,
+    set_save_settings,
+    zukan_listener_enabled,
+)
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.remove_empty_dict import remove_empty_dict
 from ..helpers.search_themes import search_resources_sublime_themes
@@ -27,6 +31,8 @@ from ..utils.zukan_paths import (
 )
 
 logger = logging.getLogger(__name__)
+
+zukan_listener_enabled = zukan_listener_enabled()
 
 
 class ChangeFileExtensionCommand(sublime_plugin.TextCommand):
@@ -579,11 +585,13 @@ class DeleteCustomIconCommand(sublime_plugin.TextCommand):
             create_custom_icon_updated = [
                 i for i in create_custom_icon if not (i['name'] == name)
             ]
-            logger.info('deleting %s customized icon', name)
+            if zukan_listener_enabled:
+                logger.info('deleting %s customized icon', name)
 
         if name == 'All':
             create_custom_icon_updated = []
-            logger.info('deleting all customized icon')
+            if zukan_listener_enabled:
+                logger.info('deleting all customized icon')
 
         set_save_settings(
             ZUKAN_SETTINGS, 'create_custom_icon', create_custom_icon_updated
@@ -756,11 +764,15 @@ class EnableIconCommand(sublime_plugin.TextCommand):
                 # Remove icon_name
                 ignored_icon = [i for i in ignored_icon if not i == icon_name]
                 new_list = sorted(ignored_icon)
-                logger.info('enabling %s icon', icon_name)
+
+                if zukan_listener_enabled:
+                    logger.info('enabling %s icon', icon_name)
 
             if icon_name == 'All':
                 new_list = []
-                logger.info('enabling all icons')
+
+                if zukan_listener_enabled:
+                    logger.info('enabling all icons')
 
             set_save_settings(ZUKAN_SETTINGS, 'ignored_icon', new_list)
 
@@ -807,11 +819,15 @@ class EnableThemeCommand(sublime_plugin.TextCommand):
                 # Remove theme_name
                 ignored_theme = [t for t in ignored_theme if not t == theme_name]
                 new_list = sorted(ignored_theme)
-                logger.info('enabling %s', theme_name)
+
+                if zukan_listener_enabled:
+                    logger.info('enabling %s', theme_name)
 
             if theme_name == 'All':
                 new_list = []
-                logger.info('enabling all themes')
+
+                if zukan_listener_enabled:
+                    logger.info('enabling all themes')
 
             set_save_settings(ZUKAN_SETTINGS, 'ignored_theme', new_list)
 
@@ -859,11 +875,15 @@ class RemovePreferIconCommand(sublime_plugin.TextCommand):
                         for k, v in prefer_icon.items()
                         if k != select_prefer_icon_theme
                     }
-                    logger.info('reseting icon %s', select_prefer_icon_theme)
+
+                    if zukan_listener_enabled:
+                        logger.info('reseting icon %s', select_prefer_icon_theme)
 
             if select_prefer_icon_theme == 'All':
                 icon_dict_updated = {}
-                logger.info('removing all prefer icons')
+
+                if zukan_listener_enabled:
+                    logger.info('removing all prefer icons')
 
             set_save_settings(ZUKAN_SETTINGS, 'prefer_icon', icon_dict_updated)
 
@@ -919,11 +939,15 @@ class ResetFileExtensionCommand(sublime_plugin.TextCommand):
                     for i in change_icon_file_extension
                     if not (i['scope'] == scope_name)
                 ]
-                logger.info('reseting file extensions for %s', scope_name)
+
+                if zukan_listener_enabled:
+                    logger.info('reseting file extensions for %s', scope_name)
 
             if scope_name == 'All':
                 change_icon_file_extension_updated = []
-                logger.info('reseting file extensions for all scopes')
+
+                if zukan_listener_enabled:
+                    logger.info('reseting file extensions for all scopes')
 
             set_save_settings(
                 ZUKAN_SETTINGS,
@@ -1001,11 +1025,15 @@ class ResetIconCommand(sublime_plugin.TextCommand):
                     icon_dict_updated = {
                         k: v for k, v in change_icon.items() if k != icon_name
                     }
-                    logger.info('reseting icon %s', icon_name)
+
+                    if zukan_listener_enabled:
+                        logger.info('reseting icon %s', icon_name)
 
             if icon_name == 'All':
                 icon_dict_updated = {}
-                logger.info('reseting all icons')
+
+                if zukan_listener_enabled:
+                    logger.info('reseting all icons')
 
             set_save_settings(ZUKAN_SETTINGS, 'change_icon', icon_dict_updated)
 

@@ -18,6 +18,7 @@ ZUKAN_SETTINGS_OPTIONS = [
     'change_icon_file_extension',
     'create_custom_icon',
     'auto_rebuild_icon',
+    'zukan_listener_enabled',
 ]
 
 USER_SETTINGS_OPTIONS = [

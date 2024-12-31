@@ -217,8 +217,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
             ) and (
                 (
                     not any(
-                        hex_dark_light(d['background'])
-                        == scheme_dark_light
+                        hex_dark_light(d['background']) == scheme_dark_light
                         for d in user_ui_settings
                     )
                     and (

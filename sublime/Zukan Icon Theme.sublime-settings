@@ -294,6 +294,38 @@
     // Default is true.
     "rebuild_on_upgrade": true,
 
+    // Option to not use the listener and 'add_on_change',
+    // so the files will not auto build under any
+    // circumstances.
+    //
+    // Any change needed, will have to do manually through
+    // Commands, to build files. The Commands are:
+    // - Install/Delete Preferences
+    // - Install/Delete Syntaxes
+    // - Install/Delete Themes
+    // - Rebuild Files
+    //
+    // Plugin use listener to watch when a Theme or 
+    // Color-scheme changed. It is used to:
+    // - Delete files when an ignored theme is selected
+    // - Change icon dark or light
+    //
+    // ST 'add_on_change' is used to watch Zukan
+    // Preferences settings. And, if following settings
+    // change, it apply them to icons files:
+    // - Change icon
+    // - Change icon file extension
+    // - Create custom icon
+    // - Prefer icon
+    // - Ignored icon
+    // - Ignored theme
+    //
+    // Change to false to turn off listener and 
+    //'add_on_change'.
+    //
+    // Default is true. A ST restart is needed if modified.
+    "zukan_listener_enabled": true,
+
     // Do not change version. Neither use this option.
     // It is used to upgrade package if 'rebuild_on_upgrade'
     // is true

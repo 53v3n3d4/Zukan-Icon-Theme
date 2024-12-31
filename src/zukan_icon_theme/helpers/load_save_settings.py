@@ -235,3 +235,9 @@ def save_current_ui_settings(
         os.remove(USER_UI_SETTINGS_FILE)
 
     dump_pickle_data(current_ui_settings, USER_UI_SETTINGS_FILE)
+
+
+def zukan_listener_enabled():
+    zukan_listener_enabled = get_settings(ZUKAN_SETTINGS, 'zukan_listener_enabled')
+
+    return zukan_listener_enabled

@@ -9,6 +9,7 @@
 ### Plugin 🕹️
 - Change SchemeThemeListener, improve handle icon dark/light
 - Rename theme_dark_light -> color_dark_light
+- Add zukan_listener_enabled setting
 
 ## [0.4.2] - 2024-12-19
 
