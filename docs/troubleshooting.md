@@ -150,4 +150,41 @@ This error usually occurs when build files are called multiple times together, c
 **Solution**
 ```
 Force quit ST or close all dialog messages.
+
+The setting option 'zukan_listener_enabled' can be an option since it turn off
+listener and 'add_on_change'. So any change needed, will have to do manually using
+Commands.
+```
+
+See info about [setting `zukan_listener_enabled`](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/plugin.md#setting-zukan_listener_enabled)
+
+### Added a syntax and it is not highlighting
+
+Plugin does not rebuild syntaxes files when a new syntax package is added.
+
+E.g. Install package INI after Zukan package. To avoid console messages, the icons syntaxes files are different when a syntax is installed and when is not.
+
+So, a `pytest.ini` file, that was not highlighted before package INI install, will need to rebuild icons syntaxes files to highlight.
+
+***Solution***
+```
+Build icons syntaxes using 'Commands'.
+
+Option 1:
+- Go to 'Command Palette', type 'zukan'
+- Select 'Zukan Icon Theme: Install Syntax'. It takes a few seconds to build the list
+with all syntaxes installed minus icons syntaxes.
+- Click all to rebuild all icons syntaxes files.
+
+Option 2:
+- Go to 'Settings > Package Settings > Zukan Icon Theme'
+- Click on 'Rebuild files'. This will rebuild all files, not only icons syntaxes. It
+is similar to first install or upgrade package.
+
+Also, there are actions where icons syntaxes are rebuilt:
+- Change icon file extension
+- Create custom icon
+- Package upgrade
+- Move from an ignored theme
+- Deleted folder 'icons_syntaxes' or all icons syntaxes files, when ST start
 ```

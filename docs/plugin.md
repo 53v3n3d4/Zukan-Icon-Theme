@@ -359,3 +359,25 @@ It installs a sublime-syntax file from zukan icons syntaxes list, excluding alre
 ### Install Theme
 
 It installs a sublime-theme file from a list of user installed themes, excluding already installed in plugin.  
+
+## Setting `zukan_listener_enabled`
+
+Option to not use the listener and `add_on_change`, so the files will not auto build under any circumstances.  
+
+Any change needed, will have to do manually through Commands, to build files. The Commands are:
+- Install/Delete Preferences
+- Install/Delete Syntaxes
+- Install/Delete Themes
+- Rebuild Files
+
+Plugin use listener to watch when a Theme or Color-scheme changed. It is used to:
+- Delete files when an ignored theme is selected
+- Change icon dark or light
+
+ST `add_on_change` is used to watch Zukan Preferences settings. And, if following settings change, it apply them to icons files:
+- Change icon
+- Change icon file extension
+- Create custom icon
+- Prefer icon
+- Ignored icon
+- Ignored theme
