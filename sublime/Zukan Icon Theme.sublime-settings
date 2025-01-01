@@ -168,6 +168,7 @@
     //    { "scope": "source.toml.pdm", "file_extensions": ["config.toml"] },
     //    { "scope": "source.toml.tidb", "file_extensions": ["config.toml"] },
     //    { "scope": "source.toml", "file_extensions": ["pyproject.toml"] },
+    //    { "scope": "source.toml.black", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.hatch", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.pdm", "file_extensions": ["pyproject.toml"] },
     //    { "scope": "source.toml.pip", "file_extensions": ["pyproject.toml"] },
@@ -295,7 +296,7 @@
     "rebuild_on_upgrade": true,
 
     // Option to not use the listener and 'add_on_change',
-    // so the files will not auto build under any
+    // so the icon files will not auto build under any
     // circumstances.
     //
     // Any change needed, will have to do manually through
@@ -306,7 +307,7 @@
     // - Rebuild Files
     //
     // Plugin use listener to watch when a Theme or 
-    // Color-scheme changed. It is used to:
+    // Color-scheme change. It is used to:
     // - Delete files when an ignored theme is selected
     // - Change icon dark or light
     //

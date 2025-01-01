@@ -188,6 +188,15 @@ def rgb_dark_light(rgb_color: list) -> str:
 
 
 def get_icon_dark_light(bgcolor: str) -> str:
+    """
+    Get icon dark if bgcolor is light. And vice-versa.
+
+    Parameters:
+    bgcolor (str) -- string 'dark' or 'light'.
+
+    Returns:
+    (str) -- return 'dark' or 'light'.
+    """
     if bgcolor == 'dark':
         return 'light'
     else:
@@ -195,4 +204,13 @@ def get_icon_dark_light(bgcolor: str) -> str:
 
 
 def hex_dark_light(hex_color: str) -> str:
+    """
+    Return 'dark' or 'light' for a Hex color.
+
+    Parameters:
+    hex_color (str) -- string Hex.
+
+    Returns:
+    (str) -- return 'dark' or 'light' for a Hex color.
+    """
     return rgb_dark_light(convert_to_rgb(hex_color))

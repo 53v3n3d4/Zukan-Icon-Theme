@@ -103,10 +103,10 @@ def get_theme_settings() -> tuple:
 
 def get_create_custom_icon_settings() -> tuple:
     """
-    Get create custom icon settings.
+    Get create custom icon setting.
 
     Returns:
-    (tuple) -- tuple with create custom icon settings.
+    (tuple) -- tuple with create custom icon setting.
     """
     create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
 
@@ -118,10 +118,10 @@ def get_create_custom_icon_settings() -> tuple:
 
 def get_change_icon_settings() -> tuple:
     """
-    Get change icon settings.
+    Get change icon setting.
 
     Returns:
-    (tuple) -- tuple with change icon settings.
+    (tuple) -- tuple with change icon setting.
     """
     change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
     change_icon_file_extension = get_settings(
@@ -152,10 +152,10 @@ def get_prefer_icon_settings() -> tuple:
 
 def get_ignored_icon_settings() -> tuple:
     """
-    Get ignore icon settings.
+    Get ignore icon setting.
 
     Returns:
-    (tuple) -- tuple with ignore icon settings.
+    (tuple) -- tuple with ignore icon setting.
     """
     ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
 
@@ -237,7 +237,13 @@ def save_current_ui_settings(
     dump_pickle_data(current_ui_settings, USER_UI_SETTINGS_FILE)
 
 
-def zukan_listener_enabled():
+def is_zukan_listener_enabled() -> tuple:
+    """
+    Check if zukan listener enabled setting is true or false.
+
+    Returns:
+    (tuple) -- tuple with zukan listener enabled setting.
+    """
     zukan_listener_enabled = get_settings(ZUKAN_SETTINGS, 'zukan_listener_enabled')
 
     return zukan_listener_enabled

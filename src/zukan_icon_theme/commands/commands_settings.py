@@ -10,7 +10,7 @@ from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.load_save_settings import (
     get_settings,
     set_save_settings,
-    zukan_listener_enabled,
+    is_zukan_listener_enabled,
 )
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.remove_empty_dict import remove_empty_dict
@@ -32,7 +32,7 @@ from ..utils.zukan_paths import (
 
 logger = logging.getLogger(__name__)
 
-zukan_listener_enabled = zukan_listener_enabled()
+zukan_listener_enabled = is_zukan_listener_enabled()
 
 
 class ChangeFileExtensionCommand(sublime_plugin.TextCommand):

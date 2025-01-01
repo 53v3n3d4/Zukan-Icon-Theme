@@ -40,7 +40,7 @@ from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
 )
 from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
 from .src.zukan_icon_theme.events.settings import SettingsEvent  # noqa: E402
-from .src.zukan_icon_theme.helpers.load_save_settings import zukan_listener_enabled  # noqa: E402
+from .src.zukan_icon_theme.helpers.load_save_settings import is_zukan_listener_enabled  # noqa: E402
 from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
 from .src.zukan_icon_theme.lib.move_folders import MoveFolder  # noqa: E402
 from .src.zukan_icon_theme.utils.zukan_paths import (  # noqa: E402
@@ -55,7 +55,7 @@ from .src.zukan_icon_theme.utils.zukan_paths import (  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
-zukan_listener_enabled = zukan_listener_enabled()
+zukan_listener_enabled = is_zukan_listener_enabled()
 
 if zukan_listener_enabled:
     from .src.zukan_icon_theme.events.listeners import (  # noqa: E402
