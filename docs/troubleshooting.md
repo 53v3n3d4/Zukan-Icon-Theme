@@ -160,15 +160,15 @@ See info about [setting `zukan_listener_enabled`](https://github.com/53v3n3d4/Zu
 
 ### Added a syntax and it is not highlighting
 
-Plugin does not rebuild syntaxes files when a new syntax package is added.
+Plugin does not rebuild icons syntaxes files when a new syntax package is added.
 
-E.g. Install package INI after Zukan package. To avoid console messages, the icons syntaxes files are different when a syntax is installed and when is not.
+E.g. Install package INI after Zukan package. To avoid console error messages, the icons syntaxes files are different when a syntax is installed and when is not.
 
 So, a `pytest.ini` file, that was not highlighted before package INI install, will need to rebuild icons syntaxes files to highlight.
 
 ***Solution***
 ```
-Build icons syntaxes using 'Commands'.
+Build icons syntaxes using Commands.
 
 Option 1:
 - Go to 'Command Palette', type 'zukan'
@@ -182,8 +182,6 @@ Option 2:
 is similar to first install or upgrade package.
 
 Also, there are actions where icons syntaxes are rebuilt:
-- Change icon file extension
-- Create custom icon
 - Package upgrade
 - Move from an ignored theme
 - Deleted folder 'icons_syntaxes' or all icons syntaxes files, when ST start
