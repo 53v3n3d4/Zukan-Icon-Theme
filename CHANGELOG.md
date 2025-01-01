@@ -3,6 +3,7 @@
 ## [0.4.3] - 2025
 
 ### Icons, syntaxes and preferences 👽
+- Add icon-theme: Black
 - Change icon: SystemVerilog
 - Change sublime-syntax: License, Rebar3
 
