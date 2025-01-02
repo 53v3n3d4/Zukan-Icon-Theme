@@ -3,6 +3,8 @@
 name: Text
 icons:
   - text-light
+  - text-1-dark
+  - text-1-light
 preferences:
   scope: text.plain
   settings:

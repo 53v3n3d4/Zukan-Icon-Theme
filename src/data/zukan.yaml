@@ -16,6 +16,7 @@ syntax:
       - zukan_preferences_data.pkl
       - zukan_syntaxes_data.pkl
       - Zukan-Icon-Theme.sublime-package
+      - 'Zukan Icon Theme.sublime-package'
     contexts:
       main: []
   - name: JSON (Zukan)

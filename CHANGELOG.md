@@ -4,7 +4,8 @@
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Black
-- Change icon: SystemVerilog
+- Add icon option: Binary, Source, Text
+- Change icon: Binary, Source, SystemVerilog, Text
 - Change sublime-syntax: License, Rebar3
 
 ### Plugin 🕹️

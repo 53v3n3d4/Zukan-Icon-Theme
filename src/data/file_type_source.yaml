@@ -3,6 +3,8 @@
 name: Source
 icons:
   - file_type_source-light
+  - file_type_source-1-dark
+  - file_type_source-1-light
 tag: primary
 preferences:
   settings:
