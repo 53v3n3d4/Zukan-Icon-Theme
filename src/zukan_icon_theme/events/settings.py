@@ -92,7 +92,7 @@ class SettingsEvent:
                 # Currently, rebuilding all files, because of manually editing
                 # sublime-settings, it is possible to have multiple entries.
 
-                # When new option settings added, need to include in zukan fike
+                # When new settings added, need to include in zukan fike
                 # before compare. Or it will raise key error.
                 for k, v in current_settings.items():
                     if k not in d:
@@ -238,6 +238,8 @@ class SettingsEvent:
     def zukan_options_settings():
         """
         Call upgrade zukan files function if 'rebuild_on_upgrade' is True.
+
+        Also, call rebuild icons files when settings change.
         """
         # auto_upgraded setting
         SettingsEvent.upgrade_zukan_files()

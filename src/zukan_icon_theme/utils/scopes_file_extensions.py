@@ -90,7 +90,7 @@ SCOPES_FILE_EXTENSIONS = [
 # model.conf: casbin
 # policy.csv: casbin
 # Project.toml: pkgjl
-# pyproject.toml: python, hatch, pdm, pip, poetry, setuptools, tox
+# pyproject.toml: python, black, hatch, pdm, pip, poetry, setuptools, tox
 # requirements.txt: pip, uv
 # setup.cfg: python, setuptools, tox
 # unittestings.json: sublime

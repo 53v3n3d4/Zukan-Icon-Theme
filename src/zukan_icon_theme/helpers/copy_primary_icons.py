@@ -34,8 +34,8 @@ def copy_primary_icons():
     'primary' icons need to delete PNGs to work in 'ignore_icon' setting. They do
     not need preference file to show.
 
-    While copying, if 'prefer_icon' setting is used, it will choose the icon, dark
-    or light, to be copied.
+    While copying, if 'prefer_icon' or 'auto_prefer_icon' setting is used, it
+    will choose the icon, dark or light, to be copied.
 
     PNGs copies necessary if install using clone repo.
     """
@@ -92,15 +92,34 @@ def copy_primary_icons():
                             p[1],
                             s,
                         )
-                        shutil.copy2(
-                            os.path.join(
-                                ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
-                                i + s + PNG_EXTENSION,
-                            ),
-                            os.path.join(
-                                ZUKAN_PKG_ICONS_PATH, p[1] + s + PNG_EXTENSION
-                            ),
-                        )
+                        # Icon has dark/light option
+                        if i.endswith('-dark') or i.endswith('-light'):
+                            if bgcolor == 'dark':
+                                icon_name = i.rsplit('-', 1)[0] + '-light'
+                            else:
+                                icon_name = i.rsplit('-', 1)[0] + '-dark'
+
+                            shutil.copy2(
+                                os.path.join(
+                                    ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
+                                    icon_name + s + PNG_EXTENSION,
+                                ),
+                                os.path.join(
+                                    ZUKAN_PKG_ICONS_PATH, p[1] + s + PNG_EXTENSION
+                                ),
+                            )
+                        # Icon does not have icon dark/light option
+                        # E.g. file_type_image-1
+                        else:
+                            shutil.copy2(
+                                os.path.join(
+                                    ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
+                                    i + s + PNG_EXTENSION,
+                                ),
+                                os.path.join(
+                                    ZUKAN_PKG_ICONS_PATH, p[1] + s + PNG_EXTENSION
+                                ),
+                            )
 
                     elif p[0] not in change_icon.keys():
                         # Icon light or dark
@@ -119,10 +138,15 @@ def copy_primary_icons():
                                 i,
                                 s,
                             )
+                            if bgcolor == 'dark':
+                                icon_name = p[2][1]
+                            else:
+                                icon_name = p[2][0]
+
                             shutil.copy2(
                                 os.path.join(
                                     ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
-                                    i + s + PNG_EXTENSION,
+                                    icon_name + s + PNG_EXTENSION,
                                 ),
                                 os.path.join(
                                     ZUKAN_PKG_ICONS_PATH, p[1] + s + PNG_EXTENSION
