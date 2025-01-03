@@ -1,11 +1,12 @@
 # Changelog
 
 ## [0.4.3] - 2025
+- Change some outline light icons to darker tone
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Black
 - Add icon option: Binary, Source, Text
-- Change icon: Binary, Source, SystemVerilog, Text
+- Change icon: Audio, Binary, CAD, Cert. Authentication, Code of Conduct, Citation, Debug, Default, Diff, Favicon, Font, Image, License, Log, Markup, Plist, README, Settings, Shell, Source, SSH, SystemVerilog, Text, Video
 - Change sublime-syntax: License, Rebar3
 
 ### Plugin 🕹️
