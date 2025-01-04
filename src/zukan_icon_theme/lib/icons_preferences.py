@@ -66,8 +66,8 @@ class ZukanPreference:
                 for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
             ):
                 ZukanPreference.delete_icons_preferences()
-            ZukanPreference.create_icons_preferences()
         finally:
+            ZukanPreference.create_icons_preferences()
             # Remove plist tag <!DOCTYPE plist>
             ZukanPreference.delete_plist_tags()
             copy_primary_icons()

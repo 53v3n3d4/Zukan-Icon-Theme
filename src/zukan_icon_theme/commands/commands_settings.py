@@ -8,7 +8,11 @@ from ..lib.icons_themes import ZukanTheme
 from ..helpers.clean_data import clean_comments_settings
 from ..helpers.create_custom_icon import create_custom_icon
 from ..helpers.load_save_settings import (
-    get_settings,
+    get_create_custom_icon_settings,
+    get_change_icon_settings,
+    get_ignored_icon_settings,
+    get_prefer_icon_settings,
+    get_theme_settings,
     set_save_settings,
     is_zukan_listener_enabled,
 )
@@ -43,13 +47,7 @@ class ChangeFileExtensionCommand(sublime_plugin.TextCommand):
     def run(
         self, edit, change_file_extension_scope: str, change_file_extension_exts: str
     ):
-        change_icon_file_extension = get_settings(
-            ZUKAN_SETTINGS, 'change_icon_file_extension'
-        )
-        if not isinstance(change_icon_file_extension, list):
-            logger.warning(
-                'change_icon_file_extension option malformed, need to be a list'
-            )
+        change_icon, change_icon_file_extension = get_change_icon_settings()
 
         # Required name and icon input
         if not change_file_extension_scope or not change_file_extension_exts:
@@ -202,9 +200,7 @@ class ChangeIconCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, change_icon_name: str, change_icon_file: str):
-        change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
-        if not isinstance(change_icon, dict):
-            logger.warning('change_icon option malformed, need to be a dict')
+        change_icon, _ = get_change_icon_settings()
 
         inserted_change_icon = {change_icon_name: change_icon_file}
 
@@ -313,9 +309,7 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
         create_custom_icon_extensions: str,
         create_custom_icon_contexts: str,
     ):
-        create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
-        if not isinstance(create_custom_icon, list):
-            logger.warning('create_custom_icon option malformed, need to be a list')
+        create_custom_icon = get_create_custom_icon_settings()
 
         # Convert create_custom_icon_extensions to list
         list_create_custom_icon_extensions = [
@@ -579,7 +573,7 @@ class DeleteCustomIconCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, name: str):
-        create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
+        create_custom_icon = get_create_custom_icon_settings()
 
         if not name == 'All':
             create_custom_icon_updated = [
@@ -613,9 +607,7 @@ class DeleteCustomIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of customized icons'
 
     def list_items(self) -> list:
-        create_custom_icon = get_settings(ZUKAN_SETTINGS, 'create_custom_icon')
-        if not isinstance(create_custom_icon, list):
-            logger.warning('create_custom_icon option malformed, need to be a list')
+        create_custom_icon = get_create_custom_icon_settings()
 
         if create_custom_icon:
             all_option = ['All']
@@ -637,7 +629,7 @@ class DisableIconCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, icon_name: str):
-        ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+        ignored_icon = get_ignored_icon_settings()
 
         if icon_name not in ignored_icon:
             ignored_icon.append(icon_name)
@@ -669,11 +661,8 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
     def list_items(self) -> list:
         try:
             zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-            ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-            if not isinstance(ignored_icon, list):
-                logger.warning(
-                    'ignored_icon option malformed, need to be a string list'
-                )
+            ignored_icon = get_ignored_icon_settings()
+
             ignored_icon_list = []
 
             # 'create_custom_icon' setting
@@ -709,7 +698,7 @@ class DisableThemeCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_st_path: str):
         theme_name = os.path.basename(theme_st_path)
-        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
+        ignored_theme, _ = get_theme_settings()
 
         if theme_name not in ignored_theme:
             ignored_theme.append(theme_name)
@@ -734,9 +723,8 @@ class DisableThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of installed themes'
 
     def list_items(self) -> list:
-        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
-        if not isinstance(ignored_theme, list):
-            logger.warning('ignored_theme option malformed, need to be a string list')
+        ignored_theme, _ = get_theme_settings()
+
         ignored_theme_list = []
 
         for name in search_resources_sublime_themes():
@@ -757,7 +745,7 @@ class EnableIconCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, icon_name: str):
-        ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
+        ignored_icon = get_ignored_icon_settings()
 
         if ignored_icon:
             if not icon_name == 'All':
@@ -794,9 +782,7 @@ class EnableIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of ignored icons'
 
     def list_items(self) -> list:
-        ignored_icon = get_settings(ZUKAN_SETTINGS, 'ignored_icon')
-        if not isinstance(ignored_icon, list):
-            logger.warning('ignored_icon option malformed, need to be a string list')
+        ignored_icon = get_ignored_icon_settings()
 
         if ignored_icon:
             all_option = ['All']
@@ -812,7 +798,7 @@ class EnableThemeCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, theme_name: str):
-        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
+        ignored_theme, _ = get_theme_settings()
 
         if ignored_theme:
             if not theme_name == 'All':
@@ -847,9 +833,7 @@ class EnableThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of ignored themes'
 
     def list_items(self) -> list:
-        ignored_theme = get_settings(ZUKAN_SETTINGS, 'ignored_theme')
-        if not isinstance(ignored_theme, list):
-            logger.warning('ignored_theme option malformed, need to be a string list')
+        ignored_theme, _ = get_theme_settings()
 
         if ignored_theme:
             all_option = ['All']
@@ -865,7 +849,7 @@ class RemovePreferIconCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, select_prefer_icon_theme: str):
-        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
+        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
 
         if prefer_icon:
             if not select_prefer_icon_theme == 'All':
@@ -903,9 +887,7 @@ class RemovePreferIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of prefered icons'
 
     def list_items(self) -> list:
-        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
-        if not isinstance(prefer_icon, dict):
-            logger.warning('prefer_icon option malformed, need to be a dict')
+        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
 
         if prefer_icon:
             all_option = ['All']
@@ -928,9 +910,7 @@ class ResetFileExtensionCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, scope_name: str):
-        change_icon_file_extension = get_settings(
-            ZUKAN_SETTINGS, 'change_icon_file_extension'
-        )
+        change_icon, change_icon_file_extension = get_change_icon_settings()
 
         if change_icon_file_extension:
             if not scope_name == 'All':
@@ -971,13 +951,7 @@ class ResetFileExtensionInputHandler(sublime_plugin.ListInputHandler):
         return 'List of changed icons file extensions'
 
     def list_items(self) -> list:
-        change_icon_file_extension = get_settings(
-            ZUKAN_SETTINGS, 'change_icon_file_extension'
-        )
-        if not isinstance(change_icon_file_extension, list):
-            logger.warning(
-                'change_icon_file_extension option malformed, need to be a list'
-            )
+        change_icon, change_icon_file_extension = get_change_icon_settings()
 
         if change_icon_file_extension:
             all_option = ['All']
@@ -1017,7 +991,7 @@ class ResetIconCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, icon_name: str):
-        change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
+        change_icon, _ = get_change_icon_settings()
 
         if change_icon:
             if not icon_name == 'All':
@@ -1053,9 +1027,7 @@ class ResetIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of changed icons'
 
     def list_items(self) -> list:
-        change_icon = get_settings(ZUKAN_SETTINGS, 'change_icon')
-        if not isinstance(change_icon, dict):
-            logger.warning('change_icon option malformed, need to be a dict')
+        change_icon, _ = get_change_icon_settings()
 
         if change_icon:
             all_option = ['All']
@@ -1080,10 +1052,7 @@ class SelectPreferIconCommand(sublime_plugin.TextCommand):
     """
 
     def run(self, edit, select_prefer_icon_theme: str, select_prefer_icon_version: str):
-        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
-
-        if not isinstance(prefer_icon, dict):
-            logger.warning('prefer_icon option malformed, need to be a dict')
+        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
 
         selected_prefer_icon = {select_prefer_icon_theme: select_prefer_icon_version}
 
@@ -1112,10 +1081,7 @@ class SelectPreferIconThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of created themes'
 
     def list_items(self) -> list:
-        prefer_icon = get_settings(ZUKAN_SETTINGS, 'prefer_icon')
-
-        if not isinstance(prefer_icon, dict):
-            logger.warning('prefer_icon option malformed, need to be a dict')
+        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
 
         if ZukanTheme.list_created_icons_themes():
             # Create a dict with prefer icon value, empty string.

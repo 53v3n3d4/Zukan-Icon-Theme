@@ -105,16 +105,12 @@ class SettingsEvent:
                     logger.info('"ignored_icon" changed, rebuilding files...')
                     InstallEvent.rebuild_icon_files_thread()
 
-                    save_current_settings()
-
                 # Check if change_icon changed
                 if sorted(d['change_icon']) != sorted(change_icon) or any(
                     [change_icon.get(k) != v for k, v in d['change_icon'].items()]
                 ):
                     logger.info('"change_icon" changed, rebuilding files...')
                     ZukanPreference.build_icons_preferences()
-
-                    save_current_settings()
 
                     # Command 'reset_icon' leaves entries commented in dict.
                     # It is working but still leaving the last reset one, because
@@ -138,16 +134,12 @@ class SettingsEvent:
                     )
                     InstallEvent.install_syntaxes()
 
-                    save_current_settings()
-
                 # Check if create_custom_icon changed
                 if any(
                     x != y for x, y in zip(d['create_custom_icon'], create_custom_icon)
                 ) or len(d['create_custom_icon']) != len(create_custom_icon):
                     logger.info('"create_custom_icon" changed, rebuilding files...')
                     InstallEvent.rebuild_icon_files_thread()
-
-                    save_current_settings()
 
                     # 'create_custom_icon' also leaves commented entries when deleted
                     # using 'delete_custom_icon'. Same as 'reset_icon', but
@@ -161,8 +153,6 @@ class SettingsEvent:
                 ):
                     logger.info('"prefer_icon" changed, rebuilding files...')
                     ZukanPreference.build_icons_preferences()
-
-                    save_current_settings()
 
                     clean_comments_settings(ZUKAN_USER_SUBLIME_SETTINGS)
 

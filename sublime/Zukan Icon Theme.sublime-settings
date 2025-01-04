@@ -98,6 +98,7 @@
     //
     // Examples: {
     //     "Angular": "angular-1",
+    //     "Binary": "file_type_binary-1-dark",
     //     "Cert. Authentication": "cert-1-dark",
     //     "Composer": "composer-1",
     //     "Composer": "composer-2",
@@ -113,7 +114,9 @@
     //     "Rust": "rust-1",
     //     "Rust": "rust-2",
     //     "SolidJS": "solidstart",
-    //     "Sublime Text": "sublime-1"
+    //     "Source": "file_type_source-1-dark",
+    //     "Sublime Text": "sublime-1",
+    //     "Text": "text-1-dark"
     // }
     "change_icon": {},
 

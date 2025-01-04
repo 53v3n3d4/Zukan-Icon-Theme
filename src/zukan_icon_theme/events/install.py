@@ -6,11 +6,12 @@ from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
 from ..lib.move_folders import MoveFolder
 from ..helpers.delete_unused import delete_unused_icons
-from ..helpers.load_save_settings import get_settings
-from ..helpers.thread_progress import ThreadProgress
-from ..utils.file_settings import (
-    ZUKAN_SETTINGS,
+from ..helpers.load_save_settings import (
+    get_theme_settings,
+    get_upgraded_version_settings,
+    is_zukan_restart_message,
 )
+from ..helpers.thread_progress import ThreadProgress
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
     ZUKAN_PKG_ICONS_PATH,
@@ -54,48 +55,52 @@ class InstallEvent:
         """
         # Check 'auto_install_theme' avoid duplicate create themes when True.
         # Because deleting theme already triggers event to create themes.
-        auto_install_theme = get_settings(ZUKAN_SETTINGS, 'auto_install_theme')
+        ignored_theme, auto_install_theme = get_theme_settings()
+        pkg_version, _ = get_upgraded_version_settings()
+
         if auto_install_theme is False:
             ZukanTheme.create_icons_themes()
 
-        ZukanPreference.build_icons_preferences()
         ZukanSyntax.build_icons_syntaxes()
+        ZukanPreference.build_icons_preferences()
 
-        version = get_settings(ZUKAN_SETTINGS, 'version')
-        logger.info('Zukan icons v%s has been built.', version)
+        logger.info('Zukan icons v%s has been built.', pkg_version)
 
     def install_syntaxes_preferences():
         """
         Batch build preferences and syntaxes, to use with Thread together in
         install_upgrade_thread and rebuild_icon_files_thread.
         """
-        ZukanPreference.build_icons_preferences()
+        # Change build order: syntax then preferences. Notice error Bad XML,
+        # when ignoring icon through Command, duplicating create preferences
+        # after change from 'add_on_change' to event listener.
         ZukanSyntax.build_icons_syntaxes()
+        ZukanPreference.build_icons_preferences()
 
     def install_upgrade_thread():
         """
         Using Thread to build upgraded files, to avoid ST freezing.
         """
-        version = get_settings(ZUKAN_SETTINGS, 'version')
-        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
-
         try:
             # Copy new icons_data and icons folder
             MoveFolder.move_folders()
 
         finally:
+            pkg_version, _ = get_upgraded_version_settings()
+            zukan_restart_message = is_zukan_restart_message()
+
             if zukan_restart_message is True:
                 dialog_message = (
                     'Zukan icons has been upgraded to v{v}.\n\n'
                     'Changelog in Sublime Text > Settings > Package Settings menu.\n\n'
                     'You may have to restart ST, if all icons do not load correct in '
-                    'current theme.'.format(v=version)
+                    'current theme.'.format(v=pkg_version)
                 )
             if zukan_restart_message is False:
                 dialog_message = (
                     'Zukan icons has been upgraded to v{v}.\n\n'
                     'Changelog in Sublime Text > Settings > Package Settings menu.'
-                    '\n\n'.format(v=version)
+                    '\n\n'.format(v=pkg_version)
                 )
 
             # Delete unused icons
@@ -106,7 +111,7 @@ class InstallEvent:
             t.start()
             ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
 
-            logger.info('upgrading Zukan icons to v%s.', version)
+            logger.info('upgrading Zukan icons to v%s.', pkg_version)
             logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
 
     def rebuild_icon_files_thread():
@@ -125,18 +130,18 @@ class InstallEvent:
         Install icons themes, preferences and syntaxes.
         """
         # Creating themes in main thread helps a little with the error not showing all
-        # building file icons when ST start.
+        # icons during install.
         # 'refresh_folder_list' do not help force reload. But deleting or duplicating a
         # folder with at least 5 files, it will realod file icons.
         # If change themes, the icons is working with no problem.
-        version = get_settings(ZUKAN_SETTINGS, 'version')
-        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        pkg_version, _ = get_upgraded_version_settings()
+        zukan_restart_message = is_zukan_restart_message()
 
         if zukan_restart_message is True:
             dialog_message = (
                 'Zukan icons v{v} has been built.\n\n'
                 'You may have to restart ST, if all icons do not load correct in '
-                'current theme.'.format(v=version)
+                'current theme.'.format(v=pkg_version)
             )
         if zukan_restart_message is False:
             dialog_message = None

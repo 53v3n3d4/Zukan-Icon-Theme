@@ -247,3 +247,15 @@ def is_zukan_listener_enabled() -> tuple:
     zukan_listener_enabled = get_settings(ZUKAN_SETTINGS, 'zukan_listener_enabled')
 
     return zukan_listener_enabled
+
+
+def is_zukan_restart_message() -> tuple:
+    """
+    Check if zukan restart message setting is true or false.
+
+    Returns:
+    (tuple) -- tuple with zukan restart message setting.
+    """
+    zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+
+    return zukan_restart_message
