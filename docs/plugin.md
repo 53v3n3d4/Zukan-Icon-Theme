@@ -55,6 +55,8 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
 
 > ST essentials icons: 'file_type_binary', 'file_type_default', 'file_type_image', 'file_type_markup' and 'file_type_source'.  
 
+> Essentials icons options works because plugin renames them when build file.  
+
 #### Example
 - `Zukan Icon Theme: Change Icon`  
 - type `Angular` hit <kbd>Enter</kbd>  
@@ -63,13 +65,13 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
 ```json
     "change_icon": {
         "Angular": "angular-1",
+        "Binary": "file_type_binary-1-dark",
         "Cert. Authentication": "cert-1-dark",
         "Composer": "composer-1",
         "Composer": "composer-2",
         "C#": "csharp-1",
         "DirectX": "directx-1-dark",
         "Go": "go-1",
-        // Image option works because plugin renames it when build file.
         "Image": "file_type_image-1",
         "LLVM": "llvm-1",
         "Node.js": "nodejs-1",
@@ -79,7 +81,9 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
         "Rust": "rust-1",
         "Rust": "rust-2",
         "SolidJS": "solidstart",
-        "Sublime Text": "sublime-1"
+        "Source": "file_type_source-1-dark",
+        "Sublime Text": "sublime-1",
+        "Text": "text-1-dark"
     },
 ```
 

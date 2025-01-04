@@ -164,7 +164,7 @@ Plugin does not rebuild icons syntaxes files when a new syntax package is added.
 
 E.g. Install package INI after Zukan package. To avoid console error messages, the icons syntaxes files are different when a syntax is installed and when is not.
 
-So, a `pytest.ini` file, that was not highlighted before package INI install, will need to rebuild icons syntaxes files to highlight.
+So, a `.npmrc` (INI file), that was not highlighted before package INI install, will need to rebuild icons syntaxes files to highlight.
 
 ***Solution***
 ```
