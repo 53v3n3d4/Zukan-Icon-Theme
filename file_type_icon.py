@@ -14,15 +14,6 @@ for module_name in [
 del prefix
 
 
-from .src.zukan_icon_theme.commands.commands import (  # noqa: E402
-    DeletePreferenceCommand,  # noqa: F401
-    DeleteSyntaxCommand,  # noqa: F401
-    DeleteThemeCommand,  # noqa: F401
-    InstallPreferenceCommand,  # noqa: F401
-    InstallSyntaxCommand,  # noqa: F401
-    InstallThemeCommand,  # noqa: F401
-    RebuildFilesCommand,  # noqa: F401
-)
 from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
     ChangeFileExtensionCommand,  # noqa: F401
     ChangeIconCommand,  # noqa: F401
@@ -37,6 +28,21 @@ from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
     ResetFileExtensionCommand,  # noqa: F401
     ResetIconCommand,  # noqa: F401
     SelectPreferIconCommand,  # noqa: F401
+)
+from .src.zukan_icon_theme.commands.preferences import (  # noqa: E402
+    DeletePreferenceCommand,  # noqa: F401
+    InstallPreferenceCommand,  # noqa: F401
+)
+from .src.zukan_icon_theme.commands.rebuild_files import (  # noqa: E402
+    RebuildFilesCommand,  # noqa: F401
+)
+from .src.zukan_icon_theme.commands.syntaxes import (  # noqa: E402
+    DeleteSyntaxCommand,  # noqa: F401
+    InstallSyntaxCommand,  # noqa: F401
+)
+from .src.zukan_icon_theme.commands.themes import (  # noqa: E402
+    DeleteThemeCommand,  # noqa: F401
+    InstallThemeCommand,  # noqa: F401
 )
 from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
 from .src.zukan_icon_theme.events.settings import SettingsEvent  # noqa: E402

@@ -1,0 +1,221 @@
+import logging
+import os
+import sublime
+import sublime_plugin
+
+from ..helpers.create_custom_icon import create_custom_icon
+from ..helpers.load_save_settings import get_ignored_icon_settings
+from ..helpers.read_write_data import read_pickle_data
+from ..lib.icons_preferences import ZukanPreference
+from ..utils.file_extensions import (
+    TMPREFERENCES_EXTENSION,
+)
+from ..utils.zukan_paths import (
+    ZUKAN_ICONS_DATA_FILE,
+    ZUKAN_PKG_ICONS_PREFERENCES_PATH,
+)
+
+logger = logging.getLogger(__name__)
+
+
+class Preferences:
+    """
+    Preferences list, install and delete.
+    """
+
+    def __init__(
+        self, preferences_path: str, icons_data_file: str, tmpreferences_extension: str
+    ):
+        self.preferences_path = preferences_path
+        self.icons_data_file = icons_data_file
+        self.tmpreferences_extension = tmpreferences_extension
+
+    def delete_icon_preference(self, preference_name: str):
+        ZukanPreference.delete_icons_preference(preference_name)
+
+    def delete_all_icons_preferences(self):
+        ZukanPreference.delete_icons_preferences()
+
+    def get_installed_preferences(self):
+        installed_preferences_list = ZukanPreference.list_created_icons_preferences()
+        return sorted(installed_preferences_list)
+
+    def get_not_installed_preferences(self):
+        list_preferences_not_installed = []
+        zukan_icons = read_pickle_data(self.icons_data_file)
+
+        # 'create_custom_icon' setting
+        custom_list = [p for p in create_custom_icon() if 'preferences' in p]
+        new_list = zukan_icons + custom_list
+
+        for p in new_list:
+            if p['preferences'].get('scope') is not None:
+                # Default icon
+                icon_name = p['preferences']['settings']['icon']
+                if icon_name.endswith('-dark'):
+                    icon_name = icon_name[:-5]
+                if icon_name.endswith('-light'):
+                    icon_name = icon_name[:-6]
+
+                list_preferences_not_installed.append(
+                    icon_name + self.tmpreferences_extension
+                )
+        list_preferences_not_installed = list(
+            set(list_preferences_not_installed).difference(
+                ZukanPreference.list_created_icons_preferences()
+            )
+        )
+
+        return list_preferences_not_installed
+
+    def install_icon_preference(self, preference_name: str):
+        file_name, file_extension = os.path.splitext(preference_name)
+
+        # 'ignored_icon' setting
+        ignored_icon = get_ignored_icon_settings()
+
+        zukan_icons = read_pickle_data(self.icons_data_file)
+
+        # 'create_custom_icon' setting
+        custom_list = [p for p in create_custom_icon() if 'preferences' in p]
+        new_list = zukan_icons + custom_list
+
+        for p in new_list:
+            if (
+                p['preferences']['settings']['icon'] == file_name
+                and p['name'] in ignored_icon
+            ):
+                dialog_message = '{i} icon is disabled. Need to enable first.'.format(
+                    i=p['name']
+                )
+                sublime.message_dialog(dialog_message)
+
+            # Default icon
+            # Need to add '-dark' or 'light' that was removed to mount list
+            if p['preferences']['settings']['icon'][:-5] == file_name:
+                file_name = p['preferences']['settings']['icon']
+
+            if p['preferences']['settings']['icon'][:-6] == file_name:
+                file_name = p['preferences']['settings']['icon']
+
+        ZukanPreference.build_icon_preference(file_name, preference_name)
+
+    def install_all_icons_preferences(self):
+        ZukanPreference.build_icons_preferences()
+
+    def confirm_delete(self, message: str):
+        return sublime.ok_cancel_dialog(message)
+
+
+class DeletePreferenceCommand(sublime_plugin.TextCommand):
+    """
+    Sublime command to delete preference from a list of created preferences.
+    """
+
+    def __init__(self, view):
+        super().__init__(view)
+        self.preferences = Preferences(
+            ZUKAN_PKG_ICONS_PREFERENCES_PATH,
+            ZUKAN_ICONS_DATA_FILE,
+            TMPREFERENCES_EXTENSION,
+        )
+
+    def run(self, edit, preference_name: str):
+        if preference_name == 'All':
+            dialog_message = (
+                "Are you sure you want to delete all preferences in '{f}'?".format(
+                    f=self.preferences.preferences_path
+                )
+            )
+            if self.preferences.confirm_delete(dialog_message):
+                self.preferences.delete_all_icons_preferences()
+        else:
+            dialog_message = "Are you sure you want to delete '{p}'?".format(
+                p=os.path.join(self.preferences.preferences_path, preference_name)
+            )
+            if self.preferences.confirm_delete(dialog_message):
+                self.preferences.delete_icon_preference(preference_name)
+
+    def input(self, args: dict):
+        return DeletePreferenceInputHandler(self.preferences)
+
+
+class DeletePreferenceInputHandler(sublime_plugin.ListInputHandler):
+    """
+    List of created preferences and return preference_name to DeletePreference.
+    """
+
+    def __init__(self, preferences):
+        self.preferences = preferences
+
+    def name(self) -> str:
+        return 'preference_name'
+
+    def placeholder(self) -> str:
+        return 'List of created preferences'
+
+    def list_items(self) -> list:
+        installed_preferences_list = self.preferences.get_installed_preferences()
+
+        if installed_preferences_list:
+            all_option = ['All']
+            new_list = all_option + installed_preferences_list
+            return new_list
+        else:
+            raise TypeError(
+                logger.info('it does not exist any created preference, list is empty')
+            )
+
+
+class InstallPreferenceCommand(sublime_plugin.TextCommand):
+    """
+    Sublime command to create preference from zukan preferences list.
+    """
+
+    def __init__(self, view):
+        super().__init__(view)
+        self.preferences = Preferences(
+            ZUKAN_PKG_ICONS_PREFERENCES_PATH,
+            ZUKAN_ICONS_DATA_FILE,
+            TMPREFERENCES_EXTENSION,
+        )
+
+    def run(self, edit, preference_name: str):
+        if preference_name == 'All':
+            self.preferences.install_all_icons_preferences()
+        else:
+            self.preferences.install_icon_preference(preference_name)
+
+    def input(self, args: dict):
+        return InstallPreferenceInputHandler(self.preferences)
+
+
+class InstallPreferenceInputHandler(sublime_plugin.ListInputHandler):
+    """
+    Zukan preferences list, created preferences excluded, and return preference_name
+    to InstallPreference.
+    """
+
+    def __init__(self, preferences):
+        self.preferences = preferences
+
+    def name(self) -> str:
+        return 'preference_name'
+
+    def placeholder(self) -> str:
+        return 'Zukan preferences list'
+
+    def list_items(self) -> list:
+        list_preferences_not_installed = (
+            self.preferences.get_not_installed_preferences()
+        )
+
+        if list_preferences_not_installed:
+            all_option = ['All']
+            preferences_list = sorted(list_preferences_not_installed)
+            new_list = all_option + preferences_list
+            return new_list
+        else:
+            raise TypeError(
+                logger.info('all preferences are already created, list is empty.')
+            )
