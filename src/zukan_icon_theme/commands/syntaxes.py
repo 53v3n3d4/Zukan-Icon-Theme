@@ -3,13 +3,13 @@ import os
 import sublime
 import sublime_plugin
 
-from ..events.install import InstallEvent
-from ..helpers.create_custom_icon import create_custom_icon
+from ..events.install import InstallEventE2
+# from ..helpers.custom_icon import generate_custom_icon
 from ..helpers.edit_file_extension import edit_file_extension
-from ..helpers.load_save_settings import get_ignored_icon_settings
-from ..helpers.read_write_data import read_pickle_data
+# from ..helpers.load_save_settings import get_ignored_icon_settings
+# from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
-from ..lib.icons_syntaxes import ZukanSyntax
+from ..lib.icons_syntaxes import ZukanSyntaxS2
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
 )
@@ -21,7 +21,7 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-class Syntaxes:
+class Syntaxes(InstallEventE2, ZukanSyntaxS2):
     """
     Syntaxes list, install and delete.
     """
@@ -29,70 +29,77 @@ class Syntaxes:
     def __init__(
         self, syntaxes_path: str, icons_data_file: str, sublime_syntax_extension: str
     ):
+        InstallEventE2.__init__(self)
+        ZukanSyntaxS2.__init__(self)
+
         self.syntaxes_path = syntaxes_path
         self.icons_data_file = icons_data_file
         self.sublime_syntax_extension = sublime_syntax_extension
 
-    def delete_icon_syntax(self, syntax_name: str):
-        ZukanSyntax.delete_icon_syntax(syntax_name)
+    def delete_single_icon_syntax(self, syntax_name: str):
+        self.delete_icon_syntax(syntax_name)
 
     def delete_all_icons_syntaxes(self):
-        ZukanSyntax.delete_icons_syntaxes()
+        self.delete_icons_syntaxes()
 
     def get_installed_syntaxes(self):
         installed_syntaxes_list = sorted(
-            ZukanSyntax.list_created_icons_syntaxes(), key=lambda x: x.upper()
+            self.list_created_icons_syntaxes(), key=lambda x: x.upper()
         )
         return sorted(installed_syntaxes_list)
 
     def get_not_installed_syntaxes(self):
         list_syntaxes_not_installed = []
-        zukan_icons = read_pickle_data(self.icons_data_file)
+        list_all_icons_syntaxes = self.get_list_icons_syntaxes()
 
-        # 'create_custom_icon' setting
-        custom_list = [s for s in create_custom_icon() if 'syntax' in s]
-        new_list = zukan_icons + custom_list
+        # zukan_icons = read_pickle_data(self.icons_data_file)
 
-        for s in new_list:
+        # # 'create_custom_icon' setting
+        # custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
+        # new_list = zukan_icons + custom_list
+
+        for s in list_all_icons_syntaxes:
             if s.get('syntax') is not None:
                 for k in s['syntax']:
                     if k not in compare_scopes():
-                        # 'change_scope_file_extension' setting
+                        # 'change_file_extension' setting
                         k['file_extensions'] = edit_file_extension(
                             k['file_extensions'], k['scope']
                         )
                         # file_extensions list can be empty
                         if k['file_extensions']:
                             list_syntaxes_not_installed.append(
-                                k['name'] + SUBLIME_SYNTAX_EXTENSION
+                                k['name'] + self.sublime_syntax_extension
                             )
         list_syntaxes_not_installed = list(
             set(list_syntaxes_not_installed).difference(
-                ZukanSyntax.list_created_icons_syntaxes()
+                self.list_created_icons_syntaxes()
             )
         )
 
         return list_syntaxes_not_installed
 
     def install_icon_syntax(self, syntax_name: str):
-        file_name, file_extension = os.path.splitext(syntax_name)
+        file_name, _ = os.path.splitext(syntax_name)
         # ZukanSyntax.create_icon_syntax(file_name)
         # Edit icon syntax contexts main if syntax not installed or ST3.
         # ZukanSyntax.edit_context_scope(syntax_name)
         # 'ignored_icon' setting
 
-        ignored_icon = get_ignored_icon_settings()
+        # ignored_icon = get_ignored_icon_settings()
 
-        zukan_icons = read_pickle_data(self.icons_data_file)
+        # zukan_icons = read_pickle_data(self.icons_data_file)
 
-        # 'create_custom_icon' setting
-        custom_list = [s for s in create_custom_icon() if 'syntax' in s]
-        new_list = zukan_icons + custom_list
+        # # 'create_custom_icon' setting
+        # custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
+        # new_list = zukan_icons + custom_list
 
-        for d in new_list:
+        list_all_icons_syntaxes = self.get_list_icons_syntaxes()
+
+        for d in list_all_icons_syntaxes:
             if 'syntax' in d:
                 for s in d['syntax']:
-                    if s['name'] == file_name and d['name'] in ignored_icon:
+                    if s['name'] == file_name and d['name'] in self.ignored_icon:
                         dialog_message = (
                             '{i} icon is disabled. Need to enable first.'.format(
                                 i=d['name']
@@ -100,13 +107,101 @@ class Syntaxes:
                         )
                         sublime.message_dialog(dialog_message)
 
-        InstallEvent.install_syntax(file_name, syntax_name)
+        self.install_syntax(file_name, syntax_name)
 
     def install_all_icons_syntaxes(self):
-        InstallEvent.install_syntaxes()
+        self.install_syntaxes()
 
     def confirm_delete(self, message: str):
         return sublime.ok_cancel_dialog(message)
+
+
+# class Syntaxes:
+#     """
+#     Syntaxes list, install and delete.
+#     """
+
+#     def __init__(
+#         self, syntaxes_path: str, icons_data_file: str, sublime_syntax_extension: str
+#     ):
+#         self.syntaxes_path = syntaxes_path
+#         self.icons_data_file = icons_data_file
+#         self.sublime_syntax_extension = sublime_syntax_extension
+
+#     def delete_icon_syntax(self, syntax_name: str):
+#         ZukanSyntax.delete_icon_syntax(syntax_name)
+
+#     def delete_all_icons_syntaxes(self):
+#         ZukanSyntax.delete_icons_syntaxes()
+
+#     def get_installed_syntaxes(self):
+#         installed_syntaxes_list = sorted(
+#             ZukanSyntax.list_created_icons_syntaxes(), key=lambda x: x.upper()
+#         )
+#         return sorted(installed_syntaxes_list)
+
+#     def get_not_installed_syntaxes(self):
+#         list_syntaxes_not_installed = []
+#         zukan_icons = read_pickle_data(self.icons_data_file)
+
+#         # 'create_custom_icon' setting
+#         custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
+#         new_list = zukan_icons + custom_list
+
+#         for s in new_list:
+#             if s.get('syntax') is not None:
+#                 for k in s['syntax']:
+#                     if k not in compare_scopes():
+#                         # 'change_file_extension' setting
+#                         k['file_extensions'] = edit_file_extension(
+#                             k['file_extensions'], k['scope']
+#                         )
+#                         # file_extensions list can be empty
+#                         if k['file_extensions']:
+#                             list_syntaxes_not_installed.append(
+#                                 k['name'] + self.sublime_syntax_extension
+#                             )
+#         list_syntaxes_not_installed = list(
+#             set(list_syntaxes_not_installed).difference(
+#                 ZukanSyntax.list_created_icons_syntaxes()
+#             )
+#         )
+
+#         return list_syntaxes_not_installed
+
+#     def install_icon_syntax(self, syntax_name: str):
+#         file_name, _ = os.path.splitext(syntax_name)
+#         # ZukanSyntax.create_icon_syntax(file_name)
+#         # Edit icon syntax contexts main if syntax not installed or ST3.
+#         # ZukanSyntax.edit_context_scope(syntax_name)
+#         # 'ignored_icon' setting
+
+#         ignored_icon = get_ignored_icon_settings()
+
+#         zukan_icons = read_pickle_data(self.icons_data_file)
+
+#         # 'create_custom_icon' setting
+#         custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
+#         new_list = zukan_icons + custom_list
+
+#         for d in new_list:
+#             if 'syntax' in d:
+#                 for s in d['syntax']:
+#                     if s['name'] == file_name and d['name'] in ignored_icon:
+#                         dialog_message = (
+#                             '{i} icon is disabled. Need to enable first.'.format(
+#                                 i=d['name']
+#                             )
+#                         )
+#                         sublime.message_dialog(dialog_message)
+
+#         InstallEvent.install_syntax(file_name, syntax_name)
+
+#     def install_all_icons_syntaxes(self):
+#         InstallEvent.install_syntaxes()
+
+#     def confirm_delete(self, message: str):
+#         return sublime.ok_cancel_dialog(message)
 
 
 class DeleteSyntaxCommand(sublime_plugin.TextCommand):
@@ -137,7 +232,7 @@ class DeleteSyntaxCommand(sublime_plugin.TextCommand):
                 s=os.path.join(self.syntaxes.syntaxes_path, syntax_name)
             )
             if self.syntaxes.confirm_delete(dialog_message):
-                self.syntaxes.delete_icon_syntax(syntax_name)
+                self.syntaxes.delete_single_icon_syntax(syntax_name)
 
     def input(self, args: dict):
         # print(args)

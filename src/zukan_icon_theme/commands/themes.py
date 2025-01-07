@@ -8,7 +8,7 @@ from ..helpers.load_save_settings import (
     is_zukan_restart_message,
 )
 from ..helpers.search_themes import search_resources_sublime_themes
-from ..lib.icons_themes import ZukanTheme
+from ..lib.icons_themes import ZukanThemeT2
 from ..utils.zukan_paths import (
     ZUKAN_ICONS_DATA_FILE,
     ZUKAN_PKG_ICONS_PATH,
@@ -17,23 +17,24 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-class Themes:
+class Themes(ZukanThemeT2):
     """
     Themes list, install and delete.
     """
 
-    def __init__(self, themes_path: str, icons_data_file: str):
-        self.themes_path = themes_path
+    def __init__(self, zukan_pkg_icons_path: str, icons_data_file: str):
+        super().__init__()
+        self.zukan_pkg_icons_path = zukan_pkg_icons_path
         self.icons_data_file = icons_data_file
 
-    def delete_icon_theme(self, theme_name: str):
-        ZukanTheme.delete_icon_theme(theme_name)
+    def delete_single_icon_theme(self, theme_name: str):
+        self.delete_icon_theme(theme_name)
 
     def delete_all_icons_themes(self):
-        ZukanTheme.delete_icons_themes()
+        self.delete_icons_themes()
 
     def get_installed_themes(self):
-        installed_themes_list = ZukanTheme.list_created_icons_themes()
+        installed_themes_list = self.list_created_icons_themes()
         return sorted(installed_themes_list)
 
     def get_not_installed_themes(self):
@@ -41,33 +42,86 @@ class Themes:
 
         for name in search_resources_sublime_themes():
             file_path, file_name = name.rsplit('/', 1)
-            if file_name not in ZukanTheme.list_created_icons_themes():
+            if file_name not in self.list_created_icons_themes():
                 list_themes_not_installed.append(name)
 
         return list_themes_not_installed
 
     def install_icon_theme(self, theme_st_path: str):
         # 'ignored_theme' setting
-        ignored_theme, _ = get_theme_settings()
+        # ignored_theme, _ = get_theme_settings()
 
         theme_name = os.path.basename(theme_st_path)
 
-        if theme_st_path in ignored_theme:
+        if theme_name in self.ignored_theme:
             dialog_message = '{t} is disabled. Need to enable first.'.format(
                 t=theme_name
             )
             sublime.message_dialog(dialog_message)
 
-        ZukanTheme.create_icon_theme(theme_st_path)
+        self.create_icon_theme(theme_st_path)
 
     def install_all_icons_themes(self):
-        ZukanTheme.create_icons_themes()
+        self.create_icons_themes()
 
     def zukan_restart_message(self):
         return is_zukan_restart_message()
 
     def confirm_delete(self, message: str):
         return sublime.ok_cancel_dialog(message)
+
+
+# class Themes:
+#     """
+#     Themes list, install and delete.
+#     """
+
+#     def __init__(self, themes_path: str, icons_data_file: str):
+#         self.themes_path = themes_path
+#         self.icons_data_file = icons_data_file
+
+#     def delete_icon_theme(self, theme_name: str):
+#         ZukanTheme.delete_icon_theme(theme_name)
+
+#     def delete_all_icons_themes(self):
+#         ZukanTheme.delete_icons_themes()
+
+#     def get_installed_themes(self):
+#         installed_themes_list = ZukanTheme.list_created_icons_themes()
+#         return sorted(installed_themes_list)
+
+#     def get_not_installed_themes(self):
+#         list_themes_not_installed = []
+
+#         for name in search_resources_sublime_themes():
+#             file_path, file_name = name.rsplit('/', 1)
+#             if file_name not in ZukanTheme.list_created_icons_themes():
+#                 list_themes_not_installed.append(name)
+
+#         return list_themes_not_installed
+
+#     def install_icon_theme(self, theme_st_path: str):
+#         # 'ignored_theme' setting
+#         ignored_theme, _ = get_theme_settings()
+
+#         theme_name = os.path.basename(theme_st_path)
+
+#         if theme_name in ignored_theme:
+#             dialog_message = '{t} is disabled. Need to enable first.'.format(
+#                 t=theme_name
+#             )
+#             sublime.message_dialog(dialog_message)
+
+#         ZukanTheme.create_icon_theme(theme_st_path)
+
+#     def install_all_icons_themes(self):
+#         ZukanTheme.create_icons_themes()
+
+#     def zukan_restart_message(self):
+#         return is_zukan_restart_message()
+
+#     def confirm_delete(self, message: str):
+#         return sublime.ok_cancel_dialog(message)
 
 
 class DeleteThemeCommand(sublime_plugin.TextCommand):
@@ -118,7 +172,7 @@ class DeleteThemeCommand(sublime_plugin.TextCommand):
                 )
 
             if self.themes.confirm_delete(dialog_message):
-                self.themes.delete_icon_theme(theme_name)
+                self.themes.delete_single_icon_theme(theme_name)
 
         # Comment because change 'add_on_change' to ViewListener
         # Check if selected theme was deleted

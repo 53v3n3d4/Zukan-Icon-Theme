@@ -148,7 +148,7 @@ def data(d: dict):
             )
 
 
-def create_custom_icon() -> list:
+def generate_custom_icon() -> list:
     create_custom_icon = get_create_custom_icon_settings()
     list_od = []
 

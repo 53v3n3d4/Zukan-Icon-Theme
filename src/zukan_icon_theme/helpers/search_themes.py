@@ -1,4 +1,5 @@
 import logging
+import os
 import re
 import sublime
 
@@ -166,8 +167,23 @@ def find_variables(
     # Background
     elif 'var(--background)' in var_value:
         # Get color scheme background and append
-        user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
-        bgcolor = [d.get('background') for d in user_ui_settings]
+        if os.path.exists(USER_UI_SETTINGS_FILE):
+            user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
+            bgcolor = [d.get('background') for d in user_ui_settings]
+
+        # After refactor, here raise error that file does not exist
+        # when enter file_type_icon conditions for InstallEvent
+        # 'new_install_manually' or 'new_install_pkg_control'.
+        #
+        # It is created, first time, in SchemeThemeViewListener.
+        # But have not created it yet here.
+        #
+        else:
+            # Use default dark icon
+            # Fixme: if this happen with Adaptive theme and Dark color-scheme
+            # dark icon will apply. And only correct if change to a light
+            # theme or color-scheme.
+            bgcolor = ['#FFFFFF']
 
         dark_light = rgb_dark_light(convert_to_rgb(bgcolor[0]))
 

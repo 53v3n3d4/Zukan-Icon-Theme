@@ -45,14 +45,13 @@ logger = logging.getLogger(__name__)
 def get_user_theme():
     """
     This function will act, when theme or zukan settings change, then
-    create or delete syntaxes and preferences for a icon theme.
+    create or delete syntaxes and preferences for an icon theme.
 
     It auto creates themes if setting 'auto_install_theme' is set to True.
     And do not create theme if theme name in 'ignored_theme' setting.
 
     It also used to select an icon version, dark or light, for a theme.
     """
-    logger.debug('Preferences.sublime-settings changed')
 
     auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
     ignored_theme, auto_install_theme = get_theme_settings()
@@ -110,6 +109,14 @@ def get_user_theme():
         theme_name in ZukanTheme.list_created_icons_themes()
         and theme_name not in ignored_theme
     ):
+        if not any(
+            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
+            for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+        ):
+            ts = threading.Thread(target=ZukanSyntax.build_icons_syntaxes)
+            ts.start()
+            ThreadProgress(ts, 'Building zukan files', 'Build done')
+
         # Build preferences if icons_preferences empty or if theme
         # in 'prefer_icon' option
         if (
@@ -134,14 +141,6 @@ def get_user_theme():
             )
         ):
             threading.Thread(target=ZukanPreference.build_icons_preferences).start()
-
-        if not any(
-            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
-            for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        ):
-            ts = threading.Thread(target=ZukanSyntax.build_icons_syntaxes)
-            ts.start()
-            ThreadProgress(ts, 'Building zukan files', 'Build done')
 
     # Deleting ignored theme in case it already exists before ignoring.
     if theme_name in ignored_theme and os.path.exists(icon_theme_file):
