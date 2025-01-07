@@ -199,32 +199,32 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
     def run(
         self,
         edit,
-        custom_icon_name: str,
-        custom_icon_file: str,
-        custom_icon_syntax: str,
-        custom_icon_scope: str,
-        custom_icon_extensions: str,
-        custom_icon_contexts: str,
+        create_custom_icon_name: str,
+        create_custom_icon_file: str,
+        create_custom_icon_syntax: str,
+        create_custom_icon_scope: str,
+        create_custom_icon_extensions: str,
+        create_custom_icon_contexts: str,
     ):
         create_custom_icon = get_create_custom_icon_settings()
 
         # Convert create_custom_icon_extensions to list
         list_custom_icon_extensions = self.create_delete_custom_icon.convert_to_list(
-            custom_icon_extensions
+            create_custom_icon_extensions
         )
 
-        custom_icon_data = {
-            'name': custom_icon_name,
-            'icon': custom_icon_file,
-            'syntax_name': custom_icon_syntax,
-            'scope': custom_icon_scope,
+        create_custom_icon_data = {
+            'name': create_custom_icon_name,
+            'icon': create_custom_icon_file,
+            'syntax_name': create_custom_icon_syntax,
+            'scope': create_custom_icon_scope,
             'file_extensions': list_custom_icon_extensions,
-            'contexts_scope': custom_icon_contexts,
+            'contexts_scope': create_custom_icon_contexts,
         }
 
-        self.create_delete_custom_icon.message_required_name(custom_icon_name)
+        self.create_delete_custom_icon.message_required_name(create_custom_icon_name)
 
-        if custom_icon_name:
+        if create_custom_icon_name:
             if create_custom_icon:
                 for d in create_custom_icon:
                     # print(d)
@@ -232,11 +232,11 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
                     # Name in create_custom_icon, update.
                     self.create_delete_custom_icon.custom_icon_name_exists(
                         d,
-                        custom_icon_data,
-                        custom_icon_file,
-                        custom_icon_syntax,
-                        custom_icon_scope,
-                        custom_icon_contexts,
+                        create_custom_icon_data,
+                        create_custom_icon_file,
+                        create_custom_icon_syntax,
+                        create_custom_icon_scope,
+                        create_custom_icon_contexts,
                         list_custom_icon_extensions,
                     )
 
@@ -244,20 +244,20 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
                     self.create_delete_custom_icon.custom_icon_name_not_exists(
                         d,
                         create_custom_icon,
-                        custom_icon_data,
-                        custom_icon_name,
-                        custom_icon_syntax,
-                        custom_icon_scope,
+                        create_custom_icon_data,
+                        create_custom_icon_name,
+                        create_custom_icon_syntax,
+                        create_custom_icon_scope,
                         list_custom_icon_extensions,
                     )
 
             # Check if PNG exist
-            self.create_delete_custom_icon.png_exists(custom_icon_file)
+            self.create_delete_custom_icon.png_exists(create_custom_icon_file)
 
             # create_custom_icon empty
             if not create_custom_icon:
                 logger.debug('create_custom_icon is empty')
-                create_custom_icon.append(custom_icon_data)
+                create_custom_icon.append(create_custom_icon_data)
 
             # Remove empty keys.
             complete_list_filtered = self.create_delete_custom_icon.remove_empty_keys(

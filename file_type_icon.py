@@ -25,7 +25,7 @@ from .src.zukan_icon_theme.commands.change_icon import (  # noqa: E402
 from .src.zukan_icon_theme.commands.clean_comments import (  # noqa: E402
     CleanCommentsCommand,  # noqa: F401
 )
-from .src.zukan_icon_theme.commands.commands_settings import (  # noqa: E402
+from .src.zukan_icon_theme.commands.create_custom_icon import (  # noqa: E402
     CreateCustomIconCommand,  # noqa: F401
     DeleteCustomIconCommand,  # noqa: F401
 )
