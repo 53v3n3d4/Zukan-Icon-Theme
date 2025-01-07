@@ -17,8 +17,6 @@ class CleanComments:
     of dicts.
     """
 
-    # def __init__(self, file_path: str):
-    #     self.file_path = file_path
     def __init__(self):
         self.file_path = ZUKAN_USER_SUBLIME_SETTINGS
 
@@ -78,12 +76,3 @@ class CleanCommentsCommand(sublime_plugin.TextCommand, CleanComments):
 
     def run(self, edit):
         self.delete_comments.clean_comments()
-
-    # def __init__(self, file_path: str):
-    #     super().__init__(file_path)
-    #     self.file_path = ZUKAN_USER_SUBLIME_SETTINGS
-
-    # def run(self, edit):
-    #     # cleaner = CleanComments(ZUKAN_USER_SUBLIME_SETTINGS)
-    #     # cleaner.clean_comments()
-    #     self.clean_comments()

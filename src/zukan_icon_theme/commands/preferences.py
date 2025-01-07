@@ -4,9 +4,8 @@ import sublime
 import sublime_plugin
 
 from ..helpers.custom_icon import generate_custom_icon
-# from ..helpers.load_save_settings import get_ignored_icon_settings
 from ..helpers.read_write_data import read_pickle_data
-from ..lib.icons_preferences import ZukanPreferenceP2
+from ..lib.icons_preferences import ZukanPreference
 from ..utils.file_extensions import (
     TMPREFERENCES_EXTENSION,
 )
@@ -18,7 +17,7 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-class Preferences(ZukanPreferenceP2):
+class Preferences(ZukanPreference):
     """
     Preferences list, install and delete.
     """
@@ -108,95 +107,6 @@ class Preferences(ZukanPreferenceP2):
 
     def confirm_delete(self, message: str):
         return sublime.ok_cancel_dialog(message)
-
-
-# class Preferences:
-#     """
-#     Preferences list, install and delete.
-#     """
-
-#     def __init__(
-#         self, preferences_path: str, icons_data_file: str, tmpreferences_extension: str
-#     ):
-#         self.preferences_path = preferences_path
-#         self.icons_data_file = icons_data_file
-#         self.tmpreferences_extension = tmpreferences_extension
-
-#     def delete_icon_preference(self, preference_name: str):
-#         ZukanPreference.delete_icons_preference(preference_name)
-
-#     def delete_all_icons_preferences(self):
-#         ZukanPreference.delete_icons_preferences()
-
-#     def get_installed_preferences(self):
-#         installed_preferences_list = ZukanPreference.list_created_icons_preferences()
-#         return sorted(installed_preferences_list)
-
-#     def get_not_installed_preferences(self):
-#         list_preferences_not_installed = []
-#         zukan_icons = read_pickle_data(self.icons_data_file)
-
-#         # 'create_custom_icon' setting
-#         custom_list = [p for p in generate_custom_icon() if 'preferences' in p]
-#         new_list = zukan_icons + custom_list
-
-#         for p in new_list:
-#             if p['preferences'].get('scope') is not None:
-#                 # Default icon
-#                 icon_name = p['preferences']['settings']['icon']
-#                 if icon_name.endswith('-dark'):
-#                     icon_name = icon_name[:-5]
-#                 if icon_name.endswith('-light'):
-#                     icon_name = icon_name[:-6]
-
-#                 list_preferences_not_installed.append(
-#                     icon_name + self.tmpreferences_extension
-#                 )
-#         list_preferences_not_installed = list(
-#             set(list_preferences_not_installed).difference(
-#                 ZukanPreference.list_created_icons_preferences()
-#             )
-#         )
-
-#         return list_preferences_not_installed
-
-#     def install_icon_preference(self, preference_name: str):
-#         file_name, _ = os.path.splitext(preference_name)
-
-#         # 'ignored_icon' setting
-#         ignored_icon = get_ignored_icon_settings()
-
-#         zukan_icons = read_pickle_data(self.icons_data_file)
-
-#         # 'create_custom_icon' setting
-#         custom_list = [p for p in generate_custom_icon() if 'preferences' in p]
-#         new_list = zukan_icons + custom_list
-
-#         for p in new_list:
-#             if (
-#                 p['preferences']['settings']['icon'] == file_name
-#                 and p['name'] in ignored_icon
-#             ):
-#                 dialog_message = '{i} icon is disabled. Need to enable first.'.format(
-#                     i=p['name']
-#                 )
-#                 sublime.message_dialog(dialog_message)
-
-#             # Default icon
-#             # Need to add '-dark' or 'light' that was removed to mount list
-#             if p['preferences']['settings']['icon'][:-5] == file_name:
-#                 file_name = p['preferences']['settings']['icon']
-
-#             if p['preferences']['settings']['icon'][:-6] == file_name:
-#                 file_name = p['preferences']['settings']['icon']
-
-#         ZukanPreference.build_icon_preference(file_name, preference_name)
-
-#     def install_all_icons_preferences(self):
-#         ZukanPreference.build_icons_preferences()
-
-#     def confirm_delete(self, message: str):
-#         return sublime.ok_cancel_dialog(message)
 
 
 class DeletePreferenceCommand(sublime_plugin.TextCommand):

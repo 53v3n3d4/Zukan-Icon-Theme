@@ -7,7 +7,6 @@ import threading
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
-from ..helpers.delete_unused import delete_unused_icon_theme
 from ..helpers.load_save_settings import (
     get_prefer_icon_settings,
     get_settings,
@@ -42,112 +41,123 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-def get_user_theme():
-    """
-    This function will act, when theme or zukan settings change, then
-    create or delete syntaxes and preferences for an icon theme.
+class SchemeTheme:
+    def __init__(self):
+        self.zukan_preference = ZukanPreference()
+        self.zukan_syntax = ZukanSyntax()
+        self.zukan_theme = ZukanTheme()
 
-    It auto creates themes if setting 'auto_install_theme' is set to True.
-    And do not create theme if theme name in 'ignored_theme' setting.
+    def get_user_theme(self):
+        """
+        This function will act, when theme or zukan settings change, then
+        create or delete syntaxes and preferences for an icon theme.
 
-    It also used to select an icon version, dark or light, for a theme.
-    """
+        It auto creates themes if setting 'auto_install_theme' is set to True.
+        And do not create theme if theme name in 'ignored_theme' setting.
 
-    auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
-    ignored_theme, auto_install_theme = get_theme_settings()
+        It also used to select an icon version, dark or light, for a theme.
+        """
 
-    color_scheme_name = get_settings(USER_SETTINGS, 'color_scheme')
-    user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
-    zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
+        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
+        ignored_theme, auto_install_theme = get_theme_settings()
 
-    theme_name = get_theme_name()
-    icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
+        color_scheme_name = get_settings(USER_SETTINGS, 'color_scheme')
+        user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
+        zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
-    if not isinstance(ignored_theme, list):
-        logger.warning('ignored_theme option malformed, need to be a string list')
+        theme_name = get_theme_name()
+        icon_theme_file = os.path.join(ZUKAN_PKG_ICONS_PATH, theme_name)
 
-    if (
-        theme_name not in ZukanTheme.list_created_icons_themes()
-        and auto_install_theme is False
-    ) or theme_name in ignored_theme:
-        # Delete preferences to avoid error unable to decode 'icon_file_type'
-        # Example of extensions that this errors show: HAML, LICENSE, README,
-        # Makefile
-        if any(
-            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
-            for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        ):
-            ZukanSyntax.delete_icons_syntaxes()
-        if any(
-            preferences.endswith(TMPREFERENCES_EXTENSION)
-            for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-        ):
-            ZukanPreference.delete_icons_preferences()
+        if not isinstance(ignored_theme, list):
+            logger.warning('ignored_theme option malformed, need to be a string list')
 
-    # 'auto_install_theme' setting
-    # Creating icon theme if does not exist.
-    if (
-        auto_install_theme is True
-        and not os.path.exists(icon_theme_file)
-        and package_theme_exists(theme_name)
-        and theme_name not in ignored_theme
-    ):
-        theme_path = sublime.find_resources(theme_name)
-        ZukanTheme.create_icon_theme(theme_path[0])
-
-        if zukan_restart_message is True:
-            dialog_message = (
-                'You may have to restart ST, if all icons do not load in '
-                'current theme.'
-            )
-            sublime.message_dialog(dialog_message)
-
-    # Delete unused icon theme files
-    delete_unused_icon_theme()
-
-    if (
-        theme_name in ZukanTheme.list_created_icons_themes()
-        and theme_name not in ignored_theme
-    ):
-        if not any(
-            syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
-            for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        ):
-            ts = threading.Thread(target=ZukanSyntax.build_icons_syntaxes)
-            ts.start()
-            ThreadProgress(ts, 'Building zukan files', 'Build done')
-
-        # Build preferences if icons_preferences empty or if theme
-        # in 'prefer_icon' option
         if (
-            not any(
+            theme_name not in self.zukan_theme.list_created_icons_themes()
+            and auto_install_theme is False
+        ) or theme_name in ignored_theme:
+            # Delete preferences to avoid error unable to decode 'icon_file_type'
+            # Example of extensions that this errors show: HAML, LICENSE, README,
+            # Makefile
+            if any(
+                syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
+                for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+            ):
+                self.zukan_syntax.delete_icons_syntaxes()
+            if any(
                 preferences.endswith(TMPREFERENCES_EXTENSION)
                 for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-            )
-            or (
-                theme_name in prefer_icon
-                and not any(d['theme'] == theme_name for d in user_ui_settings)
-            )
-            or (
-                # 'auto_prefer_icon' setting
-                auto_prefer_icon is True
-                and theme_name not in prefer_icon
-                and (
-                    not any(d['theme'] == theme_name for d in user_ui_settings)
-                    or not any(
-                        d['color_scheme'] == color_scheme_name for d in user_ui_settings
+            ):
+                self.zukan_preference.delete_icons_preferences()
+
+        # 'auto_install_theme' setting
+        # Creating icon theme if does not exist.
+        if (
+            auto_install_theme is True
+            and not os.path.exists(icon_theme_file)
+            and package_theme_exists(theme_name)
+            and theme_name not in ignored_theme
+        ):
+            theme_path = sublime.find_resources(theme_name)
+            self.zukan_theme.create_icon_theme(theme_path[0])
+
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'You may have to restart ST, if all icons do not load in '
+                    'current theme.'
+                )
+                sublime.message_dialog(dialog_message)
+
+        # Delete unused icon theme files
+        self.zukan_theme.delete_unused_icon_theme()
+
+        if (
+            theme_name in self.zukan_theme.list_created_icons_themes()
+            and theme_name not in ignored_theme
+        ):
+            if not any(
+                syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
+                for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+            ):
+                ts = threading.Thread(target=self.zukan_syntax.build_icons_syntaxes)
+                ts.start()
+                ThreadProgress(ts, 'Building zukan files', 'Build done')
+
+            # Build preferences if icons_preferences empty or if theme
+            # in 'prefer_icon' option
+            if (
+                not any(
+                    preferences.endswith(TMPREFERENCES_EXTENSION)
+                    for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
+                )
+                or (
+                    theme_name in prefer_icon
+                    and not any(d['theme'] == theme_name for d in user_ui_settings)
+                )
+                or (
+                    # 'auto_prefer_icon' setting
+                    auto_prefer_icon is True
+                    and theme_name not in prefer_icon
+                    and (
+                        not any(d['theme'] == theme_name for d in user_ui_settings)
+                        or not any(
+                            d['color_scheme'] == color_scheme_name
+                            for d in user_ui_settings
+                        )
                     )
                 )
-            )
-        ):
-            threading.Thread(target=ZukanPreference.build_icons_preferences).start()
+            ):
+                threading.Thread(
+                    target=self.zukan_preference.build_icons_preferences
+                ).start()
 
-    # Deleting ignored theme in case it already exists before ignoring.
-    if theme_name in ignored_theme and os.path.exists(icon_theme_file):
-        if zukan_restart_message is True:
-            dialog_message = 'You may have to restart ST, for all icons do not show.'
-            sublime.message_dialog(dialog_message)
-        ZukanTheme.delete_icon_theme(theme_name)
+        # Deleting ignored theme in case it already exists before ignoring.
+        if theme_name in ignored_theme and os.path.exists(icon_theme_file):
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'You may have to restart ST, for all icons do not show.'
+                )
+                sublime.message_dialog(dialog_message)
+            self.zukan_theme.delete_icon_theme(theme_name)
 
 
 class SchemeThemeListener(sublime_plugin.ViewEventListener):
@@ -253,7 +263,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                         )
                     )
                 )
-                or theme_name not in ZukanTheme.list_created_icons_themes()
+                or theme_name not in ZukanTheme().list_created_icons_themes()
                 or theme_name in ignored_theme
                 or (auto_install_theme is True and not os.path.exists(icon_theme_file))
                 # Move from ignored theme, need to create files.
@@ -266,7 +276,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
                     for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
                 )
             ):
-                get_user_theme()
+                SchemeTheme().get_user_theme()
 
                 logger.debug('SchemeTheme ViewListener on_activated_async')
 

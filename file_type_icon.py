@@ -56,11 +56,11 @@ from .src.zukan_icon_theme.commands.themes import (  # noqa: E402
     DeleteThemeCommand,  # noqa: F401
     InstallThemeCommand,  # noqa: F401
 )
-from .src.zukan_icon_theme.events.install import InstallEventE2  # noqa: E402
-from .src.zukan_icon_theme.events.settings import SettingsEventE2  # noqa: E402
+from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
+from .src.zukan_icon_theme.events.settings import SettingsEvent, ZukanIconFiles  # noqa: E402
 from .src.zukan_icon_theme.helpers.load_save_settings import is_zukan_listener_enabled  # noqa: E402
 from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
-from .src.zukan_icon_theme.lib.move_folders import MoveFolderF2  # noqa: E402
+from .src.zukan_icon_theme.lib.move_folders import MoveFolder  # noqa: E402
 from .src.zukan_icon_theme.utils.zukan_paths import (  # noqa: E402
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
@@ -83,7 +83,7 @@ if zukan_listener_enabled:
 
 def plugin_loaded():
     if zukan_listener_enabled:
-        install_event = InstallEventE2()
+        install_event = InstallEvent()
 
         # New install from repo clone, or when preferences or syntaxes folders do
         # not exist.
@@ -101,23 +101,24 @@ def plugin_loaded():
         ):
             install_event.new_install_pkg_control()
 
-        settings_event = SettingsEventE2()
+        zukan_icon_files = ZukanIconFiles()
+
         # Package auto upgraded setting.
-        settings_event.upgrade_zukan_files()
+        zukan_icon_files.upgrade_zukan_files()
 
         # Check if zukan preferences changed.
-        settings_event.zukan_preferences_changed()
+        SettingsEvent.zukan_preferences_changed()
 
         # Print to console current Zukan settings if 'log_level' DEBUG
-        settings_event.get_user_zukan_preferences()
+        SettingsEvent.get_user_zukan_preferences()
 
         # Build icons files if changed in Zukan settings
-        settings_event.rebuild_icons_files()
+        zukan_icon_files.rebuild_icons_files()
 
 
 def plugin_unloaded():
-    MoveFolderF2().remove_created_folder(ZUKAN_PKG_PATH)
+    MoveFolder().remove_created_folder(ZUKAN_PKG_PATH)
 
     if zukan_listener_enabled:
         # Clear 'add_on_change'
-        SettingsEventE2().zukan_preferences_clear()
+        SettingsEvent.zukan_preferences_clear()

@@ -3,28 +3,23 @@ import logging
 import os
 import sublime_plugin
 
-# from ..helpers.custom_icon import generate_custom_icon
 from ..helpers.load_save_settings import (
     get_ignored_icon_settings,
     is_zukan_listener_enabled,
     set_save_settings,
 )
-# from ..helpers.read_write_data import read_pickle_data
-from ..lib.icons_syntaxes import ZukanSyntaxS2
+from ..lib.icons_syntaxes import ZukanSyntax
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
 from ..utils.icons_tags import (
     ICONS_TAGS,
 )
-# from ..utils.zukan_paths import (
-#     ZUKAN_ICONS_DATA_FILE,
-# )
 
 logger = logging.getLogger(__name__)
 
 
-class DisableEnableIcon(ZukanSyntaxS2):
+class DisableEnableIcon(ZukanSyntax):
     def __init__(self):
         super().__init__()
 
@@ -193,147 +188,3 @@ class EnableIconInputHandler(sublime_plugin.ListInputHandler):
             return new_list
         else:
             raise TypeError(logger.info('no icons ignored, list is empty.'))
-
-
-# class DisableIcon:
-#     def __init__(self, icon_name: str):
-#         self.icon_name = icon_name
-#         self.ignored_icon = get_ignored_icon_settings()
-
-#     def disable(self):
-#         if self.icon_name not in self.ignored_icon:
-#             self._add_to_ignored_icon()
-#             self._save_ignored_icons()
-#             self._tag_icon_message()
-
-#     def _add_to_ignored_icon(self):
-#         self.ignored_icon.append(self.icon_name)
-
-#     def _save_ignored_icons(self):
-#         sort_list = sorted(self.ignored_icon)
-
-#         set_save_settings(ZUKAN_SETTINGS, 'ignored_icon', sort_list)
-
-#     def _tag_icon_message(self) -> bool:
-#         if self.icon_name in ICONS_TAGS:
-#             logger.info('icons with %s tag ignored', self.icon_name)
-#         else:
-#             logger.info('%s icon ignored', self.icon_name)
-
-
-# class DisableIconCommand(sublime_plugin.TextCommand):
-#     """
-#     Sublime command to disable an icon from a list of Zukan icons.
-#     """
-
-#     def run(self, edit, icon_name: str):
-#         disable_icon = DisableIcon(icon_name)
-#         disable_icon.disable()
-
-#     def input(self, args: dict):
-#         return DisableIconInputHandler()
-
-
-# class DisableIconInputHandler(sublime_plugin.ListInputHandler):
-#     """
-#     List of Zukan icons, and return icon_name to DisableIcon.
-#     """
-
-#     def name(self) -> str:
-#         return 'icon_name'
-
-#     def placeholder(self) -> str:
-#         return 'List of icons'
-
-#     def list_items(self) -> list:
-#         zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-#         ignored_icon = get_ignored_icon_settings()
-
-#         ignored_icon_list = []
-
-#         # 'create_custom_icon' setting
-#         custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
-#         new_list = zukan_icons + custom_list
-
-#         for i in new_list:
-#             if i.get('name') is not None and i.get('name') not in ignored_icon:
-#                 ignored_icon_list.append(i['name'])
-#         if ignored_icon_list:
-#             icon_list_with_tag = ICONS_TAGS + ignored_icon_list
-#             return sorted(icon_list_with_tag, key=lambda x: x.upper())
-
-#         else:
-#             raise TypeError(
-#                 logger.info('all icons are already disabled, list is empty.')
-#             )
-
-
-# class EnableIcon:
-#     def __init__(self, icon_name: str):
-#         self.icon_name = icon_name
-#         self.ignored_icon = get_ignored_icon_settings()
-#         self.zukan_listener_enabled = is_zukan_listener_enabled()
-
-#     def enable(self):
-#         if self.ignored_icon:
-#             if self.icon_name == 'All':
-#                 self._enable_all_icons()
-#             else:
-#                 self._enable_icon()
-
-#             self._save_ignored_icons()
-
-#     def _enable_icon(self):
-#         # Remove icon_name
-#         self.ignored_icon = [i for i in self.ignored_icon if not i == self.icon_name]
-
-#         if self.zukan_listener_enabled:
-#             logger.info('enabling %s icon', self.icon_name)
-
-#     def _enable_all_icons(self):
-#         self.ignored_icon = []
-
-#         if self.zukan_listener_enabled:
-#             logger.info('enabling all icons')
-
-#     def _save_ignored_icons(self):
-#         sort_list = sorted(self.ignored_icon)
-#         set_save_settings(ZUKAN_SETTINGS, 'ignored_icon', sort_list)
-
-
-# class EnableIconCommand(sublime_plugin.TextCommand):
-#     """
-#     Sublime command to enable an icon from a list of ignored icons.
-#     """
-
-#     # def __init__(self, view):
-#     #     super().__init__(view)
-
-#     def run(self, edit, icon_name: str):
-#         enable_icon = EnableIcon(icon_name)
-#         enable_icon.enable()
-
-#     def input(self, args: dict):
-#         return EnableIconInputHandler()
-
-
-# class EnableIconInputHandler(sublime_plugin.ListInputHandler):
-#     """
-#     List of ignored icons, and return icon_name to EnableIcon.
-#     """
-
-#     def name(self) -> str:
-#         return 'icon_name'
-
-#     def placeholder(self) -> str:
-#         return 'List of ignored icons'
-
-#     def list_items(self) -> list:
-#         ignored_icon = get_ignored_icon_settings()
-
-#         if ignored_icon:
-#             all_option = ['All']
-#             new_list = all_option + sorted(ignored_icon, key=lambda x: x.upper())
-#             return new_list
-#         else:
-#             raise TypeError(logger.info('no icons ignored, list is empty.'))
