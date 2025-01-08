@@ -125,12 +125,8 @@ class ZukanPreference:
                             p['preferences']['settings']['icon'],
                         )
 
-    def _apply_auto_prefer_icon(self, p, prefer_icon_version):
+    def _apply_auto_prefer_icon(self, p, prefer_icon_version, bgcolor):
         if self.theme_name not in self.prefer_icon and self.auto_prefer_icon:
-            # If instantiated at init, gets the previous value, and build
-            # icon dark or light inverted.
-            bgcolor = get_sidebar_bgcolor(self.theme_name)
-
             # Default dark icon
             if not bgcolor:
                 prefer_icon_version = p['preferences']['settings']['icon']
@@ -213,6 +209,7 @@ class ZukanPreference:
         p: dict,
         icon_name: str,
         filename: str,
+        bgcolor,
     ):
         """
         Handle the zukan settings to choose icon option, version or ignore an icon.
@@ -233,7 +230,7 @@ class ZukanPreference:
         self._apply_prefer_icon(p, prefer_icon_version)
 
         # 'auto_prefer_icon' setting
-        self._apply_auto_prefer_icon(p, prefer_icon_version)
+        self._apply_auto_prefer_icon(p, prefer_icon_version, bgcolor)
 
         # Check if PNG exist
         self._png_exists(p)
@@ -275,8 +272,9 @@ class ZukanPreference:
         preference_name (str) -- icon or icon option.
         """
         list_all_icons_preferences = self.get_list_icons_preferences()
-
         # print(list_all_icons_preferences)
+
+        bgcolor = get_sidebar_bgcolor(self.theme_name)
 
         for p in list_all_icons_preferences:
             if (
@@ -304,6 +302,7 @@ class ZukanPreference:
                     p,
                     icon_name,
                     filename,
+                    bgcolor,
                 )
 
             elif (
@@ -360,6 +359,8 @@ class ZukanPreference:
         """
         list_all_icons_preferences = self.get_list_icons_preferences()
 
+        bgcolor = get_sidebar_bgcolor(self.theme_name)
+
         for p in list_all_icons_preferences:
             if p['preferences'].get('scope') is not None and not (
                 p['name'] in self.ignored_icon
@@ -382,6 +383,7 @@ class ZukanPreference:
                     p,
                     icon_name,
                     filename,
+                    bgcolor,
                 )
 
             elif (
