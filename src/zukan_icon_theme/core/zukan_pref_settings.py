@@ -2,8 +2,9 @@ import logging
 import os
 
 from .install import InstallEvent
-from ..commands.clean_comments import CleanComments
 from ..lib.icons_preferences import ZukanPreference
+from ..lib.icons_syntaxes import ZukanSyntax
+from ..helpers.clean_comments import CleanComments
 from ..helpers.load_save_settings import (
     get_create_custom_icon_settings,
     get_change_icon_settings,
@@ -45,12 +46,14 @@ class ZukanIconFiles:
         clean_comments=None,
         install_event=None,
         zukan_preference=None,
+        zukan_syntax=None,
     ):
         self.clean_comments = clean_comments if clean_comments else CleanComments()
         self.install_event = install_event if install_event else InstallEvent()
         self.zukan_preference = (
             zukan_preference if zukan_preference else ZukanPreference()
         )
+        self.zukan_syntax = zukan_syntax if zukan_syntax else ZukanSyntax()
 
         if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
             self.data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
@@ -128,7 +131,7 @@ class ZukanIconFiles:
                     logger.info(
                         '"change_icon_file_extension" changed, rebuilding files...'
                     )
-                    self.install_event.install_syntaxes()
+                    self.zukan_syntax.install_syntaxes()
 
                 # Check if create_custom_icon changed
                 if any(
@@ -225,35 +228,66 @@ class ZukanIconFiles:
 
 class SettingsEvent:
     @staticmethod
-    def get_user_zukan_preferences():
+    def get_user_zukan_preferences() -> str:
+        folder_size = bytes_to_readable_size(get_folder_size(ZUKAN_PKG_PATH))
+        zip_size = bytes_to_readable_size(get_file_size(ZUKAN_INSTALLED_PKG_PATH))
+        ruamel_size = bytes_to_readable_size(get_folder_size(LIB_RUAMEL_YAML_PATH))
+
+        zukan_opts_list = []
+        for s in ZUKAN_SETTINGS_OPTIONS:
+            setting_option = get_settings(ZUKAN_SETTINGS, s)
+            line = '\t{s}: {v}\n'.format(s=s, v=setting_option)
+            zukan_opts_list.append(line)
+
+        user_pref_list = []
+        for s in USER_SETTINGS_OPTIONS:
+            setting_option = get_settings(USER_SETTINGS, s)
+            line = '\t{s}: {v}\n'.format(s=s, v=setting_option)
+            user_pref_list.append(line)
+
+        # lines
+        header_zukan = '==== Zukan Icon Theme settings ===='
+        zukan_pkg_folder = 'Zukan folder size: {f}'.format(f=folder_size)
+        zukan_installed_zip_file = 'sublime-package size: {z}'.format(z=zip_size)
+        dependency_ruamel = 'Ruamel size: {r}'.format(r=ruamel_size)
+        zukan_opts_to_str = ''.join(zukan_opts_list)
+        header_st = '==== User ST settings =============='
+        user_pref_to_str = ''.join(user_pref_list)
+        end_line = '------------------------------------'
+
+        new_line = '\n'
+        tab_indent = '\t'
+
+        data = (
+            new_line + tab_indent
+            + header_zukan
+            + new_line + tab_indent
+            + zukan_pkg_folder
+            + new_line + tab_indent
+            + zukan_installed_zip_file
+            + new_line + tab_indent
+            + dependency_ruamel
+            + new_line + new_line
+            + zukan_opts_to_str
+            + new_line + tab_indent
+            + header_st
+            + new_line
+            + user_pref_to_str
+            + new_line + tab_indent
+            + end_line
+        )
+
+        return data
+
+    @staticmethod
+    def output_to_console_zukan_pref_settings():
         """
         Print to console, current Zukan settings options.
         """
         log_level = get_settings(ZUKAN_SETTINGS, 'log_level')
 
         if log_level == 'DEBUG':
-            print('\n==== Zukan Icon Theme settings ====')
-
-            folder_size = bytes_to_readable_size(get_folder_size(ZUKAN_PKG_PATH))
-            print('Zukan folder size: {f}'.format(f=folder_size))
-
-            zip_size = bytes_to_readable_size(get_file_size(ZUKAN_INSTALLED_PKG_PATH))
-            print('sublime-package size: {z}'.format(z=zip_size))
-
-            ruamel_size = bytes_to_readable_size(get_folder_size(LIB_RUAMEL_YAML_PATH))
-            print('Ruamel size: {r}'.format(r=ruamel_size))
-
-            for s in ZUKAN_SETTINGS_OPTIONS:
-                setting_option = get_settings(ZUKAN_SETTINGS, s)
-                print('{s}: {v}'.format(s=s, v=setting_option))
-
-            print('\n==== User ST settings ==============')
-
-            for s in USER_SETTINGS_OPTIONS:
-                setting_option = get_settings(USER_SETTINGS, s)
-                print('{s}: {v}'.format(s=s, v=setting_option))
-
-            print('------------------------------------')
+            print(SettingsEvent.get_user_zukan_preferences())
 
     def zukan_options_settings():
         """

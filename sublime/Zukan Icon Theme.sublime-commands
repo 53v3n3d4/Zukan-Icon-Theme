@@ -12,7 +12,6 @@
         "caption": "Zukan Icon Theme: Change File Extension",
         "command": "change_file_extension"
     },
-    { "caption": "Zukan Icon Theme: Clean Comments", "command": "clean_comments"},
     { "caption": "Zukan Icon Theme: Create Custom Icon", "command": "create_custom_icon"},
     { "caption": "Zukan Icon Theme: Delete Custom Icon", "command": "delete_custom_icon"},
     { "caption": "Zukan Icon Theme: Disable Icon", "command": "disable_icon"},
@@ -25,5 +24,8 @@
         "caption": "Zukan Icon Theme: Reset File Extension",
         "command": "reset_file_extension"
     },
-    { "caption": "Zukan Icon Theme: Select Prefer Icon", "command": "select_prefer_icon"}
+    { "caption": "Zukan Icon Theme: Select Prefer Icon", "command": "select_prefer_icon"},
+    // Helpers
+    { "caption": "Zukan Icon Theme: Clean Comments", "command": "clean_comments"},
+    { "caption": "Zukan Icon Theme: Zukan Reporter", "command": "zukan_reporter"}
 ]

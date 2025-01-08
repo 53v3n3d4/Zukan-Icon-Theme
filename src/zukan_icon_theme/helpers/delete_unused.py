@@ -1,10 +1,10 @@
 import logging
 import os
 
-from ..lib.icons_themes import ZukanTheme
-from ..helpers.search_themes import (
-    search_resources_sublime_themes,
-)
+# from ..lib.icons_themes import ZukanTheme
+# from ..helpers.search_themes import (
+#     search_resources_sublime_themes,
+# )
 from ..utils.file_extensions import (
     PNG_EXTENSION,
 )
@@ -15,26 +15,26 @@ from ..utils.icons_suffix import (
 logger = logging.getLogger(__name__)
 
 
-def delete_unused_icon_theme():
-    """
-    Delete unused icon theme file.
+# def delete_unused_icon_theme():
+#     """
+#     Delete unused icon theme file.
 
-    When uninstall a theme package, it leaves an icon-theme file.
-    """
-    list_all_themes = search_resources_sublime_themes()
-    list_icon_themes = ZukanTheme.list_created_icons_themes()
+#     When uninstall a theme package, it leaves an icon-theme file.
+#     """
+#     list_all_themes = search_resources_sublime_themes()
+#     list_icon_themes = ZukanTheme.list_created_icons_themes()
 
-    list_themes = []
+#     list_themes = []
 
-    for t in list_all_themes:
-        n = os.path.basename(t)
-        list_themes.append(n)
+#     for t in list_all_themes:
+#         n = os.path.basename(t)
+#         list_themes.append(n)
 
-    list_unused_icon_themes = list(set(list_icon_themes) - set(list_themes))
+#     list_unused_icon_themes = list(set(list_icon_themes) - set(list_themes))
 
-    for o in list_unused_icon_themes:
-        logger.info('removing unused zukan icon theme, %s', o)
-        ZukanTheme.delete_icon_theme(o)
+#     for o in list_unused_icon_themes:
+#         logger.info('removing unused zukan icon theme, %s', o)
+#         ZukanTheme.delete_icon_theme(o)
 
 
 def delete_unused_icons(folder: str):

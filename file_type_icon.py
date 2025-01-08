@@ -13,60 +13,41 @@ for module_name in [
     del sys.modules[module_name]
 del prefix
 
-
-from .src.zukan_icon_theme.commands.change_file_extension import (  # noqa: E402
-    ChangeFileExtensionCommand,  # noqa: F401
-    ResetFileExtensionCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.change_icon import (  # noqa: E402
-    ChangeIconCommand,  # noqa: F401
-    ResetIconCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.clean_comments import (  # noqa: E402
-    CleanCommentsCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.create_custom_icon import (  # noqa: E402
-    CreateCustomIconCommand,  # noqa: F401
-    DeleteCustomIconCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.disable_icon import (  # noqa: E402
-    DisableIconCommand,  # noqa: F401
-    EnableIconCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.disable_theme import (  # noqa: E402
-    DisableThemeCommand,  # noqa: F401
-    EnableThemeCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.preferences import (  # noqa: E402
-    DeletePreferenceCommand,  # noqa: F401
-    InstallPreferenceCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.rebuild_files import (  # noqa: E402
-    RebuildFilesCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.select_prefer_icon import (  # noqa: E402
-    RemovePreferIconCommand,  # noqa: F401
-    SelectPreferIconCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.syntaxes import (  # noqa: E402
-    DeleteSyntaxCommand,  # noqa: F401
-    InstallSyntaxCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.commands.themes import (  # noqa: E402
-    DeleteThemeCommand,  # noqa: F401
-    InstallThemeCommand,  # noqa: F401
-)
-from .src.zukan_icon_theme.events.install import InstallEvent  # noqa: E402
-from .src.zukan_icon_theme.events.settings import SettingsEvent, ZukanIconFiles  # noqa: E402
+# fmt: off
+from .src.zukan_icon_theme.core.change_file_extension import ChangeFileExtensionCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.change_file_extension import ResetFileExtensionCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.change_icon import ChangeIconCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.change_icon import ResetIconCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.create_custom_icon import CreateCustomIconCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.create_custom_icon import DeleteCustomIconCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.disable_icon import DisableIconCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.disable_icon import EnableIconCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.disable_theme import DisableThemeCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.disable_theme import EnableThemeCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.install import InstallEvent  # noqa: E402
+from .src.zukan_icon_theme.core.preferences import DeletePreferenceCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.preferences import InstallPreferenceCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.rebuild_files import RebuildFilesCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.select_prefer_icon import RemovePreferIconCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.select_prefer_icon import SelectPreferIconCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.syntaxes import DeleteSyntaxCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.syntaxes import InstallSyntaxCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.themes import DeleteThemeCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.themes import InstallThemeCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.zukan_pref_settings import SettingsEvent  # noqa: E402
+from .src.zukan_icon_theme.core.zukan_pref_settings import ZukanIconFiles  # noqa: E402
+from .src.zukan_icon_theme.helpers.clean_comments import CleanCommentsCommand  # noqa: E402 F401
 from .src.zukan_icon_theme.helpers.load_save_settings import is_zukan_listener_enabled  # noqa: E402
 from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
-from .src.zukan_icon_theme.lib.move_folders import MoveFolder  # noqa: E402
+from .src.zukan_icon_theme.helpers.move_folders import MoveFolder  # noqa: E402
+from .src.zukan_icon_theme.helpers.zukan_reporter import ZukanReporterCommand  # noqa: E402 F401
 from .src.zukan_icon_theme.utils.zukan_paths import (  # noqa: E402
     ZUKAN_PKG_ICONS_PATH,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_PKG_PATH,
 )
+# fmt: on
 
 # https://www.sublimetext.com/docs/api_reference.html
 # python modules not present https://www.sublimetext.com/docs/api_environments.html#modules
@@ -76,9 +57,7 @@ logger = logging.getLogger(__name__)
 zukan_listener_enabled = is_zukan_listener_enabled()
 
 if zukan_listener_enabled:
-    from .src.zukan_icon_theme.events.listeners import (  # noqa: E402
-        SchemeThemeListener,  # noqa: F401
-    )
+    from .src.zukan_icon_theme.core.listeners import SchemeThemeListener  # noqa: F401
 
 
 def plugin_loaded():
@@ -110,7 +89,7 @@ def plugin_loaded():
         SettingsEvent.zukan_preferences_changed()
 
         # Print to console current Zukan settings if 'log_level' DEBUG
-        SettingsEvent.get_user_zukan_preferences()
+        SettingsEvent.output_to_console_zukan_pref_settings()
 
         # Build icons files if changed in Zukan settings
         zukan_icon_files.rebuild_icons_files()

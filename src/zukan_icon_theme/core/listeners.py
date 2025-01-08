@@ -149,6 +149,7 @@ class SchemeTheme:
                 threading.Thread(
                     target=self.zukan_preference.build_icons_preferences
                 ).start()
+                # self.zukan_preference.build_icons_preferences()
 
         # Deleting ignored theme in case it already exists before ignoring.
         if theme_name in ignored_theme and os.path.exists(icon_theme_file):

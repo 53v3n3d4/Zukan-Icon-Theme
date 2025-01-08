@@ -1,15 +1,8 @@
 import logging
-import os
 
 from ..helpers.load_save_settings import get_create_custom_icon_settings
 from ..helpers.remove_empty_dict import remove_empty_dict
 from ..helpers.search_zukan_data import list_data_names
-from ..utils.file_extensions import (
-    PNG_EXTENSION,
-)
-from ..utils.zukan_paths import (
-    ZUKAN_PKG_ICONS_PATH,
-)
 from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
@@ -154,11 +147,6 @@ def generate_custom_icon() -> list:
 
     if create_custom_icon:
         for c in create_custom_icon:
-            # Check if PNG exist
-            if 'icon' in c and not os.path.exists(
-                os.path.join(ZUKAN_PKG_ICONS_PATH, c['icon'] + PNG_EXTENSION)
-            ):
-                logger.warning('%s%s not found', c['icon'], PNG_EXTENSION)
             if 'name' in c and c['name'] not in list_data_names():
                 od = data(remove_empty_dict(c))
                 list_od.append(od)

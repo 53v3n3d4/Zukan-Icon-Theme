@@ -1,7 +1,7 @@
 import logging
 import sublime_plugin
 
-from ..events.install import InstallEvent
+from .install import InstallEvent
 from ..lib.icons_themes import ZukanTheme
 
 logger = logging.getLogger(__name__)

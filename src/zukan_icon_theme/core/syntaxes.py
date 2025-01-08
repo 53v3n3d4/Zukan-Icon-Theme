@@ -3,7 +3,6 @@ import os
 import sublime
 import sublime_plugin
 
-from ..events.install import InstallEvent
 from ..helpers.edit_file_extension import edit_file_extension
 from ..helpers.search_syntaxes import compare_scopes
 from ..lib.icons_syntaxes import ZukanSyntax
@@ -18,7 +17,7 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-class Syntaxes(InstallEvent, ZukanSyntax):
+class Syntaxes(ZukanSyntax):
     """
     Syntaxes list, install and delete.
     """
@@ -26,7 +25,6 @@ class Syntaxes(InstallEvent, ZukanSyntax):
     def __init__(
         self, syntaxes_path: str, icons_data_file: str, sublime_syntax_extension: str
     ):
-        InstallEvent.__init__(self)
         ZukanSyntax.__init__(self)
 
         self.syntaxes_path = syntaxes_path

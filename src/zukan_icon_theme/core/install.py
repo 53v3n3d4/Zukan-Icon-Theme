@@ -4,13 +4,13 @@ import threading
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..lib.icons_themes import ZukanTheme
-from ..lib.move_folders import MoveFolder
 from ..helpers.delete_unused import delete_unused_icons
 from ..helpers.load_save_settings import (
     get_theme_settings,
     get_upgraded_version_settings,
     is_zukan_restart_message,
 )
+from ..helpers.move_folders import MoveFolder
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
@@ -35,28 +35,6 @@ class InstallEvent:
         _, self.auto_install_theme = get_theme_settings()
         self.pkg_version, _ = get_upgraded_version_settings()
         self.zukan_restart_message = is_zukan_restart_message()
-
-    def install_syntax(self, file_name: str, syntax_name: str):
-        """
-        Using Thread to install syntax to avoid freezing ST to build syntax.
-
-        Parameters:
-        file_name (str) -- syntax file name, without extension.
-        syntax_name (str) -- syntax name, file name and extension.
-        """
-        ts = threading.Thread(
-            target=self.zukan_syntax.build_icon_syntax, args=(file_name, syntax_name)
-        )
-        ts.start()
-        ThreadProgress(ts, 'Building zukan syntaxes', 'Build done')
-
-    def install_syntaxes(self):
-        """
-        Using Thread to install syntax to avoid freezing ST to build syntaxes.
-        """
-        ts = threading.Thread(target=self.zukan_syntax.build_icons_syntaxes)
-        ts.start()
-        ThreadProgress(ts, 'Building zukan syntaxes', 'Build done')
 
     def install_batch(self):
         """

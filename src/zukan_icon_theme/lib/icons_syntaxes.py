@@ -3,6 +3,7 @@ import glob
 import logging
 import os
 import sublime
+import threading
 
 from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.custom_icon import generate_custom_icon
@@ -15,6 +16,7 @@ from ..helpers.read_write_data import (
     read_yaml_data,
 )
 from ..helpers.search_syntaxes import compare_scopes
+from ..helpers.thread_progress import ThreadProgress
 from ..utils.contexts_scopes import (
     CONTEXTS_MAIN,
     CONTEXTS_SCOPES,
@@ -41,6 +43,28 @@ class ZukanSyntax:
     def __init__(self):
         self.ignored_icon = get_ignored_icon_settings()
         self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+    def install_syntax(self, file_name: str, syntax_name: str):
+        """
+        Using Thread to install syntax to avoid freezing ST to build syntax.
+
+        Parameters:
+        file_name (str) -- syntax file name, without extension.
+        syntax_name (str) -- syntax name, file name and extension.
+        """
+        ts = threading.Thread(
+            target=self.build_icon_syntax, args=(file_name, syntax_name)
+        )
+        ts.start()
+        ThreadProgress(ts, 'Building zukan syntaxes', 'Build done')
+
+    def install_syntaxes(self):
+        """
+        Using Thread to install syntax to avoid freezing ST to build syntaxes.
+        """
+        ts = threading.Thread(target=self.build_icons_syntaxes)
+        ts.start()
+        ThreadProgress(ts, 'Building zukan syntaxes', 'Build done')
 
     def build_icon_syntax(self, file_name: str, syntax_name: str):
         """

@@ -24,7 +24,6 @@ from ..utils.file_extensions import (
 )
 from ..utils.primary_icons import (
     PRIMARY_ICONS,
-    TAG_PRIMARY,
 )
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
@@ -165,32 +164,6 @@ class ZukanPreference:
                         p['preferences']['settings']['icon'],
                     )
 
-    def _png_exists(self, p):
-        if (
-            'tag' in p
-            and p['tag'] != TAG_PRIMARY
-            and not os.path.exists(
-                os.path.join(
-                    ZUKAN_PKG_ICONS_PATH,
-                    p['preferences']['settings']['icon'] + PNG_EXTENSION,
-                )
-            )
-        ) or (
-            'tag' in p
-            and p['tag'] == TAG_PRIMARY
-            and not os.path.exists(
-                os.path.join(
-                    ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
-                    p['preferences']['settings']['icon'] + PNG_EXTENSION,
-                )
-            )
-        ):
-            logger.warning(
-                '%s%s not found',
-                p['preferences']['settings']['icon'],
-                PNG_EXTENSION,
-            )
-
     def _rename_primary_icons(self, p):
         for primary in PRIMARY_ICONS:
             for i in primary[2]:
@@ -203,6 +176,19 @@ class ZukanPreference:
                         'renaming primary icon option necessary, %s',
                         i,
                     )
+
+    def _png_exists(self, p):
+        if not os.path.exists(
+            os.path.join(
+                ZUKAN_PKG_ICONS_PATH,
+                p['preferences']['settings']['icon'] + PNG_EXTENSION,
+            )
+        ):
+            logger.warning(
+                '%s%s not found',
+                p['preferences']['settings']['icon'],
+                PNG_EXTENSION,
+            )
 
     def handle_icon_preferences(
         self,
@@ -232,11 +218,11 @@ class ZukanPreference:
         # 'auto_prefer_icon' setting
         self._apply_auto_prefer_icon(p, prefer_icon_version, bgcolor)
 
-        # Check if PNG exist
-        self._png_exists(p)
-
         # Rename if icon is primary icons do not work with any other names
         self._rename_primary_icons(p)
+
+        # Check if PNG exist
+        self._png_exists(p)
 
         preferences_filepath = os.path.join(ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename)
         dump_plist_data(p['preferences'], preferences_filepath)
