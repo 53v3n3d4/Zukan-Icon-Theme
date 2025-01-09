@@ -27,7 +27,7 @@ def visible_syntaxes_only() -> set:
     syntaxes_list_visible = set()
     all_syntaxes = sublime.list_syntaxes()
     for s in all_syntaxes:
-        if s.hidden is False:
+        if not s.hidden:
             # print(s.name, s.path)
             syntaxes_list_visible.add(s)
     return syntaxes_list_visible
@@ -43,14 +43,13 @@ def compare_scopes() -> list:
     """
     list_scopes_to_remove = []
     zukan_icons_syntaxes = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-    user_syntaxes = visible_syntaxes_only()
+    user_syntaxes_dict = {y.scope: y for y in visible_syntaxes_only()}
     for x in zukan_icons_syntaxes:
-        if x.get('syntax') is not None:
+        if x.get('syntax'):
             for s in x['syntax']:
-                for y in user_syntaxes:
-                    if s['scope'] == y.scope:
-                        # print(s['scope'])
-                        list_scopes_to_remove.append(s)
+                if s['scope'] in user_syntaxes_dict:
+                    # print(s['scope'])
+                    list_scopes_to_remove.append(s)
     return list_scopes_to_remove
 
 

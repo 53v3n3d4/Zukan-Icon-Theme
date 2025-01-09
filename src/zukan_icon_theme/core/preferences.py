@@ -42,13 +42,10 @@ class Preferences(ZukanPreference):
 
     def get_not_installed_preferences(self):
         list_preferences_not_installed = []
-        zukan_icons = read_pickle_data(self.icons_data_file)
 
-        # 'create_custom_icon' setting
-        custom_list = [p for p in generate_custom_icon() if 'preferences' in p]
-        new_list = zukan_icons + custom_list
+        list_all_icons_preferences = self.get_list_icons_preferences()
 
-        for p in new_list:
+        for p in list_all_icons_preferences:
             if p['preferences'].get('scope') is not None:
                 # Default icon
                 icon_name = p['preferences']['settings']['icon']
