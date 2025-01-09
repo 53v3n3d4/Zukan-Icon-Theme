@@ -19,6 +19,7 @@
 - Merge folder events -> core
 - Move move_folders to helpers
 - Move clean_comments to helpers
+- Change search_syntax and edit_file_extension, improve build time
 
 ## [0.4.2] - 2024-12-19
 

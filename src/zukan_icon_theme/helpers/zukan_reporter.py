@@ -65,7 +65,6 @@ class Reporter:
         self._open_report_file()
 
     def _zukan_preferences_settings(self, title: str):
-
         result = SettingsEvent.get_user_zukan_preferences()
 
         self._add_title_time(title, result)

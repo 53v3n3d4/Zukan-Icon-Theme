@@ -1,11 +1,8 @@
 import logging
 
-from ..helpers.load_save_settings import get_settings
+from ..helpers.load_save_settings import get_change_icon_settings
 from ..utils.scopes_file_extensions import (
     SCOPES_FILE_EXTENSIONS,
-)
-from ..utils.file_settings import (
-    ZUKAN_SETTINGS,
 )
 
 logger = logging.getLogger(__name__)
@@ -28,13 +25,7 @@ def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list
     syntax_file_extensions (list) -- list of file extensions based on two lists:
     SCOPES_FILE_EXTENSIONS and 'change_icon_file_extension' setting.
     """
-    change_icon_file_extension = get_settings(
-        ZUKAN_SETTINGS, 'change_icon_file_extension'
-    )
-    if not isinstance(change_icon_file_extension, list):
-        logger.warning(
-            'change_icon_file_extension option malformed, need to be a string list'
-        )
+    _, change_icon_file_extension = get_change_icon_settings()
 
     file_extensions_list = []
     default_extensions = set()
@@ -74,11 +65,14 @@ def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list
 
     # print(file_extensions_list)
     # Duplicating dicts from not present in lists, user_extensions and default_extensions.
-    file_extensions_list_not_duplicated = [
-        f
-        for i, f in enumerate(file_extensions_list)
-        if file_extensions_list.index(f) == i
-    ]
+    file_extensions_list_not_duplicated = []
+    seen = set()
+
+    for f in file_extensions_list:
+        tuple_rep = (f['scope'], tuple(f['file_extensions']))
+        if tuple_rep not in seen:
+            file_extensions_list_not_duplicated.append(f)
+            seen.add(tuple_rep)
     # print(file_extensions_list_not_duplicated)
 
     for d in file_extensions_list_not_duplicated:

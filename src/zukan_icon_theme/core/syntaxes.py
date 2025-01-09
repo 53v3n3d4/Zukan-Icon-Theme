@@ -4,6 +4,7 @@ import sublime
 import sublime_plugin
 
 from ..helpers.edit_file_extension import edit_file_extension
+from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..utils.file_extensions import (
@@ -22,14 +23,13 @@ class Syntaxes(ZukanSyntax):
     Syntaxes list, install and delete.
     """
 
-    def __init__(
-        self, syntaxes_path: str, icons_data_file: str, sublime_syntax_extension: str
-    ):
+    def __init__(self, syntaxes_path: str, sublime_syntax_extension: str):
         ZukanSyntax.__init__(self)
 
         self.syntaxes_path = syntaxes_path
-        self.icons_data_file = icons_data_file
         self.sublime_syntax_extension = sublime_syntax_extension
+
+        self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
     def delete_single_icon_syntax(self, syntax_name: str):
         self.delete_icon_syntax(syntax_name)
@@ -56,7 +56,7 @@ class Syntaxes(ZukanSyntax):
         for s in list_all_icons_syntaxes:
             if s.get('syntax') is not None:
                 for k in s['syntax']:
-                    if k not in compare_scopes():
+                    if k not in compare_scopes(self.zukan_icons):
                         # 'change_file_extension' setting
                         k['file_extensions'] = edit_file_extension(
                             k['file_extensions'], k['scope']
@@ -120,7 +120,6 @@ class DeleteSyntaxCommand(sublime_plugin.TextCommand):
         super().__init__(view)
         self.syntaxes = Syntaxes(
             ZUKAN_PKG_ICONS_SYNTAXES_PATH,
-            ZUKAN_ICONS_DATA_FILE,
             SUBLIME_SYNTAX_EXTENSION,
         )
 
@@ -165,6 +164,9 @@ class DeleteSyntaxInputHandler(sublime_plugin.ListInputHandler):
 
         if installed_syntaxes_list:
             all_option = ['All']
+            installed_syntaxes_list = sorted(
+                installed_syntaxes_list, key=lambda x: x.upper()
+            )
             new_list = all_option + installed_syntaxes_list
             return new_list
         else:
@@ -182,7 +184,6 @@ class InstallSyntaxCommand(sublime_plugin.TextCommand):
         super().__init__(view)
         self.syntaxes = Syntaxes(
             ZUKAN_PKG_ICONS_SYNTAXES_PATH,
-            ZUKAN_ICONS_DATA_FILE,
             SUBLIME_SYNTAX_EXTENSION,
         )
 

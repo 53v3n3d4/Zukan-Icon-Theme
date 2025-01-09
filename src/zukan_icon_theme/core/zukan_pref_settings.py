@@ -259,21 +259,28 @@ class SettingsEvent:
         tab_indent = '\t'
 
         data = (
-            new_line + tab_indent
+            new_line
+            + tab_indent
             + header_zukan
-            + new_line + tab_indent
+            + new_line
+            + tab_indent
             + zukan_pkg_folder
-            + new_line + tab_indent
+            + new_line
+            + tab_indent
             + zukan_installed_zip_file
-            + new_line + tab_indent
+            + new_line
+            + tab_indent
             + dependency_ruamel
-            + new_line + new_line
+            + new_line
+            + new_line
             + zukan_opts_to_str
-            + new_line + tab_indent
+            + new_line
+            + tab_indent
             + header_st
             + new_line
             + user_pref_to_str
-            + new_line + tab_indent
+            + new_line
+            + tab_indent
             + end_line
         )
 

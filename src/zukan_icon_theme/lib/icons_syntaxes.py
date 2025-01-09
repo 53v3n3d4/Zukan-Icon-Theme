@@ -142,7 +142,10 @@ class ZukanSyntax:
                     )
                 ):
                     for k in s['syntax']:
-                        if k not in compare_scopes() and k['name'] == syntax_name:
+                        if (
+                            k not in compare_scopes(self.zukan_icons)
+                            and k['name'] == syntax_name
+                        ):
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
 
                             # 'change_scope_file_extension' setting
@@ -216,7 +219,7 @@ class ZukanSyntax:
                     )
                 ):
                     for k in s['syntax']:
-                        if k not in compare_scopes():
+                        if k not in compare_scopes(self.zukan_icons):
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
 
                             # 'change_scope_file_extension' setting

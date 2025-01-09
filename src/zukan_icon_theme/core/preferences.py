@@ -3,8 +3,6 @@ import os
 import sublime
 import sublime_plugin
 
-from ..helpers.custom_icon import generate_custom_icon
-from ..helpers.read_write_data import read_pickle_data
 from ..lib.icons_preferences import ZukanPreference
 from ..utils.file_extensions import (
     TMPREFERENCES_EXTENSION,
@@ -69,15 +67,6 @@ class Preferences(ZukanPreference):
         file_name, _ = os.path.splitext(preference_name)
 
         list_all_icons_preferences = self.get_list_icons_preferences()
-
-        # 'ignored_icon' setting
-        # ignored_icon = get_ignored_icon_settings()
-
-        # zukan_icons = read_pickle_data(self.icons_data_file)
-
-        # 'create_custom_icon' setting
-        # custom_list = [p for p in generate_custom_icon() if 'preferences' in p]
-        # new_list = zukan_icons + custom_list
 
         for p in list_all_icons_preferences:
             if (

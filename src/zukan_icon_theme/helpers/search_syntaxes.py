@@ -3,7 +3,6 @@ import sublime
 from .read_write_data import read_pickle_data
 from ..utils.zukan_paths import (
     ZUKAN_ICONS_DATA_FILE,
-    # ZUKAN_SYNTAXES_DATA_FILE,
 )
 from ruamel.yaml import YAML
 
@@ -33,7 +32,7 @@ def visible_syntaxes_only() -> set:
     return syntaxes_list_visible
 
 
-def compare_scopes() -> list:
+def compare_scopes(zukan_icons_syntaxes: list) -> list:
     """
     Compare scopes from user ST installed syntaxes and zukan icon syntaxes.
 
@@ -42,7 +41,7 @@ def compare_scopes() -> list:
     installed syntaxes and zukan icon syntaxes.
     """
     list_scopes_to_remove = []
-    zukan_icons_syntaxes = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
     user_syntaxes_dict = {y.scope: y for y in visible_syntaxes_only()}
     for x in zukan_icons_syntaxes:
         if x.get('syntax'):
@@ -57,9 +56,9 @@ def list_syntax_to_dump():
     """
     Print syntax that will be dumped. Used for testing only,
     """
-    zukan_icons_syntaxes = read_pickle_data(ZUKAN_SYNTAXES_DATA_FILE)
+    zukan_icons_syntaxes = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
     for x in zukan_icons_syntaxes:
-        if x not in compare_scopes():
+        if x not in compare_scopes(zukan_icons_syntaxes):
             print(x)
 
 
