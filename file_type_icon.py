@@ -42,7 +42,7 @@ from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
 from .src.zukan_icon_theme.helpers.move_folders import MoveFolder  # noqa: E402
 from .src.zukan_icon_theme.helpers.zukan_reporter import ZukanReporterCommand  # noqa: E402 F401
 from .src.zukan_icon_theme.utils.zukan_paths import (  # noqa: E402
-    ZUKAN_PKG_ICONS_PATH,
+    ZUKAN_ICONS_DATA_FILE,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_PKG_PATH,
@@ -59,26 +59,18 @@ zukan_listener_enabled = is_zukan_listener_enabled()
 if zukan_listener_enabled:
     from .src.zukan_icon_theme.core.listeners import SchemeThemeListener  # noqa: F401
 
+# Extract and move folder if installed using Package Controal.
+if not os.path.exists(ZUKAN_ICONS_DATA_FILE):
+    MoveFolder().move_folders()
+
 
 def plugin_loaded():
     if zukan_listener_enabled:
-        install_event = InstallEvent()
-
-        # New install from repo clone, or when preferences or syntaxes folders do
-        # not exist.
-        if os.path.exists(ZUKAN_PKG_ICONS_PATH) and (
-            not os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-            or not os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
+        # New install or when preferences or syntaxes folders do not exist.
+        if not os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH) or not os.path.exists(
+            ZUKAN_PKG_ICONS_SYNTAXES_PATH
         ):
-            install_event.new_install_manually()
-
-        # New install from Package Control, a sublime-package file.
-        if (
-            not os.path.exists(ZUKAN_PKG_ICONS_PATH)
-            and not os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
-            and not os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
-        ):
-            install_event.new_install_pkg_control()
+            InstallEvent().new_install()
 
         zukan_icon_files = ZukanIconFiles()
 

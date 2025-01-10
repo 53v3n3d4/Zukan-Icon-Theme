@@ -69,10 +69,10 @@ def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list
     seen = set()
 
     for f in file_extensions_list:
-        tuple_rep = (f['scope'], tuple(f['file_extensions']))
-        if tuple_rep not in seen:
+        scope_file_extension_tuple = (f['scope'], tuple(f['file_extensions']))
+        if scope_file_extension_tuple not in seen:
             file_extensions_list_not_duplicated.append(f)
-            seen.add(tuple_rep)
+            seen.add(scope_file_extension_tuple)
     # print(file_extensions_list_not_duplicated)
 
     for d in file_extensions_list_not_duplicated:

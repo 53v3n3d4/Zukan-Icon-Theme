@@ -112,9 +112,10 @@ class InstallEvent:
         t.start()
         ThreadProgress(t, 'Building zukan files', 'Build done')
 
-    def new_install_manually(self):
+    def new_install(self):
         """
-        Using Thread to build new installation files via clone repo, to avoid ST freezing.
+        Using Thread to build new installation files or when 'icons_preferences' or
+        'icons_folders' do not exist, to avoid ST freezing.
 
         Install icons themes, preferences and syntaxes.
         """
@@ -123,9 +124,6 @@ class InstallEvent:
         # 'refresh_folder_list' do not help force reload. But deleting or duplicating a
         # folder with at least 5 files, it will realod file icons.
         # If change themes, the icons is working with no problem.
-
-        # pkg_version, _ = get_upgraded_version_settings()
-        # zukan_restart_message = is_zukan_restart_message()
 
         if self.zukan_restart_message is True:
             dialog_message = (
@@ -139,18 +137,3 @@ class InstallEvent:
         t = threading.Thread(target=self.install_batch)
         t.start()
         ThreadProgress(t, 'Building zukan files', 'Build done', dialog_message)
-
-    def new_install_pkg_control(self):
-        """
-        Using Thread to build new installation files via sublime-package file,
-        to avoid ST freezing.
-
-        Try move folders if installed trough Package Control. Folders contain icons
-        PNGs and zukan icons data files.
-
-        Then install icons themes, preferences and syntaxes.
-        """
-        try:
-            self.move_folder.move_folders()
-        finally:
-            self.new_install_manually()
