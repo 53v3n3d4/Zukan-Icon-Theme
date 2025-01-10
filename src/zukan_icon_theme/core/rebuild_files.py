@@ -25,4 +25,4 @@ class RebuildFilesCommand(sublime_plugin.ApplicationCommand):
             self.zukan_theme.delete_icons_themes()
 
         finally:
-            self.install_event.new_install_manually()
+            self.install_event.new_install()
