@@ -182,17 +182,6 @@ class ZukanIconFiles:
         """
         Rebuild functions that have been changed.
         """
-        # Rebuild icons preferences and syntaxes
-        if self.rebuild_functions['rebuild_icon_files_thread']:
-            self.install_event.rebuild_icon_files_thread()
-            self.rebuild_functions['rebuild_icon_files_thread'] = False
-
-            # 'create_custom_icon' also leaves commented entries when deleted
-            # using 'delete_custom_icon'. Same as 'reset_icon', but
-            # 'delete_custom_icon' leaves identation messed, and mix commented
-            # entries between othes entries.
-            self.clean_comments.clean_comments()
-
         # Rebuild icons preferences
         if (
             self.rebuild_functions['build_icons_preferences']
@@ -219,6 +208,17 @@ class ZukanIconFiles:
         ):
             self.zukan_syntax.install_syntaxes()
             self.rebuild_functions['install_syntaxes'] = False
+
+        # Rebuild icons preferences and syntaxes
+        if self.rebuild_functions['rebuild_icon_files_thread']:
+            self.install_event.rebuild_icon_files_thread()
+            self.rebuild_functions['rebuild_icon_files_thread'] = False
+
+            # 'create_custom_icon' also leaves commented entries when deleted
+            # using 'delete_custom_icon'. Same as 'reset_icon', but
+            # 'delete_custom_icon' leaves identation messed, and mix commented
+            # entries between othes entries.
+            self.clean_comments.clean_comments()
 
 
 class SettingsEvent:

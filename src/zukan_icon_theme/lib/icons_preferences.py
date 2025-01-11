@@ -233,7 +233,9 @@ class ZukanPreference:
         zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
         # 'create_custom_icon' setting
-        custom_list = [p for p in generate_custom_icon(zukan_icons) if 'preferences' in p]
+        custom_list = [
+            p for p in generate_custom_icon(zukan_icons) if 'preferences' in p
+        ]
         list_all_icons_preferences = zukan_icons + custom_list
 
         return list_all_icons_preferences
