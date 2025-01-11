@@ -29,8 +29,6 @@ class Syntaxes(ZukanSyntax):
         self.syntaxes_path = syntaxes_path
         self.sublime_syntax_extension = sublime_syntax_extension
 
-        self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-
     def delete_single_icon_syntax(self, syntax_name: str):
         self.delete_icon_syntax(syntax_name)
 
@@ -44,8 +42,10 @@ class Syntaxes(ZukanSyntax):
         return sorted(installed_syntaxes_list)
 
     def get_not_installed_syntaxes(self):
+        zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
         list_syntaxes_not_installed = []
-        list_all_icons_syntaxes = self.get_list_icons_syntaxes()
+        list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
         # zukan_icons = read_pickle_data(self.icons_data_file)
 
@@ -56,7 +56,7 @@ class Syntaxes(ZukanSyntax):
         for s in list_all_icons_syntaxes:
             if s.get('syntax') is not None:
                 for k in s['syntax']:
-                    if k not in compare_scopes(self.zukan_icons):
+                    if k not in compare_scopes(zukan_icons):
                         # 'change_file_extension' setting
                         k['file_extensions'] = edit_file_extension(
                             k['file_extensions'], k['scope']
