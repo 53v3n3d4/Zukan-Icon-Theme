@@ -233,7 +233,7 @@ class ZukanPreference:
         zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
         # 'create_custom_icon' setting
-        custom_list = [p for p in generate_custom_icon() if 'preferences' in p]
+        custom_list = [p for p in generate_custom_icon(zukan_icons) if 'preferences' in p]
         list_all_icons_preferences = zukan_icons + custom_list
 
         return list_all_icons_preferences
@@ -250,7 +250,6 @@ class ZukanPreference:
     def prepare_icon_preference_file(
         self,
         preference_name: str,
-        # zukan_icons
     ):
         """
         Prepare icon preference file, from icons data and setting 'create_custom_icon'.

@@ -96,11 +96,11 @@ class ZukanSyntax:
         self.edit_contexts_scopes()
         copy_primary_icons()
 
-    def get_list_icons_syntaxes(self, zukan_icons):
+    def get_list_icons_syntaxes(self, zukan_icons: list):
         list_all_icons_syntaxes = []
 
         # 'create_custom_icon' setting
-        custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
+        custom_list = [s for s in generate_custom_icon(zukan_icons) if 'syntax' in s]
         list_all_icons_syntaxes = zukan_icons + custom_list
 
         return list_all_icons_syntaxes

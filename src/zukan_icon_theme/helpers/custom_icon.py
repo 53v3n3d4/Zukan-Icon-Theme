@@ -141,18 +141,18 @@ def data(d: dict):
             )
 
 
-def generate_custom_icon() -> list:
+def generate_custom_icon(zukan_icons) -> list:
     create_custom_icon = get_create_custom_icon_settings()
     list_od = []
 
     if create_custom_icon:
         for c in create_custom_icon:
-            if 'name' in c and c['name'] not in list_data_names():
+            if 'name' in c and c['name'] not in list_data_names(zukan_icons):
                 od = data(remove_empty_dict(c))
                 list_od.append(od)
             if 'name' not in c:
                 logger.warning('%s do not have key "name", it is required', c)
-            if 'name' in c and c['name'] in list_data_names():
+            if 'name' in c and c['name'] in list_data_names(zukan_icons):
                 logger.warning(
                     '%s key "name" already exists, it should be unique. Excluding from build.',
                     c['name'],
