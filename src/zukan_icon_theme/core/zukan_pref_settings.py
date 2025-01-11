@@ -1,7 +1,7 @@
 import logging
 import os
 
-from .install import InstallEvent, UpgradeEvent
+from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..helpers.clean_comments import CleanComments
@@ -69,9 +69,6 @@ class ZukanIconFiles:
         self.create_custom_icon = get_create_custom_icon_settings()
         self.current_settings = read_current_settings()
 
-        self.version_json_file = get_settings(ZUKAN_VERSION, 'version')
-        self.pkg_version, self.auto_upgraded = get_upgraded_version_settings()
-
         self.is_upgrading = False
         self.event_bus.subscribe('upgrade_started', self.on_upgrade_started)
         self.event_bus.subscribe('upgrade_finished', self.on_upgrade_finished)
@@ -105,13 +102,6 @@ class ZukanIconFiles:
             ):
                 # data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
 
-                # auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
-                # change_icon, change_icon_file_extension = get_change_icon_settings()
-                # ignored_icon = get_ignored_icon_settings()
-
-                # create_custom_icon = get_create_custom_icon_settings()
-                # current_settings = read_current_settings()
-
                 for d in self.data:
                     # Currently, rebuilding all files, because of manually editing
                     # sublime-settings, it is possible to have multiple entries.
@@ -129,8 +119,6 @@ class ZukanIconFiles:
                         logger.info('"ignored_icon" changed, rebuilding files...')
                         self.rebuild_functions['rebuild_icon_files_thread'] = True
 
-                        # self.install_event.rebuild_icon_files_thread()
-
                     # Check if change_icon changed
                     if sorted(d['change_icon']) != sorted(self.change_icon) or any(
                         [
@@ -140,16 +128,6 @@ class ZukanIconFiles:
                     ):
                         logger.info('"change_icon" changed, rebuilding files...')
                         self.rebuild_functions['build_icons_preferences'] = True
-
-                        # self.zukan_preference.build_icons_preferences()
-
-                        # Command 'reset_icon' leaves entries commented in dict.
-                        # It is working but still leaving the last reset one, because
-                        # 'reloading settings Packages/User/Zukan Icon Theme.sublime-settings'
-                        # happens after cleaning.
-                        # It could left multiple commented entries if 'reset_icon > all' was
-                        # used.
-                        # self.clean_comments.clean_comments()
 
                     # Check if change_icon_file_extension changed
                     if any(
@@ -166,8 +144,6 @@ class ZukanIconFiles:
                         )
                         self.rebuild_functions['install_syntaxes'] = True
 
-                        # self.zukan_syntax.install_syntaxes()
-
                     # Check if create_custom_icon changed
                     if any(
                         x != y
@@ -178,14 +154,6 @@ class ZukanIconFiles:
                         logger.info('"create_custom_icon" changed, rebuilding files...')
                         self.rebuild_functions['rebuild_icon_files_thread'] = True
 
-                        # self.install_event.rebuild_icon_files_thread()
-
-                        # 'create_custom_icon' also leaves commented entries when deleted
-                        # using 'delete_custom_icon'. Same as 'reset_icon', but
-                        # 'delete_custom_icon' leaves identation messed, and mix commented
-                        # entries between othes entries.
-                        # self.clean_comments.clean_comments()
-
                     # Check if prefer_icon changed
                     if sorted(d['prefer_icon']) != sorted(self.prefer_icon) or any(
                         [
@@ -195,10 +163,6 @@ class ZukanIconFiles:
                     ):
                         logger.info('"prefer_icon" changed, rebuilding files...')
                         self.rebuild_functions['build_icons_preferences'] = True
-
-                        # self.zukan_preference.build_icons_preferences()
-
-                        # self.clean_comments.clean_comments()
 
                     self.execute_rebuilds()
 
@@ -212,7 +176,7 @@ class ZukanIconFiles:
                 save_current_settings()
 
         else:
-            print('Upgrade in progress, skipping rebuild.')
+            logger.debug('upgrade in progress, delay rebuild.')
 
     def execute_rebuilds(self):
         """
@@ -388,11 +352,22 @@ class EventBus:
 
 
 class UpgradePlugin:
-    def __init__(self, event_bus):
+    def __init__(
+        self,
+        event_bus,
+        install_event=None,
+    ):
         self.event_bus = event_bus
         self.is_upgrading = False
+        self.install_event = install_event if install_event else InstallEvent()
+
+        self.version_json_file = get_settings(ZUKAN_VERSION, 'version')
+        self.pkg_version, self.auto_upgraded = get_upgraded_version_settings()
 
     def start_upgrade(self):
+        """
+        Allow upgrade zukan files and delay rebuild icon files.
+        """
         self.is_upgrading = True
         self.event_bus.publish('upgrade_started')
 
@@ -410,9 +385,9 @@ class UpgradePlugin:
         It compares with 'version' value from 'zukan_current_settings.pkl'.
         """
         logger.debug('if package upgraded, begin rebuild...')
-        pkg_version, auto_upgraded = get_upgraded_version_settings()
+        # pkg_version, auto_upgraded = get_upgraded_version_settings()
 
-        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and auto_upgraded is True:
+        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and self.auto_upgraded is True:
             data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
             installed_pkg_version = ''.join(
                 [d['version'] for d in data if 'version' in d]
@@ -422,7 +397,7 @@ class UpgradePlugin:
             tuple_installed_pkg_version = tuple(
                 map(int, installed_pkg_version.split('.'))
             )
-            tuple_pkg_version = tuple(map(int, pkg_version.split('.')))
+            tuple_pkg_version = tuple(map(int, self.pkg_version.split('.')))
             # print(tuple_installed_pkg_version)
             # print(tuple_pkg_version)
             # print((0, 1, 73) > (0, 1, 72))
@@ -432,27 +407,27 @@ class UpgradePlugin:
 
             if tuple_pkg_version > tuple_installed_pkg_version:
                 logger.info('updating package...')
-                UpgradeEvent().install_upgrade_thread()
+                self.install_event.install_upgrade_thread()
 
                 save_current_settings()
 
         # Setting file `zukan-version` depreceated in favor of `zukan_current_settings`
         # Need to upgrade from v0.3.0 to v0.3.1, where there is no
         # zukan_current_settings below v0.3.0.
-        if os.path.exists(ZUKAN_VERSION_FILE) and auto_upgraded is True:
-            version_json_file = get_settings(ZUKAN_VERSION, 'version')
-            tuple_version_json_file = tuple(map(int, version_json_file.split('.')))
+        if os.path.exists(ZUKAN_VERSION_FILE) and self.auto_upgraded is True:
+            # version_json_file = get_settings(ZUKAN_VERSION, 'version')
+            tuple_version_json_file = tuple(map(int, self.version_json_file.split('.')))
 
-            tuple_version_pkg = tuple(map(int, pkg_version.split('.')))
+            tuple_version_pkg = tuple(map(int, self.pkg_version.split('.')))
 
             if tuple_version_json_file <= (0, 3, 0) and tuple_version_pkg >= (0, 3, 1):
                 logger.info('removing depreceated file "zukan-version"')
                 os.remove(ZUKAN_VERSION_FILE)
 
                 logger.info('updating package...')
-                UpgradeEvent().install_upgrade_thread()
+                self.install_event.install_upgrade_thread()
 
-        if auto_upgraded is False:
+        if self.auto_upgraded is False:
             logger.debug('auto_upgraded setting is False.')
 
         if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
