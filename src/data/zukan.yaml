@@ -2,7 +2,7 @@
 ---
 name: Zukan
 preferences:
-  scope: binary.zukan, source.json.zukan
+  scope: binary.zukan, source.json.zukan, text.plain.zukan
   settings:
     icon: zukan
 syntax:
@@ -30,3 +30,10 @@ syntax:
       main:
         - include: scope:source.json
           apply_prototype: true
+  - name: Plain Text (Zukan)
+    scope: text.plain.zukan
+    hidden: true
+    file_extensions:
+      - zukan_reports.txt
+    contexts:
+      main: []

@@ -1,9 +1,10 @@
 # Changelog
 
-## [0.4.4] - 2025
+## [0.4.4] - 2025-01-11
 
 ### Plugin 🕹️
 - Fix missing argument get_list_icons_syntaxes
+- Fix no attribute themes_path
 
 ## [0.4.3] - 2025-01-11
 - Change some outline light icons to darker tone
