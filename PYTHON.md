@@ -3,7 +3,7 @@
 > Sublime Text 4 uses python 3.8 and Sublime Text 3 uses Python 3.3  
 Link https://www.sublimetext.com/docs/porting_guide.html#python-3-3  
 
-> Build package uses python 3.12.3.  
+> Build package uses python 3.13.1.  
 
 > Plugin follow ST python versions.  
 
@@ -31,17 +31,17 @@ Package
 
 ```sh
 # Use specific python version
-$ poetry env use path-to-python/3.12.3/bin/python
-$ poetry env use /Users/xxxxx/.pyenv/versions/3.12.3/bin/python
+$ poetry env use path-to-python/3.13.1/bin/python
+$ poetry env use /Users/xxxxx/.pyenv/versions/3.13.1/bin/python
 $ poetry env info
 Virtualenv
-Python:         3.12.3
+Python:         3.13.1
 Implementation: CPython
 
 # Check if .python-version file has correct version. Important for 'poetry install'.
 # It could be 3.3 or 3.8 because Sublime Text interpreter.
 $ cat .python-version
-3.12.3
+3.13.1
 
 # install
 $ poetry install

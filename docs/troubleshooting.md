@@ -184,5 +184,5 @@ is similar to first install or upgrade package.
 Also, there are actions where icons syntaxes are rebuilt:
 - Package upgrade
 - Move from an ignored theme
-- Deleted folder 'icons_syntaxes' or all icons syntaxes files, when ST start
+- Deleted folder 'icons_syntaxes' or all icons syntaxes files, then restart ST
 ```
