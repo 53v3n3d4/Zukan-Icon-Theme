@@ -1,6 +1,8 @@
 %YAML 1.2
 ---
 name: CSS
+icons:
+  - css-1
 preferences:
   scope: source.css
   settings:

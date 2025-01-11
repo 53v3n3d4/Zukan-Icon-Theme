@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.5] - 2025
+
+### Icons, syntaxes and preferences 👽
+- Add icon option: CSS
+- Change icon: CSS
+- Change syntax: Eleventy
+
 ## [0.4.4] - 2025-01-11
 
 ### Plugin 🕹️

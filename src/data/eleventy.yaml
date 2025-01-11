@@ -13,6 +13,7 @@ syntax:
       - .eleventy.js
       - eleventy.config.js
       - eleventy.config.cjs
+      - eleventy.config.mjs
     contexts:
       main:
         - include: scope:source.js
