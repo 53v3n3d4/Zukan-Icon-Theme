@@ -8,12 +8,16 @@ from ..helpers.load_save_settings import (
     is_zukan_listener_enabled,
     set_save_settings,
 )
+from ..helpers.read_write_data import read_pickle_data
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..utils.file_settings import (
     ZUKAN_SETTINGS,
 )
 from ..utils.icons_tags import (
     ICONS_TAGS,
+)
+from ..utils.zukan_paths import (
+    ZUKAN_ICONS_DATA_FILE,
 )
 
 logger = logging.getLogger(__name__)
@@ -99,12 +103,14 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
 
     def list_items(self) -> list:
         try:
-            # zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
             ignored_icon = get_ignored_icon_settings()
 
             ignored_icon_list = []
 
-            list_all_icons_syntaxes = self.disable_enable_icon.get_list_icons_syntaxes()
+            list_all_icons_syntaxes = self.disable_enable_icon.get_list_icons_syntaxes(
+                zukan_icons
+            )
             # # 'create_custom_icon' setting
             # custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
             # new_list = zukan_icons + custom_list

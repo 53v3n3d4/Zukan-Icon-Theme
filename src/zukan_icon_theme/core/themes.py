@@ -92,13 +92,13 @@ class DeleteThemeCommand(sublime_plugin.TextCommand):
                 dialog_message = (
                     'Are you sure you want to delete all themes in "{f}"?\n\n'
                     'You may have to restart ST, for all icons do not show.'.format(
-                        f=self.themes.themes_path
+                        f=self.themes.zukan_pkg_icons_path
                     )
                 )
             else:
                 dialog_message = (
                     'Are you sure you want to delete all themes in "{f}"?'.format(
-                        f=self.themes.themes_path
+                        f=self.themes.zukan_pkg_icons_path
                     )
                 )
 
@@ -110,12 +110,12 @@ class DeleteThemeCommand(sublime_plugin.TextCommand):
                 dialog_message = (
                     'Are you sure you want to delete "{t}"?\n\n'
                     'You may have to restart ST, for all icons do not show.'.format(
-                        t=os.path.join(self.themes.themes_path, theme_name)
+                        t=os.path.join(self.themes.zukan_pkg_icons_path, theme_name)
                     )
                 )
             else:
                 dialog_message = 'Are you sure you want to delete "{t}"?'.format(
-                    t=os.path.join(self.themes.themes_path, theme_name)
+                    t=os.path.join(self.themes.zukan_pkg_icons_path, theme_name)
                 )
 
             if self.themes.confirm_delete(dialog_message):

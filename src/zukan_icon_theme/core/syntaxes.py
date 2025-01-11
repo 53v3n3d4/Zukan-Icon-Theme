@@ -83,13 +83,13 @@ class Syntaxes(ZukanSyntax):
 
         # ignored_icon = get_ignored_icon_settings()
 
-        # zukan_icons = read_pickle_data(self.icons_data_file)
+        zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
         # # 'create_custom_icon' setting
         # custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
         # new_list = zukan_icons + custom_list
 
-        list_all_icons_syntaxes = self.get_list_icons_syntaxes()
+        list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
         for d in list_all_icons_syntaxes:
             if 'syntax' in d:
