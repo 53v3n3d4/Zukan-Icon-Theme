@@ -44,7 +44,7 @@ class ZukanPreference:
         self.auto_prefer_icon, self.prefer_icon = get_prefer_icon_settings()
         self.change_icon, _ = get_change_icon_settings()
         self.ignored_icon = get_ignored_icon_settings()
-        self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+        # self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
         self.theme_name = get_theme_name()
         # Not working, currently, getting previous not the recently modified.
         # So it is building inverted dark and light.
@@ -230,9 +230,11 @@ class ZukanPreference:
     def get_list_icons_preferences(self):
         list_all_icons_preferences = []
 
+        zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
         # 'create_custom_icon' setting
         custom_list = [p for p in generate_custom_icon() if 'preferences' in p]
-        list_all_icons_preferences = self.zukan_icons + custom_list
+        list_all_icons_preferences = zukan_icons + custom_list
 
         return list_all_icons_preferences
 
@@ -321,7 +323,7 @@ class ZukanPreference:
 
             logger.info('%s created.', fname)
 
-            return self.zukan_icons
+            # return self.zukan_icons
 
         except FileNotFoundError:
             logger.error(
@@ -390,7 +392,7 @@ class ZukanPreference:
 
             logger.info('tmPreferences created.')
 
-            return self.zukan_icons
+            # return self.zukan_icons
 
         except FileNotFoundError:
             logger.error(

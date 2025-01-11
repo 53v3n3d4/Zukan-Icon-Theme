@@ -27,7 +27,6 @@ class InstallEvent:
     """
 
     def __init__(self):
-        self.move_folder = MoveFolder()
         self.zukan_preference = ZukanPreference()
         self.zukan_syntax = ZukanSyntax()
         self.zukan_theme = ZukanTheme()
@@ -66,42 +65,42 @@ class InstallEvent:
         self.zukan_syntax.build_icons_syntaxes()
         self.zukan_preference.build_icons_preferences()
 
-    def install_upgrade_thread(self):
-        """
-        Using Thread to build upgraded files, to avoid ST freezing.
-        """
-        try:
-            # Copy new icons_data and icons folder
-            self.move_folder.move_folders()
+    # def install_upgrade_thread(self):
+    #     """
+    #     Using Thread to build upgraded files, to avoid ST freezing.
+    #     """
+    #     try:
+    #         # Copy new icons_data and icons folder
+    #         self.move_folder.move_folders()
 
-        finally:
-            # pkg_version, _ = get_upgraded_version_settings()
-            # zukan_restart_message = is_zukan_restart_message()
+    #     finally:
+    #         # pkg_version, _ = get_upgraded_version_settings()
+    #         # zukan_restart_message = is_zukan_restart_message()
 
-            if self.zukan_restart_message is True:
-                dialog_message = (
-                    'Zukan icons has been upgraded to v{v}.\n\n'
-                    'Changelog in Sublime Text > Settings > Package Settings menu.\n\n'
-                    'You may have to restart ST, if all icons do not load correct in '
-                    'current theme.'.format(v=self.pkg_version)
-                )
-            if self.zukan_restart_message is False:
-                dialog_message = (
-                    'Zukan icons has been upgraded to v{v}.\n\n'
-                    'Changelog in Sublime Text > Settings > Package Settings menu.'
-                    '\n\n'.format(v=self.pkg_version)
-                )
+    #         if self.zukan_restart_message is True:
+    #             dialog_message = (
+    #                 'Zukan icons has been upgraded to v{v}.\n\n'
+    #                 'Changelog in Sublime Text > Settings > Package Settings menu.\n\n'
+    #                 'You may have to restart ST, if all icons do not load correct in '
+    #                 'current theme.'.format(v=self.pkg_version)
+    #             )
+    #         if self.zukan_restart_message is False:
+    #             dialog_message = (
+    #                 'Zukan icons has been upgraded to v{v}.\n\n'
+    #                 'Changelog in Sublime Text > Settings > Package Settings menu.'
+    #                 '\n\n'.format(v=self.pkg_version)
+    #             )
 
-            # Delete unused icons
-            delete_unused_icons(ZUKAN_PKG_ICONS_PATH)
-            delete_unused_icons(ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH)
+    #         t = threading.Thread(target=self.install_syntaxes_preferences)
+    #         t.start()
+    #         ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
 
-            t = threading.Thread(target=self.install_syntaxes_preferences)
-            t.start()
-            ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
+    #         logger.info('upgrading Zukan icons to v%s.', self.pkg_version)
+    #         logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
 
-            logger.info('upgrading Zukan icons to v%s.', self.pkg_version)
-            logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
+    #         # Delete unused icons
+    #         delete_unused_icons(ZUKAN_PKG_ICONS_PATH)
+    #         delete_unused_icons(ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH)
 
     def rebuild_icon_files_thread(self):
         """
@@ -137,3 +136,54 @@ class InstallEvent:
         t = threading.Thread(target=self.install_batch)
         t.start()
         ThreadProgress(t, 'Building zukan files', 'Build done', dialog_message)
+
+
+class UpgradeEvent:
+    @staticmethod
+    def install_upgrade_thread():
+        """
+        Using Thread to build upgraded files, to avoid ST freezing.
+        """
+        try:
+            # Copy new icons_data and icons folder
+            MoveFolder().move_folders()
+
+        finally:
+            pkg_version, _ = get_upgraded_version_settings()
+            zukan_restart_message = is_zukan_restart_message()
+
+            if zukan_restart_message is True:
+                dialog_message = (
+                    'Zukan icons has been upgraded to v{v}.\n\n'
+                    'Changelog in Sublime Text > Settings > Package Settings menu.\n\n'
+                    'You may have to restart ST, if all icons do not load correct in '
+                    'current theme.'.format(v=pkg_version)
+                )
+            if zukan_restart_message is False:
+                dialog_message = (
+                    'Zukan icons has been upgraded to v{v}.\n\n'
+                    'Changelog in Sublime Text > Settings > Package Settings menu.'
+                    '\n\n'.format(v=pkg_version)
+                )
+
+            t = threading.Thread(target=UpgradeEvent._install_syntaxes_preferences)
+            t.start()
+            ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
+
+            logger.info('upgrading Zukan icons to v%s.', pkg_version)
+            logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
+
+    def _install_syntaxes_preferences():
+        """
+        Batch build preferences and syntaxes, to use with Thread together in
+        install_upgrade_thread and rebuild_icon_files_thread.
+        """
+        # Change build order: syntax then preferences. Notice error Bad XML,
+        # when ignoring icon through Command, duplicating create preferences
+        # after change from 'add_on_change' to  ViewListener.
+        ZukanSyntax().delete_icons_syntaxes()
+        ZukanPreference().delete_icons_preferences()
+
+        # Delete unused icons
+        delete_unused_icons(ZUKAN_PKG_ICONS_PATH)
+        delete_unused_icons(ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH)

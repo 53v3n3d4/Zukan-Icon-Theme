@@ -42,7 +42,7 @@ class ZukanSyntax:
 
     def __init__(self):
         self.ignored_icon = get_ignored_icon_settings()
-        self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+        # self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
     def install_syntax(self, file_name: str, syntax_name: str):
         """
@@ -96,12 +96,12 @@ class ZukanSyntax:
         self.edit_contexts_scopes()
         copy_primary_icons()
 
-    def get_list_icons_syntaxes(self):
+    def get_list_icons_syntaxes(self, zukan_icons):
         list_all_icons_syntaxes = []
 
         # 'create_custom_icon' setting
         custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
-        list_all_icons_syntaxes = self.zukan_icons + custom_list
+        list_all_icons_syntaxes = zukan_icons + custom_list
 
         return list_all_icons_syntaxes
 
@@ -113,7 +113,9 @@ class ZukanSyntax:
         syntax_name (str) -- syntax name, file name and extension.
         """
         try:
-            list_all_icons_syntaxes = self.get_list_icons_syntaxes()
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+            list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
             for s in list_all_icons_syntaxes:
                 if (
@@ -143,7 +145,7 @@ class ZukanSyntax:
                 ):
                     for k in s['syntax']:
                         if (
-                            k not in compare_scopes(self.zukan_icons)
+                            k not in compare_scopes(zukan_icons)
                             and k['name'] == syntax_name
                         ):
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
@@ -175,7 +177,7 @@ class ZukanSyntax:
                     for k in s['syntax']:
                         if k['name'] == syntax_name:
                             logger.info('ignored icon %s', s['name'])
-            return self.zukan_icons
+            # return self.zukan_icons
         except FileNotFoundError:
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename
@@ -190,7 +192,9 @@ class ZukanSyntax:
         Create icons sublime-syntaxes files.
         """
         try:
-            list_all_icons_syntaxes = self.get_list_icons_syntaxes()
+            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+            list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
             for s in list_all_icons_syntaxes:
                 if (
@@ -219,7 +223,7 @@ class ZukanSyntax:
                     )
                 ):
                     for k in s['syntax']:
-                        if k not in compare_scopes(self.zukan_icons):
+                        if k not in compare_scopes(zukan_icons):
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
 
                             # 'change_scope_file_extension' setting
@@ -243,7 +247,7 @@ class ZukanSyntax:
                 ):
                     logger.info('ignored icon %s', s['name'])
             logger.info('sublime-syntaxes created.')
-            return self.zukan_icons
+            # return self.zukan_icons
         except FileNotFoundError:
             logger.error(
                 '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), filename

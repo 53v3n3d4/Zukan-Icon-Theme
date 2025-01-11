@@ -414,8 +414,8 @@ def get_sidebar_bgcolor(theme_name: str) -> str:
     Returns:
     (str) -- returns value 'dark' or 'light'
     """
-    bgcolor = None
-    theme_st_path = sublime.find_resources(theme_name)
+    # Sorting for Python 3.3
+    theme_st_path = sorted(sublime.find_resources(theme_name))
 
     if theme_st_path:
         bgcolor = find_sidebar_background(theme_st_path[0])

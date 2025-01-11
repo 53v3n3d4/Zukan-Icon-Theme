@@ -1,4 +1,5 @@
 import os
+import sublime
 import sys
 
 # Copied from A File Icon
@@ -34,9 +35,13 @@ from .src.zukan_icon_theme.core.syntaxes import DeleteSyntaxCommand  # noqa: E40
 from .src.zukan_icon_theme.core.syntaxes import InstallSyntaxCommand  # noqa: E402 F401
 from .src.zukan_icon_theme.core.themes import DeleteThemeCommand  # noqa: E402 F401
 from .src.zukan_icon_theme.core.themes import InstallThemeCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.core.zukan_pref_settings import EventBus  # noqa: E402
 from .src.zukan_icon_theme.core.zukan_pref_settings import SettingsEvent  # noqa: E402
+from .src.zukan_icon_theme.core.zukan_pref_settings import UpgradePlugin  # noqa: E402
 from .src.zukan_icon_theme.core.zukan_pref_settings import ZukanIconFiles  # noqa: E402
 from .src.zukan_icon_theme.helpers.clean_comments import CleanCommentsCommand  # noqa: E402 F401
+from .src.zukan_icon_theme.helpers.search_themes import get_sidebar_bgcolor  # noqa: E402 F401
+from .src.zukan_icon_theme.helpers.load_save_settings import get_theme_name  # noqa: E402
 from .src.zukan_icon_theme.helpers.load_save_settings import is_zukan_listener_enabled  # noqa: E402
 from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
 from .src.zukan_icon_theme.helpers.move_folders import MoveFolder  # noqa: E402
@@ -65,6 +70,11 @@ if not os.path.exists(ZUKAN_ICONS_DATA_FILE):
 
 
 def plugin_loaded():
+    # IndexError when testing in ST4 Python 3.3, only if using sublime-package file.
+    # get_sidebar_bgcolor use sublime find_resources
+    theme_name = get_theme_name()
+    sublime.set_timeout(lambda: get_sidebar_bgcolor(theme_name))
+
     if zukan_listener_enabled:
         # New install or when preferences or syntaxes folders do not exist.
         if not os.path.exists(ZUKAN_PKG_ICONS_PREFERENCES_PATH) or not os.path.exists(
@@ -72,10 +82,11 @@ def plugin_loaded():
         ):
             InstallEvent().new_install()
 
-        zukan_icon_files = ZukanIconFiles()
+        event_bus = EventBus()
 
         # Package auto upgraded setting.
-        zukan_icon_files.upgrade_zukan_files()
+        upgrade_zukan = UpgradePlugin(event_bus)
+        upgrade_zukan.start_upgrade()
 
         # Check if zukan preferences changed.
         SettingsEvent.zukan_preferences_changed()
@@ -84,7 +95,8 @@ def plugin_loaded():
         SettingsEvent.output_to_console_zukan_pref_settings()
 
         # Build icons files if changed in Zukan settings
-        zukan_icon_files.rebuild_icons_files()
+        zukan_icon_files = ZukanIconFiles(event_bus)
+        zukan_icon_files.rebuild_icons_files(event_bus)
 
 
 def plugin_unloaded():
