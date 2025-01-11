@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.3] - 2025
+## [0.4.3] - 2025-01-11
 - Change some outline light icons to darker tone
 
 ### Icons, syntaxes and preferences 👽
