@@ -16,32 +16,34 @@ logger = logging.getLogger(__name__)
 
 
 class SelectRemovePreferIcon:
-    def __init__(self, zukan_theme: ZukanTheme, zukan_preferences_file: str):
+    def __init__(self, zukan_theme: ZukanTheme):
         self.zukan_theme = zukan_theme
-        self.zukan_preferences_file = zukan_preferences_file
 
-        self.auto_prefer_icon, self.prefer_icon = get_prefer_icon_settings()
         self.zukan_listener_enabled = is_zukan_listener_enabled()
+
+    def prefer_icon_setting(self):
+        _, prefer_icon = get_prefer_icon_settings()
+        return prefer_icon
 
     def update_prefer_icon(self, prefer_icon: dict, selected_prefer_icon: dict):
         prefer_icon.update(selected_prefer_icon)
         self._save_prefer_icon_setting(prefer_icon)
 
     def _save_prefer_icon_setting(self, prefer_icon: dict):
-        set_save_settings(self.zukan_preferences_file, 'prefer_icon', prefer_icon)
+        set_save_settings(ZUKAN_SETTINGS, 'prefer_icon', prefer_icon)
 
     def get_list_created_icons_themes(self):
         return self.zukan_theme.list_created_icons_themes()
 
     def remove_prefer_icon(self, prefer_icon: dict, select_prefer_icon_theme: str):
-        # self.prefer_icon = {
+        # prefer_icon = {
         #     k: v
-        #     for k, v in self.prefer_icon.items()
+        #     for k, v in prefer_icon.items()
         #     if k != select_prefer_icon_theme
         # }
         del prefer_icon[select_prefer_icon_theme]
 
-        # print(self.prefer_icon)
+        # print(prefer_icon)
         if self.zukan_listener_enabled:
             logger.info('reseting icon %s', select_prefer_icon_theme)
 
@@ -64,12 +66,10 @@ class SelectPreferIconCommand(sublime_plugin.TextCommand):
     def __init__(self, view):
         super().__init__(view)
         zukan_theme = ZukanTheme()
-        self.select_remove_prefer_icon = SelectRemovePreferIcon(
-            zukan_theme, ZUKAN_SETTINGS
-        )
+        self.select_remove_prefer_icon = SelectRemovePreferIcon(zukan_theme)
 
     def run(self, edit, select_prefer_icon_theme: str, select_prefer_icon_version: str):
-        _, prefer_icon = get_prefer_icon_settings()
+        prefer_icon = self.select_remove_prefer_icon.prefer_icon_setting()
 
         selected_prefer_icon = {select_prefer_icon_theme: select_prefer_icon_version}
 
@@ -91,7 +91,7 @@ class SelectPreferIconThemeInputHandler(sublime_plugin.ListInputHandler):
     Return select_prefer_icon_theme to SelectPreferIcon.
     """
 
-    def __init__(self, select_remove_prefer_icon):
+    def __init__(self, select_remove_prefer_icon: SelectRemovePreferIcon):
         self.select_remove_prefer_icon = select_remove_prefer_icon
 
     def name(self) -> str:
@@ -102,7 +102,7 @@ class SelectPreferIconThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of created themes'
 
     def list_items(self) -> list:
-        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
+        prefer_icon = self.select_remove_prefer_icon.prefer_icon_setting()
 
         installed_icon_themes = (
             self.select_remove_prefer_icon.get_list_created_icons_themes()
@@ -159,12 +159,10 @@ class RemovePreferIconCommand(sublime_plugin.TextCommand):
     def __init__(self, view):
         super().__init__(view)
         zukan_theme = ZukanTheme()
-        self.select_remove_prefer_icon = SelectRemovePreferIcon(
-            zukan_theme, ZUKAN_SETTINGS
-        )
+        self.select_remove_prefer_icon = SelectRemovePreferIcon(zukan_theme)
 
     def run(self, edit, select_prefer_icon_theme: str):
-        _, prefer_icon = get_prefer_icon_settings()
+        prefer_icon = self.select_remove_prefer_icon.prefer_icon_setting()
 
         if prefer_icon:
             if select_prefer_icon_theme == 'All':
@@ -192,13 +190,16 @@ class RemovePreferIconCommand(sublime_plugin.TextCommand):
             # set_save_settings(ZUKAN_SETTINGS, 'prefer_icon', icon_dict_updated)
 
     def input(self, args: dict):
-        return RemovePreferIconInputHandler()
+        return RemovePreferIconInputHandler(self.select_remove_prefer_icon)
 
 
 class RemovePreferIconInputHandler(sublime_plugin.ListInputHandler):
     """
     List of prefered icons, and return select_prefer_icon_theme to RemovePreferIcon.
     """
+
+    def __init__(self, select_remove_prefer_icon: SelectRemovePreferIcon):
+        self.select_remove_prefer_icon = select_remove_prefer_icon
 
     def name(self) -> str:
         return 'select_prefer_icon_theme'
@@ -207,7 +208,7 @@ class RemovePreferIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of preferred icons'
 
     def list_items(self) -> list:
-        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
+        prefer_icon = self.select_remove_prefer_icon.prefer_icon_setting()
 
         if prefer_icon:
             all_option = ['All']

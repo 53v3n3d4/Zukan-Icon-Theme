@@ -16,9 +16,12 @@ logger = logging.getLogger(__name__)
 
 
 class DisableEnableTheme:
-    def __init__(self, zukan_preferences_file: str):
-        self.zukan_preferences_file = zukan_preferences_file
+    def __init__(self):
         self.zukan_listener_enabled = is_zukan_listener_enabled()
+
+    def ignored_theme_setting(self):
+        ignored_theme, _ = get_theme_settings()
+        return ignored_theme
 
     def add_to_ignored_themes(self, theme_name: str, ignored_theme: list):
         ignored_theme.append(theme_name)
@@ -54,7 +57,7 @@ class DisableEnableTheme:
 
     def _save_ignored_theme_setting(self, ignored_theme: list):
         sort_list = sorted(ignored_theme)
-        set_save_settings(self.zukan_preferences_file, 'ignored_theme', sort_list)
+        set_save_settings(ZUKAN_SETTINGS, 'ignored_theme', sort_list)
 
 
 class DisableThemeCommand(sublime_plugin.TextCommand):
@@ -64,15 +67,11 @@ class DisableThemeCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.disable_enable_theme = DisableEnableTheme(
-            ZUKAN_SETTINGS,
-        )
-        # Not working if init ignored_theme, test before refactor
-        # self.ignored_theme, _ = get_theme_settings()
+        self.disable_enable_theme = DisableEnableTheme()
 
     def run(self, edit, theme_st_path: str):
         theme_name = os.path.basename(theme_st_path)
-        ignored_theme, _ = get_theme_settings()
+        ignored_theme = self.disable_enable_theme.ignored_theme_setting()
 
         if theme_name not in ignored_theme:
             self.disable_enable_theme.add_to_ignored_themes(theme_name, ignored_theme)
@@ -89,10 +88,8 @@ class DisableThemeInputHandler(sublime_plugin.ListInputHandler):
     to DisableTheme.
     """
 
-    def __init__(self, disable_enable_theme):
+    def __init__(self, disable_enable_theme: DisableEnableTheme):
         self.disable_enable_theme = disable_enable_theme
-        # Not working if init ignored_theme, test before refactor
-        # self.ignored_theme, _ = get_theme_settings()
 
     def name(self) -> str:
         return 'theme_st_path'
@@ -101,7 +98,7 @@ class DisableThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of installed themes'
 
     def list_items(self) -> list:
-        ignored_theme, _ = get_theme_settings()
+        ignored_theme = self.disable_enable_theme.ignored_theme_setting()
 
         ignored_theme_list = self.disable_enable_theme.get_ignored_theme_list(
             ignored_theme
@@ -122,14 +119,10 @@ class EnableThemeCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.disable_enable_theme = DisableEnableTheme(
-            ZUKAN_SETTINGS,
-        )
-        # Not working if init ignored_theme, test before refactor
-        # self.ignored_theme, _ = get_theme_settings()
+        self.disable_enable_theme = DisableEnableTheme()
 
     def run(self, edit, theme_name: str):
-        ignored_theme, _ = get_theme_settings()
+        ignored_theme = self.disable_enable_theme.ignored_theme_setting()
 
         if ignored_theme:
             if theme_name == 'All':
@@ -146,10 +139,8 @@ class EnableThemeInputHandler(sublime_plugin.ListInputHandler):
     List of ignored themes, and return theme_name to EnableTheme.
     """
 
-    def __init__(self, disable_enable_theme):
+    def __init__(self, disable_enable_theme: DisableEnableTheme):
         self.disable_enable_theme = disable_enable_theme
-        # Not working if init ignored_theme, test before refactor
-        # self.ignored_theme, _ = get_theme_settings()
 
     def name(self) -> str:
         return 'theme_name'
@@ -158,7 +149,7 @@ class EnableThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of ignored themes'
 
     def list_items(self) -> list:
-        ignored_theme, _ = get_theme_settings()
+        ignored_theme = self.disable_enable_theme.ignored_theme_setting()
 
         if ignored_theme:
             all_option = ['All']

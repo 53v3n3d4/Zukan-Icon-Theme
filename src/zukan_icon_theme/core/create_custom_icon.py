@@ -30,9 +30,13 @@ class CreateDeleteCustomIcon:
     Class to handle creating or updating a custom icon based on user input.
     """
 
-    def __init__(self):
+    def __init__(self, zukan_preferences_file: str):
+        self.zukan_preferences_file = zukan_preferences_file
         self.zukan_pkg_icons_path = ZUKAN_PKG_ICONS_PATH
         self.zukan_listener_enabled = is_zukan_listener_enabled()
+
+    def create_custom_icon_setting(self):
+        return get_create_custom_icon_settings()
 
     def convert_to_list(self, custom_icon_extensions: str):
         # Convert custom_icon_extensions to list
@@ -184,7 +188,9 @@ class CreateDeleteCustomIcon:
         self._save_create_custom_icon_setting(create_custom_icon)
 
     def _save_create_custom_icon_setting(self, create_custom_icon: dict):
-        set_save_settings(ZUKAN_SETTINGS, 'create_custom_icon', create_custom_icon)
+        set_save_settings(
+            self.zukan_preferences_file, 'create_custom_icon', create_custom_icon
+        )
 
 
 class CreateCustomIconCommand(sublime_plugin.TextCommand):
@@ -194,7 +200,7 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.create_delete_custom_icon = CreateDeleteCustomIcon()
+        self.create_delete_custom_icon = CreateDeleteCustomIcon(ZUKAN_SETTINGS)
 
     def run(
         self,
@@ -206,7 +212,8 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
         create_custom_icon_extensions: str,
         create_custom_icon_contexts: str,
     ):
-        create_custom_icon = get_create_custom_icon_settings()
+        # create_custom_icon = get_create_custom_icon_settings()
+        create_custom_icon = self.create_delete_custom_icon.create_custom_icon_setting()
 
         # Convert create_custom_icon_extensions to list
         list_custom_icon_extensions = self.create_delete_custom_icon.convert_to_list(
@@ -266,7 +273,7 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
             # print(complete_list_filtered)
 
             set_save_settings(
-                ZUKAN_SETTINGS,
+                self.create_delete_custom_icon.zukan_preferences_file,
                 'create_custom_icon',
                 complete_list_filtered,
             )
@@ -387,10 +394,11 @@ class DeleteCustomIconCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.create_delete_custom_icon = CreateDeleteCustomIcon()
+        self.create_delete_custom_icon = CreateDeleteCustomIcon(ZUKAN_SETTINGS)
 
     def run(self, edit, name: str):
-        create_custom_icon = get_create_custom_icon_settings()
+        # create_custom_icon = get_create_custom_icon_settings()
+        create_custom_icon = self.create_delete_custom_icon.create_custom_icon_setting()
 
         if name == 'All':
             self.create_delete_custom_icon.delete_all_customs_icons(create_custom_icon)
@@ -399,13 +407,16 @@ class DeleteCustomIconCommand(sublime_plugin.TextCommand):
             self.create_delete_custom_icon.delete_custom_icon(create_custom_icon, name)
 
     def input(self, args: dict):
-        return DeleteCustomIconInputHandler()
+        return DeleteCustomIconInputHandler(self.create_delete_custom_icon)
 
 
 class DeleteCustomIconInputHandler(sublime_plugin.ListInputHandler):
     """
     List of customized icons, and return name to DeleteCustomIcon.
     """
+
+    def __init__(self, create_delete_custom_icon: CreateDeleteCustomIcon):
+        self.create_delete_custom_icon = create_delete_custom_icon
 
     def name(self) -> str:
         return 'name'
@@ -414,7 +425,8 @@ class DeleteCustomIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of customized icons'
 
     def list_items(self) -> list:
-        create_custom_icon = get_create_custom_icon_settings()
+        # create_custom_icon = get_create_custom_icon_settings()
+        create_custom_icon = self.create_delete_custom_icon.create_custom_icon_setting()
 
         if create_custom_icon:
             all_option = ['All']

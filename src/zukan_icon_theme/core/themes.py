@@ -10,7 +10,6 @@ from ..helpers.load_save_settings import (
 from ..helpers.search_themes import search_resources_sublime_themes
 from ..lib.icons_themes import ZukanTheme
 from ..utils.zukan_paths import (
-    ZUKAN_ICONS_DATA_FILE,
     ZUKAN_PKG_ICONS_PATH,
 )
 
@@ -22,10 +21,16 @@ class Themes(ZukanTheme):
     Themes list, install and delete.
     """
 
-    def __init__(self, zukan_pkg_icons_path: str, icons_data_file: str):
+    def __init__(self, zukan_pkg_icons_path: str):
         super().__init__()
         self.zukan_pkg_icons_path = zukan_pkg_icons_path
-        self.icons_data_file = icons_data_file
+
+    def ignored_theme_setting(self):
+        ignored_theme, _ = get_theme_settings()
+        return ignored_theme
+
+    def zukan_restart_message(self):
+        return is_zukan_restart_message()
 
     def delete_single_icon_theme(self, theme_name: str):
         self.delete_icon_theme(theme_name)
@@ -49,11 +54,11 @@ class Themes(ZukanTheme):
 
     def install_icon_theme(self, theme_st_path: str):
         # 'ignored_theme' setting
-        # ignored_theme, _ = get_theme_settings()
+        ignored_theme = self.ignored_theme_setting()
 
         theme_name = os.path.basename(theme_st_path)
 
-        if theme_name in self.ignored_theme:
+        if theme_name in ignored_theme:
             dialog_message = '{t} is disabled. Need to enable first.'.format(
                 t=theme_name
             )
@@ -63,9 +68,6 @@ class Themes(ZukanTheme):
 
     def install_all_icons_themes(self):
         self.create_icons_themes()
-
-    def zukan_restart_message(self):
-        return is_zukan_restart_message()
 
     def confirm_delete(self, message: str):
         return sublime.ok_cancel_dialog(message)
@@ -78,10 +80,7 @@ class DeleteThemeCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.themes = Themes(
-            ZUKAN_PKG_ICONS_PATH,
-            ZUKAN_ICONS_DATA_FILE,
-        )
+        self.themes = Themes(ZUKAN_PKG_ICONS_PATH)
 
     def run(self, edit, theme_name: str):
         # 'zukan_restart_message' setting
@@ -164,10 +163,7 @@ class InstallThemeCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.themes = Themes(
-            ZUKAN_PKG_ICONS_PATH,
-            ZUKAN_ICONS_DATA_FILE,
-        )
+        self.themes = Themes(ZUKAN_PKG_ICONS_PATH)
 
     def run(self, edit, theme_st_path: str):
         # 'zukan_restart_message' setting
@@ -185,7 +181,7 @@ class InstallThemeCommand(sublime_plugin.TextCommand):
 
         else:
             # 'ignored_theme' setting
-            ignored_theme, _ = get_theme_settings()
+            ignored_theme = self.themes.ignored_theme_setting()
             theme_name = os.path.basename(theme_st_path)
 
             if zukan_restart_message is True and theme_name not in ignored_theme:
@@ -211,7 +207,7 @@ class InstallThemeInputHandler(sublime_plugin.ListInputHandler):
     to InstallTheme.
     """
 
-    def __init__(self, themes):
+    def __init__(self, themes: Themes):
         self.themes = themes
 
     def name(self) -> str:

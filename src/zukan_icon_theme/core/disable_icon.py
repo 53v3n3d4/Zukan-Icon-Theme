@@ -27,8 +27,13 @@ class DisableEnableIcon(ZukanSyntax):
     def __init__(self):
         super().__init__()
 
-        self.ignored_icon = get_ignored_icon_settings()
         self.zukan_listener_enabled = is_zukan_listener_enabled()
+
+    def zukan_icons_data(self):
+        return read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+    def ignored_icon_setting(self):
+        return get_ignored_icon_settings()
 
     def add_to_ignored_icon(self, ignored_icon: list, icon_name: str):
         ignored_icon.append(icon_name)
@@ -75,7 +80,7 @@ class DisableIconCommand(sublime_plugin.TextCommand):
         self.disable_enable_icon = DisableEnableIcon()
 
     def run(self, edit, icon_name: str):
-        ignored_icon = get_ignored_icon_settings()
+        ignored_icon = self.disable_enable_icon.ignored_icon_setting()
 
         if icon_name not in ignored_icon:
             self.disable_enable_icon.add_to_ignored_icon(ignored_icon, icon_name)
@@ -92,7 +97,7 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
     List of Zukan icons, and return icon_name to DisableIcon.
     """
 
-    def __init__(self, disable_enable_icon):
+    def __init__(self, disable_enable_icon: DisableEnableIcon):
         self.disable_enable_icon = disable_enable_icon
 
     def name(self) -> str:
@@ -103,8 +108,8 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
 
     def list_items(self) -> list:
         try:
-            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-            ignored_icon = get_ignored_icon_settings()
+            zukan_icons = self.disable_enable_icon.zukan_icons_data()
+            ignored_icon = self.disable_enable_icon.ignored_icon_setting()
 
             ignored_icon_list = []
 
@@ -146,7 +151,7 @@ class EnableIconCommand(sublime_plugin.TextCommand):
         self.disable_enable_icon = DisableEnableIcon()
 
     def run(self, edit, icon_name: str):
-        ignored_icon = get_ignored_icon_settings()
+        ignored_icon = self.disable_enable_icon.ignored_icon_setting()
 
         if ignored_icon:
             if icon_name == 'All':
@@ -171,13 +176,16 @@ class EnableIconCommand(sublime_plugin.TextCommand):
             # Rebuild syntax and preference
 
     def input(self, args: dict):
-        return EnableIconInputHandler()
+        return EnableIconInputHandler(self.disable_enable_icon)
 
 
 class EnableIconInputHandler(sublime_plugin.ListInputHandler):
     """
     List of ignored icons, and return icon_name to EnableIcon.
     """
+
+    def __init__(self, disable_enable_icon: DisableEnableIcon):
+        self.disable_enable_icon = disable_enable_icon
 
     def name(self) -> str:
         return 'icon_name'
@@ -186,7 +194,7 @@ class EnableIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of ignored icons'
 
     def list_items(self) -> list:
-        ignored_icon = get_ignored_icon_settings()
+        ignored_icon = self.disable_enable_icon.ignored_icon_setting()
 
         if ignored_icon:
             all_option = ['All']

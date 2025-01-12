@@ -25,10 +25,14 @@ logger = logging.getLogger(__name__)
 
 
 class ChangeResetIcon:
-    def __init__(self):
-        self.zukan_preferences_file = ZUKAN_SETTINGS
+    def __init__(self, zukan_preferences_file: str):
+        self.zukan_preferences_file = zukan_preferences_file
         self.icon_path = ZUKAN_PKG_ICONS_PATH
         self.zukan_listener_enabled = is_zukan_listener_enabled()
+
+    def change_icon_setting(self):
+        change_icon, _ = get_change_icon_settings()
+        return change_icon
 
     def message_required_icon_name_file(self, change_icon_name, change_icon_file):
         # Required name and icon input
@@ -89,7 +93,7 @@ class ChangeResetIcon:
         self._save_change_icon_setting(change_icon)
 
     def _save_change_icon_setting(self, change_icon: dict):
-        set_save_settings(ZUKAN_SETTINGS, 'change_icon', change_icon)
+        set_save_settings(self.zukan_preferences_file, 'change_icon', change_icon)
 
 
 class ChangeIconCommand(sublime_plugin.TextCommand):
@@ -99,10 +103,11 @@ class ChangeIconCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.change_reset_icon = ChangeResetIcon()
+        self.change_reset_icon = ChangeResetIcon(ZUKAN_SETTINGS)
 
     def run(self, edit, change_icon_name: str, change_icon_file: str):
-        change_icon, _ = get_change_icon_settings()
+        # change_icon, _ = get_change_icon_settings()
+        change_icon = self.change_reset_icon.change_icon_setting()
 
         inserted_change_icon = {change_icon_name: change_icon_file}
 
@@ -113,7 +118,11 @@ class ChangeIconCommand(sublime_plugin.TextCommand):
         if change_icon_name and change_icon_file:
             if (change_icon_name, change_icon_file) not in change_icon.items():
                 change_icon.update(inserted_change_icon)
-                set_save_settings(ZUKAN_SETTINGS, 'change_icon', change_icon)
+                set_save_settings(
+                    self.change_reset_icon.zukan_preferences_file,
+                    'change_icon',
+                    change_icon,
+                )
 
                 self.change_reset_icon.png_exists(change_icon_name, change_icon_file)
 
@@ -168,10 +177,11 @@ class ResetIconCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.change_reset_icon = ChangeResetIcon()
+        self.change_reset_icon = ChangeResetIcon(ZUKAN_SETTINGS)
 
     def run(self, edit, icon_name: str):
-        change_icon, _ = get_change_icon_settings()
+        # change_icon, _ = get_change_icon_settings()
+        change_icon = self.change_reset_icon.change_icon_setting()
 
         if change_icon:
             if icon_name == 'All':
@@ -195,13 +205,16 @@ class ResetIconCommand(sublime_plugin.TextCommand):
             # set_save_settings(ZUKAN_SETTINGS, 'change_icon', icon_dict_updated)
 
     def input(self, args: dict):
-        return ResetIconInputHandler()
+        return ResetIconInputHandler(self.change_reset_icon)
 
 
 class ResetIconInputHandler(sublime_plugin.ListInputHandler):
     """
     List of changed icons, and return icon_name to ResetIcon.
     """
+
+    def __init__(self, change_reset_icon: ChangeResetIcon):
+        self.change_reset_icon = change_reset_icon
 
     def name(self) -> str:
         return 'icon_name'
@@ -210,7 +223,8 @@ class ResetIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of changed icons'
 
     def list_items(self) -> list:
-        change_icon, _ = get_change_icon_settings()
+        # change_icon, _ = get_change_icon_settings()
+        change_icon = self.change_reset_icon.change_icon_setting()
 
         if change_icon:
             all_option = ['All']

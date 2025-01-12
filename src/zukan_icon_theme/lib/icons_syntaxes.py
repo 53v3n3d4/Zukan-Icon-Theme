@@ -42,7 +42,9 @@ class ZukanSyntax:
 
     def __init__(self):
         self.ignored_icon = get_ignored_icon_settings()
-        # self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+    def zukan_icons_data(self):
+        return read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
     def install_syntax(self, file_name: str, syntax_name: str):
         """
@@ -113,7 +115,7 @@ class ZukanSyntax:
         syntax_name (str) -- syntax name, file name and extension.
         """
         try:
-            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+            zukan_icons = self.zukan_icons_data()
 
             list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
@@ -192,7 +194,7 @@ class ZukanSyntax:
         Create icons sublime-syntaxes files.
         """
         try:
-            zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+            zukan_icons = self.zukan_icons_data()
 
             list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 

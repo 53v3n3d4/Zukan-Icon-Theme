@@ -13,22 +13,15 @@ from ..core.zukan_pref_settings import SettingsEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..utils.zukan_paths import ZUKAN_PKG_SUBLIME_PATH
+from ..utils.zukan_reports_options import ZUKAN_REPORTS_OPTIONS
 
 logger = logging.getLogger(__name__)
 
-# ZUKAN_PROFILE_OPTIONS = [
+# ZUKAN_REPORTS_OPTIONS = [
 #     { 'get_user_theme': (lambda: SchemeTheme().get_user_theme()) },
 #     { 'build_preferences': (lambda: ZukanPreference().build_icons_preferences()) },
 #     { 'build_syntaxes': (lambda: ZukanSyntax().build_icons_syntaxes()) },
 # ]
-
-ZUKAN_PROFILE_OPTIONS = [
-    'Profile get_user_theme',
-    'Profile build_preferences',
-    'Profile build_syntaxes',
-    'Clear reports file',
-    'Zukan preferences settings',
-]
 
 
 class Reporter:
@@ -159,5 +152,5 @@ class ZukanReporterrOptionsInputHandler(sublime_plugin.ListInputHandler):
         return 'Select option'
 
     def list_items(self) -> list:
-        profile_opts = ZUKAN_PROFILE_OPTIONS
+        profile_opts = ZUKAN_REPORTS_OPTIONS
         return profile_opts

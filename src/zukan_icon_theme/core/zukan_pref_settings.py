@@ -361,6 +361,15 @@ class UpgradePlugin:
         self.is_upgrading = False
         self.install_event = install_event if install_event else InstallEvent()
 
+        self.pkg_version, self.auto_upgraded = get_upgraded_version_settings()
+        self.version_json_file = get_settings(ZUKAN_VERSION, 'version')
+
+        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
+            self.data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
+        else:
+            self.data = []
+
+
     def start_upgrade(self):
         """
         Allow upgrade zukan files and delay rebuild icon files.
@@ -382,19 +391,17 @@ class UpgradePlugin:
         It compares with 'version' value from 'zukan_current_settings.pkl'.
         """
         logger.debug('if package upgraded, begin rebuild...')
-        pkg_version, auto_upgraded = get_upgraded_version_settings()
 
-        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and auto_upgraded is True:
-            data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
+        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and self.auto_upgraded is True:
             installed_pkg_version = ''.join(
-                [d['version'] for d in data if 'version' in d]
+                [d['version'] for d in self.data if 'version' in d]
             )
 
             # Transform string to tuple to compare.
             tuple_installed_pkg_version = tuple(
                 map(int, installed_pkg_version.split('.'))
             )
-            tuple_pkg_version = tuple(map(int, pkg_version.split('.')))
+            tuple_pkg_version = tuple(map(int, self.pkg_version.split('.')))
             # print(tuple_installed_pkg_version)
             # print(tuple_pkg_version)
             # print((0, 1, 73) > (0, 1, 72))
@@ -411,11 +418,10 @@ class UpgradePlugin:
         # Setting file `zukan-version` depreceated in favor of `zukan_current_settings`
         # Need to upgrade from v0.3.0 to v0.3.1, where there is no
         # zukan_current_settings below v0.3.0.
-        if os.path.exists(ZUKAN_VERSION_FILE) and auto_upgraded is True:
-            version_json_file = get_settings(ZUKAN_VERSION, 'version')
-            tuple_version_json_file = tuple(map(int, version_json_file.split('.')))
+        if os.path.exists(ZUKAN_VERSION_FILE) and self.auto_upgraded is True:
+            tuple_version_json_file = tuple(map(int, self.version_json_file.split('.')))
 
-            tuple_version_pkg = tuple(map(int, pkg_version.split('.')))
+            tuple_version_pkg = tuple(map(int, self.pkg_version.split('.')))
 
             if tuple_version_json_file <= (0, 3, 0) and tuple_version_pkg >= (0, 3, 1):
                 logger.info('removing depreceated file "zukan-version"')
@@ -424,7 +430,7 @@ class UpgradePlugin:
                 logger.info('updating package...')
                 self.install_event.install_upgrade_thread()
 
-        if auto_upgraded is False:
+        if self.auto_upgraded is False:
             logger.debug('auto_upgraded setting is False.')
 
         if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
@@ -432,3 +438,87 @@ class UpgradePlugin:
 
         if not os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
             save_current_settings()
+
+
+
+# class UpgradePlugin:
+#     def __init__(
+#         self,
+#         event_bus,
+#         install_event=None,
+#     ):
+#         self.event_bus = event_bus
+#         self.is_upgrading = False
+#         self.install_event = install_event if install_event else InstallEvent()
+
+#     def start_upgrade(self):
+#         """
+#         Allow upgrade zukan files and delay rebuild icon files.
+#         """
+#         self.is_upgrading = True
+#         self.event_bus.publish('upgrade_started')
+
+#         self.upgrade_zukan_files()
+
+#         self.is_upgrading = False
+#         self.event_bus.publish('upgrade_finished')
+
+#     def upgrade_zukan_files(self):
+#         """
+#         Event for setting 'version' in 'Zukan Icon Theme.sublime-settings'.
+
+#         If option is True, will rebuild preferences and syntaxes files.
+
+#         It compares with 'version' value from 'zukan_current_settings.pkl'.
+#         """
+#         logger.debug('if package upgraded, begin rebuild...')
+#         pkg_version, auto_upgraded = get_upgraded_version_settings()
+
+#         if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and auto_upgraded is True:
+#             data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
+#             installed_pkg_version = ''.join(
+#                 [d['version'] for d in data if 'version' in d]
+#             )
+
+#             # Transform string to tuple to compare.
+#             tuple_installed_pkg_version = tuple(
+#                 map(int, installed_pkg_version.split('.'))
+#             )
+#             tuple_pkg_version = tuple(map(int, pkg_version.split('.')))
+#             # print(tuple_installed_pkg_version)
+#             # print(tuple_pkg_version)
+#             # print((0, 1, 73) > (0, 1, 72))
+#             # print((0, 1, 72) == (0, 1, 72))
+#             if tuple_pkg_version == tuple_installed_pkg_version:
+#                 logger.debug('no need to update')
+
+#             if tuple_pkg_version > tuple_installed_pkg_version:
+#                 logger.info('updating package...')
+#                 self.install_event.install_upgrade_thread()
+
+#                 save_current_settings()
+
+#         # Setting file `zukan-version` depreceated in favor of `zukan_current_settings`
+#         # Need to upgrade from v0.3.0 to v0.3.1, where there is no
+#         # zukan_current_settings below v0.3.0.
+#         if os.path.exists(ZUKAN_VERSION_FILE) and auto_upgraded is True:
+#             version_json_file = get_settings(ZUKAN_VERSION, 'version')
+#             tuple_version_json_file = tuple(map(int, version_json_file.split('.')))
+
+#             tuple_version_pkg = tuple(map(int, pkg_version.split('.')))
+
+#             if tuple_version_json_file <= (0, 3, 0) and tuple_version_pkg >= (0, 3, 1):
+#                 logger.info('removing depreceated file "zukan-version"')
+#                 os.remove(ZUKAN_VERSION_FILE)
+
+#                 logger.info('updating package...')
+#                 self.install_event.install_upgrade_thread()
+
+#         if auto_upgraded is False:
+#             logger.debug('auto_upgraded setting is False.')
+
+#         if not os.path.exists(ZUKAN_PKG_SUBLIME_PATH):
+#             os.makedirs(ZUKAN_PKG_SUBLIME_PATH)
+
+#         if not os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
+#             save_current_settings()

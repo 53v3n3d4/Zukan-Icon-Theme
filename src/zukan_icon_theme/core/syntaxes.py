@@ -23,11 +23,11 @@ class Syntaxes(ZukanSyntax):
     Syntaxes list, install and delete.
     """
 
-    def __init__(self, syntaxes_path: str, sublime_syntax_extension: str):
+    def __init__(self, syntaxes_path: str):
         ZukanSyntax.__init__(self)
 
         self.syntaxes_path = syntaxes_path
-        self.sublime_syntax_extension = sublime_syntax_extension
+        self.icons_data_file = ZUKAN_ICONS_DATA_FILE
 
     def delete_single_icon_syntax(self, syntax_name: str):
         self.delete_icon_syntax(syntax_name)
@@ -42,7 +42,7 @@ class Syntaxes(ZukanSyntax):
         return sorted(installed_syntaxes_list)
 
     def get_not_installed_syntaxes(self):
-        zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+        zukan_icons = read_pickle_data(self.icons_data_file)
 
         list_syntaxes_not_installed = []
         list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
@@ -64,7 +64,7 @@ class Syntaxes(ZukanSyntax):
                         # file_extensions list can be empty
                         if k['file_extensions']:
                             list_syntaxes_not_installed.append(
-                                k['name'] + self.sublime_syntax_extension
+                                k['name'] + SUBLIME_SYNTAX_EXTENSION
                             )
         list_syntaxes_not_installed = list(
             set(list_syntaxes_not_installed).difference(
@@ -83,7 +83,7 @@ class Syntaxes(ZukanSyntax):
 
         # ignored_icon = get_ignored_icon_settings()
 
-        zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+        zukan_icons = read_pickle_data(self.icons_data_file)
 
         # # 'create_custom_icon' setting
         # custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
@@ -118,10 +118,7 @@ class DeleteSyntaxCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.syntaxes = Syntaxes(
-            ZUKAN_PKG_ICONS_SYNTAXES_PATH,
-            SUBLIME_SYNTAX_EXTENSION,
-        )
+        self.syntaxes = Syntaxes(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
 
     def run(self, edit, syntax_name: str):
         if syntax_name == 'All':
@@ -182,10 +179,7 @@ class InstallSyntaxCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.syntaxes = Syntaxes(
-            ZUKAN_PKG_ICONS_SYNTAXES_PATH,
-            SUBLIME_SYNTAX_EXTENSION,
-        )
+        self.syntaxes = Syntaxes(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
 
     def run(self, edit, syntax_name: str):
         if syntax_name == 'All':

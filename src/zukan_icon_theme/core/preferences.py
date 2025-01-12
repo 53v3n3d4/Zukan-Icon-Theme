@@ -8,7 +8,6 @@ from ..utils.file_extensions import (
     TMPREFERENCES_EXTENSION,
 )
 from ..utils.zukan_paths import (
-    ZUKAN_ICONS_DATA_FILE,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
 )
 
@@ -20,13 +19,9 @@ class Preferences(ZukanPreference):
     Preferences list, install and delete.
     """
 
-    def __init__(
-        self, preferences_path: str, icons_data_file: str, tmpreferences_extension: str
-    ):
+    def __init__(self, preferences_path: str):
         super().__init__()
         self.preferences_path = preferences_path
-        self.icons_data_file = icons_data_file
-        self.tmpreferences_extension = tmpreferences_extension
 
     def delete_icon_preference(self, preference_name: str):
         self.delete_icons_preference(preference_name)
@@ -53,7 +48,7 @@ class Preferences(ZukanPreference):
                     icon_name = icon_name[:-6]
 
                 list_preferences_not_installed.append(
-                    icon_name + self.tmpreferences_extension
+                    icon_name + TMPREFERENCES_EXTENSION
                 )
         list_preferences_not_installed = list(
             set(list_preferences_not_installed).difference(
@@ -102,11 +97,7 @@ class DeletePreferenceCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.preferences = Preferences(
-            ZUKAN_PKG_ICONS_PREFERENCES_PATH,
-            ZUKAN_ICONS_DATA_FILE,
-            TMPREFERENCES_EXTENSION,
-        )
+        self.preferences = Preferences(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
 
     def run(self, edit, preference_name: str):
         if preference_name == 'All':
@@ -162,11 +153,7 @@ class InstallPreferenceCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.preferences = Preferences(
-            ZUKAN_PKG_ICONS_PREFERENCES_PATH,
-            ZUKAN_ICONS_DATA_FILE,
-            TMPREFERENCES_EXTENSION,
-        )
+        self.preferences = Preferences(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
 
     def run(self, edit, preference_name: str):
         if preference_name == 'All':

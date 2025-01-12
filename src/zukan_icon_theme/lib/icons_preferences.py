@@ -44,11 +44,13 @@ class ZukanPreference:
         self.auto_prefer_icon, self.prefer_icon = get_prefer_icon_settings()
         self.change_icon, _ = get_change_icon_settings()
         self.ignored_icon = get_ignored_icon_settings()
-        # self.zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
         self.theme_name = get_theme_name()
-        # Not working, currently, getting previous not the recently modified.
-        # So it is building inverted dark and light.
-        # self.bgcolor = get_sidebar_bgcolor(self.theme_name)
+
+    def zukan_icons_data(self):
+        return read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+    def sidebar_bgcolor(self):
+        return get_sidebar_bgcolor(self.theme_name)
 
     def build_icon_preference(self, file_name: str, preference_name: str):
         """
@@ -230,13 +232,11 @@ class ZukanPreference:
     def get_list_icons_preferences(self):
         list_all_icons_preferences = []
 
-        zukan_icons = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-
         # 'create_custom_icon' setting
         custom_list = [
-            p for p in generate_custom_icon(zukan_icons) if 'preferences' in p
+            p for p in generate_custom_icon(self.zukan_icons_data()) if 'preferences' in p
         ]
-        list_all_icons_preferences = zukan_icons + custom_list
+        list_all_icons_preferences = self.zukan_icons_data() + custom_list
 
         return list_all_icons_preferences
 
@@ -263,7 +263,7 @@ class ZukanPreference:
         list_all_icons_preferences = self.get_list_icons_preferences()
         # print(list_all_icons_preferences)
 
-        bgcolor = get_sidebar_bgcolor(self.theme_name)
+        bgcolor = self.sidebar_bgcolor()
 
         for p in list_all_icons_preferences:
             if (
@@ -348,7 +348,7 @@ class ZukanPreference:
         """
         list_all_icons_preferences = self.get_list_icons_preferences()
 
-        bgcolor = get_sidebar_bgcolor(self.theme_name)
+        bgcolor = self.sidebar_bgcolor()
 
         for p in list_all_icons_preferences:
             if p['preferences'].get('scope') is not None and not (

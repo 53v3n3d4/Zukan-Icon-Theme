@@ -32,7 +32,7 @@ def visible_syntaxes_only() -> set:
     return syntaxes_list_visible
 
 
-def compare_scopes(zukan_icons_syntaxes: list) -> list:
+def compare_scopes(zukan_icons_data: list) -> list:
     """
     Compare scopes from user ST installed syntaxes and zukan icon syntaxes.
 
@@ -43,7 +43,7 @@ def compare_scopes(zukan_icons_syntaxes: list) -> list:
     list_scopes_to_remove = []
 
     user_syntaxes_dict = {y.scope: y for y in visible_syntaxes_only()}
-    for x in zukan_icons_syntaxes:
+    for x in zukan_icons_data:
         if x.get('syntax'):
             for s in x['syntax']:
                 if s['scope'] in user_syntaxes_dict:
@@ -56,9 +56,9 @@ def list_syntax_to_dump():
     """
     Print syntax that will be dumped. Used for testing only,
     """
-    zukan_icons_syntaxes = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
-    for x in zukan_icons_syntaxes:
-        if x not in compare_scopes(zukan_icons_syntaxes):
+    zukan_icons_data = read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+    for x in zukan_icons_data:
+        if x not in compare_scopes(zukan_icons_data):
             print(x)
 
 

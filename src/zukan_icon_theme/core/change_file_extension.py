@@ -18,6 +18,10 @@ class ChangeResetFileExtension:
     def __init__(self):
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 
+    def change_icon_file_extension_setting(self):
+        _, change_icon_file_extension = get_change_icon_settings()
+        return change_icon_file_extension
+
     def message_required_change_file_scope_extension(
         self, change_file_extension_scope: str, change_file_extension_exts: str
     ):
@@ -155,7 +159,9 @@ class ChangeFileExtensionCommand(sublime_plugin.TextCommand):
     def run(
         self, edit, change_file_extension_scope: str, change_file_extension_exts: str
     ):
-        change_icon, change_icon_file_extension = get_change_icon_settings()
+        change_icon_file_extension = (
+            self.change_reset_file_extension.change_icon_file_extension_setting()
+        )
 
         self.change_reset_file_extension.message_required_change_file_scope_extension(
             change_file_extension_scope, change_file_extension_exts
@@ -281,7 +287,9 @@ class ResetFileExtensionCommand(sublime_plugin.TextCommand):
         self.change_reset_file_extension = ChangeResetFileExtension()
 
     def run(self, edit, scope_name: str):
-        change_icon, change_icon_file_extension = get_change_icon_settings()
+        change_icon_file_extension = (
+            self.change_reset_file_extension.change_icon_file_extension_setting()
+        )
 
         if change_icon_file_extension:
             if scope_name == 'All':
@@ -295,13 +303,16 @@ class ResetFileExtensionCommand(sublime_plugin.TextCommand):
                 )
 
     def input(self, args: dict):
-        return ResetFileExtensionInputHandler()
+        return ResetFileExtensionInputHandler(self.change_reset_file_extension)
 
 
 class ResetFileExtensionInputHandler(sublime_plugin.ListInputHandler):
     """
     List of changed icons file extensions, and return scope_name to ResetFileExtension.
     """
+
+    def __init__(self, change_reset_file_extension: ChangeResetFileExtension):
+        self.change_reset_file_extension = change_reset_file_extension
 
     def name(self) -> str:
         return 'scope_name'
@@ -310,7 +321,9 @@ class ResetFileExtensionInputHandler(sublime_plugin.ListInputHandler):
         return 'List of changed icons file extensions'
 
     def list_items(self) -> list:
-        change_icon, change_icon_file_extension = get_change_icon_settings()
+        change_icon_file_extension = (
+            self.change_reset_file_extension.change_icon_file_extension_setting()
+        )
 
         if change_icon_file_extension:
             all_option = ['All']
