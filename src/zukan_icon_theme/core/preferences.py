@@ -3,6 +3,7 @@ import os
 import sublime
 import sublime_plugin
 
+from ..helpers.load_save_settings import get_ignored_icon_settings
 from ..lib.icons_preferences import ZukanPreference
 from ..utils.file_extensions import (
     TMPREFERENCES_EXTENSION,
@@ -22,6 +23,9 @@ class Preferences(ZukanPreference):
     def __init__(self, preferences_path: str):
         super().__init__()
         self.preferences_path = preferences_path
+
+    def ignored_icon_setting(self):
+        return get_ignored_icon_settings()
 
     def delete_icon_preference(self, preference_name: str):
         self.delete_icons_preference(preference_name)
@@ -66,22 +70,29 @@ class Preferences(ZukanPreference):
         for p in list_all_icons_preferences:
             if (
                 p['preferences']['settings']['icon'] == file_name
-                and p['name'] in self.ignored_icon
+                or p['preferences']['settings']['icon'][:-5] == file_name
+                or p['preferences']['settings']['icon'][:-6] == file_name
             ):
-                dialog_message = '{i} icon is disabled. Need to enable first.'.format(
-                    i=p['name']
-                )
-                sublime.message_dialog(dialog_message)
+                if p['name'] in self.ignored_icon_setting():
+                    dialog_message = (
+                        '{i} icon is disabled. Need to enable first.'.format(
+                            i=p['name']
+                        )
+                    )
+                    # sublime.message_dialog(dialog_message)
+                    sublime.error_message(dialog_message)
 
-            # Default icon
-            # Need to add '-dark' or 'light' that was removed to mount list
-            if p['preferences']['settings']['icon'][:-5] == file_name:
-                file_name = p['preferences']['settings']['icon']
+                else:
+                    # Default icon
+                    # Need to add '-dark' or 'light' that was removed to mount list
+                    if p['preferences']['settings']['icon'][:-5] == file_name:
+                        file_name = p['preferences']['settings']['icon']
 
-            if p['preferences']['settings']['icon'][:-6] == file_name:
-                file_name = p['preferences']['settings']['icon']
+                    if p['preferences']['settings']['icon'][:-6] == file_name:
+                        file_name = p['preferences']['settings']['icon']
 
-        self.build_icon_preference(file_name, preference_name)
+                    # print(file_name)
+                    self.build_icon_preference(file_name, preference_name)
 
     def install_all_icons_preferences(self):
         self.build_icons_preferences()

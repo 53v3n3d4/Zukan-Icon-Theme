@@ -321,8 +321,10 @@ class ZukanPreference:
 
             if preference_name.endswith('-dark'):
                 fname = preference_name[:-5] + TMPREFERENCES_EXTENSION
-            if preference_name.endswith('-light'):
+            elif preference_name.endswith('-light'):
                 fname = preference_name[:-6] + TMPREFERENCES_EXTENSION
+            else:
+                fname = preference_name
 
             logger.info('%s created.', fname)
 

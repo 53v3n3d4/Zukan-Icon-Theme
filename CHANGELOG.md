@@ -7,6 +7,11 @@
 - Change icon: CSS
 - Change syntax: Eleventy
 
+### Plugin 🕹️
+- Fix install theme command, creating ignored_theme
+- Fix install syntax command, creating syntax for ignored_icon
+- Fix install preference command, creating preference for ignored_icon
+
 ## [0.4.4] - 2025-01-11
 
 ### Plugin 🕹️
@@ -33,7 +38,7 @@
 - Move move_folders to helpers
 - Move clean_comments to helpers
 - Change search_syntax and edit_file_extension, improve build time
-- Fix error upgrade_zukan_files and multiple rebuild_icon_files calls when upgrading through Package Control.
+- Fix error upgrade_zukan_files and multiple rebuild_icon_files calls when upgrading through Package Control
 - Add EventBus for upgrade_zukan_files and rebuild_icon_files.
 
 ## [0.4.2] - 2024-12-19

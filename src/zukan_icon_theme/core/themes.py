@@ -62,7 +62,8 @@ class Themes(ZukanTheme):
             dialog_message = '{t} is disabled. Need to enable first.'.format(
                 t=theme_name
             )
-            sublime.message_dialog(dialog_message)
+            # sublime.message_dialog(dialog_message)
+            sublime.error_message(dialog_message)
 
         else:
             self.create_icon_theme(theme_st_path)
