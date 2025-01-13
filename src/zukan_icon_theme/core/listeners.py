@@ -54,11 +54,11 @@ class SchemeTheme:
         self.user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
         self.zukan_restart_message = is_zukan_restart_message()
 
-    def theme(self):
+    def theme_name_setting(self):
         return get_theme_name()
 
     def theme_file(self):
-        return os.path.join(ZUKAN_PKG_ICONS_PATH, self.theme())
+        return os.path.join(ZUKAN_PKG_ICONS_PATH, self.theme_name_setting())
 
     def get_user_theme(self):
         """
@@ -72,9 +72,10 @@ class SchemeTheme:
         """
 
         if (
-            self.theme() not in self.zukan_theme.list_created_icons_themes()
+            self.theme_name_setting()
+            not in self.zukan_theme.list_created_icons_themes()
             and self.auto_install_theme is False
-        ) or self.theme() in self.ignored_theme:
+        ) or self.theme_name_setting() in self.ignored_theme:
             # Delete preferences to avoid error unable to decode 'icon_file_type'
             # Example of extensions that this errors show: HAML, LICENSE, README,
             # Makefile
@@ -94,10 +95,10 @@ class SchemeTheme:
         if (
             self.auto_install_theme is True
             and not os.path.exists(self.theme_file())
-            and package_theme_exists(self.theme())
-            and self.theme() not in self.ignored_theme
+            and package_theme_exists(self.theme_name_setting())
+            and self.theme_name_setting() not in self.ignored_theme
         ):
-            theme_path = sublime.find_resources(self.theme())
+            theme_path = sublime.find_resources(self.theme_name_setting())
             self.zukan_theme.create_icon_theme(theme_path[0])
 
             if self.zukan_restart_message:
@@ -111,8 +112,8 @@ class SchemeTheme:
         self.zukan_theme.delete_unused_icon_theme()
 
         if (
-            self.theme() in self.zukan_theme.list_created_icons_themes()
-            and self.theme() not in self.ignored_theme
+            self.theme_name_setting() in self.zukan_theme.list_created_icons_themes()
+            and self.theme_name_setting() not in self.ignored_theme
         ):
             if not any(
                 syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
@@ -130,18 +131,20 @@ class SchemeTheme:
                     for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
                 )
                 or (
-                    self.theme() in self.prefer_icon
+                    self.theme_name_setting() in self.prefer_icon
                     and not any(
-                        d['theme'] == self.theme() for d in self.user_ui_settings
+                        d['theme'] == self.theme_name_setting()
+                        for d in self.user_ui_settings
                     )
                 )
                 or (
                     # 'auto_prefer_icon' setting
                     self.auto_prefer_icon is True
-                    and self.theme() not in self.prefer_icon
+                    and self.theme_name_setting() not in self.prefer_icon
                     and (
                         not any(
-                            d['theme'] == self.theme() for d in self.user_ui_settings
+                            d['theme'] == self.theme_name_setting()
+                            for d in self.user_ui_settings
                         )
                         or not any(
                             d['color_scheme'] == self.color_scheme_name
@@ -156,13 +159,15 @@ class SchemeTheme:
                 # self.zukan_preference.build_icons_preferences()
 
         # Deleting ignored theme in case it already exists before ignoring.
-        if self.theme() in self.ignored_theme and os.path.exists(self.theme_file()):
+        if self.theme_name_setting() in self.ignored_theme and os.path.exists(
+            self.theme_file()
+        ):
             if self.zukan_restart_message:
                 dialog_message = (
                     'You may have to restart ST, for all icons do not show.'
                 )
                 sublime.message_dialog(dialog_message)
-            self.zukan_theme.delete_icon_theme(self.theme())
+            self.zukan_theme.delete_icon_theme(self.theme_name_setting())
 
 
 class SchemeThemeListener(sublime_plugin.ViewEventListener):

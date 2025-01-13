@@ -23,9 +23,10 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-class DisableEnableIcon(ZukanSyntax):
-    def __init__(self):
+class DisableEnableIcon:
+    def __init__(self, zukan_syntax: ZukanSyntax):
         super().__init__()
+        self.zukan_syntax = zukan_syntax
 
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 
@@ -34,6 +35,9 @@ class DisableEnableIcon(ZukanSyntax):
 
     def ignored_icon_setting(self):
         return get_ignored_icon_settings()
+
+    def get_list_all_icons_syntaxes(self, zukan_icons: list):
+        return self.zukan_syntax.get_list_icons_syntaxes(zukan_icons)
 
     def add_to_ignored_icon(self, ignored_icon: list, icon_name: str):
         ignored_icon.append(icon_name)
@@ -77,7 +81,8 @@ class DisableIconCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.disable_enable_icon = DisableEnableIcon()
+        self.zukan_syntax = ZukanSyntax()
+        self.disable_enable_icon = DisableEnableIcon(self.zukan_syntax)
 
     def run(self, edit, icon_name: str):
         ignored_icon = self.disable_enable_icon.ignored_icon_setting()
@@ -113,12 +118,9 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
 
             ignored_icon_list = []
 
-            list_all_icons_syntaxes = self.disable_enable_icon.get_list_icons_syntaxes(
-                zukan_icons
+            list_all_icons_syntaxes = (
+                self.disable_enable_icon.get_list_all_icons_syntaxes(zukan_icons)
             )
-            # # 'create_custom_icon' setting
-            # custom_list = [s for s in generate_custom_icon() if 'syntax' in s]
-            # new_list = zukan_icons + custom_list
 
             for i in list_all_icons_syntaxes:
                 if i.get('name') is not None and i.get('name') not in ignored_icon:
@@ -148,7 +150,8 @@ class EnableIconCommand(sublime_plugin.TextCommand):
 
     def __init__(self, view):
         super().__init__(view)
-        self.disable_enable_icon = DisableEnableIcon()
+        self.zukan_syntax = ZukanSyntax()
+        self.disable_enable_icon = DisableEnableIcon(self.zukan_syntax)
 
     def run(self, edit, icon_name: str):
         ignored_icon = self.disable_enable_icon.ignored_icon_setting()
