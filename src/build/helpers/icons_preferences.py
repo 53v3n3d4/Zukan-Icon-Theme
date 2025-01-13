@@ -20,7 +20,7 @@ class Preference:
     Sublime Text need a tmPreferences file to show icon beside a file.
     """
 
-    def preferences(icon_data: str, dir_destiny: str):
+    def preferences(self, icon_data: str, dir_destiny: str):
         """
         Generate icon tmPreferences file.
 
@@ -46,8 +46,8 @@ class Preference:
                 # print(isinstance(data, dict))
                 # print(data)
                 iconpreferences = (
-                    f'{ data["preferences"]["settings"]["icon"] }'
-                    f'{ TMPREFERENCES_EXTENSION }'
+                    f'{data["preferences"]["settings"]["icon"]}'
+                    f'{TMPREFERENCES_EXTENSION}'
                 )
                 # print(iconpreferences)
                 if not os.path.exists(dir_destiny):
@@ -73,8 +73,8 @@ class Preference:
                     os.path.basename(icon_data),
                     'keys preferences, scope and icon, are essentials. Exception for '
                     'ST icons default.',
-                    color=f'{ Color.RED }',
-                    color_end=f'{ Color.END }',
+                    color=f'{Color.RED}',
+                    color_end=f'{Color.END}',
                 )
                 return data
             else:
@@ -88,7 +88,7 @@ class Preference:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), icon_data
             )
 
-    def preferences_all(dir_icon_data: str, dir_destiny: str):
+    def preferences_all(self, dir_icon_data: str, dir_destiny: str):
         """
         Create all icons tmPreferences files from data files.
 
@@ -101,7 +101,7 @@ class Preference:
             for file_data in files_in_dir:
                 icon_data_path = os.path.join(dir_icon_data, file_data)
                 # print(icon_data_path)
-                Preference.preferences(icon_data_path, dir_destiny)
+                self.preferences(icon_data_path, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
             logger.error(

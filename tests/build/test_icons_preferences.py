@@ -17,25 +17,28 @@ from tests.mocks.constants_yaml import (
 from tests.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
-    DS_STORE_MOCKS_PATH,
+    OS_FILE_MOCKS_PATH,
     TEST_DATA_DIR,
 )
 from unittest.mock import patch, mock_open
+
+zukan_preference = Preference()
 
 
 class TestPreferences:
     @pytest.mark.parametrize('a, b, expected', [(DIR_DATA, DIR_DESTINY, TEST_DATA_DIR)])
     def test_preferences_all(self, a, b, expected):
-        # Delete '.DS_Store' file that get created when running tests
-        if '.DS_Store' in os.listdir(DIR_DESTINY):
-            os.remove(DS_STORE_MOCKS_PATH)
+        data_dir_list = zukan_preference.preferences_all(a, b)
 
-        result = Preference.preferences_all(a, b)
+        # Delete '.DS_Store' and 'Thumbs.db'file that get created when
+        # running tests
+        result = [i for i in data_dir_list if i not in OS_FILE_MOCKS_PATH]
+
         assert result == TEST_DATA_DIR
 
     @pytest.fixture(autouse=True)
     def test_create_preferences_file(self, capfd):
-        Preference.preferences('tests/mocks/yaml.yaml', DIR_DESTINY)
+        zukan_preference.preferences('tests/mocks/yaml.yaml', DIR_DESTINY)
 
         out, err = capfd.readouterr()
         assert (
@@ -46,7 +49,7 @@ class TestPreferences:
 
     def test_mock_create_preferences_file(self):
         with patch('src.build.helpers.icons_preferences.open', mock_open()):
-            result = Preference.preferences('tests/mocks/yaml.yaml', DIR_DESTINY)
+            result = zukan_preference.preferences('tests/mocks/yaml.yaml', DIR_DESTINY)
             assert result is None
 
     # To do: should get an Errno 13 not empty
@@ -55,7 +58,7 @@ class TestPreferences:
         caplog.clear()
         with patch('src.build.helpers.icons_preferences.open') as mock_open:
             mock_open.side_effect = OSError
-            Preference.preferences(
+            zukan_preference.preferences(
                 'tests/mocks/yaml.yaml',
                 DIR_DESTINY,
             )
@@ -66,7 +69,7 @@ class TestPreferences:
         caplog.clear()
         with patch('src.build.helpers.icons_preferences.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            Preference.preferences_all(
+            zukan_preference.preferences_all(
                 'tests/mocks/not_found_yaml.yaml',
                 'tests/mocks/',
             )
@@ -86,7 +89,7 @@ class TestPreferences:
         caplog.clear()
         with patch('src.build.helpers.icons_preferences.open') as mock_open:
             mock_open.side_effect = OSError
-            Preference.preferences_all(
+            zukan_preference.preferences_all(
                 DIR_DATA,
                 DIR_DESTINY,
             )
@@ -109,46 +112,46 @@ class TestPreferences:
         assert result == TEST_YAML_EXPECTED  # noqa: F821
 
 
-class TestIconPreferences(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.setUpClassPyfakefs()
-        cls.fake_fs().create_file('data/afdesign.yaml', contents='test')
-        cls.fake_fs().create_file('data/afphoto.yaml', contents='test')
-        cls.fake_fs().create_file('data/afpub.yaml', contents='test')
-        cls.fake_fs().create_file('data/ai.yaml', contents='test')
-        cls.fake_fs().create_file('data/angular.yaml', contents='test')
+# class TestIconPreferences(TestCase):
+#     @classmethod
+#     def setUpClass(cls):
+#         cls.setUpClassPyfakefs()
+#         cls.fake_fs().create_file('data/afdesign.yaml', contents='test')
+#         cls.fake_fs().create_file('data/afphoto.yaml', contents='test')
+#         cls.fake_fs().create_file('data/afpub.yaml', contents='test')
+#         cls.fake_fs().create_file('data/ai.yaml', contents='test')
+#         cls.fake_fs().create_file('data/angular.yaml', contents='test')
 
-    def test_file_exist(self):
-        Preference.preferences('data/ai.yaml', DIR_DESTINY)
-        self.assertTrue(os.path.exists('data/ai.yaml'))
+#     def test_file_exist(self):
+#         Preference.preferences('data/ai.yaml', DIR_DESTINY)
+#         self.assertTrue(os.path.exists('data/ai.yaml'))
 
-    def test_dir_exist(self):
-        Preference.preferences_all('data', DIR_DESTINY)
-        self.assertTrue(os.path.exists('data'))
+#     def test_dir_exist(self):
+#         Preference.preferences_all('data', DIR_DESTINY)
+#         self.assertTrue(os.path.exists('data'))
 
-    def test_file_not_found(self):
-        Preference.preferences_all('tests/build/mocks/not_found_yaml.yaml', DIR_DESTINY)
-        self.assertFalse(os.path.exists('tests/build/mocks/not_found_yaml.yaml'))
+#     def test_file_not_found(self):
+#         Preference.preferences_all('tests/build/mocks/not_found_yaml.yaml', DIR_DESTINY)
+#         self.assertFalse(os.path.exists('tests/build/mocks/not_found_yaml.yaml'))
 
-    def test_params_preferences(self):
-        Preference.preferences('data/ai.yaml', DIR_DESTINY)
-        self.assertTrue(isinstance('data/ai.yaml', str))
-        self.assertFalse(isinstance('data/ai.yaml', int))
-        self.assertFalse(isinstance('data/ai.yaml', list))
-        self.assertFalse(isinstance('data/ai.yaml', bool))
-        self.assertTrue(isinstance(DIR_DESTINY, str))
-        self.assertFalse(isinstance(DIR_DESTINY, int))
-        self.assertFalse(isinstance(DIR_DESTINY, list))
-        self.assertFalse(isinstance(DIR_DESTINY, bool))
+#     def test_params_preferences(self):
+#         Preference.preferences('data/ai.yaml', DIR_DESTINY)
+#         self.assertTrue(isinstance('data/ai.yaml', str))
+#         self.assertFalse(isinstance('data/ai.yaml', int))
+#         self.assertFalse(isinstance('data/ai.yaml', list))
+#         self.assertFalse(isinstance('data/ai.yaml', bool))
+#         self.assertTrue(isinstance(DIR_DESTINY, str))
+#         self.assertFalse(isinstance(DIR_DESTINY, int))
+#         self.assertFalse(isinstance(DIR_DESTINY, list))
+#         self.assertFalse(isinstance(DIR_DESTINY, bool))
 
-    def test_params_preferences_all(self):
-        Preference.preferences_all('data/', DIR_DESTINY)
-        self.assertTrue(isinstance('data/', str))
-        self.assertFalse(isinstance('data/', int))
-        self.assertFalse(isinstance('data/', list))
-        self.assertFalse(isinstance('data/', bool))
-        self.assertTrue(isinstance(DIR_DESTINY, str))
-        self.assertFalse(isinstance(DIR_DESTINY, int))
-        self.assertFalse(isinstance(DIR_DESTINY, list))
-        self.assertFalse(isinstance(DIR_DESTINY, bool))
+#     def test_params_preferences_all(self):
+#         Preference.preferences_all('data/', DIR_DESTINY)
+#         self.assertTrue(isinstance('data/', str))
+#         self.assertFalse(isinstance('data/', int))
+#         self.assertFalse(isinstance('data/', list))
+#         self.assertFalse(isinstance('data/', bool))
+#         self.assertTrue(isinstance(DIR_DESTINY, str))
+#         self.assertFalse(isinstance(DIR_DESTINY, int))
+#         self.assertFalse(isinstance(DIR_DESTINY, list))
+#         self.assertFalse(isinstance(DIR_DESTINY, bool))

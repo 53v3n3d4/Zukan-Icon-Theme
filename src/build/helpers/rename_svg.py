@@ -10,7 +10,7 @@ logger = logging.getLogger(__name__)
 
 
 class RenameSVG:
-    def rename_svg(name: str, dir_origin: str, dir_destiny: str):
+    def rename_svg(self, name: str, dir_origin: str, dir_destiny: str):
         """
         Rename svg file from file_type_(name).svg to (name).svg
 
@@ -37,8 +37,8 @@ class RenameSVG:
                 print_message(
                     name,
                     'file extension is not svg.',
-                    color=f'{ Color.PURPLE }',
-                    color_end=f'{ Color.END }',
+                    color=f'{Color.PURPLE}',
+                    color_end=f'{Color.END}',
                 )
         except FileNotFoundError:
             logger.error(
@@ -49,7 +49,7 @@ class RenameSVG:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), name
             )
 
-    def rename_svgs_in_dir(dir_origin: str, dir_destiny: str):
+    def rename_svgs_in_dir(self, dir_origin: str, dir_destiny: str):
         """
         Rename all svgs files, that starts with file_type_, inside
         a directiory.
@@ -61,7 +61,7 @@ class RenameSVG:
         try:
             files_in_dir = os.listdir(dir_origin)
             for name in files_in_dir:
-                RenameSVG.rename_svg(name, dir_origin, dir_destiny)
+                self.rename_svg(name, dir_origin, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
             logger.error(

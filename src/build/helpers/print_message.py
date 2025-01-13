@@ -12,7 +12,7 @@ def print_build_message(message: str, args: str) -> str:
     Returns:
     str -- description text when file built.
     """
-    return print(f'{ Color.BLUE }{ message }{ Color.END }{ args }')
+    return print(f'{Color.BLUE}{message}{Color.END}{args}')
 
 
 def print_created_message(
@@ -36,9 +36,9 @@ def print_created_message(
     suffix = kwargs.get('suffix', '')
     extension = kwargs.get('extension', '')
     return print(
-        f'{ Color.CYAN }[!] { filepath }{ filename }{ Color.END } '
-        f'-> { Color.YELLOW }{ created_filename }{ suffix }'
-        f'{ extension }{ Color.END } { message }'
+        f'{Color.CYAN}[!] {filepath}{filename}{Color.END} '
+        f'-> {Color.YELLOW}{created_filename}{suffix}'
+        f'{extension}{Color.END} {message}'
     )
 
 
@@ -57,7 +57,7 @@ def print_message(filepath: str, message: str, **kwargs) -> str:
     """
     color = kwargs.get('color', '')
     color_end = kwargs.get('color_end', '')
-    return print(f'{ color }[!] { filepath }:{ color_end } { message }')
+    return print(f'{color}[!] {filepath}:{color_end} {message}')
 
 
 def print_remove_tag(filepath: str, created_filename: str) -> str:
@@ -72,9 +72,9 @@ def print_remove_tag(filepath: str, created_filename: str) -> str:
     str -- tmPreferences remove tag description text.
     """
     return print(
-        f'{ Color.CYAN }[!] { filepath }{ Color.END } -> Deleting '
-        f'{ Color.YELLOW }tag <!DOCTYPE plist>{ Color.END } from '
-        f'{ created_filename }.'
+        f'{Color.CYAN}[!] {filepath}{Color.END} -> Deleting '
+        f'{Color.YELLOW}tag <!DOCTYPE plist>{Color.END} from '
+        f'{created_filename}.'
     )
 
 
@@ -91,7 +91,7 @@ def print_special_char(filepath: str, filename: str) -> str:
     str -- Special chars found description text.
     """
     return print(
-        f'{ Color.RED }[!] { filepath }:{ Color.END } icon value can not '
-        f'contain special characters { Color.RED }(filename would be '
-        f'{ filename }.png){ Color.END }.'
+        f'{Color.RED}[!] {filepath}:{Color.END} icon value can not '
+        f'contain special characters {Color.RED}(filename would be '
+        f'{filename}.png){Color.END}.'
     )

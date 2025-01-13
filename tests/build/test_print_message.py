@@ -92,8 +92,8 @@ class TestPrintMessage:
     test_filepath = 'foo/bar.yaml'
     test_print_message = 'file extension is not yaml.'
     test_print_expected = '[!] foo/bar.yaml: file extension is not yaml.'
-    color = f'{ Color.RED }'
-    color_end = f'{ Color.END }'
+    color = f'{Color.RED}'
+    color_end = f'{Color.END}'
     test_print_kwargs_expected = (
         '\x1b[91m[!] foo/bar.yaml:\x1b[0m file extension is not yaml.'
     )
@@ -119,7 +119,7 @@ class TestPrintMessage:
         ],
     )
     def test_print_message_kwargs(self, a, b, c, d, expected):
-        result = print_message(a, b, c=f'{ Color.RED }', d=f'{ Color.END }')
+        result = print_message(a, b, c=f'{Color.RED}', d=f'{Color.END}')
         return result
         assert result == test_print_expected  # noqa: F821
 

@@ -15,7 +15,7 @@ class IconSyntax:
     Sublime Text need an icon sublime-syntax file to show icon beside a file.
     """
 
-    def icon_syntax(icon_data: str, dir_destiny: str):
+    def icon_syntax(self, icon_data: str, dir_destiny: str):
         """
         Create icon sublime-syntax file.
 
@@ -37,7 +37,7 @@ class IconSyntax:
             if any('syntax' in d for d in data) and data.get('syntax') is not None:
                 for k in data['syntax']:
                     # print(k['name'])
-                    iconsyntax = f'{ k["name"] }{ SUBLIME_SYNTAX_EXTENSION }'
+                    iconsyntax = f'{k["name"]}{SUBLIME_SYNTAX_EXTENSION}'
                     if not os.path.exists(dir_destiny):
                         os.makedirs(dir_destiny)
                     iconsyntax_path = os.path.join(dir_destiny, iconsyntax)
@@ -51,8 +51,8 @@ class IconSyntax:
                 print_message(
                     os.path.basename(icon_data),
                     'file does not have any syntax.',
-                    color=f'{ Color.GREEN }',
-                    color_end=f'{ Color.END }',
+                    color=f'{Color.GREEN}',
+                    color_end=f'{Color.END}',
                 )
                 return data
             else:
@@ -66,7 +66,7 @@ class IconSyntax:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), icon_data
             )
 
-    def icons_syntaxes(dir_icon_data: str, dir_destiny: str):
+    def icons_syntaxes(self, dir_icon_data: str, dir_destiny: str):
         """
         Generate all icons sublime-syntax files from data files.
 
@@ -79,7 +79,7 @@ class IconSyntax:
             for file_data in files_in_dir:
                 icon_data_path = os.path.join(dir_icon_data, file_data)
                 # print(icon_data_path)
-                IconSyntax.icon_syntax(icon_data_path, dir_destiny)
+                self.icon_syntax(icon_data_path, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
             logger.error(

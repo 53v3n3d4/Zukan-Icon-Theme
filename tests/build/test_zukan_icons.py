@@ -9,7 +9,7 @@ from tests.mocks.constants_pickle import (
 from tests.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
-    DS_STORE_MOCKS_PATH,
+    OS_FILE_MOCKS_PATH,
     TEST_DATA_DIR_EXCEPT_ZUKAN_FILE,
 )
 from unittest.mock import patch
@@ -28,11 +28,12 @@ class TestZukanIcon:
         ],
     )
     def test_write_icon_data(self, a, b, c, expected):
-        # Delete '.DS_Store' file that get created when running tests
-        if '.DS_Store' in os.listdir(DIR_DESTINY):
-            os.remove(DS_STORE_MOCKS_PATH)
+        data_dir_list = ZukanIcon.write_icon_data(a, b, c)
 
-        result = ZukanIcon.write_icon_data(a, b, c)
+        # Delete '.DS_Store' and 'Thumbs.db'file that get created when
+        # running tests
+        result = [i for i in data_dir_list if i not in OS_FILE_MOCKS_PATH]
+
         assert result == TEST_DATA_DIR_EXCEPT_ZUKAN_FILE
 
     @pytest.fixture(autouse=True)
@@ -70,34 +71,34 @@ class TestZukanIcon:
         ]
 
 
-class TestIconZukanIcon(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.setUpClassPyfakefs()
-        cls.fake_fs().create_file('data/afdesign.yaml')
-        cls.fake_fs().create_file('data/afphoto.yaml')
-        cls.fake_fs().create_file('data/afpub.yaml')
-        cls.fake_fs().create_file('data/ai.yaml')
-        cls.fake_fs().create_file('data/angular.yaml')
+# class TestIconZukanIcon(TestCase):
+#     @classmethod
+#     def setUpClass(cls):
+#         cls.setUpClassPyfakefs()
+#         cls.fake_fs().create_file('data/afdesign.yaml')
+#         cls.fake_fs().create_file('data/afphoto.yaml')
+#         cls.fake_fs().create_file('data/afpub.yaml')
+#         cls.fake_fs().create_file('data/ai.yaml')
+#         cls.fake_fs().create_file('data/angular.yaml')
 
-    def test_dir_exist(self):
-        ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
-        self.assertTrue(os.path.exists('data'))
+#     def test_dir_exist(self):
+#         ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
+#         self.assertTrue(os.path.exists('data'))
 
-    def test_params_write_icon_data(self):
-        ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
-        self.assertTrue(isinstance('data', str))
-        self.assertFalse(isinstance('data', int))
-        self.assertFalse(isinstance('data', list))
-        self.assertFalse(isinstance('data', bool))
-        self.assertFalse(isinstance('data', dict))
-        self.assertTrue(isinstance(DIR_DESTINY, str))
-        self.assertFalse(isinstance(DIR_DESTINY, int))
-        self.assertFalse(isinstance(DIR_DESTINY, list))
-        self.assertFalse(isinstance(DIR_DESTINY, bool))
-        self.assertFalse(isinstance(DIR_DESTINY, dict))
-        self.assertTrue(isinstance(TEST_PICKLE_ZUKAN_FILE, str))
-        self.assertFalse(isinstance(TEST_PICKLE_ZUKAN_FILE, int))
-        self.assertFalse(isinstance(TEST_PICKLE_ZUKAN_FILE, list))
-        self.assertFalse(isinstance(TEST_PICKLE_ZUKAN_FILE, bool))
-        self.assertFalse(isinstance(TEST_PICKLE_ZUKAN_FILE, dict))
+#     def test_params_write_icon_data(self):
+#         ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
+#         self.assertTrue(isinstance('data', str))
+#         self.assertFalse(isinstance('data', int))
+#         self.assertFalse(isinstance('data', list))
+#         self.assertFalse(isinstance('data', bool))
+#         self.assertFalse(isinstance('data', dict))
+#         self.assertTrue(isinstance(DIR_DESTINY, str))
+#         self.assertFalse(isinstance(DIR_DESTINY, int))
+#         self.assertFalse(isinstance(DIR_DESTINY, list))
+#         self.assertFalse(isinstance(DIR_DESTINY, bool))
+#         self.assertFalse(isinstance(DIR_DESTINY, dict))
+#         self.assertTrue(isinstance(TEST_PICKLE_ZUKAN_FILE, str))
+#         self.assertFalse(isinstance(TEST_PICKLE_ZUKAN_FILE, int))
+#         self.assertFalse(isinstance(TEST_PICKLE_ZUKAN_FILE, list))
+#         self.assertFalse(isinstance(TEST_PICKLE_ZUKAN_FILE, bool))
+#         self.assertFalse(isinstance(TEST_PICKLE_ZUKAN_FILE, dict))

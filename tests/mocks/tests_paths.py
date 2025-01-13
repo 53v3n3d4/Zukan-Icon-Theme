@@ -8,7 +8,7 @@ DIR_DESTINY_PRIMARY_ICONS = 'tests/mocks'
 
 DIR_ORIGIN = 'tests/mocks'
 
-DS_STORE_MOCKS_PATH = 'tests/mocks/.DS_Store'
+OS_FILE_MOCKS_PATH = ['.DS_Store', 'Thumbs.db']
 
 TEST_DATA_DIR = [
     'test_no_icon_file.yaml',

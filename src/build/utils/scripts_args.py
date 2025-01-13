@@ -28,7 +28,7 @@ COMMANDS = {
                 # BooleanOptionalAction added on 3.9
                 argparse.BooleanOptionalAction,
                 False,
-                f'{ Color.YELLOW }Clean all SVGs from src/icons folder.{ Color.END }',
+                f'{Color.YELLOW}Clean all SVGs from src/icons folder.{Color.END}',
                 False,
             ),
             (

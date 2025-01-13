@@ -34,7 +34,11 @@ class IconPNG:
     """
 
     def svg_to_png(
-        icon_data: str, dir_origin: str, dir_destiny: str, dir_destiny_primary: str
+        self,
+        icon_data: str,
+        dir_origin: str,
+        dir_destiny: str,
+        dir_destiny_primary: str,
     ):
         """
         Generate PNG file from SVG.
@@ -69,13 +73,13 @@ class IconPNG:
                 print_message(
                     os.path.basename(icon_data),
                     'key icon is not defined or is None.',
-                    color=f'{ Color.RED }',
-                    color_end=f'{ Color.END }',
+                    color=f'{Color.RED}',
+                    color_end=f'{Color.END}',
                 )
                 return data
 
             elif icon_data.endswith('.yaml'):
-                IconPNG.generate_png(
+                self.generate_png(
                     data['name'],
                     data['preferences']['settings']['icon'],
                     icon_data,
@@ -85,7 +89,7 @@ class IconPNG:
 
                 # Primary icons
                 if data['name'] in PRIMARY_ICONS:
-                    IconPNG.generate_png(
+                    self.generate_png(
                         data['name'],
                         data['preferences']['settings']['icon'],
                         icon_data,
@@ -100,7 +104,7 @@ class IconPNG:
                     and data['name'] not in PRIMARY_ICONS
                 ):
                     for i in data['icons']:
-                        IconPNG.generate_png(
+                        self.generate_png(
                             data['name'],
                             i,
                             icon_data,
@@ -115,7 +119,7 @@ class IconPNG:
                     and data['name'] in PRIMARY_ICONS
                 ):
                     for i in data['icons']:
-                        IconPNG.generate_png(
+                        self.generate_png(
                             data['name'],
                             i,
                             icon_data,
@@ -135,7 +139,11 @@ class IconPNG:
             )
 
     def svg_to_png_all(
-        dir_icon_data: str, dir_origin: str, dir_destiny: str, dir_destiny_primary: str
+        self,
+        dir_icon_data: str,
+        dir_origin: str,
+        dir_destiny: str,
+        dir_destiny_primary: str,
     ):
         """
         Generate all icons PNGs files from data files.
@@ -152,7 +160,7 @@ class IconPNG:
             for file_data in files_in_dir:
                 icon_data_path = os.path.join(dir_icon_data, file_data)
                 # print(icon_data_path)
-                IconPNG.svg_to_png(
+                self.svg_to_png(
                     icon_data_path, dir_origin, dir_destiny, dir_destiny_primary
                 )
             return files_in_dir
@@ -172,7 +180,12 @@ class IconPNG:
             )
 
     def generate_png(
-        name: str, icon_name: str, icon_data: str, dir_origin: str, dir_destiny: str
+        self,
+        name: str,
+        icon_name: str,
+        icon_data: str,
+        dir_origin: str,
+        dir_destiny: str,
     ):
         """
         Generate PNGs.
@@ -184,7 +197,7 @@ class IconPNG:
         dir_origin (str) -- path to svgs files directory.
         dir_destiny (str) -- path destination of PNGs files.
         """
-        svgfile = f'{ icon_name }' f'{ SVG_EXTENSION }'
+        svgfile = f'{icon_name}{SVG_EXTENSION}'
 
         # Do not allow PNG file name with certain special chars.
         if special_chars(svgfile):
@@ -211,8 +224,7 @@ class IconPNG:
             for attribute in png_details:
                 svg2png(
                     url=svgfile_path,
-                    write_to=f'{ pngfile_path_base }{ attribute["suffix"] }'
-                    f'{ PNG_EXTENSION }',
+                    write_to=f'{pngfile_path_base}{attribute["suffix"]}{PNG_EXTENSION}',
                     output_width=attribute['width'],
                     output_height=attribute['height'],
                 )
@@ -220,17 +232,17 @@ class IconPNG:
                     os.path.basename(icon_data),
                     pngfile_base,
                     'done.',
-                    filename=f' [{ svgfile }]',
-                    suffix=f'{ attribute["suffix"] }',
-                    extension=f'{ PNG_EXTENSION }',
+                    filename=f' [{svgfile}]',
+                    suffix=f'{attribute["suffix"]}',
+                    extension=f'{PNG_EXTENSION}',
                 )
         else:
             raise FileNotFoundError(
                 print_message(
                     svgfile,
                     'file or directory do not exist.',
-                    color=f'{ Color.RED }',
-                    color_end=f'{ Color.END }',
+                    color=f'{Color.RED}',
+                    color_end=f'{Color.END}',
                 )
             )
         # return data

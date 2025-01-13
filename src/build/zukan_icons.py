@@ -22,6 +22,7 @@ class ZukanIcon:
     files.
     """
 
+    @staticmethod
     def write_icon_data(dir_icon_data: str, dir_destiny: str, pickle_file: str):
         """
         Create zukan with icons data.
@@ -71,8 +72,8 @@ class ZukanIcon:
                         os.path.basename(icon_data),
                         'File does not have any syntax, preferences, scope and icon.'
                         ' Exception for ST icons default.',
-                        color=f'{ Color.GREEN }',
-                        color_end=f'{ Color.END }',
+                        color=f'{Color.GREEN}',
+                        color_end=f'{Color.END}',
                     )
             return files_in_dir
         except FileNotFoundError:

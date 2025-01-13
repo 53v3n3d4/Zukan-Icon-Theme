@@ -38,8 +38,8 @@ def read_yaml_data(yaml_file: str) -> dict:
                 print_message(
                     os.path.basename(yaml_file),
                     'yaml file is empty.',
-                    color=f'{ Color.RED }',
-                    color_end=f'{ Color.END }',
+                    color=f'{Color.RED}',
+                    color_end=f'{Color.END}',
                 )
                 return yaml_file
             return file_data
@@ -47,8 +47,8 @@ def read_yaml_data(yaml_file: str) -> dict:
             print_message(
                 os.path.basename(yaml_file),
                 'file extension is not yaml.',
-                color=f'{ Color.PURPLE }',
-                color_end=f'{ Color.END }',
+                color=f'{Color.PURPLE}',
+                color_end=f'{Color.END}',
             )
             return yaml_file
         else:
@@ -56,8 +56,8 @@ def read_yaml_data(yaml_file: str) -> dict:
                 print_message(
                     os.path.abspath(yaml_file),
                     'file or directory do not exist.',
-                    color=f'{ Color.RED }',
-                    color_end=f'{ Color.END }',
+                    color=f'{Color.RED}',
+                    color_end=f'{Color.END}',
                 )
             )
     except FileNotFoundError:

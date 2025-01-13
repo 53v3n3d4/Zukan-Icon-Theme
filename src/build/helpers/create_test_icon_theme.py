@@ -14,7 +14,7 @@ class TestIconTheme:
     Test file extensions in data files.
     """
 
-    def create_icon_file(icon_data: str, dir_destiny: str):
+    def create_icon_file(self, icon_data: str, dir_destiny: str):
         """
         Create test file extension for an icon theme.
 
@@ -31,10 +31,10 @@ class TestIconTheme:
                     for e in k['file_extensions']:
                         # print(e)
                         if e.startswith('.'):
-                            test_file = f'{ e }'
+                            test_file = f'{e}'
                             # print(test_file)
                         else:
-                            test_file = f'{ data_name }.{ e }'
+                            test_file = f'{data_name}.{e}'
                             # print(test_file)
                         if not os.path.exists(dir_destiny):
                             os.makedirs(dir_destiny)
@@ -50,8 +50,8 @@ class TestIconTheme:
                 print_message(
                     os.path.basename(icon_data),
                     'yaml file does not have any file extension key or value.',
-                    color=f'{ Color.GREEN }',
-                    color_end=f'{ Color.END }',
+                    color=f'{Color.GREEN}',
+                    color_end=f'{Color.END}',
                 )
             else:
                 return icon_data
@@ -64,7 +64,7 @@ class TestIconTheme:
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), icon_data
             )
 
-    def create_icons_files(dir_icon_data: str, dir_destiny: str):
+    def create_icons_files(self, dir_icon_data: str, dir_destiny: str):
         """
         Generate all test files extensions in data files.
 
@@ -77,7 +77,7 @@ class TestIconTheme:
             for file_data in files_in_dir:
                 icon_data_path = os.path.join(dir_icon_data, file_data)
                 # print(icon_data_path)
-                TestIconTheme.create_icon_file(icon_data_path, dir_destiny)
+                self.create_icon_file(icon_data_path, dir_destiny)
             return files_in_dir
         except FileNotFoundError:
             logger.error(

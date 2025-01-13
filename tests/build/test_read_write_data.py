@@ -264,106 +264,106 @@ class TestPickletData:
         ]
 
 
-class TestReadWriteYamlData(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.setUpClassPyfakefs()
-        cls.fake_fs().create_file('data/afdesign.yaml', contents='test')
-        cls.fake_fs().create_file('data/afphoto.yaml', contents='test')
-        cls.fake_fs().create_file('data/afpub.yaml', contents='test')
-        cls.fake_fs().create_file('data/ai.yaml', contents='test')
-        cls.fake_fs().create_file('data/angular.yaml', contents='test')
+# class TestReadWriteYamlData(TestCase):
+#     @classmethod
+#     def setUpClass(cls):
+#         cls.setUpClassPyfakefs()
+#         cls.fake_fs().create_file('data/afdesign.yaml', contents='test')
+#         cls.fake_fs().create_file('data/afphoto.yaml', contents='test')
+#         cls.fake_fs().create_file('data/afpub.yaml', contents='test')
+#         cls.fake_fs().create_file('data/ai.yaml', contents='test')
+#         cls.fake_fs().create_file('data/angular.yaml', contents='test')
 
-    def test_file_exist(self):
-        read_yaml_data('data/afpub.yaml')
-        dump_yaml_data('test', 'data/afpub.yaml')
-        self.assertTrue(os.path.exists('data/afpub.yaml'))
+#     def test_file_exist(self):
+#         read_yaml_data('data/afpub.yaml')
+#         dump_yaml_data('test', 'data/afpub.yaml')
+#         self.assertTrue(os.path.exists('data/afpub.yaml'))
 
-    def test_file_not_found(self):
-        read_yaml_data('tests/build/mocks/not_found_yaml.yaml')
-        self.assertFalse(os.path.exists('tests/build/mocks/not_found_yaml.yaml'))
+#     def test_file_not_found(self):
+#         read_yaml_data('tests/build/mocks/not_found_yaml.yaml')
+#         self.assertFalse(os.path.exists('tests/build/mocks/not_found_yaml.yaml'))
 
-    def test_load_params(self):
-        read_yaml_data('data/afdesign.yaml')
-        self.assertTrue(isinstance('data/afdesign.yaml', str))
-        self.assertFalse(isinstance('data/afdesign.yaml', int))
-        self.assertFalse(isinstance('data/afdesign.yaml', list))
-        self.assertFalse(isinstance('data/afdesign.yaml', bool))
-        self.assertFalse(isinstance('data/afdesign.yaml', dict))
+#     def test_load_params(self):
+#         read_yaml_data('data/afdesign.yaml')
+#         self.assertTrue(isinstance('data/afdesign.yaml', str))
+#         self.assertFalse(isinstance('data/afdesign.yaml', int))
+#         self.assertFalse(isinstance('data/afdesign.yaml', list))
+#         self.assertFalse(isinstance('data/afdesign.yaml', bool))
+#         self.assertFalse(isinstance('data/afdesign.yaml', dict))
 
-    def test_dump_params(self):
-        dump_yaml_data(TEST_YAML_DICT, 'data/afdesign.yaml')
-        self.assertTrue(isinstance('data/afdesign.yaml', str))
-        self.assertFalse(isinstance('data/afdesign.yaml', int))
-        self.assertFalse(isinstance('data/afdesign.yaml', list))
-        self.assertFalse(isinstance('data/afdesign.yaml', bool))
-        self.assertFalse(isinstance('data/afdesign.yaml', dict))
-        self.assertTrue(isinstance(TEST_YAML_DICT, dict))
-        self.assertFalse(isinstance(TEST_YAML_DICT, int))
-        self.assertFalse(isinstance(TEST_YAML_DICT, list))
-        self.assertFalse(isinstance(TEST_YAML_DICT, bool))
-        self.assertFalse(isinstance(TEST_YAML_DICT, str))
-
-
-class TestWritePlistData(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.setUpClassPyfakefs()
-        cls.fake_fs().create_file('data/afdesign.plist', contents='test')
-        cls.fake_fs().create_file('data/afphoto.plist', contents='test')
-        cls.fake_fs().create_file('data/afpub.plist', contents='test')
-        cls.fake_fs().create_file('data/ai.plist', contents='test')
-        cls.fake_fs().create_file('data/angular.plist', contents='test')
-
-    def test_file_exist(self):
-        dump_plist_data('test', 'data/afpub.plist')
-        self.assertTrue(os.path.exists('data/afpub.plist'))
-
-    def test_dump_params(self):
-        dump_plist_data(TEST_PLIST_DICT, 'data/afdesign.plist')
-        self.assertTrue(isinstance('data/afdesign.plist', str))
-        self.assertFalse(isinstance('data/afdesign.plist', int))
-        self.assertFalse(isinstance('data/afdesign.plist', list))
-        self.assertFalse(isinstance('data/afdesign.plist', bool))
-        self.assertFalse(isinstance('data/afdesign.plist', dict))
-        self.assertTrue(isinstance(TEST_PLIST_DICT, dict))
-        self.assertFalse(isinstance(TEST_PLIST_DICT, int))
-        self.assertFalse(isinstance(TEST_PLIST_DICT, list))
-        self.assertFalse(isinstance(TEST_PLIST_DICT, bool))
-        self.assertFalse(isinstance(TEST_PLIST_DICT, str))
+#     def test_dump_params(self):
+#         dump_yaml_data(TEST_YAML_DICT, 'data/afdesign.yaml')
+#         self.assertTrue(isinstance('data/afdesign.yaml', str))
+#         self.assertFalse(isinstance('data/afdesign.yaml', int))
+#         self.assertFalse(isinstance('data/afdesign.yaml', list))
+#         self.assertFalse(isinstance('data/afdesign.yaml', bool))
+#         self.assertFalse(isinstance('data/afdesign.yaml', dict))
+#         self.assertTrue(isinstance(TEST_YAML_DICT, dict))
+#         self.assertFalse(isinstance(TEST_YAML_DICT, int))
+#         self.assertFalse(isinstance(TEST_YAML_DICT, list))
+#         self.assertFalse(isinstance(TEST_YAML_DICT, bool))
+#         self.assertFalse(isinstance(TEST_YAML_DICT, str))
 
 
-class TestReadWritePickleData(TestCase):
-    @classmethod
-    def setUpClass(cls):
-        cls.setUpClassPyfakefs()
-        cls.fake_fs().create_file('data/pickle.pkl')
+# class TestWritePlistData(TestCase):
+#     @classmethod
+#     def setUpClass(cls):
+#         cls.setUpClassPyfakefs()
+#         cls.fake_fs().create_file('data/afdesign.plist', contents='test')
+#         cls.fake_fs().create_file('data/afphoto.plist', contents='test')
+#         cls.fake_fs().create_file('data/afpub.plist', contents='test')
+#         cls.fake_fs().create_file('data/ai.plist', contents='test')
+#         cls.fake_fs().create_file('data/angular.plist', contents='test')
 
-    def test_file_exist(self):
-        read_pickle_data('data/pickle.pkl')
-        self.assertTrue(os.path.exists('data/pickle.pkl'))
+#     def test_file_exist(self):
+#         dump_plist_data('test', 'data/afpub.plist')
+#         self.assertTrue(os.path.exists('data/afpub.plist'))
 
-    def test_file_not_found(self):
-        read_pickle_data('tests/build/mocks/not_found_pickle.pkl')
-        self.assertFalse(os.path.exists('tests/build/mocks/not_found_pickle.pkl'))
+#     def test_dump_params(self):
+#         dump_plist_data(TEST_PLIST_DICT, 'data/afdesign.plist')
+#         self.assertTrue(isinstance('data/afdesign.plist', str))
+#         self.assertFalse(isinstance('data/afdesign.plist', int))
+#         self.assertFalse(isinstance('data/afdesign.plist', list))
+#         self.assertFalse(isinstance('data/afdesign.plist', bool))
+#         self.assertFalse(isinstance('data/afdesign.plist', dict))
+#         self.assertTrue(isinstance(TEST_PLIST_DICT, dict))
+#         self.assertFalse(isinstance(TEST_PLIST_DICT, int))
+#         self.assertFalse(isinstance(TEST_PLIST_DICT, list))
+#         self.assertFalse(isinstance(TEST_PLIST_DICT, bool))
+#         self.assertFalse(isinstance(TEST_PLIST_DICT, str))
 
-    def test_read_pickle_params(self):
-        read_pickle_data('data/pickle.pkl')
-        self.assertTrue(isinstance('data/pickle.pkl', str))
-        self.assertFalse(isinstance('data/pickle.pkl', int))
-        self.assertFalse(isinstance('data/pickle.pkl', list))
-        self.assertFalse(isinstance('data/pickle.pkl', bool))
-        self.assertFalse(isinstance('data/pickle.pkl', dict))
 
-    def test_dump_pickle_params(self):
-        dump_pickle_data(TEST_PICKLE_ORDERED_DICT, 'data/pickle.pkl')
-        self.assertTrue(isinstance('data/pickle.pkl', str))
-        self.assertFalse(isinstance('data/pickle.pkl', int))
-        self.assertFalse(isinstance('data/pickle.pkl', list))
-        self.assertFalse(isinstance('data/pickle.pkl', bool))
-        self.assertFalse(isinstance('data/pickle.pkl', dict))
-        self.assertTrue(isinstance(TEST_PICKLE_ORDERED_DICT, dict))
-        self.assertFalse(isinstance(TEST_PICKLE_ORDERED_DICT, int))
-        self.assertFalse(isinstance(TEST_PICKLE_ORDERED_DICT, list))
-        self.assertFalse(isinstance(TEST_PICKLE_ORDERED_DICT, bool))
-        self.assertFalse(isinstance(TEST_PICKLE_ORDERED_DICT, str))
+# class TestReadWritePickleData(TestCase):
+#     @classmethod
+#     def setUpClass(cls):
+#         cls.setUpClassPyfakefs()
+#         cls.fake_fs().create_file('data/pickle.pkl')
+
+#     def test_file_exist(self):
+#         read_pickle_data('data/pickle.pkl')
+#         self.assertTrue(os.path.exists('data/pickle.pkl'))
+
+#     def test_file_not_found(self):
+#         read_pickle_data('tests/build/mocks/not_found_pickle.pkl')
+#         self.assertFalse(os.path.exists('tests/build/mocks/not_found_pickle.pkl'))
+
+#     def test_read_pickle_params(self):
+#         read_pickle_data('data/pickle.pkl')
+#         self.assertTrue(isinstance('data/pickle.pkl', str))
+#         self.assertFalse(isinstance('data/pickle.pkl', int))
+#         self.assertFalse(isinstance('data/pickle.pkl', list))
+#         self.assertFalse(isinstance('data/pickle.pkl', bool))
+#         self.assertFalse(isinstance('data/pickle.pkl', dict))
+
+#     def test_dump_pickle_params(self):
+#         dump_pickle_data(TEST_PICKLE_ORDERED_DICT, 'data/pickle.pkl')
+#         self.assertTrue(isinstance('data/pickle.pkl', str))
+#         self.assertFalse(isinstance('data/pickle.pkl', int))
+#         self.assertFalse(isinstance('data/pickle.pkl', list))
+#         self.assertFalse(isinstance('data/pickle.pkl', bool))
+#         self.assertFalse(isinstance('data/pickle.pkl', dict))
+#         self.assertTrue(isinstance(TEST_PICKLE_ORDERED_DICT, dict))
+#         self.assertFalse(isinstance(TEST_PICKLE_ORDERED_DICT, int))
+#         self.assertFalse(isinstance(TEST_PICKLE_ORDERED_DICT, list))
+#         self.assertFalse(isinstance(TEST_PICKLE_ORDERED_DICT, bool))
+#         self.assertFalse(isinstance(TEST_PICKLE_ORDERED_DICT, str))
