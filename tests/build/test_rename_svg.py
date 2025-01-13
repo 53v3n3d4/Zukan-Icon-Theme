@@ -69,34 +69,34 @@ class TestRename:
         assert out == '\x1b[35m[!] plist.plist:\x1b[0m file extension is not svg.\n'
 
 
-# class TestRenameSVG(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('icons/file_type_afdesign.svg')
-#         cls.fake_fs().create_file('icons/file_type_afphoto.svg')
-#         cls.fake_fs().create_file('icons/file_type_afpub.svg')
-#         cls.fake_fs().create_file('icons/file_type_ai.svg')
-#         cls.fake_fs().create_file('icons/file_type_angular.svg')
+class TestRenameSVG(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('icons/file_type_afdesign.svg')
+        cls.fake_fs().create_file('icons/file_type_afphoto.svg')
+        cls.fake_fs().create_file('icons/file_type_afpub.svg')
+        cls.fake_fs().create_file('icons/file_type_ai.svg')
+        cls.fake_fs().create_file('icons/file_type_angular.svg')
 
-#     def test_file_exist(self):
-#         RenameSVG.rename_svg('icons/file_type_ai.svg', 'icons', 'icons')
-#         self.assertTrue(os.path.exists('icons/file_type_ai.svg'))
+    def test_file_exist(self):
+        zukan_rename_svg.rename_svg('icons/file_type_ai.svg', 'icons', 'icons')
+        self.assertTrue(os.path.exists('icons/file_type_ai.svg'))
 
 #     def test_dir_exist(self):
-#         RenameSVG.rename_svgs_in_dir('icons', 'icons')
+#         zukan_rename_svg.rename_svgs_in_dir('icons', 'icons')
 #         self.assertTrue(os.path.exists('icons'))
 
 #     def test_file_not_found(self):
-#         RenameSVG.rename_svg('icons/file_type_babel.svg', 'icons', 'icons')
+#         zukan_rename_svg.rename_svg('icons/file_type_babel.svg', 'icons', 'icons')
 #         self.assertFalse(os.path.exists('icons/file_type_babel.svg'))
 
 #     def test_dir_not_found(self):
-#         RenameSVG.rename_svgs_in_dir('icons_not_found', 'icons')
+#         zukan_rename_svg.rename_svgs_in_dir('icons_not_found', 'icons')
 #         self.assertFalse(os.path.exists('icons_not_found'))
 
 #     def test_svg_file_params(self):
-#         RenameSVG.rename_svg('icons/file_type_ai.svg', 'icons', 'icons')
+#         zukan_rename_svg.rename_svg('icons/file_type_ai.svg', 'icons', 'icons')
 #         self.assertTrue(isinstance('icons/file_type_ai.svg', str))
 #         self.assertFalse(isinstance('icons/file_type_ai.svg', int))
 #         self.assertFalse(isinstance('icons/file_type_ai.svg', list))
@@ -107,7 +107,7 @@ class TestRename:
 #         self.assertFalse(isinstance('icons', dict))
 
 #     def test_svg_dir_params(self):
-#         RenameSVG.rename_svgs_in_dir('icons', 'icons')
+#         zukan_rename_svg.rename_svgs_in_dir('icons', 'icons')
 #         self.assertTrue(isinstance('icons', str))
 #         self.assertFalse(isinstance('icons', int))
 #         self.assertFalse(isinstance('icons', list))

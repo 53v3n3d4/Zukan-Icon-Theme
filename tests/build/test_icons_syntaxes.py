@@ -161,28 +161,28 @@ class TestSyntax:
         assert out == '[!] yaml.yaml: file does not have any syntax.\n'
 
 
-# class TestIconSyntax(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('data/afdesign.yaml')
-#         cls.fake_fs().create_file('data/afphoto.yaml')
-#         cls.fake_fs().create_file('data/afpub.yaml')
-#         cls.fake_fs().create_file('data/ai.yaml')
-#         cls.fake_fs().create_file('data/angular.yaml')
-#         cls.fake_fs().create_file('./yaml.yaml')
-#         cls.fake_fs().create_file('data/Binary (Affinity Publisher.sublime-syntax)')
+class TestIconSyntax(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('data/afdesign.yaml')
+        cls.fake_fs().create_file('data/afphoto.yaml')
+        cls.fake_fs().create_file('data/afpub.yaml')
+        cls.fake_fs().create_file('data/ai.yaml')
+        cls.fake_fs().create_file('data/angular.yaml')
+        cls.fake_fs().create_file('./yaml.yaml')
+        cls.fake_fs().create_file('data/Binary (Affinity Publisher.sublime-syntax)')
 
-#     def test_syntax_exist(self):
-#         IconSyntax.icon_syntax('data/ai.yaml', DIR_DESTINY)
-#         self.assertTrue(os.path.exists('data/ai.yaml'))
+    def test_syntax_exist(self):
+        zukan_syntax.icon_syntax('data/ai.yaml', DIR_DESTINY)
+        self.assertTrue(os.path.exists('data/ai.yaml'))
 
 #     def test_syntaxes_exist(self):
-#         IconSyntax.icons_syntaxes('data', DIR_DESTINY)
+#         zukan_syntax.icons_syntaxes('data', DIR_DESTINY)
 #         self.assertTrue(os.path.exists('data/afdesign.yaml'))
 
 #     def test_params_syntax(self):
-#         IconSyntax.icon_syntax('data/afdesign.yaml', DIR_DESTINY)
+#         zukan_syntax.icon_syntax('data/afdesign.yaml', DIR_DESTINY)
 #         self.assertTrue(isinstance('data/afdesign.yaml', str))
 #         self.assertFalse(isinstance('data/afdesign.yaml', int))
 #         self.assertFalse(isinstance('data/afdesign.yaml', list))
@@ -195,7 +195,7 @@ class TestSyntax:
 #         self.assertFalse(isinstance(DIR_DESTINY, dict))
 
 #     def test_params_syntaxes(self):
-#         IconSyntax.icons_syntaxes('data/', DIR_DESTINY)
+#         zukan_syntax.icons_syntaxes('data/', DIR_DESTINY)
 #         self.assertTrue(isinstance('data/', str))
 #         self.assertFalse(isinstance('data/', int))
 #         self.assertFalse(isinstance('data/', list))

@@ -119,24 +119,24 @@ class TestPNG:
         ]
 
 
-# class TestIconPNG(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('data/file_type_afdesign.svg')
-#         cls.fake_fs().create_file('data/file_type_afphoto.svg')
-#         cls.fake_fs().create_file('data/file_type_afpub.svg')
-#         cls.fake_fs().create_file('data/file_type_ai.svg')
-#         cls.fake_fs().create_file('data/file_type_angular.svg')
+class TestIconPNG(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('data/file_type_afdesign.svg')
+        cls.fake_fs().create_file('data/file_type_afphoto.svg')
+        cls.fake_fs().create_file('data/file_type_afpub.svg')
+        cls.fake_fs().create_file('data/file_type_ai.svg')
+        cls.fake_fs().create_file('data/file_type_angular.svg')
 
-#     def test_file_exist(self):
-#         IconPNG.svg_to_png(
-#             'data/file_type_ai.svg', DIR_ORIGIN, DIR_DESTINY, DIR_DESTINY_PRIMARY_ICONS
-#         )
-#         self.assertTrue(os.path.exists('data/file_type_ai.svg'))
+    def test_file_exist(self):
+        zukan_icon_png.svg_to_png(
+            'data/file_type_ai.svg', DIR_ORIGIN, DIR_DESTINY, DIR_DESTINY_PRIMARY_ICONS
+        )
+        self.assertTrue(os.path.exists('data/file_type_ai.svg'))
 
 #     def test_file_not_found(self):
-#         IconPNG.svg_to_png(
+#         zukan_icon_png.svg_to_png(
 #             'tests/file_type_babel.svg',
 #             DIR_ORIGIN,
 #             DIR_DESTINY,
@@ -145,7 +145,7 @@ class TestPNG:
 #         self.assertFalse(os.path.exists('tests/file_type_babel.svg'))
 
 #     def test_params_svg_png(self):
-#         IconPNG.svg_to_png(
+#         zukan_icon_png.svg_to_png(
 #             'data/file_type_ai.svg', DIR_ORIGIN, DIR_DESTINY, DIR_DESTINY_PRIMARY_ICONS
 #         )
 #         self.assertTrue(isinstance('data/file_type_ai.svg', str))
@@ -168,13 +168,13 @@ class TestPNG:
 #         self.assertFalse(isinstance(DIR_DESTINY_PRIMARY_ICONS, bool))
 
 #     def test_svg_png_all(self):
-#         IconPNG.svg_to_png_all(
+#         zukan_icon_png.svg_to_png_all(
 #             'data/', DIR_ORIGIN, DIR_DESTINY, DIR_DESTINY_PRIMARY_ICONS
 #         )
 #         self.assertTrue(os.path.exists('data/file_type_ai.svg'))
 
 #     def test_params_svg_png_all(self):
-#         IconPNG.svg_to_png_all(
+#         zukan_icon_png.svg_to_png_all(
 #             'data/', DIR_ORIGIN, DIR_DESTINY, DIR_DESTINY_PRIMARY_ICONS
 #         )
 #         self.assertTrue(os.path.exists('data/'))

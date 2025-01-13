@@ -264,20 +264,20 @@ class TestPickletData:
         ]
 
 
-# class TestReadWriteYamlData(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('data/afdesign.yaml', contents='test')
-#         cls.fake_fs().create_file('data/afphoto.yaml', contents='test')
-#         cls.fake_fs().create_file('data/afpub.yaml', contents='test')
-#         cls.fake_fs().create_file('data/ai.yaml', contents='test')
-#         cls.fake_fs().create_file('data/angular.yaml', contents='test')
+class TestReadWriteYamlData(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('data/afdesign.yaml', contents='test')
+        cls.fake_fs().create_file('data/afphoto.yaml', contents='test')
+        cls.fake_fs().create_file('data/afpub.yaml', contents='test')
+        cls.fake_fs().create_file('data/ai.yaml', contents='test')
+        cls.fake_fs().create_file('data/angular.yaml', contents='test')
 
-#     def test_file_exist(self):
-#         read_yaml_data('data/afpub.yaml')
-#         dump_yaml_data('test', 'data/afpub.yaml')
-#         self.assertTrue(os.path.exists('data/afpub.yaml'))
+    def test_file_exist(self):
+        read_yaml_data('data/afpub.yaml')
+        dump_yaml_data('test', 'data/afpub.yaml')
+        self.assertTrue(os.path.exists('data/afpub.yaml'))
 
 #     def test_file_not_found(self):
 #         read_yaml_data('tests/build/mocks/not_found_yaml.yaml')
@@ -305,19 +305,19 @@ class TestPickletData:
 #         self.assertFalse(isinstance(TEST_YAML_DICT, str))
 
 
-# class TestWritePlistData(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('data/afdesign.plist', contents='test')
-#         cls.fake_fs().create_file('data/afphoto.plist', contents='test')
-#         cls.fake_fs().create_file('data/afpub.plist', contents='test')
-#         cls.fake_fs().create_file('data/ai.plist', contents='test')
-#         cls.fake_fs().create_file('data/angular.plist', contents='test')
+class TestWritePlistData(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('data/afdesign.plist', contents='test')
+        cls.fake_fs().create_file('data/afphoto.plist', contents='test')
+        cls.fake_fs().create_file('data/afpub.plist', contents='test')
+        cls.fake_fs().create_file('data/ai.plist', contents='test')
+        cls.fake_fs().create_file('data/angular.plist', contents='test')
 
-#     def test_file_exist(self):
-#         dump_plist_data('test', 'data/afpub.plist')
-#         self.assertTrue(os.path.exists('data/afpub.plist'))
+    def test_file_exist(self):
+        dump_plist_data('test', 'data/afpub.plist')
+        self.assertTrue(os.path.exists('data/afpub.plist'))
 
 #     def test_dump_params(self):
 #         dump_plist_data(TEST_PLIST_DICT, 'data/afdesign.plist')
@@ -333,15 +333,15 @@ class TestPickletData:
 #         self.assertFalse(isinstance(TEST_PLIST_DICT, str))
 
 
-# class TestReadWritePickleData(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('data/pickle.pkl')
+class TestReadWritePickleData(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('data/pickle.pkl')
 
-#     def test_file_exist(self):
-#         read_pickle_data('data/pickle.pkl')
-#         self.assertTrue(os.path.exists('data/pickle.pkl'))
+    def test_file_exist(self):
+        read_pickle_data('data/pickle.pkl')
+        self.assertTrue(os.path.exists('data/pickle.pkl'))
 
 #     def test_file_not_found(self):
 #         read_pickle_data('tests/build/mocks/not_found_pickle.pkl')

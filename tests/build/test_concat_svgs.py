@@ -118,17 +118,17 @@ class TestConcatSVGMock:
         )  # Check if the root is an SVG element
 
 
-# class TestConcatSVG(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('tests/file-icons-concat.svg')
+class TestConcatSVG(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('tests/file-icons-concat.svg')
 
-#     def test_file_exist(self):
-#         ConcatSVG.write_concat_svgs('tests', 'tests', 'tests/file-icons-concat.svg')
-#         self.assertTrue(os.path.exists('tests/file-icons-concat.svg'))
+    def test_file_exist(self):
+        zukan_concat_svgs.write_concat_svgs('tests', 'tests', 'tests/file-icons-concat.svg')
+        self.assertTrue(os.path.exists('tests/file-icons-concat.svg'))
 
-#     def test_params_write_concat_svgs(self):
-#         ConcatSVG.write_concat_svgs('tests', 'tests', 'tests/file-icons-concat.svg')
-#         self.assertTrue(isinstance('tests', str))
-#         self.assertTrue(isinstance('tests/file-icons-concat.svg', str))
+    # def test_params_write_concat_svgs(self):
+    #     zukan_concat_svgs.write_concat_svgs('tests', 'tests', 'tests/file-icons-concat.svg')
+    #     self.assertTrue(isinstance('tests', str))
+    #     self.assertTrue(isinstance('tests/file-icons-concat.svg', str))

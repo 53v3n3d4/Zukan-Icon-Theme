@@ -56,26 +56,26 @@ class TestCreateIconTheme:
         ]
 
 
-# class TestCreateIconThemeFile(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('data/afdesign.yaml')
-#         cls.fake_fs().create_file('data/afphoto.yaml')
-#         cls.fake_fs().create_file('data/afpub.yaml')
-#         cls.fake_fs().create_file('data/ai.yaml')
-#         cls.fake_fs().create_file('data/angular.yaml')
+class TestCreateIconThemeFile(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('data/afdesign.yaml')
+        cls.fake_fs().create_file('data/afphoto.yaml')
+        cls.fake_fs().create_file('data/afpub.yaml')
+        cls.fake_fs().create_file('data/ai.yaml')
+        cls.fake_fs().create_file('data/angular.yaml')
 
-#     def test_create_icon_file_exist(self):
-#         TestIconTheme.create_icon_file('data/afdesign.yaml', DIR_DESTINY)
-#         self.assertTrue(os.path.exists('data/afdesign.yaml'))
+    def test_create_icon_file_exist(self):
+        test_icon_theme.create_icon_file('data/afdesign.yaml', DIR_DESTINY)
+        self.assertTrue(os.path.exists('data/afdesign.yaml'))
 
-#     def test_create_icons_files_exist(self):
-#         TestIconTheme.create_icons_files('data', DIR_DESTINY)
-#         self.assertTrue(os.path.exists('data/afdesign.yaml'))
+    # def test_create_icons_files_exist(self):
+    #     test_icon_theme.create_icons_files('data', DIR_DESTINY)
+    #     self.assertTrue(os.path.exists('data/afdesign.yaml'))
 
 #     def test_params_create_icon_file(self):
-#         TestIconTheme.create_icon_file('data/afdesign.yaml', DIR_DESTINY)
+#         test_icon_theme.create_icon_file('data/afdesign.yaml', DIR_DESTINY)
 #         self.assertTrue(isinstance('data/afdesign.yaml', str))
 #         self.assertFalse(isinstance('data/afdesign.yaml', int))
 #         self.assertFalse(isinstance('data/afdesign.yaml', list))
@@ -88,7 +88,7 @@ class TestCreateIconTheme:
 #         self.assertFalse(isinstance(DIR_DESTINY, dict))
 
 #     def test_params_create_icons_files(self):
-#         TestIconTheme.create_icons_files('data/', DIR_DESTINY)
+#         test_icon_theme.create_icons_files('data/', DIR_DESTINY)
 #         self.assertTrue(isinstance('data/', str))
 #         self.assertFalse(isinstance('data/', int))
 #         self.assertFalse(isinstance('data/', list))

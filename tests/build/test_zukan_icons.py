@@ -71,19 +71,19 @@ class TestZukanIcon:
         ]
 
 
-# class TestIconZukanIcon(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('data/afdesign.yaml')
-#         cls.fake_fs().create_file('data/afphoto.yaml')
-#         cls.fake_fs().create_file('data/afpub.yaml')
-#         cls.fake_fs().create_file('data/ai.yaml')
-#         cls.fake_fs().create_file('data/angular.yaml')
+class TestIconZukanIcon(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('data/afdesign.yaml')
+        cls.fake_fs().create_file('data/afphoto.yaml')
+        cls.fake_fs().create_file('data/afpub.yaml')
+        cls.fake_fs().create_file('data/ai.yaml')
+        cls.fake_fs().create_file('data/angular.yaml')
 
-#     def test_dir_exist(self):
-#         ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
-#         self.assertTrue(os.path.exists('data'))
+    def test_dir_exist(self):
+        ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
+        self.assertTrue(os.path.exists('data'))
 
 #     def test_params_write_icon_data(self):
 #         ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)

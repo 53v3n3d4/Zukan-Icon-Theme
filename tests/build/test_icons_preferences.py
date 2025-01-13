@@ -112,30 +112,30 @@ class TestPreferences:
         assert result == TEST_YAML_EXPECTED  # noqa: F821
 
 
-# class TestIconPreferences(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('data/afdesign.yaml', contents='test')
-#         cls.fake_fs().create_file('data/afphoto.yaml', contents='test')
-#         cls.fake_fs().create_file('data/afpub.yaml', contents='test')
-#         cls.fake_fs().create_file('data/ai.yaml', contents='test')
-#         cls.fake_fs().create_file('data/angular.yaml', contents='test')
+class TestIconPreferences(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('data/afdesign.yaml', contents='test')
+        cls.fake_fs().create_file('data/afphoto.yaml', contents='test')
+        cls.fake_fs().create_file('data/afpub.yaml', contents='test')
+        cls.fake_fs().create_file('data/ai.yaml', contents='test')
+        cls.fake_fs().create_file('data/angular.yaml', contents='test')
 
-#     def test_file_exist(self):
-#         Preference.preferences('data/ai.yaml', DIR_DESTINY)
-#         self.assertTrue(os.path.exists('data/ai.yaml'))
+    def test_file_exist(self):
+        zukan_preference.preferences('data/ai.yaml', DIR_DESTINY)
+        self.assertTrue(os.path.exists('data/ai.yaml'))
 
 #     def test_dir_exist(self):
-#         Preference.preferences_all('data', DIR_DESTINY)
+#         zukan_preference.preferences_all('data', DIR_DESTINY)
 #         self.assertTrue(os.path.exists('data'))
 
 #     def test_file_not_found(self):
-#         Preference.preferences_all('tests/build/mocks/not_found_yaml.yaml', DIR_DESTINY)
+#         zukan_preference.preferences_all('tests/build/mocks/not_found_yaml.yaml', DIR_DESTINY)
 #         self.assertFalse(os.path.exists('tests/build/mocks/not_found_yaml.yaml'))
 
 #     def test_params_preferences(self):
-#         Preference.preferences('data/ai.yaml', DIR_DESTINY)
+#         zukan_preference.preferences('data/ai.yaml', DIR_DESTINY)
 #         self.assertTrue(isinstance('data/ai.yaml', str))
 #         self.assertFalse(isinstance('data/ai.yaml', int))
 #         self.assertFalse(isinstance('data/ai.yaml', list))
@@ -146,7 +146,7 @@ class TestPreferences:
 #         self.assertFalse(isinstance(DIR_DESTINY, bool))
 
 #     def test_params_preferences_all(self):
-#         Preference.preferences_all('data/', DIR_DESTINY)
+#         zukan_preference.preferences_all('data/', DIR_DESTINY)
 #         self.assertTrue(isinstance('data/', str))
 #         self.assertFalse(isinstance('data/', int))
 #         self.assertFalse(isinstance('data/', list))

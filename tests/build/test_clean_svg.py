@@ -215,42 +215,42 @@ class TestClean:
         assert result != test_removed
 
 
-# class TestCleanSVG(TestCase):
-#     @classmethod
-#     def setUpClass(cls):
-#         cls.setUpClassPyfakefs()
-#         cls.fake_fs().create_file('icons/file_type_afdesign.svg', contents='test')
-#         cls.fake_fs().create_file('icons/file_type_afphoto.svg', contents='test')
-#         cls.fake_fs().create_file('icons/file_type_afpub.svg', contents='test')
-#         cls.fake_fs().create_file('icons/file_type_ai.svg', contents='test')
-#         cls.fake_fs().create_file('icons/file_type_angular.svg', contents='test')
+class TestCleanSVG(TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.setUpClassPyfakefs()
+        cls.fake_fs().create_file('icons/file_type_afdesign.svg', contents='test')
+        cls.fake_fs().create_file('icons/file_type_afphoto.svg', contents='test')
+        cls.fake_fs().create_file('icons/file_type_afpub.svg', contents='test')
+        cls.fake_fs().create_file('icons/file_type_ai.svg', contents='test')
+        cls.fake_fs().create_file('icons/file_type_angular.svg', contents='test')
 
-#     def test_file_exist(self):
-#         zukan_clean_svg.clean_svg('icons/file_type_ai.svg', UNUSED_LIST)
-#         self.assertTrue(os.path.exists('icons/file_type_ai.svg'))
+    def test_file_exist(self):
+        zukan_clean_svg.clean_svg('icons/file_type_ai.svg', UNUSED_LIST)
+        self.assertTrue(os.path.exists('icons/file_type_ai.svg'))
 
-#     def test_dir_exist(self):
-#         zukan_clean_svg.clean_all_svgs('icons', UNUSED_LIST)
-#         self.assertTrue(os.path.exists('icons'))
+    # def test_dir_exist(self):
+    #     zukan_clean_svg.clean_all_svgs('icons', UNUSED_LIST)
+    #     self.assertTrue(os.path.exists('icons'))
 
-#     def test_file_not_found(self):
-#         zukan_clean_svg.clean_svg('icons/file_type_babel.svg', UNUSED_LIST)
-#         self.assertFalse(os.path.exists('icons/file_type_babel.svg'))
+    # def test_file_not_found(self):
+    #     zukan_clean_svg.clean_svg('icons/file_type_babel.svg', UNUSED_LIST)
+    #     self.assertFalse(os.path.exists('icons/file_type_babel.svg'))
 
 #     def test_dir_not_found(self):
 #         zukan_clean_svg.clean_all_svgs('icons_not_found', UNUSED_LIST)
 #         self.assertFalse(os.path.exists('icons_not_found'))
 
-#     def test_params_clean_svg(self):
-#         zukan_clean_svg.clean_svg('icons/file_type_ai.svg', UNUSED_LIST)
-#         self.assertTrue(isinstance('icons/file_type_ai.svg', str))
-#         self.assertTrue(isinstance(UNUSED_LIST, collections.abc.Set))
-#         self.assertFalse(isinstance('icons/file_type_ai.svg', int))
-#         self.assertFalse(isinstance('icons/file_type_ai.svg', list))
-#         self.assertFalse(isinstance('icons/file_type_ai.svg', bool))
-#         self.assertFalse(isinstance(UNUSED_LIST, int))
-#         self.assertFalse(isinstance(UNUSED_LIST, list))
-#         self.assertFalse(isinstance(UNUSED_LIST, bool))
+    # def test_params_clean_svg(self):
+    #     zukan_clean_svg.clean_svg('icons/file_type_ai.svg', UNUSED_LIST)
+    #     self.assertTrue(isinstance('icons/file_type_ai.svg', str))
+    #     self.assertTrue(isinstance(UNUSED_LIST, collections.abc.Set))
+    #     self.assertFalse(isinstance('icons/file_type_ai.svg', int))
+    #     self.assertFalse(isinstance('icons/file_type_ai.svg', list))
+    #     self.assertFalse(isinstance('icons/file_type_ai.svg', bool))
+    #     self.assertFalse(isinstance(UNUSED_LIST, int))
+    #     self.assertFalse(isinstance(UNUSED_LIST, list))
+    #     self.assertFalse(isinstance(UNUSED_LIST, bool))
 
 #     def test_params_clean_all_svgs(self):
 #         zukan_clean_svg.clean_all_svgs('icons', UNUSED_LIST)
