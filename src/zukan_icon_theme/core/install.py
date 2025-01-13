@@ -47,7 +47,7 @@ class InstallEvent:
         # Check 'auto_install_theme' avoid duplicate create themes when True.
         # Because deleting theme already triggers event to create themes.
 
-        _ , auto_install_theme = get_theme_settings()
+        _, auto_install_theme = get_theme_settings()
 
         if auto_install_theme is False:
             self.zukan_theme.create_icons_themes()

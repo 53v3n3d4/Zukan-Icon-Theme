@@ -55,10 +55,12 @@ class ZukanTheme:
                 theme_filepath = os.path.join(
                     ZUKAN_PKG_ICONS_PATH, os.path.basename(theme_st_path)
                 )
-                if theme_with_opacity(theme_st_path) is True:
+
+                if theme_with_opacity(theme_st_path):
                     file_content = TEMPLATE_JSON
-                if theme_with_opacity(theme_st_path) is False:
+                else:
                     file_content = TEMPLATE_JSON_WITH_OPACITY
+
                 dump_json_data(file_content, theme_filepath)
                 logger.info('creating icon theme %s', os.path.basename(theme_filepath))
                 return theme_st_path

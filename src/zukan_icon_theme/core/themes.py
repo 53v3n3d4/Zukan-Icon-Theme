@@ -64,7 +64,8 @@ class Themes(ZukanTheme):
             )
             sublime.message_dialog(dialog_message)
 
-        self.create_icon_theme(theme_st_path)
+        else:
+            self.create_icon_theme(theme_st_path)
 
     def install_all_icons_themes(self):
         self.create_icons_themes()

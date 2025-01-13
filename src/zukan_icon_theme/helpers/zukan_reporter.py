@@ -12,16 +12,11 @@ from ..core.listeners import SchemeTheme
 from ..core.zukan_pref_settings import SettingsEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
+from ..lib.icons_themes import ZukanTheme
 from ..utils.zukan_paths import ZUKAN_PKG_SUBLIME_PATH
 from ..utils.zukan_reports_options import ZUKAN_REPORTS_OPTIONS
 
 logger = logging.getLogger(__name__)
-
-# ZUKAN_REPORTS_OPTIONS = [
-#     { 'get_user_theme': (lambda: SchemeTheme().get_user_theme()) },
-#     { 'build_preferences': (lambda: ZukanPreference().build_icons_preferences()) },
-#     { 'build_syntaxes': (lambda: ZukanSyntax().build_icons_syntaxes()) },
-# ]
 
 
 class Reporter:
@@ -97,10 +92,6 @@ class Reporter:
             return self.profile_file_path
 
     def report_to_file(self, option: str):
-        # for d in self.list_profile_options.items():
-        #     if d[0] == option:
-        #         self._profile_results(d[1])
-
         if option == 'Clear reports file':
             self._delete_report_file()
 
@@ -110,10 +101,7 @@ class Reporter:
         else:
             fname = option.split()[-1]
 
-            if fname == 'get_user_theme':
-                self._profile_results(lambda: SchemeTheme().get_user_theme(), option)
-
-            elif fname == 'build_preferences':
+            if fname == 'build_preferences':
                 self._profile_results(
                     lambda: ZukanPreference().build_icons_preferences(), option
                 )
@@ -122,6 +110,14 @@ class Reporter:
                 self._profile_results(
                     lambda: ZukanSyntax().build_icons_syntaxes(), option
                 )
+
+            elif fname == 'create_icons_themes':
+                self._profile_results(
+                    lambda: ZukanTheme().create_icons_themes(), option
+                )
+
+            elif fname == 'get_user_theme':
+                self._profile_results(lambda: SchemeTheme().get_user_theme(), option)
 
 
 class ZukanReporterCommand(sublime_plugin.TextCommand):
