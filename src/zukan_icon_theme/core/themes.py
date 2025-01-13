@@ -127,7 +127,6 @@ class DeleteThemeCommand(sublime_plugin.TextCommand):
         # get_user_theme()
 
     def input(self, args: dict):
-        # print(args)
         return DeleteThemeInputHandler(self.themes)
 
 
@@ -186,7 +185,7 @@ class InstallThemeCommand(sublime_plugin.TextCommand):
             ignored_theme = self.themes.ignored_theme_setting()
             theme_name = os.path.basename(theme_st_path)
 
-            if zukan_restart_message is True and theme_name not in ignored_theme:
+            if zukan_restart_message and theme_name not in ignored_theme:
                 dialog_message = (
                     'You may have to restart ST, if all icons do not load in '
                     'current theme.'
@@ -194,10 +193,6 @@ class InstallThemeCommand(sublime_plugin.TextCommand):
                 sublime.message_dialog(dialog_message)
 
             self.themes.install_icon_theme(theme_st_path)
-
-        # Comment because change 'add_on_change' to event listener
-        # Check if selected theme was installed
-        # get_user_theme()
 
     def input(self, args: dict):
         return InstallThemeInputHandler(self.themes)
@@ -226,7 +221,6 @@ class InstallThemeInputHandler(sublime_plugin.ListInputHandler):
             themes_list = sorted(list_themes_not_installed)
             new_list = all_option + themes_list
             return new_list
-            # return sorted(list_themes_not_installed)
 
         else:
             raise TypeError(

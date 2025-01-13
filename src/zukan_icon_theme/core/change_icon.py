@@ -186,23 +186,10 @@ class ResetIconCommand(sublime_plugin.TextCommand):
         if change_icon:
             if icon_name == 'All':
                 self.change_reset_icon.reset_all_change_icons(change_icon)
-                # icon_dict_updated = {}
-
-                # if zukan_listener_enabled:
-                #     logger.info('reseting all icons')
 
             else:
                 if icon_name in change_icon.keys():
                     self.change_reset_icon.reset_change_icon(change_icon, icon_name)
-
-                    # icon_dict_updated = {
-                    #     k: v for k, v in change_icon.items() if k != icon_name
-                    # }
-
-                    # if zukan_listener_enabled:
-                    #     logger.info('reseting icon %s', icon_name)
-
-            # set_save_settings(ZUKAN_SETTINGS, 'change_icon', icon_dict_updated)
 
     def input(self, args: dict):
         return ResetIconInputHandler(self.change_reset_icon)

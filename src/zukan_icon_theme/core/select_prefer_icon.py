@@ -168,26 +168,11 @@ class RemovePreferIconCommand(sublime_plugin.TextCommand):
             if select_prefer_icon_theme == 'All':
                 self.select_remove_prefer_icon.remove_all_prefer_icons(prefer_icon)
 
-                # icon_dict_updated = {}
-
-                # if zukan_listener_enabled:
-                #     logger.info('removing all prefer icons')
-
             else:
                 if select_prefer_icon_theme in prefer_icon.keys():
                     self.select_remove_prefer_icon.remove_prefer_icon(
                         prefer_icon, select_prefer_icon_theme
                     )
-                    # icon_dict_updated = {
-                    #     k: v
-                    #     for k, v in prefer_icon.items()
-                    #     if k != select_prefer_icon_theme
-                    # }
-
-                    # if zukan_listener_enabled:
-                    #     logger.info('reseting icon %s', select_prefer_icon_theme)
-
-            # set_save_settings(ZUKAN_SETTINGS, 'prefer_icon', icon_dict_updated)
 
     def input(self, args: dict):
         return RemovePreferIconInputHandler(self.select_remove_prefer_icon)

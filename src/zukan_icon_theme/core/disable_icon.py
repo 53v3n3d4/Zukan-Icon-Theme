@@ -156,24 +156,9 @@ class EnableIconCommand(sublime_plugin.TextCommand):
         if ignored_icon:
             if icon_name == 'All':
                 self.disable_enable_icon.enable_all_ignored_icons(ignored_icon)
-                # new_list = []
-
-                # if zukan_listener_enabled:
-                #     logger.info('enabling all icons')
 
             else:
                 self.disable_enable_icon.enable_ignored_icon(ignored_icon, icon_name)
-
-                # # Remove icon_name
-                # ignored_icon = [i for i in ignored_icon if not i == icon_name]
-                # new_list = sorted(ignored_icon)
-
-                # if zukan_listener_enabled:
-                #     logger.info('enabling %s icon', icon_name)
-
-            # set_save_settings(ZUKAN_SETTINGS, 'ignored_icon', new_list)
-
-            # Rebuild syntax and preference
 
     def input(self, args: dict):
         return EnableIconInputHandler(self.disable_enable_icon)
