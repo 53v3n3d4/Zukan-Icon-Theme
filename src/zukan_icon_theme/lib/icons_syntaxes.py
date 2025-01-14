@@ -107,6 +107,15 @@ class ZukanSyntax:
 
         return list_all_icons_syntaxes
 
+    def get_compare_scopes(self, zukan_icons: list):
+        zukan_compare_scopes = compare_scopes(zukan_icons)
+
+        compare_scopes_set = set(
+            k['scope'] for k in zukan_compare_scopes if 'scope' in k
+        )
+
+        return compare_scopes_set
+
     def create_icon_syntax(self, syntax_name: str):
         """
         Create icon sublime-syntax file.
@@ -116,6 +125,7 @@ class ZukanSyntax:
         """
         try:
             zukan_icons = self.zukan_icons_data()
+            compare_scopes_set = self.get_compare_scopes(zukan_icons)
 
             list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
@@ -146,8 +156,10 @@ class ZukanSyntax:
                     )
                 ):
                     for k in s['syntax']:
+                        scope = k.get('scope')
                         if (
-                            k not in compare_scopes(zukan_icons)
+                            scope
+                            and scope not in compare_scopes_set
                             and k['name'] == syntax_name
                         ):
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
@@ -162,7 +174,6 @@ class ZukanSyntax:
                                 syntax_filepath = os.path.join(
                                     ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
                                 )
-                                # print(syntax_filepath)
                                 dump_yaml_data(k, syntax_filepath)
                                 logger.info('%s created.', filename)
                 elif (
@@ -195,6 +206,7 @@ class ZukanSyntax:
         """
         try:
             zukan_icons = self.zukan_icons_data()
+            compare_scopes_set = self.get_compare_scopes(zukan_icons)
 
             list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
@@ -225,7 +237,8 @@ class ZukanSyntax:
                     )
                 ):
                     for k in s['syntax']:
-                        if k not in compare_scopes(zukan_icons):
+                        scope = k.get('scope')
+                        if scope and scope not in compare_scopes_set:
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
 
                             # 'change_scope_file_extension' setting

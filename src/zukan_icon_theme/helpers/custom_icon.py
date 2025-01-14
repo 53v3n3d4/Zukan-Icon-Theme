@@ -141,7 +141,7 @@ def data(d: dict):
             )
 
 
-def generate_custom_icon(zukan_icons) -> list:
+def generate_custom_icon(zukan_icons: list) -> list:
     create_custom_icon = get_create_custom_icon_settings()
     list_od = []
 

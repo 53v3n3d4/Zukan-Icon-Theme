@@ -70,12 +70,13 @@ class SchemeTheme:
 
         It also used to select an icon version, dark or light, for a theme.
         """
+        theme_name = self.theme_name_setting()
+        icon_theme_file = self.theme_file()
 
         if (
-            self.theme_name_setting()
-            not in self.zukan_theme.list_created_icons_themes()
+            theme_name not in self.zukan_theme.list_created_icons_themes()
             and self.auto_install_theme is False
-        ) or self.theme_name_setting() in self.ignored_theme:
+        ) or theme_name in self.ignored_theme:
             # Delete preferences to avoid error unable to decode 'icon_file_type'
             # Example of extensions that this errors show: HAML, LICENSE, README,
             # Makefile
@@ -94,11 +95,11 @@ class SchemeTheme:
         # Creating icon theme if does not exist.
         if (
             self.auto_install_theme is True
-            and not os.path.exists(self.theme_file())
-            and package_theme_exists(self.theme_name_setting())
-            and self.theme_name_setting() not in self.ignored_theme
+            and not os.path.exists(icon_theme_file)
+            and package_theme_exists(theme_name)
+            and theme_name not in self.ignored_theme
         ):
-            theme_path = sublime.find_resources(self.theme_name_setting())
+            theme_path = sublime.find_resources(theme_name)
             self.zukan_theme.create_icon_theme(theme_path[0])
 
             if self.zukan_restart_message:
@@ -112,8 +113,8 @@ class SchemeTheme:
         self.zukan_theme.delete_unused_icon_theme()
 
         if (
-            self.theme_name_setting() in self.zukan_theme.list_created_icons_themes()
-            and self.theme_name_setting() not in self.ignored_theme
+            theme_name in self.zukan_theme.list_created_icons_themes()
+            and theme_name not in self.ignored_theme
         ):
             if not any(
                 syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
@@ -131,21 +132,15 @@ class SchemeTheme:
                     for preferences in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
                 )
                 or (
-                    self.theme_name_setting() in self.prefer_icon
-                    and not any(
-                        d['theme'] == self.theme_name_setting()
-                        for d in self.user_ui_settings
-                    )
+                    theme_name in self.prefer_icon
+                    and not any(d['theme'] == theme_name for d in self.user_ui_settings)
                 )
                 or (
                     # 'auto_prefer_icon' setting
                     self.auto_prefer_icon is True
-                    and self.theme_name_setting() not in self.prefer_icon
+                    and theme_name not in self.prefer_icon
                     and (
-                        not any(
-                            d['theme'] == self.theme_name_setting()
-                            for d in self.user_ui_settings
-                        )
+                        not any(d['theme'] == theme_name for d in self.user_ui_settings)
                         or not any(
                             d['color_scheme'] == self.color_scheme_name
                             for d in self.user_ui_settings
@@ -159,15 +154,13 @@ class SchemeTheme:
                 # self.zukan_preference.build_icons_preferences()
 
         # Deleting ignored theme in case it already exists before ignoring.
-        if self.theme_name_setting() in self.ignored_theme and os.path.exists(
-            self.theme_file()
-        ):
+        if theme_name in self.ignored_theme and os.path.exists(icon_theme_file):
             if self.zukan_restart_message:
                 dialog_message = (
                     'You may have to restart ST, for all icons do not show.'
                 )
                 sublime.message_dialog(dialog_message)
-            self.zukan_theme.delete_icon_theme(self.theme_name_setting())
+            self.zukan_theme.delete_icon_theme(theme_name)
 
 
 class SchemeThemeListener(sublime_plugin.ViewEventListener):

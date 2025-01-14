@@ -82,7 +82,7 @@ def convert_to_rgb(bgcolor: str) -> list:
         logger.info('could not convert color to RGB.')
 
 
-def st_colors_to_hex(var_name):
+def st_colors_to_hex(var_name: str) -> str:
     for i in ST_COLOR_PALETTE:
         for k, v in i.items():
             if var_name == k:

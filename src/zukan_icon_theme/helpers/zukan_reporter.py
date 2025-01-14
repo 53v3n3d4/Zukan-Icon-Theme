@@ -8,6 +8,7 @@ import sublime_plugin
 import sys
 
 from datetime import datetime
+from typing import Callable
 from ..core.listeners import SchemeTheme
 from ..core.zukan_pref_settings import SettingsEvent
 from ..lib.icons_preferences import ZukanPreference
@@ -26,7 +27,7 @@ class Reporter:
             ZUKAN_PKG_SUBLIME_PATH, 'zukan_reports.txt'
         )
 
-    def _profile_results(self, fname: str, title: str):
+    def _profile_results(self, fname: Callable[[], None], title: str):
         """
         https://docs.python.org/3/library/profile.html#profile.Profile
         """

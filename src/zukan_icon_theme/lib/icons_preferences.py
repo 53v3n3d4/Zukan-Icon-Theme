@@ -231,14 +231,13 @@ class ZukanPreference:
 
     def get_list_icons_preferences(self):
         list_all_icons_preferences = []
+        zukan_icons = self.zukan_icons_data()
 
         # 'create_custom_icon' setting
         custom_list = [
-            p
-            for p in generate_custom_icon(self.zukan_icons_data())
-            if 'preferences' in p
+            p for p in generate_custom_icon(zukan_icons) if 'preferences' in p
         ]
-        list_all_icons_preferences = self.zukan_icons_data() + custom_list
+        list_all_icons_preferences = zukan_icons + custom_list
 
         return list_all_icons_preferences
 

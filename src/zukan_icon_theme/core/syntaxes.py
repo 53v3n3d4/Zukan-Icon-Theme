@@ -49,33 +49,39 @@ class Syntaxes(ZukanSyntax):
 
     def get_not_installed_syntaxes(self):
         list_syntaxes_not_installed = []
-        list_all_icons_syntaxes = self.get_list_icons_syntaxes(self.zukan_icons_data())
+        zukan_icons = self.zukan_icons_data()
+        compare_scopes_set = self.get_compare_scopes(zukan_icons)
+
+        list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
         for s in list_all_icons_syntaxes:
-            if s.get('syntax') is not None:
+            if 'syntax' in s:
                 for k in s['syntax']:
-                    if k not in compare_scopes(self.zukan_icons_data()):
+                    scope = k.get('scope')
+                    if scope and scope not in compare_scopes_set:
                         # 'change_file_extension' setting
                         k['file_extensions'] = edit_file_extension(
-                            k['file_extensions'], k['scope']
+                            k['file_extensions'], scope
                         )
                         # file_extensions list can be empty
                         if k['file_extensions']:
                             list_syntaxes_not_installed.append(
                                 k['name'] + SUBLIME_SYNTAX_EXTENSION
                             )
+
+        created_icons_syntaxes_set = set(self.list_created_icons_syntaxes())
+
         list_syntaxes_not_installed = list(
-            set(list_syntaxes_not_installed).difference(
-                self.list_created_icons_syntaxes()
-            )
+            set(list_syntaxes_not_installed) - created_icons_syntaxes_set
         )
 
         return list_syntaxes_not_installed
 
     def install_icon_syntax(self, syntax_name: str):
         file_name, _ = os.path.splitext(syntax_name)
+        zukan_icons = self.zukan_icons_data()
 
-        list_all_icons_syntaxes = self.get_list_icons_syntaxes(self.zukan_icons_data())
+        list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
         for d in list_all_icons_syntaxes:
             if 'syntax' in d:

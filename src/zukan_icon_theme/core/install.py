@@ -32,7 +32,7 @@ class InstallEvent:
         self.zukan_syntax = ZukanSyntax()
         self.zukan_theme = ZukanTheme()
 
-    def zukan_restart_message(self):
+    def zukan_restart_message_setting(self):
         return is_zukan_restart_message()
 
     def pkg_version_setting(self):
@@ -77,25 +77,26 @@ class InstallEvent:
             self.move_folder.move_folders()
 
         finally:
-            if self.zukan_restart_message() is True:
-                dialog_message = (
-                    'Zukan icons has been upgraded to v{v}.\n\n'
-                    'Changelog in Sublime Text > Settings > Package Settings menu.\n\n'
+            pkg_version = self.pkg_version_setting()
+            zukan_restart_message = self.zukan_restart_message_setting()
+
+            dialog_message = (
+                'Zukan icons has been upgraded to v{v}.\n\n'
+                'Changelog in Sublime Text > Settings > Package Settings menu.'
+                '\n\n'.format(v=pkg_version)
+            )
+
+            if zukan_restart_message:
+                dialog_message += (
                     'You may have to restart ST, if all icons do not load correct in '
-                    'current theme.'.format(v=self.pkg_version_setting())
-                )
-            if self.zukan_restart_message() is False:
-                dialog_message = (
-                    'Zukan icons has been upgraded to v{v}.\n\n'
-                    'Changelog in Sublime Text > Settings > Package Settings menu.'
-                    '\n\n'.format(v=self.pkg_version_setting())
+                    'current theme.'
                 )
 
             t = threading.Thread(target=self.install_syntaxes_preferences)
             t.start()
             ThreadProgress(t, 'Upgrading zukan files', 'Upgrade done', dialog_message)
 
-            logger.info('upgrading Zukan icons to v%s.', self.pkg_version_setting())
+            logger.info('upgrading Zukan icons to v%s.', pkg_version)
             logger.info('Changelog in Sublime Text > Settings > Package Settings menu.')
 
             # Delete unused icons
@@ -123,15 +124,17 @@ class InstallEvent:
         # 'refresh_folder_list' do not help force reload. But deleting or duplicating a
         # folder with at least 5 files, it will realod file icons.
         # If change themes, the icons is working with no problem.
+        zukan_restart_message = self.zukan_restart_message_setting()
 
-        if self.zukan_restart_message() is True:
-            dialog_message = (
+        dialog_message = (
+            (
                 'Zukan icons v{v} has been built.\n\n'
                 'You may have to restart ST, if all icons do not load correct in '
                 'current theme.'.format(v=self.pkg_version_setting())
             )
-        if self.zukan_restart_message() is False:
-            dialog_message = None
+            if zukan_restart_message
+            else None
+        )
 
         t = threading.Thread(target=self.install_batch)
         t.start()

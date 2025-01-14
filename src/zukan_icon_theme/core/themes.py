@@ -29,7 +29,7 @@ class Themes(ZukanTheme):
         ignored_theme, _ = get_theme_settings()
         return ignored_theme
 
-    def zukan_restart_message(self):
+    def zukan_restart_message_setting(self):
         return is_zukan_restart_message()
 
     def delete_single_icon_theme(self, theme_name: str):
@@ -86,7 +86,7 @@ class DeleteThemeCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_name: str):
         # 'zukan_restart_message' setting
-        zukan_restart_message = self.themes.zukan_restart_message()
+        zukan_restart_message = self.themes.zukan_restart_message_setting()
 
         if theme_name == 'All':
             if zukan_restart_message:
@@ -168,7 +168,7 @@ class InstallThemeCommand(sublime_plugin.TextCommand):
 
     def run(self, edit, theme_st_path: str):
         # 'zukan_restart_message' setting
-        zukan_restart_message = self.themes.zukan_restart_message()
+        zukan_restart_message = self.themes.zukan_restart_message_setting()
 
         if theme_st_path == 'All':
             if zukan_restart_message:

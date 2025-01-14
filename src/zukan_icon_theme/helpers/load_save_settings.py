@@ -76,11 +76,8 @@ def get_theme_name() -> str:
     theme_name = get_settings(USER_SETTINGS, 'theme')
 
     # Get system theme
-    if theme_name == 'auto' and not system_theme():
-        theme_name = light_theme_name
-
-    if theme_name == 'auto' and system_theme():
-        theme_name = dark_theme_name
+    if theme_name == 'auto':
+        theme_name = dark_theme_name if system_theme() else light_theme_name
 
     return theme_name
 
