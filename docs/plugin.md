@@ -66,10 +66,11 @@ See [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/f
     "change_icon": {
         "Angular": "angular-1",
         "Binary": "file_type_binary-1-dark",
+        "C#": "csharp-1",
         "Cert. Authentication": "cert-1-dark",
         "Composer": "composer-1",
         "Composer": "composer-2",
-        "C#": "csharp-1",
+        "CSS": "css-1",
         "DirectX": "directx-1-dark",
         "Go": "go-1",
         "Image": "file_type_image-1",

@@ -172,14 +172,13 @@ Build icons syntaxes using Commands.
 
 Option 1:
 - Go to 'Command Palette', type 'zukan'
-- Select 'Zukan Icon Theme: Install Syntax'. It takes a few seconds to build the list
-with all syntaxes installed minus icons syntaxes.
-- Click all to rebuild all icons syntaxes files.
+- Select 'Zukan Icon Theme: Install Syntax'
+- Click all to rebuild all icons syntaxes files
 
 Option 2:
 - Go to 'Settings > Package Settings > Zukan Icon Theme'
 - Click on 'Rebuild files'. This will rebuild all files, not only icons syntaxes. It
-is similar to first install or upgrade package.
+is similar to first install or upgrade package
 
 Also, there are actions where icons syntaxes are rebuilt:
 - Package upgrade
