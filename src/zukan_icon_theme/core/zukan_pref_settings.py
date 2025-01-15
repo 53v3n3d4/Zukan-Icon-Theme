@@ -41,6 +41,25 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
+class EventBus:
+    """
+    Event bus to allow communication between UpgradePlugin and ZukanIconFiles.
+    """
+
+    def __init__(self):
+        self.listeners = {}
+
+    def subscribe(self, event_name: str, listener: Callable[[], None]):
+        if event_name not in self.listeners:
+            self.listeners[event_name] = []
+        self.listeners[event_name].append(listener)
+
+    def publish(self, event_name: str):
+        if event_name in self.listeners:
+            for listener in self.listeners[event_name]:
+                listener()
+
+
 class ZukanIconFiles:
     def __init__(
         self,
@@ -333,30 +352,11 @@ class SettingsEvent:
         )
 
 
-class EventBus:
-    """
-    Event bus to allow communication between UpgradePlugin and ZukanIconFiles.
-    """
-
-    def __init__(self):
-        self.listeners = {}
-
-    def subscribe(self, event_name: str, listener: Callable[[], None]):
-        if event_name not in self.listeners:
-            self.listeners[event_name] = []
-        self.listeners[event_name].append(listener)
-
-    def publish(self, event_name: str):
-        if event_name in self.listeners:
-            for listener in self.listeners[event_name]:
-                listener()
-
-
 class UpgradePlugin:
     def __init__(
         self,
-        event_bus,
-        install_event=None,
+        event_bus: EventBus,
+        install_event: InstallEvent = None,
     ):
         self.event_bus = event_bus
         self.is_upgrading = False
