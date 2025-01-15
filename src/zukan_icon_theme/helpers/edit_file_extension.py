@@ -8,7 +8,9 @@ from ..utils.scopes_file_extensions import (
 logger = logging.getLogger(__name__)
 
 
-def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list:
+def edit_file_extension(
+    syntax_file_extensions: list, syntax_scope: str, change_icon_file_extension: list
+) -> list:
     """
     Different packages can use same file extension. It could result in an icon
     pointing to a not desired file extension. This function remove file extension,
@@ -25,7 +27,6 @@ def edit_file_extension(syntax_file_extensions: list, syntax_scope: str) -> list
     syntax_file_extensions (list) -- list of file extensions based on two lists:
     SCOPES_FILE_EXTENSIONS and 'change_icon_file_extension' setting.
     """
-    _, change_icon_file_extension = get_change_icon_settings()
 
     file_extensions_list = []
     default_extensions = set()

@@ -21,7 +21,7 @@ class SelectRemovePreferIcon:
 
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 
-    def prefer_icon_setting(self):
+    def prefer_icon_setting(self) -> dict:
         _, prefer_icon = get_prefer_icon_settings()
         return prefer_icon
 
@@ -32,7 +32,7 @@ class SelectRemovePreferIcon:
     def _save_prefer_icon_setting(self, prefer_icon: dict):
         set_save_settings(ZUKAN_SETTINGS, 'prefer_icon', prefer_icon)
 
-    def get_list_created_icons_themes(self):
+    def get_list_created_icons_themes(self) -> list:
         return self.zukan_theme.list_created_icons_themes()
 
     def remove_prefer_icon(self, prefer_icon: dict, select_prefer_icon_theme: str):
@@ -129,7 +129,7 @@ class SelectPreferIconThemeInputHandler(sublime_plugin.ListInputHandler):
                 logger.info('it does not exist any created theme, list is empty')
             )
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if 'select_prefer_icon_theme' not in args:
             return SelectPreferIconVersionInputHandler()
 

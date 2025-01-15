@@ -1,6 +1,7 @@
 import logging
 import os
 
+from typing import Callable
 from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
@@ -43,11 +44,11 @@ logger = logging.getLogger(__name__)
 class ZukanIconFiles:
     def __init__(
         self,
-        event_bus,
-        clean_comments=None,
-        install_event=None,
-        zukan_preference=None,
-        zukan_syntax=None,
+        event_bus: EventBus,
+        clean_comments: CleanComments = None,
+        install_event: InstallEvent = None,
+        zukan_preference: ZukanPreference = None,
+        zukan_syntax: ZukanSyntax = None,
     ):
         self.event_bus = event_bus
         self.clean_comments = clean_comments if clean_comments else CleanComments()
@@ -88,7 +89,7 @@ class ZukanIconFiles:
         self.is_upgrading = False
         logger.debug('upgrade finished, rebuild can proceed.')
 
-    def rebuild_icons_files(self, event_bus):
+    def rebuild_icons_files(self, event_bus: EventBus):
         """
         Rebuild icons files, when icons settings change in Zukan preferences.
         """
@@ -340,12 +341,12 @@ class EventBus:
     def __init__(self):
         self.listeners = {}
 
-    def subscribe(self, event_name, listener):
+    def subscribe(self, event_name: str, listener: Callable[[], None]):
         if event_name not in self.listeners:
             self.listeners[event_name] = []
         self.listeners[event_name].append(listener)
 
-    def publish(self, event_name):
+    def publish(self, event_name: str):
         if event_name in self.listeners:
             for listener in self.listeners[event_name]:
                 listener()

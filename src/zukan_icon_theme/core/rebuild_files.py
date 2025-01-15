@@ -12,7 +12,9 @@ class RebuildFilesCommand(sublime_plugin.ApplicationCommand):
     Sublime command to rebuild sublime-themes and sublime-syntaxes.
     """
 
-    def __init__(self, install_event=None, zukan_theme=None):
+    def __init__(
+        self, install_event: InstallEvent = None, zukan_theme: ZukanTheme = None
+    ):
         self.install_event = install_event if install_event else InstallEvent()
         self.zukan_theme = zukan_theme if zukan_theme else ZukanTheme()
 

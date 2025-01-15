@@ -18,7 +18,7 @@ class ChangeResetFileExtension:
     def __init__(self):
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 
-    def change_icon_file_extension_setting(self):
+    def change_icon_file_extension_setting(self) -> list:
         _, change_icon_file_extension = get_change_icon_settings()
         return change_icon_file_extension
 
@@ -30,7 +30,7 @@ class ChangeResetFileExtension:
             dialog_message = 'Scope and file extension inputs are required'
             sublime.error_message(dialog_message)
 
-    def convert_to_list(self, change_file_extension_exts: str):
+    def convert_to_list(self, change_file_extension_exts: str) -> list:
         # Convert change_file_extension_exts to list
         list_change_file_extension_exts = [
             s.strip() for s in change_file_extension_exts.split(',')
@@ -113,7 +113,7 @@ class ChangeResetFileExtension:
 
             return None
 
-    def cleaning_duplicated(self, new_scopes_list: list):
+    def cleaning_duplicated(self, new_scopes_list: list) -> list:
         # Cleaning duplicated
         file_extensions_list_not_duplicated = [
             f for i, f in enumerate(new_scopes_list) if new_scopes_list.index(f) == i
@@ -255,7 +255,7 @@ class ChangeFileExtensionScopeInputHandler(sublime_plugin.TextInputHandler):
         sublime.status_message('Scope name to be used')
         return 'Type scope. E.g. source.js'
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if 'change_file_extension_exts' not in args:
             return ChangeFileExtensionExtsInputHandler()
 
@@ -272,7 +272,7 @@ class ChangeFileExtensionExtsInputHandler(sublime_plugin.TextInputHandler):
     def confirm(self, text):
         self.text = text
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if self.text == 'back':
             return sublime_plugin.BackInputHandler()
 

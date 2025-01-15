@@ -40,17 +40,25 @@ class ZukanPreference:
     Create and remove tmPreferences in preferences folder.
     """
 
-    def __init__(self):
-        self.auto_prefer_icon, self.prefer_icon = get_prefer_icon_settings()
-        self.change_icon, _ = get_change_icon_settings()
-        self.ignored_icon = get_ignored_icon_settings()
-        self.theme_name = get_theme_name()
+    def change_icon_setting(self) -> dict:
+        change_icon, _ = get_change_icon_settings()
+        return change_icon
 
-    def zukan_icons_data(self):
+    def ignored_icon_setting(self) -> list:
+        return get_ignored_icon_settings()
+
+    def prefer_icon_setting(self) -> tuple:
+        auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
+        return auto_prefer_icon, prefer_icon
+
+    def theme_name_setting(self) -> str:
+        return get_theme_name()
+
+    def zukan_icons_data(self) -> list:
         return read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
-    def sidebar_bgcolor(self):
-        return get_sidebar_bgcolor(self.theme_name)
+    def sidebar_bgcolor(self, theme_name: str) -> str:
+        return get_sidebar_bgcolor(theme_name)
 
     def build_icon_preference(self, file_name: str, preference_name: str):
         """
@@ -83,16 +91,18 @@ class ZukanPreference:
             self.delete_plist_tags()
             copy_primary_icons()
 
-    def _apply_change_icon(self, p):
-        if self.change_icon:
-            for k, v in self.change_icon.items():
+    def _apply_change_icon(self, p: dict, change_icon: dict):
+        if change_icon:
+            for k, v in change_icon.items():
                 if p['name'] == k:
                     p['preferences']['settings']['icon'] = v
 
-    def _apply_prefer_icon(self, p, prefer_icon_version):
-        if self.prefer_icon:
-            for k, v in self.prefer_icon.items():
-                if self.theme_name == k:
+    def _apply_prefer_icon(
+        self, p: dict, prefer_icon_version: str, theme_name: str, prefer_icon: dict
+    ):
+        if prefer_icon:
+            for k, v in prefer_icon.items():
+                if theme_name == k:
                     # Prefer light icon
                     if v == 'light' and p['preferences']['settings']['icon'].endswith(
                         '-dark'
@@ -126,8 +136,16 @@ class ZukanPreference:
                             p['preferences']['settings']['icon'],
                         )
 
-    def _apply_auto_prefer_icon(self, p, prefer_icon_version, bgcolor):
-        if self.theme_name not in self.prefer_icon and self.auto_prefer_icon:
+    def _apply_auto_prefer_icon(
+        self,
+        p: dict,
+        prefer_icon_version: str,
+        bgcolor: str,
+        theme_name: str,
+        auto_prefer_icon: bool,
+        prefer_icon: dict,
+    ):
+        if theme_name not in prefer_icon and auto_prefer_icon:
             # Default dark icon
             if not bgcolor:
                 prefer_icon_version = p['preferences']['settings']['icon']
@@ -166,7 +184,7 @@ class ZukanPreference:
                         p['preferences']['settings']['icon'],
                     )
 
-    def _rename_primary_icons(self, p):
+    def _rename_primary_icons(self, p: dict):
         for primary in PRIMARY_ICONS:
             for i in primary[2]:
                 if (
@@ -179,7 +197,7 @@ class ZukanPreference:
                         i,
                     )
 
-    def _png_exists(self, p):
+    def _png_exists(self, p: dict):
         if not os.path.exists(
             os.path.join(
                 ZUKAN_PKG_ICONS_PATH,
@@ -197,7 +215,11 @@ class ZukanPreference:
         p: dict,
         icon_name: str,
         filename: str,
-        bgcolor,
+        bgcolor: str,
+        theme_name: str,
+        change_icon: dict,
+        auto_prefer_icon: bool,
+        prefer_icon: dict,
     ):
         """
         Handle the zukan settings to choose icon option, version or ignore an icon.
@@ -209,16 +231,18 @@ class ZukanPreference:
         extension, excluding '-dark' or '-light' from name.
         """
         # 'change_icon' setting
-        self._apply_change_icon(p)
+        self._apply_change_icon(p, change_icon)
 
         # 'prefer_icon'  and 'auto_prefer_icon' setting
         prefer_icon_version = ''
 
         # 'prefer_icon' setting
-        self._apply_prefer_icon(p, prefer_icon_version)
+        self._apply_prefer_icon(p, prefer_icon_version, theme_name, prefer_icon)
 
         # 'auto_prefer_icon' setting
-        self._apply_auto_prefer_icon(p, prefer_icon_version, bgcolor)
+        self._apply_auto_prefer_icon(
+            p, prefer_icon_version, bgcolor, theme_name, auto_prefer_icon, prefer_icon
+        )
 
         # Rename if icon is primary icons do not work with any other names
         self._rename_primary_icons(p)
@@ -241,7 +265,7 @@ class ZukanPreference:
 
         return list_all_icons_preferences
 
-    def _get_file_name(self, icon_name):
+    def _get_file_name(self, icon_name: str) -> str:
         # Remove '-dark' and '-light' from tmPreferences name.
         if icon_name.endswith('-dark'):
             icon_name = icon_name[:-5]
@@ -264,23 +288,27 @@ class ZukanPreference:
         list_all_icons_preferences = self.get_list_icons_preferences()
         # print(list_all_icons_preferences)
 
-        bgcolor = self.sidebar_bgcolor()
+        theme_name = self.theme_name_setting()
+        bgcolor = self.sidebar_bgcolor(theme_name)
+
+        auto_prefer_icon, prefer_icon = self.prefer_icon_setting()
+        change_icon = self.change_icon_setting()
+        ignored_icon = self.ignored_icon_setting()
 
         for p in list_all_icons_preferences:
             if (
                 p['preferences']['settings']['icon'] == preference_name
                 and p['preferences'].get('scope') is not None
                 and not (
-                    p['name'] in self.ignored_icon
-                    or p['preferences']['settings']['icon'] in self.ignored_icon
+                    p['name'] in ignored_icon
+                    or p['preferences']['settings']['icon'] in ignored_icon
                     or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
-                    in self.ignored_icon
-                    or (p.get('tag') is not None and p['tag'] in self.ignored_icon)
+                    in ignored_icon
+                    or (p.get('tag') is not None and p['tag'] in ignored_icon)
                     # Icons options
                     # Need to add SVG_EXTENSION to icons options
                     or (
-                        'icons' in p
-                        and any(x for x in p['icons'] if x in self.ignored_icon)
+                        'icons' in p and any(x for x in p['icons'] if x in ignored_icon)
                     )
                 )
             ):
@@ -293,17 +321,21 @@ class ZukanPreference:
                     icon_name,
                     filename,
                     bgcolor,
+                    theme_name,
+                    change_icon,
+                    auto_prefer_icon,
+                    prefer_icon,
                 )
 
             elif (
                 p['preferences']['settings']['icon'] == preference_name
                 and p['preferences'].get('scope') is not None
                 and (
-                    p['name'] in self.ignored_icon
-                    or p['preferences']['settings']['icon'] in self.ignored_icon
+                    p['name'] in ignored_icon
+                    or p['preferences']['settings']['icon'] in ignored_icon
                     or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
-                    in self.ignored_icon
-                    or (p.get('tag') is not None and p['tag'] in self.ignored_icon)
+                    in ignored_icon
+                    or (p.get('tag') is not None and p['tag'] in ignored_icon)
                 )
             ):
                 logger.info('ignored icon %s', p['name'])
@@ -351,21 +383,23 @@ class ZukanPreference:
         """
         list_all_icons_preferences = self.get_list_icons_preferences()
 
-        bgcolor = self.sidebar_bgcolor()
+        theme_name = self.theme_name_setting()
+        bgcolor = self.sidebar_bgcolor(theme_name)
+
+        auto_prefer_icon, prefer_icon = self.prefer_icon_setting()
+        change_icon = self.change_icon_setting()
+        ignored_icon = self.ignored_icon_setting()
 
         for p in list_all_icons_preferences:
             if p['preferences'].get('scope') is not None and not (
-                p['name'] in self.ignored_icon
-                or p['preferences']['settings']['icon'] in self.ignored_icon
+                p['name'] in ignored_icon
+                or p['preferences']['settings']['icon'] in ignored_icon
                 or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
-                in self.ignored_icon
-                or (p.get('tag') is not None and p['tag'] in self.ignored_icon)
+                in ignored_icon
+                or (p.get('tag') is not None and p['tag'] in ignored_icon)
                 # Icons options
                 # Need to add SVG_EXTENSION to icons options
-                or (
-                    'icons' in p
-                    and any(x for x in p['icons'] if x in self.ignored_icon)
-                )
+                or ('icons' in p and any(x for x in p['icons'] if x in ignored_icon))
             ):
                 # Remove '-dark' and '-light' from tmPreferences name.
                 icon_name = p['preferences']['settings']['icon']
@@ -376,14 +410,18 @@ class ZukanPreference:
                     icon_name,
                     filename,
                     bgcolor,
+                    theme_name,
+                    change_icon,
+                    auto_prefer_icon,
+                    prefer_icon,
                 )
 
             elif (
-                p['name'] in self.ignored_icon
-                or p['preferences']['settings']['icon'] in self.ignored_icon
+                p['name'] in ignored_icon
+                or p['preferences']['settings']['icon'] in ignored_icon
                 or (p['preferences']['settings']['icon'] + SVG_EXTENSION)
-                in self.ignored_icon
-                or (p.get('tag') is not None and p['tag'] in self.ignored_icon)
+                in ignored_icon
+                or (p.get('tag') is not None and p['tag'] in ignored_icon)
             ):
                 logger.info('Ignored icon %s', p['name'])
 

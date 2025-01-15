@@ -64,13 +64,13 @@ zukan_listener_enabled = is_zukan_listener_enabled()
 if zukan_listener_enabled:
     from .src.zukan_icon_theme.core.listeners import SchemeThemeListener  # noqa: F401
 
-# Extract and move folder if installed using Package Controal.
+# Extract and move folder if installed using Package Control.
 if not os.path.exists(ZUKAN_ICONS_DATA_FILE):
     MoveFolder().move_folders()
 
 
 def plugin_loaded():
-    # IndexError when testing in ST4 Python 3.3, only if using sublime-package file.
+    # IndexError when testing in ST4 Python 3.3, using sublime-package file.
     # get_sidebar_bgcolor use sublime find_resources
     theme_name = get_theme_name()
     sublime.set_timeout(lambda: get_sidebar_bgcolor(theme_name))

@@ -28,9 +28,12 @@ class ZukanTheme:
     Create, list and remove sublime-themes files in Zukan Icon Theme/icons folder
     """
 
-    def __init__(self):
-        self.ignored_theme, self.auto_install_theme = get_theme_settings()
-        self.list_all_themes = search_resources_sublime_themes()
+    def ignored_theme_setting(self) -> list:
+        ignored_theme, _ = get_theme_settings()
+        return ignored_theme
+
+    def get_all_sublime_themes(self) -> list:
+        return search_resources_sublime_themes()
 
     def create_icon_theme(self, theme_st_path: str):
         """
@@ -44,12 +47,14 @@ class ZukanTheme:
         """
         try:
             file_name = os.path.basename(theme_st_path)
+            ignored_theme = self.ignored_theme_setting()
+            list_all_themes = self.get_all_sublime_themes()
 
             # Check if installed theme file exist and not in 'ignored_theme'
             # settings.
             if (
-                any(theme_st_path in t for t in self.list_all_themes)
-                and file_name not in self.ignored_theme
+                any(theme_st_path in t for t in list_all_themes)
+                and file_name not in ignored_theme
             ):
                 # print(theme_st_path)
                 theme_filepath = os.path.join(
@@ -64,7 +69,7 @@ class ZukanTheme:
                 dump_json_data(file_content, theme_filepath)
                 logger.info('creating icon theme %s', os.path.basename(theme_filepath))
                 return theme_st_path
-            elif file_name in self.ignored_theme:
+            elif file_name in ignored_theme:
                 logger.info('ignored theme %s', file_name)
             else:
                 raise FileNotFoundError(
@@ -92,12 +97,14 @@ class ZukanTheme:
         """
         Create all sublime-themes files from installed themes.
         """
+        list_all_themes = self.get_all_sublime_themes()
+
         try:
             # list_all_themes = search_resources_sublime_themes()
-            if self.list_all_themes is not None:
-                for theme in self.list_all_themes:
+            if list_all_themes is not None:
+                for theme in list_all_themes:
                     self.create_icon_theme(theme)
-                return self.list_all_themes
+                return list_all_themes
             else:
                 raise FileNotFoundError(logger.error('list is empty.'))
         except FileNotFoundError:
@@ -105,14 +112,14 @@ class ZukanTheme:
                 '[Errno %d] %s: %r',
                 errno.ENOENT,
                 os.strerror(errno.ENOENT),
-                self.list_all_themes,
+                list_all_themes,
             )
         except OSError:
             logger.error(
                 '[Errno %d] %s: %r',
                 errno.EACCES,
                 os.strerror(errno.EACCES),
-                self.list_all_themes,
+                list_all_themes,
             )
 
     def delete_icon_theme(self, theme_name: str):

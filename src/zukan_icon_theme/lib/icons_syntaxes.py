@@ -5,10 +5,14 @@ import os
 import sublime
 import threading
 
+from collections.abc import Set
 from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.custom_icon import generate_custom_icon
 from ..helpers.edit_file_extension import edit_file_extension
-from ..helpers.load_save_settings import get_ignored_icon_settings
+from ..helpers.load_save_settings import (
+    get_change_icon_settings,
+    get_ignored_icon_settings,
+)
 from ..helpers.read_write_data import (
     dump_yaml_data,
     edit_contexts_main,
@@ -40,11 +44,15 @@ class ZukanSyntax:
     Create and remove sublime-syntaxes in icons_syntaxes folder.
     """
 
-    def __init__(self):
-        self.ignored_icon = get_ignored_icon_settings()
-
-    def zukan_icons_data(self):
+    def zukan_icons_data(self) -> list:
         return read_pickle_data(ZUKAN_ICONS_DATA_FILE)
+
+    def change_icon_file_extension_setting(self) -> list:
+        _, change_icon_file_extension = get_change_icon_settings()
+        return change_icon_file_extension
+
+    def ignored_icon_setting(self) -> list:
+        return get_ignored_icon_settings()
 
     def install_syntax(self, file_name: str, syntax_name: str):
         """
@@ -98,7 +106,7 @@ class ZukanSyntax:
         self.edit_contexts_scopes()
         copy_primary_icons()
 
-    def get_list_icons_syntaxes(self, zukan_icons: list):
+    def get_list_icons_syntaxes(self, zukan_icons: list) -> list:
         list_all_icons_syntaxes = []
 
         # 'create_custom_icon' setting
@@ -107,7 +115,7 @@ class ZukanSyntax:
 
         return list_all_icons_syntaxes
 
-    def get_compare_scopes(self, zukan_icons: list):
+    def get_compare_scopes(self, zukan_icons: list) -> Set:
         zukan_compare_scopes = compare_scopes(zukan_icons)
 
         compare_scopes_set = set(
@@ -126,6 +134,8 @@ class ZukanSyntax:
         try:
             zukan_icons = self.zukan_icons_data()
             compare_scopes_set = self.get_compare_scopes(zukan_icons)
+            change_icon_file_extension = self.change_icon_file_extension_setting()
+            ignored_icon = self.ignored_icon_setting()
 
             list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
@@ -135,21 +145,20 @@ class ZukanSyntax:
                     and s.get('syntax') is not None
                     # 'ignored_icon' setting
                     and not (
-                        s['name'] in self.ignored_icon
+                        s['name'] in ignored_icon
                         or (
                             # Icon can not exist in 'create_custom_icon' setting
                             # when only creating syntax
                             'preferences' in s
                             and (
-                                s['preferences']['settings']['icon']
-                                in self.ignored_icon
+                                s['preferences']['settings']['icon'] in ignored_icon
                                 or (
                                     s['preferences']['settings']['icon'] + SVG_EXTENSION
                                 )
-                                in self.ignored_icon
+                                in ignored_icon
                                 or (
                                     s.get('tag') is not None
-                                    and s['tag'] in self.ignored_icon
+                                    and s['tag'] in ignored_icon
                                 )
                             )
                         )
@@ -157,6 +166,7 @@ class ZukanSyntax:
                 ):
                     for k in s['syntax']:
                         scope = k.get('scope')
+
                         if (
                             scope
                             and scope not in compare_scopes_set
@@ -166,7 +176,9 @@ class ZukanSyntax:
 
                             # 'change_scope_file_extension' setting
                             k['file_extensions'] = edit_file_extension(
-                                k['file_extensions'], k['scope']
+                                k['file_extensions'],
+                                k['scope'],
+                                change_icon_file_extension,
                             )
 
                             # file_extensions list can be empty
@@ -174,17 +186,18 @@ class ZukanSyntax:
                                 syntax_filepath = os.path.join(
                                     ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
                                 )
+
                                 dump_yaml_data(k, syntax_filepath)
                                 logger.info('%s created.', filename)
                 elif (
                     any('syntax' in d for d in s)
                     and s.get('syntax') is not None
                     and (
-                        s['name'] in self.ignored_icon
-                        or s['preferences']['settings']['icon'] in self.ignored_icon
+                        s['name'] in ignored_icon
+                        or s['preferences']['settings']['icon'] in ignored_icon
                         or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
-                        in self.ignored_icon
-                        or (s.get('tag') is not None and s['tag'] in self.ignored_icon)
+                        in ignored_icon
+                        or (s.get('tag') is not None and s['tag'] in ignored_icon)
                     )
                 ):
                     for k in s['syntax']:
@@ -207,6 +220,8 @@ class ZukanSyntax:
         try:
             zukan_icons = self.zukan_icons_data()
             compare_scopes_set = self.get_compare_scopes(zukan_icons)
+            change_icon_file_extension = self.change_icon_file_extension_setting()
+            ignored_icon = self.ignored_icon_setting()
 
             list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
@@ -216,21 +231,20 @@ class ZukanSyntax:
                     and s.get('syntax') is not None
                     # 'ignored_icon' setting
                     and not (
-                        s['name'] in self.ignored_icon
+                        s['name'] in ignored_icon
                         or (
                             # Icon can not exist in 'create_custom_icon' setting
                             # when only creating syntax
                             'preferences' in s
                             and (
-                                s['preferences']['settings']['icon']
-                                in self.ignored_icon
+                                s['preferences']['settings']['icon'] in ignored_icon
                                 or (
                                     s['preferences']['settings']['icon'] + SVG_EXTENSION
                                 )
-                                in self.ignored_icon
+                                in ignored_icon
                                 or (
                                     s.get('tag') is not None
-                                    and s['tag'] in self.ignored_icon
+                                    and s['tag'] in ignored_icon
                                 )
                             )
                         )
@@ -238,12 +252,15 @@ class ZukanSyntax:
                 ):
                     for k in s['syntax']:
                         scope = k.get('scope')
+
                         if scope and scope not in compare_scopes_set:
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
 
                             # 'change_scope_file_extension' setting
                             k['file_extensions'] = edit_file_extension(
-                                k['file_extensions'], k['scope']
+                                k['file_extensions'],
+                                k['scope'],
+                                change_icon_file_extension,
                             )
 
                             # file_extensions list can be empty
@@ -252,13 +269,14 @@ class ZukanSyntax:
                                     ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
                                 )
                                 # print(syntax_filepath)
+
                                 dump_yaml_data(k, syntax_filepath)
                 elif (
-                    s['name'] in self.ignored_icon
-                    or s['preferences']['settings']['icon'] in self.ignored_icon
+                    s['name'] in ignored_icon
+                    or s['preferences']['settings']['icon'] in ignored_icon
                     or (s['preferences']['settings']['icon'] + SVG_EXTENSION)
-                    in self.ignored_icon
-                    or (s.get('tag') is not None and s['tag'] in self.ignored_icon)
+                    in ignored_icon
+                    or (s.get('tag') is not None and s['tag'] in ignored_icon)
                 ):
                     logger.info('ignored icon %s', s['name'])
             logger.info('sublime-syntaxes created.')
@@ -343,6 +361,9 @@ class ZukanSyntax:
         syntax_name (str) -- icon syntax file name.
         """
         syntax_file = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name)
+        # Init this
+        sublime_version = int(sublime.version())
+
         if os.path.exists(syntax_file):
             logger.info('editing icon context scope if syntax not installed.')
             file_content = read_yaml_data(syntax_file)
@@ -354,28 +375,25 @@ class ZukanSyntax:
                     # print(od['include'])
                     scope = od['include'].replace('scope:', '')
                     # print(scope)
-                    if (
-                        sublime.find_syntax_by_scope(scope)
-                        and scope is not None
-                        and int(sublime.version()) > 4075
-                    ):
-                        return ordered_dict
-                    if (
-                        sublime.find_syntax_by_scope(scope)
-                        and scope is not None
-                        and int(sublime.version()) < 4075
-                    ):
-                        # Could not find other references, got this contexts main format,
-                        # for ST versions lower than 4075, from A File Icon package.
-                        include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
-                        include_scope = 'scope:{s}'.format(s=scope)
-                        CONTEXTS_MAIN['contexts']['main'] = [
-                            {'include': include_scope_prop},
-                            {'include': include_scope},
-                        ]
-                    if scope is None:
+                    sublime_scope = sublime.find_syntax_by_scope(scope)
+
+                    if sublime_scope and scope is not None:
+                        if sublime_version > 4075:
+                            return ordered_dict
+                        elif sublime_version < 4075:
+                            # Could not find other references, got this contexts
+                            # main format, for ST versions lower than 4075, from
+                            # A File Icon package.
+                            include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
+                            include_scope = 'scope:{s}'.format(s=scope)
+                            CONTEXTS_MAIN['contexts']['main'] = [
+                                {'include': include_scope_prop},
+                                {'include': include_scope},
+                            ]
+                    elif scope is None:
                         # print(ordered_dict)
                         CONTEXTS_MAIN['contexts']['main'] = []
+
                     # print(CONTEXTS_MAIN)
                     ordered_dict.update(CONTEXTS_MAIN)
                     # print(ordered_dict)
@@ -389,19 +407,25 @@ class ZukanSyntax:
         This avoid error in console about syntax not found.
         """
         logger.info('editing icons contexts scopes if syntax not installed.')
+
+        sublime_version = int(sublime.version())
+        installed_syntaxes_list = self.list_created_icons_syntaxes()
+
         for c in CONTEXTS_SCOPES:
-            if sublime.find_syntax_by_scope(c['scope']):
+            sublime_scope = sublime.find_syntax_by_scope(c['scope'])
+
+            if sublime_scope:
                 # print(c)
-                for i in self.list_created_icons_syntaxes():
+                for i in installed_syntaxes_list:
                     # Change to compat with ST3 contexts main
-                    if c['startsWith'] in i and int(sublime.version()) < 4075:
+                    if c['startsWith'] in i and sublime_version < 4075:
                         # print(i)
                         edit_contexts_main(
                             os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, i), c['scope']
                         )
             else:
                 # Syntaxes not installed or disabled
-                for i in self.list_created_icons_syntaxes():
+                for i in installed_syntaxes_list:
                     # Change contexts main empty if not installed or disable
                     if c['startsWith'] in i:
                         # print(i)

@@ -24,7 +24,7 @@ class Preferences(ZukanPreference):
         super().__init__()
         self.preferences_path = preferences_path
 
-    def ignored_icon_setting(self):
+    def ignored_icon_setting(self) -> list:
         return get_ignored_icon_settings()
 
     def delete_icon_preference(self, preference_name: str):
@@ -33,11 +33,11 @@ class Preferences(ZukanPreference):
     def delete_all_icons_preferences(self):
         self.delete_icons_preferences()
 
-    def get_installed_preferences(self):
+    def get_installed_preferences(self) -> list:
         installed_preferences_list = self.list_created_icons_preferences()
         return sorted(installed_preferences_list)
 
-    def get_not_installed_preferences(self):
+    def get_not_installed_preferences(self) -> list:
         list_preferences_not_installed = []
 
         list_all_icons_preferences = self.get_list_icons_preferences()
@@ -135,7 +135,7 @@ class DeletePreferenceInputHandler(sublime_plugin.ListInputHandler):
     List of created preferences and return preference_name to DeletePreference.
     """
 
-    def __init__(self, preferences):
+    def __init__(self, preferences: Preferences):
         self.preferences = preferences
 
     def name(self) -> str:
@@ -182,7 +182,7 @@ class InstallPreferenceInputHandler(sublime_plugin.ListInputHandler):
     to InstallPreference.
     """
 
-    def __init__(self, preferences):
+    def __init__(self, preferences: Preferences):
         self.preferences = preferences
 
     def name(self) -> str:

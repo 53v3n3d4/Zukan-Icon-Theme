@@ -54,10 +54,10 @@ class SchemeTheme:
         self.user_ui_settings = read_pickle_data(USER_UI_SETTINGS_FILE)
         self.zukan_restart_message = is_zukan_restart_message()
 
-    def theme_name_setting(self):
+    def theme_name_setting(self) -> str:
         return get_theme_name()
 
-    def theme_file(self):
+    def theme_file(self) -> str:
         return os.path.join(ZUKAN_PKG_ICONS_PATH, self.theme_name_setting())
 
     def get_user_theme(self):

@@ -11,6 +11,7 @@
 - Fix install theme command, creating ignored_theme
 - Fix install syntax command, creating syntax for ignored_icon
 - Fix install preference command, creating preference for ignored_icon
+- Change syntax and icons_syntaxes, improve build time
 
 ## [0.4.4] - 2025-01-11
 

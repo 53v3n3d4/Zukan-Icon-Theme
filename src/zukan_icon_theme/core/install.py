@@ -32,10 +32,10 @@ class InstallEvent:
         self.zukan_syntax = ZukanSyntax()
         self.zukan_theme = ZukanTheme()
 
-    def zukan_restart_message_setting(self):
+    def zukan_restart_message_setting(self) -> bool:
         return is_zukan_restart_message()
 
-    def pkg_version_setting(self):
+    def pkg_version_setting(self) -> str:
         pkg_version, _ = get_upgraded_version_settings()
         return pkg_version
 

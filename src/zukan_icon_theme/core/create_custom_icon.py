@@ -35,10 +35,10 @@ class CreateDeleteCustomIcon:
         self.zukan_pkg_icons_path = ZUKAN_PKG_ICONS_PATH
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 
-    def create_custom_icon_setting(self):
+    def create_custom_icon_setting(self) -> list:
         return get_create_custom_icon_settings()
 
-    def convert_to_list(self, custom_icon_extensions: str):
+    def convert_to_list(self, custom_icon_extensions: str) -> list:
         # Convert custom_icon_extensions to list
         list_custom_icon_extensions = [
             s.strip() for s in custom_icon_extensions.split(',')
@@ -162,7 +162,7 @@ class CreateDeleteCustomIcon:
             )
             sublime.error_message(dialog_message)
 
-    def remove_empty_keys(self, create_custom_icon: dict):
+    def remove_empty_keys(self, create_custom_icon: dict) -> list:
         # Remove empty keys.
         complete_list_filtered = remove_empty_dict(create_custom_icon)
         # print(complete_list_filtered)
@@ -212,7 +212,6 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
         create_custom_icon_extensions: str,
         create_custom_icon_contexts: str,
     ):
-        # create_custom_icon = get_create_custom_icon_settings()
         create_custom_icon = self.create_delete_custom_icon.create_custom_icon_setting()
 
         # Convert create_custom_icon_extensions to list
@@ -307,7 +306,7 @@ class CreateCustomIconNameInputHandler(sublime_plugin.TextInputHandler):
         sublime.status_message('Name is required field.')
         return 'Type a Name. E.g. Pip'
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if 'create_custom_icon_file' not in args:
             return CreateCustomIconFileInputHandler()
 
@@ -321,7 +320,7 @@ class CreateCustomIconFileInputHandler(sublime_plugin.TextInputHandler):
         sublime.status_message('Hit enter if field not needed')
         return 'Type icon file name, without extension. E.g. pip'
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if 'create_custom_icon_syntax' not in args:
             return CreateCustomIconSyntaxInputHandler()
 
@@ -335,7 +334,7 @@ class CreateCustomIconSyntaxInputHandler(sublime_plugin.TextInputHandler):
         sublime.status_message('Type syntax name. E.g. INI (Pip)')
         return 'Type syntax name. E.g. INI (Pip)'
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if 'create_custom_icon_scope' not in args:
             return CreateCustomIconScopeInputHandler()
 
@@ -349,7 +348,7 @@ class CreateCustomIconScopeInputHandler(sublime_plugin.TextInputHandler):
         sublime.status_message('Type scope. E.g. source.ini.pip')
         return 'Type scope. E.g. source.ini.pip'
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if 'create_custom_icon_extensions' not in args:
             return CreateCustomIconExtensionsInputHandler()
 
@@ -365,7 +364,7 @@ class CreateCustomIconExtensionsInputHandler(sublime_plugin.TextInputHandler):
         )
         return 'Type file extensions, separated by commas. E.g. pip.conf'
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if 'create_custom_icon_contexts' not in args:
             return CreateCustomIconContextsInputHandler()
 
@@ -382,7 +381,7 @@ class CreateCustomIconContextsInputHandler(sublime_plugin.TextInputHandler):
     def confirm(self, text):
         self.text = text
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if self.text == 'back':
             return sublime_plugin.BackInputHandler()
 
@@ -397,7 +396,6 @@ class DeleteCustomIconCommand(sublime_plugin.TextCommand):
         self.create_delete_custom_icon = CreateDeleteCustomIcon(ZUKAN_SETTINGS)
 
     def run(self, edit, name: str):
-        # create_custom_icon = get_create_custom_icon_settings()
         create_custom_icon = self.create_delete_custom_icon.create_custom_icon_setting()
 
         if name == 'All':
@@ -425,7 +423,6 @@ class DeleteCustomIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of customized icons'
 
     def list_items(self) -> list:
-        # create_custom_icon = get_create_custom_icon_settings()
         create_custom_icon = self.create_delete_custom_icon.create_custom_icon_setting()
 
         if create_custom_icon:

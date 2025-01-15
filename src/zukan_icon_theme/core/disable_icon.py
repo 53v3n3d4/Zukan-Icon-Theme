@@ -30,13 +30,13 @@ class DisableEnableIcon:
 
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 
-    def zukan_icons_data(self):
+    def zukan_icons_data(self) -> list:
         return read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
-    def ignored_icon_setting(self):
+    def ignored_icon_setting(self) -> list:
         return get_ignored_icon_settings()
 
-    def get_list_all_icons_syntaxes(self, zukan_icons: list):
+    def get_list_all_icons_syntaxes(self, zukan_icons: list) -> list:
         return self.zukan_syntax.get_list_icons_syntaxes(zukan_icons)
 
     def add_to_ignored_icon(self, ignored_icon: list, icon_name: str):

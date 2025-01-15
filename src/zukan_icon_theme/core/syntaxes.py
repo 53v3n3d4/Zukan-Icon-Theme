@@ -4,7 +4,10 @@ import sublime
 import sublime_plugin
 
 from ..helpers.edit_file_extension import edit_file_extension
-from ..helpers.load_save_settings import get_ignored_icon_settings
+from ..helpers.load_save_settings import (
+    get_change_icon_settings,
+    get_ignored_icon_settings,
+)
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_syntaxes import compare_scopes
 from ..lib.icons_syntaxes import ZukanSyntax
@@ -32,7 +35,11 @@ class Syntaxes(ZukanSyntax):
     def zukan_icons_data(self):
         return read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
-    def ignored_icon_setting(self):
+    def change_icon_file_extension_setting(self) -> list:
+        _, change_icon_file_extension = get_change_icon_settings()
+        return change_icon_file_extension
+
+    def ignored_icon_setting(self) -> list:
         return get_ignored_icon_settings()
 
     def delete_single_icon_syntax(self, syntax_name: str):
@@ -41,16 +48,17 @@ class Syntaxes(ZukanSyntax):
     def delete_all_icons_syntaxes(self):
         self.delete_icons_syntaxes()
 
-    def get_installed_syntaxes(self):
+    def get_installed_syntaxes(self) -> list:
         installed_syntaxes_list = sorted(
             self.list_created_icons_syntaxes(), key=lambda x: x.upper()
         )
         return sorted(installed_syntaxes_list)
 
-    def get_not_installed_syntaxes(self):
+    def get_not_installed_syntaxes(self) -> list:
         list_syntaxes_not_installed = []
         zukan_icons = self.zukan_icons_data()
         compare_scopes_set = self.get_compare_scopes(zukan_icons)
+        change_icon_file_extension = self.change_icon_file_extension_setting()
 
         list_all_icons_syntaxes = self.get_list_icons_syntaxes(zukan_icons)
 
@@ -61,7 +69,7 @@ class Syntaxes(ZukanSyntax):
                     if scope and scope not in compare_scopes_set:
                         # 'change_file_extension' setting
                         k['file_extensions'] = edit_file_extension(
-                            k['file_extensions'], scope
+                            k['file_extensions'], scope, change_icon_file_extension
                         )
                         # file_extensions list can be empty
                         if k['file_extensions']:
@@ -142,7 +150,7 @@ class DeleteSyntaxInputHandler(sublime_plugin.ListInputHandler):
     List of created syntaxes and return syntax_name to DeleteSyntax.
     """
 
-    def __init__(self, syntaxes):
+    def __init__(self, syntaxes: Syntaxes):
         self.syntaxes = syntaxes
 
     def name(self) -> str:
@@ -192,7 +200,7 @@ class InstallSyntaxInputHandler(sublime_plugin.ListInputHandler):
     to InstallSyntax.
     """
 
-    def __init__(self, syntaxes):
+    def __init__(self, syntaxes: Syntaxes):
         self.syntaxes = syntaxes
 
     def name(self) -> str:

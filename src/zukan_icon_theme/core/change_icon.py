@@ -30,17 +30,19 @@ class ChangeResetIcon:
         self.icon_path = ZUKAN_PKG_ICONS_PATH
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 
-    def change_icon_setting(self):
+    def change_icon_setting(self) -> dict:
         change_icon, _ = get_change_icon_settings()
         return change_icon
 
-    def message_required_icon_name_file(self, change_icon_name, change_icon_file):
+    def message_required_icon_name_file(
+        self, change_icon_name: str, change_icon_file: str
+    ):
         # Required name and icon input
         if not change_icon_name or not change_icon_file:
             dialog_message = 'Name and icon name inputs are required'
             sublime.error_message(dialog_message)
 
-    def png_exists(self, change_icon_name, change_icon_file):
+    def png_exists(self, change_icon_name: str, change_icon_file: str):
         # Check if PNG exist
         primary_file_list = []
 
@@ -66,7 +68,7 @@ class ChangeResetIcon:
             )
             sublime.error_message(dialog_message)
 
-    def message_icon_exists_in_change_icon(self, change_icon_name):
+    def message_icon_exists_in_change_icon(self, change_icon_name: str):
         dialog_message = '{n} icon already in setting "change_icon"'.format(
             n=change_icon_name
         )
@@ -83,7 +85,7 @@ class ChangeResetIcon:
 
         self._save_change_icon_setting(change_icon)
 
-    def reset_all_change_icons(self, change_icon):
+    def reset_all_change_icons(self, change_icon: dict):
         # icon_dict_updated = {}
         change_icon.clear()
 
@@ -148,7 +150,7 @@ class ChangeIconNameInputHandler(sublime_plugin.TextInputHandler):
         sublime.status_message('Zukan repo has a list of icons name, file-icon.md')
         return 'Type icon name. E.g. Node.js'
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if 'change_icon_file' not in args:
             return ChangeIconFileInputHandler()
 
@@ -165,7 +167,7 @@ class ChangeIconFileInputHandler(sublime_plugin.TextInputHandler):
     def confirm(self, text):
         self.text = text
 
-    def next_input(self, args):
+    def next_input(self, args: dict):
         if self.text == 'back':
             return sublime_plugin.BackInputHandler()
 

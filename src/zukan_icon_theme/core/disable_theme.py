@@ -19,7 +19,7 @@ class DisableEnableTheme:
     def __init__(self):
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 
-    def ignored_theme_setting(self):
+    def ignored_theme_setting(self) -> list:
         ignored_theme, _ = get_theme_settings()
         return ignored_theme
 
@@ -28,7 +28,7 @@ class DisableEnableTheme:
 
         self._save_ignored_theme_setting(ignored_theme)
 
-    def get_ignored_theme_list(self, ignored_theme: list):
+    def get_ignored_theme_list(self, ignored_theme: list) -> list:
         ignored_theme_list = []
 
         for name in search_resources_sublime_themes():

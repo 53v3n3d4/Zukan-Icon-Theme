@@ -25,11 +25,11 @@ class Themes(ZukanTheme):
         super().__init__()
         self.zukan_pkg_icons_path = zukan_pkg_icons_path
 
-    def ignored_theme_setting(self):
+    def ignored_theme_setting(self) -> list:
         ignored_theme, _ = get_theme_settings()
         return ignored_theme
 
-    def zukan_restart_message_setting(self):
+    def zukan_restart_message_setting(self) -> bool:
         return is_zukan_restart_message()
 
     def delete_single_icon_theme(self, theme_name: str):
@@ -38,11 +38,11 @@ class Themes(ZukanTheme):
     def delete_all_icons_themes(self):
         self.delete_icons_themes()
 
-    def get_installed_themes(self):
+    def get_installed_themes(self) -> list:
         installed_themes_list = self.list_created_icons_themes()
         return sorted(installed_themes_list)
 
-    def get_not_installed_themes(self):
+    def get_not_installed_themes(self) -> list:
         list_themes_not_installed = []
 
         for name in search_resources_sublime_themes():
@@ -135,7 +135,7 @@ class DeleteThemeInputHandler(sublime_plugin.ListInputHandler):
     List of created themes and return theme_name to DeleteTheme.
     """
 
-    def __init__(self, themes):
+    def __init__(self, themes: Themes):
         self.themes = themes
 
     def name(self) -> str:
