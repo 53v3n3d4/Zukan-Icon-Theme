@@ -147,6 +147,9 @@ def edit_contexts_main(file_path: str, scope: str = None):
     file_content = read_yaml_data(file_path)
     ordered_dict = OrderedDict(file_content)
     # print(ordered_dict['contexts']['main'])
+
+    CONTEXTS_MAIN['contexts']['main'] = []
+
     if scope is not None:
         # Could not find other references, got this contexts main format, for ST versions
         # lower than 4075, from A File Icon package.
@@ -156,8 +159,7 @@ def edit_contexts_main(file_path: str, scope: str = None):
             {'include': include_scope_prop},
             {'include': include_scope},
         ]
-    if scope is None:
-        CONTEXTS_MAIN['contexts']['main'] = []
+
     # print(CONTEXTS_MAIN)
     ordered_dict.update(CONTEXTS_MAIN)
     # print(ordered_dict)

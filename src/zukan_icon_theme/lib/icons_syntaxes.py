@@ -44,6 +44,9 @@ class ZukanSyntax:
     Create and remove sublime-syntaxes in icons_syntaxes folder.
     """
 
+    def __init__(self):
+        self.sublime_version = int(sublime.version())
+
     def zukan_icons_data(self) -> list:
         return read_pickle_data(ZUKAN_ICONS_DATA_FILE)
 
@@ -361,26 +364,41 @@ class ZukanSyntax:
         syntax_name (str) -- icon syntax file name.
         """
         syntax_file = os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, syntax_name)
-        # Init this
-        sublime_version = int(sublime.version())
+        # sublime_version = int(sublime.version())
 
         if os.path.exists(syntax_file):
             logger.info('editing icon context scope if syntax not installed.')
+
             file_content = read_yaml_data(syntax_file)
             ordered_dict = OrderedDict(file_content)
             # print(ordered_dict['contexts']['main'])
+
+            syntax_context_scope_set = set()
+            for od in ordered_dict['contexts']['main']:
+                if od['include']:
+                    scope = od['include'].replace('scope:', '')
+                    if scope:
+                        syntax_context_scope_set.add(scope)
+
+            sublime_scopes_set = {}
+            for s in syntax_context_scope_set:
+                sublime_scope = sublime.find_syntax_by_scope(s)
+                if sublime_scope:
+                    sublime_scopes_set[s] = sublime_scope
+
             for od in ordered_dict['contexts']['main']:
                 # Only with contexts main include
                 if od['include']:
                     # print(od['include'])
                     scope = od['include'].replace('scope:', '')
                     # print(scope)
-                    sublime_scope = sublime.find_syntax_by_scope(scope)
+                    # sublime_scope = sublime.find_syntax_by_scope(scope)
 
-                    if sublime_scope and scope is not None:
-                        if sublime_version > 4075:
+                    if scope and scope in sublime_scopes_set:
+                    # if sublime_scope and scope is not None:
+                        if self.sublime_version > 4075:
                             return ordered_dict
-                        elif sublime_version < 4075:
+                        elif self.sublime_version < 4075:
                             # Could not find other references, got this contexts
                             # main format, for ST versions lower than 4075, from
                             # A File Icon package.
@@ -408,17 +426,27 @@ class ZukanSyntax:
         """
         logger.info('editing icons contexts scopes if syntax not installed.')
 
-        sublime_version = int(sublime.version())
+        # sublime_version = int(sublime.version())
         installed_syntaxes_list = self.list_created_icons_syntaxes()
 
-        for c in CONTEXTS_SCOPES:
-            sublime_scope = sublime.find_syntax_by_scope(c['scope'])
+        syntax_contex_scope_set = set(c['scope'] for c in CONTEXTS_SCOPES)
 
+        sublime_scope_set = {}
+        for s in syntax_contex_scope_set:
+            sublime_scope = sublime.find_syntax_by_scope(s)
             if sublime_scope:
+                sublime_scope_set[s] = True
+            else:
+                sublime_scope_set[s] = False
+
+        for c in CONTEXTS_SCOPES:
+            # sublime_scope = sublime.find_syntax_by_scope(c['scope'])
+
+            if sublime_scope_set.get(c['scope']):
                 # print(c)
                 for i in installed_syntaxes_list:
                     # Change to compat with ST3 contexts main
-                    if c['startsWith'] in i and sublime_version < 4075:
+                    if c['startsWith'] in i and self.sublime_version < 4075:
                         # print(i)
                         edit_contexts_main(
                             os.path.join(ZUKAN_PKG_ICONS_SYNTAXES_PATH, i), c['scope']
