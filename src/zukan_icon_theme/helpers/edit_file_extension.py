@@ -1,6 +1,5 @@
 import logging
 
-from ..helpers.load_save_settings import get_change_icon_settings
 from ..utils.scopes_file_extensions import (
     SCOPES_FILE_EXTENSIONS,
 )

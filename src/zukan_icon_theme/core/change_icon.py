@@ -27,6 +27,7 @@ logger = logging.getLogger(__name__)
 class ChangeResetIcon:
     def __init__(self, zukan_preferences_file: str):
         self.zukan_preferences_file = zukan_preferences_file
+
         self.icon_path = ZUKAN_PKG_ICONS_PATH
         self.zukan_listener_enabled = is_zukan_listener_enabled()
 

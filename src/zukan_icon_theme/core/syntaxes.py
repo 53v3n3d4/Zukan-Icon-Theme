@@ -9,7 +9,6 @@ from ..helpers.load_save_settings import (
     get_ignored_icon_settings,
 )
 from ..helpers.read_write_data import read_pickle_data
-from ..helpers.search_syntaxes import compare_scopes
 from ..lib.icons_syntaxes import ZukanSyntax
 from ..utils.file_extensions import (
     SUBLIME_SYNTAX_EXTENSION,
@@ -28,8 +27,7 @@ class Syntaxes(ZukanSyntax):
     """
 
     def __init__(self, syntaxes_path: str):
-        ZukanSyntax.__init__(self)
-
+        super().__init__()
         self.syntaxes_path = syntaxes_path
 
     def zukan_icons_data(self):

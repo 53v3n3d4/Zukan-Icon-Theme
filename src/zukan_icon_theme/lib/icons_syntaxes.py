@@ -13,6 +13,7 @@ from ..helpers.load_save_settings import (
     get_change_icon_settings,
     get_ignored_icon_settings,
 )
+from ..helpers.od_to_syntax import save_sublime_syntax
 from ..helpers.read_write_data import (
     dump_yaml_data,
     edit_contexts_main,
@@ -189,8 +190,9 @@ class ZukanSyntax:
                                 syntax_filepath = os.path.join(
                                     ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
                                 )
-
-                                dump_yaml_data(k, syntax_filepath)
+                                # print(save_sublime_syntax(k, syntax_filepath))
+                                save_sublime_syntax(k, syntax_filepath)
+                                # dump_yaml_data(k, syntax_filepath)
                                 logger.info('%s created.', filename)
                 elif (
                     any('syntax' in d for d in s)
@@ -256,6 +258,7 @@ class ZukanSyntax:
                     for k in s['syntax']:
                         scope = k.get('scope')
 
+                        # if k['scope'] not in compare_scopes_set:
                         if scope and scope not in compare_scopes_set:
                             filename = k['name'] + SUBLIME_SYNTAX_EXTENSION
 
@@ -271,9 +274,10 @@ class ZukanSyntax:
                                 syntax_filepath = os.path.join(
                                     ZUKAN_PKG_ICONS_SYNTAXES_PATH, filename
                                 )
-                                # print(syntax_filepath)
 
-                                dump_yaml_data(k, syntax_filepath)
+                                save_sublime_syntax(k, syntax_filepath)
+                                # dump_yaml_data(k, syntax_filepath)
+
                 elif (
                     s['name'] in ignored_icon
                     or s['preferences']['settings']['icon'] in ignored_icon
@@ -283,6 +287,7 @@ class ZukanSyntax:
                 ):
                     logger.info('ignored icon %s', s['name'])
             logger.info('sublime-syntaxes created.')
+
             # return self.zukan_icons
         except FileNotFoundError:
             logger.error(
@@ -395,7 +400,7 @@ class ZukanSyntax:
                     # sublime_scope = sublime.find_syntax_by_scope(scope)
 
                     if scope and scope in sublime_scopes_set:
-                    # if sublime_scope and scope is not None:
+                        # if sublime_scope and scope is not None:
                         if self.sublime_version > 4075:
                             return ordered_dict
                         elif self.sublime_version < 4075:
