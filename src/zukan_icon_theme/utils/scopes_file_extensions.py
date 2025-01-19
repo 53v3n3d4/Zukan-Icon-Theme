@@ -48,6 +48,7 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'text.html.basic', 'file_extensions': ['html']},  # django.yaml
     {'scope': 'text.html.markdown', 'file_extensions': ['md']},  # mdsvex.yaml
     {'scope': 'text.plain', 'file_extensions': ['BUILD', 'WORKSPACE']},  # bazel.yaml
+    {'scope': 'text.plain', 'file_extensions': ['txt']},  # gbif.yaml TextTree
     {'scope': 'text.plain.debug', 'file_extensions': ['pdb']},  # wwpdb.yaml
     {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # uv.yaml
     {'scope': 'text.xml', 'file_extensions': ['xml']},  # django.yaml

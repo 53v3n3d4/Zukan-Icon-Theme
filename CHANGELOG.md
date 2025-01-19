@@ -3,8 +3,8 @@
 ## [0.4.5] - 2025
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: Scheme
-- Add icon option: CSS, Scheme
+- Add icon-theme: Scheme, GBIF
+- Add icon option: CSS
 - Add syntax: Cedar
 - Change icon: CSS
 - Change syntax: Applescript, Eleventy

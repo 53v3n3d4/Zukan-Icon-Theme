@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: GBIF
+icons:
+  - gbif-light
+preferences:
+  scope: source.txtree
+  settings:
+    icon: gbif-dark
+syntax:
+  - name: TextTree
+    scope: source.txtree
+    hidden: true
+    file_extensions:
+      - txt
+      - txtree
+    contexts:
+      main: []
