@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Scheme
+icons:
+  - scheme-light
+preferences:
+  scope: source.lisp.scheme
+  settings:
+    icon: scheme-dark
+syntax:
+  - name: Scheme
+    scope: source.lisp.scheme
+    hidden: true
+    file_extensions:
+      - ss
+      - scm
+    contexts:
+      main:
+        - include: scope:source.lisp
+          apply_prototype: true

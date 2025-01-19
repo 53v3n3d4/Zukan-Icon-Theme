@@ -3,9 +3,11 @@
 ## [0.4.5] - 2025
 
 ### Icons, syntaxes and preferences 👽
-- Add icon option: CSS
+- Add icon-theme: Scheme
+- Add icon option: CSS, Scheme
+- Add syntax: Cedar
 - Change icon: CSS
-- Change syntax: Eleventy
+- Change syntax: Applescript, Eleventy
 
 ### Plugin 🕹️
 - Fix install theme command, creating ignored_theme

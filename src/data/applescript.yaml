@@ -25,6 +25,7 @@ syntax:
       main: []
   - name: JavaScript for Automation (JXA)
     scope: source.js.jxa
+    hidden: true
     file_extensions:
       - jxa
       - jxainc

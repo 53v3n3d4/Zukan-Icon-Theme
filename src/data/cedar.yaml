@@ -2,7 +2,7 @@
 ---
 name: Cedar
 preferences:
-  scope: source.cedar
+  scope: source.cedar, source.cedarschema
   settings:
     icon: cedar
 syntax:
@@ -11,6 +11,12 @@ syntax:
     hidden: true
     file_extensions:
       - cedar
+    contexts:
+      main: []
+  - name: Cedar schema
+    scope: source.cedarschema
+    hidden: true
+    file_extensions:
       - cedarschema
     contexts:
       main: []

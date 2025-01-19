@@ -53,6 +53,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.js', 'startsWith': 'Bicep'},
     {'scope': 'source.js', 'startsWith': 'UnitTest (JavaScript)'},
     {'scope': 'source.jsx', 'startsWith': 'UnitTest (JSX)'},
+    {'scope': 'source.lisp', 'startsWith': 'Scheme'},
     {'scope': 'source.ts', 'startsWith': 'UnitTest (TypeScript)'},
     {'scope': 'source.tsx', 'startsWith': 'UnitTest (TSX)'},
     {'scope': 'text.html.basic', 'startsWith': 'Vue Component'},

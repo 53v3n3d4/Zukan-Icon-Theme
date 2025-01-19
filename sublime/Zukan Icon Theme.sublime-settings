@@ -163,6 +163,7 @@
     //    { "scope": "source.json", "file_extensions": ["dependencies.json"] },
     //    { "scope": "source.json", "file_extensions": ["messages.json"] },
     //    { "scope": "source.json", "file_extensions": ["unittesting.json"] },
+    //    { "scope": "source.lisp", "file_extensions": ["scm", "ss"]},
     //    { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
     //    { "scope": "source.python", "file_extensions": ["config.py"] },
     //    { "scope": "source.rspec", "file_extensions": ["rb"] },

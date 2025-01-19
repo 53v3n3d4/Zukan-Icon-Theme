@@ -32,6 +32,7 @@ SCOPES_FILE_EXTENSIONS = [
         'scope': 'source.pubspec',
         'file_extensions': ['pubspec.lock', 'pubspec.yaml'],
     },  # flutter.ymal
+    {'scope': 'source.lisp.scheme', 'file_extensions': ['scm', 'ss']},
     {'scope': 'source.python.fastapi', 'file_extensions': ['config.py']},
     {'scope': 'source.ruby', 'file_extensions': ['rb']},  # rspec.yaml
     {'scope': 'source.shader', 'file_extensions': ['cginc', 'shader']},  # unity.yaml
