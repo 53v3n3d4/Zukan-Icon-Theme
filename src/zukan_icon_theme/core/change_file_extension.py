@@ -302,6 +302,15 @@ class ResetFileExtensionCommand(sublime_plugin.TextCommand):
                     change_icon_file_extension, scope_name
                 )
 
+    def is_enabled(self):
+        change_icon_file_extension = (
+            self.change_reset_file_extension.change_icon_file_extension_setting()
+        )
+        return (
+            change_icon_file_extension is not None
+            and len(change_icon_file_extension) > 0
+        )
+
     def input(self, args: dict):
         return ResetFileExtensionInputHandler(self.change_reset_file_extension)
 

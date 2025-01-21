@@ -138,6 +138,11 @@ class DeleteSyntaxCommand(sublime_plugin.TextCommand):
             if self.syntaxes.confirm_delete(dialog_message):
                 self.syntaxes.delete_single_icon_syntax(syntax_name)
 
+    def is_enabled(self):
+        list_installed_syntaxes = self.syntaxes.get_installed_syntaxes()
+
+        return list_installed_syntaxes is not None and len(list_installed_syntaxes) > 0
+
     def input(self, args: dict):
         # print(args)
         return DeleteSyntaxInputHandler(self.syntaxes)
@@ -158,14 +163,14 @@ class DeleteSyntaxInputHandler(sublime_plugin.ListInputHandler):
         return 'List of created syntaxes'
 
     def list_items(self) -> list:
-        installed_syntaxes_list = self.syntaxes.get_installed_syntaxes()
+        list_installed_syntaxes = self.syntaxes.get_installed_syntaxes()
 
-        if installed_syntaxes_list:
+        if list_installed_syntaxes:
             all_option = ['All']
-            installed_syntaxes_list = sorted(
-                installed_syntaxes_list, key=lambda x: x.upper()
+            list_installed_syntaxes = sorted(
+                list_installed_syntaxes, key=lambda x: x.upper()
             )
-            new_list = all_option + installed_syntaxes_list
+            new_list = all_option + list_installed_syntaxes
             return new_list
         else:
             raise TypeError(
@@ -187,6 +192,13 @@ class InstallSyntaxCommand(sublime_plugin.TextCommand):
             self.syntaxes.install_all_icons_syntaxes()
         else:
             self.syntaxes.install_icon_syntax(syntax_name)
+
+    def is_enabled(self):
+        list_syntaxes_not_installed = self.syntaxes.get_not_installed_syntaxes()
+        return (
+            list_syntaxes_not_installed is not None
+            and len(list_syntaxes_not_installed) > 0
+        )
 
     def input(self, args: dict):
         return InstallSyntaxInputHandler(self.syntaxes)

@@ -2,6 +2,7 @@ import errno
 import glob
 import logging
 import os
+import re
 import sublime
 import threading
 
@@ -128,12 +129,26 @@ class ZukanSyntax:
 
         return compare_scopes_set
 
+    def get_sublime_scope_set(self) -> Set:
+        syntax_contex_scope_set = set(c['scope'] for c in CONTEXTS_SCOPES)
+
+        sublime_scope_set = {}
+        for s in syntax_contex_scope_set:
+            sublime_scope = sublime.find_syntax_by_scope(s)
+            if sublime_scope:
+                sublime_scope_set[s] = True
+            else:
+                sublime_scope_set[s] = False
+
+        # print(sublime_scope_set)
+        return sublime_scope_set
+
     def create_icon_syntax(self, syntax_name: str):
         """
         Create icon sublime-syntax file.
 
         Parameters:
-        syntax_name (str) -- syntax name, file name and extension.
+        syntax_name (str) -- syntax file name, without extension.
         """
         try:
             zukan_icons = self.zukan_icons_data()
@@ -434,15 +449,19 @@ class ZukanSyntax:
         # sublime_version = int(sublime.version())
         installed_syntaxes_list = self.list_created_icons_syntaxes()
 
-        syntax_contex_scope_set = set(c['scope'] for c in CONTEXTS_SCOPES)
+        # syntax_contex_scope_set = set(c['scope'] for c in CONTEXTS_SCOPES)
 
-        sublime_scope_set = {}
-        for s in syntax_contex_scope_set:
-            sublime_scope = sublime.find_syntax_by_scope(s)
-            if sublime_scope:
-                sublime_scope_set[s] = True
-            else:
-                sublime_scope_set[s] = False
+        # sublime_scope_set = {}
+        # for s in syntax_contex_scope_set:
+        #     sublime_scope = sublime.find_syntax_by_scope(s)
+        #     if sublime_scope:
+        #         sublime_scope_set[s] = True
+        #     else:
+        #         sublime_scope_set[s] = False
+
+        sublime_scope_set = self.get_sublime_scope_set()
+
+        # print(sublime_scope_set)
 
         for c in CONTEXTS_SCOPES:
             # sublime_scope = sublime.find_syntax_by_scope(c['scope'])

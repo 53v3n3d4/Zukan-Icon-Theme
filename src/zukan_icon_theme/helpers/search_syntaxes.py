@@ -1,5 +1,9 @@
 import sublime
 
+from ..utils.zukan_paths import (
+    ICONS_SYNTAXES_PARTIAL_PATH,
+)
+
 
 def visible_syntaxes_only() -> set:
     """
@@ -16,9 +20,7 @@ def visible_syntaxes_only() -> set:
         # When testing without Ruamel, the result of sublime list_syntaxes bring
         # icons syntaxes with hidden false, even though they are all marked as
         # hidden true.
-        if not s.hidden and not s.path.startswith(
-            'Packages/Zukan Icon Theme/icons_syntaxes/'
-        ):
+        if not s.hidden and not s.path.startswith(ICONS_SYNTAXES_PARTIAL_PATH):
             # print(s.name, s.path, s.hidden)
             # print(os.path.abspath(s.path))
             syntaxes_list_visible.add(s)

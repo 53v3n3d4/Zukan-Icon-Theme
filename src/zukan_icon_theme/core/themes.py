@@ -126,6 +126,11 @@ class DeleteThemeCommand(sublime_plugin.TextCommand):
         # Check if selected theme was deleted
         # get_user_theme()
 
+    def is_enabled(self):
+        list_installed_themes = self.themes.get_installed_themes()
+
+        return list_installed_themes is not None and len(list_installed_themes) > 0
+
     def input(self, args: dict):
         return DeleteThemeInputHandler(self.themes)
 
@@ -145,11 +150,11 @@ class DeleteThemeInputHandler(sublime_plugin.ListInputHandler):
         return 'List of created themes'
 
     def list_items(self) -> list:
-        installed_themes_list = self.themes.get_installed_themes()
+        list_installed_themes = self.themes.get_installed_themes()
 
-        if installed_themes_list:
+        if list_installed_themes:
             all_option = ['All']
-            new_list = all_option + installed_themes_list
+            new_list = all_option + list_installed_themes
             return new_list
         else:
             raise TypeError(
@@ -193,6 +198,12 @@ class InstallThemeCommand(sublime_plugin.TextCommand):
                 sublime.message_dialog(dialog_message)
 
             self.themes.install_icon_theme(theme_st_path)
+
+    def is_enabled(self):
+        list_themes_not_installed = self.themes.get_not_installed_themes()
+        return (
+            list_themes_not_installed is not None and len(list_themes_not_installed) > 0
+        )
 
     def input(self, args: dict):
         return InstallThemeInputHandler(self.themes)

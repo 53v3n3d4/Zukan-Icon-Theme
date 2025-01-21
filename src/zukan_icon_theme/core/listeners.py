@@ -42,6 +42,10 @@ logger = logging.getLogger(__name__)
 
 
 class SchemeTheme:
+    """
+    Modify icons, if need, when a theme change.
+    """
+
     def __init__(self):
         self.zukan_preference = ZukanPreference()
         self.zukan_syntax = ZukanSyntax()
@@ -62,8 +66,9 @@ class SchemeTheme:
 
     def get_user_theme(self):
         """
-        This function will act, when theme or zukan settings change, then
-        create or delete syntaxes and preferences for an icon theme.
+        This function will act, when theme or color scheme, using an adaptive
+        theme, change then create or delete syntaxes and preferences
+        for an icon theme if needed.
 
         It auto creates themes if setting 'auto_install_theme' is set to True.
         And do not create theme if theme name in 'ignored_theme' setting.

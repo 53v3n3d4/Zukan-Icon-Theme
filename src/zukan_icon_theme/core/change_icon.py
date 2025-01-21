@@ -194,6 +194,10 @@ class ResetIconCommand(sublime_plugin.TextCommand):
                 if icon_name in change_icon.keys():
                     self.change_reset_icon.reset_change_icon(change_icon, icon_name)
 
+    def is_enabled(self):
+        change_reset_icon = self.change_reset_icon.change_icon_setting()
+        return change_reset_icon is not None and len(change_reset_icon) > 0
+
     def input(self, args: dict):
         return ResetIconInputHandler(self.change_reset_icon)
 

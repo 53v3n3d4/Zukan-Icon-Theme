@@ -126,6 +126,14 @@ class DeletePreferenceCommand(sublime_plugin.TextCommand):
             if self.preferences.confirm_delete(dialog_message):
                 self.preferences.delete_icon_preference(preference_name)
 
+    def is_enabled(self):
+        list_installed_preferences = self.preferences.get_installed_preferences()
+
+        return (
+            list_installed_preferences is not None
+            and len(list_installed_preferences) > 0
+        )
+
     def input(self, args: dict):
         return DeletePreferenceInputHandler(self.preferences)
 
@@ -145,11 +153,11 @@ class DeletePreferenceInputHandler(sublime_plugin.ListInputHandler):
         return 'List of created preferences'
 
     def list_items(self) -> list:
-        installed_preferences_list = self.preferences.get_installed_preferences()
+        list_installed_preferences = self.preferences.get_installed_preferences()
 
-        if installed_preferences_list:
+        if list_installed_preferences:
             all_option = ['All']
-            new_list = all_option + installed_preferences_list
+            new_list = all_option + list_installed_preferences
             return new_list
         else:
             raise TypeError(
@@ -171,6 +179,15 @@ class InstallPreferenceCommand(sublime_plugin.TextCommand):
             self.preferences.install_all_icons_preferences()
         else:
             self.preferences.install_icon_preference(preference_name)
+
+    def is_enabled(self):
+        list_preferences_not_installed = (
+            self.preferences.get_not_installed_preferences()
+        )
+        return (
+            list_preferences_not_installed is not None
+            and len(list_preferences_not_installed) > 0
+        )
 
     def input(self, args: dict):
         return InstallPreferenceInputHandler(self.preferences)

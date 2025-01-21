@@ -405,6 +405,14 @@ class DeleteCustomIconCommand(sublime_plugin.TextCommand):
         else:
             self.create_delete_custom_icon.delete_custom_icon(create_custom_icon, name)
 
+    def is_enabled(self):
+        create_delete_custom_icon = (
+            self.create_delete_custom_icon.create_custom_icon_setting()
+        )
+        return (
+            create_delete_custom_icon is not None and len(create_delete_custom_icon) > 0
+        )
+
     def input(self, args: dict):
         return DeleteCustomIconInputHandler(self.create_delete_custom_icon)
 

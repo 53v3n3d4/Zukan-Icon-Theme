@@ -4,15 +4,12 @@ import json
 import logging
 import os
 import plistlib
+import re
 
 from .convert_to_commented import convert_to_commented
-from ..utils.contexts_scopes import (
-    CONTEXTS_MAIN,
-)
 from ..utils.st_py_version import (
     PYTHON_VERSION,
 )
-from collections import OrderedDict
 from ruamel.yaml import YAML
 
 logger = logging.getLogger(__name__)
@@ -144,26 +141,39 @@ def edit_contexts_main(file_path: str, scope: str = None):
     file_path (str) -- path to icon syntax file.
     scope (Optional[str]) -- scope name, default to None.
     """
-    file_content = read_yaml_data(file_path)
-    ordered_dict = OrderedDict(file_content)
-    # print(ordered_dict['contexts']['main'])
+    with open(file_path, 'r') as f:
+        content = f.read()
 
-    CONTEXTS_MAIN['contexts']['main'] = []
+    regex_contexts_main = (
+        r'contexts:\n\s*main:\n\s*- include: .*?\n\s*  apply_prototype: .*?\n'
+    )
 
     if scope is not None:
         # Could not find other references, got this contexts main format, for ST versions
         # lower than 4075, from A File Icon package.
         include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
         include_scope = 'scope:{s}'.format(s=scope)
-        CONTEXTS_MAIN['contexts']['main'] = [
-            {'include': include_scope_prop},
-            {'include': include_scope},
-        ]
 
-    # print(CONTEXTS_MAIN)
-    ordered_dict.update(CONTEXTS_MAIN)
-    # print(ordered_dict)
-    dump_yaml_data(ordered_dict, file_path)
+        contexts_main = (
+            'contexts:\n  main:\n    - include: {p}\n      include: {s}\n'.format(
+                p=include_scope_prop, s=include_scope
+            )
+        )
+
+        content = re.sub(regex_contexts_main, contexts_main, content)
+    else:
+        contexts_main = 'contexts:\n  main: []\n'
+
+        content = re.sub(
+            regex_contexts_main,
+            contexts_main,
+            content,
+        )
+
+    with open(file_path, 'w') as f:
+        f.write(content)
+
+    logger.debug('edited file %r contaxts main.', file_path)
 
 
 def dump_json_data(file_data: dict, json_file: str):

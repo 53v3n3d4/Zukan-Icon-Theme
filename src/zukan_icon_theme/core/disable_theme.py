@@ -28,15 +28,15 @@ class DisableEnableTheme:
 
         self._save_ignored_theme_setting(ignored_theme)
 
-    def get_ignored_theme_list(self, ignored_theme: list) -> list:
-        ignored_theme_list = []
+    def get_list_ignored_theme(self, ignored_theme: list) -> list:
+        list_ignored_theme = []
 
         for name in search_resources_sublime_themes():
             file_path, file_name = name.rsplit('/', 1)
             if file_name not in ignored_theme:
-                ignored_theme_list.append(name)
+                list_ignored_theme.append(name)
 
-        return ignored_theme_list
+        return list_ignored_theme
 
     def enable_icon_theme(self, theme_name: str, ignored_theme: list):
         # Remove theme_name
@@ -78,6 +78,15 @@ class DisableThemeCommand(sublime_plugin.TextCommand):
 
             logger.info('%s ignored', theme_name)
 
+    def is_enabled(self):
+        ignored_theme = self.disable_enable_theme.ignored_theme_setting()
+
+        list_ignored_theme = self.disable_enable_theme.get_list_ignored_theme(
+            ignored_theme
+        )
+
+        return list_ignored_theme is not None and len(list_ignored_theme) > 0
+
     def input(self, args: dict):
         return DisableThemeInputHandler(self.disable_enable_theme)
 
@@ -100,12 +109,12 @@ class DisableThemeInputHandler(sublime_plugin.ListInputHandler):
     def list_items(self) -> list:
         ignored_theme = self.disable_enable_theme.ignored_theme_setting()
 
-        ignored_theme_list = self.disable_enable_theme.get_ignored_theme_list(
+        list_ignored_theme = self.disable_enable_theme.get_list_ignored_theme(
             ignored_theme
         )
 
-        if ignored_theme_list:
-            return sorted(ignored_theme_list)
+        if list_ignored_theme:
+            return sorted(list_ignored_theme)
         else:
             raise TypeError(
                 logger.info('all themes are already disabled, list is empty.')
@@ -129,6 +138,10 @@ class EnableThemeCommand(sublime_plugin.TextCommand):
                 self.disable_enable_theme.enable_all_icons_themes(ignored_theme)
             else:
                 self.disable_enable_theme.enable_icon_theme(theme_name, ignored_theme)
+
+    def is_enabled(self):
+        disable_enable_theme = self.disable_enable_theme.ignored_theme_setting()
+        return disable_enable_theme is not None and len(disable_enable_theme) > 0
 
     def input(self, args: dict):
         return EnableThemeInputHandler(self.disable_enable_theme)

@@ -78,6 +78,13 @@ class SelectPreferIconCommand(sublime_plugin.TextCommand):
                 prefer_icon, selected_prefer_icon
             )
 
+    def is_enabled(self):
+        installed_icon_themes = (
+            self.select_remove_prefer_icon.get_list_created_icons_themes()
+        )
+
+        return installed_icon_themes is not None and len(installed_icon_themes) > 0
+
     def input(self, args: dict):
         if not args.get('select_prefer_icon_theme'):
             return SelectPreferIconThemeInputHandler(self.select_remove_prefer_icon)
@@ -173,6 +180,10 @@ class RemovePreferIconCommand(sublime_plugin.TextCommand):
                     self.select_remove_prefer_icon.remove_prefer_icon(
                         prefer_icon, select_prefer_icon_theme
                     )
+
+    def is_enabled(self):
+        prefer_icon = self.select_remove_prefer_icon.prefer_icon_setting()
+        return prefer_icon is not None and len(prefer_icon) > 0
 
     def input(self, args: dict):
         return RemovePreferIconInputHandler(self.select_remove_prefer_icon)

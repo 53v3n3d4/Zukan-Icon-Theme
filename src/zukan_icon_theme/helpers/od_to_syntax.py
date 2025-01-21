@@ -76,7 +76,7 @@ def od_to_syntax(syntax_od, multiplier=0):
                 data += new_line
 
                 for list_item in v:
-                    data += '{i}- {l}\n'.format(i=indent, l=list_item)
+                    data += '{i}  - {l}\n'.format(i=indent, l=list_item)
 
             # Tuple list
             if v and all(isinstance(i, dict) for i in v):
@@ -91,9 +91,9 @@ def od_to_syntax(syntax_od, multiplier=0):
                             y = 'true' if y is True else 'false'
 
                         if i == 0:
-                            data += '{i}- {k}: {v}\n'.format(i=indent, k=x, v=y)
+                            data += '{i}  - {k}: {v}\n'.format(i=indent, k=x, v=y)
                         else:
-                            data += '{i}  {k}: {v}\n'.format(i=indent, k=x, v=y)
+                            data += '{i}    {k}: {v}\n'.format(i=indent, k=x, v=y)
 
         # String or boolean
         else:

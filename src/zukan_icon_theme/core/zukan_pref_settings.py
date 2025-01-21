@@ -1,7 +1,7 @@
 import logging
 import os
 
-from typing import Callable
+from collections.abc import Callable
 from .install import InstallEvent
 from ..lib.icons_preferences import ZukanPreference
 from ..lib.icons_syntaxes import ZukanSyntax
@@ -49,7 +49,7 @@ class EventBus:
     def __init__(self):
         self.listeners = {}
 
-    def subscribe(self, event_name: str, listener: Callable[[], None]):
+    def subscribe(self, event_name: str, listener: Callable):
         if event_name not in self.listeners:
             self.listeners[event_name] = []
         self.listeners[event_name].append(listener)
@@ -61,6 +61,10 @@ class EventBus:
 
 
 class ZukanIconFiles:
+    """
+    Modify icons, if need, when Zukan Preferences settings change.
+    """
+
     def __init__(
         self,
         event_bus: EventBus,
@@ -242,6 +246,10 @@ class ZukanIconFiles:
 
 
 class SettingsEvent:
+    """
+    Watch Zukan Preferences settings.
+    """
+
     @staticmethod
     def get_user_zukan_preferences() -> str:
         folder_size = bytes_to_readable_size(get_folder_size(ZUKAN_PKG_PATH))
@@ -353,6 +361,10 @@ class SettingsEvent:
 
 
 class UpgradePlugin:
+    """
+    Watch when package is upgraded and rebuild files.
+    """
+
     def __init__(
         self,
         event_bus: EventBus,

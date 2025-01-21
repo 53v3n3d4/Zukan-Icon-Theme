@@ -36,6 +36,12 @@ PACKAGE_NAME = __package__.split('.', 1)[0]
 
 PKG_ZUKAN_ICON_THEME_FOLDER = os.path.join('Packages', PACKAGE_NAME)
 
+# Partial paths
+
+# Used in search_syntaxes
+# Packages/Zukan Icon Theme/icons_syntaxes/
+ICONS_SYNTAXES_PARTIAL_PATH = os.path.join('Packages', PACKAGE_NAME, 'icons_syntaxes')
+
 # Zukan dir paths
 
 LIB_RUAMEL_YAML_PATH = filepath('../../../../../Lib/python38/ruamel')
