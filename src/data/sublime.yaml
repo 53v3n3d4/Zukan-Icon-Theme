@@ -47,7 +47,9 @@ syntax:
     scope: text.plist.sublime
     hidden: true
     file_extensions:
-      - Comments.tmPreferences
+      - Fold.tmPreferences
+      - 'Indexed Symbol List.tmPreferences'
+      - Symbol List.tmPreferences
     contexts:
       main:
         - include: scope:text.plist
@@ -56,7 +58,7 @@ syntax:
     scope: text.xml.sublime.snippet
     hidden: true
     file_extensions:
-      - Comments.tmPreferences
+      - Comments.tmPreferences # does not to display icon if in Plist (Sublime)
       - sublime-snippet
     contexts:
       main:
@@ -73,4 +75,3 @@ syntax:
           apply_prototype: true
 
 # ST Package: JSON and YAML.
-
