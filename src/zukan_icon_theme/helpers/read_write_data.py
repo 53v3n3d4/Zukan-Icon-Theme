@@ -149,8 +149,8 @@ def edit_contexts_main(file_path: str, scope: str = None):
     )
 
     if scope is not None:
-        # Could not find other references, got this contexts main format, for ST versions
-        # lower than 4075, from A File Icon package.
+        # Could not find other references, got this contexts main format, for 
+        # ST versions lower than 4075, from A File Icon package.
         include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
         include_scope = 'scope:{s}'.format(s=scope)
 

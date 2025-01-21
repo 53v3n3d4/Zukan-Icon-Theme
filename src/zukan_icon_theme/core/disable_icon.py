@@ -126,9 +126,7 @@ class DisableIconInputHandler(sublime_plugin.ListInputHandler):
         return 'List of icons'
 
     def list_items(self) -> list:
-        list_not_ignored_icons = (
-            self.disable_enable_icon.get_list_not_ignored_icons()
-        )
+        list_not_ignored_icons = self.disable_enable_icon.get_list_not_ignored_icons()
 
         if list_not_ignored_icons:
             icon_list_with_tag = ICONS_TAGS + list_not_ignored_icons

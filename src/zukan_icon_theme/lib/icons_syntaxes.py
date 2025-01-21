@@ -16,15 +16,12 @@ from ..helpers.load_save_settings import (
 )
 from ..helpers.od_to_syntax import save_sublime_syntax
 from ..helpers.read_write_data import (
-    dump_yaml_data,
     edit_contexts_main,
     read_pickle_data,
-    read_yaml_data,
 )
 from ..helpers.search_syntaxes import compare_scopes
 from ..helpers.thread_progress import ThreadProgress
 from ..utils.contexts_scopes import (
-    CONTEXTS_MAIN,
     CONTEXTS_SCOPES,
 )
 from ..utils.file_extensions import (
@@ -34,9 +31,7 @@ from ..utils.file_extensions import (
 from ..utils.zukan_paths import (
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
     ZUKAN_ICONS_DATA_FILE,
-    # ZUKAN_SYNTAXES_DATA_FILE,
 )
-from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 
@@ -389,53 +384,58 @@ class ZukanSyntax:
         if os.path.exists(syntax_file):
             logger.info('editing icon context scope if syntax not installed.')
 
-            file_content = read_yaml_data(syntax_file)
-            ordered_dict = OrderedDict(file_content)
-            # print(ordered_dict['contexts']['main'])
+            with open(syntax_file, 'r') as f:
+                content = f.read()
 
-            syntax_context_scope_set = set()
-            for od in ordered_dict['contexts']['main']:
-                if od['include']:
-                    scope = od['include'].replace('scope:', '')
-                    if scope:
-                        syntax_context_scope_set.add(scope)
+            regex_contexts_main = (
+                r'contexts:\n\s*main:\n\s*- include: .*?\n\s*  apply_prototype: .*?\n'
+            )
 
-            sublime_scopes_set = {}
-            for s in syntax_context_scope_set:
-                sublime_scope = sublime.find_syntax_by_scope(s)
-                if sublime_scope:
-                    sublime_scopes_set[s] = sublime_scope
+            sublime_scope_set = self.get_sublime_scope_set()
 
-            for od in ordered_dict['contexts']['main']:
-                # Only with contexts main include
-                if od['include']:
-                    # print(od['include'])
-                    scope = od['include'].replace('scope:', '')
-                    # print(scope)
-                    # sublime_scope = sublime.find_syntax_by_scope(scope)
+            include_scope = content.find('- include: scope:')
+            # Need to exclude the apply_prototype line
+            if include_scope != -1:
+                scope_start = include_scope + len('- include: scope:')
+                scope_end = content.find(' ', scope_start)
+                if scope_end == -1:
+                    scope_end = content.find('\n', scope_start)
 
-                    if scope and scope in sublime_scopes_set:
-                        # if sublime_scope and scope is not None:
-                        if self.sublime_version > 4075:
-                            return ordered_dict
-                        elif self.sublime_version < 4075:
-                            # Could not find other references, got this contexts
-                            # main format, for ST versions lower than 4075, from
-                            # A File Icon package.
-                            include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
-                            include_scope = 'scope:{s}'.format(s=scope)
-                            CONTEXTS_MAIN['contexts']['main'] = [
-                                {'include': include_scope_prop},
-                                {'include': include_scope},
-                            ]
-                    elif scope is None:
-                        # print(ordered_dict)
-                        CONTEXTS_MAIN['contexts']['main'] = []
+                scope = content[scope_start:scope_end].strip()
+            else:
+                scope = ''
 
-                    # print(CONTEXTS_MAIN)
-                    ordered_dict.update(CONTEXTS_MAIN)
-                    # print(ordered_dict)
-                    dump_yaml_data(ordered_dict, syntax_file)
+            # print(scope)
+
+            if sublime_scope_set.get(scope) is True:
+                if self.sublime_version >= 4075:
+                    return
+                else:
+                    # Could not find other references, got this contexts main
+                    # format, for ST versions lower than 4075, from A File
+                    # Icon package.
+                    include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
+                    include_scope = 'scope:{s}'.format(s=scope)
+
+                    contexts_main = (
+                        'contexts:\n  main:\n    - include: {p}\n      '
+                        'include: {s}\n'.format(p=include_scope_prop, s=include_scope)
+                    )
+
+                    content = re.sub(regex_contexts_main, contexts_main, content)
+            else:
+                contexts_main = 'contexts:\n  main: []\n'
+
+                content = re.sub(
+                    regex_contexts_main,
+                    contexts_main,
+                    content,
+                )
+
+            # print(content)
+
+            with open(syntax_file, 'w') as f:
+                f.write(content)
 
     def edit_contexts_scopes(self):
         """

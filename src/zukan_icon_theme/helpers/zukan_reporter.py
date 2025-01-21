@@ -7,8 +7,8 @@ import sublime
 import sublime_plugin
 import sys
 
+from collections.abc import Callable
 from datetime import datetime
-from typing import Callable
 from ..core.listeners import SchemeTheme
 from ..core.zukan_pref_settings import SettingsEvent
 from ..lib.icons_preferences import ZukanPreference
@@ -27,7 +27,7 @@ class Reporter:
             ZUKAN_PKG_SUBLIME_PATH, 'zukan_reports.txt'
         )
 
-    def _profile_results(self, fname: Callable[[], None], title: str):
+    def _profile_results(self, fname: Callable, title: str):
         """
         https://docs.python.org/3/library/profile.html#profile.Profile
         """
@@ -105,6 +105,14 @@ class Reporter:
             if fname == 'build_preferences':
                 self._profile_results(
                     lambda: ZukanPreference().build_icons_preferences(), option
+                )
+
+            elif fname == 'build_syntax':
+                self._profile_results(
+                    lambda: ZukanSyntax().build_icon_syntax(
+                        'Hocon (Scala Steward)', 'Hocon (Scala Steward).sublime-syntax'
+                    ),
+                    option,
                 )
 
             elif fname == 'build_syntaxes':
