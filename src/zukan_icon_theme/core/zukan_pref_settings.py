@@ -30,7 +30,6 @@ from ..utils.file_settings import (
     ZUKAN_VERSION,
 )
 from ..utils.zukan_paths import (
-    LIB_RUAMEL_YAML_PATH,
     ZUKAN_CURRENT_SETTINGS_FILE,
     ZUKAN_INSTALLED_PKG_PATH,
     ZUKAN_PKG_PATH,

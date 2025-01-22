@@ -7,7 +7,14 @@ from collections import OrderedDict
 logger = logging.getLogger(__name__)
 
 
-def save_sublime_syntax(data, file_path):
+def save_sublime_syntax(data: dict, file_path: str):
+    """
+    Write sublime-syntax file.
+
+    Parameters:
+    data (dict) -- sublime-syntax ordered dict.
+    file_path (str) -- path to directory where sublime-syntax will be saved.
+    """
     content = build_syntax(data)
 
     try:
@@ -25,7 +32,16 @@ def save_sublime_syntax(data, file_path):
     # return content
 
 
-def build_syntax(data):
+def build_syntax(data: dict) -> str:
+    """
+    Build sublime-syntax string with YAML directive.
+
+    Parameters:
+    data (dict) -- sublime-syntax ordered dict.
+
+    Returns:
+    content (str) -- sublime-syntax string with YAML directive.
+    """
     content = ''
     content += add_directive()
     content += od_to_syntax(data)
@@ -34,6 +50,12 @@ def build_syntax(data):
 
 
 def add_directive() -> str:
+    """
+    Add YAML directive.
+
+    Returns:
+    content (str) -- YAML directive.
+    """
     new_line = '\n'
 
     # Directive
@@ -44,9 +66,16 @@ def add_directive() -> str:
     return directive
 
 
-def od_to_syntax(syntax_od, multiplier=0):
+def od_to_syntax(syntax_od: dict, multiplier=0) -> str:
     """
-    Convert an OrderedDict to sublime-syntax string.
+    Convert sublime-syntax ordered dict to string.
+
+    Parameters:
+    syntax_od (dict) -- sublime-syntax ordered dict.
+    multiplier (int) -- indentation multiplier.
+
+    Returns:
+    data (str) -- sublime-syntax string.
     """
     data = ''
     indent = '  ' * multiplier

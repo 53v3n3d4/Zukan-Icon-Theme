@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.6] - 2025
+
+### Plugin 🕹️
+- Change icons_preferences, improve build time
+
 ## [0.4.5] - 2025-01-22
 
 ### Icons, syntaxes and preferences 👽

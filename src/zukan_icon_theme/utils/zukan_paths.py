@@ -44,7 +44,6 @@ ICONS_SYNTAXES_PARTIAL_PATH = os.path.join('Packages', PACKAGE_NAME, 'icons_synt
 
 # Zukan dir paths
 
-LIB_RUAMEL_YAML_PATH = filepath('../../../../../Lib/python38/ruamel')
 INSTALLED_PACKAGES_PATH = filepath('../../../../../Installed Packages')
 PACKAGES_PATH = filepath('../../../../../Packages')
 

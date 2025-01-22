@@ -3,7 +3,6 @@ import glob
 import logging
 import os
 
-from ..helpers.clean_data import clean_plist_tag
 from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.custom_icon import generate_custom_icon
 from ..helpers.load_save_settings import (
@@ -12,10 +11,8 @@ from ..helpers.load_save_settings import (
     get_prefer_icon_settings,
     get_theme_name,
 )
-from ..helpers.read_write_data import (
-    dump_plist_data,
-    read_pickle_data,
-)
+from ..helpers.od_to_preference import save_tm_preferences
+from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_themes import get_sidebar_bgcolor
 from ..utils.file_extensions import (
     PNG_EXTENSION,
@@ -66,8 +63,6 @@ class ZukanPreference:
         use with Thread together in install events.
         """
         self.create_icon_preference(file_name)
-        # Remove plist tag <!DOCTYPE plist>
-        self.delete_plist_tag(preference_name)
         copy_primary_icons()
 
     def build_icons_preferences(self):
@@ -87,8 +82,6 @@ class ZukanPreference:
                 self.delete_icons_preferences()
         finally:
             self.create_icons_preferences()
-            # Remove plist tag <!DOCTYPE plist>
-            self.delete_plist_tags()
             copy_primary_icons()
 
     def _apply_change_icon(self, p: dict, change_icon: dict):
@@ -250,8 +243,11 @@ class ZukanPreference:
         # Check if PNG exist
         self._png_exists(p)
 
+        # print(p['preferences'])
+
         preferences_filepath = os.path.join(ZUKAN_PKG_ICONS_PREFERENCES_PATH, filename)
-        dump_plist_data(p['preferences'], preferences_filepath)
+
+        save_tm_preferences(p['preferences'], preferences_filepath)
 
     def get_list_icons_preferences(self):
         list_all_icons_preferences = []
@@ -503,48 +499,6 @@ class ZukanPreference:
         except OSError:
             logger.error(
                 '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), p
-            )
-
-    def delete_plist_tag(self, preference_name: str):
-        """
-        Delete tag <!DOCTYPE plist> from tmPreferences file created.
-
-        Parameters:
-        preference_name (str) -- icon preference file name.
-        """
-        logger.debug('deleting plist tag <!DOCTYPE plist>.')
-        preference_file = os.path.join(
-            ZUKAN_PKG_ICONS_PREFERENCES_PATH, preference_name
-        )
-        if os.path.exists(preference_file):
-            clean_plist_tag(preference_file)
-
-    def delete_plist_tags(self):
-        """
-        Delete tag <!DOCTYPE plist> from all tmPreferences files created.
-        """
-        try:
-            logger.debug('deleting plist tag <!DOCTYPE plist>.')
-            for p in glob.glob(
-                os.path.join(
-                    ZUKAN_PKG_ICONS_PREFERENCES_PATH, '*' + TMPREFERENCES_EXTENSION
-                )
-            ):
-                clean_plist_tag(p)
-            return p
-        except FileNotFoundError:
-            logger.error(
-                '[Errno %d] %s: %r',
-                errno.ENOENT,
-                os.strerror(errno.ENOENT),
-                'Zukan Icon Theme/preferences folder',
-            )
-        except OSError:
-            logger.error(
-                '[Errno %d] %s: %r',
-                errno.EACCES,
-                os.strerror(errno.EACCES),
-                'Zukan Icon Theme/preferences folder',
             )
 
     def list_created_icons_preferences(self) -> list:
