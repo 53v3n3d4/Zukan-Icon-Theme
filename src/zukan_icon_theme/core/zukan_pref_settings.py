@@ -86,6 +86,7 @@ class ZukanIconFiles:
         else:
             self.data = []
 
+        self.auto_rebuild_icon = get_settings(ZUKAN_SETTINGS, 'auto_rebuild_icon')
         self.auto_prefer_icon, self.prefer_icon = get_prefer_icon_settings()
         self.change_icon, self.change_icon_file_extension = get_change_icon_settings()
         self.ignored_icon = get_ignored_icon_settings()
@@ -117,7 +118,8 @@ class ZukanIconFiles:
         Rebuild icons files, when icons settings change in Zukan preferences.
         """
         logger.debug('if icons settings changed, begin rebuild...')
-        auto_rebuild_icon = get_settings(ZUKAN_SETTINGS, 'auto_rebuild_icon')
+
+        auto_rebuild_icon = self.auto_rebuild_icon
 
         if not self.is_upgrading:
             if (
@@ -254,7 +256,6 @@ class SettingsEvent:
     def get_user_zukan_preferences() -> str:
         folder_size = bytes_to_readable_size(get_folder_size(ZUKAN_PKG_PATH))
         zip_size = bytes_to_readable_size(get_file_size(ZUKAN_INSTALLED_PKG_PATH))
-        ruamel_size = bytes_to_readable_size(get_folder_size(LIB_RUAMEL_YAML_PATH))
 
         zukan_opts_list = []
         for s in ZUKAN_SETTINGS_OPTIONS:
@@ -272,7 +273,6 @@ class SettingsEvent:
         header_zukan = '==== Zukan Icon Theme settings ===='
         zukan_pkg_folder = 'Zukan folder size: {f}'.format(f=folder_size)
         zukan_installed_zip_file = 'sublime-package size: {z}'.format(z=zip_size)
-        dependency_ruamel = 'Ruamel size: {r}'.format(r=ruamel_size)
         zukan_opts_to_str = ''.join(zukan_opts_list)
         header_st = '==== User ST settings =============='
         user_pref_to_str = ''.join(user_pref_list)
@@ -291,9 +291,6 @@ class SettingsEvent:
             + new_line
             + tab_indent
             + zukan_installed_zip_file
-            + new_line
-            + tab_indent
-            + dependency_ruamel
             + new_line
             + new_line
             + zukan_opts_to_str
