@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.5] - 2025
+## [0.4.5] - 2025-01-22
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Scheme, GBIF
@@ -14,7 +14,7 @@
 - Fix install syntax command, creating syntax for ignored_icon
 - Fix install preference command, creating preference for ignored_icon
 - Change syntax, icons_syntaxes and read_write_data, improve build time
-- Removed plugin `ruamel-yaml` dependency. This version no longer requires the library
+- Remove plugin `ruamel-yaml` dependency. This version no longer requires the library
 - Add is_enabled for Commands, when InputHandler list_items is None
 
 ## [0.4.4] - 2025-01-11
