@@ -6,7 +6,9 @@ We need this folder, to create, edit or delete, icons sublime-themes, icons tmPr
 
 ## Install
 
-If clone repo, you may need to `Package Control: Satisfy Libraries` to install dependencies.  
+> The plugin `ruamel-yaml` dependency has been removed in version 0.4.5.  
+
+If clone repo, for tags below v0.4.4, you may need to `Package Control: Satisfy Libraries` to install dependencies.  
 
 More info about 3rd party dependencies, see [SO link](https://stackoverflow.com/questions/61196270/how-to-properly-use-3rd-party-dependencies-with-sublime-text-plugins).  
 
@@ -163,11 +165,13 @@ Required parameters are: scope and file extensions.
         { "scope": "source.json", "file_extensions": ["dependencies.json"] },
         { "scope": "source.json", "file_extensions": ["messages.json"] },
         { "scope": "source.json", "file_extensions": ["unittesting.json"] },
+        { "scope": "source.lisp", "file_extensions": ["scm", "ss"]},
         { "scope": "source.modern-fortran", "file_extensions": ["f90", "F90", "f95", "F95", "f03", "F03", "f08", "F08"] },
         { "scope": "source.python", "file_extensions": ["config.py"] },
         { "scope": "source.rspec", "file_extensions": ["rb"] },
         { "scope": "source.sss", "file_extensions": ["sss"] },
         { "scope": "source.starlark", "file_extensions": ["BUILD", "WORKSPACE", "bazel", "bzl"] },
+        { "scope": "source.txtree", "file_extensions": ["txt"] },
         { "scope": "source.toml", "file_extensions": ["book.toml"] },
         { "scope": "source.toml.pdm", "file_extensions": ["config.toml"] },
         { "scope": "source.toml.tidb", "file_extensions": ["config.toml"] },

@@ -33,9 +33,7 @@ To install manually:
 > Mac/Linux `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git Zukan\ Icon\ Theme`  
 > Windows `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git "Zukan Icon Theme"`  
 
-> You may see a console message, regarding `ruamel-yaml` dependecy, when first install this package. ST may install it and inform that a restart is needed.  
-
-> [`ruamel-yaml`](https://pypi.org/project/ruamel.yaml/) is being used to create icons sublime-syntaxes files in `icons-syntaxes` folder.  
+> The plugin `ruamel-yaml` dependency has been removed in version 0.4.5.  
 
 If new install, the default is to create all icons files and make them show on all themes installed.  
 
@@ -56,10 +54,6 @@ To remove package using Package Control.
 To uninstall manually, go to your Sublime Text folder.  
 - Menu `Sublime Text > Preferences > Browse packages...`  
 - Then delete `Zukan Icon Theme` inside `Packages` folder  
-
-> Dependecies  
-
-> ST4 uninstall unused dependencies. So dependency [`ruamel-yaml`](https://pypi.org/project/ruamel.yaml/) should be deleted when you uninstall/remove package, if not used by other packages.  
 
 ## Upgrade
 
