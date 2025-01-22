@@ -19,8 +19,6 @@ syntax:
     file_extensions:
       - rd
     contexts:
-      main:
-      - include: scope:text.tex.latex#comments
-        apply_prototype: true
+      main: []
 
 # ST Package
