@@ -1,5 +1,3 @@
-CONTEXTS_MAIN = {'contexts': {'main': []}}
-
 # Scopes used in 'contexts', sublime-syntax files. In case, syntax not installed
 # or disabled, this needs to be removed. Or user receives an error message in console,
 # about syntax not found.

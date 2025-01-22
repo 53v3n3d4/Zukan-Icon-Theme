@@ -7,13 +7,15 @@
 - Add icon option: CSS
 - Add syntax: Cedar
 - Change icon: CSS
-- Change syntax: Applescript, Eleventy
+- Change syntax: Applescript, Eleventy, R, Sublime
 
 ### Plugin 🕹️
 - Fix install theme command, creating ignored_theme
 - Fix install syntax command, creating syntax for ignored_icon
 - Fix install preference command, creating preference for ignored_icon
-- Change syntax and icons_syntaxes, improve build time
+- Change syntax, icons_syntaxes and read_write_data, improve build time
+- Removed plugin `ruamel-yaml` dependency. This version no longer requires the library
+- Add is_enabled for Commands, when InputHandler list_items is None
 
 ## [0.4.4] - 2025-01-11
 

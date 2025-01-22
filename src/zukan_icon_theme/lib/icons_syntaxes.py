@@ -125,10 +125,10 @@ class ZukanSyntax:
         return compare_scopes_set
 
     def get_sublime_scope_set(self) -> Set:
-        syntax_contex_scope_set = set(c['scope'] for c in CONTEXTS_SCOPES)
+        syntax_contexts_scope_set = set(c['scope'] for c in CONTEXTS_SCOPES)
 
         sublime_scope_set = {}
-        for s in syntax_contex_scope_set:
+        for s in syntax_contexts_scope_set:
             sublime_scope = sublime.find_syntax_by_scope(s)
             if sublime_scope:
                 sublime_scope_set[s] = True
@@ -384,58 +384,74 @@ class ZukanSyntax:
         if os.path.exists(syntax_file):
             logger.info('editing icon context scope if syntax not installed.')
 
-            with open(syntax_file, 'r') as f:
-                content = f.read()
+            try:
+                with open(syntax_file, 'r') as f:
+                    content = f.read()
 
-            regex_contexts_main = (
-                r'contexts:\n\s*main:\n\s*- include: .*?\n\s*  apply_prototype: .*?\n'
-            )
+                regex_contexts_main = r'contexts:\n\s*main:\n\s*- include: .*?\n\s*  apply_prototype: .*?\n'
 
-            sublime_scope_set = self.get_sublime_scope_set()
+                sublime_scope_set = self.get_sublime_scope_set()
 
-            include_scope = content.find('- include: scope:')
-            # Need to exclude the apply_prototype line
-            if include_scope != -1:
-                scope_start = include_scope + len('- include: scope:')
-                scope_end = content.find(' ', scope_start)
-                if scope_end == -1:
-                    scope_end = content.find('\n', scope_start)
+                include_scope = content.find('- include: scope:')
+                # Need to exclude the apply_prototype line
+                if include_scope != -1:
+                    scope_start = include_scope + len('- include: scope:')
+                    scope_end = content.find(' ', scope_start)
+                    if scope_end == -1:
+                        scope_end = content.find('\n', scope_start)
 
-                scope = content[scope_start:scope_end].strip()
-            else:
-                scope = ''
-
-            # print(scope)
-
-            if sublime_scope_set.get(scope) is True:
-                if self.sublime_version >= 4075:
-                    return
+                    scope = content[scope_start:scope_end].strip()
                 else:
-                    # Could not find other references, got this contexts main
-                    # format, for ST versions lower than 4075, from A File
-                    # Icon package.
-                    include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
-                    include_scope = 'scope:{s}'.format(s=scope)
+                    scope = ''
 
-                    contexts_main = (
-                        'contexts:\n  main:\n    - include: {p}\n      '
-                        'include: {s}\n'.format(p=include_scope_prop, s=include_scope)
+                # print(scope)
+
+                if sublime_scope_set.get(scope) is True:
+                    if self.sublime_version >= 4075:
+                        return
+                    else:
+                        # Could not find other references, got this contexts main
+                        # format, for ST versions lower than 4075, from A File
+                        # Icon package.
+                        include_scope_prop = 'scope:{s}#prototype'.format(s=scope)
+                        include_scope = 'scope:{s}'.format(s=scope)
+
+                        contexts_main = (
+                            'contexts:\n  main:\n    - include: {p}\n      '
+                            'include: {s}\n'.format(
+                                p=include_scope_prop, s=include_scope
+                            )
+                        )
+
+                        content = re.sub(regex_contexts_main, contexts_main, content)
+                else:
+                    contexts_main = 'contexts:\n  main: []\n'
+
+                    content = re.sub(
+                        regex_contexts_main,
+                        contexts_main,
+                        content,
                     )
 
-                    content = re.sub(regex_contexts_main, contexts_main, content)
-            else:
-                contexts_main = 'contexts:\n  main: []\n'
+                # print(content)
 
-                content = re.sub(
-                    regex_contexts_main,
-                    contexts_main,
-                    content,
+                with open(syntax_file, 'w') as f:
+                    f.write(content)
+
+            except FileNotFoundError:
+                logger.error(
+                    '[Errno %d] %s: %r',
+                    errno.ENOENT,
+                    os.strerror(errno.ENOENT),
+                    syntax_file,
                 )
-
-            # print(content)
-
-            with open(syntax_file, 'w') as f:
-                f.write(content)
+            except OSError:
+                logger.error(
+                    '[Errno %d] %s: %r',
+                    errno.EACCES,
+                    os.strerror(errno.EACCES),
+                    syntax_file,
+                )
 
     def edit_contexts_scopes(self):
         """
