@@ -17,7 +17,6 @@ Package
 ├── tests
 ├── .coveragerc
 ├── .python.version
-├── dependencies.json
 ├── main.py
 ├── pyproject.toml
 ├── pytest.ini

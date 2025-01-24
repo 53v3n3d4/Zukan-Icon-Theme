@@ -12,7 +12,7 @@ Icon theme for Sublime Text 4 editor.
 
 <img src="assets/file-icons-concat-sample.svg" width="728" height="460" alt="file icon">
 
-> File icons in v0.4.5  
+> File icons in v0.4.6  
 
 > All file icons, see [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md)  
 
@@ -32,8 +32,6 @@ To install manually:
 
 > Mac/Linux `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git Zukan\ Icon\ Theme`  
 > Windows `$ git clone https://github.com/53v3n3d4/Zukan-Icon-Theme.git "Zukan Icon Theme"`  
-
-> The plugin `ruamel-yaml` dependency has been removed in version 0.4.5.  
 
 If new install, the default is to create all icons files and make them show on all themes installed.  
 
