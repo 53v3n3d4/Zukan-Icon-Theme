@@ -279,7 +279,7 @@
 
     // This option will auto install theme in the following
     // case:
-    // - When a select theme do not show icons because
+    // - When a select theme does not show icons because
     // there is not an icon theme file.
     //
     // Default is false.
