@@ -66,7 +66,7 @@ def add_directive() -> str:
     return directive
 
 
-def od_to_syntax(syntax_od: dict, multiplier=0) -> str:
+def od_to_syntax(syntax_od: dict, multiplier: int = 0) -> str:
     """
     Convert sublime-syntax ordered dict to string.
 

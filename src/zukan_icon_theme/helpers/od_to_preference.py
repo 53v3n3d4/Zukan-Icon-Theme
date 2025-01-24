@@ -32,13 +32,13 @@ def save_tm_preferences(data: dict, file_path):
 
 def build_preference(data: dict) -> str:
     """
-    Build tmPreference string with plist version.
+    Build tmPreferences string with plist version.
 
     Parameters:
     data (dict) -- tmPreferences ordered dict.
 
     Returns:
-    content_with_plist_version (str) -- tmPreference string with plist version.
+    content_with_plist_version (str) -- tmPreferences string with plist version.
     """
     content = od_to_preference(data)
 
@@ -54,14 +54,14 @@ def build_preference(data: dict) -> str:
 
 def od_to_preference(preference_od: dict, multiplier: int = 2) -> str:
     """
-    Convert tmPreference ordered dict to string.
+    Convert tmPreferences ordered dict to string.
 
     Parameters:
     preference_od (dict) -- tmPreferences ordered dict.
     multiplier (int) -- indentation multiplier.
 
     Returns:
-    data (str) -- tmPreference string.
+    data (str) -- tmPreferences string.
     """
     indent = '\t' * multiplier
     data = ''
