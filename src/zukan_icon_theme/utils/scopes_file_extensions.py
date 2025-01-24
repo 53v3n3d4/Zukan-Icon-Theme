@@ -52,10 +52,6 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'text.plain.debug', 'file_extensions': ['pdb']},  # wwpdb.yaml
     {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # uv.yaml
     {'scope': 'text.xml', 'file_extensions': ['xml']},  # django.yaml
-    {
-        'scope': 'text.xml.sublime.snippet',
-        'file_extensions': ['Comments.tmPreferences'],
-    },  # sublime.yaml
 ]
 
 # Occurred cases

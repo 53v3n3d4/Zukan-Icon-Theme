@@ -2,6 +2,10 @@
 
 ## [0.4.6] - 2025
 
+### Icons, syntaxes and preferences 👽
+- Add icon-theme: Zizmor
+- Change syntax: Sublime
+
 ### Plugin 🕹️
 - Change icons_preferences, improve build time
 

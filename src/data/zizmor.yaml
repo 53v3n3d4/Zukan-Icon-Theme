@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Zizmor
+preferences:
+  scope: source.yaml.zizmor
+  settings:
+    icon: zizmor
+syntax:
+  - name: YAML (Zizmor)
+    scope: source.yaml.zizmor
+    hidden: true
+    file_extensions:
+      - zizmor.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
