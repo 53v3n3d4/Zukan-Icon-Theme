@@ -243,6 +243,12 @@ def is_zukan_listener_enabled() -> tuple:
     """
     zukan_listener_enabled = get_settings(ZUKAN_SETTINGS, 'zukan_listener_enabled')
 
+    # Help when `sublime-package` file is enabled from `ignored_packages`, e.g. 
+    # Package Control upgrade. After reload `file_type_pluing`, Sublime seems to fail
+    # to load settings and returns None, even though the default value is True.
+    if zukan_listener_enabled is None:
+        zukan_listener_enabled = True
+
     return zukan_listener_enabled
 
 

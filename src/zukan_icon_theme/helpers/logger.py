@@ -117,7 +117,7 @@ def get_setting_log_level():
     Get `log_level` setting in `Zukan Icon Theme.sublime-settings`.
 
     Initialize logging is faster than get `log_level`. So it is being
-    initialize using 'set_timeout_async'.
+    initialize using `set_timeout_async`.
     """
 
     log_level = get_settings(ZUKAN_SETTINGS, 'log_level')
@@ -139,16 +139,5 @@ def get_setting_log_level():
 
 
 # sublime.load_settings takes more time to get log_level than logging in
-# 'file_type_icons' file to init logging.
-# sublime.set_timeout_async(get_setting_log_level)
-
-
-def init_logger():
-    if not logging.getLogger().hasHandlers():
-        # sublime.load_settings takes more time to get log_level than
-        # logging in `file_type_icons` file to init logging.
-        sublime.set_timeout_async(get_setting_log_level)
-
-
-# Initialize logging async
-init_logger()
+# `file_type_icons` file to init logging.
+sublime.set_timeout_async(get_setting_log_level)
