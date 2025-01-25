@@ -25,16 +25,21 @@ class LevelFormatter(logging.Formatter):
                 'not this one'
             )
 
-        self.formats = sorted(
-            (level, logging.Formatter(fmt, **kwargs)) for level, fmt in formats.items()
+        self.formats = (
+            sorted(
+                (level, logging.Formatter(fmt, **kwargs))
+                for level, fmt in formats.items()
+            )
+            if formats
+            else []
         )
 
     def format(self, record: logging.LogRecord) -> str:
-        # print(self.formats)
         if self.formats:
             idx = bisect(self.formats, (record.levelno,), hi=len(self.formats) - 1)
             level, formatter = self.formats[idx]
-        return formatter.format(record)
+            return formatter.format(record)
+        return super().format(record)
 
 
 def logging_config(log_level: str):
@@ -88,34 +93,62 @@ def logging_config(log_level: str):
     # logger.critical('critical message')
 
 
+def reset_logging_config(log_level: str):
+    """
+    Reset logger.
+    """
+    logger = logging.getLogger()
+
+    # Remove existing handlers:
+    # - Helps prevent duplicate messages when reloading `file_type_icons`.
+    # - If installed via `.sublime-package` file, it ensures that when package
+    #   is placed in the ignored packages list and then enabled, the logger
+    #   doesn't need to be restarted to avoid seeing the `TypeError`.
+    #   There are still 3 `TypeError` messages after enabling, but the logger
+    #   works correctly afterward.
+    if logger.hasHandlers():
+        logger.handlers.clear()
+
+    logging_config(log_level)
+
+
 def get_setting_log_level():
     """
-    Get 'log_level' setting in 'Zukan Icon Theme.sublime-settings'.
+    Get `log_level` setting in `Zukan Icon Theme.sublime-settings`.
 
-    Initialize logging is faster than get 'log_level'. So it is being
+    Initialize logging is faster than get `log_level`. So it is being
     initialize using 'set_timeout_async'.
     """
 
     log_level = get_settings(ZUKAN_SETTINGS, 'log_level')
 
-    if log_level == 'DEBUG':
-        log_level = logging.DEBUG
-    elif log_level == 'INFO':
-        log_level = logging.INFO
-    elif log_level == 'WARNING':
-        log_level = logging.WARNING
-    elif log_level == 'ERROR':
-        log_level = logging.ERROR
-    elif log_level == 'CRITICAL':
-        log_level = logging.CRITICAL
-    else:
-        log_level = logging.INFO
+    level_map = {
+        'DEBUG': logging.DEBUG,
+        'INFO': logging.INFO,
+        'WARNING': logging.WARNING,
+        'ERROR': logging.ERROR,
+        'CRITICAL': logging.CRITICAL,
+    }
 
-    logging_config(log_level)
+    log_level = level_map.get(log_level, logging.INFO)
+
+    # logging_config(log_level)
+    reset_logging_config(log_level)
 
     return log_level
 
 
 # sublime.load_settings takes more time to get log_level than logging in
 # 'file_type_icons' file to init logging.
-sublime.set_timeout_async(get_setting_log_level)
+# sublime.set_timeout_async(get_setting_log_level)
+
+
+def init_logger():
+    if not logging.getLogger().hasHandlers():
+        # sublime.load_settings takes more time to get log_level than
+        # logging in `file_type_icons` file to init logging.
+        sublime.set_timeout_async(get_setting_log_level)
+
+
+# Initialize logging async
+init_logger()

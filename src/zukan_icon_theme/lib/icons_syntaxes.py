@@ -51,8 +51,8 @@ class ZukanSyntax:
         _, change_icon_file_extension = get_change_icon_settings()
         return change_icon_file_extension
 
-    def ignored_icon_setting(self) -> list:
-        return get_ignored_icon_settings()
+    def ignored_icon_setting(self) -> Set:
+        return set(get_ignored_icon_settings())
 
     def install_syntax(self, file_name: str, syntax_name: str):
         """

@@ -45,10 +45,15 @@ def edit_file_extension(
         if d in scope_file_extensions_dict:
             del scope_file_extensions_dict[d]
 
-    file_extensions_dict = {
-        **scope_file_extensions_dict,
-        **change_icon_file_extension_dict,
-    }
+    # file_extensions_dict = {
+    #     **scope_file_extensions_dict,
+    #     **change_icon_file_extension_dict,
+    # }
+    # Python 3.3
+    file_extensions_dict = dict(
+        scope_file_extensions_dict, **change_icon_file_extension_dict
+    )
+
     # print(file_extensions_dict)
 
     syntax_file_extensions = [

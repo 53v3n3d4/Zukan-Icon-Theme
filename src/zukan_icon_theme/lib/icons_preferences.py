@@ -3,6 +3,7 @@ import glob
 import logging
 import os
 
+from collections.abc import Set
 from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.custom_icon import generate_custom_icon
 from ..helpers.load_save_settings import (
@@ -41,8 +42,8 @@ class ZukanPreference:
         change_icon, _ = get_change_icon_settings()
         return change_icon
 
-    def ignored_icon_setting(self) -> list:
-        return get_ignored_icon_settings()
+    def ignored_icon_setting(self) -> Set:
+        return set(get_ignored_icon_settings())
 
     def prefer_icon_setting(self) -> tuple:
         auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
