@@ -46,16 +46,6 @@ $ cat .python-version
 $ poetry install
 ```
 
-### Plugin
-
-You may need to `Package Control: Satisfy Libraries` to install dependencies.  
-
-```
-# Select ST python interpreter in '.python-version' file
-# 3.3 or 3.8
-$ cat .python-version
-3.3
-```
 
 ## Poetry notes
 

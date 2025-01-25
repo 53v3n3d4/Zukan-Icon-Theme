@@ -8,6 +8,7 @@
 
 ### Plugin 🕹️
 - Change icons_preferences, improve build time
+- Fix logger TypeError after enabling from ignored_packages, avoiding Sublime Text restart
 
 ## [0.4.5] - 2025-01-22
 
