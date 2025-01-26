@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.6] - 2025
+## [0.4.6] - 2025-01-26
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Zizmor
@@ -8,11 +8,9 @@
 
 ### Plugin 🕹️
 - Change icons_preferences, improve build time
-- Fix logger TypeError after enabling from ignored_packages, avoiding Sublime Text restart
+- Fix logger TypeError after enabling from `ignored_packages`, avoiding need to restart Sublime Text
 - Fix listener and add_on_change not starting after enabling via '.sublime-package' during upgrade
-- Fix TypeError, NoneType, caused by Sublime failing to load settings when enabling from `ignored_packages`, if using '.sublime-package'
-
-
+- Fix TypeError, NoneType, caused by failing to load settings when enabling from `ignored_packages`, if using '.sublime-package'
 
 ## [0.4.5] - 2025-01-22
 
