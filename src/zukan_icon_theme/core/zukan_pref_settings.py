@@ -373,11 +373,6 @@ class UpgradePlugin:
         self.pkg_version, self.auto_upgraded = get_upgraded_version_settings()
         self.version_json_file = get_settings(ZUKAN_VERSION, 'version')
 
-        if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE):
-            self.data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
-        else:
-            self.data = []
-
     def start_upgrade(self):
         """
         Allow upgrade zukan files and delay rebuild icon files.
@@ -401,8 +396,10 @@ class UpgradePlugin:
         logger.debug('if package upgraded, begin rebuild...')
 
         if os.path.exists(ZUKAN_CURRENT_SETTINGS_FILE) and self.auto_upgraded is True:
+            data = read_pickle_data(ZUKAN_CURRENT_SETTINGS_FILE)
+
             installed_pkg_version = ''.join(
-                [d['version'] for d in self.data if 'version' in d]
+                [d['version'] for d in data if 'version' in d]
             )
 
             # Transform string to tuple to compare.

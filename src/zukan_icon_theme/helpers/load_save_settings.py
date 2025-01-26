@@ -1,7 +1,9 @@
+import json
 import logging
 import os
 import sublime
 
+from zipfile import ZipFile
 from ..helpers.read_write_data import dump_pickle_data
 from ..helpers.system_theme import system_theme
 from ..utils.file_settings import (
@@ -12,6 +14,7 @@ from ..utils.file_settings import (
 from ..utils.zukan_paths import (
     USER_UI_SETTINGS_FILE,
     ZUKAN_CURRENT_SETTINGS_FILE,
+    ZUKAN_INSTALLED_PKG_PATH,
 )
 
 logger = logging.getLogger(__name__)
@@ -181,9 +184,81 @@ def read_current_settings() -> dict:
     """
     current_settings = {}
 
+    # ST4 Python 3.3 issue where settings are not loaded.
+    # A similar issue occurs in `is_zukan_listener_enabled`.
+    # This helps when `.sublime-package` file is enabled from `ignored_packages`,
+    # e.g., after a Package Control upgrade. Upon reloading `file_type_icon`,
+    # Sublime fails to load settings and returns None, even though the default
+    # value is True.
+    # This works until the package is disabled and then re-enabled. After that,
+    # Sublime cannot read settings and save them with value None instead of the
+    # values from `Zukan Icon Theme.sublime-settings`.
+    # current_settings = {
+    #     'version': '0.4.5',
+    #     'auto_install_theme': False,
+    #     'log_level': 'INFO',
+    #     'rebuild_on_upgrade': True,
+    #     'zukan_restart_message': True,
+    #     'ignored_icon': [],
+    #     'create_custom_icon': [],
+    #     'zukan_listener_enabled': True,
+    #     'prefer_icon': {},
+    #     'change_icon_file_extension': [],
+    #     'ignored_theme': [],
+    #     'auto_rebuild_icon': True,
+    #     'auto_prefer_icon': True,
+    #     'change_icon': {},
+    # }
+    if os.path.exists(ZUKAN_INSTALLED_PKG_PATH):
+        current_settings = default_settings()
+
     for s in ZUKAN_SETTINGS_OPTIONS:
         setting_option = get_settings(ZUKAN_SETTINGS, s)
-        current_settings.update({s: setting_option})
+        # ST4 Python 3.3 issue not loading settings.
+        # `set_timeout` for `load_settings`or for this methos at start `on_loaded`
+        # did not work.
+        if setting_option is not None:
+            current_settings.update({s: setting_option})
+
+    return current_settings
+
+
+def remove_json_comments(json_data: str) -> str:
+    """
+    Removes comments from JSON.
+
+    Parameters:
+    json_data (str) -- string JSON.
+
+    Returns:
+    (str) -- string with out comments.
+    """
+    lines = json_data.splitlines()
+    result = []
+
+    for line in lines:
+        if '//' in line:
+            line = line.split('//', 1)[0]
+
+        if line.strip():
+            result.append(line)
+
+    return '\n'.join(result)
+
+
+def default_settings() -> dict:
+    """
+    Read default settings, `Zukan Icon Theme.sublime-settings`, in,
+    `.sublime-package`, zip file.
+    """
+    installed_zukan_sublime_settings = os.path.join('sublime', ZUKAN_SETTINGS)
+
+    with ZipFile(ZUKAN_INSTALLED_PKG_PATH, 'r') as zf:
+        with zf.open(installed_zukan_sublime_settings) as f:
+            content = f.read().decode('utf-8')
+
+            content_no_comments = remove_json_comments(content)
+            current_settings = json.loads(content_no_comments)
 
     return current_settings
 
@@ -243,9 +318,11 @@ def is_zukan_listener_enabled() -> tuple:
     """
     zukan_listener_enabled = get_settings(ZUKAN_SETTINGS, 'zukan_listener_enabled')
 
-    # Help when `sublime-package` file is enabled from `ignored_packages`, e.g. 
-    # Package Control upgrade. After reload `file_type_pluing`, Sublime seems to fail
+    # Help when `sublime-package` file is enabled from `ignored_packages`, e.g.
+    # Package Control upgrade. After reload `file_type_icon`, Sublime seems to fail
     # to load settings and returns None, even though the default value is True.
+    # Tested in ST4 and Python 3.3.
+    # Same issue occur on `read_current_settings`.
     if zukan_listener_enabled is None:
         zukan_listener_enabled = True
 

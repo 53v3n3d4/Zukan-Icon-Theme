@@ -10,6 +10,8 @@
 - Change icons_preferences, improve build time
 - Fix logger TypeError after enabling from ignored_packages, avoiding Sublime Text restart
 - Fix listener and add_on_change not starting after enabling via '.sublime-package' during upgrade
+- Fix TypeError, NoneType, caused by Sublime failing to load settings when enabling from `ignored_packages`, if using '.sublime-package'
+
 
 
 ## [0.4.5] - 2025-01-22

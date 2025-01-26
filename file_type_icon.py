@@ -1,52 +1,39 @@
 import os
 import sublime
-import sys
-
-# Copied from A File Icon
-# https://github.com/SublimeText/AFileIcon/blob/master/plugin.py
-# Clear module cache to force reloading all modules of this package.
-prefix = __package__ + '.'  # don't clear the base package
-for module_name in [
-    module_name
-    for module_name in sys.modules
-    if module_name.startswith(prefix) and module_name != __name__
-]:
-    del sys.modules[module_name]
-del prefix
 
 # fmt: off
-from .src.zukan_icon_theme.core.change_file_extension import ChangeFileExtensionCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.change_file_extension import ResetFileExtensionCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.change_icon import ChangeIconCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.change_icon import ResetIconCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.create_custom_icon import CreateCustomIconCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.create_custom_icon import DeleteCustomIconCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.disable_icon import DisableIconCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.disable_icon import EnableIconCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.disable_theme import DisableThemeCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.disable_theme import EnableThemeCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.install import InstallEvent  # noqa: E402
-from .src.zukan_icon_theme.core.preferences import DeletePreferenceCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.preferences import InstallPreferenceCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.rebuild_files import RebuildFilesCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.select_prefer_icon import RemovePreferIconCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.select_prefer_icon import SelectPreferIconCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.syntaxes import DeleteSyntaxCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.syntaxes import InstallSyntaxCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.themes import DeleteThemeCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.themes import InstallThemeCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.core.zukan_pref_settings import EventBus  # noqa: E402
-from .src.zukan_icon_theme.core.zukan_pref_settings import SettingsEvent  # noqa: E402
-from .src.zukan_icon_theme.core.zukan_pref_settings import UpgradePlugin  # noqa: E402
-from .src.zukan_icon_theme.core.zukan_pref_settings import ZukanIconFiles  # noqa: E402
-from .src.zukan_icon_theme.helpers.clean_comments import CleanCommentsCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.helpers.search_themes import get_sidebar_bgcolor  # noqa: E402 F401
-from .src.zukan_icon_theme.helpers.load_save_settings import get_theme_name  # noqa: E402
-from .src.zukan_icon_theme.helpers.load_save_settings import is_zukan_listener_enabled  # noqa: E402
-from .src.zukan_icon_theme.helpers.logger import logging  # noqa: E402
-from .src.zukan_icon_theme.helpers.move_folders import MoveFolder  # noqa: E402
-from .src.zukan_icon_theme.helpers.zukan_reporter import ZukanReporterCommand  # noqa: E402 F401
-from .src.zukan_icon_theme.utils.zukan_paths import (  # noqa: E402
+from .src.zukan_icon_theme.core.change_file_extension import ChangeFileExtensionCommand  # noqa F401
+from .src.zukan_icon_theme.core.change_file_extension import ResetFileExtensionCommand  # noqa F401
+from .src.zukan_icon_theme.core.change_icon import ChangeIconCommand  # noqa F401
+from .src.zukan_icon_theme.core.change_icon import ResetIconCommand  # noqa F401
+from .src.zukan_icon_theme.core.create_custom_icon import CreateCustomIconCommand  # noqa F401
+from .src.zukan_icon_theme.core.create_custom_icon import DeleteCustomIconCommand  # noqa F401
+from .src.zukan_icon_theme.core.disable_icon import DisableIconCommand  # noqa F401
+from .src.zukan_icon_theme.core.disable_icon import EnableIconCommand  # noqa F401
+from .src.zukan_icon_theme.core.disable_theme import DisableThemeCommand  # noqa F401
+from .src.zukan_icon_theme.core.disable_theme import EnableThemeCommand  # noqa F401
+from .src.zukan_icon_theme.core.install import InstallEvent
+from .src.zukan_icon_theme.core.preferences import DeletePreferenceCommand  # noqa F401
+from .src.zukan_icon_theme.core.preferences import InstallPreferenceCommand  # noqa F401
+from .src.zukan_icon_theme.core.rebuild_files import RebuildFilesCommand  # noqa F401
+from .src.zukan_icon_theme.core.select_prefer_icon import RemovePreferIconCommand  # noqa F401
+from .src.zukan_icon_theme.core.select_prefer_icon import SelectPreferIconCommand  # noqa F401
+from .src.zukan_icon_theme.core.syntaxes import DeleteSyntaxCommand  # noqa F401
+from .src.zukan_icon_theme.core.syntaxes import InstallSyntaxCommand  # noqa F401
+from .src.zukan_icon_theme.core.themes import DeleteThemeCommand  # noqa F401
+from .src.zukan_icon_theme.core.themes import InstallThemeCommand  # noqa F401
+from .src.zukan_icon_theme.core.zukan_pref_settings import EventBus
+from .src.zukan_icon_theme.core.zukan_pref_settings import SettingsEvent
+from .src.zukan_icon_theme.core.zukan_pref_settings import UpgradePlugin
+from .src.zukan_icon_theme.core.zukan_pref_settings import ZukanIconFiles
+from .src.zukan_icon_theme.helpers.clean_comments import CleanCommentsCommand  # noqa F401
+from .src.zukan_icon_theme.helpers.search_themes import get_sidebar_bgcolor
+from .src.zukan_icon_theme.helpers.load_save_settings import get_theme_name
+from .src.zukan_icon_theme.helpers.load_save_settings import is_zukan_listener_enabled
+from .src.zukan_icon_theme.helpers.logger import logging
+from .src.zukan_icon_theme.helpers.move_folders import MoveFolder
+from .src.zukan_icon_theme.helpers.zukan_reporter import ZukanReporterCommand  # noqa F401
+from .src.zukan_icon_theme.utils.zukan_paths import (
     ZUKAN_ICONS_DATA_FILE,
     ZUKAN_PKG_ICONS_PREFERENCES_PATH,
     ZUKAN_PKG_ICONS_SYNTAXES_PATH,
