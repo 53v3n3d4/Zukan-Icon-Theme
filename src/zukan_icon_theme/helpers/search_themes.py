@@ -10,7 +10,7 @@ from ..helpers.color_dark_light import (
 )
 from ..helpers.read_write_data import read_pickle_data
 from ..utils.st_color_palette import (
-    ST_COLOR_PALETTE,
+    ST_COLOR_PALETTE_DICT,
 )
 from ..utils.zukan_paths import (
     PKG_ZUKAN_ICON_THEME_FOLDER,
@@ -191,7 +191,7 @@ def find_variables(
 
     # ST color palette
     # E.g. aliceblue
-    elif any(var_value in d for d in ST_COLOR_PALETTE):
+    elif var_value in ST_COLOR_PALETTE_DICT:
         st_color = var_value
 
         dark_light = rgb_dark_light(convert_to_rgb(st_colors_to_hex(st_color)))

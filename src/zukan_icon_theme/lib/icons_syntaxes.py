@@ -202,7 +202,6 @@ class ZukanSyntax:
                                 )
                                 # print(save_sublime_syntax(k, syntax_filepath))
                                 save_sublime_syntax(k, syntax_filepath)
-                                # dump_yaml_data(k, syntax_filepath)
                                 logger.info('%s created.', filename)
                 elif (
                     any('syntax' in d for d in s)
@@ -286,7 +285,6 @@ class ZukanSyntax:
                                 )
 
                                 save_sublime_syntax(k, syntax_filepath)
-                                # dump_yaml_data(k, syntax_filepath)
 
                 elif (
                     s['name'] in ignored_icon
@@ -392,10 +390,10 @@ class ZukanSyntax:
 
                 sublime_scope_set = self.get_sublime_scope_set()
 
-                include_scope = content.find('- include: scope:')
+                contexts_main_scope = content.find('- include: scope:')
                 # Need to exclude the apply_prototype line
-                if include_scope != -1:
-                    scope_start = include_scope + len('- include: scope:')
+                if contexts_main_scope != -1:
+                    scope_start = contexts_main_scope + len('- include: scope:')
                     scope_end = content.find(' ', scope_start)
                     if scope_end == -1:
                         scope_end = content.find('\n', scope_start)
@@ -464,24 +462,9 @@ class ZukanSyntax:
 
         # sublime_version = int(sublime.version())
         installed_syntaxes_list = self.list_created_icons_syntaxes()
-
-        # syntax_contex_scope_set = set(c['scope'] for c in CONTEXTS_SCOPES)
-
-        # sublime_scope_set = {}
-        # for s in syntax_contex_scope_set:
-        #     sublime_scope = sublime.find_syntax_by_scope(s)
-        #     if sublime_scope:
-        #         sublime_scope_set[s] = True
-        #     else:
-        #         sublime_scope_set[s] = False
-
         sublime_scope_set = self.get_sublime_scope_set()
 
-        # print(sublime_scope_set)
-
         for c in CONTEXTS_SCOPES:
-            # sublime_scope = sublime.find_syntax_by_scope(c['scope'])
-
             if sublime_scope_set.get(c['scope']):
                 # print(c)
                 for i in installed_syntaxes_list:

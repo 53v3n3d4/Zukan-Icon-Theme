@@ -83,10 +83,9 @@ def convert_to_rgb(bgcolor: str) -> list:
 
 
 def st_colors_to_hex(var_name: str) -> str:
-    for i in ST_COLOR_PALETTE:
-        for k, v in i.items():
-            if var_name == k:
-                return v
+    for k, v in ST_COLOR_PALETTE:
+        if var_name == k:
+            return v
 
 
 def extract_numbers_from_hsl(color_hsl: str) -> tuple:

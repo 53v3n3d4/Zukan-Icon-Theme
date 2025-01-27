@@ -188,10 +188,9 @@ def read_current_settings() -> dict:
     # A similar issue occurs in `is_zukan_listener_enabled`.
     # This helps when `.sublime-package` file is enabled from `ignored_packages`,
     # e.g., after a Package Control upgrade. Upon reloading `file_type_icon`,
-    # Sublime fails to load settings and returns None, even though the default
-    # value is True.
+    # Sublime fails to load settings and returns None.
     # This works until the package is disabled and then re-enabled. After that,
-    # Sublime cannot read settings and save them with value None instead of the
+    # Sublime cannot read settings and return them with value None instead of the
     # values from `Zukan Icon Theme.sublime-settings`.
     # current_settings = {
     #     'version': '0.4.5',
