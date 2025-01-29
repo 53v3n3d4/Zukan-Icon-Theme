@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.4.7] - 2025-01-29
+
+### Plugin 🕹️
+- Fix compatibility issue with Zukan-icons-theme v0.4.5 and v0.4.6 (#1)
+
 ## [0.4.6] - 2025-01-26
 
 ### Icons, syntaxes and preferences 👽
