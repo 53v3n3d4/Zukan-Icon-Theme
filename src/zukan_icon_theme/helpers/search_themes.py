@@ -269,6 +269,7 @@ def find_attributes(
             if target_list:
                 return target_list
 
+
 def find_attributes_hidden_file(
     theme: str,
     theme_content: dict,
@@ -362,6 +363,7 @@ def theme_with_opacity(theme_st_path: str) -> bool:
             class_parent,
         )
 
+    # print(target_list)
     if True in target_list:
         return True
     else:
@@ -419,7 +421,7 @@ def get_sidebar_bgcolor(theme_name: str) -> str:
     theme_sublime_path = sublime.find_resources(theme_name)
 
     for p in theme_sublime_path:
-        if not p.startswith(PKG_ZUKAN_ICON_THEME_FOLDER):
+        if not p.startswith('Packages/Zukan Icon Theme'):
             theme_st_path = p
 
     if theme_st_path:
