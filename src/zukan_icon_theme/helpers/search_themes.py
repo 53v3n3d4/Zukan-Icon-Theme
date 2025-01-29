@@ -414,10 +414,13 @@ def get_sidebar_bgcolor(theme_name: str) -> str:
     Returns:
     (str) -- returns value 'dark' or 'light'
     """
-    # Sorting for Python 3.3
-    theme_st_path = sorted(sublime.find_resources(theme_name))
+    theme_sublime_path = sublime.find_resources(theme_name)
+
+    for p in theme_sublime_path:
+        if not p.startswith('Packages/Zukan Icon Theme'):
+            theme_st_path = p
 
     if theme_st_path:
-        bgcolor = find_sidebar_background(theme_st_path[0])
+        bgcolor = find_sidebar_background(theme_st_path)
 
     return bgcolor[0]
