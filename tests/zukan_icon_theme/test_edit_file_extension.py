@@ -1,7 +1,6 @@
 import importlib
 
 from unittest import TestCase
-from unittest.mock import patch
 
 edit_file_extension = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.helpers.edit_file_extension'
