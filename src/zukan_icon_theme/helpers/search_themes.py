@@ -13,7 +13,7 @@ from ..utils.st_color_palette import (
     ST_COLOR_PALETTE_DICT,
 )
 from ..utils.zukan_paths import (
-    PKG_ZUKAN_ICON_THEME_FOLDER,
+    # PKG_ZUKAN_ICON_THEME_FOLDER,
     USER_UI_SETTINGS_FILE,
 )
 
@@ -291,7 +291,7 @@ def find_attributes_hidden_file(
     hidden_theme_list = sublime.find_resources(theme_content['extends'])
     # Exclude Zukan created themes, important for Rebuild Files command.
     hidden_theme_name = [
-        h for h in hidden_theme_list if not h.startswith(PKG_ZUKAN_ICON_THEME_FOLDER)
+        h for h in hidden_theme_list if not h.startswith('Packages/Zukan Icon Theme')
     ]
     for t in hidden_theme_name:
         hidden_theme_content = sublime.decode_value(sublime.load_resource(t))
