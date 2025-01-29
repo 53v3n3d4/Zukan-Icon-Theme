@@ -93,6 +93,10 @@ If icons does not prompt show correct, restart ST may be the solution. See [trou
 - [A File Icon](https://github.com/SublimeText/AFileIcon)  
 - [FileIcons](https://github.com/braver/FileIcons)  
 
+## Contributing
+
+Feel free to send your PRs or open issues! Every contribution helps, whether it's a bug fix, a new feature, or just feedback.😊
+
 ## License
 
 MIT license ([LICENSE-MIT](LICENSE))  
