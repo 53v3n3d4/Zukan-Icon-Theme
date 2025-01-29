@@ -259,13 +259,15 @@ def find_attributes(
                     ):
                         logger.debug('%s has attributes', theme)
                         target_list.append(True)
+                        return target_list
 
         # Find sidebar background
         if not class_parent and i.get(target_key):
             logger.debug('%s sidebar layer0.tint is %s', theme, i.get(target_key))
 
             find_variables(i.get(target_key), theme_content, target_list, theme)
-
+            if target_list:
+                return target_list
 
 def find_attributes_hidden_file(
     theme: str,
@@ -417,7 +419,7 @@ def get_sidebar_bgcolor(theme_name: str) -> str:
     theme_sublime_path = sublime.find_resources(theme_name)
 
     for p in theme_sublime_path:
-        if not p.startswith('Packages/Zukan Icon Theme'):
+        if not p.startswith(PKG_ZUKAN_ICON_THEME_FOLDER):
             theme_st_path = p
 
     if theme_st_path:
