@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.8] - 2025-01-29
+
+### Plugin 🕹️
+- Undo removal constant from `get_sidebar_bgcolor`
+- Removal constant from `find_attributes_hidden_file`
+
 ## [0.4.7] - 2025-01-29
 
 ### Plugin 🕹️
