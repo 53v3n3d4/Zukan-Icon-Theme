@@ -8,6 +8,8 @@ parallel = true
 ; source = src
 
 [report]
+exclude_also =
+    no cover
 omit =
     **/__main__.py
     **/__init__.py
