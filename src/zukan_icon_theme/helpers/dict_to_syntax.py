@@ -2,8 +2,6 @@ import errno
 import logging
 import os
 
-from collections import OrderedDict
-
 logger = logging.getLogger(__name__)
 
 
@@ -44,7 +42,7 @@ def build_syntax(data: dict) -> str:
     """
     content = ''
     content += add_directive()
-    content += od_to_syntax(data)
+    content += dict_to_syntax(data)
 
     return content
 
@@ -66,7 +64,7 @@ def add_directive() -> str:
     return directive
 
 
-def od_to_syntax(syntax_od: dict, multiplier: int = 0) -> str:
+def dict_to_syntax(syntax_od: dict, multiplier: int = 0) -> str:
     """
     Convert sublime-syntax ordered dict to string.
 
@@ -88,10 +86,10 @@ def od_to_syntax(syntax_od: dict, multiplier: int = 0) -> str:
         data += '{i}{k}:'.format(i=indent, k=k)
 
         # OD
-        if isinstance(v, (OrderedDict, dict)):
+        if isinstance(v, dict):
             # print(v)
             data += new_line
-            data += od_to_syntax(v, multiplier + 1)
+            data += dict_to_syntax(v, multiplier + 1)
 
         # List
         elif isinstance(v, list):

@@ -3,7 +3,6 @@ import logging
 import os
 
 from src.build.helpers.color import Color
-from src.build.helpers.nested_ordered_dict import nested_ordered_dict
 from src.build.helpers.print_message import print_created_message, print_message
 from src.build.helpers.read_write_data import (
     dump_pickle_data,
@@ -60,8 +59,9 @@ class ZukanIcon:
                     # OrderedDict only necessary if using python 3.3.
                     # Python 3.8, dict read ordered.
                     # ordered_dict = OrderedDict(data)
-                    ordered_dict = nested_ordered_dict(data)
-                    dump_pickle_data(ordered_dict, pickle_file)
+                    # ordered_dict = nested_ordered_dict(data)
+                    # dump_pickle_data(ordered_dict, pickle_file)
+                    dump_pickle_data(data, pickle_file)
                     print_created_message(
                         os.path.basename(icon_data),
                         data['name'],

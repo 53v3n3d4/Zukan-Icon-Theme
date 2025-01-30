@@ -6,15 +6,15 @@ from collections import OrderedDict
 from unittest import TestCase
 from unittest.mock import patch
 
-od_to_preference = importlib.import_module(
-    'Zukan Icon Theme.src.zukan_icon_theme.helpers.od_to_preference'
+dict_to_preference = importlib.import_module(
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_preference'
 )
 
 
 class TestPreferencesFunctions(TestCase):
     @patch('builtins.open', side_effect=FileNotFoundError)
     @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.od_to_preference.logger.error'
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_preference.logger.error'
     )
     def test_save_tm_preferences_file_not_found(self, mock_logger, mock_open):
         data = OrderedDict(
@@ -25,14 +25,14 @@ class TestPreferencesFunctions(TestCase):
         )
         file_path = 'invalid_path/tmPreferences.plist'
 
-        od_to_preference.save_tm_preferences(data, file_path)
+        dict_to_preference.save_tm_preferences(data, file_path)
         mock_logger.assert_called_with(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), file_path
         )
 
     @patch('builtins.open', side_effect=OSError)
     @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.od_to_preference.logger.error'
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_preference.logger.error'
     )
     def test_save_tm_preferences_os_error(self, mock_logger, mock_open):
         data = OrderedDict(
@@ -43,7 +43,7 @@ class TestPreferencesFunctions(TestCase):
         )
         file_path = 'invalid_path/tmPreferences.plist'
 
-        od_to_preference.save_tm_preferences(data, file_path)
+        dict_to_preference.save_tm_preferences(data, file_path)
         mock_logger.assert_called_with(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), file_path
         )
@@ -56,7 +56,7 @@ class TestPreferencesFunctions(TestCase):
             ]
         )
 
-        result = od_to_preference.build_preference(data)
+        result = dict_to_preference.build_preference(data)
 
         expected_result = (
             '<?xml version="1.0" encoding="UTF-8"?>\n'
@@ -71,7 +71,7 @@ class TestPreferencesFunctions(TestCase):
         )
         self.assertEqual(result, expected_result)
 
-    def test_od_to_preference(self):
+    def test_dict_to_preference(self):
         data = OrderedDict(
             [
                 ('key1', 'value1'),
@@ -79,7 +79,7 @@ class TestPreferencesFunctions(TestCase):
             ]
         )
 
-        result = od_to_preference.od_to_preference(data)
+        result = dict_to_preference.dict_to_preference(data)
 
         expected_result = (
             '\t\t<key>key1</key>\n'
@@ -89,7 +89,7 @@ class TestPreferencesFunctions(TestCase):
         )
         self.assertEqual(result, expected_result)
 
-    def test_od_to_preference_nested(self):
+    def test_dict_to_preference_nested(self):
         data = OrderedDict(
             [
                 ('key1', 'value1'),
@@ -105,7 +105,7 @@ class TestPreferencesFunctions(TestCase):
             ]
         )
 
-        result = od_to_preference.od_to_preference(data)
+        result = dict_to_preference.dict_to_preference(data)
 
         expected_result = (
             '\t\t<key>key1</key>\n'
@@ -120,8 +120,8 @@ class TestPreferencesFunctions(TestCase):
         )
         self.assertEqual(result, expected_result)
 
-    def test_od_to_preference_empty(self):
+    def test_dict_to_preference_empty(self):
         data = OrderedDict()
 
-        result = od_to_preference.od_to_preference(data)
+        result = dict_to_preference.dict_to_preference(data)
         self.assertEqual(result, '')

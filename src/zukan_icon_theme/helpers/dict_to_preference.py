@@ -2,8 +2,6 @@ import errno
 import logging
 import os
 
-from collections import OrderedDict
-
 logger = logging.getLogger(__name__)
 
 
@@ -40,7 +38,7 @@ def build_preference(data: dict) -> str:
     Returns:
     content_with_plist_version (str) -- tmPreferences string with plist version.
     """
-    content = od_to_preference(data)
+    content = dict_to_preference(data)
 
     # Add plist version
     content_with_plist_version = (
@@ -52,7 +50,7 @@ def build_preference(data: dict) -> str:
     return content_with_plist_version
 
 
-def od_to_preference(preference_od: dict, multiplier: int = 2) -> str:
+def dict_to_preference(preference_od: dict, multiplier: int = 2) -> str:
     """
     Convert tmPreferences ordered dict to string.
 
@@ -66,11 +64,13 @@ def od_to_preference(preference_od: dict, multiplier: int = 2) -> str:
     indent = '\t' * multiplier
     data = ''
 
+    # print(preference_od)
+
     for k, v in preference_od.items():
-        if isinstance(v, OrderedDict):
+        if isinstance(v, dict):
             data += '{i}<key>{k}</key>\n'.format(i=indent, k=k)
             data += '{i}<dict>\n'.format(i=indent)
-            data += od_to_preference(v, multiplier + 1)
+            data += dict_to_preference(v, multiplier + 1)
             data += '{i}</dict>\n'.format(i=indent)
         else:
             data += '{i}<key>{k}</key>\n'.format(i=indent, k=k)

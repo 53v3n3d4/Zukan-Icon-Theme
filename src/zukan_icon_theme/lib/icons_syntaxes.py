@@ -9,12 +9,12 @@ import threading
 from collections.abc import Set
 from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.custom_icon import generate_custom_icon
+from ..helpers.dict_to_syntax import save_sublime_syntax
 from ..helpers.edit_file_extension import edit_file_extension
 from ..helpers.load_save_settings import (
     get_change_icon_settings,
     get_ignored_icon_settings,
 )
-from ..helpers.od_to_syntax import save_sublime_syntax
 from ..helpers.read_write_data import (
     edit_contexts_main,
     read_pickle_data,

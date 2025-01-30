@@ -6,13 +6,13 @@ import os
 from collections.abc import Set
 from ..helpers.copy_primary_icons import copy_primary_icons
 from ..helpers.custom_icon import generate_custom_icon
+from ..helpers.dict_to_preference import save_tm_preferences
 from ..helpers.load_save_settings import (
     get_change_icon_settings,
     get_ignored_icon_settings,
     get_prefer_icon_settings,
     get_theme_name,
 )
-from ..helpers.od_to_preference import save_tm_preferences
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_themes import get_sidebar_bgcolor
 from ..utils.file_extensions import (
