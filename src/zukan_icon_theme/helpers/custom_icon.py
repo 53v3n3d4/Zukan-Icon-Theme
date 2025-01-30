@@ -3,7 +3,6 @@ import logging
 from ..helpers.load_save_settings import get_create_custom_icon_settings
 from ..helpers.remove_empty_dict import remove_empty_dict
 from ..helpers.search_zukan_data import list_data_names
-from collections import OrderedDict
 
 logger = logging.getLogger(__name__)
 
@@ -14,64 +13,51 @@ def data(d: dict):
     # Preference only
     # No 'syntax_name' and 'file_extensions'
     if 'syntax_name' not in d and 'file_extensions' not in d:
-        return OrderedDict(
-            {
-                'name': d['name'],
-                'preferences': OrderedDict(
-                    {'scope': d['scope'], 'settings': OrderedDict({'icon': d['icon']})}
-                ),
-            }
-        )
+        return {
+            'name': d['name'],
+            'preferences': {
+                'scope': d['scope'],
+                'settings': {'icon': d['icon']},
+            },
+        }
 
     # Syntax only
     # No icon argument -> no preferences, only create syntax
     if 'icon' not in d and 'syntax_name' in d:
         if 'contexts_scope' not in d:
-            return OrderedDict(
-                {
-                    'name': d['name'],
-                    'syntax': [
-                        OrderedDict(
-                            {
-                                'name': d['syntax_name'],
-                                'scope': syntax_scope,
-                                'hidden': True,
-                                'file_extensions': d['file_extensions'],
-                                'contexts': OrderedDict({'main': []}),
-                            }
-                        )
-                    ],
-                }
-            )
+            return {
+                'name': d['name'],
+                'syntax': [
+                    {
+                        'name': d['syntax_name'],
+                        'scope': syntax_scope,
+                        'hidden': True,
+                        'file_extensions': d['file_extensions'],
+                        'contexts': {'main': []},
+                    }
+                ],
+            }
         if 'contexts_scope' in d:
             scope = 'scope:' + d['contexts_scope']
-            return OrderedDict(
-                {
-                    'name': d['name'],
-                    'syntax': [
-                        OrderedDict(
-                            {
-                                'name': d['syntax_name'],
-                                'scope': syntax_scope,
-                                'hidden': True,
-                                'file_extensions': d['file_extensions'],
-                                'contexts': OrderedDict(
-                                    {
-                                        'main': [
-                                            OrderedDict(
-                                                {
-                                                    'include': scope,
-                                                    'apply_prototype': True,
-                                                }
-                                            )
-                                        ]
-                                    }
-                                ),
-                            }
-                        )
-                    ],
-                }
-            )
+            return {
+                'name': d['name'],
+                'syntax': [
+                    {
+                        'name': d['syntax_name'],
+                        'scope': syntax_scope,
+                        'hidden': True,
+                        'file_extensions': d['file_extensions'],
+                        'contexts': {
+                            'main': [
+                                {
+                                    'include': scope,
+                                    'apply_prototype': True,
+                                }
+                            ]
+                        },
+                    }
+                ],
+            }
 
     # Preference and Syntax
     if (
@@ -82,74 +68,58 @@ def data(d: dict):
         and 'file_extensions' in d
     ):
         if 'contexts_scope' not in d:
-            return OrderedDict(
-                {
-                    'name': d['name'],
-                    'preferences': OrderedDict(
-                        {
-                            'scope': d['scope'],
-                            'settings': OrderedDict({'icon': d['icon']}),
-                        }
-                    ),
-                    'syntax': [
-                        OrderedDict(
-                            {
-                                'name': d['syntax_name'],
-                                'scope': syntax_scope,
-                                'hidden': True,
-                                'file_extensions': d['file_extensions'],
-                                'contexts': OrderedDict({'main': []}),
-                            }
-                        )
-                    ],
-                }
-            )
+            return {
+                'name': d['name'],
+                'preferences': {
+                    'scope': d['scope'],
+                    'settings': {'icon': d['icon']},
+                },
+                'syntax': [
+                    {
+                        'name': d['syntax_name'],
+                        'scope': syntax_scope,
+                        'hidden': True,
+                        'file_extensions': d['file_extensions'],
+                        'contexts': {'main': []},
+                    }
+                ],
+            }
         if 'contexts_scope' in d:
             scope = 'scope:' + d['contexts_scope']
-            return OrderedDict(
-                {
-                    'name': d['name'],
-                    'preferences': OrderedDict(
-                        {
-                            'scope': d['scope'],
-                            'settings': OrderedDict({'icon': d['icon']}),
-                        }
-                    ),
-                    'syntax': [
-                        OrderedDict(
-                            {
-                                'name': d['syntax_name'],
-                                'scope': syntax_scope,
-                                'hidden': True,
-                                'file_extensions': d['file_extensions'],
-                                'contexts': OrderedDict(
-                                    {
-                                        'main': [
-                                            OrderedDict(
-                                                {
-                                                    'include': scope,
-                                                    'apply_prototype': True,
-                                                }
-                                            )
-                                        ]
-                                    }
-                                ),
-                            }
-                        )
-                    ],
-                }
-            )
+            return {
+                'name': d['name'],
+                'preferences': {
+                    'scope': d['scope'],
+                    'settings': {'icon': d['icon']},
+                },
+                'syntax': [
+                    {
+                        'name': d['syntax_name'],
+                        'scope': syntax_scope,
+                        'hidden': True,
+                        'file_extensions': d['file_extensions'],
+                        'contexts': {
+                            'main': [
+                                {
+                                    'include': scope,
+                                    'apply_prototype': True,
+                                }
+                            ]
+                        },
+                    }
+                ],
+            }
 
 
 def generate_custom_icon(zukan_icons: list) -> list:
     create_custom_icon = get_create_custom_icon_settings()
-    list_od = []
+    dict_list = []
 
     if create_custom_icon:
         for c in create_custom_icon:
             if 'name' in c and c['name'] not in list_data_names(zukan_icons):
                 od = data(remove_empty_dict(c))
-                list_od.append(od)
+                dict_list.append(od)
             if 'name' not in c:
                 logger.warning('%s do not have key "name", it is required', c)
             if 'name' in c and c['name'] in list_data_names(zukan_icons):
@@ -158,5 +128,5 @@ def generate_custom_icon(zukan_icons: list) -> list:
                     c['name'],
                 )
 
-    logger.debug('create_custom_icon od list %s', list_od)
-    return list_od
+    logger.debug('create_custom_icon od list %s', dict_list)
+    return dict_list

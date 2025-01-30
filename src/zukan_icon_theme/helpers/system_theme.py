@@ -57,7 +57,8 @@ def macos_theme() -> bool:
     return bool(p.communicate()[0])
 
 
-def windows_theme() -> bool:
+# Windows module only
+def windows_theme() -> bool:  # pragma: no cover
     """
     Code from
     https://stackoverflow.com/questions/65294987/detect-os-dark-mode-in-python
@@ -89,5 +90,6 @@ def system_theme() -> bool:
     if platform.system() == 'Darwin':
         return macos_theme()
 
-    if platform.system() == 'Windows':
+    # Windows module only
+    if platform.system() == 'Windows':  # pragma: no cover
         return windows_theme()

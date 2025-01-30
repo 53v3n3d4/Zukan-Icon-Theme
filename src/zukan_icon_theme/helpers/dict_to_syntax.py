@@ -64,12 +64,12 @@ def add_directive() -> str:
     return directive
 
 
-def dict_to_syntax(syntax_od: dict, multiplier: int = 0) -> str:
+def dict_to_syntax(syntax_dict: dict, multiplier: int = 0) -> str:
     """
     Convert sublime-syntax ordered dict to string.
 
     Parameters:
-    syntax_od (dict) -- sublime-syntax ordered dict.
+    syntax_dict (dict) -- sublime-syntax ordered dict.
     multiplier (int) -- indentation multiplier.
 
     Returns:
@@ -79,10 +79,10 @@ def dict_to_syntax(syntax_od: dict, multiplier: int = 0) -> str:
     indent = '  ' * multiplier
     new_line = '\n'
 
-    # print(syntax_od)
+    # print(syntax_dict)
 
     # sublime-syntax
-    for k, v in syntax_od.items():
+    for k, v in syntax_dict.items():
         data += '{i}{k}:'.format(i=indent, k=k)
 
         # OD

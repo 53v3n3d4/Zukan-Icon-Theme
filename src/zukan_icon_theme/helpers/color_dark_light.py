@@ -179,7 +179,9 @@ def rgb_dark_light(rgb_color: list) -> str:
         # dark background, use light icon
         return 'dark'
 
-    elif hsp > 127.5:
+    # Option: use else to make coverage 100%, no need for 'no cover'
+    elif hsp > 127.5:  # pragma: no cover
+    # else:
         logger.debug('HSP = %s, sidebar seems light background.', hsp)
         # print(hsp)
         # light background, use dark icon

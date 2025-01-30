@@ -2,7 +2,6 @@ import errno
 import importlib
 import os
 
-from collections import OrderedDict
 from unittest import TestCase
 from unittest.mock import patch
 
@@ -17,12 +16,11 @@ class TestPreferencesFunctions(TestCase):
         'Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_preference.logger.error'
     )
     def test_save_tm_preferences_file_not_found(self, mock_logger, mock_open):
-        data = OrderedDict(
-            [
-                ('key1', 'value1'),
-                ('key2', 'value2'),
-            ]
-        )
+        data = {
+            'key1': 'value1',
+            'key2': 'value2',
+        }
+
         file_path = 'invalid_path/tmPreferences.plist'
 
         dict_to_preference.save_tm_preferences(data, file_path)
@@ -35,12 +33,11 @@ class TestPreferencesFunctions(TestCase):
         'Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_preference.logger.error'
     )
     def test_save_tm_preferences_os_error(self, mock_logger, mock_open):
-        data = OrderedDict(
-            [
-                ('key1', 'value1'),
-                ('key2', 'value2'),
-            ]
-        )
+        data = {
+            'key1': 'value1',
+            'key2': 'value2',
+        }
+
         file_path = 'invalid_path/tmPreferences.plist'
 
         dict_to_preference.save_tm_preferences(data, file_path)
@@ -49,12 +46,10 @@ class TestPreferencesFunctions(TestCase):
         )
 
     def test_build_preference(self):
-        data = OrderedDict(
-            [
-                ('key1', 'value1'),
-                ('key2', 'value2'),
-            ]
-        )
+        data = {
+            'key1': 'value1',
+            'key2': 'value2',
+        }
 
         result = dict_to_preference.build_preference(data)
 
@@ -72,12 +67,10 @@ class TestPreferencesFunctions(TestCase):
         self.assertEqual(result, expected_result)
 
     def test_dict_to_preference(self):
-        data = OrderedDict(
-            [
-                ('key1', 'value1'),
-                ('key2', 'value2'),
-            ]
-        )
+        data = {
+            'key1': 'value1',
+            'key2': 'value2',
+        }
 
         result = dict_to_preference.dict_to_preference(data)
 
@@ -90,20 +83,13 @@ class TestPreferencesFunctions(TestCase):
         self.assertEqual(result, expected_result)
 
     def test_dict_to_preference_nested(self):
-        data = OrderedDict(
-            [
-                ('key1', 'value1'),
-                (
-                    'key2',
-                    OrderedDict(
-                        [
-                            ('subkey1', 'subvalue1'),
-                            ('subkey2', 'subvalue2'),
-                        ]
-                    ),
-                ),
-            ]
-        )
+        data = {
+            'key1': 'value1',
+            'key2': {
+                'sub_key1': 'sub_value1',
+                'sub_key2': 'sub_value2',
+            },
+        }
 
         result = dict_to_preference.dict_to_preference(data)
 
@@ -112,16 +98,16 @@ class TestPreferencesFunctions(TestCase):
             '\t\t<string>value1</string>\n'
             '\t\t<key>key2</key>\n'
             '\t\t<dict>\n'
-            '\t\t\t<key>subkey1</key>\n'
-            '\t\t\t<string>subvalue1</string>\n'
-            '\t\t\t<key>subkey2</key>\n'
-            '\t\t\t<string>subvalue2</string>\n'
+            '\t\t\t<key>sub_key1</key>\n'
+            '\t\t\t<string>sub_value1</string>\n'
+            '\t\t\t<key>sub_key2</key>\n'
+            '\t\t\t<string>sub_value2</string>\n'
             '\t\t</dict>\n'
         )
         self.assertEqual(result, expected_result)
 
     def test_dict_to_preference_empty(self):
-        data = OrderedDict()
+        data = {}
 
         result = dict_to_preference.dict_to_preference(data)
         self.assertEqual(result, '')

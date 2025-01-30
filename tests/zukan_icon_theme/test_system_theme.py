@@ -80,7 +80,8 @@ class TestSystemTheme(TestCase):
         result = system_theme.system_theme()
         self.assertTrue(result)
 
-    if platform.system() == 'Windows':
+    # Windows module only
+    if platform.system() == 'Windows':  # pragma: no cover
         import winreg
 
         @patch(

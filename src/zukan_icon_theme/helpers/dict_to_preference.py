@@ -50,12 +50,12 @@ def build_preference(data: dict) -> str:
     return content_with_plist_version
 
 
-def dict_to_preference(preference_od: dict, multiplier: int = 2) -> str:
+def dict_to_preference(preference_dict: dict, multiplier: int = 2) -> str:
     """
     Convert tmPreferences ordered dict to string.
 
     Parameters:
-    preference_od (dict) -- tmPreferences ordered dict.
+    preference_dict (dict) -- tmPreferences dict.
     multiplier (int) -- indentation multiplier.
 
     Returns:
@@ -64,9 +64,9 @@ def dict_to_preference(preference_od: dict, multiplier: int = 2) -> str:
     indent = '\t' * multiplier
     data = ''
 
-    # print(preference_od)
+    # print(preference_dict)
 
-    for k, v in preference_od.items():
+    for k, v in preference_dict.items():
         if isinstance(v, dict):
             data += '{i}<key>{k}</key>\n'.format(i=indent, k=k)
             data += '{i}<dict>\n'.format(i=indent)
