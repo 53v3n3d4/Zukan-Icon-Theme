@@ -3,7 +3,7 @@ import logging
 
 from bisect import bisect
 from unittest import TestCase
-from unittest.mock import Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 logger = importlib.import_module('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger')
 
@@ -115,3 +115,76 @@ class TestLevelFormatter(TestCase):
         )
         idx = bisect(self.formatter.formats, (record.levelno,))
         self.assertEqual(idx, 0)  # INFO should be at index 0
+
+    def test_value_error_on_fmt_in_kwargs(self):
+        formats = {
+            logging.DEBUG: 'debug-format',
+            logging.INFO: 'info-format',
+        }
+
+        with self.assertRaises(ValueError) as context:
+            logger.LevelFormatter(formats=formats, fmt='incorrect-format')
+
+        self.assertEqual(
+            str(context.exception),
+            'Format string must be passed to level-surrogate formatters, not this one',
+        )
+
+    def test_format_with_default_formatter(self):
+        formats = {}
+        formatter = logger.LevelFormatter(formats)
+
+        record = logging.LogRecord(
+            name='test',
+            level=logging.INFO,
+            pathname='test.py',
+            lineno=10,
+            msg='info message',
+            args=None,
+            exc_info=None,
+        )
+
+        with patch.object(
+            logging.Formatter, 'format', return_value='formatted default log'
+        ) as mock_super_format:
+            formatted_message = formatter.format(record)
+
+            # Check parent format method was called (super().format)
+            mock_super_format.assert_called_once_with(record)
+            self.assertEqual(formatted_message, 'formatted default log')
+
+
+class TestResetLoggingConfig(TestCase):
+    def test_reset_logging_config_with_handlers(self):
+        log_level = 'DEBUG'
+
+        with patch('logging.getLogger') as mock_get_logger:
+            mock_logger = Mock()
+            mock_get_logger.return_value = mock_logger
+
+            with patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.logging_config'
+            ) as mock_logging_config:
+                mock_logger.hasHandlers.return_value = True
+
+                logger.reset_logging_config(log_level)
+
+                mock_logger.handlers.clear.assert_called_once()
+                mock_logging_config.assert_called_once_with(log_level)
+
+    def test_reset_logging_config_no_handlers(self):
+        log_level = 'DEBUG'
+
+        with patch('logging.getLogger') as mock_get_logger:
+            mock_logger = Mock()
+            mock_get_logger.return_value = mock_logger
+
+            with patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.logging_config'
+            ) as mock_logging_config:
+                mock_logger.hasHandlers.return_value = False
+
+                logger.reset_logging_config(log_level)
+
+                mock_logger.handlers.clear.assert_not_called()
+                mock_logging_config.assert_called_once_with(log_level)
