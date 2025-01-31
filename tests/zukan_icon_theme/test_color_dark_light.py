@@ -8,7 +8,7 @@ color_dark_light = importlib.import_module(
 )
 
 
-class TestColorFunctions(TestCase):
+class TestColorDarkLight(TestCase):
     # convert_to_rgb
     def test_convert_to_rgb_hex(self):
         list_hex = [

@@ -10,9 +10,6 @@ constants_json = importlib.import_module('Zukan Icon Theme.tests.mocks.constants
 constants_pickle = importlib.import_module(
     'Zukan Icon Theme.tests.mocks.constants_pickle'
 )
-constants_plist = importlib.import_module(
-    'Zukan Icon Theme.tests.mocks.constants_plist'
-)
 constants_yaml = importlib.import_module('Zukan Icon Theme.tests.mocks.constants_yaml')
 read_write_data = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data'

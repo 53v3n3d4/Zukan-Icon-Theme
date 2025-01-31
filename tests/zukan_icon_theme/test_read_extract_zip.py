@@ -5,9 +5,6 @@ import sublime
 from unittest import TestCase
 from unittest.mock import Mock
 
-constants_icons_preferences = importlib.import_module(
-    'Zukan Icon Theme.tests.mocks.constants_icons_preferences'
-)
 read_extract_zip = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_extract_zip'
 )
@@ -37,7 +34,7 @@ class TestReadExtractZip(TestCase):
             'mocks',
         )
         read_extract_zip.extract_folder(
-            constants_icons_preferences.TEST_DIR_ICONS_PREFERENCES,
+            'icons_preferences',
             dir_destiny,
             test_file_path,
         )
@@ -60,7 +57,7 @@ class TestExtractZipFolder(TestCase):
             'mocks',
         )
         read_extract_zip.extract_folder(
-            constants_icons_preferences.TEST_DIR_ICONS_PREFERENCES,
+            'icons_preferences',
             dir_destiny,
             test_file_path,
         )
@@ -81,25 +78,15 @@ class TestExtractZipFolder(TestCase):
             'mocks',
         )
         read_extract_zip.extract_folder(
-            constants_icons_preferences.TEST_DIR_ICONS_PREFERENCES,
+            'icons_preferences',
             dir_destiny,
             test_file_path,
         )
-        self.assertIsInstance(
-            constants_icons_preferences.TEST_DIR_ICONS_PREFERENCES, str
-        )
-        self.assertNotIsInstance(
-            constants_icons_preferences.TEST_DIR_ICONS_PREFERENCES, int
-        )
-        self.assertNotIsInstance(
-            constants_icons_preferences.TEST_DIR_ICONS_PREFERENCES, list
-        )
-        self.assertNotIsInstance(
-            constants_icons_preferences.TEST_DIR_ICONS_PREFERENCES, bool
-        )
-        self.assertNotIsInstance(
-            constants_icons_preferences.TEST_DIR_ICONS_PREFERENCES, dict
-        )
+        self.assertIsInstance('icons_preferences', str)
+        self.assertNotIsInstance('icons_preferences', int)
+        self.assertNotIsInstance('icons_preferences', list)
+        self.assertNotIsInstance('icons_preferences', bool)
+        self.assertNotIsInstance('icons_preferences', dict)
         self.assertIsInstance(dir_destiny, str)
         self.assertNotIsInstance(dir_destiny, int)
         self.assertNotIsInstance(dir_destiny, list)

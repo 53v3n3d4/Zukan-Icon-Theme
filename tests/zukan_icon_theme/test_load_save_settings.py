@@ -399,3 +399,168 @@ class TestGetChangeIconSettings(TestCase):
 
         result = load_save_settings.get_change_icon_settings()
         self.assertEqual(result, ({}, 'svg'))
+
+
+class TestGetPreferIconSettings(TestCase):
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_dict'
+    )
+    def test_prefer_icon_empty_dict_invalid(
+        self, mock_is_valid_dict, mock_get_settings
+    ):
+        mock_get_settings.side_effect = (
+            lambda settings, key: None
+            if key == 'prefer_icon'
+            else {'auto_prefer_icon': True}
+        )
+        mock_is_valid_dict.return_value = False
+
+        auto_prefer_icon, prefer_icon = load_save_settings.get_prefer_icon_settings()
+
+        self.assertEqual(prefer_icon, {})
+
+
+class TestGetIgnoredIconSettings(TestCase):
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
+    )
+    def test_ignored_icon_empty_list_invalid(
+        self, mock_is_valid_list, mock_get_settings
+    ):
+        mock_get_settings.side_effect = (
+            lambda settings, key: None if key == 'ignored_icon' else []
+        )
+        mock_is_valid_list.return_value = False
+
+        ignored_icon = load_save_settings.get_ignored_icon_settings()
+
+        self.assertEqual(ignored_icon, [])
+
+
+class TestReadCurrentSettings(TestCase):
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.os.path.exists'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.default_settings'
+    )
+    def test_read_current_settings_using_default_settings_1(
+        self, mock_default_settings, mock_get_settings, mock_exists
+    ):
+        mock_exists.return_value = True
+        mock_get_settings.side_effect = lambda settings, key: {
+            'auto_install_theme': True,
+            'log_level': 'DEBUG',
+            'rebuild_on_upgrade': False,
+            'ignored_icon': ['icon1', 'icon2'],
+            'prefer_icon': {'key': 'value'},
+            'auto_prefer_icon': True,
+        }.get(key, None)
+        mock_default_settings.return_value = {
+            'version': '0.4.8',
+            'zukan_listener_enabled': True,
+        }
+
+        result = load_save_settings.read_current_settings()
+
+        expected_result = {
+            'version': '0.4.8',
+            'auto_install_theme': True,
+            'log_level': 'DEBUG',
+            'rebuild_on_upgrade': False,
+            'ignored_icon': ['icon1', 'icon2'],
+            'prefer_icon': {'key': 'value'},
+            'auto_prefer_icon': True,
+            'zukan_listener_enabled': True,
+        }
+
+        self.assertEqual(result, expected_result)
+
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.os.path.exists'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.default_settings'
+    )
+    def test_read_current_settings_using_default_settings_2(
+        self, mock_default_settings, mock_get_settings, mock_exists
+    ):
+        mock_exists.return_value = True
+
+        mock_get_settings.side_effect = lambda settings, key: {
+            'auto_install_theme': True,
+            'log_level': 'DEBUG',
+            'rebuild_on_upgrade': None,
+            'ignored_icon': None,
+            'prefer_icon': {'key': 'value'},
+            'auto_prefer_icon': True,
+        }.get(key, None)
+        mock_default_settings.return_value = {
+            'version': '0.4.8',
+            'zukan_listener_enabled': True,
+        }
+
+        result = load_save_settings.read_current_settings()
+
+        expected_result = {
+            'version': '0.4.8',
+            'auto_install_theme': True,
+            'log_level': 'DEBUG',
+            'prefer_icon': {'key': 'value'},
+            'auto_prefer_icon': True,
+            'zukan_listener_enabled': True,
+        }
+
+        self.assertEqual(result, expected_result)
+
+
+class TestRemoveJsonComments(TestCase):
+    def test_removejson_comments_no_comments(self):
+        json_data = """
+        {
+            "key": "value",
+            "another_key": "another_value"
+        }
+        """
+        expected = """
+        {
+            "key": "value",
+            "another_key": "another_value"
+        }
+        """
+        result = load_save_settings.remove_json_comments(json_data)
+        self.assertEqual(result.strip(), expected.strip())
+
+    def test_removejson_comments_empty_json(self):
+        json_data = ''
+        expected = ''
+        result = load_save_settings.remove_json_comments(json_data)
+        self.assertEqual(result, expected.strip())
+
+    def test_removejson_comments(self):
+        json_data = """
+        {
+            "key": "value",
+            // this is a comment
+            // another line
+        }
+        """
+        expected = """
+        {
+            "key": "value",
+        }
+        """
+        result = load_save_settings.remove_json_comments(json_data)
+        self.assertEqual(result.strip(), expected.strip())

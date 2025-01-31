@@ -3,7 +3,7 @@ import logging
 
 from bisect import bisect
 from unittest import TestCase
-from unittest.mock import MagicMock, Mock, patch
+from unittest.mock import Mock, patch
 
 logger = importlib.import_module('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger')
 
