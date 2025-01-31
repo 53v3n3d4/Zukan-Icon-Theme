@@ -4,7 +4,6 @@ import logging
 import os
 
 from ..helpers.load_save_settings import get_theme_settings
-from ..helpers.read_write_data import dump_json_data
 from ..helpers.search_themes import (
     search_resources_sublime_themes,
     theme_with_opacity,
@@ -66,7 +65,9 @@ class ZukanTheme:
                 else:
                     file_content = TEMPLATE_JSON_WITH_OPACITY
 
-                dump_json_data(file_content, theme_filepath)
+                with open(theme_filepath, 'w') as f:
+                    f.write(file_content)
+
                 logger.info('creating icon theme %s', os.path.basename(theme_filepath))
                 return theme_st_path
             elif file_name in ignored_theme:
