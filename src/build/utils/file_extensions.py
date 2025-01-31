@@ -1,4 +1,2 @@
 PNG_EXTENSION = '.png'
-SUBLIME_SYNTAX_EXTENSION = '.sublime-syntax'
 SVG_EXTENSION = '.svg'
-TMPREFERENCES_EXTENSION = '.tmPreferences'

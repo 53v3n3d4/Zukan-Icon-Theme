@@ -5,8 +5,6 @@ from src.build.utils.build_dir_paths import (
     ICONS_DATA_PRIMARY_ICONS_PATH,
     ICONS_PNG_PATH,
     ICONS_SVG_PATH,
-    ICONS_SYNTAXES_PATH,
-    ICONS_PREFERENCES_PATH,
     # ZUKAN_ICONS_DATA_FILE,
 )
 from src.build.utils.svg_unused_list import (
@@ -51,50 +49,6 @@ COMMANDS_ARGS_PATH_P4 = [
         ['clean', '--file', TEST_SVG_FILE],
         TEST_SVG_FILE,
         UNUSED_LIST,
-    ),
-    # Command preference
-    (
-        'src.build.helpers.icons_preferences.Preference.preferences_all',
-        ['preference', '--data', DATA_PATH, '--tmpreference', ICONS_PREFERENCES_PATH],
-        DATA_PATH,
-        ICONS_PREFERENCES_PATH,
-    ),
-    (
-        'src.build.helpers.icons_preferences.Preference.preferences_all',
-        ['preference', '--all'],
-        DATA_PATH,
-        ICONS_PREFERENCES_PATH,
-    ),
-    (
-        'src.build.helpers.icons_preferences.Preference.preferences',
-        [
-            'preference',
-            '--file',
-            'src/data/afdesing.yaml',
-            '--tmpreference',
-            ICONS_PREFERENCES_PATH,
-        ],
-        'src/data/afdesing.yaml',
-        ICONS_PREFERENCES_PATH,
-    ),
-    # Command syntax
-    (
-        'src.build.helpers.icons_syntaxes.IconSyntax.icons_syntaxes',
-        ['syntax', '--data', DATA_PATH, '--syntax', ICONS_SYNTAXES_PATH],
-        DATA_PATH,
-        ICONS_SYNTAXES_PATH,
-    ),
-    (
-        'src.build.helpers.icons_syntaxes.IconSyntax.icons_syntaxes',
-        ['syntax', '--all'],
-        DATA_PATH,
-        ICONS_SYNTAXES_PATH,
-    ),
-    (
-        'src.build.helpers.icons_syntaxes.IconSyntax.icon_syntax',
-        ['syntax', '--file', 'src/data/afdesing.yaml', '--syntax', ICONS_SYNTAXES_PATH],
-        'src/data/afdesing.yaml',
-        ICONS_SYNTAXES_PATH,
     ),
     # Command test-icon-theme
     (

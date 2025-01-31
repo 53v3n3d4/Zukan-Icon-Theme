@@ -11,7 +11,6 @@ logger_message = logging.getLogger(__name__)
 
 class TestLogger:
     def test_logging_config(self, caplog):
-        # Set up the logger as it would be in your application
         logger = logging.getLogger()
         logger.setLevel(logging.INFO)
 
@@ -43,7 +42,7 @@ class TestLogger:
             logger.warning('Test warning message')
 
         assert 'Test warning message' in caplog.text
-        assert 'WARNING' in caplog.text  # Ensure warning level is present
+        assert 'WARNING' in caplog.text
 
 
 class TestLevelFormatter:
@@ -94,6 +93,18 @@ class TestLevelFormatter:
     def test_invalid_level_in_formats(self):
         with pytest.raises(ValueError):
             LevelFormatter({999: 'Invalid level format'})
+
+    def test_value_error_on_fmt_in_kwargs(self):
+        formats = {
+            logging.DEBUG: 'debug-format',
+            logging.INFO: 'info-format',
+        }
+
+        with pytest.raises(
+            ValueError,
+            match='Format string must be passed to level-surrogate formatters, not this one',
+        ):
+            LevelFormatter(formats=formats, fmt='incorrect-format')
 
     def test_bisect_index(self):
         record = logging.LogRecord(

@@ -7,8 +7,6 @@ from src.build.clean_svg import CleanSVG
 from src.build.helpers.color import Color
 from src.build.helpers.concat_svgs import ConcatSVG
 from src.build.helpers.create_test_icon_theme import TestIconTheme
-from src.build.helpers.icons_preferences import Preference
-from src.build.helpers.icons_syntaxes import IconSyntax
 from src.build.helpers.logger import logging
 from src.build.helpers.print_message import print_build_message, print_message
 from src.build.helpers.read_write_data import read_pickle_data
@@ -19,8 +17,6 @@ from src.build.utils.build_dir_paths import (
     ICON_THEME_TEST_PATH,
     ICONS_PNG_PATH,
     ICONS_SVG_PATH,
-    ICONS_SYNTAXES_PATH,
-    ICONS_PREFERENCES_PATH,
     ZUKAN_ICONS_DATA_FILE,
 )
 from src.build.utils.scripts_args import (
@@ -193,44 +189,6 @@ def main():
             zukan_icon_png.svg_to_png_all(
                 args.data, args.icon, args.png, args.pngprimary
             )
-        else:
-            _error_message()
-    # tmPreferences
-    elif parser == 'preference':
-        zukan_preference = Preference()
-
-        if args.all and not (args.file or args.data):
-            print_build_message(
-                '🛠️  Creating all icons tmPreferences: ',
-                ICONS_PREFERENCES_PATH,
-            )
-            zukan_preference.preferences_all(DATA_PATH, args.tmpreference)
-        elif args.file and not (args.all or args.data):
-            print_build_message('🛠️  Creating icon tmPreferences: ', args.tmpreference)
-            zukan_preference.preferences(args.file, args.tmpreference)
-        elif args.data and not (args.all or args.file):
-            print_build_message(
-                '🛠️  Creating all icons tmPreferences: ', args.tmpreference
-            )
-            zukan_preference.preferences_all(args.data, args.tmpreference)
-        else:
-            _error_message()
-    # Sublime-syntaxes
-    elif parser == 'syntax':
-        zukan_syntax = IconSyntax()
-
-        if args.all and not (args.file or args.data):
-            print_build_message(
-                '🛠️  Creating all icons sublime-syntaxes: ',
-                ICONS_SYNTAXES_PATH,
-            )
-            zukan_syntax.icons_syntaxes(DATA_PATH, args.syntax)
-        elif args.file and not (args.all or args.data):
-            print_build_message('🛠️  Creating icon sublime-syntaxes: ', args.syntax)
-            zukan_syntax.icon_syntax(args.file, args.syntax)
-        elif args.data and not (args.all or args.file):
-            print_build_message('🛠️  Creating all icons sublime-syntaxes: ', args.syntax)
-            zukan_syntax.icons_syntaxes(args.data, args.syntax)
         else:
             _error_message()
     # Tests icons themes
