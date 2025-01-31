@@ -123,44 +123,6 @@ $ poetry run build png -f src/data/afdesign.yaml
 $ poetry run build png --all
 ```
 
-## Create sublime-syntaxes
-Create icons sublime-syntaxes.  
-
-Using argparse commands  
-```sh
-# Environment activated
-🚥 in ../Zukan Icon Theme$ python src/build/scripts.py syntax --help
-🚥 in ../Zukan Icon Theme$ python src/build/scripts.py syntax -f src/data/afdesign.yaml
-# Create all sublime-syntax files
-🚥 in ../Zukan Icon Theme$ python src/build/scripts.py syntax --all
-```
-
-Using poetry scripts  
-```sh
-$ poetry run build syntax -f src/data/afdesign.yaml
-# Create all sublime-syntax files
-$ poetry run build syntax --all
-```
-
-## Create tmPreferences
-Create icons tmPreferences.  
-
-Using argparse commands  
-```sh
-# Environment activated
-🚥 in ../Zukan Icon Theme$ python src/build/scripts.py preference --help
-🚥 in ../Zukan Icon Theme$ python src/build/scripts.py preference -f src/data/afdesign.yaml
-# Create all tnPreferences files
-🚥 in ../Zukan Icon Theme$ python src/build/scripts.py preference --all
-```
-
-Using poetry scripts  
-```sh
-$ poetry run build preference -f src/data/afdesign.yaml
-# Create all tnPreferences files
-$ poetry run build preference --all
-```
-
 ## Create test files extensions
 Create icons themes files extensions.  
 
