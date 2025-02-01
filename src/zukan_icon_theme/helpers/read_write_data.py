@@ -1,6 +1,5 @@
 import _pickle as pickle
 import errno
-import json
 import logging
 import os
 import re
@@ -116,28 +115,5 @@ def edit_contexts_main(file_path: str, scope: str = None):
     except OSError:
         logger.error(
             '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), file_path
-        )
-        raise
-
-
-def dump_json_data(file_data: dict, json_file: str):
-    """
-    Write json file (sublime-themes).
-
-    Parameters:
-    file_data (dict) -- contents of json file.
-    json_file (str) -- path to where json file will be saved.
-    """
-    try:
-        with open(json_file, 'w') as f:
-            json.dump(file_data, f, indent=4)
-    except FileNotFoundError:
-        logger.error(
-            '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), json_file
-        )
-        raise
-    except OSError:
-        logger.error(
-            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), json_file
         )
         raise
