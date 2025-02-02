@@ -386,7 +386,10 @@ class ZukanSyntax:
                 with open(syntax_file, 'r') as f:
                     content = f.read()
 
-                regex_contexts_main = r'contexts:\n\s*main:\n\s*- include: .*?\n\s*  apply_prototype: .*?\n'
+                regex_contexts_main = (
+                    r'contexts:\n\s*main:\n\s*- include: .*?\n\s*'
+                    '  apply_prototype: .*?\n'
+                )
 
                 sublime_scope_set = self.get_sublime_scope_set()
 

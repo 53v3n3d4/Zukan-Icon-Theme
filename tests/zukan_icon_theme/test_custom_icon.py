@@ -1,7 +1,7 @@
 import importlib
 
 from unittest import TestCase
-from unittest.mock import ANY, patch, MagicMock
+from unittest.mock import patch, MagicMock
 
 custom_icon = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.helpers.custom_icon'

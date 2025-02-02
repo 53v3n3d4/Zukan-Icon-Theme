@@ -15,28 +15,6 @@ from ..utils.icons_suffix import (
 logger = logging.getLogger(__name__)
 
 
-# def delete_unused_icon_theme():
-#     """
-#     Delete unused icon theme file.
-
-#     When uninstall a theme package, it leaves an icon-theme file.
-#     """
-#     list_all_themes = search_resources_sublime_themes()
-#     list_icon_themes = ZukanTheme.list_created_icons_themes()
-
-#     list_themes = []
-
-#     for t in list_all_themes:
-#         n = os.path.basename(t)
-#         list_themes.append(n)
-
-#     list_unused_icon_themes = list(set(list_icon_themes) - set(list_themes))
-
-#     for o in list_unused_icon_themes:
-#         logger.info('removing unused zukan icon theme, %s', o)
-#         ZukanTheme.delete_icon_theme(o)
-
-
 def delete_unused_icons(folder: str):
     """
     Delete unused icons that has dark and light versions.
@@ -84,7 +62,6 @@ def delete_unused_icons(folder: str):
                 if os.path.exists(icon_path):
                     os.remove(icon_path)
                     logger.debug('unused icon %s%s%s deleted.', i, s, PNG_EXTENSION)
-                    # print('{}{}{} removed'.format(i, s, PNG_EXTENSION))
 
     if not remove_unused:
         logger.debug('folder has no unused icon to remove.')
