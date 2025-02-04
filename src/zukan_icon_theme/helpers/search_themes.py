@@ -3,17 +3,21 @@ import os
 import re
 import sublime
 
+from ..helpers.cache_theme_info import is_theme_info_valid, save_theme_info
 from ..helpers.color_dark_light import (
     convert_to_rgb,
     rgb_dark_light,
     st_colors_to_hex,
 )
+from ..helpers.load_save_settings import is_cached_theme_info
 from ..helpers.read_write_data import read_pickle_data
 from ..utils.st_color_palette import (
     ST_COLOR_PALETTE_DICT,
 )
 from ..utils.zukan_paths import (
-    # PKG_ZUKAN_ICON_THEME_FOLDER,
+    filepath,
+    PKG_USER_PARTIAL_PATH,
+    PKG_ZUKAN_ICON_THEME_FOLDER,
     USER_UI_SETTINGS_FILE,
 )
 
@@ -291,7 +295,7 @@ def find_attributes_hidden_file(
     hidden_theme_list = sublime.find_resources(theme_content['extends'])
     # Exclude Zukan created themes, important for Rebuild Files command.
     hidden_theme_name = [
-        h for h in hidden_theme_list if not h.startswith('Packages/Zukan Icon Theme')
+        h for h in hidden_theme_list if not h.startswith(PKG_ZUKAN_ICON_THEME_FOLDER)
     ]
     for t in hidden_theme_name:
         hidden_theme_content = sublime.decode_value(sublime.load_resource(t))
@@ -343,17 +347,16 @@ def theme_with_opacity(theme_st_path: str) -> bool:
     target_list = []
     theme_content = sublime.decode_value(sublime.load_resource(theme_st_path))
 
-    find_attributes(
-        theme_st_path,
-        theme_content,
-        class_name,
-        target_key,
-        target_list,
-        target_values,
-        class_parent,
-    )
-    if 'extends' in theme_content:
-        find_attributes_hidden_file(
+    cached_theme_info = is_cached_theme_info()
+
+    if cached_theme_info:
+        theme_info_valid = is_theme_info_valid(
+            filepath(os.path.join('../../../../..', theme_st_path))
+        )
+        # print(theme_info_valid)
+
+    if (cached_theme_info and theme_info_valid is None) or not cached_theme_info:
+        find_attributes(
             theme_st_path,
             theme_content,
             class_name,
@@ -362,12 +365,29 @@ def theme_with_opacity(theme_st_path: str) -> bool:
             target_values,
             class_parent,
         )
+        if 'extends' in theme_content:
+            find_attributes_hidden_file(
+                theme_st_path,
+                theme_content,
+                class_name,
+                target_key,
+                target_list,
+                target_values,
+                class_parent,
+            )
 
-    # print(target_list)
-    if True in target_list:
-        return True
-    else:
-        return False
+        # print(target_list)
+        # target_value = any(target_list)
+        target_value = bool(target_list)
+
+        if cached_theme_info:
+            save_theme_info(
+                filepath(os.path.join('../../../../..', theme_st_path)), target_value
+            )
+        return target_value
+
+    # print(bool(theme_info_valid))
+    return bool(theme_info_valid)
 
 
 def find_sidebar_background(theme_st_path: str) -> list:
@@ -388,6 +408,7 @@ def find_sidebar_background(theme_st_path: str) -> list:
     target_key = 'layer0.tint'
     target_list = []
     theme_content = sublime.decode_value(sublime.load_resource(theme_st_path))
+
     find_attributes(
         theme_st_path,
         theme_content,
@@ -421,8 +442,12 @@ def get_sidebar_bgcolor(theme_name: str) -> str:
     theme_sublime_path = sublime.find_resources(theme_name)
 
     for p in theme_sublime_path:
-        if not p.startswith('Packages/Zukan Icon Theme'):
+        if p.startswith(PKG_USER_PARTIAL_PATH):
             theme_st_path = p
+            break
+        if not p.startswith(PKG_ZUKAN_ICON_THEME_FOLDER):
+            theme_st_path = p
+            break
 
     if theme_st_path:
         bgcolor = find_sidebar_background(theme_st_path)

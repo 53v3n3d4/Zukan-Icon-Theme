@@ -338,3 +338,27 @@ def is_zukan_restart_message() -> tuple:
     zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
     return zukan_restart_message
+
+
+def is_cached_theme_info() -> tuple:
+    """
+    Check if cache theme info setting is true or false.
+
+    Returns:
+    (tuple) -- tuple with cache theme info setting.
+    """
+    cached_theme_info = get_settings(ZUKAN_SETTINGS, 'cache_theme_info')
+
+    return cached_theme_info
+
+
+def get_cached_theme_info_lifespan() -> tuple:
+    """
+    Get cache theme info lifespan setting.
+
+    Returns:
+    (tuple) -- tuple with cache theme info lifespan setting.
+    """
+    cached_theme_info = get_settings(ZUKAN_SETTINGS, 'cache_theme_info_lifespan')
+
+    return cached_theme_info

@@ -1,3 +1,4 @@
+JSON_ENTENSION = '.json'
 PICKLE_EXTENSION = '.pkl'
 PNG_EXTENSION = '.png'
 SUBLIME_PACKAGE_EXTENSION = '.sublime-package'

@@ -11,6 +11,8 @@ ZUKAN_SETTINGS_OPTIONS = [
     'rebuild_on_upgrade',
     'auto_install_theme',
     'ignored_theme',
+    'cache_theme_info',
+    'cache_theme_info_lifespan',
     'auto_prefer_icon',
     'prefer_icon',
     'ignored_icon',

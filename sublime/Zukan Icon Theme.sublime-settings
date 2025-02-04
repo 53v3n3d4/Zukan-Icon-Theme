@@ -285,6 +285,25 @@
     // Default is false.
     "auto_install_theme": false,
 
+    // Option to cache theme info. This cache stores an
+    // opacity boolean value. The opacity is used to select
+    // the icon theme to apply, based on whether the theme
+    // explicitly define opacity settings or not.
+    //
+    // This helps improve performance by avoiding API calls,
+    // only searching theme when it is modified.
+    //
+    // Cache file is stored at 'Packages/Zukan Icon Theme/
+    // sublime/theme_info.json'
+    //
+    // Default is false.
+    "cache_theme_info": false,
+
+    // Lifespan for `cache_theme_info` in days.
+    //
+    // Default is 180 days.
+    "cache_theme_info_lifespan": 180,
+
     // This setting control if user want to auto upgrade
     // icons preferences and syntaxes files.
     //

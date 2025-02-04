@@ -1,5 +1,13 @@
 # Changelog
 
+## [0.4.9] - 2025
+
+### Plugin 🕹️
+- Change icons_themes
+- Fix issue with partial paths being replaced from `/` to `\` on Windows by removing `os.path.join`
+- Fix user customized theme not being handled by `get_sidebar_background`
+- Add `cache_theme_info` and `cache_theme_info_lifespan` settings
+
 ## [0.4.8] - 2025-01-29
 
 ### Plugin 🕹️

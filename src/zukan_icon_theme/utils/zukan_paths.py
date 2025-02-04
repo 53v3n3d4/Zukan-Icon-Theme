@@ -2,6 +2,7 @@ import os
 # import sublime
 
 from .file_extensions import (
+    JSON_ENTENSION,
     PICKLE_EXTENSION,
     SUBLIME_PACKAGE_EXTENSION,
     SUBLIME_SETTINGS_EXTENSION,
@@ -34,13 +35,17 @@ def filepath(url: str) -> str:
 # Zukan-Icon-Theme.src.zukan_icon_theme.utils
 PACKAGE_NAME = __package__.split('.', 1)[0]
 
-PKG_ZUKAN_ICON_THEME_FOLDER = os.path.join('Packages', PACKAGE_NAME)
-
 # Partial paths
+
+PKG_ZUKAN_ICON_THEME_FOLDER = 'Packages' + '/' + PACKAGE_NAME
+
+# Used in search_syntaxes
+# Packages/User
+PKG_USER_PARTIAL_PATH = 'Packages/User'
 
 # Used in search_syntaxes
 # Packages/Zukan Icon Theme/icons_syntaxes/
-ICONS_SYNTAXES_PARTIAL_PATH = os.path.join('Packages', PACKAGE_NAME, 'icons_syntaxes')
+ICONS_SYNTAXES_PARTIAL_PATH = 'Packages' + '/' + PACKAGE_NAME + '/' + 'icons_syntaxes'
 
 # Zukan dir paths
 
@@ -86,6 +91,13 @@ ZUKAN_PKG_SRC_PATH = os.path.join(PACKAGES_PATH, PACKAGE_NAME, 'src')
 ZUKAN_PKG_SUBLIME_PATH = os.path.join(PACKAGES_PATH, PACKAGE_NAME, 'sublime')
 
 # Zukan file paths
+
+# THEME_INFO_FILE = os.path.join(
+#     sublime.packages_path(), PACKAGE_NAME, 'sublime', 'theme_info' + JSON_ENTENSION
+# )
+THEME_INFO_FILE = os.path.join(
+    PACKAGES_PATH, PACKAGE_NAME, 'sublime', 'theme_info' + JSON_ENTENSION
+)
 
 # USER_UI_SETTINGS_FILE = os.path.join(
 #     sublime.packages_path(), PACKAGE_NAME, 'sublime', 'user_ui_settings' + PICKLE_EXTENSION
