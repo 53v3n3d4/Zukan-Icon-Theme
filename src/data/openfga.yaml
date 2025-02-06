@@ -18,6 +18,7 @@ syntax:
     hidden: true
     file_extensions:
       - config.yaml
+      - fga.mod
       - store.fga.yaml
     contexts:
       main:

@@ -23,6 +23,7 @@ syntax:
     scope: source.json.zukan
     hidden: true
     file_extensions:
+      - theme_info.json
       - Zukan Icon Theme.sublime-commands
       - Zukan Icon Theme.sublime-settings
       - zukan-version.sublime-settings

@@ -2,6 +2,9 @@
 
 ## [0.4.9] - 2025
 
+### Icons, syntaxes and preferences 👽
+- Change syntax: OpenFGA
+
 ### Plugin 🕹️
 - Change icons_themes
 - Fix issue with partial paths being replaced from `/` to `\` on Windows by removing `os.path.join`
