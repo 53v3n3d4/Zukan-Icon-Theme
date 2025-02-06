@@ -243,7 +243,7 @@ class TestChangeIconFileInputHandler(TestCase):
         result = self.handler.next_input({})
         self.assertIsInstance(result, sublime_plugin.BackInputHandler)
 
-    def test_change_icon_file_input_handler_next_input_normal(self):
+    def test_change_icon_file_input_handler_next_input(self):
         self.handler.confirm('atest')
         result = self.handler.next_input({})
         self.assertIsNone(result)
@@ -319,7 +319,7 @@ class TestResetIconInputHandler(TestCase):
     def test_reset_icon_input_handler_placeholder(self):
         self.assertEqual(self.handler.placeholder(), 'List of changed icons')
 
-    def test_reset_icon_input_handler_list_items_with_changes(self):
+    def test_reset_icon_input_handler_list_items(self):
         change_icon = {'ATest': 'atest', 'ATest-2': 'atest2'}
         self.change_reset_icon.change_icon_setting.return_value = change_icon
 
@@ -337,7 +337,7 @@ class TestResetIconInputHandler(TestCase):
             self.assertEqual(result[i].value, list_input_items[i - 1].value)
             self.assertEqual(result[i].annotation, list_input_items[i - 1].annotation)
 
-    def test_reset_icon_input_handler_list_items_with_no_changes(self):
+    def test_reset_icon_input_handler_list_items_none(self):
         self.change_reset_icon.change_icon_setting.return_value = None
 
         with self.assertRaises(TypeError):

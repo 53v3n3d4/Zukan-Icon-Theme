@@ -308,12 +308,12 @@ def save_current_ui_settings(
     dump_pickle_data(current_ui_settings, USER_UI_SETTINGS_FILE)
 
 
-def is_zukan_listener_enabled() -> tuple:
+def is_zukan_listener_enabled() -> bool:
     """
     Check if zukan listener enabled setting is true or false.
 
     Returns:
-    (tuple) -- tuple with zukan listener enabled setting.
+    (bool) -- True or False for zukan listener enabled setting.
     """
     zukan_listener_enabled = get_settings(ZUKAN_SETTINGS, 'zukan_listener_enabled')
 
@@ -328,36 +328,36 @@ def is_zukan_listener_enabled() -> tuple:
     return zukan_listener_enabled
 
 
-def is_zukan_restart_message() -> tuple:
+def is_zukan_restart_message() -> bool:
     """
     Check if zukan restart message setting is true or false.
 
     Returns:
-    (tuple) -- tuple with zukan restart message setting.
+    (bool) -- True or False for zukan restart message setting.
     """
     zukan_restart_message = get_settings(ZUKAN_SETTINGS, 'zukan_restart_message')
 
     return zukan_restart_message
 
 
-def is_cached_theme_info() -> tuple:
+def is_cached_theme_info() -> (bool, None):
     """
     Check if cache theme info setting is true or false.
 
     Returns:
-    (tuple) -- tuple with cache theme info setting.
+    (bool, None) -- True or False for valid cache, or None for cache invalid.
     """
     cached_theme_info = get_settings(ZUKAN_SETTINGS, 'cache_theme_info')
 
     return cached_theme_info
 
 
-def get_cached_theme_info_lifespan() -> tuple:
+def get_cached_theme_info_lifespan() -> int:
     """
     Get cache theme info lifespan setting.
 
     Returns:
-    (tuple) -- tuple with cache theme info lifespan setting.
+    (int) -- an integer representing the cache theme info lifespan in days.
     """
     cached_theme_info = get_settings(ZUKAN_SETTINGS, 'cache_theme_info_lifespan')
 

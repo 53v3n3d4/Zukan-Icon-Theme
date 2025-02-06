@@ -633,3 +633,59 @@ class TestIsZukanRestartMessage(TestCase):
         mock_get_settings.assert_called_once_with(
             load_save_settings.ZUKAN_SETTINGS, 'zukan_restart_message'
         )
+
+
+class TestIsCachedThemeInfo(TestCase):
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
+    )
+    def test_is_cached_theme_info_true(self, mock_get_settings):
+        mock_get_settings.return_value = True
+
+        result = load_save_settings.is_cached_theme_info()
+
+        self.assertTrue(result)
+        mock_get_settings.assert_called_once_with(
+            load_save_settings.ZUKAN_SETTINGS, 'cache_theme_info'
+        )
+
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
+    )
+    def test_is_cached_theme_info_false(self, mock_get_settings):
+        mock_get_settings.return_value = False
+
+        result = load_save_settings.is_cached_theme_info()
+
+        self.assertFalse(result)
+        mock_get_settings.assert_called_once_with(
+            load_save_settings.ZUKAN_SETTINGS, 'cache_theme_info'
+        )
+
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
+    )
+    def test_is_cached_theme_info_none(self, mock_get_settings):
+        mock_get_settings.return_value = None
+
+        result = load_save_settings.is_cached_theme_info()
+
+        self.assertIsNone(result)
+        mock_get_settings.assert_called_once_with(
+            load_save_settings.ZUKAN_SETTINGS, 'cache_theme_info'
+        )
+
+
+class TestGetCacheThemeInfoLifespan(TestCase):
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
+    )
+    def test_get_cached_theme_info_lifespan(self, mock_get_settings):
+        mock_get_settings.return_value = 180
+
+        result = load_save_settings.get_cached_theme_info_lifespan()
+
+        self.assertEqual(result, 180)
+        mock_get_settings.assert_called_once_with(
+            load_save_settings.ZUKAN_SETTINGS, 'cache_theme_info_lifespan'
+        )
