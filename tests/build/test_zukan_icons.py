@@ -34,7 +34,7 @@ class TestZukanIcon:
         # running tests
         result = [i for i in data_dir_list if i not in OS_FILE_MOCKS_PATH]
 
-        assert result == TEST_DATA_DIR_EXCEPT_ZUKAN_FILE
+        assert sorted(result) == sorted(TEST_DATA_DIR_EXCEPT_ZUKAN_FILE)
 
     @pytest.fixture(autouse=True)
     def test_write_icon_data_filenotfounderror(self, caplog):
@@ -84,6 +84,7 @@ class TestIconZukanIcon(TestCase):
     def test_dir_exist(self):
         ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)
         self.assertTrue(os.path.exists('data'))
+
 
 #     def test_params_write_icon_data(self):
 #         ZukanIcon.write_icon_data('data', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE)

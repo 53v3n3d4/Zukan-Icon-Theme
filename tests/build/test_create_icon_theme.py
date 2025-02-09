@@ -23,7 +23,7 @@ class TestCreateIconTheme:
         # running tests
         result = [i for i in data_dir_list if i not in OS_FILE_MOCKS_PATH]
 
-        assert result == TEST_DATA_DIR
+        assert sorted(result) == sorted(TEST_DATA_DIR)
 
     @pytest.fixture(autouse=True)
     def test_create_icons_files_filenotfounderror(self, caplog):
@@ -73,6 +73,7 @@ class TestCreateIconThemeFile(TestCase):
     # def test_create_icons_files_exist(self):
     #     test_icon_theme.create_icons_files('data', DIR_DESTINY)
     #     self.assertTrue(os.path.exists('data/afdesign.yaml'))
+
 
 #     def test_params_create_icon_file(self):
 #         test_icon_theme.create_icon_file('data/afdesign.yaml', DIR_DESTINY)
