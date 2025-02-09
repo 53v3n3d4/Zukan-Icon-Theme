@@ -18,6 +18,13 @@ class TestChangeResetIcon(TestCase):
         self.test_icon_file = 'atest'
         self.test_change_icon = {'ATest-2': 'atest2'}
 
+    def test_change_reset_icon_init(self):
+        self.assertEqual(
+            self.icon_handler.zukan_preferences_file, self.preferences_file
+        )
+        self.assertEqual(self.icon_handler.icon_path, change_icon.ZUKAN_PKG_ICONS_PATH)
+        self.assertIsInstance(self.icon_handler.zukan_listener_enabled, bool)
+
     @patch(
         'Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.get_change_icon_settings'
     )
@@ -125,13 +132,6 @@ class TestChangeResetIcon(TestCase):
         mock_save_settings.assert_called_once_with(
             self.preferences_file, 'change_icon', test_settings
         )
-
-    def test_initialization(self):
-        self.assertEqual(
-            self.icon_handler.zukan_preferences_file, self.preferences_file
-        )
-        self.assertEqual(self.icon_handler.icon_path, change_icon.ZUKAN_PKG_ICONS_PATH)
-        self.assertIsInstance(self.icon_handler.zukan_listener_enabled, bool)
 
 
 class TestChangeIconCommand(TestCase):
