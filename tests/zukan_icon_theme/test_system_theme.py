@@ -84,15 +84,9 @@ class TestSystemTheme(TestCase):
     if platform.system() == 'Windows':  # pragma: no cover
         import winreg
 
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.OpenKey'
-        )
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.EnumValue'
-        )
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.ConnectRegistry'
-        )
+        @patch('winreg.OpenKey')
+        @patch('winreg.EnumValue')
+        @patch('winreg.ConnectRegistry')
         def test_windows_theme_dark(
             self, mock_connect_registry, mock_enum_value, mock_open_key
         ):
@@ -103,15 +97,9 @@ class TestSystemTheme(TestCase):
             result = system_theme.windows_theme()
             self.assertTrue(result)
 
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.OpenKey'
-        )
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.EnumValue'
-        )
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.ConnectRegistry'
-        )
+        @patch('winreg.OpenKey')
+        @patch('winreg.EnumValue')
+        @patch('winreg.ConnectRegistry')
         def test_windows_theme_light(
             self, mock_connect_registry, mock_enum_value, mock_open_key
         ):
@@ -126,19 +114,10 @@ class TestSystemTheme(TestCase):
             'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.platform.system',
             return_value='Windows',
         )
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg',
-            MagicMock(),
-        )
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.ConnectRegistry'
-        )
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.OpenKey'
-        )
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.winreg.EnumValue'
-        )
+        @patch('winreg', MagicMock())
+        @patch('winreg.ConnectRegistry')
+        @patch('winreg.OpenKey')
+        @patch('winreg.EnumValue')
         def test_system_theme_windows(
             self,
             mock_enum_value,
