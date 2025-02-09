@@ -1,10 +1,12 @@
-<p align="center">
-    <a href="" title="Sublime Version">
-        <img src="https://img.shields.io/badge/Build_for_Sublime_text-4169-orange?style=flat&logo=sublime-text"/>
+## Zukan Icon Theme
+
+<p align="left">
+    <a href="https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/ci.yml"><img src="https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/ci.yml/badge.svg" alt="build status"></a>
+    <a href="https://www.sublimetext.com/download" title="ST releases">
+        <img src="https://img.shields.io/badge/Sublime_Text->= 4169-orange?style=flat&logo=sublime-text"/>
     </a>
 </p>
 
-## Zukan Icon Theme
 
 Icon theme for Sublime Text 4 editor.  
 
@@ -12,7 +14,7 @@ Icon theme for Sublime Text 4 editor.
 
 <img src="assets/file-icons-concat-sample.svg" width="728" height="460" alt="file icon">
 
-> File icons in v0.4.6  
+> File icons in v0.4.8  
 
 > All file icons, see [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md)  
 
@@ -95,7 +97,7 @@ If icons does not prompt show correct, restart ST may be the solution. See [trou
 
 ## Contributing
 
-Feel free to send your PRs or open issues! Every contribution helps, whether it's a bug fix, a new feature, or just feedback.😊
+Feel free to send your PRs or open issues! Every contribution helps, whether it's a bug fix, a new feature, or just feedback. 😊
 
 ## License
 

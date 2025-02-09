@@ -76,7 +76,11 @@ To disable coverage (pytest-cov)
 addopts = -ra -q
 ```
 
-> `test_scripts icon-theme command` delay tests. If need, comment it in `tests/mocks/constants_scripts.py`.  
+> Two `test_scripts icon-theme command` tests that introduce a 39-second delay are commented out to prevent slowing down the test run in GitHub CI.  
+
+> This reduce coverage in 6.18%, but the build data file and PNG are being tested separately.
+
+> To enable and run them locally, uncomment  the relevant lines in in `tests/mocks/constants_scripts.py`.  
 
 ### Plugin tests
 
