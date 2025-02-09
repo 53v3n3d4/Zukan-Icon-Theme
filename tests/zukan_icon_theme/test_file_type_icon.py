@@ -1,6 +1,7 @@
 import importlib
 import os
 
+from datetime import datetime
 from unittest import TestCase
 from unittest.mock import MagicMock, patch, PropertyMock
 
@@ -99,12 +100,17 @@ class TestPluginLoaded(TestCase):
         mock_get_theme.return_value = 'Treble Adaptive.sublime-theme'
         file_type_icon.plugin_loaded()
         mock_get_theme.assert_called_once()
-        mock_timeout.assert_called_once()
-        mock_timeout.call_args[0][0]()
+        assert mock_timeout.call_count == 2
+        first_lambda = mock_timeout.call_args_list[0][0][0]
+        first_lambda()
         mock_get_bgcolor.assert_called_once_with('Treble Adaptive.sublime-theme')
 
     @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
-    def test_cached_theme_info_deleted(self, mock_delete_cache):
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.system_theme',
+        return_value=True,
+    )
+    def test_cached_theme_info_deleted(self, mock_system_theme, mock_delete_cache):
         file_type_icon.plugin_loaded()
         mock_delete_cache.assert_called_once()
 
@@ -268,6 +274,7 @@ class TestPluginLoaded(TestCase):
         mock_settings_event.zukan_preferences_changed.assert_called_once()
         mock_settings_event.output_to_console_zukan_pref_settings.assert_called_once()
 
+    @patch('os.path.getctime')
     @patch('os.path.exists')
     @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
     @patch('Zukan Icon Theme.file_type_icon.EventBus')
@@ -281,14 +288,16 @@ class TestPluginLoaded(TestCase):
         mock_zukan_icon_files,
         mock_event_bus,
         mock_exists,
+        mock_getctime,
     ):
-        mock_get_theme.return_value = 'Treble Adaptive.sublime-theme'
         mock_exists.return_value = True
+        mock_getctime.return_value = datetime.now().timestamp()
+
+        mock_get_theme.return_value = 'Treble Adaptive.sublime-theme'
         mock_rebuild_icon_files = MagicMock()
         mock_zukan_icon_files.return_value = mock_rebuild_icon_files
         mock_event_bus_instance = MagicMock()
         mock_event_bus.return_value = mock_event_bus_instance
-
         mock_upgrade_instance = MagicMock()
         type(mock_upgrade_instance).version_json_file = PropertyMock(
             return_value='0.4.8'
