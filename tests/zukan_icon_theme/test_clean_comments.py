@@ -15,6 +15,9 @@ class TestCleanComments(TestCase):
         self.cleaner = clean_comments.CleanComments()
         self.test_file_path = clean_comments.ZUKAN_USER_SUBLIME_SETTINGS
 
+    def normalize_str(self, crlf_str: str) -> str:
+        return crlf_str.replace('\r\n', '\n')
+
     def test_remove_comments(self):
         list_comments = [
             ('/* Line comment */ "log_level": "INFO"', ' "log_level": "INFO"'),
@@ -27,7 +30,7 @@ class TestCleanComments(TestCase):
         for p1, p2 in list_comments:
             with self.subTest(list_comments):
                 result = self.cleaner._remove_comments(p1)
-                self.assertEqual(result, p2)
+                self.assertEqual(self.normalize_str(result), p2)
 
     def test_remove_empty_lines(self):
         list_comments = [
@@ -40,7 +43,7 @@ class TestCleanComments(TestCase):
         for p1, p2 in list_comments:
             with self.subTest(list_comments):
                 result = self.cleaner._remove_empty_lines(p1)
-                self.assertEqual(result, p2)
+                self.assertEqual(self.normalize_str(result), self.normalize_str(p2))
 
     @patch('os.path.isfile')
     def test_file_exists(self, mock_isfile):
@@ -63,7 +66,9 @@ class TestCleanComments(TestCase):
         result = self.cleaner._read_and_clean_file()
 
         expected_output = '"prefer_icon": {},\n"ignored_icon": []'
-        self.assertEqual(result, expected_output)
+        self.assertEqual(
+            self.normalize_str(result), self.normalize_str(expected_output)
+        )
         mock_file.assert_called_once_with(self.test_file_path, 'r+')
 
     @patch('builtins.open', new_callable=mock_open)
