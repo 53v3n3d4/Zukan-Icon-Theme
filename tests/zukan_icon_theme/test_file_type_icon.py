@@ -1,5 +1,6 @@
 import importlib
 import os
+import platform
 
 from datetime import datetime
 from unittest import TestCase
@@ -107,10 +108,12 @@ class TestPluginLoaded(TestCase):
 
     @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
     @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.system_theme',
-        return_value=True,
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output'
     )
-    def test_cached_theme_info_deleted(self, mock_system_theme, mock_delete_cache):
+    def test_cached_theme_info_deleted(self, mock_subprocess, mock_delete_cache):
+        if platform.system() == 'Linux':
+            mock_subprocess.return_value = '{"data":[{"data":1}]}'
+
         file_type_icon.plugin_loaded()
         mock_delete_cache.assert_called_once()
 
