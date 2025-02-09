@@ -1,0 +1,58 @@
+name: CI
+
+on: [push]
+
+jobs:
+  plugin-tests:
+
+    name: Plugin Tests
+    strategy:
+      fail-fast: false
+      matrix:
+        st-version: [4]
+        os: ["ubuntu-latest", "macOS-latest", "windows-latest"]
+    runs-on: ${{ matrix.os }}
+    permissions:
+      # Passing one of default ones.
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Sublime Text
+        uses: SublimeText/UnitTesting/actions/setup@v1
+        with:
+          package-name: Zukan Icon Theme
+          sublime-text-version: ${{ matrix.st-version }}
+      - name: Test with unittest
+        uses: SublimeText/UnitTesting/actions/run-tests@v1
+        with:
+          coverage: true
+          package-name: Zukan Icon Theme
+
+  build-tests:
+
+    name: Build Tests
+    runs-on: ubuntu-latest
+    permissions:
+      # Passing one of default ones.
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+      - name: Test with pytest
+        run: poetry run pytest
