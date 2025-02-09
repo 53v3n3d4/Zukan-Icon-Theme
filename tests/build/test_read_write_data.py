@@ -14,11 +14,8 @@ from tests.mocks.constants_pickle import (
     TEST_PICKLE_ORDERED_DICT,
 )
 from tests.mocks.constants_yaml import (
-    TEST_YAML_CONTENT,
-    TEST_YAML_DICT,
     TEST_YAML_EMPTY_FILE,
     TEST_YAML_EXPECTED,
-    TEST_YAML_FILE,
 )
 from unittest.mock import patch, mock_open
 
@@ -93,7 +90,7 @@ class TestYamlData:
     #     )
 
     @pytest.fixture(autouse=True)
-    def test_read_file_filenotfounderror(self, caplog):
+    def test_read_yaml_data_file_not_found(self, caplog):
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
@@ -107,7 +104,7 @@ class TestYamlData:
         ]
 
     @pytest.fixture(autouse=True)
-    def test_read_file_oserror(self, caplog):
+    def test_read_yaml_data_os_error(self, caplog):
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError
@@ -138,7 +135,7 @@ class TestPickletData:
         assert result == TEST_PICKLE_FILE
 
     @pytest.fixture(autouse=True)
-    def test_write_pickle_file_filenotfounderror(self, caplog):
+    def test_dump_pickle_data_file_not_found(self, caplog):
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
@@ -154,7 +151,7 @@ class TestPickletData:
         ]
 
     @pytest.fixture(autouse=True)
-    def test_write_plist_file_oserror(self, caplog):
+    def test_dump_pickle_data_os_error(self, caplog):
         caplog.clear()
         with patch('src.build.helpers.read_write_data.open') as mock_open:
             mock_open.side_effect = OSError

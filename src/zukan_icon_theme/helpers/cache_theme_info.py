@@ -16,7 +16,16 @@ from ..utils.zukan_paths import (
 )
 
 
-def get_modified_time(file_path: str):
+def get_modified_time(file_path: str) -> int:
+    """
+    Get file last modified time.
+
+    Parameters:
+    file_path (str) -- file path.
+
+    Returns:
+    (int) -- file lastest modified timestamp
+    """
     installed_package_name = os.path.basename(os.path.dirname(file_path))
     # print(installed_package_name)
 
@@ -34,6 +43,20 @@ def get_modified_time(file_path: str):
 
 
 def get_file_path(file_path: str) -> str:
+    """
+    Try define the file path for a theme. Theme can be from four different source:
+    - Installed Packages
+    - Packages
+    - User
+    - Default Theme
+
+    Parameters:
+    file_path (str) -- API returns themes with partial paths, e.g. Packages/
+    Treble Adaptive.sublime-theme
+
+    Returns:
+    (str) -- return a string representing theme path.
+    """
     installed_package_name = os.path.basename(os.path.dirname(file_path))
 
     if os.path.exists(file_path):
@@ -53,6 +76,16 @@ def get_file_path(file_path: str) -> str:
 
 
 def is_theme_info_valid(file_path: str) -> bool:
+    """
+
+    Parameters:
+    file_path (str) -- API returns themes with partial paths, e.g. Packages/
+    Treble Adaptive.sublime-theme
+
+    Returns:
+    (Optional[bool) -- returns True or False for theme opacity value, or None
+    if path does not exist.
+    """
     if os.path.exists(THEME_INFO_FILE):
         theme_path = get_file_path(file_path)
         source_date = get_modified_time(theme_path)
@@ -83,7 +116,14 @@ def is_theme_info_valid(file_path: str) -> bool:
     return None
 
 
-def save_theme_info(file_path: str, opacity: str):
+def save_theme_info(file_path: str, opacity: bool):
+    """
+    Save theme info in a JSON file.
+
+    Parameters:
+    file_path (str) -- file path.
+    opacity (bool) -- True or False for theme opacity value.
+    """
     theme_path = get_file_path(file_path)
     # print(theme_path)
     last_updated = get_modified_time(theme_path)
@@ -140,7 +180,13 @@ def save_theme_info(file_path: str, opacity: str):
         json.dump(cache, f, indent=4)
 
 
-def cache_theme_info_lifespan():
+def cache_theme_info_lifespan() -> bool:
+    """
+    `theme_info.json` cache lifespan. Default is 180 days.
+
+    Returns:
+    (bool) -- True or False for expired cache.
+    """
     if not os.path.exists(THEME_INFO_FILE):
         return False
 
@@ -153,5 +199,8 @@ def cache_theme_info_lifespan():
 
 
 def delete_cached_theme_info():
+    """
+    Delete cache file `theme_info.json` if cache expired.
+    """
     if cache_theme_info_lifespan():
         os.remove(THEME_INFO_FILE)

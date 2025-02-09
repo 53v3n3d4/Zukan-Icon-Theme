@@ -80,36 +80,37 @@ COMMANDS_ARGS_PATH_P4 = [
 COMMANDS_ARGS_PATH_P5 = [
     # Command icon-theme
     # icon-theme combine png and zukan-icon
-    # Comment 2 tuples below to speed tests
-    (
-        'src.build.zukan_icons.ZukanIcon.write_icon_data',
-        [
-            'icon-theme',
-            '--all',
-            '--icondata',
-            ICONS_DATA_PATH,
-            '--iconfile',
-            TEST_PICKLE_ZUKAN_FILE,
-        ],
-        DATA_PATH,
-        ICONS_DATA_PATH,
-        TEST_PICKLE_ZUKAN_FILE,
-    ),
-    (
-        'src.build.zukan_icons.ZukanIcon.write_icon_data',
-        [
-            'icon-theme',
-            '--data',
-            DATA_PATH,
-            '--icondata',
-            ICONS_DATA_PATH,
-            '--iconfile',
-            TEST_PICKLE_ZUKAN_FILE,
-        ],
-        DATA_PATH,
-        ICONS_DATA_PATH,
-        TEST_PICKLE_ZUKAN_FILE,
-    ),
+    # Commented 2 tuples below to speed tests
+    # Slow test run in aprox. 34.41s. Reduce coverage in 3.22%
+    # (
+    #     'src.build.zukan_icons.ZukanIcon.write_icon_data',
+    #     [
+    #         'icon-theme',
+    #         '--all',
+    #         '--icondata',
+    #         ICONS_DATA_PATH,
+    #         '--iconfile',
+    #         TEST_PICKLE_ZUKAN_FILE,
+    #     ],
+    #     DATA_PATH,
+    #     ICONS_DATA_PATH,
+    #     TEST_PICKLE_ZUKAN_FILE,
+    # ),
+    # (
+    #     'src.build.zukan_icons.ZukanIcon.write_icon_data',
+    #     [
+    #         'icon-theme',
+    #         '--data',
+    #         DATA_PATH,
+    #         '--icondata',
+    #         ICONS_DATA_PATH,
+    #         '--iconfile',
+    #         TEST_PICKLE_ZUKAN_FILE,
+    #     ],
+    #     DATA_PATH,
+    #     ICONS_DATA_PATH,
+    #     TEST_PICKLE_ZUKAN_FILE,
+    # ),
     # Command zukan-icon
     (
         'src.build.zukan_icons.ZukanIcon.write_icon_data',
@@ -125,62 +126,57 @@ COMMANDS_ARGS_PATH_P5 = [
         ICONS_DATA_PATH,
         TEST_PICKLE_ZUKAN_FILE,
     ),
-    # (
-    #     'src.build.helpers.read_write_data.read_pickle_data',
-    #     ['zukan-icon', '--read', '--icondata', ICONS_DATA_PATH, '--iconfile', TEST_PICKLE_ZUKAN_FILE],
-    #     DATA_PATH,
-    #     ICONS_DATA_PATH,
-    #     TEST_PICKLE_ZUKAN_FILE,
-    # ),
 ]
 
 COMMANDS_ARGS_PATH_P6 = [
     # Command icon-theme
     # icon-theme combine png and zukan-icon
-    (
-        'src.build.icons.IconPNG.svg_to_png_all',
-        ['icon-theme', '--all'],
-        DATA_PATH,
-        ICONS_SVG_PATH,
-        ICONS_PNG_PATH,
-        ICONS_DATA_PRIMARY_ICONS_PATH,
-    ),
-    (
-        'src.build.icons.IconPNG.svg_to_png_all',
-        [
-            'icon-theme',
-            '--data',
-            DATA_PATH,
-            '--icon',
-            ICONS_SVG_PATH,
-            '--png',
-            ICONS_PNG_PATH,
-            '--pngprimary',
-            ICONS_DATA_PRIMARY_ICONS_PATH,
-        ],
-        DATA_PATH,
-        ICONS_SVG_PATH,
-        ICONS_PNG_PATH,
-        ICONS_DATA_PRIMARY_ICONS_PATH,
-    ),
-    (
-        'src.build.icons.IconPNG.svg_to_png',
-        [
-            'icon-theme',
-            '--file',
-            'src/data/afdesign.yaml',
-            '--icon',
-            ICONS_SVG_PATH,
-            '--png',
-            ICONS_PNG_PATH,
-            '--pngprimary',
-            ICONS_DATA_PRIMARY_ICONS_PATH,
-        ],
-        'src/data/afdesign.yaml',
-        ICONS_SVG_PATH,
-        ICONS_PNG_PATH,
-        ICONS_DATA_PRIMARY_ICONS_PATH,
-    ),
+    # Commented 3 tuples below to speed tests
+    # Slow test run in 5,37s. Reduce coverage in 2.96%
+    # (
+    #     'src.build.icons.IconPNG.svg_to_png_all',
+    #     ['icon-theme', '--all'],
+    #     DATA_PATH,
+    #     ICONS_SVG_PATH,
+    #     ICONS_PNG_PATH,
+    #     ICONS_DATA_PRIMARY_ICONS_PATH,
+    # ),
+    # (
+    #     'src.build.icons.IconPNG.svg_to_png_all',
+    #     [
+    #         'icon-theme',
+    #         '--data',
+    #         DATA_PATH,
+    #         '--icon',
+    #         ICONS_SVG_PATH,
+    #         '--png',
+    #         ICONS_PNG_PATH,
+    #         '--pngprimary',
+    #         ICONS_DATA_PRIMARY_ICONS_PATH,
+    #     ],
+    #     DATA_PATH,
+    #     ICONS_SVG_PATH,
+    #     ICONS_PNG_PATH,
+    #     ICONS_DATA_PRIMARY_ICONS_PATH,
+    # ),
+    # (
+    #     'src.build.icons.IconPNG.svg_to_png',
+    #     [
+    #         'icon-theme',
+    #         '--file',
+    #         'src/data/afdesign.yaml',
+    #         '--icon',
+    #         ICONS_SVG_PATH,
+    #         '--png',
+    #         ICONS_PNG_PATH,
+    #         '--pngprimary',
+    #         ICONS_DATA_PRIMARY_ICONS_PATH,
+    #     ],
+    #     'src/data/afdesign.yaml',
+    #     ICONS_SVG_PATH,
+    #     ICONS_PNG_PATH,
+    #     ICONS_DATA_PRIMARY_ICONS_PATH,
+    # ),
     # Command png
     (
         'src.build.icons.IconPNG.svg_to_png_all',

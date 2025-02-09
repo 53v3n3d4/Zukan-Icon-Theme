@@ -422,7 +422,7 @@ class TestResetFileExtensionInputHandler(TestCase):
         self.assertEqual(items[2].value, 'source.python')
         self.assertEqual(items[2].annotation, 'py, pyw')
 
-    def test_reset_file_extension_input_handler_list_items(self):
+    def test_reset_file_extension_input_handler_list_items_none(self):
         self.change_reset_mock.change_icon_file_extension_setting.return_value = []
 
         with self.assertRaises(TypeError):
