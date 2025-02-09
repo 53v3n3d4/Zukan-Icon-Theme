@@ -11,7 +11,7 @@ repository = "https://github.com/53v3n3d4/Zukan-Icon-Theme"
 # https://python-poetry.org/docs/pyproject/#packages
 # Setting below needed to run poetry scripts [tool.poetry.scripts].
 packages = [
-    { include = "../Zukan Icon Theme" }
+    { include = "src/build" }
 ]
 
 [tool.poetry.dependencies]
