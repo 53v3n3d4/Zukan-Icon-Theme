@@ -114,7 +114,6 @@ class TestSystemTheme(TestCase):
             'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.platform.system',
             return_value='Windows',
         )
-        @patch('winreg', MagicMock())
         @patch('winreg.ConnectRegistry')
         @patch('winreg.OpenKey')
         @patch('winreg.EnumValue')
@@ -124,7 +123,6 @@ class TestSystemTheme(TestCase):
             mock_open_key,
             mock_connect_registry,
             mock_platform_system,
-            mock_winreg,
         ):
             mock_connect_registry.return_value = MagicMock()
             mock_open_key.return_value = MagicMock()
