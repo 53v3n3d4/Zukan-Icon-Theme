@@ -288,14 +288,20 @@ class CreateCustomIconCommand(sublime_plugin.TextCommand):
         if not args.get('create_custom_icon_syntax'):
             return CreateCustomIconSyntaxInputHandler()
 
+        # Seems accept any handler, since it was `CreateCustomIconFileInputHandler`
+        # repeating from above, and working
         if not args.get('create_custom_icon_scope'):
-            return CreateCustomIconFileInputHandler()
+            return CreateCustomIconScopeInputHandler()
 
+        # Seems accept any handler, since it was `CreateCustomIconFileInputHandler`
+        # repeating from above, and working
         if not args.get('create_custom_icon_extensions'):
-            return CreateCustomIconNameInputHandler()
+            return CreateCustomIconExtensionsInputHandler()
 
+        # Seems accept any handler, since it was `CreateCustomIconFileInputHandler`
+        # repeating from above, and working
         if not args.get('create_custom_icon_contexts'):
-            return CreateCustomIconFileInputHandler()
+            return CreateCustomIconContextsInputHandler()
 
 
 class CreateCustomIconNameInputHandler(sublime_plugin.TextInputHandler):
