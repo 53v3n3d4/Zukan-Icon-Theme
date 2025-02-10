@@ -27,8 +27,8 @@ class Preferences(ZukanPreference):
     def ignored_icon_setting(self) -> list:
         return get_ignored_icon_settings()
 
-    def delete_icon_preference(self, preference_name: str):
-        self.delete_icons_preference(preference_name)
+    def delete_single_icon_preference(self, preference_name: str):
+        self.delete_icon_preference(preference_name)
 
     def delete_all_icons_preferences(self):
         self.delete_icons_preferences()

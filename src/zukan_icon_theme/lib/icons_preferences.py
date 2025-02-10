@@ -344,15 +344,15 @@ class ZukanPreference:
         Parameters:
         preference_name (str) -- icon or icon option.
         """
+        if preference_name.endswith('-dark'):
+            fname = preference_name[:-5] + TMPREFERENCES_EXTENSION
+        elif preference_name.endswith('-light'):
+            fname = preference_name[:-6] + TMPREFERENCES_EXTENSION
+        else:
+            fname = preference_name + TMPREFERENCES_EXTENSION
+
         try:
             self.prepare_icon_preference_file(preference_name)
-
-            if preference_name.endswith('-dark'):
-                fname = preference_name[:-5] + TMPREFERENCES_EXTENSION
-            elif preference_name.endswith('-light'):
-                fname = preference_name[:-6] + TMPREFERENCES_EXTENSION
-            else:
-                fname = preference_name
 
             logger.info('%s created.', fname)
 
@@ -448,7 +448,7 @@ class ZukanPreference:
                 ZUKAN_ICONS_DATA_FILE,
             )
 
-    def delete_icons_preference(self, preference_name: str):
+    def delete_icon_preference(self, preference_name: str):
         """
         Delete tmPreference file in Zukan Icon Theme/preferences folder.
 

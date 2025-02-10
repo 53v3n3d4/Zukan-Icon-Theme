@@ -177,7 +177,7 @@ class SchemeThemeListener(sublime_plugin.ViewEventListener):
     """
 
     def on_activated_async(self):
-        # Use async: click to select UI Select UI Color Scheme / Theme does not
+        # Use async: click to select UI Select Color Scheme / Theme does not
         # activate. Use 'enter' to select works. Seems happen with other functions.
         # With async seems not occur.
 

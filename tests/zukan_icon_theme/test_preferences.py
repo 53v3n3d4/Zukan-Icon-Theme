@@ -37,12 +37,12 @@ class TestPreferences(TestCase):
             result = self.preferences.ignored_icon_setting()
             self.assertEqual(result, self.mock_icon_settings)
 
-    def test_delete_icon_preference(self):
-        self.preferences.delete_icons_preference = Mock()
+    def test_delete_single_icon_preference(self):
+        self.preferences.delete_single_icon_preference = Mock()
 
-        self.preferences.delete_icon_preference('atest.tmPreferences')
+        self.preferences.delete_single_icon_preference('atest.tmPreferences')
 
-        self.preferences.delete_icons_preference.assert_called_once_with(
+        self.preferences.delete_single_icon_preference.assert_called_once_with(
             'atest.tmPreferences'
         )
 
