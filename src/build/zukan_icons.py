@@ -54,13 +54,8 @@ class ZukanIcon:
                     )
                     or (file_data in ICONS_NO_SYNTAX)
                 ):
-                    if not os.path.exists(dir_destiny):
-                        os.makedirs(dir_destiny)
-                    # OrderedDict only necessary if using python 3.3.
-                    # Python 3.8, dict read ordered.
-                    # ordered_dict = OrderedDict(data)
-                    # ordered_dict = nested_ordered_dict(data)
-                    # dump_pickle_data(ordered_dict, pickle_file)
+                    ZukanIcon.make_directory(dir_destiny)
+
                     dump_pickle_data(data, pickle_file)
                     print_created_message(
                         os.path.basename(icon_data),
@@ -90,3 +85,8 @@ class ZukanIcon:
                 os.strerror(errno.EACCES),
                 dir_icon_data,
             )
+
+    @staticmethod
+    def make_directory(dir_destiny: str):
+        if not os.path.exists(dir_destiny):
+            os.makedirs(dir_destiny)

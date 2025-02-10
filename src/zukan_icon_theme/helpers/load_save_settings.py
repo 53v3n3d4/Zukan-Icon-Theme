@@ -28,10 +28,10 @@ def get_settings(file_settings: str, option: str = None):
     file_settings (str) -- sublime-settings file.
     option (str) -- get option value.
     """
+    settings = sublime.load_settings(file_settings)
     if option is not None:
-        return sublime.load_settings(file_settings).get(option)
-    if option is None:
-        return sublime.load_settings(file_settings)
+        return settings.get(option)
+    return settings
 
 
 def set_save_settings(file_settings: str, option: str, option_value: list):

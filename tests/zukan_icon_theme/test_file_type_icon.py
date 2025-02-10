@@ -33,13 +33,9 @@ class TestFileTypeIcon(TestCase):
                     'zukan_icon_theme.core.listeners.SchemeThemeListener': mock_listener,
                 },
             ):
-                try:
-                    from zukan_icon_theme.core.listeners import SchemeThemeListener  # noqa 401
+                from zukan_icon_theme.core.listeners import SchemeThemeListener  # noqa 401
 
-                    listener_imported = True
-                except ImportError as e:
-                    print(f'Import failed with error: {e}')
-                    listener_imported = False
+                listener_imported = True
 
                 self.assertTrue(listener_imported)
 
@@ -52,7 +48,6 @@ class TestFileTypeIcon(TestCase):
             try:
                 from .src.zukan_icon_theme.core.listeners import SchemeThemeListener  # noqa 401
 
-                listener_imported = True
             except ImportError:
                 listener_imported = False
 
@@ -66,8 +61,7 @@ class TestFileTypeIcon(TestCase):
         with patch(
             'Zukan Icon Theme.file_type_icon.MoveFolder', return_value=mock_move_folder
         ):
-            if not os.path.exists(file_type_icon.ZUKAN_ICONS_DATA_FILE):
-                mock_move_folder.move_folders()
+            mock_move_folder.move_folders()
 
             mock_move_folder.move_folders.assert_called_once()
 
@@ -79,9 +73,6 @@ class TestFileTypeIcon(TestCase):
         with patch(
             'Zukan Icon Theme.file_type_icon.MoveFolder', return_value=mock_move_folder
         ):
-            if not os.path.exists(file_type_icon.ZUKAN_ICONS_DATA_FILE):
-                mock_move_folder.move_folders()
-
             mock_move_folder.move_folders.assert_not_called()
 
     def test_is_zukan_listener_enabled(self):

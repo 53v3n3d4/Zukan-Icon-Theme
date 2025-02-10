@@ -1,4 +1,6 @@
 import importlib
+import json
+import os
 import sublime
 
 from unittest import TestCase
@@ -564,6 +566,151 @@ class TestRemoveJsonComments(TestCase):
         """
         result = load_save_settings.remove_json_comments(json_data)
         self.assertEqual(result.strip(), expected.strip())
+
+
+class TestDefaultSettings(TestCase):
+    def setUp(self):
+        self.mock_json_data = {'setting1': 'value1', 'setting2': 'value2'}
+
+    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.ZipFile')
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.remove_json_comments'
+    )
+    def test_default_settings(self, mock_remove_comments, mock_zipfile):
+        json_content = """
+        {
+            // Comment
+            "setting1": "value1",
+            "setting2": "value2" // Inline comment
+        }
+        """
+
+        mock_file = MagicMock()
+        mock_file.read.return_value = json_content.encode('utf-8')
+        mock_zip_instance = MagicMock()
+        mock_zip_instance.open.return_value.__enter__.return_value = mock_file
+        mock_zipfile.return_value.__enter__.return_value = mock_zip_instance
+        mock_remove_comments.return_value = json.dumps(self.mock_json_data)
+
+        result = load_save_settings.default_settings()
+
+        self.assertEqual(result, self.mock_json_data)
+        mock_zipfile.assert_called_once_with(
+            load_save_settings.ZUKAN_INSTALLED_PKG_PATH, 'r'
+        )
+        mock_zip_instance.open.assert_called_once_with(
+            os.path.join('sublime', load_save_settings.ZUKAN_SETTINGS)
+        )
+        mock_remove_comments.assert_called_once_with(json_content)
+
+
+class TestSaveCurrentSettings(TestCase):
+    def test_save_current_settings(self):
+        mock_settings = {'setting': 'value'}
+
+        # fmt: off
+        with patch('os.path.exists', return_value=True), \
+             patch('os.remove') as mock_remove, \
+             patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.read_current_settings',
+                return_value=mock_settings
+             ), \
+             patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.dump_pickle_data'
+             ) as mock_dump:
+             # fmt: on
+
+            load_save_settings.save_current_settings()
+
+            mock_remove.assert_called_once_with(
+                load_save_settings.ZUKAN_CURRENT_SETTINGS_FILE
+            )
+            mock_dump.assert_called_once_with(
+                mock_settings, load_save_settings.ZUKAN_CURRENT_SETTINGS_FILE
+            )
+
+    def test_save_current_settings_file_not_exists(self):
+        mock_settings = {'setting': 'value'}
+
+        # fmt: off
+        with patch('os.path.exists', return_value=False), \
+             patch('os.remove') as mock_remove, \
+             patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.read_current_settings',
+                return_value=mock_settings,
+             ), \
+             patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.dump_pickle_data'
+            ) as mock_dump:
+             # fmt: on
+
+            load_save_settings.save_current_settings()
+
+            mock_remove.assert_not_called()
+            mock_dump.assert_called_once_with(
+                mock_settings, load_save_settings.ZUKAN_CURRENT_SETTINGS_FILE
+            )
+
+
+class TestSettings(TestCase):
+    def setUp(self):
+        self.mock_ui_settings = {
+            'background': 'dark',
+            'color_scheme': 'Roci.sublime-color-scheme',
+            'dark_theme': 'Treble Dark.sublime-theme',
+            'light_theme': 'Treble Light.sublime-theme',
+            'sidebar_bgcolor': 'light',
+            'system_theme': False,
+            'theme': 'Treble Dark.sublime-theme',
+        }
+
+    def test_save_current_ui_settings(self):
+        # fmt: off
+        with patch('os.path.exists', return_value=True), \
+             patch('os.remove') as mock_remove, \
+             patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.dump_pickle_data'
+             ) as mock_dump:
+             # fmt: on
+
+            load_save_settings.save_current_ui_settings(
+                color_scheme_background='dark',
+                current_color_scheme='Roci.sublime-color-scheme',
+                current_dark_theme='Treble Dark.sublime-theme',
+                current_light_theme='Treble Light.sublime-theme',
+                current_system_theme=False,
+                current_theme='Treble Dark.sublime-theme',
+            )
+
+            mock_remove.assert_called_once_with(
+                load_save_settings.USER_UI_SETTINGS_FILE
+            )
+            mock_dump.assert_called_once_with(
+                self.mock_ui_settings, load_save_settings.USER_UI_SETTINGS_FILE
+            )
+
+    def test_save_current_ui_settings_file_not_exists(self):
+        # fmt: off
+        with patch('os.path.exists', return_value=False), \
+             patch('os.remove') as mock_remove, \
+             patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.dump_pickle_data'
+             ) as mock_dump:
+             # fmt: on
+
+            load_save_settings.save_current_ui_settings(
+                color_scheme_background='dark',
+                current_color_scheme='Roci.sublime-color-scheme',
+                current_dark_theme='Treble Dark.sublime-theme',
+                current_light_theme='Treble Light.sublime-theme',
+                current_system_theme=False,
+                current_theme='Treble Dark.sublime-theme',
+            )
+
+            mock_remove.assert_not_called()
+            mock_dump.assert_called_once_with(
+                self.mock_ui_settings, load_save_settings.USER_UI_SETTINGS_FILE
+            )
 
 
 class TestIsZukanListenerEnabled(TestCase):

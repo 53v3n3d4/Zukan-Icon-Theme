@@ -12,7 +12,7 @@ from tests.mocks.tests_paths import (
     OS_FILE_MOCKS_PATH,
     TEST_DATA_DIR_EXCEPT_ZUKAN_FILE,
 )
-from unittest.mock import patch
+from unittest.mock import MagicMock, patch
 
 
 class TestZukanIcon:
@@ -37,7 +37,7 @@ class TestZukanIcon:
         assert sorted(result) == sorted(TEST_DATA_DIR_EXCEPT_ZUKAN_FILE)
 
     @pytest.fixture(autouse=True)
-    def test_write_icon_data_filenotfounderror(self, caplog):
+    def test_write_icon_data_file_not_found(self, caplog):
         caplog.clear()
         with patch('src.build.zukan_icons.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
@@ -55,7 +55,7 @@ class TestZukanIcon:
         ]
 
     @pytest.fixture(autouse=True)
-    def test_write_icon_data_oserror(self, caplog):
+    def test_write_icon_data_os_error(self, caplog):
         caplog.clear()
         with patch('src.build.zukan_icons.open') as mock_open:
             mock_open.side_effect = OSError
@@ -69,6 +69,18 @@ class TestZukanIcon:
                 "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
             )
         ]
+
+    def test_make_directory(self):
+        # fmt: off
+        with patch('os.path.exists', return_value=False), \
+             patch('os.makedirs') as mock_makedirs, \
+             patch('builtins.open', MagicMock()):
+             # fmt: on
+
+                ZukanIcon.make_directory('mock_dir')
+
+                assert mock_makedirs.call_count == 1
+                mock_makedirs.assert_any_call('mock_dir')
 
 
 class TestIconZukanIcon(TestCase):

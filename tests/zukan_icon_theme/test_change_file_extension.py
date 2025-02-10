@@ -427,6 +427,3 @@ class TestResetFileExtensionInputHandler(TestCase):
 
         with self.assertRaises(TypeError):
             self.handler.list_items()
-            self.logger_mock.info.assert_called_with(
-                'no file extenions for any scope to reset, list is empty.'
-            )
