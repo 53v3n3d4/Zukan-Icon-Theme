@@ -81,7 +81,7 @@ COMMANDS_ARGS_PATH_P5 = [
     # Command icon-theme
     # icon-theme combine png and zukan-icon
     # Commented 2 tuples below to speed tests
-    # Slow test run in aprox. 34.89s. Reduce coverage in 0.77%
+    # Slow test run in aprox. 35.15s. Reduce coverage in 0.77%
     # (
     #     'src.build.zukan_icons.ZukanIcon.write_icon_data',
     #     [
@@ -132,7 +132,7 @@ COMMANDS_ARGS_PATH_P6 = [
     # Command icon-theme
     # icon-theme combine png and zukan-icon
     # Commented 3 tuples below to speed tests
-    # Slow test run in 5,41s. Reduce coverage in 2.96%
+    # Slow test run in 5,40s. Reduce coverage in 2.95%
     # (
     #     'src.build.icons.IconPNG.svg_to_png_all',
     #     ['icon-theme', '--all'],

@@ -15,7 +15,7 @@ from tests.mocks.tests_paths import (
 from unittest.mock import MagicMock, patch
 
 
-class TestZukanIcon:
+class TestZukanIconParams:
     @pytest.mark.parametrize(
         'a, b, c, expected',
         [
@@ -36,6 +36,19 @@ class TestZukanIcon:
 
         assert sorted(result) == sorted(TEST_DATA_DIR_EXCEPT_ZUKAN_FILE)
 
+
+class TestZukanIcon:
+    # Ensure os.remove is patched globally for this class scope
+    @pytest.fixture(autouse=True)
+    def mock_os(self):
+        with patch('os.path.exists', return_value=False), patch(
+            'os.makedirs'
+        ) as mock_makedirs, patch('os.remove') as mock_remove, patch(
+            'builtins.open', MagicMock()
+        ):
+            yield mock_makedirs, mock_remove
+
+    # Fixture to handle FileNotFoundError
     @pytest.fixture(autouse=True)
     def test_write_icon_data_file_not_found(self, caplog):
         caplog.clear()
@@ -54,6 +67,7 @@ class TestZukanIcon:
             )
         ]
 
+    # Fixture to handle OSError
     @pytest.fixture(autouse=True)
     def test_write_icon_data_os_error(self, caplog):
         caplog.clear()
@@ -70,17 +84,20 @@ class TestZukanIcon:
             )
         ]
 
-    def test_make_directory(self):
-        # fmt: off
-        with patch('os.path.exists', return_value=False), \
-             patch('os.makedirs') as mock_makedirs, \
-             patch('builtins.open', MagicMock()):
-             # fmt: on
+    # If put below and same class with parametrize tests, `zukan_icon_data.pkl` in
+    # `tests/mocks` get deleted when run tests.
+    def test_make_directory(self, mock_os):
+        mock_makedirs, mock_remove = mock_os
 
-                ZukanIcon.make_directory('mock_dir')
+        # Call the method to test
+        ZukanIcon.make_directory('mock_dir')
 
-                assert mock_makedirs.call_count == 1
-                mock_makedirs.assert_any_call('mock_dir')
+        # Assertions to verify the correct behavior
+        assert mock_makedirs.call_count == 1
+        mock_makedirs.assert_any_call('mock_dir')
+
+        # Ensure os.remove was never called
+        mock_remove.assert_not_called()
 
 
 class TestIconZukanIcon(TestCase):

@@ -1,7 +1,7 @@
 import importlib
 
 from unittest import TestCase
-from unittest.mock import call, MagicMock, Mock, patch
+from unittest.mock import MagicMock, Mock, patch
 
 disable_theme = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme'
@@ -131,7 +131,9 @@ class TestDisableThemeCommand(TestCase):
         self.command.disable_enable_theme.add_to_ignored_themes.assert_called_once_with(
             'Treble Dark.sublime-theme', mock_ignored_theme
         )
-        mock_logger.info.assert_called_once_with('%s ignored', 'Treble Dark.sublime-theme')
+        mock_logger.info.assert_called_once_with(
+            '%s ignored', 'Treble Dark.sublime-theme'
+        )
 
     @patch('os.path.basename')
     def test_disable_theme_command_run_ignored(self, mock_basename):

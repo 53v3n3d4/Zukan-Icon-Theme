@@ -308,7 +308,7 @@ class TestCreateCustomIconCommand(TestCase):
             create_custom_icon.CreateCustomIconContextsInputHandler,
         )
 
-    def test_input_none(self):
+    def test_create_custom_icon_command_input_none(self):
         result = self.command.input(
             {
                 'create_custom_icon_name': 'ATest',
