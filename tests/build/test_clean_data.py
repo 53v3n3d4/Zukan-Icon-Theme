@@ -17,6 +17,7 @@ class TestWriteFile:
             clean_yaml_tabs(TEST_YAML_FILE)
             mocked_open.assert_called_with(TEST_YAML_FILE, 'w')
 
+
 class TestCleanYamlTabs:
     @pytest.mark.parametrize('a, expected', [(TEST_YAML_FILE, TEST_YAML_EXPECTED)])
     def test_clean_yaml_tabs(self, a, expected):

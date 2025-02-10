@@ -43,6 +43,38 @@ class TestLoadFile:
             result = TestLoadFile.load_pickle(self, TEST_PICKLE_AUDIO_FILE)
             assert result == TEST_PICKLE_ORDERED_DICT
 
+    @pytest.fixture(autouse=True)
+    def test_read_pickle_data_file_not_found(self, caplog):
+        caplog.clear()
+        with patch('src.build.helpers.read_write_data.open') as mock_open:
+            mock_open.side_effect = FileNotFoundError
+            read_pickle_data('test/pickle.pkl')
+
+        assert caplog.record_tuples == [
+            (
+                'src.build.helpers.read_write_data',
+                40,
+                "[Errno 2] No such file or directory: 'test/pickle.pkl'",
+            )
+        ]
+        assert mock_open.call_count == 1
+
+    @pytest.fixture(autouse=True)
+    def test_read_pickle_data_os_error(self, caplog):
+        caplog.clear()
+        with patch('src.build.helpers.read_write_data.open') as mock_open:
+            mock_open.side_effect = OSError
+            read_pickle_data('test/pickle.pkl')
+
+        assert caplog.record_tuples == [
+            (
+                'src.build.helpers.read_write_data',
+                40,
+                "[Errno 13] Permission denied: 'test/pickle.pkl'",
+            )
+        ]
+        assert mock_open.call_count == 1
+
     def test_read_yaml_empty_file(self):
         with patch('src.build.helpers.read_write_data.open', mock_open()):
             file_data = read_yaml_data(TEST_YAML_EMPTY_FILE)

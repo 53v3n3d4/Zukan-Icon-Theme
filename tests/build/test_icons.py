@@ -2,6 +2,8 @@ import errno
 import logging
 import os
 import pytest
+import shutil
+import tempfile
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.icons import IconPNG
@@ -470,3 +472,59 @@ class TestSVGToPNGALL:
             )
 
             assert result == ['file.toml']
+
+
+class TestGeneratePNG:
+    @pytest.fixture
+    def setup_directories(self):
+        origin_dir = tempfile.mkdtemp(prefix='origin_')
+        destiny_dir = tempfile.mkdtemp(prefix='destiny_')
+
+        yield origin_dir, destiny_dir
+
+    def test_directory_creation(self, setup_directories):
+        origin_dir, destiny_dir = setup_directories
+
+        if os.path.exists(destiny_dir):
+            shutil.rmtree(destiny_dir)
+
+        file_name = 'test-icon'
+        svg_path = os.path.join(origin_dir, f'{file_name}.svg')
+
+        with open(svg_path, 'w') as f:
+            f.write('<svg></svg>')
+
+        assert os.path.exists(svg_path)
+
+        with patch('cairosvg.svg2png', return_value=None):
+            generator = IconPNG()
+            generator.generate_png(
+                name='test',
+                icon_name='test-icon',
+                icon_data='test-data',
+                dir_origin=origin_dir,
+                dir_destiny=destiny_dir,
+            )
+
+        assert os.path.exists(destiny_dir)
+
+    def test_file_not_found_error(self, setup_directories):
+        origin_dir, destiny_dir = setup_directories
+        icon_png = IconPNG()
+
+        with pytest.raises(FileNotFoundError):
+            icon_png.generate_png(
+                name='test',
+                icon_name='nonexistent',
+                icon_data='test-data',
+                dir_origin=origin_dir,
+                dir_destiny=destiny_dir,
+            )
+
+    @pytest.fixture(autouse=True)
+    def cleanup(self, setup_directories):
+        yield
+        origin_dir, destiny_dir = setup_directories
+        for dir_path in [origin_dir, destiny_dir]:
+            if os.path.exists(dir_path):
+                shutil.rmtree(dir_path)
