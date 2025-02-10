@@ -150,8 +150,10 @@ class TestSchemeTheme(TestCase):
         self.scheme_theme.zukan_preference.build_icons_preferences.assert_called()
 
     @patch('os.path.exists')
-    def test_get_user_theme_delete_ignored_theme(self, mock_exists):
+    @patch('os.listdir')
+    def test_get_user_theme_delete_ignored_theme(self, mock_listdir, mock_exists):
         mock_exists.return_value = True
+        mock_listdir.return_value = []
         self.mock_theme_name.return_value = 'Ignored Theme.sublime-theme'
 
         self.mock_restart_message.return_value = True
