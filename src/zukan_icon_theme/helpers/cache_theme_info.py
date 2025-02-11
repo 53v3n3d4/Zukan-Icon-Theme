@@ -2,7 +2,7 @@ import json
 import os
 import sublime
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from ..helpers.load_save_settings import get_cached_theme_info_lifespan
 from ..utils.file_extensions import (
     SUBLIME_PACKAGE_EXTENSION,
