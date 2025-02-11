@@ -30,12 +30,12 @@ def get_modified_time(file_path: str) -> int:
     # print(installed_package_name)
 
     if not installed_package_name:
-        current_time = datetime.now()
+        current_time = datetime.now(tz=timezone.utc)
         dt_rounded = current_time.replace(microsecond=0)
 
     else:
         modified_time = os.path.getmtime(file_path)
-        dt = datetime.fromtimestamp(modified_time)
+        dt = datetime.fromtimestamp(modified_time, tz=timezone.utc)
         dt_rounded = dt.replace(microsecond=0)
 
     # print(dt_rounded)
