@@ -76,11 +76,11 @@ To disable coverage (pytest-cov)
 addopts = -ra -q
 ```
 
-> Two `test_scripts icon-theme command` tests that introduce a 39-second delay are commented out to prevent slowing down the test run in GitHub CI.  
+> Two `test_scripts icon-theme command` tests that introduce a 40-seconds delay are commented out to prevent slowing down the test run in GitHub CI.  
 
-> This reduce coverage in 6.18%, but the build data file and PNG are being tested separately.
+> This reduce coverage in 3.72%,  despite that `test_scripts` still tests the data file and PNG build separately.  
 
-> To enable and run them locally, uncomment  the relevant lines in in `tests/mocks/constants_scripts.py`.  
+> To enable and run them locally, uncomment the relevant lines in `tests/mocks/constants_scripts.py`.  
 
 ### Plugin tests
 
@@ -91,6 +91,8 @@ Go to `Tools > Command Palette...` select `UnitTesting: Test Package` type `Zuka
 > Tests files are not bundled with releases. Need to clone repo.  
 
 > `.python-version` needs to be 3.8. There is no `subTest` in 3.3.
+
+> tag `no cover` is used four times. Two times for Windows related code in `system_them` and once in `test_system_theme`. And the fourth is, in `color_dark_light`, an `if` statement.
 
 ```
 # .coveragerc

@@ -10,12 +10,6 @@ We need this folder, to create, edit or delete, icons sublime-themes, icons tmPr
 
 If clone repo, for tags below v0.4.4, you may need to `Package Control: Satisfy Libraries` to install dependencies.  
 
-More info about 3rd party dependencies, see [SO link](https://stackoverflow.com/questions/61196270/how-to-properly-use-3rd-party-dependencies-with-sublime-text-plugins).  
-
-Plugin use [`ruamel-yaml`](https://github.com/packagecontrol/channel/pull/12/files) dependency.  
-
-Plugin dependencies in [`dependencies.json`](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/dependencies.json).  
-
 ## `.python-version`
 
 Change ST python interpreter in `.python-version` file: 3.3 or 3.8.  
