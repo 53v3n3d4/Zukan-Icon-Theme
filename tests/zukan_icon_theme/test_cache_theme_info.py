@@ -12,11 +12,13 @@ cache_theme_info = importlib.import_module(
 
 class TestCacheThemeInfo(TestCase):
     def setUp(self):
+        self.test_theme = '/test/path/Treble Adaptive.sublime-theme'
+        self.test_theme_default = '/test/path/Default.sublime-theme'
         self.test_theme_info = {
             'themes': [
                 {
                     'name': 'Treble Adaptive.sublime-theme',
-                    'source': '/test/path/Treble Adaptive.sublime-theme',
+                    'source': self.test_theme,
                     'st_version': cache_theme_info.sublime.version(),
                     'opacity': {'value': True, 'last_updated': 1000},
                 }
@@ -31,8 +33,6 @@ class TestCacheThemeInfo(TestCase):
                 }
             ]
         }
-        self.test_theme = '/test/path/Treble Adaptive.sublime-theme'
-        self.test_theme_default = '/test/path/Default.sublime-theme'
 
     @patch('os.path.getmtime')
     def test_get_modified_time(self, mock_getmtime):

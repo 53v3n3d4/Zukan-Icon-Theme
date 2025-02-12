@@ -1,7 +1,7 @@
 import importlib
 import os
-import unittest
 
+from unittest import TestCase
 from unittest.mock import call, patch
 
 
@@ -22,7 +22,7 @@ zukan_paths = importlib.import_module(
 )
 
 
-class TestCopyPrimaryIcons(unittest.TestCase):
+class TestCopyPrimaryIcons(TestCase):
     @patch(
         'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
     )

@@ -268,6 +268,12 @@ class TestPluginLoaded(TestCase):
         mock_settings_event.zukan_preferences_changed.assert_called_once()
         mock_settings_event.output_to_console_zukan_pref_settings.assert_called_once()
 
+    def capture_timeout_func(self, func, *args):
+        if callable(func):
+            func()
+
+    @patch('Zukan Icon Theme.file_type_icon.get_sidebar_bgcolor')
+    @patch('Zukan Icon Theme.file_type_icon.sublime.set_timeout')
     @patch('os.path.getctime')
     @patch('os.path.exists')
     @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
@@ -275,18 +281,21 @@ class TestPluginLoaded(TestCase):
     @patch('Zukan Icon Theme.file_type_icon.ZukanIconFiles')
     @patch('Zukan Icon Theme.file_type_icon.UpgradePlugin')
     @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
+    @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
     def test_rebuild_icons_files(
         self,
+        mock_delete_cached_theme_info,
         mock_get_theme,
         mock_upgrade_plugin,
         mock_zukan_icon_files,
         mock_event_bus,
         mock_exists,
         mock_getctime,
+        mock_set_timeout,
+        mock_get_sidebar_bgcolor,
     ):
         mock_exists.return_value = True
         mock_getctime.return_value = datetime.now().timestamp()
-
         mock_get_theme.return_value = 'Treble Adaptive.sublime-theme'
         mock_rebuild_icon_files = MagicMock()
         mock_zukan_icon_files.return_value = mock_rebuild_icon_files
@@ -297,12 +306,16 @@ class TestPluginLoaded(TestCase):
             return_value='0.4.8'
         )
         mock_upgrade_plugin.return_value = mock_upgrade_instance
+        mock_get_sidebar_bgcolor.return_value = 'dark'
+        mock_set_timeout.side_effect = self.capture_timeout_func
 
         file_type_icon.plugin_loaded()
 
         mock_rebuild_icon_files.rebuild_icons_files.assert_called_once_with(
             mock_event_bus_instance
         )
+        mock_delete_cached_theme_info.assert_called_once()
+        mock_set_timeout.assert_called_once()
 
     @patch('sublime.set_timeout')
     @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
