@@ -186,7 +186,10 @@ class TestZukanSyntax(TestCase):
 
         self.zukan.create_icon_syntax('ATest-3')
 
-        mock_save_syntax.assert_called_once()
+        expected_result = {'name': 'ATest-3', 'scope': 'source.atest3', 'file_extensions': ['abc']}
+        expected_syntax = '/test/path/ATest.sublime-syntax'
+
+        mock_save_syntax.assert_called_with(expected_result, expected_syntax)
 
     @patch('os.path.exists')
     @patch('os.remove')
