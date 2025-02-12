@@ -186,7 +186,11 @@ class TestZukanSyntax(TestCase):
 
         self.zukan.create_icon_syntax('ATest-3')
 
-        expected_result = {'name': 'ATest-3', 'scope': 'source.atest3', 'file_extensions': ['abc']}
+        expected_result = {
+            'name': 'ATest-3',
+            'scope': 'source.atest3',
+            'file_extensions': ['abc'],
+        }
         expected_syntax = '/test/path/ATest.sublime-syntax'
 
         mock_save_syntax.assert_called_with(expected_result, expected_syntax)
@@ -227,8 +231,8 @@ class TestZukanSyntax(TestCase):
     def test_create_icons_syntaxes(
         self, mock_path_join, mock_edit_extension, mock_save_syntax
     ):
-        mock_path_join.return_value = '/test/path/ATest.sublime-syntax'
-        mock_edit_extension.return_value = ['abc']
+        mock_path_join.return_value = '/test/path/ATest-3.sublime-syntax'
+        mock_edit_extension.return_value = ['abc', 'xyz']
 
         self.zukan.zukan_icons_data = MagicMock(
             return_value=[
@@ -255,7 +259,7 @@ class TestZukanSyntax(TestCase):
                         {
                             'name': 'ATest-3',
                             'scope': 'source.atest3',
-                            'file_extensions': ['xyz'],
+                            'file_extensions': ['abc', 'xyz'],
                         }
                     ],
                 }
@@ -264,7 +268,17 @@ class TestZukanSyntax(TestCase):
 
         self.zukan.create_icons_syntaxes()
 
-        mock_save_syntax.assert_called_once()
+        expected_result = {
+            'name': 'ATest-3',
+            'scope': 'source.atest3',
+            'file_extensions': ['abc', 'xyz'],
+        }
+        expected_syntax = '/test/path/ATest-3.sublime-syntax'
+        mock_save_syntax.assert_any_call(expected_result, expected_syntax)
+        assert mock_save_syntax.call_count > 0
+
+        list_all_icons_syntaxes = self.zukan.get_list_icons_syntaxes()
+        assert mock_save_syntax.call_count == len(list_all_icons_syntaxes)
 
     @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.logger.info')
     def test_create_icon_syntax_ignored(self, mock_logger_info):
