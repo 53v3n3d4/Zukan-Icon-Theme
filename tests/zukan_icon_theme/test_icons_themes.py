@@ -3,7 +3,7 @@ import importlib
 import os
 
 from unittest import TestCase
-from unittest.mock import call, MagicMock, mock_open, patch
+from unittest.mock import call, MagicMock, Mock, mock_open, patch
 
 icons_themes = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes'
@@ -13,9 +13,9 @@ icons_themes = importlib.import_module(
 class TestZukanTheme(TestCase):
     def setUp(self):
         self.mock_file = mock_open()
-        self.mock_settings = mock.Mock()
-        self.mock_search = mock.Mock()
-        self.mock_opacity = mock.Mock()
+        self.mock_settings = Mock()
+        self.mock_search = Mock()
+        self.mock_opacity = Mock()
 
         self.zukan_theme = icons_themes.ZukanTheme()
         self.sample_themes = [
