@@ -3,7 +3,7 @@ import importlib
 import os
 
 from unittest import TestCase
-from unittest.mock import MagicMock, mock_open, patch
+from unittest.mock import call, MagicMock, mock_open, patch
 
 icons_syntaxes = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes'
@@ -12,6 +12,43 @@ icons_syntaxes = importlib.import_module(
 
 class TestZukanSyntax(TestCase):
     def setUp(self):
+        self.test_syntax_file_name = 'ATest-3.sublime-syntax'
+        self.test_syntax_path = '/test/path/ATest-3.sublime-syntax'
+        self.test_edit_extensions_data = ['abc', 'xyz']
+        self.mock_zukan_icons_data = [
+            {
+                'name': 'ATest-3',
+                'syntax': [
+                    {
+                        'name': 'ATest-3',
+                        'scope': 'source.atest3',
+                        'file_extensions': ['xyz'],
+                    }
+                ],
+            }
+        ]
+        self.mock_get_list_icons_syntaxes_data = [
+            {
+                'name': 'ATest-3',
+                'syntax': [
+                    {
+                        'name': 'ATest-3',
+                        'scope': 'source.atest3',
+                        'file_extensions': ['abc', 'xyz'],
+                    }
+                ],
+            }
+        ]
+        self.test_syntax_data = {
+            'name': 'ATest-3',
+            'scope': 'source.atest3',
+            'file_extensions': ['abc', 'xyz'],
+        }
+        self.test_contexts_scopes = [
+            {'startsWith': 'ATest-1', 'scope': 'source.atest1'},
+            {'startsWith': 'ATest-2', 'scope': 'source.atest2'},
+        ]
+
         self.sublime_mock = MagicMock()
         self.sublime_mock.version.return_value = '4000'
 
@@ -80,6 +117,20 @@ class TestZukanSyntax(TestCase):
             mock_thread_instance, 'Building zukan syntaxes', 'Build done'
         )
 
+    @patch('threading.Thread')
+    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.ThreadProgress')
+    def test_install_syntaxes(self, mock_thread_progress, mock_thread):
+        mock_thread_instance = MagicMock()
+        mock_thread.return_value = mock_thread_instance
+
+        self.zukan.install_syntaxes()
+
+        mock_thread.assert_called_once_with(target=self.zukan.build_icons_syntaxes)
+        mock_thread_instance.start.assert_called_once()
+        mock_thread_progress.assert_called_once_with(
+            mock_thread_instance, 'Building zukan syntaxes', 'Build done'
+        )
+
     def test_get_list_icons_syntaxes(self):
         zukan_icons = [{'syntax': 'Rust'}, {'other': 'value'}]
         custom_icons = [{'syntax': 'ATest-1'}]
@@ -115,7 +166,6 @@ class TestZukanSyntax(TestCase):
             mock_compare.assert_called_once_with(zukan_icons)
 
     def test_get_sublime_scope_set(self):
-        # Setup
         contexts_scopes = [{'scope': 'source.atest1'}, {'scope': 'source.atest2'}]
 
         with patch(
@@ -149,136 +199,22 @@ class TestZukanSyntax(TestCase):
     def test_create_icon_syntax(
         self, mock_path_join, mock_edit_extension, mock_save_syntax
     ):
-        mock_path_join.return_value = '/test/path/ATest.sublime-syntax'
-        mock_edit_extension.return_value = ['abc']
+        mock_path_join.return_value = self.test_syntax_path
+        mock_edit_extension.return_value = self.test_edit_extensions_data
 
-        self.zukan.zukan_icons_data = MagicMock(
-            return_value=[
-                {
-                    'name': 'ATest-3',
-                    'syntax': [
-                        {
-                            'name': 'ATest-3',
-                            'scope': 'source.atest3',
-                            'file_extensions': ['xyz'],
-                        }
-                    ],
-                }
-            ]
-        )
+        self.zukan.zukan_icons_data = MagicMock(return_value=self.mock_zukan_icons_data)
         self.zukan.get_compare_scopes = MagicMock(return_value=set())
         self.zukan.change_icon_file_extension_setting = MagicMock(return_value=[])
         self.zukan.ignored_icon_setting = MagicMock(return_value=set())
         self.zukan.get_list_icons_syntaxes = MagicMock(
-            return_value=[
-                {
-                    'name': 'ATest-3',
-                    'syntax': [
-                        {
-                            'name': 'ATest-3',
-                            'scope': 'source.atest3',
-                            'file_extensions': ['xyz'],
-                        }
-                    ],
-                }
-            ]
+            return_value=self.mock_get_list_icons_syntaxes_data
         )
 
         self.zukan.create_icon_syntax('ATest-3')
 
-        expected_result = {
-            'name': 'ATest-3',
-            'scope': 'source.atest3',
-            'file_extensions': ['abc'],
-        }
-        expected_syntax = '/test/path/ATest.sublime-syntax'
-
-        mock_save_syntax.assert_called_with(expected_result, expected_syntax)
-
-    @patch('os.path.exists')
-    @patch('os.remove')
-    def test_delete_icon_syntax(self, mock_remove, mock_exists):
-        mock_exists.return_value = True
-        syntax_name = 'Atest.sublime-syntax'
-
-        result = self.zukan.delete_icon_syntax(syntax_name)
-
-        mock_remove.assert_called_once()
-        self.assertEqual(result, syntax_name)
-
-    @patch('glob.iglob')
-    @patch('os.path.exists')
-    @patch('os.remove')
-    def test_delete_icons_syntaxes(self, mock_remove, mock_exists, mock_glob):
-        mock_glob.return_value = [
-            '/test/path/ATest-1.sublime-syntax',
-            '/test/path/ATest-2.sublime-syntax',
-        ]
-        mock_exists.return_value = True
-
-        self.zukan.delete_icons_syntaxes()
-
-        # 2 from glob + 1 from exists check
-        self.assertEqual(mock_remove.call_count, 3)
-
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.save_sublime_syntax'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.edit_file_extension'
-    )
-    @patch('os.path.join')
-    def test_create_icons_syntaxes(
-        self, mock_path_join, mock_edit_extension, mock_save_syntax
-    ):
-        mock_path_join.return_value = '/test/path/ATest-3.sublime-syntax'
-        mock_edit_extension.return_value = ['abc', 'xyz']
-
-        self.zukan.zukan_icons_data = MagicMock(
-            return_value=[
-                {
-                    'name': 'ATest-3',
-                    'syntax': [
-                        {
-                            'name': 'ATest-3',
-                            'scope': 'source.atest3',
-                            'file_extensions': ['xyz'],
-                        }
-                    ],
-                }
-            ]
+        mock_save_syntax.assert_called_with(
+            self.test_syntax_data, self.test_syntax_path
         )
-        self.zukan.get_compare_scopes = MagicMock(return_value=set())
-        self.zukan.change_icon_file_extension_setting = MagicMock(return_value=[])
-        self.zukan.ignored_icon_setting = MagicMock(return_value=set())
-        self.zukan.get_list_icons_syntaxes = MagicMock(
-            return_value=[
-                {
-                    'name': 'ATest-3',
-                    'syntax': [
-                        {
-                            'name': 'ATest-3',
-                            'scope': 'source.atest3',
-                            'file_extensions': ['abc', 'xyz'],
-                        }
-                    ],
-                }
-            ]
-        )
-
-        self.zukan.create_icons_syntaxes()
-
-        expected_result = {
-            'name': 'ATest-3',
-            'scope': 'source.atest3',
-            'file_extensions': ['abc', 'xyz'],
-        }
-        expected_syntax = '/test/path/ATest-3.sublime-syntax'
-        mock_save_syntax.assert_any_call(expected_result, expected_syntax)
-        assert mock_save_syntax.call_count > 0
-
-        list_all_icons_syntaxes = self.zukan.get_list_icons_syntaxes()
-        assert mock_save_syntax.call_count == len(list_all_icons_syntaxes)
 
     @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.logger.info')
     def test_create_icon_syntax_ignored(self, mock_logger_info):
@@ -311,6 +247,244 @@ class TestZukanSyntax(TestCase):
         self.zukan.create_icon_syntax('Ignored Icon')
         mock_logger_info.assert_called_once_with('ignored icon %s', 'Ignored Icon')
 
+    def test_create_icon_syntax_file_not_found(self):
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.save_sublime_syntax'
+        ) as mock_save:
+            mock_save.side_effect = FileNotFoundError(
+                errno.ENOENT, os.strerror(errno.ENOENT), self.test_syntax_file_name
+            )
+
+            self.zukan.zukan_icons_data = MagicMock(
+                return_value=self.mock_zukan_icons_data
+            )
+            self.zukan.get_compare_scopes = MagicMock(return_value=set())
+            self.zukan.change_icon_file_extension_setting = MagicMock(return_value=[])
+            self.zukan.ignored_icon_setting = MagicMock(return_value=[])
+            self.zukan.get_list_icons_syntaxes = MagicMock(
+                return_value=self.mock_get_list_icons_syntaxes_data
+            )
+
+            with self.assertLogs(level='ERROR') as log:
+                self.zukan.create_icon_syntax('ATest-3')
+
+            self.assertIn(
+                f"[Errno {errno.ENOENT}] {os.strerror(errno.ENOENT)}: '{self.test_syntax_file_name}'",
+                log.output[0],
+            )
+
+    def test_create_icon_syntax_os_error(self):
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.save_sublime_syntax'
+        ) as mock_save:
+            mock_save.side_effect = OSError(
+                errno.EACCES, os.strerror(errno.EACCES), self.test_syntax_file_name
+            )
+
+            self.zukan.zukan_icons_data = MagicMock(
+                return_value=self.mock_zukan_icons_data
+            )
+            self.zukan.get_compare_scopes = MagicMock(return_value=set())
+            self.zukan.change_icon_file_extension_setting = MagicMock(return_value=[])
+            self.zukan.ignored_icon_setting = MagicMock(return_value=[])
+            self.zukan.get_list_icons_syntaxes = MagicMock(
+                return_value=self.mock_get_list_icons_syntaxes_data
+            )
+
+            with self.assertLogs(level='ERROR') as log:
+                self.zukan.create_icon_syntax('ATest-3')
+
+            self.assertIn(
+                f"[Errno {errno.EACCES}] {os.strerror(errno.EACCES)}: '{self.test_syntax_file_name}'",
+                log.output[0],
+            )
+
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.save_sublime_syntax'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.edit_file_extension'
+    )
+    @patch('os.path.join')
+    def test_create_icons_syntaxes(
+        self, mock_path_join, mock_edit_extension, mock_save_syntax
+    ):
+        mock_path_join.return_value = self.test_syntax_path
+        mock_edit_extension.return_value = self.test_edit_extensions_data
+
+        self.zukan.zukan_icons_data = MagicMock(return_value=self.mock_zukan_icons_data)
+        self.zukan.get_compare_scopes = MagicMock(return_value=set())
+        self.zukan.change_icon_file_extension_setting = MagicMock(return_value=[])
+        self.zukan.ignored_icon_setting = MagicMock(return_value=set())
+        self.zukan.get_list_icons_syntaxes = MagicMock(
+            return_value=self.mock_get_list_icons_syntaxes_data
+        )
+
+        self.zukan.create_icons_syntaxes()
+
+        mock_save_syntax.assert_any_call(self.test_syntax_data, self.test_syntax_path)
+        assert mock_save_syntax.call_count > 0
+
+        list_all_icons_syntaxes = self.zukan.get_list_icons_syntaxes()
+        assert mock_save_syntax.call_count == len(list_all_icons_syntaxes)
+
+    def test_create_icons_syntaxes_file_not_found(self):
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.save_sublime_syntax'
+        ) as mock_save:
+            mock_save.side_effect = FileNotFoundError(
+                errno.ENOENT, os.strerror(errno.ENOENT), self.test_syntax_file_name
+            )
+
+            self.zukan.zukan_icons_data = MagicMock(
+                return_value=self.mock_zukan_icons_data
+            )
+            self.zukan.get_compare_scopes = MagicMock(return_value=set())
+            self.zukan.change_icon_file_extension_setting = MagicMock(return_value=[])
+            self.zukan.ignored_icon_setting = MagicMock(return_value=[])
+            self.zukan.get_list_icons_syntaxes = MagicMock(
+                return_value=self.mock_get_list_icons_syntaxes_data
+            )
+
+            with self.assertLogs(level='ERROR') as log:
+                self.zukan.create_icons_syntaxes()
+
+            self.assertIn(
+                f"[Errno {errno.ENOENT}] {os.strerror(errno.ENOENT)}: '{self.test_syntax_file_name}'",
+                log.output[0],
+            )
+
+    def test_create_icons_syntaxes_os_error(self):
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.save_sublime_syntax'
+        ) as mock_save:
+            mock_save.side_effect = OSError(
+                errno.EACCES, os.strerror(errno.EACCES), self.test_syntax_file_name
+            )
+
+            self.zukan.zukan_icons_data = MagicMock(
+                return_value=self.mock_zukan_icons_data
+            )
+            self.zukan.get_compare_scopes = MagicMock(return_value=set())
+            self.zukan.change_icon_file_extension_setting = MagicMock(return_value=[])
+            self.zukan.ignored_icon_setting = MagicMock(return_value=[])
+            self.zukan.get_list_icons_syntaxes = MagicMock(
+                return_value=self.mock_get_list_icons_syntaxes_data
+            )
+
+            with self.assertLogs(level='ERROR') as log:
+                self.zukan.create_icons_syntaxes()
+
+            self.assertIn(
+                f"[Errno {errno.EACCES}] {os.strerror(errno.EACCES)}: '{self.test_syntax_file_name}'",
+                log.output[0],
+            )
+
+    @patch('os.path.exists')
+    @patch('os.remove')
+    def test_delete_icon_syntax(self, mock_remove, mock_exists):
+        mock_exists.return_value = True
+
+        result = self.zukan.delete_icon_syntax(self.test_syntax_file_name)
+
+        mock_remove.assert_called_once()
+        self.assertEqual(result, self.test_syntax_file_name)
+
+    def test_delete_icon_syntax_file_not_found(self):
+        with patch('os.remove') as mock_remove:
+            mock_remove.side_effect = FileNotFoundError(
+                errno.ENOENT, os.strerror(errno.ENOENT), self.test_syntax_file_name
+            )
+
+            with self.assertLogs(level='ERROR') as log:
+                self.zukan.delete_icon_syntax(self.test_syntax_file_name)
+
+            self.assertIn(
+                f"[Errno {errno.ENOENT}] {os.strerror(errno.ENOENT)}: '{self.test_syntax_file_name}'",
+                log.output[0],
+            )
+
+            mock_remove.assert_called_once_with(
+                os.path.join(
+                    icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, self.test_syntax_file_name
+                )
+            )
+
+    def test_delete_icon_syntax_os_error(self):
+        with patch('os.remove') as mock_remove:
+            mock_remove.side_effect = OSError(
+                errno.EACCES, os.strerror(errno.EACCES), self.test_syntax_file_name
+            )
+
+            with self.assertLogs(level='ERROR') as log:
+                self.zukan.delete_icon_syntax(self.test_syntax_file_name)
+
+            self.assertIn(
+                f"[Errno {errno.EACCES}] {os.strerror(errno.EACCES)}: '{self.test_syntax_file_name}'",
+                log.output[0],
+            )
+
+            mock_remove.assert_called_once_with(
+                os.path.join(
+                    icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, self.test_syntax_file_name
+                )
+            )
+
+    @patch('glob.iglob')
+    @patch('os.path.exists')
+    @patch('os.remove')
+    def test_delete_icons_syntaxes(self, mock_remove, mock_exists, mock_glob):
+        mock_glob.return_value = [
+            '/test/path/ATest-1.sublime-syntax',
+            '/test/path/ATest-2.sublime-syntax',
+        ]
+        mock_exists.return_value = True
+
+        self.zukan.delete_icons_syntaxes()
+
+        # 2 from glob + 1 from exists check
+        self.assertEqual(mock_remove.call_count, 3)
+
+    def test_delete_icons_syntaxes_file_not_found(self):
+        test_file = os.path.join(
+            icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, self.test_syntax_file_name
+        )
+
+        with patch('glob.iglob', return_value=[test_file]):
+            with patch('os.remove') as mock_remove:
+                mock_remove.side_effect = FileNotFoundError(
+                    errno.ENOENT, os.strerror(errno.ENOENT), test_file
+                )
+                with patch('os.path.exists', return_value=False):
+                    with self.assertLogs(level='ERROR') as log:
+                        self.zukan.delete_icons_syntaxes()
+
+                    self.assertIn(
+                        f"[Errno {errno.ENOENT}] {os.strerror(errno.ENOENT)}: '{test_file}'",
+                        log.output[0],
+                    )
+                    mock_remove.assert_called_once_with(test_file)
+
+    def test_delete_icons_syntaxes_os_error(self):
+        test_file = os.path.join(
+            icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, self.test_syntax_file_name
+        )
+
+        with patch('glob.iglob', return_value=[test_file]):
+            with patch('os.remove') as mock_remove:
+                mock_remove.side_effect = OSError(
+                    errno.EACCES, os.strerror(errno.EACCES), test_file
+                )
+                with patch('os.path.exists', return_value=False):
+                    with self.assertLogs(level='ERROR') as log:
+                        self.zukan.delete_icons_syntaxes()
+
+                    self.assertIn(
+                        f"[Errno {errno.EACCES}] {os.strerror(errno.EACCES)}: '{test_file}'",
+                        log.output[0],
+                    )
+                    mock_remove.assert_called_once_with(test_file)
+
     @patch('os.path.exists')
     @patch(
         'builtins.open',
@@ -330,7 +504,7 @@ class TestZukanSyntax(TestCase):
 
         mock_file_handle = mock_file()
 
-        self.zukan.edit_context_scope('ATest.sublime-syntax')
+        self.zukan.edit_context_scope(self.test_syntax_file_name)
 
         written_content = ''.join(
             call.args[0] for call in mock_file_handle.write.call_args_list
@@ -355,7 +529,7 @@ class TestZukanSyntax(TestCase):
 
         mock_file_handle = mock_file()
 
-        self.zukan.edit_context_scope('ATest.sublime-syntax')
+        self.zukan.edit_context_scope(self.test_syntax_file_name)
 
         written_content = ''.join(
             call.args[0] for call in mock_file_handle.write.call_args_list
@@ -370,15 +544,34 @@ class TestZukanSyntax(TestCase):
     ):
         mock_exists.return_value = True
         expected_path = os.path.join(
-            icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, 'ATest.sublime-syntax'
+            icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, self.test_syntax_file_name
         )
 
         mock_file.side_effect = FileNotFoundError
 
-        self.zukan.edit_context_scope('ATest.sublime-syntax')
+        self.zukan.edit_context_scope(self.test_syntax_file_name)
 
         mock_logger_error.assert_called_with(
             '[Errno %d] %s: %r', errno.ENOENT, os.strerror(errno.ENOENT), expected_path
+        )
+
+    @patch('os.path.exists')
+    @patch('builtins.open', new_callable=mock_open)
+    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.logger.error')
+    def test_edit_context_scope_os_error(
+        self, mock_logger_error, mock_file, mock_exists
+    ):
+        mock_exists.return_value = True
+        expected_path = os.path.join(
+            icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, self.test_syntax_file_name
+        )
+
+        mock_file.side_effect = OSError
+
+        self.zukan.edit_context_scope(self.test_syntax_file_name)
+
+        mock_logger_error.assert_called_with(
+            '[Errno %d] %s: %r', errno.EACCES, os.strerror(errno.EACCES), expected_path
         )
 
     @patch(
@@ -386,14 +579,14 @@ class TestZukanSyntax(TestCase):
     )
     def test_edit_contexts_scopes(self, mock_edit_contexts):
         self.zukan.list_created_icons_syntaxes = MagicMock(
-            return_value=['ATest.sublime-syntax']
+            return_value=[self.test_syntax_file_name]
         )
         self.zukan.get_sublime_scope_set = MagicMock(
             return_value={'source.atest': True}
         )
         self.zukan.sublime_version = 4000
-
         test_contexts = [{'scope': 'source.atest', 'startsWith': 'ATest'}]
+
         with patch(
             'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.CONTEXTS_SCOPES',
             test_contexts,
@@ -401,6 +594,62 @@ class TestZukanSyntax(TestCase):
             self.zukan.edit_contexts_scopes()
 
         mock_edit_contexts.assert_called_once()
+
+    def test_edit_contexts_scopes_not_installed(self):
+        test_installed_syntaxes = ['ATest-1.sublime-syntax', 'ATest-2.sublime-syntax']
+        self.zukan.list_created_icons_syntaxes = MagicMock(
+            return_value=test_installed_syntaxes
+        )
+
+        self.zukan.get_sublime_scope_set = MagicMock(
+            return_value={'source.atest1': None, 'source.atest2': None}
+        )
+
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.CONTEXTS_SCOPES',
+            self.test_contexts_scopes,
+        ):
+            with patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.edit_contexts_main'
+            ) as mock_edit:
+                self.zukan.edit_contexts_scopes()
+
+                expected_calls = [
+                    call(
+                        os.path.join(
+                            icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH,
+                            'ATest-1.sublime-syntax',
+                        ),
+                        None,
+                    ),
+                    call(
+                        os.path.join(
+                            icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH,
+                            'ATest-2.sublime-syntax',
+                        ),
+                        None,
+                    ),
+                ]
+                mock_edit.assert_has_calls(expected_calls, any_order=True)
+                self.assertEqual(mock_edit.call_count, 2)
+
+    def test_edit_contexts_scopes_empty_installed_list(self):
+        self.zukan.list_created_icons_syntaxes = MagicMock(return_value=[])
+
+        self.zukan.get_sublime_scope_set = MagicMock(
+            return_value={'source.atest1': None, 'source.atest2': None}
+        )
+
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.CONTEXTS_SCOPES',
+            self.test_contexts_scopes,
+        ):
+            with patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.edit_contexts_main'
+            ) as mock_edit:
+                self.zukan.edit_contexts_scopes()
+
+                mock_edit.assert_not_called()
 
     @patch('os.path.exists')
     @patch('glob.glob')
@@ -422,3 +671,47 @@ class TestZukanSyntax(TestCase):
         result = self.zukan.list_created_icons_syntaxes()
 
         self.assertIsNone(result)
+
+    def test_list_created_icons_syntaxes_os_error(self):
+        with patch('os.path.exists') as mock_exists:
+            mock_exists.side_effect = OSError(
+                errno.EACCES,
+                os.strerror(errno.EACCES),
+                icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH,
+            )
+
+            with self.assertLogs(level='ERROR') as log:
+                result = self.zukan.list_created_icons_syntaxes()
+
+            self.assertIn(
+                f"[Errno {errno.EACCES}] {os.strerror(errno.EACCES)}: 'Zukan Icon Theme/icons_syntaxes folder'",
+                log.output[0],
+            )
+            self.assertIsNone(result)
+            mock_exists.assert_called_once_with(
+                icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH
+            )
+
+    def test_list_created_icons_syntaxes_os_error_glob(self):
+        with patch('os.path.exists', return_value=True):
+            with patch('glob.glob') as mock_glob:
+                mock_glob.side_effect = OSError(
+                    errno.EACCES,
+                    os.strerror(errno.EACCES),
+                    icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH,
+                )
+
+                with self.assertLogs(level='ERROR') as log:
+                    result = self.zukan.list_created_icons_syntaxes()
+
+                self.assertIn(
+                    f"[Errno {errno.EACCES}] {os.strerror(errno.EACCES)}: 'Zukan Icon Theme/icons_syntaxes folder'",
+                    log.output[0],
+                )
+                self.assertIsNone(result)
+                mock_glob.assert_called_once_with(
+                    os.path.join(
+                        icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH,
+                        '*' + icons_syntaxes.SUBLIME_SYNTAX_EXTENSION,
+                    )
+                )
