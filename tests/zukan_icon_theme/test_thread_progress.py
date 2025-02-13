@@ -53,6 +53,15 @@ class TestThreadProgress(TestCase):
         mock_set_timeout.assert_called_once()
         self.assertEqual(mock_set_timeout.call_args[0][1], 100)
 
+    def progress_cleanup(self, progress, mock_set_timeout):
+        progress.run(0)
+        self.mock_view.set_status.assert_called_with('_zukan', self.success_message)
+
+        cleanup_callback = mock_set_timeout.call_args_list[-1][0][0]
+        cleanup_callback()
+
+        self.mock_view.erase_status.assert_called_with('_zukan')
+
     @patch('sublime.set_timeout')
     @patch('sublime.active_window')
     def test_thread_progress_run(self, mock_active_window, mock_set_timeout):
@@ -64,10 +73,14 @@ class TestThreadProgress(TestCase):
         progress.run(0)
 
         self.assertEqual(progress.window, self.mock_window)
-        self.mock_view.set_status.assert_called_once_with(
+        self.mock_view.set_status.assert_called_with(
             '_zukan', f'{self.message}  ⦿  ⦾  ⦾ '
         )
-        self.assertEqual(mock_set_timeout.call_args[0][1], 400)
+        self.mock_thread.is_alive.return_value = False
+
+        self.progress_cleanup(progress, mock_set_timeout)
+
+        self.assertEqual(mock_set_timeout.call_args[0][1], 1000)
 
     @patch('sublime.set_timeout')
     @patch('sublime.active_window')
@@ -87,8 +100,19 @@ class TestThreadProgress(TestCase):
             progress.run(i)
             self.mock_view.set_status.assert_called_with('_zukan', expected)
 
+        self.mock_thread.is_alive.return_value = False
+
+        self.progress_cleanup(progress, mock_set_timeout)
+
+    def progress_cleanup_2(self, mock_set_timeout):
+        callback = mock_set_timeout.call_args_list[0][0][0]
+        callback()
+
+        self.mock_view.erase_status.assert_called_with('_zukan')
+
     @patch('sublime.active_window')
-    def test_thread_progress_fail(self, mock_active_window):
+    @patch('sublime.set_timeout')
+    def test_thread_progress_fail(self, mock_set_timeout, mock_active_window):
         self.mock_thread.is_alive.return_value = False
         self.mock_thread.result = False
 
@@ -100,10 +124,13 @@ class TestThreadProgress(TestCase):
 
         progress.run(0)
 
-        self.mock_view.erase_status.assert_called_once_with('_zukan')
+        self.progress_cleanup_2(mock_set_timeout)
 
     @patch('sublime.active_window')
-    def test_thread_progress_run_view_changed(self, mock_active_window):
+    @patch('sublime.set_timeout')
+    def test_thread_progress_run_view_changed(
+        self, mock_set_timeout, mock_active_window
+    ):
         progress = thread_progress.ThreadProgress(
             self.mock_thread, self.message, self.success_message
         )
@@ -112,7 +139,6 @@ class TestThreadProgress(TestCase):
         previous_view = Mock()
         progress.last_view = previous_view
 
-        # New view
         new_view = Mock()
         self.mock_window.active_view.return_value = new_view
 
@@ -123,18 +149,23 @@ class TestThreadProgress(TestCase):
         new_view.set_status.assert_called_once()
         self.assertEqual(progress.last_view, new_view)
 
-    def test_thread_progress_circle_direction(self):
+        progress.last_view = self.mock_view
+        self.progress_cleanup_2(mock_set_timeout)
+
+    @patch('sublime.set_timeout')
+    def test_thread_progress_circle_direction(self, mock_set_timeout):
         progress = thread_progress.ThreadProgress(
             self.mock_thread, self.message, self.success_message
         )
 
         self.assertEqual(progress.addend, 1)
-
         progress.run(2)
         self.assertEqual(progress.addend, -1)
-
         progress.run(0)
         self.assertEqual(progress.addend, 1)
+
+        progress.last_view = self.mock_view
+        self.progress_cleanup_2(mock_set_timeout)
 
     def load_pickle(self, path):
         with open(path, 'rb') as f:
