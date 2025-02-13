@@ -448,36 +448,48 @@ class TestZukanSyntax(TestCase):
         self.assertEqual(mock_remove.call_count, 3)
 
     def test_delete_icons_syntaxes_file_not_found(self):
-        with patch('glob.iglob', return_value=[self.test_syntax_file_name]):
+        test_file = os.path.normpath(
+            os.path.join(
+                icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, self.test_syntax_file_name
+            )
+        )
+
+        with patch('glob.iglob', return_value=[test_file]):
             with patch('os.remove') as mock_remove:
                 mock_remove.side_effect = FileNotFoundError(
-                    errno.ENOENT, os.strerror(errno.ENOENT), self.test_syntax_file_name
+                    errno.ENOENT, os.strerror(errno.ENOENT), test_file
                 )
                 with patch('os.path.exists', return_value=False):
                     with self.assertLogs(level='ERROR') as log:
                         self.zukan.delete_icons_syntaxes()
 
                     self.assertIn(
-                        f"[Errno {errno.ENOENT}] {os.strerror(errno.ENOENT)}: '{self.test_syntax_file_name}'",
+                        f"[Errno {errno.ENOENT}] {os.strerror(errno.ENOENT)}: '{test_file}'",
                         log.output[0],
                     )
-                    mock_remove.assert_called_once_with(self.test_syntax_file_name)
+                    mock_remove.assert_called_once_with(test_file)
 
     def test_delete_icons_syntaxes_os_error(self):
-        with patch('glob.iglob', return_value=[self.test_syntax_file_name]):
+        test_file = os.path.normpath(
+            os.path.join(
+                icons_syntaxes.ZUKAN_PKG_ICONS_SYNTAXES_PATH, self.test_syntax_file_name
+            )
+        )
+
+        with patch('glob.iglob', return_value=[test_file]):
             with patch('os.remove') as mock_remove:
                 mock_remove.side_effect = OSError(
-                    errno.EACCES, os.strerror(errno.EACCES), self.test_syntax_file_name
+                    errno.EACCES, os.strerror(errno.EACCES), test_file
                 )
                 with patch('os.path.exists', return_value=False):
                     with self.assertLogs(level='ERROR') as log:
                         self.zukan.delete_icons_syntaxes()
 
                     self.assertIn(
-                        f"[Errno {errno.EACCES}] {os.strerror(errno.EACCES)}: '{self.test_syntax_file_name}'",
+                        f"[Errno {errno.EACCES}] {os.strerror(errno.EACCES)}: '{test_file}'",
                         log.output[0],
                     )
-                    mock_remove.assert_called_once_with(self.test_syntax_file_name)
+                    mock_remove.assert_called_once_with(test_file)
 
     @patch('os.path.exists')
     @patch(
