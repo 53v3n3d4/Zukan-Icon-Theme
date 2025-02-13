@@ -86,7 +86,7 @@ class TestCopyPrimaryIcons(TestCase):
         mock_debug.assert_called_with(
             '%s not in change_icon, copying prefer icon %s%s',
             'Source',
-            'file_type_source-1-dark',
+            'file_type_source-dark',
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )
 
@@ -165,7 +165,7 @@ class TestCopyPrimaryIcons(TestCase):
         mock_debug.assert_called_with(
             '%s not in change_icon, copying prefer icon %s%s',
             'Source',
-            'file_type_source-1-light',
+            'file_type_source-light',
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )
 
@@ -476,5 +476,84 @@ class TestCopyPrimaryIcons(TestCase):
             '%s in change_icon, removing renamed %s%s',
             'Source',
             'file_type_source',
+            str(copy_primary_icons.ICONS_SUFFIX[2]),
+        )
+
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_change_icon_settings'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_ignored_icon_settings'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_theme_name'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_sidebar_bgcolor'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_icon_dark_light'
+    )
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.shutil.copy2'
+    )
+    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.os.remove')
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.logger.debug'
+    )
+    def test_copy_primary_icons_default(
+        self,
+        mock_debug,
+        mock_remove,
+        mock_copy2,
+        mock_get_icon_dark_light,
+        mock_get_sidebar_bgcolor,
+        mock_get_theme_name,
+        mock_get_ignored_icon_settings,
+        mock_get_change_icon_settings,
+        mock_get_prefer_icon_settings,
+    ):
+        mock_copy2.reset_mock()
+
+        mock_get_prefer_icon_settings.return_value = (
+            False,
+            {},
+        )
+        mock_get_change_icon_settings.return_value = (
+            {},
+            [],
+        )
+        mock_get_ignored_icon_settings.return_value = []
+        mock_get_theme_name.return_value = 'Treble Light.sublime-theme'
+        mock_get_sidebar_bgcolor.return_value = ''
+        mock_get_icon_dark_light.return_value = ''
+
+        mock_copy2.return_value = None
+        mock_remove.return_value = None
+
+        copy_primary_icons.copy_primary_icons()
+
+        mock_copy2.assert_called_with(
+            os.path.join(
+                copy_primary_icons.ZUKAN_PKG_ICONS_DATA_PRIMARY_PATH,
+                'file_type_source-dark'
+                + str(copy_primary_icons.ICONS_SUFFIX[2])
+                + copy_primary_icons.PNG_EXTENSION,
+            ),
+            os.path.join(
+                copy_primary_icons.ZUKAN_PKG_ICONS_PATH,
+                'file_type_source'
+                + str(copy_primary_icons.ICONS_SUFFIX[2])
+                + copy_primary_icons.PNG_EXTENSION,
+            ),
+        )
+
+        mock_debug.assert_called_with(
+            '%s not in change_icon, copying default %s%s',
+            'Source',
+            'file_type_source-dark',
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )

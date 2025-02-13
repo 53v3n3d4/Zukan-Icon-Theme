@@ -132,16 +132,17 @@ def copy_primary_icons():
                             and i.rsplit('-', 1)[1] == icon_dark_light
                             and auto_prefer_icon
                         ):
-                            logger.debug(
-                                '%s not in change_icon, copying prefer icon %s%s',
-                                p[0],
-                                i,
-                                s,
-                            )
                             if bgcolor == 'dark':
                                 icon_name = p[2][1]
                             else:
                                 icon_name = p[2][0]
+
+                            logger.debug(
+                                '%s not in change_icon, copying prefer icon %s%s',
+                                p[0],
+                                icon_name,
+                                s,
+                            )
 
                             shutil.copy2(
                                 os.path.join(
@@ -159,7 +160,7 @@ def copy_primary_icons():
                             logger.debug(
                                 '%s not in change_icon, copying default %s%s',
                                 p[0],
-                                i,
+                                p[2][0],
                                 s,
                             )
                             shutil.copy2(
