@@ -12,6 +12,11 @@ icons_themes = importlib.import_module(
 
 class TestZukanTheme(TestCase):
     def setUp(self):
+        self.mock_file = mock_open()
+        self.mock_settings = mock.Mock()
+        self.mock_search = mock.Mock()
+        self.mock_opacity = mock.Mock()
+
         self.zukan_theme = icons_themes.ZukanTheme()
         self.sample_themes = [
             'Packages/Theme - Default/Default.sublime-theme',
@@ -26,6 +31,11 @@ class TestZukanTheme(TestCase):
         self.test_theme_path = 'Packages/Theme - Test/Test.sublime-theme'
 
     def tearDown(self):
+        self.mock_file.reset_mock()
+        self.mock_settings.reset_mock()
+        self.mock_search.reset_mock()
+        self.mock_opacity.reset_mock()
+
         self.zukan_theme = None
 
     @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.get_theme_settings')
