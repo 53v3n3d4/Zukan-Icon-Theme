@@ -9,29 +9,66 @@ logger = importlib.import_module('Zukan Icon Theme.src.zukan_icon_theme.helpers.
 
 logger_message = logging.getLogger(__name__)
 
-# https://docs.python.org/3/howto/logging.html#logging-levels
-params_list = [
-    ('DEBUG', 10),
-    ('INFO', 20),
-    ('WARNING', 30),
-    ('ERROR', 40),
-    ('CRITICAL', 50),
-]
+
+class TestLoggingConfig(TestCase):
+    def setUp(self):
+        self.original_logger = logging.getLogger()
+        self.original_handlers = self.original_logger.handlers[:]
+        self.original_level = self.original_logger.level
+
+    def tearDown(self):
+        self.original_logger.handlers = self.original_handlers
+        self.original_logger.setLevel(self.original_level)
+        self.original_logger.propagate = True
+
+    def test_logging_config(self):
+        self.original_logger.handlers = []
+
+        test_levels = ['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL']
+        for level in test_levels:
+            with self.subTest(level=level):
+                logger.logging_config(level)
+                logger_test = logging.getLogger()
+
+                self.assertEqual(logger_test.level, getattr(logging, level))
+                self.assertTrue(logger_test.handlers)
+                self.assertTrue(
+                    any(
+                        isinstance(h, logging.StreamHandler)
+                        for h in logger_test.handlers
+                    )
+                )
+                self.assertTrue(
+                    any(
+                        isinstance(h.formatter, logger.LevelFormatter)
+                        for h in logger_test.handlers
+                    )
+                )
+                self.assertFalse(logger_test.propagate)
 
 
 class TestGetSettingLogLevel(TestCase):
-    def test_mock_get_setting_log_level(self):
-        mock = Mock()
-        mock.logger.get_setting_log_level()
-        mock.logger.get_setting_log_level.assert_called_once()
-
     @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.get_settings')
-    def test_getting_log_level(self, log_level_mock):
-        for p1, p2 in params_list:
-            with self.subTest(params_list):
-                log_level_mock.return_value = p1
+    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.reset_logging_config')
+    def test_get_setting_log_level(self, mock_reset_config, mock_get_settings):
+        params_list = [
+            ('DEBUG', logging.DEBUG),
+            ('INFO', logging.INFO),
+            ('WARNING', logging.WARNING),
+            ('ERROR', logging.ERROR),
+            ('CRITICAL', logging.CRITICAL),
+            ('INVALID', logging.INFO),
+        ]
+
+        for setting_value, expected_level in params_list:
+            with self.subTest(setting_value=setting_value):
+                mock_get_settings.return_value = setting_value
+
                 result = logger.get_setting_log_level()
-                self.assertEqual(result, p2)
+
+                self.assertEqual(result, expected_level)
+                mock_reset_config.assert_called_with(expected_level)
+                mock_get_settings.assert_called_with(logger.ZUKAN_SETTINGS, 'log_level')
 
 
 class TestLoggerMessages(TestCase):
@@ -55,7 +92,6 @@ class TestLoggerMessages(TestCase):
 
 class TestLevelFormatter(TestCase):
     def setUp(self):
-        # Set up the formats to be used in testing
         self.formats = {
             logging.INFO: '%(levelname)s | Zukan Icon Theme %(name)s %(message)s',
             logging.WARNING: '%(asctime)s | %(levelname)s | Zukan Icon Theme '
