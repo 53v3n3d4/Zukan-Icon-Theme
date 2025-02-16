@@ -1,6 +1,6 @@
 from src.build.scripts import create_parser, main
 from src.build.utils.scripts_args import COMMANDS
-from tests.mocks.constants_scripts import (
+from tests.build.mocks.constants_scripts import (
     # COMMANDS_ARGS_PATH_P2,
     # COMMANDS_ARGS_PATH_P3,
     COMMANDS_ARGS_PATH_P4,
@@ -14,9 +14,8 @@ from unittest.mock import patch
 class TestScripts:
     def test_create_parser(self):
         parser = create_parser(COMMANDS)
-        assert parser  # Ensure parser is created
+        assert parser
 
-        # Check if help is available
         help_message = parser.format_help()
         assert '--help' in help_message
 
@@ -31,7 +30,6 @@ class TestScripts:
     def test_scripts_p4(self):
         for p1, p2, p3, p4 in COMMANDS_ARGS_PATH_P4:
             with patch(p1) as mock_command:
-                # Simulate command-line arguments
                 with patch('sys.argv', ['script_name'] + p2):
                     main()
 
@@ -40,7 +38,6 @@ class TestScripts:
     def test_scripts_p5(self):
         for p1, p2, p3, p4, p5 in COMMANDS_ARGS_PATH_P5:
             with patch(p1) as mock_command:
-                # Simulate command-line arguments
                 with patch('sys.argv', ['script_name'] + p2):
                     main()
 
@@ -49,7 +46,6 @@ class TestScripts:
     def test_scripts_p6(self):
         for p1, p2, p3, p4, p5, p6 in COMMANDS_ARGS_PATH_P6:
             with patch(p1) as mock_command:
-                # Simulate command-line arguments
                 with patch('sys.argv', ['script_name'] + p2):
                     main()
 
@@ -58,7 +54,6 @@ class TestScripts:
     def test_scripts_p9(self):
         for p1, p2, p3, p4, p5, p6, p7, p8, p9, p10 in COMMANDS_ARGS_PATH_P10:
             with patch(p1) as mock_command:
-                # Simulate command-line arguments
                 with patch('sys.argv', ['script_name'] + p2):
                     main()
 

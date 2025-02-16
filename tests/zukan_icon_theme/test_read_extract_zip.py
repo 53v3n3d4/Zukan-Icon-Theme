@@ -24,13 +24,15 @@ class TestReadExtractZip(TestCase):
             sublime.packages_path(),
             'Zukan Icon Theme',
             'tests',
+            'zukan_icon_theme',
             'mocks',
-            'Zukan-Icon-Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
+            'Zukan Icon Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
         )
         dir_destiny = os.path.join(
             sublime.packages_path(),
             'Zukan Icon Theme',
             'tests',
+            'zukan_icon_theme',
             'mocks',
         )
         read_extract_zip.extract_folder(
@@ -47,13 +49,15 @@ class TestExtractZipFolder(TestCase):
             sublime.packages_path(),
             'Zukan Icon Theme',
             'tests',
+            'zukan_icon_theme',
             'mocks',
-            'Zukan-Icon-Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
+            'Zukan Icon Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
         )
         dir_destiny = os.path.join(
             sublime.packages_path(),
             'Zukan Icon Theme',
             'tests',
+            'zukan_icon_theme',
             'mocks',
         )
         read_extract_zip.extract_folder(
@@ -68,13 +72,15 @@ class TestExtractZipFolder(TestCase):
             sublime.packages_path(),
             'Zukan Icon Theme',
             'tests',
+            'zukan_icon_theme',
             'mocks',
-            'Zukan-Icon-Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
+            'Zukan Icon Theme' + file_extensions.SUBLIME_PACKAGE_EXTENSION,
         )
         dir_destiny = os.path.join(
             sublime.packages_path(),
             'Zukan Icon Theme',
             'tests',
+            'zukan_icon_theme',
             'mocks',
         )
         read_extract_zip.extract_folder(

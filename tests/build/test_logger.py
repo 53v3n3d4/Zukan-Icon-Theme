@@ -47,7 +47,6 @@ class TestLogger:
 
 class TestLevelFormatter:
     def setUp(self):
-        # Set up the formats to be used in testing
         self.formats = {
             logging.INFO: '%(levelname)s | Zukan Icon Theme %(name)s %(message)s',
             logging.WARNING: '%(asctime)s | %(levelname)s | Zukan Icon Theme '
@@ -119,4 +118,4 @@ class TestLevelFormatter:
         )
         TestLevelFormatter.setUp(self)
         idx = bisect(self.formatter.formats, (record.levelno,))
-        assert idx == 0  # INFO should be at index 0
+        assert idx == 0

@@ -8,7 +8,7 @@ from unittest import TestCase
 from unittest.mock import mock_open, patch
 
 constants_pickle = importlib.import_module(
-    'Zukan Icon Theme.tests.mocks.constants_pickle'
+    'Zukan Icon Theme.tests.zukan_icon_theme.mocks.constants_pickle'
 )
 read_write_data = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data'

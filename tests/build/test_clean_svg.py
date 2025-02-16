@@ -4,7 +4,7 @@ import re
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.clean_svg import CleanSVG
-from tests.mocks.constants_svg import (
+from tests.build.mocks.constants_svg import (
     SVG_ALL_UNUSED,
     SVG_ALMOST_CLEAN,
     SVG_CLEANED,
@@ -177,12 +177,14 @@ class TestClean:
         caplog.clear()
         with patch('src.build.clean_svg.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            zukan_clean_svg.clean_svg('tests/mocks/not_found_svg.svg', UNUSED_LIST)
+            zukan_clean_svg.clean_svg(
+                'tests/build/mocks/not_found_svg.svg', UNUSED_LIST
+            )
         assert caplog.record_tuples == [
             (
                 'src.build.clean_svg',
                 40,
-                "[Errno 2] No such file or directory: 'tests/mocks/not_found_svg.svg'",
+                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_svg.svg'",
             )
         ]
 
@@ -191,12 +193,12 @@ class TestClean:
         caplog.clear()
         with patch('src.build.clean_svg.open') as mock_open:
             mock_open.side_effect = OSError
-            zukan_clean_svg.clean_svg('tests/mocks/svg.svg', UNUSED_LIST)
+            zukan_clean_svg.clean_svg('tests/build/mocks/svg.svg', UNUSED_LIST)
         assert caplog.record_tuples == [
             (
                 'src.build.clean_svg',
                 40,
-                "[Errno 13] Permission denied: 'tests/mocks/svg.svg'",
+                "[Errno 13] Permission denied: 'tests/build/mocks/svg.svg'",
             )
         ]
 
@@ -222,13 +224,13 @@ class TestClean:
         caplog.clear()
         with patch('src.build.clean_svg.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
-            zukan_clean_svg.clean_all_svgs('tests/mocks/svg', UNUSED_LIST)
+            zukan_clean_svg.clean_all_svgs('tests/build/mocks/svg', UNUSED_LIST)
         # Check if it is cache, should be Errno 2
         assert caplog.record_tuples == [
             (
                 'src.build.clean_svg',
                 40,
-                "[Errno 2] No such file or directory: 'tests/mocks/svg'",
+                "[Errno 2] No such file or directory: 'tests/build/mocks/svg'",
             )
         ]
 
@@ -237,12 +239,12 @@ class TestClean:
         caplog.clear()
         with patch('src.build.clean_svg.open') as mock_open:
             mock_open.side_effect = OSError
-            zukan_clean_svg.clean_all_svgs('tests/mocks/svg.svg', UNUSED_LIST)
+            zukan_clean_svg.clean_all_svgs('tests/build/mocks/svg.svg', UNUSED_LIST)
         assert caplog.record_tuples == [
             (
                 'src.build.clean_svg',
                 40,
-                "[Errno 13] Permission denied: 'tests/mocks/svg.svg'",
+                "[Errno 13] Permission denied: 'tests/build/mocks/svg.svg'",
             )
         ]
 

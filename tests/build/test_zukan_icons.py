@@ -3,10 +3,10 @@ import pytest
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.zukan_icons import ZukanIcon
-from tests.mocks.constants_pickle import (
+from tests.build.mocks.constants_pickle import (
     TEST_PICKLE_ZUKAN_FILE,
 )
-from tests.mocks.tests_paths import (
+from tests.build.mocks.tests_paths import (
     DIR_DATA,
     DIR_DESTINY,
     OS_FILE_MOCKS_PATH,
@@ -55,7 +55,7 @@ class TestZukanIcon:
         with patch('src.build.zukan_icons.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
             ZukanIcon.write_icon_data(
-                'tests/mocks/not_found_yaml.yaml',
+                'tests/build/mocks/not_found_yaml.yaml',
                 DIR_DESTINY,
                 TEST_PICKLE_ZUKAN_FILE,
             )
@@ -63,7 +63,7 @@ class TestZukanIcon:
             (
                 'src.build.zukan_icons',
                 40,
-                "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
+                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
             )
         ]
 
@@ -74,18 +74,18 @@ class TestZukanIcon:
         with patch('src.build.zukan_icons.open') as mock_open:
             mock_open.side_effect = OSError
             ZukanIcon.write_icon_data(
-                'tests/mocks/yaml.yaml', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE
+                'tests/build/mocks/yaml.yaml', DIR_DESTINY, TEST_PICKLE_ZUKAN_FILE
             )
         assert caplog.record_tuples == [
             (
                 'src.build.zukan_icons',
                 40,
-                "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
+                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
             )
         ]
 
     # If put below and same class with parametrize tests, `zukan_icon_data.pkl` in
-    # `tests/mocks` get deleted when run tests.
+    # `tests/build/mocks` get deleted when run tests.
     def test_make_directory(self, mock_os):
         mock_makedirs, mock_remove = mock_os
 

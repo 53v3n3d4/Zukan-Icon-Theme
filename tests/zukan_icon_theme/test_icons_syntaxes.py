@@ -516,9 +516,6 @@ class TestZukanSyntax(TestCase):
         ),
     )
     def test_edit_context_scope_scope_not_exists(self, mock_file, mock_exists):
-        mock_file.reset_mock()
-        mock_exists.reset_mock()
-
         mock_exists.return_value = True
         self.zukan.get_sublime_scope_set = MagicMock(
             return_value={'source.atest': False}

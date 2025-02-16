@@ -4,7 +4,7 @@ import pytest
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.helpers.concat_svgs import ConcatSVG
 from src.build.utils.file_extensions import SVG_EXTENSION
-from tests.mocks.tests_paths import (
+from tests.build.mocks.tests_paths import (
     DIR_DATA,
     DIR_ORIGIN,
 )
@@ -60,7 +60,7 @@ class TestConcatSVGMock:
 
     def test_edit_icon_svg(self, concat_svgs, mock_svg_data):
         patch('xml.etree.ElementTree.parse', return_value=mock_svg_data)
-        icon_svg = concat_svgs.edit_icon_svg('tests/mocks/vitest.svg')
+        icon_svg = concat_svgs.edit_icon_svg('tests/build/mocks/vitest.svg')
 
         assert icon_svg.get('width') == '32'
         assert icon_svg.get('height') == '28.4'
@@ -70,7 +70,7 @@ class TestConcatSVGMock:
 
     def test_create_icon_sticker(self, concat_svgs):
         sticker_svg = concat_svgs.create_icon_sticker(
-            'tests/mocks/vitest.svg', str(12), str(8), 'Vitest', 'vitest.svg'
+            'tests/build/mocks/vitest.svg', str(12), str(8), 'Vitest', 'vitest.svg'
         )
 
         assert sticker_svg.get('width') == '79'
@@ -117,7 +117,7 @@ class TestConcatSVGMock:
             (
                 'src.build.helpers.concat_svgs',
                 40,
-                "[Errno 2] No such file or directory: 'tests/mocks'",
+                "[Errno 2] No such file or directory: 'tests/build/mocks'",
             )
         ]
 
@@ -130,7 +130,7 @@ class TestConcatSVGMock:
             (
                 'src.build.helpers.concat_svgs',
                 40,
-                "[Errno 13] Permission denied: 'tests/mocks'",
+                "[Errno 13] Permission denied: 'tests/build/mocks'",
             )
         ]
 
@@ -145,7 +145,7 @@ class TestConcatSVGMock:
             return_value=[('test_icon', str(mock_icon_data[0]), 'test_icon.svg')],
         )
 
-        output_svg = 'tests/mocks/output.svg'
+        output_svg = 'tests/build/mocks/output.svg'
         concat_svgs.write_concat_svgs(
             str(mock_icon_data[0].parent),
             str(mock_icon_data[0].parent),
@@ -159,7 +159,7 @@ class TestConcatSVGMock:
 
     @pytest.fixture
     def mock_directory(self):
-        mock_dir = os.path.join(os.path.dirname(__file__), 'mocks')
+        mock_dir = os.path.join(os.path.dirname(__file__), 'test_mockdir')
         if not os.path.exists(mock_dir):
             os.makedirs(mock_dir)
         yield mock_dir
@@ -206,15 +206,20 @@ class TestConcatSVGMock:
                 )
 
     def test_write_concat_svgs_sample_icons(self, concat_svgs, mock_directory):
+        # fmt: off
         with patch.object(
-            concat_svgs,
-            'sorted_icons_list',
-            return_value=['icon1', 'icon2', 'icon3', 'icon4', 'icon5'],
-        ) as mock_sorted_icons_list, patch(
-            'random.sample', return_value=['icon1', 'icon2', 'icon3']
-        ) as mock_random_sample, patch.object(
-            concat_svgs, 'create_icon_sticker', return_value=ElementTree.Element('icon')
-        ) as mock_create_icon_sticker:
+                concat_svgs,
+                'sorted_icons_list',
+                return_value=['icon1', 'icon2', 'icon3', 'icon4', 'icon5'],
+             ) as mock_sorted_icons_list, \
+             patch(
+                'random.sample', return_value=['icon1', 'icon2', 'icon3']
+             ) as mock_random_sample, \
+             patch.object(
+                concat_svgs, 'create_icon_sticker', return_value=ElementTree.Element('icon')
+             ) as mock_create_icon_sticker:
+             # fmt: on
+
             dir_icon_data = '/path/test/dir_icon_data'
             dir_origin = '/path/test/dir_origin'
             concat_svgfile = os.path.join(mock_directory, 'concat_svgfile.svg')

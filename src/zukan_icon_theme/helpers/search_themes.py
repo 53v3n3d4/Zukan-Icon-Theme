@@ -258,7 +258,7 @@ def find_attributes(
         if class_parent:
             if i.get(class_parent) is not None:
                 for p in i.get(class_parent):
-                    if p['class'] == target_key and all(
+                    if p['class'] == target_key and any(
                         a in p['attributes'] for a in target_values
                     ):
                         logger.debug('%s has attributes', theme)

@@ -10,8 +10,8 @@ from src.build.utils.build_dir_paths import (
 from src.build.utils.svg_unused_list import (
     UNUSED_LIST,
 )
-from tests.mocks.constants_pickle import TEST_PICKLE_ZUKAN_FILE
-from tests.mocks.constants_svg import TEST_SVG_FILE
+from tests.build.mocks.constants_pickle import TEST_PICKLE_ZUKAN_FILE
+from tests.build.mocks.constants_svg import TEST_SVG_FILE
 
 
 COMMANDS_ARGS_PATH_P2 = [

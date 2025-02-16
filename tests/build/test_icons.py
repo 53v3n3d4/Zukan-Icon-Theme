@@ -7,10 +7,10 @@ import tempfile
 
 from pyfakefs.fake_filesystem_unittest import TestCase
 from src.build.icons import IconPNG
-from tests.mocks.constants_icons import (
+from tests.build.mocks.constants_icons import (
     TEST_STDOUT_PNG,
 )
-from tests.mocks.tests_paths import (
+from tests.build.mocks.tests_paths import (
     DIR_DATA,
     DIR_DATA_NOT_FOUND,
     DIR_DESTINY,
@@ -28,7 +28,10 @@ class TestPNG:
     @pytest.fixture(autouse=True)
     def test_generate_PNGs(self, icon_png, capfd):
         icon_png.svg_to_png(
-            'tests/mocks/yaml.yaml', DIR_ORIGIN, DIR_DESTINY, DIR_DESTINY_PRIMARY_ICONS
+            'tests/build/mocks/yaml.yaml',
+            DIR_ORIGIN,
+            DIR_DESTINY,
+            DIR_DESTINY_PRIMARY_ICONS,
         )
 
         out, err = capfd.readouterr()
@@ -54,7 +57,7 @@ class TestPNG:
         with patch('src.build.icons.open') as mock_open:
             mock_open.side_effect = FileNotFoundError
             icon_png.svg_to_png(
-                'tests/mocks/not_found_yaml.yaml',
+                'tests/build/mocks/not_found_yaml.yaml',
                 DIR_ORIGIN,
                 DIR_DESTINY,
                 DIR_DESTINY_PRIMARY_ICONS,
@@ -63,7 +66,7 @@ class TestPNG:
             (
                 'src.build.icons',
                 40,
-                "[Errno 2] No such file or directory: 'tests/mocks/not_found_yaml.yaml'",
+                "[Errno 2] No such file or directory: 'tests/build/mocks/not_found_yaml.yaml'",
             )
         ]
 
@@ -73,7 +76,7 @@ class TestPNG:
         with patch('src.build.icons.open') as mock_open:
             mock_open.side_effect = OSError
             icon_png.svg_to_png(
-                'tests/mocks/not_found_yaml.yaml',
+                'tests/build/mocks/not_found_yaml.yaml',
                 DIR_ORIGIN,
                 DIR_DESTINY,
                 DIR_DESTINY_PRIMARY_ICONS,
@@ -82,7 +85,7 @@ class TestPNG:
             (
                 'src.build.icons',
                 40,
-                "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
+                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
             )
         ]
 
@@ -101,7 +104,7 @@ class TestPNG:
             (
                 'src.build.icons',
                 40,
-                "[Errno 2] No such file or directory: 'tests/mocks/icons_not_found/'",
+                "[Errno 2] No such file or directory: 'tests/build/mocks/icons_not_found/'",
             )
         ]
 
@@ -120,7 +123,7 @@ class TestPNG:
             (
                 'src.build.icons',
                 40,
-                "[Errno 13] Permission denied: 'tests/mocks/yaml.yaml'",
+                "[Errno 13] Permission denied: 'tests/build/mocks/yaml.yaml'",
             )
         ]
 

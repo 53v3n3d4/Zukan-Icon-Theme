@@ -7,8 +7,6 @@ install_event = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.core.install'
 )
 
-# Fixme: running test does not clear status message.
-
 
 class TestInstallEvent(TestCase):
     def setUp(self):

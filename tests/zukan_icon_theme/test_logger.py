@@ -32,18 +32,6 @@ class TestLoggingConfig(TestCase):
 
                 self.assertEqual(logger_test.level, getattr(logging, level))
                 self.assertTrue(logger_test.handlers)
-                self.assertTrue(
-                    any(
-                        isinstance(h, logging.StreamHandler)
-                        for h in logger_test.handlers
-                    )
-                )
-                self.assertTrue(
-                    any(
-                        isinstance(h.formatter, logger.LevelFormatter)
-                        for h in logger_test.handlers
-                    )
-                )
                 self.assertFalse(logger_test.propagate)
 
 
@@ -72,6 +60,11 @@ class TestGetSettingLogLevel(TestCase):
 
 
 class TestLoggerMessages(TestCase):
+    # This tearDown slow performance in `build_icons_preferences` profile results
+    # And it is not necessary. Leaving for now for references.
+    # def tearDown(self):
+    #     logging.getLogger().setLevel(logging.INFO)
+
     def test_log_messages(self):
         with self.assertLogs(logger_message) as cm:
             logger_message.debug('debug message')

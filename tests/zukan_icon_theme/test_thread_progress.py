@@ -8,7 +8,7 @@ from unittest import TestCase
 from unittest.mock import patch, Mock
 
 constants_pickle = importlib.import_module(
-    'Zukan Icon Theme.tests.mocks.constants_pickle'
+    'Zukan Icon Theme.tests.zukan_icon_theme.mocks.constants_pickle'
 )
 thread_progress = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.helpers.thread_progress'
@@ -166,6 +166,74 @@ class TestThreadProgress(TestCase):
 
         progress.last_view = self.mock_view
         self.progress_cleanup_2(mock_set_timeout)
+
+    # This test downgrade performance and raise func call in `build_icons_themes` profile results
+    # And it is not necessary since it does not solve the uncovered missing lines.
+    # Leaving for now for references.
+    # @patch('sublime.message_dialog')
+    # @patch('sublime.set_timeout')
+    # @patch('sublime.active_window')
+    # def test_thread_progress_shows_dialog_on_completion(
+    #     self, mock_active_window, mock_set_timeout, mock_message_dialog
+    # ):
+    #     progress = thread_progress.ThreadProgress(
+    #         self.mock_thread, self.message, self.success_message, self.dialog_message
+    #     )
+    #     progress.window = self.mock_window
+
+    #     self.mock_thread.is_alive.return_value = False
+    #     self.mock_thread.result = True
+
+    #     progress.run(0)
+
+    #     self.mock_view.set_status.assert_called_with('_zukan', self.success_message)
+
+    #     mock_message_dialog.assert_called_once_with(self.dialog_message)
+
+    #     cleanup_calls = [
+    #         call for call in mock_set_timeout.call_args_list if call[0][1] == 1000
+    #     ]
+    #     self.assertEqual(len(cleanup_calls), 1, 'Cleanup timeout should be set once')
+
+    # This test downgrade performance and raise func call in `build_icons_themes` profile results
+    # And it is not necessary since it does not solve the uncovered missing lines.
+    # Leaving for now for references.    # @patch('sublime.set_timeout')
+    # @patch('sublime.active_window')
+    # def test_thread_progress_animation_continues(
+    #     self, mock_active_window, mock_set_timeout
+    # ):
+    #     progress = thread_progress.ThreadProgress(
+    #         self.mock_thread, self.message, self.success_message
+    #     )
+    #     progress.window = self.mock_window
+
+    #     self.mock_thread.is_alive.return_value = True
+
+    #     expected_frames = [
+    #         f'{self.message}  ⦿  ⦾  ⦾ ',
+    #         f'{self.message}  ⦾  ⦿  ⦾ ',
+    #         f'{self.message}  ⦾  ⦾  ⦿ ',
+    #     ]
+
+    #     for i in range(len(expected_frames)):
+    #         progress.run(i)
+
+    #         self.mock_view.set_status.assert_called_with('_zukan', expected_frames[i])
+
+    #         timeout_calls = [
+    #             call for call in mock_set_timeout.call_args_list if call[0][1] == 400
+    #         ]
+    #         self.assertEqual(
+    #             len(timeout_calls), 1, 'Animation timeout should be set once'
+    #         )
+
+    #         mock_set_timeout.reset_mock()
+    #         self.mock_view.set_status.reset_mock()
+
+    #         if i == 2:
+    #             self.assertEqual(progress.addend, -1)
+    #         elif i == 0:
+    #             self.assertEqual(progress.addend, 1)
 
     def load_pickle(self, path):
         with open(path, 'rb') as f:
