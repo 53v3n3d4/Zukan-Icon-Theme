@@ -197,7 +197,8 @@ class TestThreadProgress(TestCase):
 
     # This test downgrade performance and raise func call in `build_icons_themes` profile results
     # And it is not necessary since it does not solve the uncovered missing lines.
-    # Leaving for now for references.    # @patch('sublime.set_timeout')
+    # Leaving for now for references.
+    # @patch('sublime.set_timeout')
     # @patch('sublime.active_window')
     # def test_thread_progress_animation_continues(
     #     self, mock_active_window, mock_set_timeout

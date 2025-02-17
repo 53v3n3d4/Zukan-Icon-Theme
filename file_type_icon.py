@@ -63,7 +63,7 @@ def plugin_loaded():
     theme_name = get_theme_name()
     sublime.set_timeout(lambda: get_sidebar_bgcolor(theme_name))
 
-    # `cache_theme_info` settings. Default is false.
+    # `cache_theme_info` setting. Cache default is false.
     delete_cached_theme_info()
 
     if zukan_listener_enabled:

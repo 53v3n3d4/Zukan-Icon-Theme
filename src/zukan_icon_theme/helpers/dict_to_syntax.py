@@ -85,7 +85,7 @@ def dict_to_syntax(syntax_dict: dict, multiplier: int = 0) -> str:
     for k, v in syntax_dict.items():
         data += '{i}{k}:'.format(i=indent, k=k)
 
-        # OD
+        # Dict
         if isinstance(v, dict):
             # print(v)
             data += new_line

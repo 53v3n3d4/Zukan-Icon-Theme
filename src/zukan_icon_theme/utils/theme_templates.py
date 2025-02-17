@@ -22,5 +22,5 @@ TEMPLATE_JSON_WITH_OPACITY = """[
         "class": "icon_file_type",
         "parents": [{"class": "tree_row", "attributes": ["selected"]}],
         "layer0.opacity": 1.0,
-    },
+    }
 ]"""

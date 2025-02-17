@@ -1,4 +1,5 @@
 import importlib
+import os
 
 from unittest import TestCase
 from unittest.mock import Mock, patch
@@ -129,178 +130,6 @@ class TestPackageThemeExists(TestCase):
                 mock_find_resources.assert_called_once_with('Not Found.sublime-theme')
 
 
-class TestFindSidebarBackground(TestCase):
-    def setUp(self):
-        self.theme_content = {
-            'rules': [
-                {
-                    'class': 'icon_file_type',
-                    'parents': [
-                        {
-                            'class': 'tree_row',
-                            'attributes': ['hover', 'selected'],
-                            'layer0.opacity': 0.8,
-                        }
-                    ],
-                },
-                {'class': 'sidebar_container', 'layer0.tint': 'var(white2)'},
-            ],
-            'variables': {'white2': '#F0F0F7'},
-        }
-        self.theme_content_no_rules = [
-            {
-                'class': 'icon_file_type',
-                'parents': [
-                    {
-                        'class': 'tree_row',
-                        'attributes': ['hover', 'selected'],
-                        'layer0.opacity': 0.8,
-                    }
-                ],
-            },
-            {'class': 'sidebar_container', 'layer0.tint': '#FFFFFF'},
-        ]
-        self.theme_content_derived_background = {
-            'rules': [
-                {'class': 'icon_file_type', 'content_margin': [9, 8]},
-                {'class': 'sidebar_container', 'layer0.tint': 'var(bgcolor)'},
-            ],
-            'variables': {'bgcolor': 'var(--background)'},
-        }
-        self.theme_content_st_color_palette = {
-            'rules': [
-                {'class': 'icon_file_type', 'content_margin': [9, 8]},
-                {'class': 'sidebar_container', 'layer0.tint': 'darkslategray'},
-            ],
-        }
-
-        self.patcher1 = patch('sublime.load_resource')
-        self.patcher2 = patch('sublime.decode_value')
-        self.mock_load_resource = self.patcher1.start()
-        self.mock_decode_value = self.patcher2.start()
-
-    def tearDown(self):
-        self.patcher1.stop()
-        self.patcher2.stop()
-
-    def test_find_variables_st_default_theme(self):
-        target_list = []
-        search_themes.find_variables(
-            'rgb(115, 125, 240)',
-            self.theme_content,
-            target_list,
-            'Packages/Theme - Default/Default.sublime-theme',
-        )
-        self.assertEqual(target_list, ['light'])
-
-    def test_find_variables_hex_color(self):
-        target_list = []
-        search_themes.find_variables(
-            '#FFFFFF',
-            self.theme_content,
-            target_list,
-            'Packages/Theme - Treble/Treble Light.sublime-theme',
-        )
-        self.assertEqual(target_list, ['light'])
-
-    def test_find_variables_rgb_color(self):
-        target_list = []
-        search_themes.find_variables(
-            'rgb(255, 255, 255)',
-            self.theme_content,
-            target_list,
-            'Packages/Theme - Treble/Treble Light.sublime-theme',
-        )
-        self.assertEqual(target_list, ['light'])
-
-    def test_find_variables_hsl_color(self):
-        target_list = []
-        search_themes.find_variables(
-            'hsl(0, 0%, 100%)',
-            self.theme_content,
-            target_list,
-            'Packages/Theme - Treble/Treble Light.sublime-theme',
-        )
-        self.assertEqual(target_list, ['light'])
-
-    def test_find_variables_derived_background(self):
-        target_list = []
-        with patch('os.path.exists') as mock_exists:
-            mock_exists.return_value = True
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.read_pickle_data'
-            ) as mock_read_pickle:
-                mock_read_pickle.return_value = [{'background': '#000000'}]
-                search_themes.find_variables(
-                    'var(--background)',
-                    self.theme_content_derived_background,
-                    target_list,
-                    'Packages/Theme - Treble/Treble Adaptive.sublime-theme',
-                )
-                self.assertEqual(target_list, ['dark'])
-
-    def test_find_variables_st_color_palette(self):
-        target_list = []
-        search_themes.find_variables(
-            '#2f4f4f',
-            self.theme_content_st_color_palette,
-            target_list,
-            'Packages/Theme - Custom/Custom.sublime-theme',
-        )
-        self.assertEqual(target_list, ['dark'])
-
-    def test_find_attributes_sidebar_background(self):
-        target_list = []
-        search_themes.find_attributes(
-            'Packages/Theme - Treble/Treble Light.sublime-theme',
-            self.theme_content,
-            'sidebar_container',
-            'layer0.tint',
-            target_list,
-        )
-        self.assertEqual(target_list, ['light'])
-
-    def test_find_attributes_sidebar_background_no_rules(self):
-        target_list = []
-        search_themes.find_attributes(
-            'Packages/Theme - ayu/ayu-light.sublime-theme',
-            self.theme_content_no_rules,
-            'sidebar_container',
-            'layer0.tint',
-            target_list,
-        )
-        self.assertEqual(target_list, ['light'])
-
-    def test_find_attributes_hidden_file_sidebar_background(self):
-        hidden_theme_content = {
-            'rules': [{'class': 'sidebar_container', 'layer0.tint': 'var(black)'}],
-            'variables': {'black': '#000000'},
-        }
-        self.mock_load_resource.return_value = '{}'
-        self.mock_decode_value.return_value = hidden_theme_content
-
-        target_list = []
-        with patch('sublime.find_resources') as mock_find_resources:
-            mock_find_resources.return_value = ['Nested Base Theme.hidden-theme']
-            search_themes.find_attributes_hidden_file(
-                'Nested Dark Theme.hidden-theme',
-                {'extends': 'Nested Base Theme.hidden-theme'},
-                'sidebar_container',
-                'layer0.tint',
-                target_list,
-            )
-            self.assertEqual(target_list, ['dark'])
-
-    def test_find_sidebar_background(self):
-        self.mock_load_resource.return_value = '{}'
-        self.mock_decode_value.return_value = self.theme_content
-
-        result = search_themes.find_sidebar_background(
-            'Packages/Theme - Treble/Treble Light.sublime-theme'
-        )
-        self.assertEqual(result, ['light'])
-
-
 class TestThemeOpacity(TestCase):
     def setUp(self):
         self.theme_content_with_opacity = {
@@ -384,6 +213,34 @@ class TestThemeOpacity(TestCase):
         )
         self.assertEqual(target_list, [True, True])
 
+    def test_theme_with_opacity_cached_theme_info(self):
+        self.mock_load_resource.return_value = self.theme_content_with_opacity
+        self.mock_decode_value.side_effect = lambda x: x
+
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
+        ) as mock_cached:
+            mock_cached.return_value = True
+
+            with patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_theme_info_valid'
+            ) as mock_valid:
+                mock_valid.return_value = True
+
+                with patch(
+                    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filepath'
+                ) as mock_filepath:
+                    mock_filepath.return_value = '/test/path/Treble Dark.sublime-theme'
+
+                    result = search_themes.theme_with_opacity(
+                        'Treble Dark.sublime-theme'
+                    )
+                    self.assertTrue(result)
+
+                    mock_filepath.assert_called_once_with(
+                        os.path.join('../../../../..', 'Treble Dark.sublime-theme')
+                    )
+
     def test_theme_with_opacity_return_false(self):
         self.mock_load_resource.return_value = self.theme_content_without_opacity
         self.mock_decode_value.side_effect = lambda x: x
@@ -433,6 +290,329 @@ class TestThemeOpacity(TestCase):
                 'Packages/Theme - Custom/Custom.sublime-theme'
             )
             self.assertTrue(result)
+
+    def test_theme_with_opacity_hidden_theme_return_true(self):
+        main_theme_content = {'extends': 'Nested.hidden-theme', 'rules': []}
+
+        hidden_theme_content_with_opacity = {
+            'rules': [
+                {
+                    'class': 'icon_file_type',
+                    'parents': [{'class': 'tree_row', 'attributes': ['hover']}],
+                    'layer0.opacity': 0.8,
+                }
+            ]
+        }
+
+        self.mock_load_resource.side_effect = [
+            main_theme_content,
+            hidden_theme_content_with_opacity,
+        ]
+        self.mock_decode_value.side_effect = lambda x: x
+
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
+        ) as mock_cached:
+            mock_cached.return_value = False
+
+            with patch('sublime.find_resources') as mock_find_resources:
+                mock_find_resources.return_value = ['Nested.hidden-theme']
+
+                with patch(
+                    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filepath'
+                ) as mock_filepath:
+                    mock_filepath.return_value = '/test/path/Nested Theme.sublime-theme'
+
+                    result = search_themes.theme_with_opacity(
+                        'Nested Theme.sublime-theme'
+                    )
+                    self.assertTrue(result)
+
+                    mock_find_resources.assert_called_once_with('Nested.hidden-theme')
+
+    def test_theme_with_opacity_saves_theme_info(self):
+        self.mock_load_resource.return_value = self.theme_content_with_opacity
+        self.mock_decode_value.side_effect = lambda x: x
+
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
+        ) as mock_cached:
+            mock_cached.return_value = True
+
+            with patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_theme_info_valid'
+            ) as mock_valid:
+                mock_valid.return_value = None
+
+                with patch(
+                    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filepath'
+                ) as mock_filepath:
+                    mock_filepath.return_value = '/test/path/Treble Dark.sublime-theme'
+
+                    with patch(
+                        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.save_theme_info'
+                    ) as mock_save:
+                        search_themes.theme_with_opacity('Treble Dark.sublime-theme')
+
+                        mock_save.assert_called_once_with(
+                            '/test/path/Treble Dark.sublime-theme', True
+                        )
+
+
+class TestFindSidebarBackground(TestCase):
+    def setUp(self):
+        self.theme_content = {
+            'rules': [
+                {
+                    'class': 'icon_file_type',
+                    'parents': [
+                        {
+                            'class': 'tree_row',
+                            'attributes': ['hover', 'selected'],
+                            'layer0.opacity': 0.8,
+                        }
+                    ],
+                },
+                {'class': 'sidebar_container', 'layer0.tint': 'var(white2)'},
+            ],
+            'variables': {'white2': '#F0F0F7'},
+        }
+        self.theme_content_no_rules = [
+            {
+                'class': 'icon_file_type',
+                'parents': [
+                    {
+                        'class': 'tree_row',
+                        'attributes': ['hover', 'selected'],
+                        'layer0.opacity': 0.8,
+                    }
+                ],
+            },
+            {'class': 'sidebar_container', 'layer0.tint': '#FFFFFF'},
+        ]
+        self.theme_content_derived_background = {
+            'rules': [
+                {'class': 'icon_file_type', 'content_margin': [9, 8]},
+                {'class': 'sidebar_container', 'layer0.tint': 'var(bgcolor)'},
+            ],
+            'variables': {'bgcolor': 'var(--background)'},
+        }
+        self.theme_content_st_color_palette = {
+            'rules': [
+                {'class': 'icon_file_type', 'content_margin': [9, 8]},
+                {'class': 'sidebar_container', 'layer0.tint': 'darkslategray'},
+            ],
+        }
+
+        self.patcher1 = patch('sublime.load_resource')
+        self.patcher2 = patch('sublime.decode_value')
+        self.mock_load_resource = self.patcher1.start()
+        self.mock_decode_value = self.patcher2.start()
+
+    def tearDown(self):
+        self.patcher1.stop()
+        self.patcher2.stop()
+
+    def test_find_variables_st_default_theme(self):
+        target_list = []
+        search_themes.find_variables(
+            'rgb(115, 125, 240)',
+            self.theme_content,
+            target_list,
+            'Packages/Theme - Default/Default.sublime-theme',
+        )
+        self.assertEqual(target_list, ['light'])
+
+    def test_find_variables_hsl_color(self):
+        target_list = []
+        search_themes.find_variables(
+            'hsl(0, 0%, 100%)',
+            self.theme_content,
+            target_list,
+            'Packages/Theme - Treble/Treble Light.sublime-theme',
+        )
+        self.assertEqual(target_list, ['light'])
+
+    def test_find_variables_hsla_color(self):
+        target_list = []
+        search_themes.find_variables(
+            # Bowtruckle color with alpha
+            'hsla(137, 42.17%, 83.73%, 0.8)',
+            self.theme_content,
+            target_list,
+            'Packages/Theme - Treble/Treble Light.sublime-theme',
+        )
+        self.assertEqual(target_list, ['light'])
+
+    def test_find_variables_rgb_color(self):
+        target_list = []
+        search_themes.find_variables(
+            'rgb(255, 255, 255)',
+            self.theme_content,
+            target_list,
+            'Packages/Theme - Treble/Treble Light.sublime-theme',
+        )
+        self.assertEqual(target_list, ['light'])
+
+    def test_find_variables_rgba_color(self):
+        target_list = []
+        search_themes.find_variables(
+            # Biohack color with alpha
+            'rgba(24, 23, 27, 0.8)',
+            self.theme_content,
+            target_list,
+            'Packages/Theme - Treble/Treble Dark.sublime-theme',
+        )
+        self.assertEqual(target_list, ['dark'])
+
+    def test_find_variables_hex_color(self):
+        target_list = []
+        search_themes.find_variables(
+            '#FFFFFF',
+            self.theme_content,
+            target_list,
+            'Packages/Theme - Treble/Treble Light.sublime-theme',
+        )
+        self.assertEqual(target_list, ['light'])
+
+    def test_find_variables_derived_background(self):
+        target_list = []
+        with patch('os.path.exists') as mock_exists:
+            mock_exists.return_value = True
+            with patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.read_pickle_data'
+            ) as mock_read_pickle:
+                mock_read_pickle.return_value = [{'background': '#000000'}]
+                search_themes.find_variables(
+                    'var(--background)',
+                    self.theme_content_derived_background,
+                    target_list,
+                    'Packages/Theme - Treble/Treble Adaptive.sublime-theme',
+                )
+                self.assertEqual(target_list, ['dark'])
+
+    def test_find_variables_derived_background_no_user_ui_settings(self):
+        target_list = []
+        with patch('os.path.exists') as mock_exists:
+            mock_exists.return_value = False
+            with patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.read_pickle_data'
+            ) as mock_read_pickle:
+                mock_read_pickle.return_value = [{'background': '#FFFFFF'}]
+                search_themes.find_variables(
+                    'var(--background)',
+                    self.theme_content_derived_background,
+                    target_list,
+                    'Packages/Theme - Treble/Treble Adaptive.sublime-theme',
+                )
+                self.assertEqual(target_list, ['light'])
+
+    def test_find_variables_st_color_palette(self):
+        target_list = []
+        search_themes.find_variables(
+            '#2f4f4f',
+            self.theme_content_st_color_palette,
+            target_list,
+            'Packages/Theme - Custom/Custom.sublime-theme',
+        )
+        self.assertEqual(target_list, ['dark'])
+
+    def test_find_attributes_sidebar_background(self):
+        target_list = []
+        search_themes.find_attributes(
+            'Packages/Theme - Treble/Treble Light.sublime-theme',
+            self.theme_content,
+            'sidebar_container',
+            'layer0.tint',
+            target_list,
+        )
+        self.assertEqual(target_list, ['light'])
+
+    def test_find_attributes_sidebar_background_no_rules(self):
+        target_list = []
+        search_themes.find_attributes(
+            'Packages/Theme - ayu/ayu-light.sublime-theme',
+            self.theme_content_no_rules,
+            'sidebar_container',
+            'layer0.tint',
+            target_list,
+        )
+        self.assertEqual(target_list, ['light'])
+
+    def test_find_attributes_hidden_file_sidebar_background(self):
+        hidden_theme_content = {
+            'rules': [{'class': 'sidebar_container', 'layer0.tint': 'var(black)'}],
+            'variables': {'black': '#000000'},
+        }
+        self.mock_load_resource.return_value = '{}'
+        self.mock_decode_value.return_value = hidden_theme_content
+
+        target_list = []
+        with patch('sublime.find_resources') as mock_find_resources:
+            mock_find_resources.return_value = ['Nested Base Theme.hidden-theme']
+            search_themes.find_attributes_hidden_file(
+                'Nested Dark Theme.hidden-theme',
+                {'extends': 'Nested Base Theme.hidden-theme'},
+                'sidebar_container',
+                'layer0.tint',
+                target_list,
+            )
+            self.assertEqual(target_list, ['dark'])
+
+    def test_find_sidebar_background(self):
+        self.mock_load_resource.return_value = '{}'
+        self.mock_decode_value.return_value = self.theme_content
+
+        result = search_themes.find_sidebar_background(
+            'Packages/Theme - Treble/Treble Light.sublime-theme'
+        )
+        self.assertEqual(result, ['light'])
+
+    def test_test_find_sidebar_background_hidden_theme(self):
+        main_theme_content = {'extends': 'Nested.hidden-theme', 'rules': []}
+
+        hidden_theme_content = {
+            'rules': [
+                {
+                    'class': 'icon_file_type',
+                    'parents': [
+                        {
+                            'class': 'tree_row',
+                            'attributes': ['hover'],
+                            'layer0.opacity': 0.8,
+                        }
+                    ],
+                },
+                {'class': 'sidebar_container', 'layer0.tint': 'var(white2)'},
+            ],
+            'variables': {'white2': '#F0F0F7'},
+        }
+
+        self.mock_load_resource.side_effect = [
+            main_theme_content,
+            hidden_theme_content,
+        ]
+        self.mock_decode_value.side_effect = lambda x: x
+
+        with patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
+        ) as mock_cached:
+            mock_cached.return_value = False
+
+            with patch('sublime.find_resources') as mock_find_resources:
+                mock_find_resources.return_value = ['Nested.hidden-theme']
+
+                with patch(
+                    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filepath'
+                ) as mock_filepath:
+                    mock_filepath.return_value = '/test/path/Nested Theme.sublime-theme'
+
+                    result = search_themes.find_sidebar_background(
+                        'Nested Theme.sublime-theme'
+                    )
+                    self.assertTrue(result)
+
+                    mock_find_resources.assert_called_once_with('Nested.hidden-theme')
 
 
 class TestGetSidebarBgColor(TestCase):
