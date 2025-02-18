@@ -92,7 +92,7 @@ Go to `Tools > Command Palette...` select `UnitTesting: Test Package` type `Zuka
 
 > `.python-version` needs to be 3.8. There is no `subTest` in 3.3.
 
-> tag `no cover` is used four times. Two times for Windows related code in `system_them` and once in `test_system_theme`. And the fourth is, in `color_dark_light`, an `if` statement.
+> tag `no cover` is used four times. Two times for Windows related code in `system_theme` and once in `test_system_theme`. And the fourth is, in `color_dark_light`, an `if` statement.
 
 ```
 # .coveragerc
