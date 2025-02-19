@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: cargo-deny
+preferences:
+  scope: source.toml.cargodeny
+  settings:
+    icon: cargodeny
+syntax:
+  - name: TOML (cargo-deny)
+    scope: source.toml.cargodeny
+    hidden: true
+    file_extensions:
+      - deny.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

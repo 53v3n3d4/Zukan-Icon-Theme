@@ -4,7 +4,7 @@ name: Python
 icons: 
   - python-1
 preferences:
-  scope: binary.pickle, source.ini.python, source.python, source.shell.python, source.toml.python
+  scope: binary.pickle, source.ini.python, source.python, source.shell.python, source.toml.python, text.plain.python
   settings:
     icon: python
 syntax:
@@ -24,6 +24,13 @@ syntax:
       main:
         - include: scope:source.ini
           apply_prototype: true
+  - name: Plain Text (Python)
+    scope: text.plain.python
+    hidden: true
+    file_extensions:
+      - MANIFEST.in  # Removed from std in Python 3.12
+    contexts:
+      main: []
   - name: Python
     scope: source.python
     hidden: true
@@ -67,3 +74,5 @@ syntax:
       main:
         - include: scope:source.toml
           apply_prototype: true
+
+# ST Package

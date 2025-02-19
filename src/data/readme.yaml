@@ -5,7 +5,7 @@ name: README
 icons:
   - readme-light
 preferences:
-  scope: text.html.markdown.readme, text.plain.readme
+  scope: text.html.markdown.readme, text.plain.readme, text.restructuredtext.readme
   settings:
     icon: readme-dark
 syntax:
@@ -28,3 +28,12 @@ syntax:
       - RELEASE-NOTES
     contexts:
       main: []
+  - name: reStructuredText (README)
+    scope: text.restructuredtext.readme
+    hidden: true
+    file_extensions:
+      - README.rst
+    contexts:
+      main:
+        - include: scope:text.restructuredtext
+          apply_prototype: true

@@ -6,7 +6,7 @@ icons:
   - rust-1
   - rust-2
 preferences:
-  scope: source.json.rust, source.rust
+  scope: source.json.rust, source.rust, source.toml.rust
   settings:
     icon: rust-dark
 syntax:
@@ -26,5 +26,20 @@ syntax:
       - rs
     contexts:
       main: []
+  - name: TOML (Rust)
+    scope: source.toml.rust
+    hidden: true
+    file_extensions:
+      - .rustfmt.toml
+      - _typos.toml
+      - config.example.toml
+      - rust-toolchain
+      - rustfmt-nightly.toml
+      - rustfmt.toml
+      - typos.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
 
 # ST Package
