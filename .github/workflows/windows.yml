@@ -1,0 +1,27 @@
+name: Windows
+
+on: [push]
+
+jobs:
+  plugin-tests:
+
+    name: Plugin Tests
+    runs-on: windows-latest
+    permissions:
+      # Passing one of default ones.
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Sublime Text
+        uses: SublimeText/UnitTesting/actions/setup@v1
+        with:
+          package-name: Zukan Icon Theme
+          sublime-text-version: 4
+      - name: Test with unittest
+        uses: SublimeText/UnitTesting/actions/run-tests@v1
+        with:
+          coverage: true
+          package-name: Zukan Icon Theme

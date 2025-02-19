@@ -1,4 +1,5 @@
 # Ignored directories that will not be added on releases.
+.github/      export-ignore
 assets/       export-ignore
 docs/         export-ignore
 examples/     export-ignore

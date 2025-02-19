@@ -1,6 +1,9 @@
 ## Zukan Icon Theme
 
-[![Build Status](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/ci.yml/badge.svg)](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/ci.yml)
+[![Build Status](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/build.yml/badge.svg)](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/build.yml)
+[![Linux Status](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/linux.yml/badge.svg)](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/linux.yml)
+[![macOS Status](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/macos.yml/badge.svg)](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/macos.yml)
+[![Windows Status](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/windows.yml/badge.svg)](https://github.com/53v3n3d4/Zukan-Icon-Theme/actions/workflows/windows.yml)
 [![Sublime Text >= 4169](https://img.shields.io/badge/Sublime_Text-%3E%3D%204169-orange?style=flat&logo=sublime-text)](https://www.sublimetext.com/download)  
 
 Icon theme for Sublime Text 4 editor.  
