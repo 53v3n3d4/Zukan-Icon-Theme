@@ -3,7 +3,8 @@
 ## [0.4.9] - 2025
 
 ### Icons, syntaxes and preferences 👽
-- Change syntax: OpenFGA
+- Add icon-theme: Fluent, Just, prefix.dev
+- Change syntax: License, OpenFGA
 
 ### Plugin 🕹️
 - Change icons_themes

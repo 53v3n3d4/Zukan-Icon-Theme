@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Fluent
+preferences:
+  scope: source.fluent
+  settings:
+    icon: fluent
+syntax:
+  - name: Fluent
+    scope: source.fluent
+    hidden: true
+    file_extensions:
+     - ftl
+    contexts:
+      main: []
+
+# Package Fluent

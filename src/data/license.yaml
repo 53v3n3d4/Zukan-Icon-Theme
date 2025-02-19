@@ -35,5 +35,7 @@ syntax:
       - license.txt
       - LICENSE
       - LICENSE.txt
+      - LICENSE-APACHE
+      - LICENSE-MIT
     contexts:
       main: []

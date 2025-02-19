@@ -1,0 +1,19 @@
+%YAML 1.2
+---
+name: Just
+preferences:
+  scope: source.just
+  settings:
+    icon: just
+syntax:
+  - name: Just
+    scope: source.just
+    hidden: true
+    file_extensions:
+      - .justfile
+      - just
+      - justfile
+    contexts:
+      main: []
+
+# Package Just

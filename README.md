@@ -9,7 +9,7 @@ Icon theme for Sublime Text 4 editor.
 
 <img src="assets/file-icons-concat-sample.svg" width="728" height="460" alt="file icon">
 
-> File icons in v0.4.8  
+> File icons in v0.4.9  
 
 > All file icons, see [file-icon.md](https://github.com/53v3n3d4/Zukan-Icon-Theme/blob/main/docs/file-icon.md)  
 

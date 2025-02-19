@@ -16,3 +16,7 @@ syntax:
       - txtree
     contexts:
       main: []
+
+# Packages TextTree
+# To maintain txt with `text` icon, need to use ST `Open all with current
+# extension as...` since there will be no icon syntax.

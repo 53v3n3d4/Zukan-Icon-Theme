@@ -78,7 +78,7 @@ SCOPES_FILE_EXTENSIONS = [
 # ci.yml: github
 # config.exs: phoenix
 # config.py: fastapi
-# config.toml: pdm, tidb
+# config.toml: pdm, prefix.dev, tidb
 # config.xml: clickhouse
 # config.yml: circleci
 # config.yaml: clickhouse, openfga
@@ -88,7 +88,7 @@ SCOPES_FILE_EXTENSIONS = [
 # model.conf: casbin
 # policy.csv: casbin
 # Project.toml: pkgjl
-# pyproject.toml: python, black, hatch, pdm, pip, poetry, setuptools, tox
+# pyproject.toml: python, black, hatch, pdm, pip, poetry, prefix.dev, setuptools, tox
 # requirements.txt: pip, uv
 # setup.cfg: python, setuptools, tox
 # unittestings.json: sublime
