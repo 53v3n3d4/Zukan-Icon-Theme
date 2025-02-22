@@ -90,15 +90,19 @@ as explained above.
 
 Icon does not change from dark version to light or vice-versa, while all others do.
 
-If is an issue with plugin you can check if the correct icon was applied.
+Check if the correct icon was applied:
 
-- Go to  `Settings > Browse Packages...`
-- If the icon is not a Primary Icon, go to `Packages/Zukan Icon Theme/icons_preferences` and check the icon used in tmPreferences file
-- If the icon is a Primary Icon and does not have a tmPreferences file, go to `Packages/Zukan Icon Theme/icons` and check the icon PNG
+- Go to  `Settings > Browse Packages...`  
+- If the icon is not a Primary icon, go to `Packages/Zukan Icon Theme/icons_preferences` and check the icon used in tmPreferences file  
+- If the icon is a Primary icon, go to `Packages/Zukan Icon Theme/icons` and check the icon PNG.  
+
+> Checking tmPreferences is not useful because Primary icons need to be renamed to correct display  
 
 **Solution**
 ```
 If the correct icon is applied, a restart will fix it.
+
+Alternatively, switching betwween dark and light may correct icon.
 ```
 
 

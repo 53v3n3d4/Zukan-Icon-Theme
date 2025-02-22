@@ -22,6 +22,10 @@ class TestZukanPreference(TestCase):
                 'scope': 'source.atest',
             },
         }
+        self.test_dark_theme = 'Treble Dark.sublime-theme'
+        self.test_light_theme = 'Treble Light.sublime-theme'
+        self.bgcolor_dark = 'dark'
+        self.bgcolor_light = 'light'
 
     @patch(
         'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_change_icon_settings'
@@ -52,7 +56,7 @@ class TestZukanPreference(TestCase):
         'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_prefer_icon_settings'
     )
     def test_prefer_icon_setting(self, mock_get_settings):
-        expected = (True, {'Treble Dark.sublime-theme': 'light'})
+        expected = (True, {self.test_dark_theme: 'light'})
         mock_get_settings.return_value = expected
 
         result = self.zukan.prefer_icon_setting()
@@ -62,7 +66,7 @@ class TestZukanPreference(TestCase):
 
     @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_theme_name')
     def test_theme_name_setting(self, mock_get_theme):
-        expected = 'my_theme'
+        expected = self.test_dark_theme
         mock_get_theme.return_value = expected
 
         result = self.zukan.theme_name_setting()
@@ -88,26 +92,38 @@ class TestZukanPreference(TestCase):
         'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_sidebar_bgcolor'
     )
     def test_sidebar_bgcolor(self, mock_get_bgcolor):
-        expected = 'dark'
-        mock_get_bgcolor.return_value = expected
+        mock_get_bgcolor.return_value = self.bgcolor_dark
 
         result = self.zukan.sidebar_bgcolor(self.test_theme)
 
-        self.assertEqual(result, expected)
+        self.assertEqual(result, self.bgcolor_dark)
         mock_get_bgcolor.assert_called_once_with(self.test_theme)
 
     @patch(
         'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.copy_primary_icons'
     )
     def test_build_icon_preference(self, mock_copy_icons):
-        with patch.object(self.zukan, 'create_icon_preference') as mock_create:
-            test_file_name = 'atest'
-            test_preference_name = 'atest.tmPreferences'
+        # fmt: off
+        with patch.object(self.zukan, 'create_icon_preference') as mock_create, \
+             patch.object(self.zukan, 'theme_name_setting') as mock_theme_name, \
+             patch.object(self.zukan, 'sidebar_bgcolor') as mock_bgcolor:
+             # fmt: on
 
-            self.zukan.build_icon_preference(test_file_name, test_preference_name)
+                    mock_theme_name.return_value = self.test_dark_theme
+                    mock_bgcolor.return_value = self.bgcolor_dark
 
-            mock_create.assert_called_once_with(test_file_name)
-            mock_copy_icons.assert_called_once()
+                    test_file_name = 'atest'
+
+                    self.zukan.build_icon_preference(test_file_name)
+
+                    mock_theme_name.assert_called_once()
+                    mock_bgcolor.assert_called_once_with(self.test_dark_theme)
+                    mock_create.assert_called_once_with(
+                        test_file_name, self.bgcolor_dark, self.test_dark_theme
+                    )
+                    mock_copy_icons.assert_called_once_with(
+                        self.bgcolor_dark, self.test_dark_theme
+                    )
 
     @patch('os.path.exists')
     @patch('os.makedirs')
@@ -128,6 +144,35 @@ class TestZukanPreference(TestCase):
             )
             mock_create.assert_called_once()
             mock_copy_icons.assert_called_once()
+
+    def test_build_icons_preferences_deletes_existing_preferences(self):
+        # fmt: off
+        with patch('os.path.exists') as mock_exists, \
+             patch('os.makedirs') as mock_makedirs, \
+             patch('os.listdir') as mock_listdir, \
+             patch.object(self.zukan, 'delete_icons_preferences') as mock_delete, \
+             patch.object(self.zukan, 'theme_name_setting') as mock_theme_name, \
+             patch.object(self.zukan, 'sidebar_bgcolor') as mock_bgcolor, \
+             patch.object(
+                self.zukan, 'create_icons_preferences'
+             ) as mock_create_icons_preferences, \
+             patch(
+                'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.copy_primary_icons'
+             ) as mock_copy_icons:
+             # fmt: on
+
+            mock_exists.return_value = True
+            mock_listdir.return_value = ["atest1.tmPreferences", "atest2.tmPreferences"]
+            mock_theme_name.return_value = self.test_dark_theme
+            mock_bgcolor.return_value = self.bgcolor_dark
+
+            self.zukan.build_icons_preferences()
+
+            mock_delete.assert_called_once()
+            mock_create_icons_preferences.assert_called_once_with(
+                self.bgcolor_dark, self.test_dark_theme
+            )
+            mock_copy_icons.assert_called_once_with(self.bgcolor_dark, self.test_dark_theme)
 
     def test_apply_change_icon(self):
         test_pref = {
@@ -164,7 +209,7 @@ class TestZukanPreference(TestCase):
         mock_exists.return_value = True
 
         self.zukan._apply_auto_prefer_icon(
-            test_pref, 'ada-light', 'dark', self.test_theme, True, {}
+            test_pref, 'ada-light', self.bgcolor_dark, self.test_theme, True, {}
         )
 
         self.assertEqual(test_pref['preferences']['settings']['icon'], 'ada-light')
@@ -213,7 +258,7 @@ class TestZukanPreference(TestCase):
         test_params = {
             'icon_name': 'ATest',
             'filename': 'atest.tmPreferences',
-            'bgcolor': 'dark',
+            'bgcolor': self.bgcolor_dark,
             'theme_name': 'Treble Adaptive.sublime-theme',
             'change_icon': {},
             'auto_prefer_icon': True,
@@ -286,20 +331,24 @@ class TestZukanPreference(TestCase):
             self.zukan,
             get_list_icons_preferences=MagicMock(return_value=mock_icons),
             theme_name_setting=MagicMock(return_value='Treble Adaptive.sublime-theme'),
-            sidebar_bgcolor=MagicMock(return_value='dark'),
+            sidebar_bgcolor=MagicMock(return_value=self.bgcolor_dark),
             prefer_icon_setting=MagicMock(return_value=(True, {})),
             change_icon_setting=MagicMock(return_value={}),
             ignored_icon_setting=MagicMock(return_value=set()),
             handle_icon_preferences=MagicMock(),
         ):
-            self.zukan.prepare_icon_preference_file(test_preference)
+            self.zukan.prepare_icon_preference_file(
+                test_preference, self.bgcolor_dark, self.test_dark_theme
+            )
 
             self.zukan.handle_icon_preferences.assert_called_once()
 
     @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
     def test_create_icon_preference(self, mock_logger):
         with patch.object(self.zukan, 'prepare_icon_preference_file'):
-            self.zukan.create_icon_preference('atest')
+            self.zukan.create_icon_preference(
+                'atest', self.bgcolor_dark, self.test_dark_theme
+            )
             mock_logger.info.assert_called_once_with(
                 '%s created.', 'atest.tmPreferences'
             )
@@ -315,7 +364,9 @@ class TestZukanPreference(TestCase):
         with patch.object(
             self.zukan, 'prepare_icon_preference_file', side_effect=side_effect
         ):
-            self.zukan.create_icon_preference(test_name)
+            self.zukan.create_icon_preference(
+                test_name, self.bgcolor_dark, self.test_dark_theme
+            )
 
             mock_logger.error.assert_called_once_with(
                 '[Errno %d] %s: %r',
@@ -335,7 +386,9 @@ class TestZukanPreference(TestCase):
         with patch.object(
             self.zukan, 'prepare_icon_preference_file', side_effect=side_effect
         ):
-            self.zukan.create_icon_preference(test_name)
+            self.zukan.create_icon_preference(
+                test_name, self.bgcolor_dark, self.test_dark_theme
+            )
 
             mock_logger.error.assert_called_once_with(
                 '[Errno %d] %s: %r',
@@ -363,10 +416,12 @@ class TestZukanPreference(TestCase):
                 ), patch(
                     'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger'
                 ) as mock_logger:
-                    self.zukan.create_icon_preference(input_name)
+                    self.zukan.create_icon_preference(
+                        input_name, self.bgcolor_light, self.test_light_theme
+                    )
 
                     self.zukan.prepare_icon_preference_file.assert_called_once_with(
-                        input_name
+                        input_name, self.bgcolor_light, self.test_light_theme
                     )
                     mock_logger.info.assert_called_once_with(
                         '%s created.',
@@ -380,9 +435,13 @@ class TestZukanPreference(TestCase):
             _get_file_name=MagicMock(),
         ):
             test_name = 'ada-dark'
-            self.zukan.create_icon_preference(test_name)
+            self.zukan.create_icon_preference(
+                test_name, self.bgcolor_light, self.test_light_theme
+            )
 
-            self.zukan.prepare_icon_preference_file.assert_called_once_with(test_name)
+            self.zukan.prepare_icon_preference_file.assert_called_once_with(
+                test_name, self.bgcolor_light, self.test_light_theme
+            )
 
     def test_create_icon_preference_with_light_suffix(self):
         with patch.multiple(
@@ -391,9 +450,13 @@ class TestZukanPreference(TestCase):
             _get_file_name=MagicMock(),
         ):
             test_name = 'ada-light'
-            self.zukan.create_icon_preference(test_name)
+            self.zukan.create_icon_preference(
+                test_name, self.bgcolor_dark, self.test_dark_theme
+            )
 
-            self.zukan.prepare_icon_preference_file.assert_called_once_with(test_name)
+            self.zukan.prepare_icon_preference_file.assert_called_once_with(
+                test_name, self.bgcolor_dark, self.test_dark_theme
+            )
 
     @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
     def test_prepare_icons_preferences_list(self, mock_logger):
@@ -411,13 +474,15 @@ class TestZukanPreference(TestCase):
             self.zukan,
             get_list_icons_preferences=MagicMock(return_value=mock_list),
             theme_name_setting=MagicMock(return_value='Treble Adaptive.sublime-theme'),
-            sidebar_bgcolor=MagicMock(return_value='dark'),
+            sidebar_bgcolor=MagicMock(return_value=self.bgcolor_dark),
             prefer_icon_setting=MagicMock(return_value=(True, {})),
             change_icon_setting=MagicMock(return_value={}),
             ignored_icon_setting=MagicMock(return_value=set()),
             handle_icon_preferences=MagicMock(),
         ):
-            self.zukan.prepare_icons_preferences_list()
+            self.zukan.prepare_icons_preferences_list(
+                self.bgcolor_dark, self.test_dark_theme
+            )
 
             self.zukan.handle_icon_preferences.assert_called_once()
 
@@ -436,7 +501,7 @@ class TestZukanPreference(TestCase):
             self.zukan,
             get_list_icons_preferences=MagicMock(return_value=mock_list),
             theme_name_setting=MagicMock(return_value='Treble Adaptive.sublime-theme'),
-            sidebar_bgcolor=MagicMock(return_value='dark'),
+            sidebar_bgcolor=MagicMock(return_value=self.bgcolor_dark),
             prefer_icon_setting=MagicMock(return_value=(True, {})),
             change_icon_setting=MagicMock(return_value={}),
             ignored_icon_setting=MagicMock(return_value={'Ignored-1'}),
@@ -444,7 +509,9 @@ class TestZukanPreference(TestCase):
         ), patch(
             'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger'
         ) as mock_logger:
-            self.zukan.prepare_icons_preferences_list()
+            self.zukan.prepare_icons_preferences_list(
+                self.bgcolor_dark, self.test_dark_theme
+            )
 
             self.zukan.handle_icon_preferences.assert_not_called()
             mock_logger.info.assert_called_with('Ignored icon %s', 'Ignored-1')
@@ -452,7 +519,7 @@ class TestZukanPreference(TestCase):
     @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
     def test_create_icons_preferences(self, mock_logger):
         with patch.object(self.zukan, 'prepare_icons_preferences_list'):
-            self.zukan.create_icons_preferences()
+            self.zukan.create_icons_preferences(self.bgcolor_dark, self.test_dark_theme)
             mock_logger.info.assert_called_once_with('tmPreferences created.')
 
     @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
@@ -460,7 +527,7 @@ class TestZukanPreference(TestCase):
         with patch.object(
             self.zukan, 'prepare_icons_preferences_list', side_effect=FileNotFoundError
         ):
-            self.zukan.create_icons_preferences()
+            self.zukan.create_icons_preferences(self.bgcolor_dark, self.test_dark_theme)
             mock_logger.error.assert_called_once_with(
                 '[Errno %d] %s: %r',
                 errno.ENOENT,
@@ -473,7 +540,7 @@ class TestZukanPreference(TestCase):
         with patch.object(
             self.zukan, 'prepare_icons_preferences_list', side_effect=OSError
         ):
-            self.zukan.create_icons_preferences()
+            self.zukan.create_icons_preferences(self.bgcolor_dark, self.test_dark_theme)
             mock_logger.error.assert_called_once_with(
                 '[Errno %d] %s: %r',
                 errno.EACCES,

@@ -58,13 +58,15 @@ class ZukanPreference:
     def sidebar_bgcolor(self, theme_name: str) -> str:
         return get_sidebar_bgcolor(theme_name)
 
-    def build_icon_preference(self, file_name: str, preference_name: str):
+    def build_icon_preference(self, file_name: str):
         """
         Batch create preference, delete plist tag and copy primary icons, to
         use with Thread together in install events.
         """
-        self.create_icon_preference(file_name)
-        copy_primary_icons()
+        theme_name = self.theme_name_setting()
+        bgcolor = self.sidebar_bgcolor(theme_name)
+        self.create_icon_preference(file_name, bgcolor, theme_name)
+        copy_primary_icons(bgcolor, theme_name)
 
     def build_icons_preferences(self):
         """
@@ -82,8 +84,10 @@ class ZukanPreference:
             ):
                 self.delete_icons_preferences()
         finally:
-            self.create_icons_preferences()
-            copy_primary_icons()
+            theme_name = self.theme_name_setting()
+            bgcolor = self.sidebar_bgcolor(theme_name)
+            self.create_icons_preferences(bgcolor, theme_name)
+            copy_primary_icons(bgcolor, theme_name)
 
     def _apply_change_icon(self, p: dict, change_icon: dict):
         if change_icon:
@@ -223,6 +227,11 @@ class ZukanPreference:
         icon_name (str) -- icon name or icon option name.
         filename (str) -- icon name or icon option name with tmPreferences file
         extension, excluding '-dark' or '-light' from name.
+        bgcolor (str) -- theme background color.
+        theme_name (str) -- theme name.
+        change_icon (dict) -- dictionary with name and icon name.
+        auto_prefer_icon (bool) -- auto prefere icon settiong, true or false.
+        prefer_icon (dict) -- dictionary with theme name and prefer icon, light or dark.
         """
         # 'change_icon' setting
         self._apply_change_icon(p, change_icon)
@@ -274,6 +283,8 @@ class ZukanPreference:
     def prepare_icon_preference_file(
         self,
         preference_name: str,
+        bgcolor: str,
+        theme_name: str,
     ):
         """
         Prepare icon preference file, from icons data and setting 'create_custom_icon'.
@@ -281,12 +292,11 @@ class ZukanPreference:
 
         Parameters:
         preference_name (str) -- icon or icon option.
+        bgcolor (str) -- theme background color.
+        theme_name (str) -- theme name.
         """
         list_all_icons_preferences = self.get_list_icons_preferences()
         # print(list_all_icons_preferences)
-
-        theme_name = self.theme_name_setting()
-        bgcolor = self.sidebar_bgcolor(theme_name)
 
         auto_prefer_icon, prefer_icon = self.prefer_icon_setting()
         change_icon = self.change_icon_setting()
@@ -337,12 +347,16 @@ class ZukanPreference:
             ):
                 logger.info('ignored icon %s', p['name'])
 
-    def create_icon_preference(self, preference_name: str):
+    def create_icon_preference(
+        self, preference_name: str, bgcolor: str, theme_name: str
+    ):
         """
         Create icon tmPreferences file.
 
         Parameters:
         preference_name (str) -- icon or icon option.
+        bgcolor (str) -- theme background color.
+        theme_name (str) -- theme name.
         """
         if preference_name.endswith('-dark'):
             fname = preference_name[:-5] + TMPREFERENCES_EXTENSION
@@ -352,7 +366,7 @@ class ZukanPreference:
             fname = preference_name + TMPREFERENCES_EXTENSION
 
         try:
-            self.prepare_icon_preference_file(preference_name)
+            self.prepare_icon_preference_file(preference_name, bgcolor, theme_name)
 
             logger.info('%s created.', fname)
 
@@ -373,15 +387,16 @@ class ZukanPreference:
                 fname,
             )
 
-    def prepare_icons_preferences_list(self):
+    def prepare_icons_preferences_list(self, bgcolor: str, theme_name: str):
         """
         Prepare icons preferences list, from icons data and setting 'create_custom_icon'.
         And handle the zukan settings to choose icon option, version or ignore an icon.
+
+        Parameters:
+        bgcolor (str) -- theme background color.
+        theme_name (str) -- theme name.
         """
         list_all_icons_preferences = self.get_list_icons_preferences()
-
-        theme_name = self.theme_name_setting()
-        bgcolor = self.sidebar_bgcolor(theme_name)
 
         auto_prefer_icon, prefer_icon = self.prefer_icon_setting()
         change_icon = self.change_icon_setting()
@@ -422,12 +437,16 @@ class ZukanPreference:
             ):
                 logger.info('Ignored icon %s', p['name'])
 
-    def create_icons_preferences(self):
+    def create_icons_preferences(self, bgcolor: str, theme_name: str):
         """
         Create icons tmPreferences files.
+
+        Parameters:
+        bgcolor (str) -- theme background color.
+        theme_name (str) -- theme name.
         """
         try:
-            self.prepare_icons_preferences_list()
+            self.prepare_icons_preferences_list(bgcolor, theme_name)
 
             logger.info('tmPreferences created.')
 

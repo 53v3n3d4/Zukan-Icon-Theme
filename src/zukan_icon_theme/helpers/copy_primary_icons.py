@@ -29,7 +29,7 @@ from ..utils.zukan_paths import (
 logger = logging.getLogger(__name__)
 
 
-def copy_primary_icons():
+def copy_primary_icons(bgcolor: str = None, theme_name: str = None):
     """
     'primary' icons need to delete PNGs to work in 'ignore_icon' setting. They do
     not need preference file to show.
@@ -38,13 +38,19 @@ def copy_primary_icons():
     will choose the icon, dark or light, to be copied.
 
     PNGs copies necessary if install using clone repo.
+
+    Parameters:
+    bgcolor (str) -- theme background color.
+    theme_name (str) -- theme name.
     """
     auto_prefer_icon, prefer_icon = get_prefer_icon_settings()
     change_icon, _ = get_change_icon_settings()
     ignored_icon = get_ignored_icon_settings()
 
-    theme_name = get_theme_name()
-    bgcolor = get_sidebar_bgcolor(theme_name)
+    if not theme_name:
+        theme_name = get_theme_name()
+    if not bgcolor:
+        bgcolor = get_sidebar_bgcolor(theme_name)
     icon_dark_light = get_icon_dark_light(bgcolor)
 
     for p in PRIMARY_ICONS:

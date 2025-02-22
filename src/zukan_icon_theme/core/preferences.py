@@ -92,7 +92,7 @@ class Preferences(ZukanPreference):
                         file_name = p['preferences']['settings']['icon']
 
                     # print(file_name)
-                    self.build_icon_preference(file_name, preference_name)
+                    self.build_icon_preference(file_name)
 
     def install_all_icons_preferences(self):
         self.build_icons_preferences()
