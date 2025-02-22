@@ -132,17 +132,17 @@ class TestZukanPreference(TestCase):
     @patch(
         'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.copy_primary_icons'
     )
-    @patch('subprocess.check_output')
+    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output')
     def test_build_icons_preferences(
         self,
-        mock_check_output,
+        mock_subprocess,
         mock_copy_icons,
         mock_listdir,
         mock_makedirs,
         mock_exists,
     ):
         if platform.system() == 'Linux':
-            mock_check_output.return_value = b'{"color-scheme": "dark"}'
+            mock_subprocess.return_value = '{"data":[{"data":1}]}'
 
         mock_exists.return_value = False
 
