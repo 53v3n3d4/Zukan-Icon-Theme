@@ -18,10 +18,10 @@ syntax:
       - bmp
       - emf
       - gif
+      - heic
       - jp2
       - jpeg
       - jpg
-      - heic
       - png
       - pnm
       - ppm
@@ -30,6 +30,7 @@ syntax:
       - tiff
       - webp
       - xbm
+      - xcf
       - xpm
     contexts:
       main: []

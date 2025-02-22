@@ -30,8 +30,11 @@ syntax:
     scope: source.toml.rust
     hidden: true
     file_extensions:
+      - .clippy.toml
       - .rustfmt.toml
+      - .typos.toml
       - _typos.toml
+      - clippy.toml
       - config.example.toml
       - rust-toolchain
       - rustfmt-nightly.toml

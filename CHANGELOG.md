@@ -5,7 +5,7 @@
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: cargo-deny, Fluent, Just, prefix.dev
 - Add syntax: Python, README, Rust
-- Change syntax: License, OpenFGA
+- Change syntax: Image, License, OpenFGA
 
 ### Plugin 🕹️
 - Change icons_themes
