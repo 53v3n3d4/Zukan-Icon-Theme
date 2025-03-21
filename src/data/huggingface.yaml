@@ -1,0 +1,35 @@
+%YAML 1.2
+---
+name: Hugging Face
+preferences:
+  scope: binary.huggingface, source.json.huggingface, source.yaml.huggingface
+  settings:
+    icon: huggingface
+syntax:
+  - name: Binary (Safetensors)
+    scope: binary.huggingface
+    hidden: true
+    file_extensions:
+      - safetensors
+    contexts:
+      main: []
+  - name: JSON (Hugging Face)
+    scope: source.json.huggingface
+    hidden: true
+    file_extensions:
+      - config.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: YAML (Hugging Face)
+    scope: source.yaml.huggingface
+    hidden: true
+    file_extensions:
+      - config.yaml
+      - default_config.yaml
+      - default_config.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

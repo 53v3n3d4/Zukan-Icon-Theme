@@ -3,7 +3,7 @@
 ## [0.4.9] - 2025
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: cargo-deny, Fluent, Just, prefix.dev
+- Add icon-theme: cargo-deny, Fluent, Hugging Face, Just, prefix.dev, ONNX
 - Add syntax: Python, README, Rust
 - Change syntax: Image, License, OpenFGA
 

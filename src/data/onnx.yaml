@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: ONNX
+icons:
+  - onnx-light
+preferences:
+  scope: binary.onnx
+  settings:
+    icon: onnx-dark
+syntax:
+  - name: Binary (ONNX)
+    scope: binary.onnx
+    hidden: true
+    file_extensions:
+      - onnx
+    contexts:
+      main: []

@@ -77,11 +77,12 @@ SCOPES_FILE_EXTENSIONS = [
 # app.config.ts: ts, angular, nuxt, solid
 # ci.yml: github
 # config.exs: phoenix
+# config.json: huggingface
 # config.py: fastapi
 # config.toml: pdm, prefix.dev, tidb
 # config.xml: clickhouse
 # config.yml: circleci
-# config.yaml: clickhouse, openfga
+# config.yaml: clickhouse, huggingface, openfga
 # dependencies.json: packagecontrol
 # Manifest.tom: pkgjl
 # messages.json: sublime
