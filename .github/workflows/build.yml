@@ -19,11 +19,11 @@ jobs:
       - name: uv
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: 3.13t
+          python-version: 3.13
       - name: Python
         run: |
-          uv python install 3.13
-          uv pip install --python=3.13t pip
+          uv python install 3.13 --system
+          uv pip install --python=3.13 pip
       - name: Install dependencies
         run: uv sync
       - name: Test with pytest
