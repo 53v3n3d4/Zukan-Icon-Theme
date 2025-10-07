@@ -110,7 +110,9 @@ class Reporter:
             elif fname == 'build_syntax':
                 self._profile_results(
                     lambda: ZukanSyntax().build_icon_syntax(
-                        'Hocon (Scala Steward)', 'Hocon (Scala Steward).sublime-syntax'
+                        'Hocon (Scala Steward)',
+                        'Hocon (Scala Steward).sublime-syntax',
+                        # 'SDlang (DUB)', 'SDlang (DUB).sublime-syntax'
                     ),
                     option,
                 )

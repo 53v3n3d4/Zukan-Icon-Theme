@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Odin
+preferences:
+  scope: source.odin
+  settings:
+    icon: odin
+syntax:
+  - name: Odin
+    scope: source.odin
+    hidden: true
+    file_extensions:
+      - odin
+    contexts:
+      main: []
+
+# Package Odin

@@ -132,7 +132,9 @@ class TestZukanPreference(TestCase):
     @patch(
         'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.copy_primary_icons'
     )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output')
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output'
+    )
     def test_build_icons_preferences(
         self,
         mock_subprocess,

@@ -26,6 +26,7 @@ syntax:
     scope: source.toml.pip
     hidden: true
     file_extensions:
+      - pylock.toml
       - pyproject.toml
     contexts:
       main:

@@ -32,14 +32,21 @@ SCOPES_FILE_EXTENSIONS = [
         'scope': 'source.pubspec',
         'file_extensions': ['pubspec.lock', 'pubspec.yaml'],
     },  # flutter.ymal
+    {
+        'scope': 'source.json.sublime',
+        'file_extensions': ['Preferences.sublime-settings'],
+    },
+    # sublimemerge.ymal
     {'scope': 'source.lisp.scheme', 'file_extensions': ['scm', 'ss']},
     {'scope': 'source.python.fastapi', 'file_extensions': ['config.py']},
     {'scope': 'source.ruby', 'file_extensions': ['rb']},  # rspec.yaml
     {'scope': 'source.shader', 'file_extensions': ['cginc', 'shader']},  # unity.yaml
     {'scope': 'source.tex', 'file_extensions': ['cls']},  # tex.yaml
     {'scope': 'source.toml', 'file_extensions': ['config.toml']},
+    {'scope': 'source.toml.python', 'file_extensions': ['pylock.toml']},
+    # pip, uv
     {'scope': 'source.toml.python', 'file_extensions': ['pyproject.toml']},
-    # poetry, pip, tox, pdm
+    # poetry, pip, tox, pdm, uv
     {'scope': 'source.ts', 'file_extensions': ['app.config.ts']},
     # angular.yaml, nuxt.yaml, solidjs.yaml
     {'scope': 'source.yaml', 'file_extensions': ['config.yaml']},
@@ -88,8 +95,10 @@ SCOPES_FILE_EXTENSIONS = [
 # messages.json: sublime
 # model.conf: casbin
 # policy.csv: casbin
+# Preferences.sublime-settings: sublime text, sublime merge
 # Project.toml: pkgjl
-# pyproject.toml: python, black, hatch, pdm, pip, poetry, prefix.dev, setuptools, tox
+# pylock.toml: python, pip, uv
+# pyproject.toml: python, black, hatch, pdm, pip, poetry, prefix.dev, setuptools, tox, uv
 # requirements.txt: pip, uv
 # setup.cfg: python, setuptools, tox
 # unittestings.json: sublime

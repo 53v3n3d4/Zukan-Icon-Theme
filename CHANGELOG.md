@@ -3,9 +3,10 @@
 ## [0.4.9] - 2025
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: cargo-deny, Fluent, Hugging Face, Just, prefix.dev, ONNX
+- Add icon-theme: cargo-deny, Fluent, Hugging Face, Just, prefix.dev, Odin, ONNX, Sublime Merge
 - Add syntax: Python, README, Rust
-- Change syntax: Image, License, OpenFGA
+- Change icon: Sublime Text
+- Change syntax: Image, License, OpenFGA, Python, Pip, uv
 
 ### Plugin 🕹️
 - Change icons_themes

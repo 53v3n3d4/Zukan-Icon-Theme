@@ -19,6 +19,7 @@ syntax:
     scope: source.ini.python
     hidden: true
     file_extensions:
+      - pyvenv.cfg
       - setup.cfg
     contexts:
       main:
@@ -69,6 +70,7 @@ syntax:
     scope: source.toml.python
     hidden: true
     file_extensions:
+      - pylock.toml
       - pyproject.toml
     contexts:
       main:

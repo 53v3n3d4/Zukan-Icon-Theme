@@ -52,7 +52,7 @@ def add_directive() -> str:
     Add YAML directive.
 
     Returns:
-    content (str) -- YAML directive.
+    directive (str) -- YAML directive.
     """
     new_line = '\n'
 

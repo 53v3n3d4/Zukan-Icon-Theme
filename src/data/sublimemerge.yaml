@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: Sublime Merge
+preferences:
+  scope: source.json.sublimemerge
+  settings:
+    icon: sublimemerge
+syntax:
+  - name: JSON (Sublime Merge)
+    scope: source.json.sublimemerge
+    hidden: true
+    file_extensions:
+      - "Commit Message.sublime-settings"
+      - Preferences.sublime-settings
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+
+# ST Package: JSON.
