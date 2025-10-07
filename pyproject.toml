@@ -1,45 +1,49 @@
-[tool.poetry]
-name = "Zukan Icon Theme"
-version = "0.4.8"
-description = "Icon theme for Sublime Text"
-license = "MIT"
-authors = ["Seven Eda <53v3n3d4@gmail.com>"]
-readme = "README.md"
-repository = "https://github.com/53v3n3d4/Zukan-Icon-Theme"
-# Install local package with poetry.
-# https://github.com/orgs/python-poetry/discussions/1135
-# https://python-poetry.org/docs/pyproject/#packages
-# Setting below needed to run poetry scripts [tool.poetry.scripts].
-packages = [
-    { include = "src/build" }
+[project]
+name = "Zukan-Icon-Theme"
+version = "0.4.9"
+requires-python = ">=3.13"
+authors = [
+  {name = "Seven Eda", email = "53v3n3d4@gmail.com"}
 ]
+description = "Icon theme for Sublime Text"
+readme = "README.md"
+license = "MIT"
 
-[tool.poetry.dependencies]
-# .python-version file should be 3.12.3 while using 'poetry install', if not,
-# could fail to install dependencies
-python = "^3.13.1"
+[project.urls]
+Repository = "https://github.com/53v3n3d4/Zukan-Icon-Theme"
 
-[tool.poetry.group.dev.dependencies]
-# Need cairo installed. brew install cairo
-cairosvg = "^2.7.1"
-ruamel-yaml = "^0.18.10"
-
-[tool.poetry.group.test.dependencies]
-pytest = "^8.3.4"
-pytest-cov = "^6.0.0"
-pyfakefs = "^5.7.3"
-
-[tool.poetry.group.lint-format.dependencies]
-ruff = "^0.9.1"
-
-[tool.poetry.scripts]
-# poetry run build --help
-# Examples:
-# Generate PNGs, zukan preferences and syntaxes file.
-# poetry run build icon-theme -f src/data/afdesign.yaml
-# poetry run build icon-theme --all
+# uv pip install -e .
+[project.scripts]
 build = "src.build.scripts:main"
 
+[dependency-groups]
+dev = [
+  "cairosvg >=2.8.2",
+  "ruamel-yaml >=0.18.15"
+]
+test = [
+  "pytest >=8.4.2",
+  "pytest-cov >=7.0.0",
+  "pyfakefs >=5.9.3"
+]
+lint = [
+  "ruff >=0.13.3"
+]
+
+[tool.uv]
+default-groups = ["dev", "test", "lint"]
+
+# https://docs.astral.sh/uv/concepts/build-backend/#namespace-packages
+# https://docs.astral.sh/uv/reference/settings/#build-backend_source-include
+[tool.uv.build-backend]
+module-root = ""
+module-name = "build"
+namespace = true
+
+# https://docs.astral.sh/uv/reference/settings/#workspace
+# [tool.uv.workspace]
+# exclude = ["zukan_icon_theme"]
+
 [build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build>=0.8.23,<0.9.0"]
+build-backend = "uv_build"

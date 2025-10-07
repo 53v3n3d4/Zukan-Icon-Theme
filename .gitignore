@@ -15,6 +15,9 @@ __pycache__
 # test icon theme
 tests_icon_theme
 
+# uv
+.venv
+
 # zukan
 /icons/*.sublime-theme
 /icons_preferences/*.tmPreferences
