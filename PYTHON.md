@@ -17,7 +17,7 @@ Package
 ├── tests
 ├── .coveragerc
 ├── .python.version
-├── main.py
+├── file_type_icons.py
 ├── pyproject.toml
 ├── pytest.ini
 ├── ruff.toml
@@ -30,27 +30,20 @@ Package
 
 ```sh
 # Use specific python version
-$ poetry env use path-to-python/3.13.1/bin/python
-$ poetry env use /Users/xxxxx/.pyenv/versions/3.13.1/bin/python
-$ poetry env info
-Virtualenv
-Python:         3.13.1
-Implementation: CPython
+$ uv venv --python 3.13
+Using CPython 3.13.7 interpreter at: /path/to/python@3.13/bin/python3.13
+Creating virtual environment at: .venv
+Activate with: source .venv/bin/activate
 
-# Check if .python-version file has correct version. Important for 'poetry install'.
+# Check if .python-version file has correct version. Important for 'uv sync'.
 # It could be 3.3 or 3.8 because Sublime Text interpreter.
 $ cat .python-version
-3.13.1
+3.13
 
 # install
-$ poetry install
+# After `uv-sync` return `.python-version` to 3.3 or 3.8 for ST plugin function properly.
+$ uv sync
 ```
-
-
-## Poetry notes
-
-- If package do not install using `poetry add <package>` or during `poetry install`, use `pip install <package>`  
-
 
 ## Tests
 
@@ -62,7 +55,10 @@ $ pytest
 ```
 Or  
 ```
-$ poetry run pytest
+$ uv run pytest
+
+# If `.python-version` is 3.3 or 3.8
+$ uv run --python 3.13 pytest
 ```
 
 To disable coverage (pytest-cov)  
@@ -86,7 +82,7 @@ addopts = -ra -q
 
 Using ST package `UnitTesting`.  
 
-Go to `Tools > Command Palette...` select `UnitTesting: Test Package` type `Zukan Icon Theme`.  
+Go to `Tools > Command Palette...` select `UnitTesting: Test Package with Coverage` type `Zukan Icon Theme`.  
 
 > Tests files are not bundled with releases. Need to clone repo.  
 

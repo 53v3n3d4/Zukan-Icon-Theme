@@ -3,11 +3,14 @@ Build scripts used to create icons PNG and icons data file.
 ```sh
 # Environment activated
 🚥 in ../Zukan Icon Theme$ python src/build/scripts.py -h
-# Poetry with env activated
+# uv with env activated
 $ build -h
 
-# Env deactivated, with poetry
-$ poetry run build -h
+# Env deactivated, with uv
+$ uv run build -h
+
+# If `.python-version` is 3.3 or 3.8
+$ uv run --python 3.13 build -h
 ```
 
 ## Create icon theme
@@ -22,11 +25,11 @@ Using argparse commands
 🚥 in ../Zukan Icon Theme$ python src/build/scripts.py icon-theme --all
 ```
 
-Using poetry scripts  
+Using uv scripts  
 ```sh
-$ poetry run build icon-theme -f src/data/afdesign.yaml
+$ uv run build icon-theme -f src/data/afdesign.yaml
 # Create PNGs and icons data file
-$ poetry run build icon-theme --all
+$ uv run build icon-theme --all
 ```
 
 ## Create zukan icon data file
@@ -43,11 +46,11 @@ Using argparse commands
 🚥 in ../Zukan Icon Theme$ python src/build/scripts.py zukan-icon --read
 ```
 
-Using poetry scripts  
+Using uv scripts  
 ```sh
-$ poetry run build zukan-icon --write
+$ uv run build zukan-icon --write
 # Print file
-$ poetry run build zukan-icon --read
+$ uv run build zukan-icon --read
 ```
 
 ## Clean SVG
@@ -69,11 +72,11 @@ Using argparse commands
 # After migrating all data files, this will data files instead of svg files.
 ```
 
-Using poetry scripts  
+Using uv scripts  
 ```sh
-$ poetry run build clean -f src/icons/afdesign.svg
+$ uv run build clean -f src/icons/afdesign.svg
 # Clean all SVGs
-$ poetry run build clean --all
+$ uv run build clean --all
 ```
 
 ## Concat SVG
@@ -88,12 +91,12 @@ Using argparse commands
 🚥 in ../Zukan Icon Theme$ python src/build/scripts.py concat --all
 ```
 
-Using poetry scripts  
+Using uv scripts  
 ```sh
 # Concat SVG sample file, with 30 random file icons.
-$ poetry run build concat -sa -sano 30
+$ uv run build concat -sa -sano 30
 # Concat SVG file.
-$ poetry run build concat --all --iconsperrow 6
+$ uv run build concat --all --iconsperrow 6
 ```
 
 ## Generate PNGs
@@ -116,11 +119,11 @@ Using argparse commands
 🚥 in ../Zukan Icon Theme$ python src/build/scripts.py png --all
 ```
 
-Using poetry scripts  
+Using uv scripts  
 ```sh
-$ poetry run build png -f src/data/afdesign.yaml
+$ uv run build png -f src/data/afdesign.yaml
 # Create all PNGs 
-$ poetry run build png --all
+$ uv run build png --all
 ```
 
 ## Create test files extensions
@@ -137,11 +140,11 @@ Using argparse commands
 🚥 in ../Zukan Icon Theme$ python src/build/scripts.py test-icon-theme --all
 ```
 
-Using poetry scripts  
+Using uv scripts  
 ```sh
-$ poetry run build test-icon-theme -f src/data/afdesign.yaml
+$ uv run build test-icon-theme -f src/data/afdesign.yaml
 # Create all test files extensions files
-$ poetry run build test-icon-theme --all
+$ uv run build test-icon-theme --all
 ```
 
 > Creating test files may raise parsing errors for files that ST use, like Sublime Text.sublime-syntax or Sublime Text.sublime-settings.
