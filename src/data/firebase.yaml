@@ -12,6 +12,7 @@ syntax:
     file_extensions:
       - .firebaserc
       - firebase.json
+      - database.rules.json
     contexts:
       main:
       - include: scope:source.json

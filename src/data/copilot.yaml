@@ -1,0 +1,23 @@
+
+%YAML 1.2
+---
+name: Github Copilot
+icons: 
+  - copilot-light
+preferences:
+  scope: text.html.markdown.copilot
+  settings:
+    icon: copilot-dark
+syntax:
+  - name: Markdown (Github Copilot)
+    scope: text.html.markdown.copilot
+    hidden: true
+    file_extensions:
+      # - AGENTS.md
+      # - CLAUDE.md
+      # - GEMINI.md
+      - copilot-instructions.md
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true

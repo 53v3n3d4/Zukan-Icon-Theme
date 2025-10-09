@@ -15,7 +15,13 @@ Repository = "https://github.com/53v3n3d4/Zukan-Icon-Theme"
 # uv pip install -e .
 [project.scripts]
 build = "src.build.scripts:main"
+# Examples:
+# uv run build --help
+# Generate PNGs, zukan preferences and syntaxes file.
+# uv run build icon-theme -f src/data/afdesign.yaml
+# uv run build icon-theme --all
 
+# Need cairo installed. brew install cairo
 [dependency-groups]
 dev = [
   "cairosvg >=2.8.2",

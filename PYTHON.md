@@ -54,7 +54,7 @@ $ uv sync
 $ pytest
 ```
 Or  
-```
+```sh
 $ uv run pytest
 
 # If `.python-version` is 3.3 or 3.8

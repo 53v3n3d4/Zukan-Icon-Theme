@@ -1,0 +1,21 @@
+
+%YAML 1.2
+---
+name: OpenAI
+icons: 
+  - openai-light
+preferences:
+  scope: text.html.markdown.openai
+  settings:
+    icon: openai-dark
+syntax:
+  - name: Markdown (OpenAI Codex)
+    scope: text.html.markdown.openai
+    hidden: true
+    file_extensions:
+      - agents.md
+      - AGENTS.md
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true

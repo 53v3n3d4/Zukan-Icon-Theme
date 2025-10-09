@@ -1,0 +1,19 @@
+
+%YAML 1.2
+---
+name: Google Gemini
+preferences:
+  scope: text.html.markdown.gemini
+  settings:
+    icon: gemini
+syntax:
+  - name: Markdown (Google Gemini)
+    scope: text.html.markdown.gemini
+    hidden: true
+    file_extensions:
+      - gemini.md
+      - GEMINI.md
+    contexts:
+      main:
+        - include: scope:text.html.markdown
+          apply_prototype: true

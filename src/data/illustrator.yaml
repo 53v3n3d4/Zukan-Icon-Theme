@@ -4,7 +4,7 @@ name: Adobe Illustrator
 preferences:
   scope: binary.ai
   settings:
-    icon: ai
+    icon: illustrator
 syntax:
   - name: Binary (Adobe Illustrator)
     scope: binary.ai
