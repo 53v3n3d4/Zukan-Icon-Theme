@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: PyTorch
+preferences:
+  scope: binary.pytorch
+  settings:
+    icon: pytorch
+syntax:
+  - name: Binary (PyTorch)
+    scope: binary.pytorch
+    hidden: true
+    file_extensions:
+      - pt
+      - pth
+      - pwf
+    contexts:
+      main: []

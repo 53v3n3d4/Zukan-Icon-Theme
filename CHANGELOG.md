@@ -3,16 +3,20 @@
 ## [0.4.9] - 2025
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: cargo-deny, Fluent, Hugging Face, Just, prefix.dev, Odin, ONNX, Sublime Merge
+- Add icon-theme: Amp, Anthropic Claude, Buf, cargo-deny, Fluent, Github Copilot, Google Gemini, Hugging Face, Just, Odin, ONNX, OpenAI Codex, prefix.dev, PyTorch, Sublime Merge
 - Add syntax: Python, README, Rust
 - Change icon: Sublime Text
-- Change syntax: Image, License, OpenFGA, Python, Pip, uv
+- Change syntax: Firebase, Image, License, OpenFGA, Python, Pip, uv
+- Rename icon: Adobe Illustrator
 
 ### Plugin 🕹️
 - Change icons_themes
 - Fix issue with partial paths being replaced from `/` to `\` on Windows by removing `os.path.join`
 - Fix user customized theme not being handled by `get_sidebar_background`
 - Add `cache_theme_info` and `cache_theme_info_lifespan` settings
+
+### Build 🛠️
+- Migrate to uv
 
 ## [0.4.8] - 2025-01-29
 

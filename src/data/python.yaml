@@ -30,6 +30,8 @@ syntax:
     hidden: true
     file_extensions:
       - MANIFEST.in  # Removed from std in Python 3.12
+      - pth
+      - py.typed
     contexts:
       main: []
   - name: Python

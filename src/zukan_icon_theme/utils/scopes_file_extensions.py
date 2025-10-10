@@ -58,6 +58,7 @@ SCOPES_FILE_EXTENSIONS = [
     {'scope': 'text.plain', 'file_extensions': ['txt']},  # gbif.yaml TextTree
     {'scope': 'text.plain.debug', 'file_extensions': ['pdb']},  # wwpdb.yaml
     {'scope': 'text.plain.pip', 'file_extensions': ['requirements.txt']},  # uv.yaml
+    {'scope': 'text.plain.python', 'file_extensions': ['pth']},  # pytorch.yaml
     {'scope': 'text.xml', 'file_extensions': ['xml']},  # django.yaml
 ]
 
@@ -76,6 +77,7 @@ SCOPES_FILE_EXTENSIONS = [
 # - Fortran: package Fortran and Modern-Fortran use same file-extensions.
 # - F#: fs extension is used by OpenGL.
 # - PostCSS: Syntax Highlighting for PostCSS and Syntax Highlighting for SSS SugarSS use sss.
+# - Python: python and pytorch use pth file extension.
 # - Sublime: Package Plist highlight tmPreferences, also ST XML
 # - Unity: Package Unity Shader and Unity3D Shader Highlighter and Snippets same extensions.
 
