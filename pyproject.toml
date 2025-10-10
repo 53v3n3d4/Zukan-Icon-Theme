@@ -17,7 +17,7 @@ Repository = "https://github.com/53v3n3d4/Zukan-Icon-Theme"
 build = "src.build.scripts:main"
 # Examples:
 # uv run build --help
-# Generate PNGs, zukan preferences and syntaxes file.
+# Generate PNGs and zukan icons data file.
 # uv run build icon-theme -f src/data/afdesign.yaml
 # uv run build icon-theme --all
 
@@ -43,7 +43,7 @@ default-groups = ["dev", "test", "lint"]
 # https://docs.astral.sh/uv/reference/settings/#build-backend_source-include
 [tool.uv.build-backend]
 module-root = ""
-module-name = "build"
+module-name = "src.build"
 namespace = true
 
 # https://docs.astral.sh/uv/reference/settings/#workspace
@@ -51,5 +51,5 @@ namespace = true
 # exclude = ["zukan_icon_theme"]
 
 [build-system]
-requires = ["uv_build>=0.8.23,<0.9.0"]
+requires = ["uv_build>=0.9.1,<0.10.0"]
 build-backend = "uv_build"

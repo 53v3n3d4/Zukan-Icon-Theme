@@ -1,0 +1,27 @@
+
+%YAML 1.2
+---
+name: dist
+preferences:
+  scope: source.json.dist, source.toml.dist
+  settings:
+    icon: dist
+syntax:
+  - name: JSON (dist)
+    scope: source.json.dist
+    hidden: true
+    file_extensions:
+      - dist-manifest.json
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
+  - name: TOML (dist)
+    scope: source.toml.dist
+    hidden: true
+    file_extensions:
+      - dist-workspace.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

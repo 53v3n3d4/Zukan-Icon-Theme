@@ -4,15 +4,16 @@ name: Python
 icons: 
   - python-1
 preferences:
-  scope: binary.pickle, source.ini.python, source.python, source.shell.python, source.toml.python, text.plain.python
+  scope: binary.python, source.ini.python, source.python, source.shell.python, source.toml.python, text.plain.python
   settings:
     icon: python
 syntax:
-  - name: Binary (Pickle)
-    scope: binary.pickle
+  - name: Binary (Python)
+    scope: binary.python
     hidden: true
     file_extensions:
       - pkl
+      # - whl
     contexts:
       main: []
   - name: INI (Python)
@@ -64,6 +65,7 @@ syntax:
     hidden: true
     file_extensions:
       - .python-version
+      - .python-versions
     contexts:
       main:
         - include: scope:source.shell

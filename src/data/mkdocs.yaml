@@ -13,6 +13,9 @@ syntax:
     hidden: true
     file_extensions:
       - mkdocs.yml
+      - mkdocs.insiders.yml
+      - mkdocs.public.yml
+      - mkdocs.template.yml
     contexts:
       main:
         - include: scope:source.yaml

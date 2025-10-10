@@ -12,6 +12,7 @@ syntax:
     file_extensions:
       - .pre-commit.config.yaml
       - .pre-commit.hooks.yaml
+      - .pre-commit-config.yaml
     contexts:
       main:
         - include: scope:source.yaml

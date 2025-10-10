@@ -21,6 +21,7 @@ syntax:
     file_extensions:
       - Cargo.lock
       - Cargo.toml
+      - config.toml
     contexts:
       main:
         - include: scope:source.toml

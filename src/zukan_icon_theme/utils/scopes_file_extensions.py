@@ -88,7 +88,7 @@ SCOPES_FILE_EXTENSIONS = [
 # config.exs: phoenix
 # config.json: huggingface
 # config.py: fastapi
-# config.toml: pdm, prefix.dev, tidb
+# config.toml: cargo, pdm, prefix.dev, tidb
 # config.xml: clickhouse
 # config.yml: circleci
 # config.yaml: clickhouse, huggingface, openfga

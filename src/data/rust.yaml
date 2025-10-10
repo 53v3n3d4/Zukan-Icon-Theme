@@ -37,6 +37,7 @@ syntax:
       - clippy.toml
       - config.example.toml
       - rust-toolchain
+      - rust-toolchain.toml
       - rustfmt-nightly.toml
       - rustfmt.toml
       - typos.toml
