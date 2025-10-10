@@ -140,9 +140,9 @@ Required parameters are: scope and file extensions.
 
 ```json
     "change_icon_file_extension": [
+        { "scope": "binary.pytorch", "file_extensions": ["pth"] },
         { "scope": "feature.behat", "file_extensions": ["feature"] },
         { "scope": "source.bazel", "file_extensions": ["BUILD", "WORKSPACE"] },
-        { "scope": "binary.pytorch", "file_extensions": ["pth"] },
         { "scope": "source.clojure", "file_extensions": ["cljc"] },
         { "scope": "source.clojure.clojure-common", "file_extensions": ["cljc"] },
         { "scope": "source.cmakeeditor", "file_extensions": ["CMakeLists.txt"] },
