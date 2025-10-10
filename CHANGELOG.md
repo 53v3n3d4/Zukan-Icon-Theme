@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.9] - 2025
+## [0.4.9] - 2025-10-10
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Amp, Anthropic Claude, Buf, cargo-deny, Fluent, Github Copilot, Google Gemini, Hugging Face, Just, Odin, ONNX, OpenAI Codex, prefix.dev, PyTorch, Sublime Merge
