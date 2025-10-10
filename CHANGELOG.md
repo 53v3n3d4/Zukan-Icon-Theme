@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.10] - 2026
+
+### Icons, syntaxes and preferences 👽
+- Add icon-theme: ty
+- Change syntax: Sublime LSP
+
 ## [0.4.9] - 2025-10-10
 
 ### Icons, syntaxes and preferences 👽

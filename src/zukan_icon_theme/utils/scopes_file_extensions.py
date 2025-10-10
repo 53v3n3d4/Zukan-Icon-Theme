@@ -100,7 +100,7 @@ SCOPES_FILE_EXTENSIONS = [
 # Preferences.sublime-settings: sublime text, sublime merge
 # Project.toml: pkgjl
 # pylock.toml: python, pip, uv
-# pyproject.toml: python, black, hatch, pdm, pip, poetry, prefix.dev, setuptools, tox, uv
+# pyproject.toml: python, black, hatch, pdm, pip, poetry, prefix.dev, setuptools, tox, ty, uv
 # requirements.txt: pip, uv
 # setup.cfg: python, setuptools, tox
 # unittestings.json: sublime

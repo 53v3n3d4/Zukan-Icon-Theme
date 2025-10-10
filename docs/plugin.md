@@ -184,6 +184,7 @@ Required parameters are: scope and file extensions.
         { "scope": "source.toml.pixi", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.setuptools", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.tox", "file_extensions": ["pyproject.toml"] },
+        { "scope": "source.toml.ty", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.toml.uv", "file_extensions": ["pyproject.toml"] },
         { "scope": "source.ts.angular", "file_extensions": ["app.config.ts"] },
         { "scope": "source.ts.nuxt", "file_extensions": ["app.config.ts"] },

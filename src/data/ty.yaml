@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: ty
+preferences:
+  scope: source.toml.ty
+  settings:
+    icon: ty
+syntax:
+  - name: TOML (ty)
+    scope: source.toml.ty
+    hidden: true
+    file_extensions:
+      - pyproject.toml
+      - ty.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true

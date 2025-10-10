@@ -115,6 +115,10 @@ syntax:
       - LSP-TexLab.sublime-build
       - LSP-TextLab.sublime-commands
       - LSP-TextLab.sublime-settings
+      - LSP-Tinymist.sublime-commands
+      - LSP-Tinymist.sublime-settings
+      - LSP-ty.sublime-commands
+      - LSP-ty.sublime-settings
       - LSP-typescript.sublime-commands
       - LSP-typescript.sublime-settings
       - LSP-volar.sublime-commands
