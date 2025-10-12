@@ -11,6 +11,7 @@ syntax:
     scope: source.ini.pgsql
     hidden: true
     file_extensions:
+      - pg_hba.conf
       - postgresql.conf
     contexts:
       main:

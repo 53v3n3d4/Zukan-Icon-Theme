@@ -3,8 +3,9 @@
 ## [0.4.10] - 2026
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: ty
-- Change syntax: Sublime LSP
+- Add icon-theme: dist, ty
+- Change syntax: cargo, MKDocs, pre-commit, PostgreSQL Python, Rust, Sublime LSP, Yugabyte
+- Rename syntax: Python
 
 ## [0.4.9] - 2025-10-10
 

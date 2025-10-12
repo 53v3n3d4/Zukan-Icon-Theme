@@ -28,7 +28,10 @@ for i in "${files[@]}"; do
   find $sublime_dir -name $i -type f -delete
 done
 
+# Use ST Python 3.3. interpreter to test
 zip -r 'Zukan Icon Theme.sublime-package' ./* -X '*.DS_Store'
+# ST Python 3.8 interpreter
+# zip -r 'Zukan Icon Theme.sublime-package' ./* .python-version -X '*.DS_Store'
 
 echo "Zip file has been created."
 
