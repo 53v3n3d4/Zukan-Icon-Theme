@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: nuxt
 syntax:
-  - name: Git (Nuxt)
+  - name: Git Ignore (Nuxt)
     scope: text.git.ignore.nuxt
     hidden: true
     file_extensions:

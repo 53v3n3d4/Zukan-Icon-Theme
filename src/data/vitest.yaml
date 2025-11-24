@@ -25,6 +25,7 @@ syntax:
       - vitest.config.ts
       - vitest.config.cts
       - vitest.config.mts
+      - vitest-setup-client.ts
     contexts:
       main:
         - include: scope:source.ts

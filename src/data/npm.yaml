@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: npm
 syntax:
-  - name: Git (npm)
+  - name: Git Ignore (npm)
     scope: text.git.ignore.npm
     hidden: true
     file_extensions:

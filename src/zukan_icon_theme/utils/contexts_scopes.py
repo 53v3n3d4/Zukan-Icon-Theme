@@ -35,7 +35,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.yaml', 'startsWith': 'YAML ('},
     {'scope': 'text.bibtex', 'startsWith': 'BibTeX ('},
     {'scope': 'text.csv', 'startsWith': 'CSV ('},
-    {'scope': 'text.git.ignore', 'startsWith': 'Git ('},
+    {'scope': 'text.git.ignore', 'startsWith': 'Git Ignore ('},
     {'scope': 'text.html.basic', 'startsWith': 'HTML ('},
     {'scope': 'text.html.markdown', 'startsWith': 'Markdown ('},
     # {'scope': 'text.plain', 'startsWith': 'Plain Text ('},
@@ -57,4 +57,11 @@ CONTEXTS_SCOPES = [
     {'scope': 'text.html.basic', 'startsWith': 'Vue Component'},
     {'scope': 'text.html.basic', 'startsWith': 'XML (SVG)'},
     {'scope': 'text.tex.latex', 'startsWith': 'Literate Haskell'},
+    # Yaml Pipelines
+    {'scope': 'source.yaml.heml', 'startsWith': 'YAML (Helm)'},
+    {'scope': 'source.yaml.kong', 'startsWith': 'YAML (Kong)'},
+    {'scope': 'source.yaml.pipeline.bitbucket', 'startsWith': 'YAML (Bitbucket)'},
+    {'scope': 'source.yaml.pipeline.drone', 'startsWith': 'YAML (Drone)'},
+    {'scope': 'source.yaml.pipeline.github-actions', 'startsWith': 'YAML (GitHub Actions)'},
+    {'scope': 'source.yaml.pipeline.gitlab', 'startsWith': 'YAML (GitLab)'},
 ]

@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: fantomas
 syntax:
-  - name: Git (Fantomas)
+  - name: Git Ignore (Fantomas)
     scope: text.git.ignore.fantomas
     hidden: true
     file_extensions:

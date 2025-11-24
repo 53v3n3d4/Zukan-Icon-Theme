@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: prettier
 syntax:
-  - name: Git (Prettier)
+  - name: Git Ignore (Prettier)
     scope: text.git.ignore.prettier
     hidden: true
     file_extensions:

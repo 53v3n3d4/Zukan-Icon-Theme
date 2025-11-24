@@ -1,0 +1,36 @@
+%YAML 1.2
+---
+name: Helm
+icons:
+  - helm-light
+preferences:
+  scope: source.yaml.helm.workflow, text.git.ignore.helm
+  settings:
+    icon: helm-dark
+syntax:
+  - name: Git Ignore (Helm)
+    scope: text.git.ignore.helm
+    hidden: true
+    file_extensions:
+      - .helmignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
+  - name: YAML (Helm)
+    scope: source.yaml.helm.workflow
+    hidden: true
+    file_extensions:
+      - Chart.yaml
+      - values.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml.helm
+          apply_prototype: true
+
+# Package YamlPipelines: source.yaml.helm
+# Do not have file_extensions
+
+# Currently user needs to install Yaml Pipelines
+# Can use example to ignore GitHub icon
+# Or change file extension to exclude file extensions

@@ -65,6 +65,8 @@ syntax:
       - LSP-julia.sublime-settings
       - LSP-kotlin.sublime-commands
       - LSP-kotlin.sublime-settings
+      - LSP-lean.sublime-commands
+      - LSP-lean.sublime-settings
       - LSP-lemminx.sublime-commands
       - LSP-lemminx.sublime-settings
       - LSP-leo.sublime-commands

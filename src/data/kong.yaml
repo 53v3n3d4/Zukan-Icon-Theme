@@ -2,18 +2,24 @@
 ---
 name: Kong
 preferences:
-  scope: source.yaml.kong
+  scope: source.yaml.kong, source.yaml.kong.workflow
   settings:
     icon: kong
 syntax:
   - name: YAML (Kong)
-    scope: source.yaml.kong
+    scope: source.yaml.kong.workflow
     hidden: true
     file_extensions:
       - kong.yml
     contexts:
       main:
-        - include: scope:source.yaml
+        - include: scope:source.yaml.kong
           apply_prototype: true
 
-# Package YamlPipelines
+# Package YamlPipelines: source.yaml.kong
+# Do not have file_extensions
+
+# Currently user needs to install Yaml Pipelines
+# Can use example to ignore GitHub icon
+# Or change file extension to exclude file extensions
+

@@ -105,6 +105,63 @@ If the correct icon is applied, a restart will fix it.
 Alternatively, switching betwween dark and light may correct icon.
 ```
 
+### Yaml file not highlighting
+
+Yaml files not highlighting. Files below may not use yaml syntax because plugin opt in to use YamlPipelines syntax package by default.
+
+So if Yaml Pipelines package not installed it will not hightligt.
+
+Files affected are:
+
+| Files | Icon used | Sytanx Scope |
+|-------|-----------|--------------|
+| .drone.yml | drone | source.yaml.pipeline.drone |
+| .gitlab-ci.yml | gitlab | source.yaml.pipeline.gitlab |
+| gitlab.yml | gitlab | source.yaml.pipeline.gitlab |
+| bitbucket-pipelines.yml | bitbucket |
+| ci.yml | github |source.yaml.pipeline.github-actions |
+| kong.yml | kong | source.yaml.kong |
+| Chart.yaml | helm-dark | source.yaml.heml |
+| values.yaml | helm-dark | source.yaml.heml |
+
+
+**Solution**
+1. Using change file extension
+
+>  This will use Yaml icon with Yaml syntax
+
+Example:
+- `Zukan Icon Theme: Change File Extension`  
+- type `source.yaml` hit <kbd>Enter</kbd>  
+- type `ci.yml` hit <kbd>Enter</kbd>  
+
+2. Using ignore icon and create custom icon 
+
+> This will use GitHub icon with Yaml syntax
+> IMPORTANT: use a different scope from the table above
+
+- Using command palette, disable icon GitHub. Or, manually, insert in `ignored_icon`
+- Next, create a custom icon
+- `Zukan Icon Theme: Create Custom Icon`
+- type `GitHub 2` hit <kbd>Enter</kbd>
+- type `github` hit <kbd>Enter</kbd>
+- type `YAML (GitHub 2)` hit <kbd>Enter</kbd>
+- type `source.yaml.github` hit <kbd>Enter</kbd>
+- type `ci.yml` hit <kbd>Enter</kbd>
+- type `source.yaml` hit <kbd>Enter</kbd>  
+
+```json
+    "create_custom_icon": [
+       {
+           "name": "GitHub 2",
+           "icon": "github",
+           "syntax_name": "YAML (GitHub 2)",
+           "scope": "source.yaml.github",
+           "file_extensions": ["ci.yml"],
+           "contexts_scope": "source.yaml"
+       }
+    ]
+```
 
 ### Error loading syntax file (Markdown, YAML, JSON) when building files
 

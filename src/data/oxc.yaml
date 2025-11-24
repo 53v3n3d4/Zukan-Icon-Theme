@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: oxc
 syntax:
-  - name: Git (Oxc)
+  - name: Git Ignore (Oxc)
     scope: text.git.ignore.oxc
     hidden: true
     file_extensions:

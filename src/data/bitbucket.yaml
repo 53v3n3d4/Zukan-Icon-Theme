@@ -2,18 +2,23 @@
 ---
 name: Bitbucket
 preferences:
-  scope: source.yaml.pipeline.bitbucket
+  scope: source.yaml.pipeline.bitbucket, source.yaml.pipeline.bitbucket.workflow
   settings:
     icon: bitbucket
 syntax:
   - name: YAML (Bitbucket)
-    scope: source.yaml.pipeline.bitbucket
+    scope: source.yaml.pipeline.bitbucket.workflow
     hidden: true
     file_extensions:
       - bitbucket-pipelines.yml
     contexts:
       main:
-        - include: scope:source.yaml
+        - include: scope:source.yaml.pipeline.bitbucket
           apply_prototype: true
 
-# Package YamlPipelines
+# Package YamlPipelines: source.yaml.pipeline.bitbucket
+# Do not have file_extensions
+
+# Currently user needs to install Yaml Pipelines
+# Can use example to ignore GitHub icon
+# Or change file extension to exclude file extensions

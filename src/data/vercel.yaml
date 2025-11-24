@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: vercel
 syntax:
-  - name: Git (Vercel)
+  - name: Git Ignore (Vercel)
     scope: text.git.ignore.vercel
     hidden: true
     file_extensions:

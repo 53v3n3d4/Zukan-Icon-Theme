@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: docker
 syntax:
-  - name: Git (Docker)
+  - name: Git Ignore (Docker)
     scope: text.git.ignore.docker
     hidden: true
     file_extensions:
@@ -20,6 +20,8 @@ syntax:
     hidden: true
     file_extensions:
       - Dockerfile
+      - Dockerfile.ci
+      - Dockerfile.dev
       - dockerfile
     contexts:
       main: []
@@ -28,6 +30,7 @@ syntax:
     hidden: true
     file_extensions:
       - docker-compose.yml
+      - docker-compose.yaml
     contexts:
       main:
         - include: scope:source.yaml

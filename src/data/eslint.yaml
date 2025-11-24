@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: eslint
 syntax:
-  - name: Git (ESLint)
+  - name: Git Ignore (ESLint)
     scope: text.git.ignore.eslint
     hidden: true
     file_extensions:

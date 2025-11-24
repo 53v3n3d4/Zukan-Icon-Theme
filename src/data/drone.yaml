@@ -2,18 +2,23 @@
 ---
 name: Drone
 preferences:
-  scope: source.yaml.pipeline.drone
+  scope: source.yaml.pipeline.drone, source.yaml.pipeline.drone.workflow
   settings:
     icon: drone
 syntax:
   - name: YAML (Drone)
-    scope: source.yaml.pipeline.drone
+    scope: source.yaml.pipeline.drone.workflow
     hidden: true
     file_extensions:
       - .drone.yml
     contexts:
       main:
-        - include: scope:source.yaml
+        - include: scope:source.yaml.pipeline.drone
           apply_prototype: true
 
-# Package YamlPipelines
+# Package YamlPipelines: source.yaml.pipeline.drone
+# Do not have file_extensions
+
+# Currently user needs to install Yaml Pipelines
+# Can use example to ignore GitHub icon
+# Or change file extension to exclude file extensions

@@ -16,5 +16,9 @@ syntax:
         - include: scope:source.yaml.pipeline.github-actions
           apply_prototype: true
 
-# Package YamlPipelines: do not have syntax.
-# Syntax YAML (GitHub Actions) added by plugin
+# Package YamlPipelines: source.yaml.pipeline.github-actions
+# Do not have file_extensions
+
+# Currently user needs to install Yaml Pipelines
+# Can use example to ignore GitHub icon
+# Or change file extension to exclude file extensions

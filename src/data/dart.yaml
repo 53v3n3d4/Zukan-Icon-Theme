@@ -13,7 +13,7 @@ syntax:
       - dart
     contexts:
       main: []
-  - name: Git (Dart)
+  - name: Git Ignore (Dart)
     scope: text.git.ignore.dart
     hidden: true
     file_extensions:

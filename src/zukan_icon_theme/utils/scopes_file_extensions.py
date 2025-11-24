@@ -85,6 +85,7 @@ SCOPES_FILE_EXTENSIONS = [
 # .env: fastapi
 # app.config.ts: ts, angular, nuxt, solid
 # ci.yml: github
+# Chart.yaml: helm
 # config.exs: phoenix
 # config.json: huggingface
 # config.py: fastapi
@@ -104,3 +105,4 @@ SCOPES_FILE_EXTENSIONS = [
 # requirements.txt: pip, uv
 # setup.cfg: python, setuptools, tox
 # unittestings.json: sublime
+# values.yaml: helm

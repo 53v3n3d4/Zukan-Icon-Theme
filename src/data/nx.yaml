@@ -8,7 +8,7 @@ preferences:
   settings:
     icon: nx-dark
 syntax:
-  - name: Git (Nx)
+  - name: Git Ignore (Nx)
     scope: text.git.ignore.nx
     hidden: true
     file_extensions:

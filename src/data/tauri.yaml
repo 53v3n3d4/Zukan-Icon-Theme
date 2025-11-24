@@ -6,7 +6,7 @@ preferences:
   settings:
     icon: tauri
 syntax:
-  - name: Git (Tauri)
+  - name: Git Ignore (Tauri)
     scope: text.git.ignore.tauri
     hidden: true
     file_extensions:
