@@ -4,7 +4,7 @@ name: Helm
 icons:
   - helm-light
 preferences:
-  scope: source.yaml.helm.workflow, text.git.ignore.helm
+  scope: source.yaml.helm, source.yaml.helm.workflow, text.git.ignore.helm
   settings:
     icon: helm-dark
 syntax:

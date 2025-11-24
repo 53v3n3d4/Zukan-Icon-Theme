@@ -118,7 +118,7 @@ Files affected are:
 | .drone.yml | drone | source.yaml.pipeline.drone |
 | .gitlab-ci.yml | gitlab | source.yaml.pipeline.gitlab |
 | gitlab.yml | gitlab | source.yaml.pipeline.gitlab |
-| bitbucket-pipelines.yml | bitbucket |
+| bitbucket-pipelines.yml | bitbucket | source.yaml.pipeline.bitbucket |
 | ci.yml | github |source.yaml.pipeline.github-actions |
 | kong.yml | kong | source.yaml.kong |
 | Chart.yaml | helm-dark | source.yaml.heml |

@@ -58,7 +58,7 @@ CONTEXTS_SCOPES = [
     {'scope': 'text.html.basic', 'startsWith': 'XML (SVG)'},
     {'scope': 'text.tex.latex', 'startsWith': 'Literate Haskell'},
     # Yaml Pipelines
-    {'scope': 'source.yaml.heml', 'startsWith': 'YAML (Helm)'},
+    {'scope': 'source.yaml.helm', 'startsWith': 'YAML (Helm)'},
     {'scope': 'source.yaml.kong', 'startsWith': 'YAML (Kong)'},
     {'scope': 'source.yaml.pipeline.bitbucket', 'startsWith': 'YAML (Bitbucket)'},
     {'scope': 'source.yaml.pipeline.drone', 'startsWith': 'YAML (Drone)'},
