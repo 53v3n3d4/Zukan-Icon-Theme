@@ -418,19 +418,16 @@ class TestZukanPreference(TestCase):
 
         for input_name, expected_base in test_cases:
             with self.subTest(input_name=input_name):
-                with (
-                    patch.multiple(
-                        self.zukan,
-                        prepare_icon_preference_file=MagicMock(),
-                        _get_file_name=MagicMock(
-                            return_value=expected_base
-                            + icons_preferences.TMPREFERENCES_EXTENSION
-                        ),
+                with patch.multiple(
+                    self.zukan,
+                    prepare_icon_preference_file=MagicMock(),
+                    _get_file_name=MagicMock(
+                        return_value=expected_base
+                        + icons_preferences.TMPREFERENCES_EXTENSION
                     ),
-                    patch(
-                        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger'
-                    ) as mock_logger,
-                ):
+                ), patch(
+                    'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger'
+                ) as mock_logger:
                     self.zukan.create_icon_preference(
                         input_name, self.bgcolor_light, self.test_light_theme
                     )
@@ -512,23 +509,18 @@ class TestZukanPreference(TestCase):
             }
         ]
 
-        with (
-            patch.multiple(
-                self.zukan,
-                get_list_icons_preferences=MagicMock(return_value=mock_list),
-                theme_name_setting=MagicMock(
-                    return_value='Treble Adaptive.sublime-theme'
-                ),
-                sidebar_bgcolor=MagicMock(return_value=self.bgcolor_dark),
-                prefer_icon_setting=MagicMock(return_value=(True, {})),
-                change_icon_setting=MagicMock(return_value={}),
-                ignored_icon_setting=MagicMock(return_value={'Ignored-1'}),
-                handle_icon_preferences=MagicMock(),
-            ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger'
-            ) as mock_logger,
-        ):
+        with patch.multiple(
+            self.zukan,
+            get_list_icons_preferences=MagicMock(return_value=mock_list),
+            theme_name_setting=MagicMock(return_value='Treble Adaptive.sublime-theme'),
+            sidebar_bgcolor=MagicMock(return_value=self.bgcolor_dark),
+            prefer_icon_setting=MagicMock(return_value=(True, {})),
+            change_icon_setting=MagicMock(return_value={}),
+            ignored_icon_setting=MagicMock(return_value={'Ignored-1'}),
+            handle_icon_preferences=MagicMock(),
+        ), patch(
+            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger'
+        ) as mock_logger:
             self.zukan.prepare_icons_preferences_list(
                 self.bgcolor_dark, self.test_dark_theme
             )
