@@ -435,7 +435,7 @@ class ZukanPreference:
                 in ignored_icon
                 or (p.get('tag') is not None and p['tag'] in ignored_icon)
             ):
-                logger.info('Ignored icon %s', p['name'])
+                logger.info('ignored icon %s', p['name'])
 
     def create_icons_preferences(self, bgcolor: str, theme_name: str):
         """

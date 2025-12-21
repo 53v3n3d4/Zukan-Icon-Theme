@@ -109,11 +109,11 @@ Alternatively, switching betwween dark and light may correct icon.
 
 Yaml files not highlighting. Files below may not use yaml syntax because plugin opt in to use YamlPipelines syntax package by default.
 
-So if Yaml Pipelines package not installed it will not hightligt.
+So if Yaml Pipelines package not installed it will not hightlight.
 
 Files affected are:
 
-| Files | Icon used | Sytanx Scope |
+| Files | Icon used | Syntax Scope |
 |-------|-----------|--------------|
 | .drone.yml | drone | source.yaml.pipeline.drone |
 | .gitlab-ci.yml | gitlab | source.yaml.pipeline.gitlab |
@@ -128,7 +128,7 @@ Files affected are:
 **Solution**
 1. Using change file extension
 
->  This will use Yaml icon with Yaml syntax
+>  This will use Yaml icon with Yaml syntax  
 
 Example:
 - `Zukan Icon Theme: Change File Extension`  
@@ -137,8 +137,8 @@ Example:
 
 2. Using ignore icon and create custom icon 
 
-> This will use GitHub icon with Yaml syntax
-> IMPORTANT: use a different scope from the table above
+> This will use GitHub icon with Yaml syntax  
+> IMPORTANT: use a different scope from the table above  
 
 - Using command palette, disable icon GitHub. Or, manually, insert in `ignored_icon`
 - Next, create a custom icon

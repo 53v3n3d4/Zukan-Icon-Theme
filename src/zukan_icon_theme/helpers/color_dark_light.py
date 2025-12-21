@@ -153,6 +153,23 @@ def extract_numbers_from_rgb(color_rgb: str) -> list:
         return None
 
 
+def extract_base_color(value: str) -> str:
+    regex_color_mod = re.compile(
+        r'^color\(\s*(?P<base>(?:[^()\s]+|\([^)]*\))+)\s*(?:[a-zA-Z]+\(|\))'
+    )
+
+    value = value.strip()
+
+    if not value.startswith('color('):
+        return value
+
+    m = regex_color_mod.match(value)
+    if not m:
+        return
+
+    return m.group('base')
+
+
 def rgb_dark_light(rgb_color: list) -> str:
     """
     Code from

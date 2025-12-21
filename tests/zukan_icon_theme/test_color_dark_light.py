@@ -191,3 +191,36 @@ class TestColorDarkLight(TestCase):
             with self.subTest(list_hex):
                 result = color_dark_light.hex_dark_light(p1)
                 self.assertEqual(result, p2)
+
+    # Biohack colors
+    # #392E2A, hsl(16, 15.15%, 19.41%), rgb(57, 46, 42)
+    def test_extract_base_color(self):
+        list_colors = [
+            ('#392E2A', '#392E2A'),  # Hex
+            ('rgb(57,46,42)', 'rgb(57,46,42)'),  # RGB
+            ('hsl(16, 15.15%, 19.41%)', 'hsl(16, 15.15%, 19.41%)'),  # HSL
+            ('color(#392E2A)', '#392E2A'),  # color with Hex
+            ('color(rgb(57, 46, 42))', 'rgb(57, 46, 42)'),  # color with RGB
+            (
+                'color(hsl(16, 15.15%, 19.41%))',
+                'hsl(16, 15.15%, 19.41%)',
+            ),  # color with HSL
+            ('color(#392E2A l(+ 2%))', '#392E2A'),  # color with modifier
+            (
+                'color(hsl(16, 15.15%, 19.41%) l(-10%) a(0.8))',
+                'hsl(16, 15.15%, 19.41%)',
+            ),  # color with modifiers
+            ('color(  rgb(57, 46, 42) s(0.2))', 'rgb(57, 46, 42)'),  # color with spaces
+            ('', ''),  # empty
+        ]
+
+        for p1, p2 in list_colors:
+            with self.subTest(list_colors):
+                result = color_dark_light.extract_base_color(p1)
+                self.assertEqual(result, p2)
+
+    def test_extract_base_color_return(self):
+        self.assertIsNone(color_dark_light.extract_base_color('color('))
+
+    def test_extract_base_color_not_valid(self):
+        self.assertIsNone(color_dark_light.extract_base_color('color(foo bar)'))

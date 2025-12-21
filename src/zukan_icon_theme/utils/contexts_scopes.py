@@ -62,6 +62,9 @@ CONTEXTS_SCOPES = [
     {'scope': 'source.yaml.kong', 'startsWith': 'YAML (Kong)'},
     {'scope': 'source.yaml.pipeline.bitbucket', 'startsWith': 'YAML (Bitbucket)'},
     {'scope': 'source.yaml.pipeline.drone', 'startsWith': 'YAML (Drone)'},
-    {'scope': 'source.yaml.pipeline.github-actions', 'startsWith': 'YAML (GitHub Actions)'},
+    {
+        'scope': 'source.yaml.pipeline.github-actions',
+        'startsWith': 'YAML (GitHub Actions)',
+    },
     {'scope': 'source.yaml.pipeline.gitlab', 'startsWith': 'YAML (GitLab)'},
 ]

@@ -3,7 +3,7 @@
 > Sublime Text 4 uses python 3.8 and Sublime Text 3 uses Python 3.3  
 Link https://www.sublimetext.com/docs/porting_guide.html#python-3-3  
 
-> Build package uses python 3.13.1.  
+> Build package uses python 3.14.0.  
 
 > Plugin follow ST python versions.  
 
@@ -30,15 +30,15 @@ Package
 
 ```sh
 # Use specific python version
-$ uv venv --python 3.13
-Using CPython 3.13.7 interpreter at: /path/to/python@3.13/bin/python3.13
+$ uv venv --python 3.14
+Using CPython 3.14.0
 Creating virtual environment at: .venv
 Activate with: source .venv/bin/activate
 
 # Check if .python-version file has correct version. Important for 'uv sync'.
 # It could be 3.3 or 3.8 because Sublime Text interpreter.
 $ cat .python-version
-3.13
+3.14
 
 # install
 # After `uv-sync` return `.python-version` to 3.3 or 3.8 for ST plugin function properly.
@@ -58,7 +58,7 @@ Or
 $ uv run pytest
 
 # If `.python-version` is 3.3 or 3.8
-$ uv run --python 3.13 pytest
+$ uv run --python 3.14 pytest
 ```
 
 To disable coverage (pytest-cov)  

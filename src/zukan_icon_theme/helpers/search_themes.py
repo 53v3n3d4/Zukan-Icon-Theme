@@ -6,6 +6,7 @@ import sublime
 from ..helpers.cache_theme_info import is_theme_info_valid, save_theme_info
 from ..helpers.color_dark_light import (
     convert_to_rgb,
+    extract_base_color,
     rgb_dark_light,
     st_colors_to_hex,
 )
@@ -108,6 +109,10 @@ def find_variables(
         '\s*([01]?\d(\.\d+)?|1(\.0+)?))?\)'
     )
     regex_hex = r'#(?:[0-9a-fA-F]{6}|[0-9a-fA-F]{8})'
+
+    # Color mod
+    var_value = extract_base_color(var_value)
+    # print(var_value)
 
     # Both Default and Default Dark give HSP = 124.12283073381384.
     # So it chooses icon light for both themes.
@@ -216,7 +221,7 @@ def find_variables(
                     find_variables(v, theme_content, target_list, theme)
 
     else:
-        logger.debug('failed to find sidebar background.')
+        logger.warning('failed to find sidebar background.')
 
 
 def find_attributes(

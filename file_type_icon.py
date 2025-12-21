@@ -94,5 +94,5 @@ def plugin_unloaded():
     MoveFolder().remove_created_folder(ZUKAN_PKG_PATH)
 
     if zukan_listener_enabled:
-        # Clear 'add_on_change'
+        # Clear `add_on_change`
         SettingsEvent.zukan_preferences_clear()

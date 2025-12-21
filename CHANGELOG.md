@@ -4,12 +4,13 @@
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: dist, Helm, Lean, ty
-- Change syntax: Bitbucket, cargo, Docker, Drone, GitLab, Kong, License, MKDocs, pre-commit, PostgreSQL Python, Rust, Sublime LSP, Vitest, Yugabyte
+- Change syntax: Bitbucket, cargo, Docker, Drone, Font, GitLab, Kong, License, MKDocs, pre-commit, PostgreSQL, Python, Rust, Sublime LSP, Vitest, Yugabyte
 - Rename: Anthropic Claude
 - Rename syntax: Dart, Docker, EsLint, Fantomas, npm, Nuxt, Nx, Oxc, Prettier, Python, Tauri, Vercel
 
 ### Plugin 🕹️
-- Fix error, removing context scopes, when syntax package Yaml Pipelines is not installed
+- Fix error, removing contexts scopes, when syntax package Yaml Pipelines is not installed
+- Fix `get_sidebar_bgcolor` fails to detect dark/light HSP when using color()
 
 ## [0.4.9] - 2025-10-10
 
