@@ -15,16 +15,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           persist-credentials: false
-      #  Install the latest version of uv and set the python version to 3.13t
+      #  Install the latest version of uv and set the python version to 3.14
       - name: uv
         uses: astral-sh/setup-uv@v6
         with:
-          python-version: 3.13
+          python-version: 3.14
       - name: Python
         run: |
-          uv python install 3.13
-          uv venv --python 3.13
-          uv python pin 3.13
+          uv python install 3.14
+          uv venv --python 3.14
+          uv python pin 3.14
       - name: Install dependencies
         run: uv sync
       - name: Test with pytest
