@@ -4,7 +4,7 @@ name: CSS
 icons:
   - css-1
 preferences:
-  scope: source.css
+  scope: source.css, source.json.css
   settings:
     icon: css
 syntax:
@@ -15,5 +15,14 @@ syntax:
     - css
     contexts:
       main: []
+  - name: JSON (CSS)
+    scope: source.json.css
+    hidden: true
+    file_extensions:
+      - css.map
+    contexts:
+      main:
+        - include: scope:source.json
+          apply_prototype: true
 
 # ST Package

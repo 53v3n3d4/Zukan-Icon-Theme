@@ -4,10 +4,19 @@ name: Stylelint
 icons:
   - stylelint-light
 preferences:
-  scope: source.js.stylelint, source.json.stylelint, source.yaml.stylelint
+  scope: source.js.stylelint, source.json.stylelint, source.yaml.stylelint, text.git.ignore.stylelint
   settings:
     icon: stylelint-dark
 syntax:
+  - name: Git Ignore (Stylelint)
+    scope: text.git.ignore.stylelint
+    hidden: true
+    file_extensions:
+      - .stylelintignore
+    contexts:
+      main:
+        - include: scope:text.git.ignore
+          apply_prototype: true
   - name: JavaScript (Stylelint)
     scope: source.js.stylelint
     hidden: true

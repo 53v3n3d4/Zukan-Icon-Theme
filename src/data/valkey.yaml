@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+name: Valkey
+tag: database
+preferences:
+  scope: source.ini.valkey
+  settings:
+    icon: valkey
+syntax:
+  - name: INI (Valkey)
+    scope: source.ini.valkey
+    hidden: true
+    file_extensions:
+      - valkey.conf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true

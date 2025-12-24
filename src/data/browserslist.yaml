@@ -1,0 +1,15 @@
+%YAML 1.2
+---
+name: Browserslist
+preferences:
+  scope: text.plain.browserslist
+  settings:
+    icon: browserslist
+syntax:
+  - name: Plain Text (Browserslist)
+    scope: text.plain.browserslist
+    hidden: true
+    file_extensions:
+      - .browserslistrc
+    contexts:
+      main: []

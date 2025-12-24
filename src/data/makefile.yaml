@@ -4,7 +4,7 @@ name: Makefile
 icons:
   - makefile-light
 preferences:
-  scope: source.makefile
+  scope: source.makefile, source.makefile.depfile
   settings:
     icon: makefile-dark
 syntax:
@@ -15,7 +15,21 @@ syntax:
       - mk
       - mak
       - make
+      - GNUmakefile
+      - Makefile
+      - Makefile.am
+      - Makefile.in
+      - OCamlMakefile
     contexts:
       main: []
+  - name: Makefile
+    scope: source.makefile.depfile
+    hidden: true
+    file_extensions:
+      - d
+    contexts:
+      main:
+        - include: scope:source.makefile
+          apply_prototype: true
 
 # ST Package

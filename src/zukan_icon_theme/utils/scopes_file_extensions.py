@@ -19,6 +19,7 @@ SCOPES_FILE_EXTENSIONS = [
         'scope': 'source.cmake',
         'file_extensions': ['CMakeLists.txt'],
     },  # cmake.yaml
+    {'scope': 'source.d', 'file_extensions': ['d']},  # Makefile.yaml
     {'scope': 'source.elixir', 'file_extensions': ['config.exs']},  # phoenix.yaml
     {'scope': 'source.env', 'file_extensions': ['.env']},  # fastapi.yaml
     {

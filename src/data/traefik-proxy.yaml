@@ -1,0 +1,27 @@
+%YAML 1.2
+---
+name: Traefik Proxy
+preferences:
+  scope: source.toml.traefikproxy, source.yaml.traefikproxy
+  settings:
+    icon: traefikproxy
+syntax:
+  - name: TOML (Traefik Proxy)
+    scope: source.toml.traefikproxy
+    hidden: true
+    file_extensions:
+      - traefik.toml
+    contexts:
+      main:
+        - include: scope:source.toml
+          apply_prototype: true
+  - name: YAML (Traefik Proxy)
+    scope: source.yaml.traefikproxy
+    hidden: true
+    file_extensions:
+      - traefik.yaml
+      - traefik.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

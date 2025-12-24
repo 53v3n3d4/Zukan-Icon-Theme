@@ -2,7 +2,7 @@
 ---
 name: JavaScript
 preferences:
-  scope: source.js, source.js.map, source.json.js
+  scope: source.js, source.json.js
   settings:
     icon: js
 syntax:
@@ -16,22 +16,14 @@ syntax:
       - mjs
     contexts:
       main: []
-  - name: JavaScript (Map)
-    scope: source.js.map
-    hidden: true
-    file_extensions:
-      - js.map
-      - cjs.map
-      - mjs.map
-    contexts:
-      main:
-        - include: scope:source.js
-          apply_prototype: true
   - name: JSON (JavaScript)
     scope: source.json.js
     hidden: true
     file_extensions:
       - jsconfig.json
+      - js.map
+      - cjs.map
+      - mjs.map
     contexts:
       main:
         - include: scope:source.json

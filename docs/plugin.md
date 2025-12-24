@@ -147,6 +147,7 @@ Required parameters are: scope and file extensions.
         { "scope": "source.clojure.clojure-common", "file_extensions": ["cljc"] },
         { "scope": "source.cmakeeditor", "file_extensions": ["CMakeLists.txt"] },
         { "scope": "source.cuda-c++", "file_extensions": ["h"] },
+        { "scope": "source.makefile.depfile", "file_extensions": ["d"] },
         { "scope": "source.edn", "file_extensions": ["edn"] },
         { "scope": "source.elixir", "file_extensions": ["dev.exs", "prod.exs", "prod.secret.exs", "test.exs"] },
         { "scope": "source.elixir.phoenix", "file_extensions": ["config.exs"] },

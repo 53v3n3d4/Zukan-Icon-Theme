@@ -3,10 +3,12 @@
 ## [0.4.10] - 2026
 
 ### Icons, syntaxes and preferences 👽
-- Add icon-theme: dist, Helm, Lean, ty
-- Change syntax: Bitbucket, cargo, Docker, Drone, Font, GitLab, Kong, License, MKDocs, pre-commit, PostgreSQL, Python, Rust, Sublime LSP, Vitest, Yugabyte
+- Add icon-theme: Browserlist, dist, Helm, Lean, Traefik Proxy, ty, Valkey
+- Add syntax: CSS, Makefile, Stylelint
+- Change syntax: Bitbucket, cargo, Docker, Drone, Font, GitLab, JavaScript, Kong, License, MKDocs, pre-commit, PostgreSQL, Python, Rust, Sublime LSP, Vitest, Yugabyte
 - Rename: Anthropic Claude
 - Rename syntax: Dart, Docker, EsLint, Fantomas, npm, Nuxt, Nx, Oxc, Prettier, Python, Tauri, Vercel
+- Remove syntax: JavaScript
 
 ### Plugin 🕹️
 - Fix error, removing contexts scopes, when syntax package Yaml Pipelines is not installed
