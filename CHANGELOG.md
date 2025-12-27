@@ -1,6 +1,6 @@
 # Changelog
 
-## [0.4.10] - 2026
+## [0.4.10] - 2025-12-27
 
 ### Icons, syntaxes and preferences 👽
 - Add icon-theme: Browserlist, dist, Helm, Lean, Traefik Proxy, ty, Valkey
