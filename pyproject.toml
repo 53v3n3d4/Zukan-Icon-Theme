@@ -1,6 +1,6 @@
 [project]
 name = "Zukan-Icon-Theme"
-version = "0.4.10"
+version = "0.4.11"
 requires-python = ">=3.14"
 authors = [
   {name = "Seven Eda", email = "53v3n3d4@gmail.com"}

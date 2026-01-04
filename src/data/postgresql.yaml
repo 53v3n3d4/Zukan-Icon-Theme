@@ -13,6 +13,7 @@ syntax:
     file_extensions:
       - pg_hba.conf
       - postgresql.conf
+      - .pg_service.conf
     contexts:
       main:
         - include: scope:source.ini

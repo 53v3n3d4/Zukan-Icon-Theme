@@ -308,6 +308,18 @@ def save_current_ui_settings(
     dump_pickle_data(current_ui_settings, USER_UI_SETTINGS_FILE)
 
 
+def should_clean_output_dir() -> bool:
+    """
+    Get clean output dir setting.
+
+    Returns:
+    (bool) -- True or False for clean output dir  setting.
+    """
+    clean_output_dir = get_settings(ZUKAN_SETTINGS, 'clean_output_dir')
+
+    return clean_output_dir
+
+
 def is_zukan_listener_enabled() -> bool:
     """
     Check if zukan listener enabled setting is true or false.

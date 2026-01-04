@@ -1,5 +1,14 @@
 # Changelog
 
+## [0.4.11] - 2026
+
+### Icons, syntaxes and preferences 👽
+- Add syntax: Docker
+- Change syntax: Docker, PostgreSQL
+
+### Plugin 🕹️
+- Add `clean_output_dir` setting, default is False for deleting zukan directories before generating files
+
 ## [0.4.10] - 2025-12-27
 
 ### Icons, syntaxes and preferences 👽

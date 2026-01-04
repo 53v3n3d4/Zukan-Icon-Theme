@@ -41,6 +41,28 @@ class TestZukanPreference(TestCase):
         mock_get_settings.assert_called_once()
 
     @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.should_clean_output_dir'
+    )
+    def test_clean_output_dir_setting(self, mock_should_clean):
+        mock_should_clean.return_value = True
+
+        result = self.zukan.clean_output_dir_setting()
+
+        self.assertTrue(result)
+        mock_should_clean.assert_called_once()
+
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.should_clean_output_dir'
+    )
+    def test_clean_output_dir_setting_false(self, mock_should_clean):
+        mock_should_clean.return_value = False
+
+        result = self.zukan.clean_output_dir_setting()
+
+        self.assertFalse(result)
+        mock_should_clean.assert_called_once()
+
+    @patch(
         'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_ignored_icon_settings'
     )
     def test_ignored_icon_setting(self, mock_get_settings):
@@ -165,6 +187,7 @@ class TestZukanPreference(TestCase):
              patch.object(self.zukan, 'delete_icons_preferences') as mock_delete, \
              patch.object(self.zukan, 'theme_name_setting') as mock_theme_name, \
              patch.object(self.zukan, 'sidebar_bgcolor') as mock_bgcolor, \
+             patch.object(self.zukan, 'clean_output_dir_setting') as mock_ckean_output_dir, \
              patch.object(
                 self.zukan, 'create_icons_preferences'
              ) as mock_create_icons_preferences, \
@@ -177,6 +200,7 @@ class TestZukanPreference(TestCase):
             mock_listdir.return_value = ["atest1.tmPreferences", "atest2.tmPreferences"]
             mock_theme_name.return_value = self.test_dark_theme
             mock_bgcolor.return_value = self.bgcolor_dark
+            mock_ckean_output_dir = True
 
             self.zukan.build_icons_preferences()
 

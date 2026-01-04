@@ -319,6 +319,12 @@
     // Default is 180 days.
     "cache_theme_info_lifespan": 180,
 
+    // If enabled, the output directory is cleaned before
+    // generating files.
+    //
+    // Default is false.
+    "clean_output_dir": false,
+
     // This setting control if user want to auto upgrade
     // icons preferences and syntaxes files.
     //

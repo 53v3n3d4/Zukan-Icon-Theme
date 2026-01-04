@@ -14,6 +14,7 @@ from ..helpers.edit_file_extension import edit_file_extension
 from ..helpers.load_save_settings import (
     get_change_icon_settings,
     get_ignored_icon_settings,
+    should_clean_output_dir,
 )
 from ..helpers.read_write_data import (
     edit_contexts_main,
@@ -50,6 +51,10 @@ class ZukanSyntax:
     def change_icon_file_extension_setting(self) -> list:
         _, change_icon_file_extension = get_change_icon_settings()
         return change_icon_file_extension
+
+    def clean_output_dir_setting(self) -> bool:
+        clean_output_dir = should_clean_output_dir()
+        return clean_output_dir
 
     def ignored_icon_setting(self) -> Set:
         return set(get_ignored_icon_settings())
@@ -97,7 +102,7 @@ class ZukanSyntax:
         if not os.path.exists(ZUKAN_PKG_ICONS_SYNTAXES_PATH):
             os.makedirs(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
         # Deleting syntax for 'change_icon_file_extension' and 'create_custom_icon'
-        if any(
+        if self.clean_output_dir_setting() and any(
             syntax.endswith(SUBLIME_SYNTAX_EXTENSION)
             for syntax in os.listdir(ZUKAN_PKG_ICONS_SYNTAXES_PATH)
         ):
@@ -337,7 +342,7 @@ class ZukanSyntax:
 
     def delete_icons_syntaxes(self):
         """
-        Delete all sublime-syntaxes files, leaving pickle file.
+        Delete all sublime-syntaxes files.
         """
         try:
             for s in glob.iglob(

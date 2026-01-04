@@ -88,6 +88,28 @@ class TestZukanSyntax(TestCase):
         mock_get_settings.assert_called_once()
 
     @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.should_clean_output_dir'
+    )
+    def test_clean_output_dir_setting(self, mock_should_clean):
+        mock_should_clean.return_value = True
+
+        result = self.zukan.clean_output_dir_setting()
+
+        self.assertTrue(result)
+        mock_should_clean.assert_called_once()
+
+    @patch(
+        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.should_clean_output_dir'
+    )
+    def test_clean_output_dir_setting_false(self, mock_should_clean):
+        mock_should_clean.return_value = False
+
+        result = self.zukan.clean_output_dir_setting()
+
+        self.assertFalse(result)
+        mock_should_clean.assert_called_once()
+
+    @patch(
         'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.get_ignored_icon_settings'
     )
     def test_ignored_icon_setting(self, mock_get_settings):
@@ -130,6 +152,34 @@ class TestZukanSyntax(TestCase):
         mock_thread_progress.assert_called_once_with(
             mock_thread_instance, 'Building zukan syntaxes', 'Build done'
         )
+
+    def test_build_icons_syntaxes_deletes_existing_syntaxes(self):
+        # fmt: off
+        with patch('os.path.exists') as mock_exists, \
+             patch('os.makedirs') as mock_makedirs, \
+             patch('os.listdir') as mock_listdir, \
+             patch.object(self.zukan, 'clean_output_dir_setting') as mock_clean_output_dir, \
+             patch.object(self.zukan, 'delete_icons_syntaxes') as mock_delete, \
+             patch.object(self.zukan, 'create_icons_syntaxes') as mock_create, \
+             patch.object(self.zukan, 'edit_contexts_scopes') as mock_edit_contexts, \
+             patch(
+                 'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_syntaxes.copy_primary_icons'
+             ) as mock_copy_icons:
+        # fmt: on
+
+            mock_exists.return_value = True
+            mock_listdir.return_value = [
+                'Atest-1.sublime-syntax',
+                'Atest-2.sublime-syntax',
+            ]
+            mock_clean_output_dir.return_value = True
+
+            self.zukan.build_icons_syntaxes()
+
+            mock_delete.assert_called_once()
+            mock_create.assert_called_once()
+            mock_edit_contexts.assert_called_once()
+            mock_copy_icons.assert_called_once()
 
     def test_get_list_icons_syntaxes(self):
         zukan_icons = [{'syntax': 'Rust'}, {'other': 'value'}]

@@ -12,6 +12,7 @@ from ..helpers.load_save_settings import (
     get_ignored_icon_settings,
     get_prefer_icon_settings,
     get_theme_name,
+    should_clean_output_dir,
 )
 from ..helpers.read_write_data import read_pickle_data
 from ..helpers.search_themes import get_sidebar_bgcolor
@@ -41,6 +42,10 @@ class ZukanPreference:
     def change_icon_setting(self) -> dict:
         change_icon, _ = get_change_icon_settings()
         return change_icon
+
+    def clean_output_dir_setting(self) -> bool:
+        clean_output_dir = should_clean_output_dir()
+        return clean_output_dir
 
     def ignored_icon_setting(self) -> Set:
         return set(get_ignored_icon_settings())
@@ -78,7 +83,7 @@ class ZukanPreference:
                 os.makedirs(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
             # Deleting unused files for 'create_custom_icon' if preferences do not exist
             # and not in 'create_custom_icon' anymore.
-            if any(
+            if self.clean_output_dir_setting() and any(
                 preference.endswith(TMPREFERENCES_EXTENSION)
                 for preference in os.listdir(ZUKAN_PKG_ICONS_PREFERENCES_PATH)
             ):
@@ -502,7 +507,7 @@ class ZukanPreference:
 
     def delete_icons_preferences(self):
         """
-        Delete all tmPreferences files, leaving pickle file.
+        Delete all tmPreferences files.
         """
         try:
             for p in glob.iglob(
