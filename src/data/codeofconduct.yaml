@@ -13,6 +13,7 @@ syntax:
     hidden: true
     file_extensions:
       - CODE_OF_CONDUCT.md
+      - CODE-OF-CONDUCT.md
     contexts:
       main:
         - include: scope:text.html.markdown

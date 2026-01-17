@@ -3,8 +3,9 @@
 ## [0.4.11] - 2026
 
 ### Icons, syntaxes and preferences 👽
+- Add icon-theme: Coveralls, GoReleaser, NATS
 - Add syntax: Docker
-- Change syntax: Docker, PostgreSQL
+- Change syntax: Code of Conduct, Docker, PostgreSQL
 
 ### Plugin 🕹️
 - Add `clean_output_dir` setting, default is False for deleting zukan directories before generating files

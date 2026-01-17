@@ -1,0 +1,20 @@
+%YAML 1.2
+---
+name: GoReleaser
+preferences:
+  scope: source.yaml.goreleaser
+  settings:
+    icon: goreleaser
+syntax:
+  - name: YAML (GoReleaser)
+    scope: source.yaml.goreleaser
+    hidden: true
+    file_extensions:
+      - .goreleaser.yml
+      - .goreleaser.yaml
+      - goreleaser.yml
+      - goreleaser.yaml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true

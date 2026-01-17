@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: NATS
+preferences:
+  scope: source.ini.nats
+  settings:
+    icon: nats
+syntax:
+  - name: INI (NATS)
+    scope: source.ini.nats
+    hidden: true
+    file_extensions:
+      - nats-server.conf
+    contexts:
+      main:
+        - include: scope:source.ini
+          apply_prototype: true

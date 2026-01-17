@@ -1,0 +1,17 @@
+%YAML 1.2
+---
+name: Coveralls
+preferences:
+  scope: source.yaml.coveralls
+  settings:
+    icon: coveralls
+syntax:
+  - name: YAML (Coveralls)
+    scope: source.yaml.coveralls
+    hidden: true
+    file_extensions:
+      - .coveralls.yml
+    contexts:
+      main:
+        - include: scope:source.yaml
+          apply_prototype: true
