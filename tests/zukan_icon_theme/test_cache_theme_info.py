@@ -44,10 +44,8 @@ class TestCacheThemeInfo(TestCase):
         )
         self.assertIsInstance(result, float)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.datetime')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.os.path.getmtime'
-    )
+    @patch.object(cache_theme_info, 'datetime')
+    @patch.object(cache_theme_info.os.path, 'getmtime')
     def test_get_modified_time_defaut_st_themes(self, mock_getmtime, mock_datetime):
         mock_now = datetime(2025, 2, 5, 12, 0, 0)
         mock_datetime.now.return_value = mock_now
@@ -73,16 +71,9 @@ class TestCacheThemeInfo(TestCase):
 
     @patch('os.path.exists')
     @patch('builtins.open', new_callable=mock_open)
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_modified_time'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_file_path'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.THEME_INFO_FILE',
-        '/mock/theme_info.json',
-    )
+    @patch.object(cache_theme_info, 'get_modified_time')
+    @patch.object(cache_theme_info, 'get_file_path')
+    @patch.object(cache_theme_info, 'THEME_INFO_FILE', '/mock/theme_info.json')
     @patch('os.path.basename')
     def test_is_theme_info_valid(
         self, mock_basename, mock_get_file_path, mock_get_time, mock_file, mock_exists
@@ -106,10 +97,7 @@ class TestCacheThemeInfo(TestCase):
 
     @patch('os.path.exists')
     @patch('builtins.open', new_callable=mock_open)
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.THEME_INFO_FILE',
-        '/mock/theme_info.json',
-    )
+    @patch.object(cache_theme_info, 'THEME_INFO_FILE', '/mock/theme_info.json')
     def test_is_theme_info_vaid_none(self, mock_file, mock_exists):
         test_path = None
         mock_exists.side_effect = [False, False]
@@ -118,12 +106,8 @@ class TestCacheThemeInfo(TestCase):
         self.assertEqual(result, None)
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_modified_time'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_file_path'
-    )
+    @patch.object(cache_theme_info, 'get_modified_time')
+    @patch.object(cache_theme_info, 'get_file_path')
     @patch('builtins.open', new_callable=mock_open)
     def test_save_theme_info(
         self, mock_file, mock_get_path, mock_mod_time, mock_exists
@@ -150,12 +134,8 @@ class TestCacheThemeInfo(TestCase):
         self.assertEqual(theme['opacity']['last_updated'], 1000)
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_modified_time'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_file_path'
-    )
+    @patch.object(cache_theme_info, 'get_modified_time')
+    @patch.object(cache_theme_info, 'get_file_path')
     @patch('builtins.open', new_callable=mock_open)
     def test_save_theme_info_default_theme_no_update(
         self, mock_file, mock_get_path, mock_mod_time, mock_exists
@@ -175,12 +155,8 @@ class TestCacheThemeInfo(TestCase):
         mock_file().write.assert_not_called()
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_modified_time'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_file_path'
-    )
+    @patch.object(cache_theme_info, 'get_modified_time')
+    @patch.object(cache_theme_info, 'get_file_path')
     @patch('builtins.open', new_callable=mock_open)
     def test_save_theme_info_default_theme_update(
         self, mock_file, mock_get_path, mock_mod_time, mock_exists
@@ -206,12 +182,8 @@ class TestCacheThemeInfo(TestCase):
         self.assertEqual(theme['opacity']['last_updated'], new_time)
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_modified_time'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_file_path'
-    )
+    @patch.object(cache_theme_info, 'get_modified_time')
+    @patch.object(cache_theme_info, 'get_file_path')
     @patch('builtins.open', new_callable=mock_open)
     def test_save_theme_info_no_update(
         self, mock_file, mock_get_path, mock_mod_time, mock_exists
@@ -227,12 +199,8 @@ class TestCacheThemeInfo(TestCase):
         mock_file().write.assert_not_called()
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_modified_time'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_file_path'
-    )
+    @patch.object(cache_theme_info, 'get_modified_time')
+    @patch.object(cache_theme_info, 'get_file_path')
     @patch('builtins.open', new_callable=mock_open)
     def test_save_theme_info_update(
         self, mock_file, mock_get_path, mock_mod_time, mock_exists
@@ -255,12 +223,8 @@ class TestCacheThemeInfo(TestCase):
         self.assertEqual(theme['opacity']['last_updated'], new_time)
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_modified_time'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_file_path'
-    )
+    @patch.object(cache_theme_info, 'get_modified_time')
+    @patch.object(cache_theme_info, 'get_file_path')
     @patch('builtins.open', new_callable=mock_open)
     def test_save_theme_info_no_theme_info_file(
         self, mock_file, mock_get_path, mock_mod_time, mock_exists
@@ -293,9 +257,7 @@ class TestCacheThemeInfo(TestCase):
 
     @patch('os.path.exists')
     @patch('os.path.getctime')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_cached_theme_info_lifespan'
-    )
+    @patch.object(cache_theme_info, 'get_cached_theme_info_lifespan')
     def test_cache_theme_info_lifespan(self, mock_lifespan, mock_ctime, mock_exists):
         mock_exists.return_value = True
         mock_lifespan.return_value = 30
@@ -307,9 +269,7 @@ class TestCacheThemeInfo(TestCase):
 
     @patch('os.path.exists')
     @patch('os.path.getctime')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.get_cached_theme_info_lifespan'
-    )
+    @patch.object(cache_theme_info, 'get_cached_theme_info_lifespan')
     def test_cache_theme_info_not_expired(self, mock_lifespan, mock_ctime, mock_exists):
         mock_exists.return_value = True
         mock_lifespan.return_value = 30
@@ -326,18 +286,14 @@ class TestCacheThemeInfo(TestCase):
         self.assertFalse(result)
 
     @patch('os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.cache_theme_info_lifespan'
-    )
+    @patch.object(cache_theme_info, 'cache_theme_info_lifespan')
     def test_delete_cached_theme_info(self, mock_lifespan, mock_remove):
         mock_lifespan.return_value = True
         cache_theme_info.delete_cached_theme_info()
         mock_remove.assert_called_once_with(cache_theme_info.THEME_INFO_FILE)
 
     @patch('os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.cache_theme_info.cache_theme_info_lifespan'
-    )
+    @patch.object(cache_theme_info, 'cache_theme_info_lifespan')
     def test_delete_cached_theme_info_not_expired(self, mock_lifespan, mock_remove):
         mock_lifespan.return_value = False
         cache_theme_info.delete_cached_theme_info()

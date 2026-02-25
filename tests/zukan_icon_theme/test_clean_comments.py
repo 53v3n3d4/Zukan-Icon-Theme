@@ -79,9 +79,7 @@ class TestCleanComments(TestCase):
         mock_file.assert_called_once_with(self.test_file_path, 'w')
         mock_file().write.assert_called_once_with(content)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.clean_comments.logging.Logger.error'
-    )
+    @patch.object(clean_comments.logger, 'error')
     @patch('os.path.isfile')
     def test_clean_comments_file_not_found(self, mock_isfile, mock_logger):
         mock_isfile.return_value = False
@@ -96,8 +94,8 @@ class TestCleanComments(TestCase):
         mock_isfile.return_value = True
         mock_open.side_effect = OSError(errno.EACCES, 'Permission denied')
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.clean_comments.logging.Logger.error'
+        with patch.object(
+            clean_comments.logger, 'error'
         ) as mock_logger:
             self.cleaner.clean_comments()
 

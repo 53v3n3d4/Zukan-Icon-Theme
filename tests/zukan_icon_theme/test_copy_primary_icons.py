@@ -11,31 +11,15 @@ copy_primary_icons = importlib.import_module(
 
 
 class TestCopyPrimaryIcons(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_change_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_ignored_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_theme_name'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_sidebar_bgcolor'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_icon_dark_light'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.shutil.copy2'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.logger.debug'
-    )
+    @patch.object(copy_primary_icons, 'get_prefer_icon_settings')
+    @patch.object(copy_primary_icons, 'get_change_icon_settings')
+    @patch.object(copy_primary_icons, 'get_ignored_icon_settings')
+    @patch.object(copy_primary_icons, 'get_theme_name')
+    @patch.object(copy_primary_icons, 'get_sidebar_bgcolor')
+    @patch.object(copy_primary_icons, 'get_icon_dark_light')
+    @patch.object(copy_primary_icons.shutil, 'copy2')
+    @patch.object(copy_primary_icons.os, 'remove')
+    @patch.object(copy_primary_icons.logger, 'debug')
     def test_copy_primary_icons_dark(
         self,
         mock_debug,
@@ -90,31 +74,15 @@ class TestCopyPrimaryIcons(TestCase):
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_change_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_ignored_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_theme_name'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_sidebar_bgcolor'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_icon_dark_light'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.shutil.copy2'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.logger.debug'
-    )
+    @patch.object(copy_primary_icons, 'get_prefer_icon_settings')
+    @patch.object(copy_primary_icons, 'get_change_icon_settings')
+    @patch.object(copy_primary_icons, 'get_ignored_icon_settings')
+    @patch.object(copy_primary_icons, 'get_theme_name')
+    @patch.object(copy_primary_icons, 'get_sidebar_bgcolor')
+    @patch.object(copy_primary_icons, 'get_icon_dark_light')
+    @patch.object(copy_primary_icons.shutil, 'copy2')
+    @patch.object(copy_primary_icons.os, 'remove')
+    @patch.object(copy_primary_icons.logger, 'debug')
     def test_copy_primary_icons_light(
         self,
         mock_debug,
@@ -169,31 +137,15 @@ class TestCopyPrimaryIcons(TestCase):
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_change_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_ignored_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_theme_name'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_sidebar_bgcolor'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_icon_dark_light'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.shutil.copy2'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.logger.debug'
-    )
+    @patch.object(copy_primary_icons, 'get_prefer_icon_settings')
+    @patch.object(copy_primary_icons, 'get_change_icon_settings')
+    @patch.object(copy_primary_icons, 'get_ignored_icon_settings')
+    @patch.object(copy_primary_icons, 'get_theme_name')
+    @patch.object(copy_primary_icons, 'get_sidebar_bgcolor')
+    @patch.object(copy_primary_icons, 'get_icon_dark_light')
+    @patch.object(copy_primary_icons.shutil, 'copy2')
+    @patch.object(copy_primary_icons.os, 'remove')
+    @patch.object(copy_primary_icons.logger, 'debug')
     def test_copy_primary_icons_change_icon_dark(
         self,
         mock_debug,
@@ -248,31 +200,15 @@ class TestCopyPrimaryIcons(TestCase):
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_change_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_ignored_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_theme_name'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_sidebar_bgcolor'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_icon_dark_light'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.shutil.copy2'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.logger.debug'
-    )
+    @patch.object(copy_primary_icons, 'get_prefer_icon_settings')
+    @patch.object(copy_primary_icons, 'get_change_icon_settings')
+    @patch.object(copy_primary_icons, 'get_ignored_icon_settings')
+    @patch.object(copy_primary_icons, 'get_theme_name')
+    @patch.object(copy_primary_icons, 'get_sidebar_bgcolor')
+    @patch.object(copy_primary_icons, 'get_icon_dark_light')
+    @patch.object(copy_primary_icons.shutil, 'copy2')
+    @patch.object(copy_primary_icons.os, 'remove')
+    @patch.object(copy_primary_icons.logger, 'debug')
     def test_copy_primary_icons_change_icon_light(
         self,
         mock_debug,
@@ -327,31 +263,15 @@ class TestCopyPrimaryIcons(TestCase):
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_change_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_ignored_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_theme_name'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_sidebar_bgcolor'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_icon_dark_light'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.shutil.copy2'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.logger.debug'
-    )
+    @patch.object(copy_primary_icons, 'get_prefer_icon_settings')
+    @patch.object(copy_primary_icons, 'get_change_icon_settings')
+    @patch.object(copy_primary_icons, 'get_ignored_icon_settings')
+    @patch.object(copy_primary_icons, 'get_theme_name')
+    @patch.object(copy_primary_icons, 'get_sidebar_bgcolor')
+    @patch.object(copy_primary_icons, 'get_icon_dark_light')
+    @patch.object(copy_primary_icons.shutil, 'copy2')
+    @patch.object(copy_primary_icons.os, 'remove')
+    @patch.object(copy_primary_icons.logger, 'debug')
     def test_copy_primary_icons_remove(
         self,
         mock_debug,
@@ -403,31 +323,15 @@ class TestCopyPrimaryIcons(TestCase):
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_change_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_ignored_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_theme_name'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_sidebar_bgcolor'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_icon_dark_light'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.shutil.copy2'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.logger.debug'
-    )
+    @patch.object(copy_primary_icons, 'get_prefer_icon_settings')
+    @patch.object(copy_primary_icons, 'get_change_icon_settings')
+    @patch.object(copy_primary_icons, 'get_ignored_icon_settings')
+    @patch.object(copy_primary_icons, 'get_theme_name')
+    @patch.object(copy_primary_icons, 'get_sidebar_bgcolor')
+    @patch.object(copy_primary_icons, 'get_icon_dark_light')
+    @patch.object(copy_primary_icons.shutil, 'copy2')
+    @patch.object(copy_primary_icons.os, 'remove')
+    @patch.object(copy_primary_icons.logger, 'debug')
     def test_copy_primary_icons_remove_change_icon(
         self,
         mock_debug,
@@ -479,31 +383,15 @@ class TestCopyPrimaryIcons(TestCase):
             str(copy_primary_icons.ICONS_SUFFIX[2]),
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_prefer_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_change_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_ignored_icon_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_theme_name'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_sidebar_bgcolor'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.get_icon_dark_light'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.shutil.copy2'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.copy_primary_icons.logger.debug'
-    )
+    @patch.object(copy_primary_icons, 'get_prefer_icon_settings')
+    @patch.object(copy_primary_icons, 'get_change_icon_settings')
+    @patch.object(copy_primary_icons, 'get_ignored_icon_settings')
+    @patch.object(copy_primary_icons, 'get_theme_name')
+    @patch.object(copy_primary_icons, 'get_sidebar_bgcolor')
+    @patch.object(copy_primary_icons, 'get_icon_dark_light')
+    @patch.object(copy_primary_icons.shutil, 'copy2')
+    @patch.object(copy_primary_icons.os, 'remove')
+    @patch.object(copy_primary_icons.logger, 'debug')
     def test_copy_primary_icons_default(
         self,
         mock_debug,

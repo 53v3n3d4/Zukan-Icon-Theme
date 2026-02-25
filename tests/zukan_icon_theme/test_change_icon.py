@@ -25,9 +25,7 @@ class TestChangeResetIcon(TestCase):
         self.assertEqual(self.icon_handler.icon_path, change_icon.ZUKAN_PKG_ICONS_PATH)
         self.assertIsInstance(self.icon_handler.zukan_listener_enabled, bool)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.get_change_icon_settings'
-    )
+    @patch.object(change_icon, 'get_change_icon_settings')
     def test_change_icon_setting(self, mock_get_settings):
         expected_settings = {'ATest-3': 'atest3', 'ATest-4': 'atest4'}
         mock_get_settings.return_value = [expected_settings, None]
@@ -37,9 +35,7 @@ class TestChangeResetIcon(TestCase):
         self.assertEqual(result, expected_settings)
         mock_get_settings.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.sublime.error_message'
-    )
+    @patch.object(change_icon.sublime, 'error_message')
     def test_message_required_icon_name_file_missing_name(self, mock_error_message):
         self.icon_handler.message_required_icon_name_file('', 'atest')
 
@@ -47,9 +43,7 @@ class TestChangeResetIcon(TestCase):
             'Name and icon name inputs are required'
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.sublime.error_message'
-    )
+    @patch.object(change_icon.sublime, 'error_message')
     def test_message_required_icon_name_file_missing_file(self, mock_error_message):
         self.icon_handler.message_required_icon_name_file('ATest', '')
 
@@ -58,9 +52,7 @@ class TestChangeResetIcon(TestCase):
         )
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.sublime.error_message'
-    )
+    @patch.object(change_icon.sublime, 'error_message')
     def test_png_exists_file_not_found(self, mock_error_message, mock_exists):
         mock_exists.return_value = False
 
@@ -75,9 +67,7 @@ class TestChangeResetIcon(TestCase):
         mock_error_message.assert_called_once_with(expected_message)
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.sublime.error_message'
-    )
+    @patch.object(change_icon.sublime, 'error_message')
     def test_png_exists_primary_icon(self, mock_error_message, mock_exists):
         mock_exists.return_value = False
         primary_icon = change_icon.PRIMARY_ICONS[0][2][0]
@@ -86,9 +76,7 @@ class TestChangeResetIcon(TestCase):
 
         mock_error_message.assert_not_called()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.sublime.error_message'
-    )
+    @patch.object(change_icon.sublime, 'error_message')
     def test_message_icon_exists_in_change_icon(self, mock_error_message):
         self.icon_handler.message_icon_exists_in_change_icon(self.test_icon_name)
 
@@ -97,8 +85,8 @@ class TestChangeResetIcon(TestCase):
         )
         mock_error_message.assert_called_once_with(expected_message)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.logger')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.set_save_settings')
+    @patch.object(change_icon, 'logger')
+    @patch.object(change_icon, 'set_save_settings')
     def test_reset_change_icon(self, mock_save_settings, mock_logger):
         test_icon = 'ATest'
         change_icon = {'ATest': 'atest', 'ATest-1': 'atest1'}
@@ -111,8 +99,8 @@ class TestChangeResetIcon(TestCase):
             self.preferences_file, 'change_icon', expected_result
         )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.logger')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.set_save_settings')
+    @patch.object(change_icon, 'logger')
+    @patch.object(change_icon, 'set_save_settings')
     def test_reset_all_change_icons(self, mock_save_settings, mock_logger):
         change_icon = {'ATest-1': 'atest1', 'ATest-2': 'atest2'}
 
@@ -123,7 +111,7 @@ class TestChangeResetIcon(TestCase):
             self.preferences_file, 'change_icon', {}
         )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.set_save_settings')
+    @patch.object(change_icon, 'set_save_settings')
     def test_save_change_icon_setting(self, mock_save_settings):
         test_settings = {'ATest': 'atest'}
 
@@ -149,7 +137,7 @@ class TestChangeIconCommand(TestCase):
         self.assertIsInstance(command.change_reset_icon, change_icon.ChangeResetIcon)
         self.assertEqual(command.view, self.view)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.change_icon.set_save_settings')
+    @patch.object(change_icon, 'set_save_settings')
     def test_change_icon_command_run_new_icon(self, mock_set_save_settings):
         change_icon = {'existing': 'file1'}
         self.change_reset_icon.change_icon_setting.return_value = change_icon

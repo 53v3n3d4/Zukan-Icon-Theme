@@ -81,8 +81,9 @@ class TestColorDarkLight(TestCase):
             ('primary', '#392E2A'),  # Biohack
             ('secondary', '#F9EFDA'),  # DO
         ]
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.color_dark_light.ST_COLOR_PALETTE',
+        with patch.object(
+            color_dark_light,
+            'ST_COLOR_PALETTE',
             ST_COLOR_PALETTE,
         ):
             self.assertEqual(color_dark_light.st_colors_to_hex('primary'), '#392E2A')

@@ -15,7 +15,7 @@ class TestChangeResetFileExtension(TestCase):
         self.logger_mock = MagicMock()
 
         patcher = patch.multiple(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.change_file_extension',
+            change_file_extension,
             sublime=self.sublime_mock,
             logger=self.logger_mock,
             is_zukan_listener_enabled=MagicMock(return_value=True),
@@ -29,9 +29,7 @@ class TestChangeResetFileExtension(TestCase):
             change_file_extension.ChangeResetFileExtension()
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.change_file_extension.is_zukan_listener_enabled'
-    )
+    @patch.object(change_file_extension, 'is_zukan_listener_enabled')
     def test_change_reset_file_extension_init(self, mock_listener):
         mock_listener.return_value = True
         file_extension = change_file_extension.ChangeResetFileExtension()
@@ -40,8 +38,9 @@ class TestChangeResetFileExtension(TestCase):
 
     def test_change_icon_file_extension_setting(self):
         expected = ['test.txt']
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.change_file_extension.get_change_icon_settings',
+        with patch.object(
+            change_file_extension,
+            'get_change_icon_settings',
             return_value=(None, expected),
         ):
             result = (
@@ -174,7 +173,7 @@ class TestChangeFileExtensionCommand(TestCase):
         self.change_reset_mock = MagicMock()
 
         patcher = patch.multiple(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.change_file_extension',
+            change_file_extension,
             sublime=self.sublime_mock,
             sublime_plugin=self.sublime_plugin_mock,
             logger=self.logger_mock,
@@ -239,8 +238,9 @@ class TestChangeFileExtensionCommand(TestCase):
 class TestChangeFileExtensionScopeInputHandler(TestCase):
     def setUp(self):
         self.sublime_mock = MagicMock()
-        patcher = patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.change_file_extension.sublime',
+        patcher = patch.object(
+            change_file_extension,
+            'sublime',
             self.sublime_mock,
         )
         patcher.start()
@@ -292,7 +292,7 @@ class TestResetFileExtensionCommand(TestCase):
         self.change_reset_mock = MagicMock()
 
         patcher = patch.multiple(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.change_file_extension',
+            change_file_extension,
             sublime=self.sublime_mock,
             sublime_plugin=self.sublime_plugin_mock,
             logger=self.logger_mock,
@@ -378,7 +378,7 @@ class TestResetFileExtensionInputHandler(TestCase):
         self.sublime_mock.ListInputItem = MockListInputItem
 
         patcher = patch.multiple(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.change_file_extension',
+            change_file_extension,
             sublime=self.sublime_mock,
             logger=self.logger_mock,
         )
