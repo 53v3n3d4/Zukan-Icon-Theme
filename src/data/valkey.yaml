@@ -12,6 +12,7 @@ syntax:
     hidden: true
     file_extensions:
       - valkey.conf
+      - users.acl
     contexts:
       main:
         - include: scope:source.ini

@@ -3,7 +3,7 @@
 name: Yugabyte
 tag: database
 preferences:
-  scope: source.ini.yugabyte
+  scope: source.ini.yugabyte, source.json.yugabyte
   settings:
     icon: yugabyte
 syntax:
@@ -13,8 +13,16 @@ syntax:
     file_extensions:
       - ysql_hba.conf
       - ysql_pg.conf
-      - yugabyted.conf
     contexts:
       main:
         - include: scope:source.ini
+          apply_prototype: true
+  - name: JSON (Yugabyte)
+    scope: source.json.yugabyte
+    hidden: true
+    file_extensions:
+      - yugabyted.conf
+    contexts:
+      main:
+        - include: scope:source.json
           apply_prototype: true

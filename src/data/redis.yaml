@@ -19,6 +19,7 @@ syntax:
     hidden: true
     file_extensions:
       - redis.conf
+      - users.acl
     contexts:
       main:
         - include: scope:source.ini
