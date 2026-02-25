@@ -22,9 +22,7 @@ class TestInstallEvent(TestCase):
         self.install_event.zukan_syntax = self.mock_syntax
         self.install_event.zukan_theme = self.mock_theme
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.install.is_zukan_restart_message'
-    )
+    @patch.object(install_event, 'is_zukan_restart_message')
     def test_zukan_restart_message_setting(self, mock_restart_message):
         mock_restart_message.return_value = True
         self.assertTrue(self.install_event.zukan_restart_message_setting())
@@ -32,14 +30,12 @@ class TestInstallEvent(TestCase):
         mock_restart_message.return_value = False
         self.assertFalse(self.install_event.zukan_restart_message_setting())
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.install.get_upgraded_version_settings'
-    )
+    @patch.object(install_event, 'get_upgraded_version_settings')
     def test_pkg_version_setting(self, mock_version):
         mock_version.return_value = ('0.4.8', None)
         self.assertEqual(self.install_event.pkg_version_setting(), '0.4.8')
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.install.get_theme_settings')
+    @patch.object(install_event, 'get_theme_settings')
     def test_install_batch(self, mock_theme_settings):
         # Test auto_install_theme is False
         mock_theme_settings.return_value = (None, False)
@@ -66,8 +62,8 @@ class TestInstallEvent(TestCase):
         self.mock_syntax.build_icons_syntaxes.assert_called_once()
         self.mock_preference.build_icons_preferences.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.install.delete_unused_icons')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.install.threading.Thread')
+    @patch.object(install_event, 'delete_unused_icons')
+    @patch.object(install_event.threading, 'Thread')
     @patch('sublime.active_window')
     @patch('sublime.set_timeout')
     @patch('sublime.message_dialog')
@@ -110,7 +106,7 @@ class TestInstallEvent(TestCase):
             first_callback = mock_set_timeout.call_args_list[0][0][0]
             first_callback()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.install.threading.Thread')
+    @patch.object(install_event.threading, 'Thread')
     @patch('sublime.active_window')
     @patch('sublime.set_timeout')
     def test_rebuild_icon_files_thread(
@@ -141,7 +137,7 @@ class TestInstallEvent(TestCase):
 
         mock_view.erase_status.assert_called_with('_zukan')
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.install.threading.Thread')
+    @patch.object(install_event.threading, 'Thread')
     @patch('sublime.active_window')
     @patch('sublime.set_timeout')
     @patch('sublime.message_dialog')

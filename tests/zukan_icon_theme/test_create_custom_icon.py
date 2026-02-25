@@ -12,17 +12,15 @@ create_custom_icon = importlib.import_module(
 class TestCreateDeleteCustomIcon(TestCase):
     def setUp(self):
         self.preferences_file = 'test_preferences.sublime-settings'
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.is_zukan_listener_enabled'
+        with patch.object(
+            create_custom_icon, 'is_zukan_listener_enabled'
         ) as mock_listener:
             mock_listener.return_value = True
             self.icon_handler = create_custom_icon.CreateDeleteCustomIcon(
                 self.preferences_file
             )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.is_zukan_listener_enabled'
-    )
+    @patch.object(create_custom_icon, 'is_zukan_listener_enabled')
     def test_change_reset_file_extension_init(self, mock_listener):
         self.assertEqual(
             self.icon_handler.zukan_preferences_file, self.preferences_file
@@ -43,9 +41,7 @@ class TestCreateDeleteCustomIcon(TestCase):
 
         self.assertEqual(self.icon_handler.convert_to_list('py'), ['py'])
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.sublime.error_message'
-    )
+    @patch.object(create_custom_icon.sublime, 'error_message')
     def test_message_required_name(self, mock_error):
         self.icon_handler.message_required_name('')
         mock_error.assert_called_once_with('Name input is required')
@@ -55,9 +51,7 @@ class TestCreateDeleteCustomIcon(TestCase):
         mock_error.assert_not_called()
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.sublime.error_message'
-    )
+    @patch.object(create_custom_icon.sublime, 'error_message')
     def test_png_exists(self, mock_error, mock_exists):
         mock_exists.return_value = False
         custom_icon = 'atest'
@@ -95,9 +89,7 @@ class TestCreateDeleteCustomIcon(TestCase):
         result = self.icon_handler.remove_empty_keys(test_data)
         self.assertEqual(result, expected)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.set_save_settings'
-    )
+    @patch.object(create_custom_icon, 'set_save_settings')
     def test_delete_custom_icon(self, mock_save):
         test_data = [
             {'name': 'ATest-1', 'icon': 'atest1'},
@@ -111,9 +103,7 @@ class TestCreateDeleteCustomIcon(TestCase):
             [{'name': 'ATest-2', 'icon': 'atest2'}],
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.set_save_settings'
-    )
+    @patch.object(create_custom_icon, 'set_save_settings')
     def test_delete_all_customs_icons(self, mock_save):
         test_data = [
             {'name': 'ATest-1', 'icon': 'atest1'},
@@ -168,8 +158,9 @@ class TestCreateCustomIconCommand(TestCase):
         self.view = MagicMock()
         mock_creator = MagicMock()
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.CreateDeleteCustomIcon',
+        with patch.object(
+            create_custom_icon,
+            'CreateDeleteCustomIcon',
             return_value=mock_creator,
         ):
             self.command = create_custom_icon.CreateCustomIconCommand(self.view)
@@ -195,9 +186,7 @@ class TestCreateCustomIconCommand(TestCase):
             'create_custom_icon_contexts': 'source.ini',
         }
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.set_save_settings'
-        ) as mock_save:
+        with patch.object(create_custom_icon, 'set_save_settings') as mock_save:
             self.command.run(MagicMock(), **test_data)
 
             self.mock_creator.message_required_name.assert_called_once_with('Pip')
@@ -229,9 +218,7 @@ class TestCreateCustomIconCommand(TestCase):
             'create_custom_icon_contexts': 'source.ini',
         }
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.set_save_settings'
-        ):
+        with patch.object(create_custom_icon, 'set_save_settings'):
             self.command.run(MagicMock(), **test_data)
 
             self.mock_creator.custom_icon_name_exists.assert_called_once()
@@ -247,9 +234,7 @@ class TestCreateCustomIconCommand(TestCase):
             'create_custom_icon_contexts': 'source.ini',
         }
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.set_save_settings'
-        ) as mock_save:
+        with patch.object(create_custom_icon, 'set_save_settings') as mock_save:
             self.command.run(MagicMock(), **test_data)
 
             self.mock_creator.message_required_name.assert_called_once_with('')
@@ -329,9 +314,7 @@ class TestCreateCustomIconNameInputHandler(TestCase):
         self.handler = create_custom_icon.CreateCustomIconNameInputHandler()
 
     def test_create_custom_icon_name_input_handler_placeholder(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.sublime.status_message'
-        ) as mock_status:
+        with patch.object(create_custom_icon.sublime, 'status_message') as mock_status:
             placeholder = self.handler.placeholder()
             self.assertEqual(placeholder, 'Type a Name. E.g. Pip')
             mock_status.assert_called_once_with('Name is required field.')
@@ -350,9 +333,7 @@ class TestCreateCustomIconFileInputHandler(TestCase):
         self.handler = create_custom_icon.CreateCustomIconFileInputHandler()
 
     def test_create_custom_icon_file_input_handler_placeholder(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.sublime.status_message'
-        ) as mock_status:
+        with patch.object(create_custom_icon.sublime, 'status_message') as mock_status:
             placeholder = self.handler.placeholder()
             self.assertEqual(
                 placeholder, 'Type icon file name, without extension. E.g. pip'
@@ -373,9 +354,7 @@ class TestCreateCustomIconSyntaxInputHandler(TestCase):
         self.handler = create_custom_icon.CreateCustomIconSyntaxInputHandler()
 
     def test_create_custom_icon_syntax_input_handler_placeholder(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.sublime.status_message'
-        ) as mock_status:
+        with patch.object(create_custom_icon.sublime, 'status_message') as mock_status:
             placeholder = self.handler.placeholder()
             self.assertEqual(placeholder, 'Type syntax name. E.g. INI (Pip)')
             mock_status.assert_called_once_with('Type syntax name. E.g. INI (Pip)')
@@ -394,9 +373,7 @@ class TestCreateCustomIconScopeInputHandler(TestCase):
         self.handler = create_custom_icon.CreateCustomIconScopeInputHandler()
 
     def test_create_custom_icon_scope_input_handler_placeholder(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.sublime.status_message'
-        ) as mock_status:
+        with patch.object(create_custom_icon.sublime, 'status_message') as mock_status:
             placeholder = self.handler.placeholder()
             self.assertEqual(placeholder, 'Type scope. E.g. source.ini.pip')
             mock_status.assert_called_once_with('Type scope. E.g. source.ini.pip')
@@ -415,9 +392,7 @@ class TestCreateCustomIconExtensionsInputHandler(TestCase):
         self.handler = create_custom_icon.CreateCustomIconExtensionsInputHandler()
 
     def test_create_custom_icon_extensions_input_handler_placeholder(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.sublime.status_message'
-        ) as mock_status:
+        with patch.object(create_custom_icon.sublime, 'status_message') as mock_status:
             placeholder = self.handler.placeholder()
             self.assertEqual(
                 placeholder, 'Type file extensions, separated by commas. E.g. pip.conf'
@@ -459,8 +434,9 @@ class TestDeleteCustomIconCommand(TestCase):
         self.view = MagicMock()
         mock_creator = MagicMock()
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.CreateDeleteCustomIcon',
+        with patch.object(
+            create_custom_icon,
+            'CreateDeleteCustomIcon',
             return_value=mock_creator,
         ):
             self.command = create_custom_icon.DeleteCustomIconCommand(self.view)
@@ -562,7 +538,7 @@ class TestDeleteCustomIconInputHandler(TestCase):
         result = self.handler.list_items()
         self.assertEqual(result, expected_list)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.create_custom_icon.logger')
+    @patch.object(create_custom_icon, 'logger')
     def test_delete_custom_icon_input_handler_list_items_logging(self, mock_logger):
         self.mock_creator.create_custom_icon_setting.return_value = []
 

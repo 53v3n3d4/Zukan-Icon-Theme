@@ -11,20 +11,20 @@ listeners = importlib.import_module(
 class TestSchemeTheme(TestCase):
     def setUp(self):
         patch_targets = [
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.ZukanPreference',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.ZukanSyntax',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.ZukanTheme',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.get_prefer_icon_settings',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.get_theme_settings',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.get_settings',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.read_pickle_data',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.is_zukan_restart_message',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.get_theme_name',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.package_theme_exists',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.sublime',
+            (listeners, 'ZukanPreference'),
+            (listeners, 'ZukanSyntax'),
+            (listeners, 'ZukanTheme'),
+            (listeners, 'get_prefer_icon_settings'),
+            (listeners, 'get_theme_settings'),
+            (listeners, 'get_settings'),
+            (listeners, 'read_pickle_data'),
+            (listeners, 'is_zukan_restart_message'),
+            (listeners, 'get_theme_name'),
+            (listeners, 'package_theme_exists'),
+            (listeners, 'sublime'),
         ]
 
-        self.patches = [patch(target) for target in patch_targets]
+        self.patches = [patch.object(module, attr) for module, attr in patch_targets]
         self.mocks = [patcher.start() for patcher in self.patches]
 
         (
@@ -172,19 +172,19 @@ class TestSchemeTheme(TestCase):
 class TestSchemeThemeListener(TestCase):
     def setUp(self):
         patch_targets = [
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.sublime_plugin.ViewEventListener',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.get_theme_settings',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.system_theme',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.save_current_ui_settings',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.get_sidebar_bgcolor',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.read_pickle_data',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.hex_dark_light',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.SchemeTheme',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.ZukanTheme',
-            'Zukan Icon Theme.src.zukan_icon_theme.core.listeners.logger',
+            (listeners.sublime_plugin, 'ViewEventListener'),
+            (listeners, 'get_theme_settings'),
+            (listeners, 'system_theme'),
+            (listeners, 'save_current_ui_settings'),
+            (listeners, 'get_sidebar_bgcolor'),
+            (listeners, 'read_pickle_data'),
+            (listeners, 'hex_dark_light'),
+            (listeners, 'SchemeTheme'),
+            (listeners, 'ZukanTheme'),
+            (listeners, 'logger'),
         ]
 
-        self.patches = [patch(target) for target in patch_targets]
+        self.patches = [patch.object(module, attr) for module, attr in patch_targets]
         self.mocks = [patcher.start() for patcher in self.patches]
 
         (

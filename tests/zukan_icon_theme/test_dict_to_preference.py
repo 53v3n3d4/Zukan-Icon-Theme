@@ -79,7 +79,7 @@ class TestPreferencesFunctions(TestCase):
         self.assertEqual(result, '')
 
     @patch('builtins.open', new_callable=mock_open)
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_preference.logger')
+    @patch.object(dict_to_preference, 'logger')
     def test_save_tm_preferences(self, mock_logger, mock_open):
         data = {
             'key1': 'value1',
@@ -105,9 +105,7 @@ class TestPreferencesFunctions(TestCase):
         mock_open().write.assert_called_once_with(expected_result)
 
     @patch('builtins.open', side_effect=FileNotFoundError)
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_preference.logger.error'
-    )
+    @patch.object(dict_to_preference.logger, 'error')
     def test_save_tm_preferences_file_not_found(self, mock_logger, mock_open):
         data = {
             'key1': 'value1',
@@ -122,9 +120,7 @@ class TestPreferencesFunctions(TestCase):
         )
 
     @patch('builtins.open', side_effect=OSError)
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_preference.logger.error'
-    )
+    @patch.object(dict_to_preference.logger, 'error')
     def test_save_tm_preferences_os_error(self, mock_logger, mock_open):
         data = {
             'key1': 'value1',

@@ -34,9 +34,7 @@ class TestDeleteUnusedIcons(TestCase):
     def tearDown(self):
         shutil.rmtree(self.test_dir)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.delete_unused.logging.Logger.debug'
-    )
+    @patch.object(delete_unused.logger, 'debug')
     def test_delete_unused_icons(self, mock_debug):
         delete_unused.delete_unused_icons(self.test_dir)
 
@@ -48,9 +46,7 @@ class TestDeleteUnusedIcons(TestCase):
         self.assertTrue(os.path.exists(os.path.join(self.test_dir, 'cert-dark.png')))
         self.assertTrue(os.path.exists(os.path.join(self.test_dir, 'cert-light.png')))
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.delete_unused.logging.Logger.debug'
-    )
+    @patch.object(delete_unused.logger, 'debug')
     def test_delete_unused_icons_not_delete(self, mock_debug):
         delete_unused.delete_unused_icons(self.test_dir)
 
@@ -70,9 +66,7 @@ class TestDeleteUnusedIcons(TestCase):
 
         shutil.rmtree(empty_dir)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.delete_unused.logging.Logger.debug'
-    )
+    @patch.object(delete_unused.logger, 'debug')
     def test_logging_output(self, mock_debug):
         delete_unused.delete_unused_icons(self.test_dir)
 

@@ -9,14 +9,10 @@ custom_icon = importlib.import_module(
 
 
 class TestGenerateCustomIcon(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.custom_icon.get_create_custom_icon_settings'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.custom_icon.list_data_names')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.custom_icon.remove_empty_dict'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.custom_icon.logger')
+    @patch.object(custom_icon, 'get_create_custom_icon_settings')
+    @patch.object(custom_icon, 'list_data_names')
+    @patch.object(custom_icon, 'remove_empty_dict')
+    @patch.object(custom_icon, 'logger')
     def test_generate_custom_icon(
         self,
         mock_logger,

@@ -12,25 +12,21 @@ class TestDisableEnableTheme(TestCase):
     def setUp(self):
         self.theme = disable_theme.DisableEnableTheme()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.is_zukan_listener_enabled'
-    )
+    @patch.object(disable_theme, 'is_zukan_listener_enabled')
     def test_disable_enable_theme_init(self, mock_listener):
         mock_listener.return_value = True
         theme = disable_theme.DisableEnableTheme()
         self.assertTrue(theme.zukan_listener_enabled)
         mock_listener.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.get_theme_settings'
-    )
+    @patch.object(disable_theme, 'get_theme_settings')
     def test_ignored_theme_setting(self, mock_get_settings):
         mock_get_settings.return_value = (['theme1', 'theme2'], 'other_setting')
         result = self.theme.ignored_theme_setting()
         self.assertEqual(result, ['theme1', 'theme2'])
         mock_get_settings.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.set_save_settings')
+    @patch.object(disable_theme, 'set_save_settings')
     def test_add_to_ignored_themes(self, mock_save):
         ignored_list = ['theme1']
         self.theme.add_to_ignored_themes('theme2', ignored_list)
@@ -38,9 +34,7 @@ class TestDisableEnableTheme(TestCase):
             disable_theme.ZUKAN_SETTINGS, 'ignored_theme', ['theme1', 'theme2']
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.search_resources_sublime_themes'
-    )
+    @patch.object(disable_theme, 'search_resources_sublime_themes')
     def test_get_list_ignored_theme(self, mock_search):
         mock_search.return_value = [
             'folder/Treble Adaptive.sublime-theme',
@@ -51,8 +45,8 @@ class TestDisableEnableTheme(TestCase):
         self.assertEqual(result, ['folder/Treble Adaptive.sublime-theme'])
         mock_search.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.set_save_settings')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.logger')
+    @patch.object(disable_theme, 'set_save_settings')
+    @patch.object(disable_theme, 'logger')
     def test_enable_icon_theme(self, mock_logger, mock_save):
         self.theme.zukan_listener_enabled = True
         ignored_list = ['theme1', 'theme2']
@@ -62,8 +56,8 @@ class TestDisableEnableTheme(TestCase):
         )
         mock_logger.info.assert_called_once_with('enabling %s', 'theme1')
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.set_save_settings')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.logger')
+    @patch.object(disable_theme, 'set_save_settings')
+    @patch.object(disable_theme, 'logger')
     def test_enable_icon_theme_listener_disabled(self, mock_logger, mock_save):
         self.theme.zukan_listener_enabled = False
         ignored_list = ['theme1', 'theme2']
@@ -73,8 +67,8 @@ class TestDisableEnableTheme(TestCase):
         )
         mock_logger.info.assert_not_called()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.set_save_settings')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.logger')
+    @patch.object(disable_theme, 'set_save_settings')
+    @patch.object(disable_theme, 'logger')
     def test_enable_all_icons_themes(self, mock_logger, mock_save):
         self.theme.zukan_listener_enabled = True
         ignored_list = ['theme1', 'theme2']
@@ -86,7 +80,7 @@ class TestDisableEnableTheme(TestCase):
             disable_theme.ZUKAN_SETTINGS, 'ignored_theme', []
         )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.set_save_settings')
+    @patch.object(disable_theme, 'set_save_settings')
     def test_save_ignored_theme_setting(self, mock_save):
         ignored_list = ['theme2', 'theme1', 'theme3']
         self.theme._save_ignored_theme_setting(ignored_list)
@@ -96,7 +90,7 @@ class TestDisableEnableTheme(TestCase):
             ['theme1', 'theme2', 'theme3'],
         )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.set_save_settings')
+    @patch.object(disable_theme, 'set_save_settings')
     def test_save_ignored_theme_setting_empty_list(self, mock_save):
         self.theme._save_ignored_theme_setting([])
         mock_save.assert_called_once_with(
@@ -115,7 +109,7 @@ class TestDisableThemeCommand(TestCase):
         )
         self.assertEqual(self.command.view, self.view)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.logger')
+    @patch.object(disable_theme, 'logger')
     @patch('os.path.basename')
     def test_disable_theme_command_run(self, mock_basename, mock_logger):
         mock_basename.return_value = 'Treble Dark.sublime-theme'
@@ -197,7 +191,7 @@ class TestDisableThemeInputHandler(TestCase):
         result = self.handler.list_items()
         self.assertEqual(result, ['theme2', 'theme3'])
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_theme.logger')
+    @patch.object(disable_theme, 'logger')
     def test_disable_theme_input_handler_list_items_none(self, mock_logger):
         mock_ignored = ['theme1']
         self.disable_enable_theme.ignored_theme_setting = Mock(

@@ -59,7 +59,7 @@ contexts_main:
         self.assertEqual(result, expected)
 
     @patch('builtins.open', new_callable=mock_open)
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_syntax.logger')
+    @patch.object(dict_to_syntax, 'logger')
     def test_save_sublime_syntax(self, mock_logger, mock_open):
         data = {'name': 'ATest-3', 'scope': 'source.atest3'}
         file_path = 'file.sublime-syntax'
@@ -72,7 +72,7 @@ contexts_main:
         )
 
     @patch('builtins.open', side_effect=FileNotFoundError)
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_syntax.logger')
+    @patch.object(dict_to_syntax, 'logger')
     def test_save_sublime_syntax_file_not_found(self, mock_logger, mock_open):
         data = {'name': 'ATest-4', 'version': 2}
 
@@ -84,7 +84,7 @@ contexts_main:
         )
 
     @patch('builtins.open', side_effect=OSError)
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.dict_to_syntax.logger')
+    @patch.object(dict_to_syntax, 'logger')
     def test_save_sublime_syntax_os_error(self, mock_logger, mock_open):
         data = {'name': 'ATest-5', 'contexts': {'prototype': [{'include': 'comments'}]}}
 

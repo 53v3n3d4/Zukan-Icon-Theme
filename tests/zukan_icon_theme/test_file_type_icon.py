@@ -7,6 +7,9 @@ from unittest import TestCase
 from unittest.mock import MagicMock, patch, PropertyMock
 
 file_type_icon = importlib.import_module('Zukan Icon Theme.file_type_icon')
+system_theme = importlib.import_module(
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme'
+)
 
 
 class TestFileTypeIcon(TestCase):
@@ -17,8 +20,9 @@ class TestFileTypeIcon(TestCase):
         os.path.exists = self.original_path_exists
 
     def test_zukan_listener_enabled(self):
-        with patch(
-            'Zukan Icon Theme.file_type_icon.is_zukan_listener_enabled',
+        with patch.object(
+            file_type_icon,
+            'is_zukan_listener_enabled',
             return_value=True,
         ):
             mock_module = MagicMock()
@@ -41,8 +45,9 @@ class TestFileTypeIcon(TestCase):
 
     @patch('os.path.exists')
     def test_zukan_listener_disabled(self, mock_exists):
-        with patch(
-            'Zukan Icon Theme.file_type_icon.is_zukan_listener_enabled',
+        with patch.object(
+            file_type_icon,
+            'is_zukan_listener_enabled',
             return_value=False,
         ):
             try:
@@ -58,9 +63,7 @@ class TestFileTypeIcon(TestCase):
         mock_exists.return_value = False
 
         mock_move_folder = MagicMock()
-        with patch(
-            'Zukan Icon Theme.file_type_icon.MoveFolder', return_value=mock_move_folder
-        ):
+        with patch.object(file_type_icon, 'MoveFolder', return_value=mock_move_folder):
             mock_move_folder.move_folders()
 
             mock_move_folder.move_folders.assert_called_once()
@@ -70,9 +73,7 @@ class TestFileTypeIcon(TestCase):
         mock_exists.return_value = True
 
         mock_move_folder = MagicMock()
-        with patch(
-            'Zukan Icon Theme.file_type_icon.MoveFolder', return_value=mock_move_folder
-        ):
+        with patch.object(file_type_icon, 'MoveFolder', return_value=mock_move_folder):
             mock_move_folder.move_folders.assert_not_called()
 
     def test_is_zukan_listener_enabled(self):
@@ -86,8 +87,8 @@ class TestPluginLoaded(TestCase):
         self.mock_sublime = MagicMock()
 
     @patch('sublime.set_timeout')
-    @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
-    @patch('Zukan Icon Theme.file_type_icon.get_sidebar_bgcolor')
+    @patch.object(file_type_icon, 'get_theme_name')
+    @patch.object(file_type_icon, 'get_sidebar_bgcolor')
     def test_get_sidebar_bgcolor(self, mock_get_bgcolor, mock_get_theme, mock_timeout):
         mock_get_theme.return_value = 'Treble Adaptive.sublime-theme'
         file_type_icon.plugin_loaded()
@@ -97,10 +98,8 @@ class TestPluginLoaded(TestCase):
         first_lambda()
         mock_get_bgcolor.assert_called_once_with('Treble Adaptive.sublime-theme')
 
-    @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output'
-    )
+    @patch.object(file_type_icon, 'delete_cached_theme_info')
+    @patch.object(system_theme.subprocess, 'check_output')
     def test_cached_theme_info_deleted(self, mock_subprocess, mock_delete_cache):
         if platform.system() == 'Linux':
             mock_subprocess.return_value = '{"data":[{"data":1}]}'
@@ -111,12 +110,14 @@ class TestPluginLoaded(TestCase):
     def test_zukan_listener_disabled(self):
         # fmt: off
         with patch('os.path.exists') as mock_exists, \
-             patch(
-                'Zukan Icon Theme.file_type_icon.zukan_listener_enabled', False
+             patch.object(
+                file_type_icon,
+                'zukan_listener_enabled',
+                False,
              ), \
-             patch('Zukan Icon Theme.file_type_icon.get_theme_name'), \
+             patch.object(file_type_icon, 'get_theme_name'), \
              patch('sublime.set_timeout'), \
-             patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info'):
+             patch.object(file_type_icon, 'delete_cached_theme_info'):
              # fmt: on
 
             file_type_icon.plugin_loaded()
@@ -129,15 +130,15 @@ class TestPluginLoaded(TestCase):
                 )
             )
 
-    @patch('Zukan Icon Theme.file_type_icon.ZukanIconFiles')
+    @patch.object(file_type_icon, 'ZukanIconFiles')
     @patch('sublime.set_timeout')
-    @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
-    @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
+    @patch.object(file_type_icon, 'delete_cached_theme_info')
+    @patch.object(file_type_icon, 'get_theme_name')
     @patch('os.path.exists')
-    @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
-    @patch('Zukan Icon Theme.file_type_icon.InstallEvent')
-    @patch('Zukan Icon Theme.file_type_icon.EventBus')
-    @patch('Zukan Icon Theme.file_type_icon.UpgradePlugin')
+    @patch.object(file_type_icon, 'zukan_listener_enabled', True)
+    @patch.object(file_type_icon, 'InstallEvent')
+    @patch.object(file_type_icon, 'EventBus')
+    @patch.object(file_type_icon, 'UpgradePlugin')
     def test_new_install_when_icons_preferences_missing(
         self,
         mock_upgrade_plugin,
@@ -166,15 +167,15 @@ class TestPluginLoaded(TestCase):
 
         mock_install.new_install.assert_called_once()
 
-    @patch('Zukan Icon Theme.file_type_icon.ZukanIconFiles')
+    @patch.object(file_type_icon, 'ZukanIconFiles')
     @patch('sublime.set_timeout')
-    @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
-    @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
+    @patch.object(file_type_icon, 'delete_cached_theme_info')
+    @patch.object(file_type_icon, 'get_theme_name')
     @patch('os.path.exists')
-    @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
-    @patch('Zukan Icon Theme.file_type_icon.InstallEvent')
-    @patch('Zukan Icon Theme.file_type_icon.EventBus')
-    @patch('Zukan Icon Theme.file_type_icon.UpgradePlugin')
+    @patch.object(file_type_icon, 'zukan_listener_enabled', True)
+    @patch.object(file_type_icon, 'InstallEvent')
+    @patch.object(file_type_icon, 'EventBus')
+    @patch.object(file_type_icon, 'UpgradePlugin')
     def test_new_install_when_icons_syntaxes_missing(
         self,
         mock_upgrade_plugin,
@@ -203,14 +204,14 @@ class TestPluginLoaded(TestCase):
 
         mock_install.new_install.assert_called_once()
 
-    @patch('Zukan Icon Theme.file_type_icon.ZukanIconFiles')
+    @patch.object(file_type_icon, 'ZukanIconFiles')
     @patch('sublime.set_timeout')
-    @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
-    @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
+    @patch.object(file_type_icon, 'delete_cached_theme_info')
+    @patch.object(file_type_icon, 'get_theme_name')
     @patch('os.path.exists')
-    @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
-    @patch('Zukan Icon Theme.file_type_icon.EventBus')
-    @patch('Zukan Icon Theme.file_type_icon.UpgradePlugin')
+    @patch.object(file_type_icon, 'zukan_listener_enabled', True)
+    @patch.object(file_type_icon, 'EventBus')
+    @patch.object(file_type_icon, 'UpgradePlugin')
     def test_start_upgrade(
         self,
         mock_upgrade_plugin,
@@ -234,15 +235,15 @@ class TestPluginLoaded(TestCase):
 
         mock_upgrade.start_upgrade.assert_called_once()
 
-    @patch('Zukan Icon Theme.file_type_icon.ZukanIconFiles')
+    @patch.object(file_type_icon, 'ZukanIconFiles')
     @patch('sublime.set_timeout')
-    @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
+    @patch.object(file_type_icon, 'delete_cached_theme_info')
     @patch('os.path.exists')
-    @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
-    @patch('Zukan Icon Theme.file_type_icon.SettingsEvent')
-    @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
-    @patch('Zukan Icon Theme.file_type_icon.EventBus')
-    @patch('Zukan Icon Theme.file_type_icon.UpgradePlugin')
+    @patch.object(file_type_icon, 'zukan_listener_enabled', True)
+    @patch.object(file_type_icon, 'SettingsEvent')
+    @patch.object(file_type_icon, 'get_theme_name')
+    @patch.object(file_type_icon, 'EventBus')
+    @patch.object(file_type_icon, 'UpgradePlugin')
     def test_settings_events(
         self,
         mock_upgrade_plugin,
@@ -272,16 +273,16 @@ class TestPluginLoaded(TestCase):
         if callable(func):
             func()
 
-    @patch('Zukan Icon Theme.file_type_icon.get_sidebar_bgcolor')
-    @patch('Zukan Icon Theme.file_type_icon.sublime.set_timeout')
+    @patch.object(file_type_icon, 'get_sidebar_bgcolor')
+    @patch.object(file_type_icon.sublime, 'set_timeout')
     @patch('os.path.getctime')
     @patch('os.path.exists')
-    @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
-    @patch('Zukan Icon Theme.file_type_icon.EventBus')
-    @patch('Zukan Icon Theme.file_type_icon.ZukanIconFiles')
-    @patch('Zukan Icon Theme.file_type_icon.UpgradePlugin')
-    @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
-    @patch('Zukan Icon Theme.file_type_icon.delete_cached_theme_info')
+    @patch.object(file_type_icon, 'zukan_listener_enabled', True)
+    @patch.object(file_type_icon, 'EventBus')
+    @patch.object(file_type_icon, 'ZukanIconFiles')
+    @patch.object(file_type_icon, 'UpgradePlugin')
+    @patch.object(file_type_icon, 'get_theme_name')
+    @patch.object(file_type_icon, 'delete_cached_theme_info')
     def test_rebuild_icons_files(
         self,
         mock_delete_cached_theme_info,
@@ -318,7 +319,7 @@ class TestPluginLoaded(TestCase):
         mock_set_timeout.assert_called_once()
 
     @patch('sublime.set_timeout')
-    @patch('Zukan Icon Theme.file_type_icon.get_theme_name')
+    @patch.object(file_type_icon, 'get_theme_name')
     def test_get_theme_name_error_exception(self, mock_get_theme, mock_timeout):
         mock_get_theme.side_effect = Exception('Theme error')
 
@@ -333,7 +334,7 @@ class TestPluginUnload(TestCase):
         self.mock_move_folder = MagicMock()
         self.mock_settings_event = MagicMock()
 
-    @patch('Zukan Icon Theme.file_type_icon.MoveFolder')
+    @patch.object(file_type_icon, 'MoveFolder')
     def test_remove_created_folder(self, mock_move_folder_class):
         mock_move_folder = MagicMock()
         mock_move_folder_class.return_value = mock_move_folder
@@ -344,17 +345,17 @@ class TestPluginUnload(TestCase):
             file_type_icon.ZUKAN_PKG_PATH
         )
 
-    @patch('Zukan Icon Theme.file_type_icon.MoveFolder')
-    @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
-    @patch('Zukan Icon Theme.file_type_icon.SettingsEvent')
+    @patch.object(file_type_icon, 'MoveFolder')
+    @patch.object(file_type_icon, 'zukan_listener_enabled', True)
+    @patch.object(file_type_icon, 'SettingsEvent')
     def test_zukan_preferences_clear(self, mock_settings_event, mock_move_folder_class):
         file_type_icon.plugin_unloaded()
 
         mock_settings_event.zukan_preferences_clear.assert_called_once()
 
-    @patch('Zukan Icon Theme.file_type_icon.MoveFolder')
-    @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', False)
-    @patch('Zukan Icon Theme.file_type_icon.SettingsEvent')
+    @patch.object(file_type_icon, 'MoveFolder')
+    @patch.object(file_type_icon, 'zukan_listener_enabled', False)
+    @patch.object(file_type_icon, 'SettingsEvent')
     def test_zukan_preferences_clear_listener_disabled(
         self, mock_settings_event, mock_move_folder_class
     ):
@@ -362,7 +363,7 @@ class TestPluginUnload(TestCase):
 
         mock_settings_event.zukan_preferences_clear.assert_not_called()
 
-    @patch('Zukan Icon Theme.file_type_icon.MoveFolder')
+    @patch.object(file_type_icon, 'MoveFolder')
     def test_remove_created_folder_error_exception(self, mock_move_folder_class):
         mock_move_folder_instance = MagicMock()
         mock_move_folder_instance.remove_created_folder.side_effect = Exception(
@@ -375,9 +376,9 @@ class TestPluginUnload(TestCase):
 
         self.assertEqual(str(context.exception), 'Failed to remove folder')
 
-    @patch('Zukan Icon Theme.file_type_icon.MoveFolder')
-    @patch('Zukan Icon Theme.file_type_icon.zukan_listener_enabled', True)
-    @patch('Zukan Icon Theme.file_type_icon.SettingsEvent')
+    @patch.object(file_type_icon, 'MoveFolder')
+    @patch.object(file_type_icon, 'zukan_listener_enabled', True)
+    @patch.object(file_type_icon, 'SettingsEvent')
     def test_zukan_preferences_clear_error_exception(
         self, mock_settings_event, mock_move_folder_class
     ):

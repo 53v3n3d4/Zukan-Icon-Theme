@@ -13,16 +13,14 @@ class TestDisableEnableIcon(TestCase):
         self.zukan_syntax = Mock(spec=disable_icon.ZukanSyntax)
         self.disable_enable_icon = disable_icon.DisableEnableIcon(self.zukan_syntax)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.read_pickle_data')
+    @patch.object(disable_icon, 'read_pickle_data')
     def test_zukan_icons_data(self, mock_read):
         mock_data = [{'name': 'ATest'}, {'name': 'ATest-1'}]
         mock_read.return_value = mock_data
         result = self.disable_enable_icon.zukan_icons_data()
         self.assertEqual(result, mock_data)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.get_ignored_icon_settings'
-    )
+    @patch.object(disable_icon, 'get_ignored_icon_settings')
     def test_ignored_icon_setting(self, mock_get):
         mock_ignored = ['atest', 'atest1']
         mock_get.return_value = mock_ignored
@@ -39,10 +37,8 @@ class TestDisableEnableIcon(TestCase):
         result = self.disable_enable_icon.get_list_all_icons_syntaxes(mock_icons)
         self.assertEqual(result, mock_syntaxes)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.read_pickle_data')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.get_ignored_icon_settings'
-    )
+    @patch.object(disable_icon, 'read_pickle_data')
+    @patch.object(disable_icon, 'get_ignored_icon_settings')
     def test_get_list_not_ignored_icons(self, mock_ignored, mock_read):
         mock_icons = [{'name': 'ATest-1'}, {'name': 'ATest-2'}]
         mock_read.return_value = mock_icons
@@ -56,14 +52,14 @@ class TestDisableEnableIcon(TestCase):
         result = self.disable_enable_icon.get_list_not_ignored_icons()
         self.assertEqual(result, ['ATest-1'])
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.set_save_settings')
+    @patch.object(disable_icon, 'set_save_settings')
     def test_add_to_ignored_icon(self, mock_save):
         ignored_list = ['atest']
         self.disable_enable_icon.add_to_ignored_icon(ignored_list, 'atest1')
         mock_save.assert_called_once()
         self.assertEqual(ignored_list, ['atest', 'atest1'])
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.set_save_settings')
+    @patch.object(disable_icon, 'set_save_settings')
     def test_save_ignored_icon_setting(self, mock_save):
         ignored_list = ['atest2', 'atest1']
         self.disable_enable_icon._save_ignored_icon_setting(ignored_list)
@@ -71,33 +67,36 @@ class TestDisableEnableIcon(TestCase):
             disable_icon.ZUKAN_SETTINGS, 'ignored_icon', ['atest1', 'atest2']
         )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.logger')
+    @patch.object(disable_icon, 'logger')
     def test_message_icon_tag_with_tag(self, mock_logger):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.ICONS_TAGS',
+        with patch.object(
+            disable_icon,
+            'ICONS_TAGS',
             ['test_tag'],
         ):
             self.disable_enable_icon.message_icon_tag('test_tag')
             mock_logger.info.assert_called_with('icons with %s tag ignored', 'test_tag')
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.logger')
+    @patch.object(disable_icon, 'logger')
     def test_message_icon_tag_without_tag(self, mock_logger):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.ICONS_TAGS', []
+        with patch.object(
+            disable_icon,
+            'ICONS_TAGS',
+            [],
         ):
             self.disable_enable_icon.message_icon_tag('test_icon')
             mock_logger.info.assert_called_with('%s icon ignored', 'test_icon')
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.set_save_settings')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.logger')
+    @patch.object(disable_icon, 'set_save_settings')
+    @patch.object(disable_icon, 'logger')
     def test_enable_ignored_icon(self, mock_logger, mock_save):
         ignored_list = ['atest1', 'atest2']
         self.disable_enable_icon.enable_ignored_icon(ignored_list, 'atest1')
         mock_save.assert_called_once()
         mock_logger.info.assert_called_with('enabling %s icon', 'atest1')
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.set_save_settings')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.logger')
+    @patch.object(disable_icon, 'set_save_settings')
+    @patch.object(disable_icon, 'logger')
     def test_enable_all_ignored_icons(self, mock_logger, mock_save):
         ignored_list = ['atest1', 'atest2']
         self.disable_enable_icon.enable_all_ignored_icons(ignored_list)
@@ -160,8 +159,9 @@ class TestDisableIconInputHandler(TestCase):
     def test_disbale_icon_input_handler_placeholder(self):
         self.assertEqual(self.handler.placeholder(), 'List of icons')
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.disable_icon.ICONS_TAGS',
+    @patch.object(
+        disable_icon,
+        'ICONS_TAGS',
         ['tag1', 'tag2'],
     )
     def test_disbale_icon_input_handler_list_items(self):

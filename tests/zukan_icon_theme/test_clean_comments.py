@@ -94,9 +94,7 @@ class TestCleanComments(TestCase):
         mock_isfile.return_value = True
         mock_open.side_effect = OSError(errno.EACCES, 'Permission denied')
 
-        with patch.object(
-            clean_comments.logger, 'error'
-        ) as mock_logger:
+        with patch.object(clean_comments.logger, 'error') as mock_logger:
             self.cleaner.clean_comments()
 
             mock_logger.assert_called_once_with(

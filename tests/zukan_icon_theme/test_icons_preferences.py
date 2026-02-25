@@ -10,6 +10,9 @@ from unittest.mock import MagicMock, patch
 icons_preferences = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences'
 )
+system_theme = importlib.import_module(
+    'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme'
+)
 
 
 class TestZukanPreference(TestCase):
@@ -28,9 +31,7 @@ class TestZukanPreference(TestCase):
         self.bgcolor_dark = 'dark'
         self.bgcolor_light = 'light'
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_change_icon_settings'
-    )
+    @patch.object(icons_preferences, 'get_change_icon_settings')
     def test_change_icon_setting(self, mock_get_settings):
         expected = {'Rust': 'rust-1', 'Go': 'go-1'}
         mock_get_settings.return_value = (expected, None)
@@ -40,9 +41,7 @@ class TestZukanPreference(TestCase):
         self.assertEqual(result, expected)
         mock_get_settings.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.should_clean_output_dir'
-    )
+    @patch.object(icons_preferences, 'should_clean_output_dir')
     def test_clean_output_dir_setting(self, mock_should_clean):
         mock_should_clean.return_value = True
 
@@ -51,9 +50,7 @@ class TestZukanPreference(TestCase):
         self.assertTrue(result)
         mock_should_clean.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.should_clean_output_dir'
-    )
+    @patch.object(icons_preferences, 'should_clean_output_dir')
     def test_clean_output_dir_setting_false(self, mock_should_clean):
         mock_should_clean.return_value = False
 
@@ -62,9 +59,7 @@ class TestZukanPreference(TestCase):
         self.assertFalse(result)
         mock_should_clean.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_ignored_icon_settings'
-    )
+    @patch.object(icons_preferences, 'get_ignored_icon_settings')
     def test_ignored_icon_setting(self, mock_get_settings):
         expected = {'Ignored-1', 'Ignored-2'}
         mock_get_settings.return_value = expected
@@ -75,9 +70,7 @@ class TestZukanPreference(TestCase):
         self.assertEqual(result, expected)
         mock_get_settings.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_prefer_icon_settings'
-    )
+    @patch.object(icons_preferences, 'get_prefer_icon_settings')
     def test_prefer_icon_setting(self, mock_get_settings):
         expected = (True, {self.test_dark_theme: 'light'})
         mock_get_settings.return_value = expected
@@ -87,7 +80,7 @@ class TestZukanPreference(TestCase):
         self.assertEqual(result, expected)
         mock_get_settings.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_theme_name')
+    @patch.object(icons_preferences, 'get_theme_name')
     def test_theme_name_setting(self, mock_get_theme):
         expected = self.test_dark_theme
         mock_get_theme.return_value = expected
@@ -97,9 +90,7 @@ class TestZukanPreference(TestCase):
         self.assertEqual(result, expected)
         mock_get_theme.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.read_pickle_data'
-    )
+    @patch.object(icons_preferences, 'read_pickle_data')
     def test_zukan_icons_data(self, mock_read_pickle):
         expected = [{'name': 'ATest-1'}, {'name': 'ATest-2'}]
         mock_read_pickle.return_value = expected
@@ -111,9 +102,7 @@ class TestZukanPreference(TestCase):
             icons_preferences.ZUKAN_ICONS_DATA_FILE
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.get_sidebar_bgcolor'
-    )
+    @patch.object(icons_preferences, 'get_sidebar_bgcolor')
     def test_sidebar_bgcolor(self, mock_get_bgcolor):
         mock_get_bgcolor.return_value = self.bgcolor_dark
 
@@ -122,9 +111,7 @@ class TestZukanPreference(TestCase):
         self.assertEqual(result, self.bgcolor_dark)
         mock_get_bgcolor.assert_called_once_with(self.test_theme)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.copy_primary_icons'
-    )
+    @patch.object(icons_preferences, 'copy_primary_icons')
     def test_build_icon_preference(self, mock_copy_icons):
         # fmt: off
         with patch.object(self.zukan, 'create_icon_preference') as mock_create, \
@@ -151,12 +138,8 @@ class TestZukanPreference(TestCase):
     @patch('os.path.exists')
     @patch('os.makedirs')
     @patch('os.listdir')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.copy_primary_icons'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output'
-    )
+    @patch.object(icons_preferences, 'copy_primary_icons')
+    @patch.object(system_theme.subprocess, 'check_output')
     def test_build_icons_preferences(
         self,
         mock_subprocess,
@@ -191,8 +174,8 @@ class TestZukanPreference(TestCase):
              patch.object(
                 self.zukan, 'create_icons_preferences'
              ) as mock_create_icons_preferences, \
-             patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.copy_primary_icons'
+             patch.object(
+                icons_preferences, 'copy_primary_icons'
              ) as mock_copy_icons:
              # fmt: on
 
@@ -264,8 +247,9 @@ class TestZukanPreference(TestCase):
             'preferences': {'settings': {'icon': 'file_type_image-light'}},
         }
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.PRIMARY_ICONS',
+        with patch.object(
+            icons_preferences,
+            'PRIMARY_ICONS',
             PRIMARY_ICONS,
         ):
             self.zukan._rename_primary_icons(test_pref)
@@ -275,7 +259,7 @@ class TestZukanPreference(TestCase):
             )
 
     @patch('os.path.exists')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_png_exists(self, mock_logger, mock_exists):
         mock_exists.return_value = False
         test_pref = {'preferences': {'settings': {'icon': 'missing_icon'}}}
@@ -286,9 +270,7 @@ class TestZukanPreference(TestCase):
             '%s%s not found', 'missing_icon', icons_preferences.PNG_EXTENSION
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.save_tm_preferences'
-    )
+    @patch.object(icons_preferences, 'save_tm_preferences')
     def test_handle_icon_preferences(self, mock_save):
         test_pref = self.test_preference.copy()
         test_params = {
@@ -318,9 +300,7 @@ class TestZukanPreference(TestCase):
             self.zukan._png_exists.assert_called_once()
             mock_save.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.generate_custom_icon'
-    )
+    @patch.object(icons_preferences, 'generate_custom_icon')
     def test_get_list_icons_preferences(self, mock_generate):
         mock_zukan_icons = [{'name': 'ATest-1', 'preferences': {}}]
         mock_custom_icons = [
@@ -350,7 +330,7 @@ class TestZukanPreference(TestCase):
                 result = self.zukan._get_file_name(input_name)
                 self.assertEqual(result, expected)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_prepare_icon_preference_file(self, mock_logger):
         test_preference = 'atest'
         mock_icons = [
@@ -379,7 +359,7 @@ class TestZukanPreference(TestCase):
 
             self.zukan.handle_icon_preferences.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_create_icon_preference(self, mock_logger):
         with patch.object(self.zukan, 'prepare_icon_preference_file'):
             self.zukan.create_icon_preference(
@@ -389,7 +369,7 @@ class TestZukanPreference(TestCase):
                 '%s created.', 'atest.tmPreferences'
             )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_create_icon_preference_file_not_found(self, mock_logger):
         test_name = 'not_found'
         expected_fname = test_name + icons_preferences.TMPREFERENCES_EXTENSION
@@ -411,7 +391,7 @@ class TestZukanPreference(TestCase):
                 expected_fname,
             )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_create_icon_preference_os_error(self, mock_logger):
         test_name = 'os_error'
         expected_fname = test_name + icons_preferences.TMPREFERENCES_EXTENSION
@@ -449,9 +429,7 @@ class TestZukanPreference(TestCase):
                         return_value=expected_base
                         + icons_preferences.TMPREFERENCES_EXTENSION
                     ),
-                ), patch(
-                    'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger'
-                ) as mock_logger:
+                ), patch.object(icons_preferences, 'logger') as mock_logger:
                     self.zukan.create_icon_preference(
                         input_name, self.bgcolor_light, self.test_light_theme
                     )
@@ -494,7 +472,7 @@ class TestZukanPreference(TestCase):
                 test_name, self.bgcolor_dark, self.test_dark_theme
             )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_prepare_icons_preferences_list(self, mock_logger):
         mock_list = [
             {
@@ -542,9 +520,7 @@ class TestZukanPreference(TestCase):
             change_icon_setting=MagicMock(return_value={}),
             ignored_icon_setting=MagicMock(return_value={'Ignored-1'}),
             handle_icon_preferences=MagicMock(),
-        ), patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger'
-        ) as mock_logger:
+        ), patch.object(icons_preferences, 'logger') as mock_logger:
             self.zukan.prepare_icons_preferences_list(
                 self.bgcolor_dark, self.test_dark_theme
             )
@@ -552,13 +528,13 @@ class TestZukanPreference(TestCase):
             self.zukan.handle_icon_preferences.assert_not_called()
             mock_logger.info.assert_called_with('ignored icon %s', 'Ignored-1')
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_create_icons_preferences(self, mock_logger):
         with patch.object(self.zukan, 'prepare_icons_preferences_list'):
             self.zukan.create_icons_preferences(self.bgcolor_dark, self.test_dark_theme)
             mock_logger.info.assert_called_once_with('tmPreferences created.')
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_create_icons_preferences_file_not_found(self, mock_logger):
         with patch.object(
             self.zukan, 'prepare_icons_preferences_list', side_effect=FileNotFoundError
@@ -571,7 +547,7 @@ class TestZukanPreference(TestCase):
                 icons_preferences.ZUKAN_ICONS_DATA_FILE,
             )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_create_icons_preferences_os_error(self, mock_logger):
         with patch.object(
             self.zukan, 'prepare_icons_preferences_list', side_effect=OSError
@@ -585,7 +561,7 @@ class TestZukanPreference(TestCase):
             )
 
     @patch('os.remove')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_delete_icon_preference(self, mock_logger, mock_remove):
         preference_name = 'atest.tmPreferences'
         result = self.zukan.delete_icon_preference(preference_name)
@@ -595,7 +571,7 @@ class TestZukanPreference(TestCase):
         mock_remove.assert_called_once()
 
     @patch('os.remove')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_delete_icon_preference_file_not_found(self, mock_logger, mock_remove):
         mock_remove.side_effect = FileNotFoundError
         preference_name = 'not_found.tmPreferences'
@@ -611,7 +587,7 @@ class TestZukanPreference(TestCase):
         )
 
     @patch('os.remove')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_delete_icon_preference_os_error(self, mock_logger, mock_remove):
         mock_remove.side_effect = OSError
         preference_name = 'os_error.tmPreferences'
@@ -628,7 +604,7 @@ class TestZukanPreference(TestCase):
 
     @patch('glob.iglob')
     @patch('os.remove')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_delete_icons_preferences(self, mock_logger, mock_remove, mock_iglob):
         mock_iglob.return_value = ['atest1.tmPreferences', 'atest2.tmPreferences']
 
@@ -639,7 +615,7 @@ class TestZukanPreference(TestCase):
 
     @patch('glob.iglob')
     @patch('os.remove')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_delete_icons_preferences_file_not_found(
         self, mock_logger, mock_remove, mock_iglob
     ):
@@ -652,7 +628,7 @@ class TestZukanPreference(TestCase):
 
     @patch('glob.iglob')
     @patch('os.remove')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_delete_icons_preferences_os_error(
         self, mock_logger, mock_remove, mock_iglob
     ):
@@ -675,7 +651,7 @@ class TestZukanPreference(TestCase):
         self.assertEqual(result, expected_files)
 
     @patch('os.path.exists')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_list_created_icons_preferences_directory_not_found(
         self, mock_logger, mock_exists
     ):
@@ -688,7 +664,7 @@ class TestZukanPreference(TestCase):
 
     @patch('os.path.exists')
     @patch('glob.glob')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_preferences.logger')
+    @patch.object(icons_preferences, 'logger')
     def test_list_created_icons_preferences_os_error(
         self, mock_logger, mock_glob, mock_exists
     ):

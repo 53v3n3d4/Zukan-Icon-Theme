@@ -28,43 +28,37 @@ class TestZukanTheme(TestCase):
     def tearDown(self):
         self.zukan_theme = None
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.get_theme_settings')
+    @patch.object(icons_themes, 'get_theme_settings')
     def test_ignored_theme_setting_with_themes(self, mock_get_settings):
         mock_get_settings.return_value = (self.sample_ignored_themes, None)
         result = self.zukan_theme.ignored_theme_setting()
         self.assertEqual(result, self.sample_ignored_themes)
         mock_get_settings.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.get_theme_settings')
+    @patch.object(icons_themes, 'get_theme_settings')
     def test_ignored_theme_setting_empty(self, mock_get_settings):
         mock_get_settings.return_value = ([], None)
         result = self.zukan_theme.ignored_theme_setting()
         self.assertEqual(result, [])
         mock_get_settings.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
     def test_get_all_sublime_themes_with_themes(self, mock_search):
         mock_search.return_value = self.sample_themes
         result = self.zukan_theme.get_all_sublime_themes()
         self.assertEqual(result, self.sample_themes)
         mock_search.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
     def test_get_all_sublime_themes_empty(self, mock_search):
         mock_search.return_value = []
         result = self.zukan_theme.get_all_sublime_themes()
         self.assertEqual(result, [])
         mock_search.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.theme_with_opacity')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.get_theme_settings')
+    @patch.object(icons_themes, 'theme_with_opacity')
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
+    @patch.object(icons_themes, 'get_theme_settings')
     @patch('builtins.open', new_callable=mock_open)
     def test_create_icon_theme_with_opacity(
         self, mock_file, mock_settings, mock_search, mock_opacity
@@ -84,11 +78,9 @@ class TestZukanTheme(TestCase):
         mock_file.assert_has_calls([call(theme_filepath, 'w')], any_order=True)
         mock_file().write.assert_called_with(icons_themes.TEMPLATE_JSON_WITH_OPACITY)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.theme_with_opacity')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.get_theme_settings')
+    @patch.object(icons_themes, 'theme_with_opacity')
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
+    @patch.object(icons_themes, 'get_theme_settings')
     @patch('builtins.open', new_callable=mock_open)
     def test_create_icon_theme_without_opacity(
         self, mock_file, mock_settings, mock_search, mock_opacity
@@ -109,11 +101,9 @@ class TestZukanTheme(TestCase):
         mock_file().write.assert_called_with(icons_themes.TEMPLATE_JSON)
 
     # # Faling on Linux CI. If pass, `test_create_icon_theme_without_opacity` will fail
-    # @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.theme_with_opacity')
-    # @patch(
-    #     'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    # )
-    # @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.get_theme_settings')
+    # @patch.object(icons_themes, 'theme_with_opacity')
+    # @patch.object(icons_themes, 'search_resources_sublime_themes')
+    # @patch.object(icons_themes, 'get_theme_settings')
     # def test_create_icon_theme_with_opacity(
     #     self, mock_settings, mock_search, mock_opacity
     # ):
@@ -134,11 +124,9 @@ class TestZukanTheme(TestCase):
     #         mock_file().write.assert_called_once_with(icons_themes.TEMPLATE_JSON_WITH_OPACITY)
 
     # # Faling on Linux CI. If pass, `test_create_icon_theme_with_opacity` will fail
-    # @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.theme_with_opacity')
-    # @patch(
-    #     'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    # )
-    # @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.get_theme_settings')
+    # @patch.object(icons_themes, 'theme_with_opacity')
+    # @patch.object(icons_themes, 'search_resources_sublime_themes')
+    # @patch.object(icons_themes, 'get_theme_settings')
     # def test_create_icon_theme_without_opacity(
     #     self, mock_settings, mock_search, mock_opacity
     # ):
@@ -160,10 +148,8 @@ class TestZukanTheme(TestCase):
     #             icons_themes.TEMPLATE_JSON
     #         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.get_theme_settings')
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
+    @patch.object(icons_themes, 'get_theme_settings')
     def test_create_icon_theme_not_exists(self, mock_settings, mock_search):
         theme_path = 'Packages/Theme - Nonexistent/Theme.sublime-theme'
         mock_settings.return_value = ([], None)
@@ -175,7 +161,7 @@ class TestZukanTheme(TestCase):
 
     @patch('os.path.basename')
     @patch('os.path.join')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.logger.info')
+    @patch.object(icons_themes.logger, 'info')
     def test_create_icon_theme_ignored(
         self, mock_logger_info, mock_join, mock_basename
     ):
@@ -198,7 +184,7 @@ class TestZukanTheme(TestCase):
 
     @patch('os.path.basename')
     @patch('os.path.join')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.logger.error')
+    @patch.object(icons_themes.logger, 'error')
     def test_create_icon_theme_file_not_found(
         self, mock_logger_error, mock_join, mock_basename
     ):
@@ -238,9 +224,7 @@ class TestZukanTheme(TestCase):
         result = self.zukan_theme.create_icon_theme(self.test_theme_path)
         self.assertIsNone(result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
     def test_create_icons_themes(self, mock_search):
         mock_search.return_value = self.sample_themes
         with patch.object(self.zukan_theme, 'create_icon_theme') as mock_create:
@@ -248,17 +232,13 @@ class TestZukanTheme(TestCase):
             self.assertEqual(result, self.sample_themes)
             self.assertEqual(mock_create.call_count, len(self.sample_themes))
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
     def test_create_icons_themes_empty(self, mock_search):
         mock_search.return_value = None
         result = self.zukan_theme.create_icons_themes()
         self.assertIsNone(result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.logging.Logger.error'
-    )
+    @patch.object(icons_themes.logger, 'error')
     def test_create_icons_themes_file_not_found(self, mock_logger):
         with patch.object(
             self.zukan_theme, 'get_all_sublime_themes', return_value=None
@@ -313,9 +293,7 @@ class TestZukanTheme(TestCase):
 
     @patch('glob.iglob')
     @patch('os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.logging.Logger.error'
-    )
+    @patch.object(icons_themes.logger, 'error')
     def test_delete_icons_themes_file_not_found(
         self, mock_logger, mock_remove, mock_iglob
     ):
@@ -335,9 +313,7 @@ class TestZukanTheme(TestCase):
 
     @patch('glob.iglob')
     @patch('os.remove')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.logging.Logger.error'
-    )
+    @patch.object(icons_themes.logger, 'error')
     def test_delete_icons_themes_os_error(self, mock_logger, mock_remove, mock_iglob):
         mock_themes = ['Treble Adaptive.sublime-theme']
         mock_iglob.return_value = mock_themes
@@ -355,9 +331,7 @@ class TestZukanTheme(TestCase):
             'Treble Adaptive.sublime-theme',
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
     @patch('glob.glob')
     @patch('os.path.exists')
     @patch('os.remove')
@@ -379,9 +353,7 @@ class TestZukanTheme(TestCase):
             os.path.join(self.icons_path, 'unused.sublime-theme')
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.search_resources_sublime_themes'
-    )
+    @patch.object(icons_themes, 'search_resources_sublime_themes')
     @patch('glob.glob')
     @patch('os.path.exists')
     def test_delete_unused_icon_theme_no_unused(
@@ -423,7 +395,7 @@ class TestZukanTheme(TestCase):
 
     @patch('os.path.exists')
     @patch('glob.glob')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.lib.icons_themes.logger')
+    @patch.object(icons_themes, 'logger')
     def test_list_created_icons_themes_os_error(
         self, mock_logger, mock_glob, mock_exists
     ):
