@@ -24,23 +24,19 @@ class TestSyntaxes(TestCase):
             }
         ]
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.syntaxes.read_pickle_data')
+    @patch.object(syntaxes, 'read_pickle_data')
     def test_zukan_icons_data(self, mock_read_pickle):
         mock_read_pickle.return_value = self.mock_zukan_data
         result = self.syntaxes.zukan_icons_data()
         self.assertEqual(result, self.mock_zukan_data)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.syntaxes.get_change_icon_settings'
-    )
+    @patch.object(syntaxes, 'get_change_icon_settings')
     def test_change_icon_file_extension_setting(self, mock_settings):
         mock_settings.return_value = (None, ['txt'])
         result = self.syntaxes.change_icon_file_extension_setting()
         self.assertEqual(result, ['txt'])
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.syntaxes.get_ignored_icon_settings'
-    )
+    @patch.object(syntaxes, 'get_ignored_icon_settings')
     def test_ignored_icon_setting(self, mock_ignored):
         mock_ignored.return_value = ['ignored_icon']
         result = self.syntaxes.ignored_icon_setting()
@@ -61,8 +57,9 @@ class TestSyntaxes(TestCase):
 
         self.syntaxes.list_created_icons_syntaxes = Mock(return_value=set())
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.syntaxes.edit_file_extension',
+        with patch.object(
+            syntaxes,
+            'edit_file_extension',
             return_value=['atest'],
         ):
             result = self.syntaxes.get_not_installed_syntaxes()
@@ -70,7 +67,7 @@ class TestSyntaxes(TestCase):
             self.assertEqual(sorted(result), sorted(expected))
 
     @patch('os.path.splitext')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.syntaxes.sublime.error_message')
+    @patch.object(syntaxes.sublime, 'error_message')
     @patch.object(syntaxes.Syntaxes, 'zukan_icons_data')
     @patch.object(syntaxes.Syntaxes, 'get_list_icons_syntaxes')
     @patch.object(syntaxes.Syntaxes, 'ignored_icon_setting')
@@ -103,7 +100,7 @@ class TestSyntaxes(TestCase):
             'ATest icon is disabled. Need to enable first.'
         )
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.syntaxes.sublime')
+    @patch.object(syntaxes, 'sublime')
     def test_install_icon_syntax_ignored(self, mock_sublime):
         self.syntaxes.zukan_icons_data = Mock(return_value=self.mock_zukan_data)
         self.syntaxes.ignored_icon_setting = Mock(return_value=['ATest'])
@@ -111,7 +108,7 @@ class TestSyntaxes(TestCase):
         self.syntaxes.install_icon_syntax('ATest.sublime-syntax')
         mock_sublime.error_message.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.syntaxes.sublime')
+    @patch.object(syntaxes, 'sublime')
     def test_confirm_delete(self, mock_sublime):
         mock_sublime.ok_cancel_dialog.return_value = True
         result = self.syntaxes.confirm_delete('Test message')

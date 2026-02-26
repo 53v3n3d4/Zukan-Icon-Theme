@@ -11,8 +11,8 @@ select_prefer_icon = importlib.import_module(
 class TestSelectRemovePreferIcon(TestCase):
     def setUp(self):
         self.zukan_theme = Mock(spec=select_prefer_icon.ZukanTheme)
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.is_zukan_listener_enabled'
+        with patch.object(
+            select_prefer_icon, 'is_zukan_listener_enabled'
         ) as mock_enabled:
             mock_enabled.return_value = True
             self.select_remove_prefer_icon = select_prefer_icon.SelectRemovePreferIcon(
@@ -26,8 +26,8 @@ class TestSelectRemovePreferIcon(TestCase):
         }
 
     def test_select_remove_prefer_icon_init(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.is_zukan_listener_enabled'
+        with patch.object(
+            select_prefer_icon, 'is_zukan_listener_enabled'
         ) as mock_enabled:
             mock_enabled.return_value = True
             icon_manager = select_prefer_icon.SelectRemovePreferIcon(self.zukan_theme)
@@ -35,9 +35,7 @@ class TestSelectRemovePreferIcon(TestCase):
             self.assertTrue(icon_manager.zukan_listener_enabled)
 
     def test_prefer_icon_setting(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.get_prefer_icon_settings'
-        ) as mock_get:
+        with patch.object(select_prefer_icon, 'get_prefer_icon_settings') as mock_get:
             expected = {'theme1': {'icon': 'path1'}}
             mock_get.return_value = (None, expected)
 
@@ -57,9 +55,7 @@ class TestSelectRemovePreferIcon(TestCase):
             mock_save.assert_called_once_with(expected)
 
     def test_save_prefer_icon_setting(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.set_save_settings'
-        ) as mock_save:
+        with patch.object(select_prefer_icon, 'set_save_settings') as mock_save:
             prefer_icon = {'theme1': {'icon': 'path1'}}
             self.select_remove_prefer_icon._save_prefer_icon_setting(prefer_icon)
 
@@ -87,9 +83,7 @@ class TestSelectRemovePreferIcon(TestCase):
             mock_save.assert_called_once_with(expected)
 
     def test_remove_prefer_icon_logging(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.logger'
-        ) as mock_logger:
+        with patch.object(select_prefer_icon, 'logger') as mock_logger:
             with patch.object(
                 self.select_remove_prefer_icon, '_save_prefer_icon_setting'
             ):
@@ -109,9 +103,7 @@ class TestSelectRemovePreferIcon(TestCase):
             mock_save.assert_called_once_with({})
 
     def test_remove_all_prefer_icons_logging(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.logger'
-        ) as mock_logger:
+        with patch.object(select_prefer_icon, 'logger') as mock_logger:
             with patch.object(
                 self.select_remove_prefer_icon, '_save_prefer_icon_setting'
             ):
@@ -125,9 +117,7 @@ class TestSelectPreferIconCommand(TestCase):
     def setUp(self):
         self.view = Mock()
         self.zukan_theme = Mock(spec=select_prefer_icon.ZukanTheme)
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.ZukanTheme'
-        ) as mock_zukan:
+        with patch.object(select_prefer_icon, 'ZukanTheme') as mock_zukan:
             mock_zukan.return_value = self.zukan_theme
             self.command = select_prefer_icon.SelectPreferIconCommand(self.view)
 
@@ -229,9 +219,7 @@ class TestSelectPreferIconThemeInputHandler(TestCase):
         self.assertEqual(self.handler.name(), 'select_prefer_icon_theme')
 
     def test_select_prefer_icon_theme_input_handler_placeholder(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.sublime.status_message'
-        ) as mock_status:
+        with patch.object(select_prefer_icon.sublime, 'status_message') as mock_status:
             placeholder = self.handler.placeholder()
             self.assertEqual(placeholder, 'List of created themes')
             mock_status.assert_called_once_with('Select theme to prefer icon.')
@@ -245,9 +233,7 @@ class TestSelectPreferIconThemeInputHandler(TestCase):
             'theme2',
         ]
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.sublime.ListInputItem'
-        ) as mock_item:
+        with patch.object(select_prefer_icon.sublime, 'ListInputItem') as mock_item:
             mock_item.side_effect = lambda text, value, annotation: (
                 text,
                 value,
@@ -279,9 +265,7 @@ class TestSelectPreferIconVersionInputHandler(TestCase):
         self.assertEqual(self.handler.name(), 'select_prefer_icon_version')
 
     def test_select_prefer_icon_version_input_handler_placeholder(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.sublime.status_message'
-        ) as mock_status:
+        with patch.object(select_prefer_icon.sublime, 'status_message') as mock_status:
             placeholder = self.handler.placeholder()
             self.assertEqual(placeholder, 'Icon options: dark and light')
             mock_status.assert_called_once_with('Select prefer icon version.')
@@ -295,9 +279,7 @@ class TestRemovePreferIconCommand(TestCase):
     def setUp(self):
         self.view = Mock()
         self.zukan_theme = Mock(spec=select_prefer_icon.ZukanTheme)
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.select_prefer_icon.ZukanTheme'
-        ) as mock_zukan:
+        with patch.object(select_prefer_icon, 'ZukanTheme') as mock_zukan:
             mock_zukan.return_value = self.zukan_theme
             self.command = select_prefer_icon.RemovePreferIconCommand(self.view)
 

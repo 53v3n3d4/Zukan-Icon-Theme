@@ -36,8 +36,8 @@ class TestLoggingConfig(TestCase):
 
 
 class TestGetSettingLogLevel(TestCase):
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.get_settings')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.reset_logging_config')
+    @patch.object(logger, 'get_settings')
+    @patch.object(logger, 'reset_logging_config')
     def test_get_setting_log_level(self, mock_reset_config, mock_get_settings):
         params_list = [
             ('DEBUG', logging.DEBUG),
@@ -191,9 +191,7 @@ class TestResetLoggingConfig(TestCase):
             mock_logger = Mock()
             mock_get_logger.return_value = mock_logger
 
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.logging_config'
-            ) as mock_logging_config:
+            with patch.object(logger, 'logging_config') as mock_logging_config:
                 mock_logger.hasHandlers.return_value = True
 
                 logger.reset_logging_config(log_level)
@@ -208,9 +206,7 @@ class TestResetLoggingConfig(TestCase):
             mock_logger = Mock()
             mock_get_logger.return_value = mock_logger
 
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.logger.logging_config'
-            ) as mock_logging_config:
+            with patch.object(logger, 'logging_config') as mock_logging_config:
                 mock_logger.hasHandlers.return_value = False
 
                 logger.reset_logging_config(log_level)

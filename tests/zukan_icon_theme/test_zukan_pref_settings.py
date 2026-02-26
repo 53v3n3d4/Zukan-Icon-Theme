@@ -61,43 +61,60 @@ class TestZukanIconFiles(TestCase):
             ('builtins.open', {'return_value': MagicMock()}),
             ('os.makedirs', {'return_value': MagicMock()}),
             (
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.read_pickle_data',
+                zukan_pref_settings,
+                'read_pickle_data',
                 {'return_value': [self.mock_settings]},
             ),
             (
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_settings',
+                zukan_pref_settings,
+                'get_settings',
                 {'return_value': True},
             ),
             (
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_prefer_icon_settings',
+                zukan_pref_settings,
+                'get_prefer_icon_settings',
                 {'return_value': (True, {'Treble Dark.sublime-theme': 'light'})},
             ),
             (
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_change_icon_settings',
+                zukan_pref_settings,
+                'get_change_icon_settings',
                 {'return_value': ({'ATest': 'atest'}, ['txt', 'md'])},
             ),
             (
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_ignored_icon_settings',
+                zukan_pref_settings,
+                'get_ignored_icon_settings',
                 {'return_value': ['Ignored-1', 'Ignored-2']},
             ),
             (
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_create_custom_icon_settings',
+                zukan_pref_settings,
+                'get_create_custom_icon_settings',
                 {'return_value': ['ATest-1', 'ATest-2']},
             ),
             (
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.read_current_settings',
+                zukan_pref_settings,
+                'read_current_settings',
                 {'return_value': self.mock_settings},
             ),
             (
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.save_current_settings',
+                zukan_pref_settings,
+                'save_current_settings',
                 {'return_value': MagicMock()},
             ),
         ]
 
-        self.patches = [patch(target, **kwargs) for target, kwargs in patch_config]
+        self.patches = []
 
-        for patcher in self.patches:
-            patcher.start()
+        for item in patch_config:
+            if isinstance(item[0], str):
+                target, kwargs = item
+                patcher = patch(target, **kwargs)
+            else:
+                module, attr, kwargs = item
+                patcher = patch.object(module, attr, **kwargs)
+
+            self.patches.append(patcher)
+
+        self.mocks = [p.start() for p in self.patches]
 
         self.zukan = zukan_pref_settings.ZukanIconFiles(
             event_bus=self.event_bus,
@@ -148,9 +165,7 @@ class TestZukanIconFiles(TestCase):
         self.zukan.prefer_icon = {'Treble Light.sublime-theme': 'dark'}
         self.zukan.change_icon_file_extension = ['txt', 'py']
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.save_current_settings'
-        ):
+        with patch.object(zukan_pref_settings, 'save_current_settings'):
             self.zukan.rebuild_icons_files(self.event_bus)
 
         self.assertTrue(any(self.zukan.rebuild_functions.values()))
@@ -202,46 +217,51 @@ class TestSettingsEvent(TestCase):
         self.zukan_settings_mock = MagicMock()
 
         self.patches = [
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_settings',
+            patch.object(
+                zukan_pref_settings,
+                'get_settings',
                 side_effect=self.settings_side_effect,
             ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_folder_size',
+            patch.object(
+                zukan_pref_settings,
+                'get_folder_size',
                 return_value=1024,
             ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_file_size',
+            patch.object(
+                zukan_pref_settings,
+                'get_file_size',
                 return_value=2048,
             ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.bytes_to_readable_size',
+            patch.object(
+                zukan_pref_settings,
+                'bytes_to_readable_size',
                 side_effect=lambda x: f'{x}B',
             ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.ZUKAN_SETTINGS_OPTIONS',
+            patch.object(
+                zukan_pref_settings,
+                'ZUKAN_SETTINGS_OPTIONS',
                 ['option1', 'option2'],
             ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.USER_SETTINGS_OPTIONS',
+            patch.object(
+                zukan_pref_settings,
+                'USER_SETTINGS_OPTIONS',
                 ['user_opt1', 'user_opt2'],
             ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.EventBus',
+            patch.object(
+                zukan_pref_settings,
+                'EventBus',
                 return_value=self.event_bus_mock,
             ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.UpgradePlugin'
-            ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.ZukanIconFiles'
-            ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.ZUKAN_SETTINGS',
+            patch.object(zukan_pref_settings, 'UpgradePlugin'),
+            patch.object(zukan_pref_settings, 'ZukanIconFiles'),
+            patch.object(
+                zukan_pref_settings,
+                'ZUKAN_SETTINGS',
                 'Zukan Icon Theme',
             ),
-            patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.USER_SETTINGS',
+            patch.object(
+                zukan_pref_settings,
+                'USER_SETTINGS',
                 'USER_SETTINGS',
             ),
         ]
@@ -281,8 +301,9 @@ class TestSettingsEvent(TestCase):
 
     @patch('builtins.print')
     def test_output_to_console_zukan_pref_settings_not_debug(self, mock_print):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_settings',
+        with patch.object(
+            zukan_pref_settings,
+            'get_settings',
             return_value='INFO',
         ):
             zukan_pref_settings.SettingsEvent.output_to_console_zukan_pref_settings()
@@ -293,12 +314,14 @@ class TestSettingsEvent(TestCase):
         zukan_files_mock = MagicMock()
 
         # fmt: off
-        with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.UpgradePlugin',
+        with patch.object(
+                zukan_pref_settings,
+                'UpgradePlugin',
                 return_value=upgrade_plugin_mock,
              ) as upgrade_mock, \
-             patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.ZukanIconFiles',
+             patch.object(
+                zukan_pref_settings,
+                'ZukanIconFiles',
                 return_value=zukan_files_mock,
              ) as files_mock:
              # fmt: on
@@ -329,12 +352,8 @@ class TestSettingsEvent(TestCase):
 
 
 class TestUpgradePlugin(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_upgraded_version_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_settings'
-    )
+    @patch.object(zukan_pref_settings, 'get_upgraded_version_settings')
+    @patch.object(zukan_pref_settings, 'get_settings')
     def setUp(self, mock_get_settings, mock_get_upgraded_settings):
         self.event_bus = zukan_pref_settings.EventBus()
         self.install_event = Mock(spec=zukan_pref_settings.InstallEvent)
@@ -346,12 +365,8 @@ class TestUpgradePlugin(TestCase):
             event_bus=self.event_bus, install_event=self.install_event
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_upgraded_version_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.get_settings'
-    )
+    @patch.object(zukan_pref_settings, 'get_upgraded_version_settings')
+    @patch.object(zukan_pref_settings, 'get_settings')
     def test_upgrade_plugin_init(self, mock_get_settings, mock_get_upgraded_settings):
         mock_get_upgraded_settings.return_value = ('0.4.8', True)
         mock_get_settings.return_value = '0.4.8'
@@ -384,12 +399,8 @@ class TestUpgradePlugin(TestCase):
         return False
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.read_pickle_data'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.save_current_settings'
-    )
+    @patch.object(zukan_pref_settings, 'read_pickle_data')
+    @patch.object(zukan_pref_settings, 'save_current_settings')
     @patch('os.makedirs')
     def test_upgrade_zukan_files(
         self, mock_makedirs, mock_save_settings, mock_read_pickle, mock_exists
@@ -405,12 +416,8 @@ class TestUpgradePlugin(TestCase):
         mock_makedirs.assert_not_called()
 
     @patch('os.path.exists')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.read_pickle_data'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.save_current_settings'
-    )
+    @patch.object(zukan_pref_settings, 'read_pickle_data')
+    @patch.object(zukan_pref_settings, 'save_current_settings')
     def test_upgrade_zukan_files_same_version(
         self, mock_save_settings, mock_read_pickle, mock_exists
     ):
@@ -425,9 +432,7 @@ class TestUpgradePlugin(TestCase):
 
     @patch('os.path.exists')
     @patch('os.makedirs')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.zukan_pref_settings.save_current_settings'
-    )
+    @patch.object(zukan_pref_settings, 'save_current_settings')
     def test_upgrade_zukan_files_no_zukan_current_settings_file(
         self, mock_save_settings, mock_makedirs, mock_exists
     ):

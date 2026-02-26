@@ -35,9 +35,7 @@ class TestGetSettings(TestCase):
         y = sublime.load_settings(file_settings.ZUKAN_SETTINGS).get('version')
         self.assertNotEqual(x, y)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.sublime.load_settings'
-    )
+    @patch.object(load_save_settings.sublime, 'load_settings')
     def test_get_settings_with_option_none(self, mock_load_settings):
         mock_settings = {'setting1': 'value1', 'setting2': 'value2'}
         mock_load_settings.return_value = mock_settings
@@ -46,9 +44,7 @@ class TestGetSettings(TestCase):
         self.assertEqual(result, mock_settings)
         mock_load_settings.assert_called_once_with('file.sublime-settings')
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.sublime.load_settings'
-    )
+    @patch.object(load_save_settings.sublime, 'load_settings')
     def test_get_settings_with_option(self, mock_load_settings):
         mock_settings = {'setting1': 'value1', 'setting2': 'value2'}
         mock_load_settings.return_value = mock_settings
@@ -59,12 +55,8 @@ class TestGetSettings(TestCase):
 
 
 class TestSetSaveSettings(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.sublime.load_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.sublime.save_settings'
-    )
+    @patch.object(load_save_settings.sublime, 'load_settings')
+    @patch.object(load_save_settings.sublime, 'save_settings')
     def test_set_save_settings(self, mock_save_settings, mock_load_settings):
         mock_settings = MagicMock()
         mock_load_settings.return_value = mock_settings
@@ -81,9 +73,7 @@ class TestSetSaveSettings(TestCase):
 
 
 class TestValidDictList(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.logger.warning'
-    )
+    @patch.object(load_save_settings.logger, 'warning')
     def test_is_valid_dict_true(self, mock_warning):
         setting_option = {'key': 'value'}
 
@@ -92,9 +82,7 @@ class TestValidDictList(TestCase):
         self.assertTrue(result)
         mock_warning.assert_not_called()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.logger.warning'
-    )
+    @patch.object(load_save_settings.logger, 'warning')
     def test_is_valid_dict_false(self, mock_warning):
         setting_option = ['key', 'value']
 
@@ -103,9 +91,7 @@ class TestValidDictList(TestCase):
         self.assertFalse(result)
         mock_warning.assert_called_once_with('%s option malformed, needs to be a dict')
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.logger.warning'
-    )
+    @patch.object(load_save_settings.logger, 'warning')
     def test_is_valid_list_true(self, mock_warning):
         setting_option = [1, 2, 3]
 
@@ -114,9 +100,7 @@ class TestValidDictList(TestCase):
         self.assertTrue(result)
         mock_warning.assert_not_called()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.logger.warning'
-    )
+    @patch.object(load_save_settings.logger, 'warning')
     def test_is_valid_list_false(self, mock_warning):
         setting_option = {'key': 'value'}
 
@@ -127,12 +111,8 @@ class TestValidDictList(TestCase):
 
 
 class TestGetThemeName(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.system_theme'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'system_theme')
     def test_get_theme_name_auto_dark(self, mock_system_theme, mock_get_settings):
         mock_get_settings.side_effect = lambda user_settings, key: {
             'dark_theme': 'Treble Dark.sublime-theme',
@@ -146,12 +126,8 @@ class TestGetThemeName(TestCase):
 
         self.assertEqual(result, 'Treble Dark.sublime-theme')
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.system_theme'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'system_theme')
     def test_get_theme_name_auto_light(self, mock_system_theme, mock_get_settings):
         mock_get_settings.side_effect = lambda user_settings, key: {
             'dark_theme': 'Treble Dark.sublime-theme',
@@ -165,12 +141,8 @@ class TestGetThemeName(TestCase):
 
         self.assertEqual(result, 'Treble Light.sublime-theme')
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.system_theme'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'system_theme')
     def test_get_theme_name(self, mock_system_theme, mock_get_settings):
         mock_get_settings.side_effect = lambda user_settings, key: {
             'dark_theme': 'Treble Dark.sublime-theme',
@@ -184,12 +156,8 @@ class TestGetThemeName(TestCase):
 
 
 class TestGetThemeSettings(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_list')
     def test_get_theme_settings_with_valid_ignored_theme(
         self, mock_is_valid_list, mock_get_settings
     ):
@@ -204,12 +172,8 @@ class TestGetThemeSettings(TestCase):
         result = load_save_settings.get_theme_settings()
         self.assertEqual(result, (['theme1', 'theme2'], 'some_theme'))
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_list')
     def test_get_theme_settings_with_invalid_ignored_theme(
         self, mock_is_valid_list, mock_get_settings
     ):
@@ -223,12 +187,8 @@ class TestGetThemeSettings(TestCase):
         result = load_save_settings.get_theme_settings()
         self.assertEqual(result, ([], 'some_theme'))
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_list')
     def test_get_theme_settings_with_empty_ignored_theme(
         self, mock_is_valid_list, mock_get_settings
     ):
@@ -242,12 +202,8 @@ class TestGetThemeSettings(TestCase):
 
 
 class TestGetCreateCustomIconSettings(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_list')
     def test_get_create_custom_icon_settings_with_valid_list(
         self, mock_is_valid_list, mock_get_settings
     ):
@@ -275,12 +231,8 @@ class TestGetCreateCustomIconSettings(TestCase):
             ],
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_list')
     def test_get_create_custom_icon_settings_with_invalid_list(
         self, mock_is_valid_list, mock_get_settings
     ):
@@ -298,12 +250,8 @@ class TestGetCreateCustomIconSettings(TestCase):
         result = load_save_settings.get_create_custom_icon_settings()
         self.assertEqual(result, [])
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_list')
     def test_get_create_custom_icon_settings_with_empty_list(
         self, mock_is_valid_list, mock_get_settings
     ):
@@ -313,12 +261,8 @@ class TestGetCreateCustomIconSettings(TestCase):
         result = load_save_settings.get_create_custom_icon_settings()
         self.assertEqual(result, [])
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_list')
     def test_get_create_custom_icon_settings_with_none(
         self, mock_is_valid_list, mock_get_settings
     ):
@@ -330,12 +274,8 @@ class TestGetCreateCustomIconSettings(TestCase):
 
 
 class TestGetChangeIconSettings(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_dict'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_dict')
     def test_get_change_icon_settings_with_valid_dict(
         self, mock_is_valid_dict, mock_get_settings
     ):
@@ -349,12 +289,8 @@ class TestGetChangeIconSettings(TestCase):
         result = load_save_settings.get_change_icon_settings()
         self.assertEqual(result, ({'Icon 1': 'icon1', 'Icon 2': 'icon2'}, 'png'))
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_dict'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_dict')
     def test_get_change_icon_settings_with_invalid_dict(
         self, mock_is_valid_dict, mock_get_settings
     ):
@@ -368,12 +304,8 @@ class TestGetChangeIconSettings(TestCase):
         result = load_save_settings.get_change_icon_settings()
         self.assertEqual(result, ({}, 'png'))
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_dict'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_dict')
     def test_get_change_icon_settings_with_empty_dict(
         self, mock_is_valid_dict, mock_get_settings
     ):
@@ -385,12 +317,8 @@ class TestGetChangeIconSettings(TestCase):
         result = load_save_settings.get_change_icon_settings()
         self.assertEqual(result, ({}, 'svg'))
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_dict'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_dict')
     def test_get_change_icon_settings_with_none(
         self, mock_is_valid_dict, mock_get_settings
     ):
@@ -404,12 +332,8 @@ class TestGetChangeIconSettings(TestCase):
 
 
 class TestGetPreferIconSettings(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_dict'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_dict')
     def test_prefer_icon_empty_dict_invalid(
         self, mock_is_valid_dict, mock_get_settings
     ):
@@ -426,12 +350,8 @@ class TestGetPreferIconSettings(TestCase):
 
 
 class TestGetIgnoredIconSettings(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.is_valid_list'
-    )
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'is_valid_list')
     def test_ignored_icon_empty_list_invalid(
         self, mock_is_valid_list, mock_get_settings
     ):
@@ -446,15 +366,9 @@ class TestGetIgnoredIconSettings(TestCase):
 
 
 class TestReadCurrentSettings(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.os.path.exists'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.default_settings'
-    )
+    @patch.object(load_save_settings.os.path, 'exists')
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'default_settings')
     def test_read_current_settings_using_default_settings_1(
         self, mock_default_settings, mock_get_settings, mock_exists
     ):
@@ -487,15 +401,9 @@ class TestReadCurrentSettings(TestCase):
 
         self.assertEqual(result, expected_result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.os.path.exists'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.default_settings'
-    )
+    @patch.object(load_save_settings.os.path, 'exists')
+    @patch.object(load_save_settings, 'get_settings')
+    @patch.object(load_save_settings, 'default_settings')
     def test_read_current_settings_using_default_settings_2(
         self, mock_default_settings, mock_get_settings, mock_exists
     ):
@@ -572,10 +480,8 @@ class TestDefaultSettings(TestCase):
     def setUp(self):
         self.mock_json_data = {'setting1': 'value1', 'setting2': 'value2'}
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.ZipFile')
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.remove_json_comments'
-    )
+    @patch.object(load_save_settings, 'ZipFile')
+    @patch.object(load_save_settings, 'remove_json_comments')
     def test_default_settings(self, mock_remove_comments, mock_zipfile):
         json_content = """
         {
@@ -611,13 +517,12 @@ class TestSaveCurrentSettings(TestCase):
         # fmt: off
         with patch('os.path.exists', return_value=True), \
              patch('os.remove') as mock_remove, \
-             patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.read_current_settings',
+             patch.object(
+                load_save_settings,
+                'read_current_settings',
                 return_value=mock_settings
              ), \
-             patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.dump_pickle_data'
-             ) as mock_dump:
+             patch.object(load_save_settings,'dump_pickle_data') as mock_dump:
              # fmt: on
 
             load_save_settings.save_current_settings()
@@ -635,13 +540,12 @@ class TestSaveCurrentSettings(TestCase):
         # fmt: off
         with patch('os.path.exists', return_value=False), \
              patch('os.remove') as mock_remove, \
-             patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.read_current_settings',
+             patch.object(
+                load_save_settings,
+                'read_current_settings',
                 return_value=mock_settings,
              ), \
-             patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.dump_pickle_data'
-            ) as mock_dump:
+             patch.object(load_save_settings,'dump_pickle_data') as mock_dump:
              # fmt: on
 
             load_save_settings.save_current_settings()
@@ -668,9 +572,7 @@ class TestSettings(TestCase):
         # fmt: off
         with patch('os.path.exists', return_value=True), \
              patch('os.remove') as mock_remove, \
-             patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.dump_pickle_data'
-             ) as mock_dump:
+             patch.object(load_save_settings,'dump_pickle_data') as mock_dump:
              # fmt: on
 
             load_save_settings.save_current_ui_settings(
@@ -693,9 +595,7 @@ class TestSettings(TestCase):
         # fmt: off
         with patch('os.path.exists', return_value=False), \
              patch('os.remove') as mock_remove, \
-             patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.dump_pickle_data'
-             ) as mock_dump:
+             patch.object(load_save_settings,'dump_pickle_data') as mock_dump:
              # fmt: on
 
             load_save_settings.save_current_ui_settings(
@@ -714,9 +614,7 @@ class TestSettings(TestCase):
 
 
 class TestIsZukanListenerEnabled(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_is_zukan_listener_enabled_true(self, mock_get_settings):
         mock_get_settings.return_value = True
 
@@ -727,9 +625,7 @@ class TestIsZukanListenerEnabled(TestCase):
             load_save_settings.ZUKAN_SETTINGS, 'zukan_listener_enabled'
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_is_zukan_listener_enabled_false(self, mock_get_settings):
         mock_get_settings.return_value = False
 
@@ -740,9 +636,7 @@ class TestIsZukanListenerEnabled(TestCase):
             load_save_settings.ZUKAN_SETTINGS, 'zukan_listener_enabled'
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_is_zukan_listener_enabled_none(self, mock_get_settings):
         mock_get_settings.return_value = None
 
@@ -755,9 +649,7 @@ class TestIsZukanListenerEnabled(TestCase):
 
 
 class TestIsZukanRestartMessage(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_is_zukan_restart_message(self, mock_get_settings):
         mock_get_settings.return_value = True
 
@@ -768,9 +660,7 @@ class TestIsZukanRestartMessage(TestCase):
             load_save_settings.ZUKAN_SETTINGS, 'zukan_restart_message'
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_is_zukan_restart_message_false(self, mock_get_settings):
         mock_get_settings.return_value = False
 
@@ -783,9 +673,7 @@ class TestIsZukanRestartMessage(TestCase):
 
 
 class TestIsCachedThemeInfo(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_is_cached_theme_info_true(self, mock_get_settings):
         mock_get_settings.return_value = True
 
@@ -796,9 +684,7 @@ class TestIsCachedThemeInfo(TestCase):
             load_save_settings.ZUKAN_SETTINGS, 'cache_theme_info'
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_is_cached_theme_info_false(self, mock_get_settings):
         mock_get_settings.return_value = False
 
@@ -809,9 +695,7 @@ class TestIsCachedThemeInfo(TestCase):
             load_save_settings.ZUKAN_SETTINGS, 'cache_theme_info'
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_is_cached_theme_info_none(self, mock_get_settings):
         mock_get_settings.return_value = None
 
@@ -824,9 +708,7 @@ class TestIsCachedThemeInfo(TestCase):
 
 
 class TestGetCacheThemeInfoLifespan(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.load_save_settings.get_settings'
-    )
+    @patch.object(load_save_settings, 'get_settings')
     def test_get_cached_theme_info_lifespan(self, mock_get_settings):
         mock_get_settings.return_value = 180
 

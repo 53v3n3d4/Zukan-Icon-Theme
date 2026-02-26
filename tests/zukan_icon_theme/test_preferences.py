@@ -26,12 +26,11 @@ class TestPreferences(TestCase):
             },
         ]
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.preferences.sublime.error_message'
-    )
+    @patch.object(preferences.sublime, 'error_message')
     def test_ignored_icon_setting(self, mock_error):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.core.preferences.get_ignored_icon_settings',
+        with patch.object(
+            preferences,
+            'get_ignored_icon_settings',
             return_value=self.mock_icon_settings,
         ):
             result = self.preferences.ignored_icon_setting()
@@ -78,9 +77,7 @@ class TestPreferences(TestCase):
 
         self.assertEqual(result, expected)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.preferences.sublime.error_message'
-    )
+    @patch.object(preferences.sublime, 'error_message')
     def test_install_icon_preference_icon_ignored(self, mock_error):
         self.preferences.get_list_icons_preferences = Mock(
             return_value=self.mock_preferences_list
@@ -91,9 +88,7 @@ class TestPreferences(TestCase):
 
         mock_error.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.preferences.sublime.error_message'
-    )
+    @patch.object(preferences.sublime, 'error_message')
     def test_install_icon_preference(self, mock_error):
         self.preferences.get_list_icons_preferences = Mock(
             return_value=self.mock_preferences_list
@@ -111,9 +106,7 @@ class TestPreferences(TestCase):
         self.preferences.install_all_icons_preferences()
         self.preferences.build_icons_preferences.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.preferences.sublime.ok_cancel_dialog'
-    )
+    @patch.object(preferences.sublime, 'ok_cancel_dialog')
     def test_confirm_delete(self, mock_dialog):
         mock_dialog.return_value = True
 

@@ -76,7 +76,7 @@ class TestReporter(TestCase):
         mock_remove.assert_not_called()
         self.assertIsNone(result)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.zukan_reporter.datetime')
+    @patch.object(zukan_reporter, 'datetime')
     def test_add_title_time(self, mock_datetime):
         mock_now = datetime(2022, 12, 8, 12, 34, 56)
         mock_datetime.now.return_value = mock_now
@@ -132,9 +132,7 @@ class TestZukanReporterCommand(TestCase):
         self.command = zukan_reporter.ZukanReporterCommand(Mock())
 
     def test_zukan_reporter_command_run(self):
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.zukan_reporter.Reporter'
-        ) as MockReporter:
+        with patch.object(zukan_reporter, 'Reporter') as MockReporter:
             self.command.run(Mock(), 'test_option')
             MockReporter.assert_called_once_with(self.command.view)
             MockReporter().report_to_file.assert_called_once_with('test_option')

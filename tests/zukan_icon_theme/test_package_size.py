@@ -36,7 +36,7 @@ class TestPackageSize(TestCase):
         mock_isfile.assert_called_once_with(file_path)
         mock_lstat.assert_not_called()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.package_size.logger')
+    @patch.object(package_size, 'logger')
     @patch('os.lstat')
     @patch('os.path.isfile')
     def test_get_file_size_os_error(self, mock_isfile, mock_lstat, mock_logger):
@@ -91,7 +91,7 @@ class TestPackageSize(TestCase):
         self.assertEqual(result, 0)
         mock_oswalk.assert_called_once_with(folder_path)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.package_size.logger')
+    @patch.object(package_size, 'logger')
     @patch('os.lstat')
     @patch('os.walk')
     def test_get_folder_size_os_error(self, mock_oswalk, mock_lstat, mock_logger):

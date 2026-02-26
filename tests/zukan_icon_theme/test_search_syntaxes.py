@@ -6,12 +6,13 @@ from unittest.mock import patch, MagicMock
 search_syntaxes = importlib.import_module(
     'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_syntaxes'
 )
+zukan_paths = importlib.import_module(
+    'Zukan Icon Theme.src.zukan_icon_theme.utils.zukan_paths'
+)
 
 
 class TestZukanSyntaxFunctions(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_syntaxes.sublime.list_syntaxes'
-    )
+    @patch.object(search_syntaxes.sublime, 'list_syntaxes')
     def test_visible_syntaxes_only(self, mock_list_syntaxes):
         mock_syntax1 = MagicMock(
             name='ATest-1',
@@ -52,9 +53,7 @@ class TestZukanSyntaxFunctions(TestCase):
         self.assertIn(mock_syntax4, result)
         self.assertNotIn(mock_syntax3, result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_syntaxes.sublime.list_syntaxes'
-    )
+    @patch.object(search_syntaxes.sublime, 'list_syntaxes')
     def test_compare_scopes(self, mock_list_syntaxes):
         zukan_icons_data = [
             {'syntax': [{'scope': 'source.atest1'}, {'scope': 'source.atest2'}]},
@@ -87,13 +86,8 @@ class TestZukanSyntaxFunctions(TestCase):
             result, [{'scope': 'source.atest1'}, {'scope': 'embedding.atest3'}]
         )
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_syntaxes.sublime.list_syntaxes'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.utils.zukan_paths.ICONS_SYNTAXES_PARTIAL_PATH',
-        'path/to/icons_syntaxes',
-    )
+    @patch.object(search_syntaxes.sublime, 'list_syntaxes')
+    @patch.object(zukan_paths, 'ICONS_SYNTAXES_PARTIAL_PATH', 'path/to/icons_syntaxe')
     def test_compare_scopes_no_match(self, mock_list_syntaxes):
         zukan_icons_data = [
             {'syntax': [{'scope': 'source.atest11'}, {'scope': 'source.atest12'}]},
@@ -118,9 +112,7 @@ class TestZukanSyntaxFunctions(TestCase):
         result = search_syntaxes.compare_scopes(zukan_icons_data)
         self.assertEqual(result, [])
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_syntaxes.sublime.list_syntaxes'
-    )
+    @patch.object(search_syntaxes.sublime, 'list_syntaxes')
     def test_compare_scopes_empty_input(self, mock_list_syntaxes):
         zukan_icons_data = []
 
@@ -129,9 +121,7 @@ class TestZukanSyntaxFunctions(TestCase):
         result = search_syntaxes.compare_scopes(zukan_icons_data)
         self.assertEqual(result, [])
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_syntaxes.sublime.list_syntaxes'
-    )
+    @patch.object(search_syntaxes.sublime, 'list_syntaxes')
     def test_compare_scopes_no_syntax(self, mock_list_syntaxes):
         zukan_icons_data = [
             {'name': 'ATest-22'},

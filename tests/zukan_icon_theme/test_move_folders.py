@@ -14,7 +14,7 @@ class TestMoveFolder(TestCase):
 
     @patch('os.path.exists')
     @patch('os.makedirs')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.move_folders.extract_folder')
+    @patch.object(move_folders, 'extract_folder')
     def test_move_folder(self, mock_extract, mock_makedirs, mock_exists):
         # INSTALLED_PKG_PATH exists, PKG_PATH doesn't
         mock_exists.side_effect = [

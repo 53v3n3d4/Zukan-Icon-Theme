@@ -26,10 +26,7 @@ class TestReadPickleData(TestCase):
     # From https://stackoverflow.com/questions/60761451/how-to-use-mock-open-with-pickle-load
     def test_load_pickle(self):
         read_data = pickle.dumps(constants_pickle.TEST_PICKLE_ORDERED_DICT)
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data',
-            mock_open(read_data=read_data),
-        ):
+        with patch('builtins.open', mock_open(read_data=read_data)):
             test_file_path = os.path.join(
                 sublime.packages_path(),
                 'Zukan Icon Theme',
@@ -39,7 +36,7 @@ class TestReadPickleData(TestCase):
             self.assertEqual(result, constants_pickle.TEST_PICKLE_ORDERED_DICT)
 
     @patch('builtins.open')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.logger')
+    @patch.object(read_write_data, 'logger')
     def test_read_pickle_data_file_not_found(self, mock_logger, mock_file):
         mock_file.side_effect = FileNotFoundError()
 
@@ -51,7 +48,7 @@ class TestReadPickleData(TestCase):
         )
 
     @patch('builtins.open')
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.logger')
+    @patch.object(read_write_data, 'logger')
     def test_read_pickle_data_os_error(self, mock_logger, mock_file):
         mock_file.side_effect = OSError()
 
@@ -115,7 +112,7 @@ class TestDumpPickleData(TestCase):
         )
 
     @patch('builtins.open', side_effect=FileNotFoundError)
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.logger')
+    @patch.object(read_write_data, 'logger')
     def test_dump_pickle_data_file_not_found(self, mock_logger, mock_open):
         data = {'name': 'ATest-1', 'version': 2}
 
@@ -127,7 +124,7 @@ class TestDumpPickleData(TestCase):
         )
 
     @patch('builtins.open', side_effect=OSError)
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.helpers.read_write_data.logger')
+    @patch.object(read_write_data, 'logger')
     def test_dump_pickle_data_os_error(self, mock_logger, mock_open):
         data = {'name': 'ATest-2', 'version': 2}
 

@@ -12,7 +12,7 @@ class TestThemes(TestCase):
         self.zukan_pkg_icons_path = '/folder_path/icons'
         self.themes = themes.Themes(self.zukan_pkg_icons_path)
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.themes.get_theme_settings')
+    @patch.object(themes, 'get_theme_settings')
     def test_ignored_theme_setting(self, mock_get_settings):
         expected_ignored_themes = [
             'Treble Dark.sublime-theme',
@@ -25,7 +25,7 @@ class TestThemes(TestCase):
         self.assertEqual(result, expected_ignored_themes)
         mock_get_settings.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.themes.is_zukan_restart_message')
+    @patch.object(themes, 'is_zukan_restart_message')
     def test_zukan_restart_message_setting(self, mock_restart_message):
         mock_restart_message.return_value = True
 
@@ -62,9 +62,7 @@ class TestThemes(TestCase):
         self.assertEqual(result, sorted(mock_themes))
         self.themes.list_created_icons_themes.assert_called_once()
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.core.themes.search_resources_sublime_themes'
-    )
+    @patch.object(themes, 'search_resources_sublime_themes')
     def test_get_not_installed_themes(self, mock_search_themes):
         mock_search_themes.return_value = [
             'path/Treble Dark.sublime-theme',
@@ -80,7 +78,7 @@ class TestThemes(TestCase):
         self.assertEqual(result, ['path/Treble Light.sublime-theme'])
         mock_search_themes.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.themes.sublime.error_message')
+    @patch.object(themes.sublime, 'error_message')
     def test_install_icon_theme_ignored(self, mock_error_message):
         theme_path = 'path/Treble Dark.sublime-theme'
         self.themes.ignored_theme_setting = Mock(
@@ -109,7 +107,7 @@ class TestThemes(TestCase):
 
         self.themes.create_icons_themes.assert_called_once()
 
-    @patch('Zukan Icon Theme.src.zukan_icon_theme.core.themes.sublime.ok_cancel_dialog')
+    @patch.object(themes.sublime, 'ok_cancel_dialog')
     def test_confirm_delete(self, mock_dialog):
         message = 'Delete confirmation message'
         mock_dialog.return_value = True

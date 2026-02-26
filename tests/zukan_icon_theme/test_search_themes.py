@@ -41,9 +41,7 @@ class TestFilterResourcesThemes(TestCase):
 
 
 class TestSearchResourcesSublimeThemes(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.search_resources_sublime_themes'
-    )
+    @patch.object(search_themes, 'search_resources_sublime_themes')
     def test_mock_search_resources_sublime_themes(
         self, search_resources_sublime_themes_mock
     ):
@@ -71,11 +69,9 @@ class TestPackageThemeExists(TestCase):
     def test_package_theme_exists(self, mock_find_resources):
         mock_find_resources.return_value = self.mock_theme_paths
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filter_resources_themes'
-        ) as mock_filter:
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.search_resources_sublime_themes'
+        with patch.object(search_themes, 'filter_resources_themes') as mock_filter:
+            with patch.object(
+                search_themes, 'search_resources_sublime_themes'
             ) as mock_search:
                 mock_filter.return_value = [
                     'Packages/Theme - Treble/Treble Dark.sublime-theme'
@@ -95,11 +91,9 @@ class TestPackageThemeExists(TestCase):
     def test_package_theme_exists_theme_not_found(self, mock_find_resources):
         mock_find_resources.return_value = self.mock_theme_paths
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filter_resources_themes'
-        ) as mock_filter:
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.search_resources_sublime_themes'
+        with patch.object(search_themes, 'filter_resources_themes') as mock_filter:
+            with patch.object(
+                search_themes, 'search_resources_sublime_themes'
             ) as mock_search:
                 mock_filter.return_value = ['Packages/Theme/Not Found.sublime-theme']
                 mock_search.return_value = [
@@ -115,11 +109,9 @@ class TestPackageThemeExists(TestCase):
     def test_package_theme_exists_empty_result(self, mock_find_resources):
         mock_find_resources.return_value = []
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filter_resources_themes'
-        ) as mock_filter:
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.search_resources_sublime_themes'
+        with patch.object(search_themes, 'filter_resources_themes') as mock_filter:
+            with patch.object(
+                search_themes, 'search_resources_sublime_themes'
             ) as mock_search:
                 mock_filter.return_value = []
                 mock_search.return_value = []
@@ -217,19 +209,13 @@ class TestThemeOpacity(TestCase):
         self.mock_load_resource.return_value = self.theme_content_with_opacity
         self.mock_decode_value.side_effect = lambda x: x
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
-        ) as mock_cached:
+        with patch.object(search_themes, 'is_cached_theme_info') as mock_cached:
             mock_cached.return_value = True
 
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_theme_info_valid'
-            ) as mock_valid:
+            with patch.object(search_themes, 'is_theme_info_valid') as mock_valid:
                 mock_valid.return_value = True
 
-                with patch(
-                    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filepath'
-                ) as mock_filepath:
+                with patch.object(search_themes, 'filepath') as mock_filepath:
                     mock_filepath.return_value = '/test/path/Treble Dark.sublime-theme'
 
                     result = search_themes.theme_with_opacity(
@@ -245,9 +231,7 @@ class TestThemeOpacity(TestCase):
         self.mock_load_resource.return_value = self.theme_content_without_opacity
         self.mock_decode_value.side_effect = lambda x: x
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
-        ) as mock_cached:
+        with patch.object(search_themes, 'is_cached_theme_info') as mock_cached:
             mock_cached.return_value = False
             result = search_themes.theme_with_opacity('Default.sublime-theme')
             self.assertFalse(result)
@@ -258,9 +242,7 @@ class TestThemeOpacity(TestCase):
         )
         self.mock_decode_value.side_effect = lambda x: x
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
-        ) as mock_cached:
+        with patch.object(search_themes, 'is_cached_theme_info') as mock_cached:
             mock_cached.return_value = False
             result = search_themes.theme_with_opacity('ayu-light.sublime-theme')
             self.assertFalse(result)
@@ -269,9 +251,7 @@ class TestThemeOpacity(TestCase):
         self.mock_load_resource.return_value = self.theme_content_with_opacity
         self.mock_decode_value.side_effect = lambda x: x
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
-        ) as mock_cached:
+        with patch.object(search_themes, 'is_cached_theme_info') as mock_cached:
             mock_cached.return_value = False
             result = search_themes.theme_with_opacity(
                 'Packages/Theme - Treble/Treble Dark.sublime-theme'
@@ -282,9 +262,7 @@ class TestThemeOpacity(TestCase):
         self.mock_load_resource.return_value = self.theme_content_with_opacity_no_rules
         self.mock_decode_value.side_effect = lambda x: x
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
-        ) as mock_cached:
+        with patch.object(search_themes, 'is_cached_theme_info') as mock_cached:
             mock_cached.return_value = False
             result = search_themes.theme_with_opacity(
                 'Packages/Theme - Custom/Custom.sublime-theme'
@@ -310,17 +288,13 @@ class TestThemeOpacity(TestCase):
         ]
         self.mock_decode_value.side_effect = lambda x: x
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
-        ) as mock_cached:
+        with patch.object(search_themes, 'is_cached_theme_info') as mock_cached:
             mock_cached.return_value = False
 
             with patch('sublime.find_resources') as mock_find_resources:
                 mock_find_resources.return_value = ['Nested.hidden-theme']
 
-                with patch(
-                    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filepath'
-                ) as mock_filepath:
+                with patch.object(search_themes, 'filepath') as mock_filepath:
                     mock_filepath.return_value = '/test/path/Nested Theme.sublime-theme'
 
                     result = search_themes.theme_with_opacity(
@@ -334,24 +308,16 @@ class TestThemeOpacity(TestCase):
         self.mock_load_resource.return_value = self.theme_content_with_opacity
         self.mock_decode_value.side_effect = lambda x: x
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
-        ) as mock_cached:
+        with patch.object(search_themes, 'is_cached_theme_info') as mock_cached:
             mock_cached.return_value = True
 
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_theme_info_valid'
-            ) as mock_valid:
+            with patch.object(search_themes, 'is_theme_info_valid') as mock_valid:
                 mock_valid.return_value = None
 
-                with patch(
-                    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filepath'
-                ) as mock_filepath:
+                with patch.object(search_themes, 'filepath') as mock_filepath:
                     mock_filepath.return_value = '/test/path/Treble Dark.sublime-theme'
 
-                    with patch(
-                        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.save_theme_info'
-                    ) as mock_save:
+                    with patch.object(search_themes, 'save_theme_info') as mock_save:
                         search_themes.theme_with_opacity('Treble Dark.sublime-theme')
 
                         mock_save.assert_called_once_with(
@@ -479,9 +445,7 @@ class TestFindSidebarBackground(TestCase):
         target_list = []
         with patch('os.path.exists') as mock_exists:
             mock_exists.return_value = True
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.read_pickle_data'
-            ) as mock_read_pickle:
+            with patch.object(search_themes, 'read_pickle_data') as mock_read_pickle:
                 mock_read_pickle.return_value = [{'background': '#000000'}]
                 search_themes.find_variables(
                     'var(--background)',
@@ -495,9 +459,7 @@ class TestFindSidebarBackground(TestCase):
         target_list = []
         with patch('os.path.exists') as mock_exists:
             mock_exists.return_value = False
-            with patch(
-                'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.read_pickle_data'
-            ) as mock_read_pickle:
+            with patch.object(search_themes, 'read_pickle_data') as mock_read_pickle:
                 mock_read_pickle.return_value = [{'background': '#FFFFFF'}]
                 search_themes.find_variables(
                     'var(--background)',
@@ -594,17 +556,13 @@ class TestFindSidebarBackground(TestCase):
         ]
         self.mock_decode_value.side_effect = lambda x: x
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.is_cached_theme_info'
-        ) as mock_cached:
+        with patch.object(search_themes, 'is_cached_theme_info') as mock_cached:
             mock_cached.return_value = False
 
             with patch('sublime.find_resources') as mock_find_resources:
                 mock_find_resources.return_value = ['Nested.hidden-theme']
 
-                with patch(
-                    'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.filepath'
-                ) as mock_filepath:
+                with patch.object(search_themes, 'filepath') as mock_filepath:
                     mock_filepath.return_value = '/test/path/Nested Theme.sublime-theme'
 
                     result = search_themes.find_sidebar_background(
@@ -616,12 +574,8 @@ class TestFindSidebarBackground(TestCase):
 
 
 class TestGetSidebarBgColor(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.sublime.find_resources'
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.find_sidebar_background'
-    )
+    @patch.object(search_themes.sublime, 'find_resources')
+    @patch.object(search_themes, 'find_sidebar_background')
     def test_get_sidebar_bgcolor(
         self, mock_find_sidebar_background, mock_find_resources
     ):
@@ -641,9 +595,7 @@ class TestGetSidebarBgColor(TestCase):
     def test_get_sidebar_bgcolor_user_theme(self, mock_find_resources):
         mock_find_resources.return_value = ['Packages/User/Treble Dark.sublime-theme']
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.find_sidebar_background'
-        ) as mock_find_bg:
+        with patch.object(search_themes, 'find_sidebar_background') as mock_find_bg:
             mock_find_bg.return_value = ['dark']
 
             result = search_themes.get_sidebar_bgcolor('Treble Dark.sublime-theme')
@@ -661,9 +613,7 @@ class TestGetSidebarBgColor(TestCase):
             'Packages/Theme - Treble/Treble Dark.sublime-theme'
         ]
 
-        with patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.search_themes.find_sidebar_background'
-        ) as mock_find_bg:
+        with patch.object(search_themes, 'find_sidebar_background') as mock_find_bg:
             mock_find_bg.return_value = ['light']
 
             result = search_themes.get_sidebar_bgcolor('Treble Dark.sublime-theme')

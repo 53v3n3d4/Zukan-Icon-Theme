@@ -12,27 +12,21 @@ system_theme = importlib.import_module(
 
 
 class TestSystemTheme(TestCase):
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output'
-    )
+    @patch.object(system_theme.subprocess, 'check_output')
     def test_linux_theme_dark(self, mock_check_output):
         mock_check_output.return_value = json.dumps({'data': [{'data': 1}]})
 
         result = system_theme.linux_theme()
         self.assertTrue(result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output'
-    )
+    @patch.object(system_theme.subprocess, 'check_output')
     def test_linux_theme_light(self, mock_check_output):
         mock_check_output.return_value = json.dumps({'data': [{'data': 2}]})
 
         result = system_theme.linux_theme()
         self.assertFalse(result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.Popen'
-    )
+    @patch.object(system_theme.subprocess, 'Popen')
     def test_macos_theme_dark(self, mock_popen):
         mock_process = MagicMock()
         mock_process.communicate.return_value = ('AppleInterfaceStyle', '')
@@ -41,9 +35,7 @@ class TestSystemTheme(TestCase):
         result = system_theme.macos_theme()
         self.assertTrue(result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.Popen'
-    )
+    @patch.object(system_theme.subprocess, 'Popen')
     def test_macos_theme_light(self, mock_popen):
         mock_process = MagicMock()
         mock_process.communicate.return_value = ('', '')
@@ -52,26 +44,16 @@ class TestSystemTheme(TestCase):
         result = system_theme.macos_theme()
         self.assertFalse(result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.platform.system',
-        return_value='Linux',
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.check_output'
-    )
+    @patch.object(system_theme.platform, 'system', return_value='Linux')
+    @patch.object(system_theme.subprocess, 'check_output')
     def test_system_theme_linux(self, mock_check_output, mock_platform_system):
         mock_check_output.return_value = json.dumps({'data': [{'data': 1}]})
 
         result = system_theme.system_theme()
         self.assertTrue(result)
 
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.platform.system',
-        return_value='Darwin',
-    )
-    @patch(
-        'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.subprocess.Popen'
-    )
+    @patch.object(system_theme.platform, 'system', return_value='Darwin')
+    @patch.object(system_theme.subprocess, 'Popen')
     def test_system_theme_macos(self, mock_popen, mock_platform_system):
         mock_process = MagicMock()
         mock_process.communicate.return_value = ('AppleInterfaceStyle', '')
@@ -110,8 +92,9 @@ class TestSystemTheme(TestCase):
             result = system_theme.windows_theme()
             self.assertFalse(result)
 
-        @patch(
-            'Zukan Icon Theme.src.zukan_icon_theme.helpers.system_theme.platform.system',
+        @patch.object(
+            system_theme.platform,
+            'system',
             return_value='Windows',
         )
         @patch('winreg.ConnectRegistry')
