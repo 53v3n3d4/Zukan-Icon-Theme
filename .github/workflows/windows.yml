@@ -16,12 +16,12 @@ jobs:
         with:
           persist-credentials: false
       - name: Sublime Text
-        uses: 53v3n3d4/UnitTesting/actions/setup@7e4b8cc
+        uses: 53v3n3d4/UnitTesting/actions/setup@7e4b8ccc13ce425736ba8537da3add4760058b79
         with:
           package-name: Zukan Icon Theme
           sublime-text-version: 4
       - name: Test with unittest
-        uses: 53v3n3d4/UnitTesting/actions/run-tests@7e4b8cc
+        uses: 53v3n3d4/UnitTesting/actions/run-tests@7e4b8ccc13ce425736ba8537da3add4760058b79
         with:
           coverage: true
           package-name: Zukan Icon Theme
